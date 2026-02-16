@@ -1,30 +1,32 @@
-#!/usr/bin/env node
+# !/usr/bin/env node
 
 /*
- * Copyright 2025 Adobe. All rights reserved.
- * This file is licensed to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License. You may obtain a copy
- * of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under
- * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
- * OF ANY KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
+
+* Copyright 2025 Adobe. All rights reserved.
+* This file is licensed to you under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License. You may obtain a copy
+* of the License at http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software distributed under
+* the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+* OF ANY KIND, either express or implied. See the License for the specific language
+* governing permissions and limitations under the License.
  */
 
 /**
- * Fetch and parse block structure examples from Adobe Block Collection
- *
- * This script retrieves the .plain.html version of a block's documentation page,
- * which contains pre-decoration HTML structure examples showing the expected
- * content model for the block.
- *
- * Usage:
- *   node get-block-structure.js <block-name>
- *   node get-block-structure.js accordion
- *   node get-block-structure.js cards
- *
- * Output: JSON with block metadata, variants, and HTML structure examples
+
+* Fetch and parse block structure examples from Adobe Block Collection
+*
+* This script retrieves the .plain.html version of a block's documentation page,
+* which contains pre-decoration HTML structure examples showing the expected
+* content model for the block.
+*
+* Usage:
+* node get-block-structure.js <block-name>
+* node get-block-structure.js accordion
+* node get-block-structure.js cards
+*
+* Output: JSON with block metadata, variants, and HTML structure examples
  */
 
 import { JSDOM } from 'jsdom';
@@ -32,7 +34,8 @@ import { JSDOM } from 'jsdom';
 const BLOCK_COLLECTION_BASE = 'https://main--aem-block-collection--adobe.aem.live';
 
 /**
- * Simplify HTML by removing optimized picture elements and showing essential structure
+
+* Simplify HTML by removing optimized picture elements and showing essential structure
  */
 function simplifyHTML(html) {
   // Remove picture optimization attributes that clutter the output
@@ -50,7 +53,7 @@ function simplifyHTML(html) {
     /<picture>\s*(<source[^>]*>\s*)*\s*<img\s+([^>]*?)src="([^"]*)"([^>]*?)>\s*<\/picture>/gs,
     (match, sources, beforeSrc, src, afterSrc) => {
       const altMatch = match.match(/alt="([^"]*)"/);
-      const alt = altMatch ? ` alt="${altMatch[1]}"` : '';
+      const alt = altMatch ? `alt="${altMatch[1]}"` : '';
       return `<picture><img src="${src}"${alt}></picture>`;
     }
   );
@@ -65,7 +68,8 @@ function simplifyHTML(html) {
 }
 
 /**
- * Analyze HTML structure to provide a human-readable description
+
+* Analyze HTML structure to provide a human-readable description
  */
 function analyzeStructure(html, blockName) {
   const dom = new JSDOM(html);
@@ -98,7 +102,8 @@ function analyzeStructure(html, blockName) {
 }
 
 /**
- * Fetch and parse block structure from Block Collection
+
+* Fetch and parse block structure from Block Collection
  */
 async function getBlockStructure(blockName) {
   const url = `${BLOCK_COLLECTION_BASE}/block-collection/${blockName}.plain.html`;

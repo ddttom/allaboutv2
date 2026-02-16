@@ -6,7 +6,7 @@
 }
 
 .video.lazy-loading {
-  /* reserve an approximate space to avoid extensive layout shifts */
+  /*reserve an approximate space to avoid extensive layout shifts*/
   aspect-ratio: 16 / 9;
 }
 
@@ -20,7 +20,7 @@
 }
 
 .video video[data-loading] {
-  /* reserve an approximate space to avoid extensive layout shifts */
+  /*reserve an approximate space to avoid extensive layout shifts*/
   width: 100%;
   aspect-ratio: 16 / 9;
 }

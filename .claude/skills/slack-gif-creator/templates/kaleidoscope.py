@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Kaleidoscope Effect - Create mirror/rotation effects.
 
@@ -13,7 +13,6 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 from PIL import Image, ImageOps, ImageDraw
 import numpy as np
-
 
 def apply_kaleidoscope(frame: Image.Image, segments: int = 8,
                        center: tuple[int, int] | None = None) -> Image.Image:
@@ -82,7 +81,6 @@ def apply_kaleidoscope(frame: Image.Image, segments: int = 8,
 
     return Image.fromarray(output_array)
 
-
 def apply_simple_mirror(frame: Image.Image, mode: str = 'quad') -> Image.Image:
     """
     Apply simple mirror effect (faster than full kaleidoscope).
@@ -135,7 +133,6 @@ def apply_simple_mirror(frame: Image.Image, mode: str = 'quad') -> Image.Image:
 
     else:
         return frame
-
 
 def create_kaleidoscope_animation(
     base_frame: Image.Image | None = None,
@@ -191,8 +188,8 @@ def create_kaleidoscope_animation(
 
     return frames
 
-
 # Example usage
+
 if __name__ == '__main__':
     from core.gif_builder import GIFBuilder
 

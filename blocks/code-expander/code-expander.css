@@ -1,5 +1,5 @@
 :root {
-  /* Core colors */
+  /*Core colors*/
   --code-expander-button-bg: #4a90e2;
   --code-expander-button-text: #fff;
   --code-expander-button-border: #3a7bc8;
@@ -8,38 +8,38 @@
   --code-expander-code-text: #333;
   --code-expander-button-focus-outline: #4d90fe;
   
-  /* Border and structure */
+  /*Border and structure*/
   --code-expander-pre-border-color: #e1e4e8;
   --code-expander-pre-border-width: 1px;
   --code-expander-border-radius: 6px;
   --code-expander-box-shadow: 0 2px 6px rgb(0 0 0 / 0.05);
   
-  /* Typography */
+  /*Typography*/
   --code-expander-font-size-small: 0.8rem;
   --code-expander-font-size-normal: 0.9rem;
   --code-expander-font-size-large: 1rem;
   --code-expander-font-family: 'SFMono-Regular', consolas, 'Liberation Mono', menlo, monospace;
   --code-expander-line-height: 1.5;
   
-  /* Layout */
+  /*Layout*/
   --code-expander-header-height: 40px;
   --code-expander-button-width: 80px;
   
-  /* Modal */
+  /*Modal*/
   --code-expander-modal-bg: rgb(0 0 0 / 0.5);
   --code-expander-modal-content-bg: #fff;
   --code-expander-modal-border: #ccc;
   --code-expander-input-border: #ddd;
   --code-expander-input-focus-border: #4a90e2;
   
-  /* Tooltip */
+  /*Tooltip*/
   --code-expander-tooltip-bg: #fff;
   --code-expander-tooltip-border: #ddd;
   --code-expander-tooltip-shadow: 0 2px 8px rgb(0 0 0 / 0.15);
   --code-expander-tooltip-text: #333;
   --code-expander-tooltip-title-bg: #f5f5f5;
 
-  /* Syntax highlighting */
+  /*Syntax highlighting*/
   --code-expander-css-property: #f00;
   --code-expander-css-value: #00f;
   --code-expander-css-selector: #800000;
@@ -54,7 +54,7 @@
   --code-expander-terminal-comment: #008000;
   --code-expander-terminal-output: #000;
 
-  /* Markdown syntax highlighting */
+  /*Markdown syntax highlighting*/
   --code-expander-markdown-heading: #00F;
   --code-expander-markdown-list-item: #008000;
   --code-expander-markdown-blockquote: #808080;
@@ -63,7 +63,7 @@
   --code-expander-json-null: #00F;
 }
 
-/* Main wrapper styles */
+/*Main wrapper styles*/
 .code-expander-wrapper {
   position: relative;
   margin: 1.5em 0;
@@ -74,7 +74,7 @@
   background-color: var(--code-expander-code-bg);
 }
 
-/* Header bar for buttons */
+/*Header bar for buttons*/
 .code-expander-header {
   display: flex;
   justify-content: space-between;
@@ -86,7 +86,7 @@
   border-bottom: 1px solid var(--code-expander-pre-border-color);
 }
 
-/* Language indicator */
+/*Language indicator*/
 .code-expander-language {
   font-size: var(--code-expander-font-size-small);
   color: #666;
@@ -95,7 +95,7 @@
   padding-left: 0.5rem;
 }
 
-/* Scroll hint in header */
+/*Scroll hint in header*/
 .code-expander-scroll-hint {
   font-size: var(--code-expander-font-size-small);
   color: #888;
@@ -103,7 +103,7 @@
   white-space: nowrap;
 }
 
-/* Button group */
+/*Button group*/
 .code-expander-buttons {
   display: flex;
   gap: 0.5rem;
@@ -111,7 +111,7 @@
   align-items: center;
 }
 
-/* Pre and code elements */
+/*Pre and code elements*/
 .code-expander-wrapper pre {
   margin: 0;
   padding: 1rem;
@@ -129,7 +129,7 @@
   tab-size: 4;
 }
 
-/* Button styles */
+/*Button styles*/
 .code-expander-copy,
 .code-expander-expand-collapse,
 .code-expander-view-raw,
@@ -151,7 +151,7 @@
   line-height: 1;
 }
 
-/* Info button specific styles */
+/*Info button specific styles*/
 .code-expander-info {
   min-width: 28px;
   width: 28px;
@@ -182,10 +182,10 @@
   outline-offset: 2px;
 }
 
-/* Tooltip styles */
+/*Tooltip styles */
 .code-expander-tooltip {
   position: fixed; /* Changed from absolute to fixed for better positioning */
-  z-index: 100; /* Increased z-index to ensure visibility */
+  z-index: 100; /* Increased z-index to ensure visibility*/
   width: 300px;
   max-width: 90%;
   background-color: var(--code-expander-tooltip-bg);
@@ -224,7 +224,7 @@
   margin-bottom: 0;
 }
 
-/* Collapsible code blocks */
+/*Collapsible code blocks*/
 pre[class^="language-"].collapsible {
   max-height: 300px;
   overflow-y: hidden;
@@ -235,11 +235,11 @@ pre[class^="language-"].expanded {
   max-height: none;
 }
 
-/* Raw code view styles */
+/*Raw code view styles */
 .code-expander-raw-view {
   display: none;
   position: absolute;
-  top: var(--code-expander-header-height); /* Adjusted to account for header */
+  top: var(--code-expander-header-height); /* Adjusted to account for header*/
   left: 0;
   width: 100%;
   height: calc(100% - var(--code-expander-header-height));
@@ -258,7 +258,7 @@ pre[class^="language-"].expanded {
   display: block;
 }
 
-/* Filename prompt modal styles */
+/*Filename prompt modal styles*/
 .code-expander-filename-modal {
   display: none;
   position: fixed;
@@ -337,46 +337,46 @@ pre[class^="language-"].expanded {
   background-color: #e5e5e5;
 }
 
-/* JavaScript syntax highlighting */
+/*JavaScript syntax highlighting*/
 .language-javascript .keyword { color: var(--code-expander-js-keyword); }
 .language-javascript .string { color: var(--code-expander-js-string); }
 .language-javascript .comment { color: var(--code-expander-css-comment); }
 .language-javascript .boolean { color: var(--code-expander-json-boolean); }
 .language-javascript .number { color: var(--code-expander-json-number); }
 
-/* JSON syntax highlighting */
+/*JSON syntax highlighting*/
 .language-json .key { color: var(--code-expander-json-key); }
 .language-json .string { color: var(--code-expander-json-string); }
 .language-json .boolean { color: var(--code-expander-json-boolean); }
 .language-json .number { color: var(--code-expander-json-number); }
 .language-json .null { color: var(--code-expander-json-null); }
 
-/* HTML syntax highlighting */
+/*HTML syntax highlighting*/
 .language-html .tag { color: var(--code-expander-css-selector); }
 .language-html .string { color: var(--code-expander-js-string); }
 .language-html .comment { color: var(--code-expander-css-comment); }
 
-/* CSS syntax highlighting */
+/*CSS syntax highlighting*/
 .language-css .property { color: var(--code-expander-css-property); }
 .language-css .value { color: var(--code-expander-css-value); }
 
-/* Markdown syntax highlighting */
+/*Markdown syntax highlighting*/
 .language-markdown .heading { color: var(--code-expander-markdown-heading); font-weight: bold; }
 .language-markdown .list-item { color: var(--code-expander-markdown-list-item); }
 .language-markdown .blockquote { color: var(--code-expander-markdown-blockquote); font-style: italic; }
 .language-markdown .code { color: var(--code-expander-markdown-code); background-color: #f0f0f0; padding: 2px 4px; border-radius: 3px; }
 .language-markdown .link { color: var(--code-expander-markdown-link); text-decoration: underline; }
 
-/* Terminal syntax highlighting */
+/*Terminal syntax highlighting*/
 .language-shell .command { color: var(--code-expander-terminal-command); }
 .language-shell .comment { color: var(--code-expander-terminal-comment); }
 .language-shell .output { color: var(--code-expander-terminal-output); }
 
-/* Python syntax highlighting */
+/*Python syntax highlighting*/
 .language-python .comment { color: #008000; }
 .language-python .string { color: #a31515; font-weight: bold; }
 
-/* General syntax highlighting */
+/*General syntax highlighting*/
 .comment { color: #6a737d; }
 .string { color: #032f62; }
 .keyword { color: #d73a49; }
@@ -391,7 +391,7 @@ pre[class^="language-"].expanded {
 .code { color: #24292e; background-color: #f6f8fa; }
 .link { color: #032f62; }
 
-/* Mobile responsiveness */
+/*Mobile responsiveness*/
 @media (width <= 768px) {
   .code-expander-wrapper pre {
     font-size: 12px;
@@ -411,7 +411,7 @@ pre[class^="language-"].expanded {
   }
   
   .code-expander-scroll-hint {
-    display: none; /* Hide on mobile to save space */
+    display: none; /*Hide on mobile to save space*/
   }
   
   .code-expander-buttons {
@@ -441,7 +441,7 @@ pre[class^="language-"].expanded {
     margin: 0 auto;
   }
   
-  /* Adjust filename modal for mobile */
+  /*Adjust filename modal for mobile*/
   .code-expander-filename-modal-content {
     width: 90%;
     padding: 15px;
@@ -452,7 +452,7 @@ pre[class^="language-"].expanded {
   }
 }
 
-/* For very small screens */
+/*For very small screens*/
 @media (width <= 480px) {
   .code-expander-wrapper pre {
     font-size: 11px;

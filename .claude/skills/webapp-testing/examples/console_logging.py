@@ -28,6 +28,7 @@ with sync_playwright() as p:
     browser.close()
 
 # Save console logs to file
+
 with open('/mnt/user-data/outputs/console.log', 'w') as f:
     f.write('\n'.join(console_logs))
 

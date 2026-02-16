@@ -1,9 +1,10 @@
 /**
- * Remove Icon Styles Block
- *
- * This block's purpose is to override the default icon styles in EDS.
- * The block doesn't modify DOM elements but relies on its CSS file
- * to override the default icon styling through CSS specificity.
+
+* Remove Icon Styles Block
+*
+* This block's purpose is to override the default icon styles in EDS.
+* The block doesn't modify DOM elements but relies on its CSS file
+* to override the default icon styling through CSS specificity.
  */
 
 export default function decorate(block) {

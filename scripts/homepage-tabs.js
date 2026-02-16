@@ -1,6 +1,7 @@
 /**
- * Homepage Category Tabs
- * Handles category filtering for blog posts on the homepage
+
+* Homepage Category Tabs
+* Handles category filtering for blog posts on the homepage
  */
 
 const HOMEPAGE_TABS_CONFIG = {
@@ -10,7 +11,8 @@ const HOMEPAGE_TABS_CONFIG = {
 };
 
 /**
- * Update URL hash without scrolling
+
+* Update URL hash without scrolling
  */
 function updateUrlHash(category) {
   const newHash = `#category-${category}`;
@@ -25,7 +27,8 @@ function updateUrlHash(category) {
 }
 
 /**
- * Initialize category from URL hash on page load
+
+* Initialize category from URL hash on page load
  */
 function initializeFromHash() {
   const hash = window.location.hash.replace('#category-', '');
@@ -43,8 +46,9 @@ function initializeFromHash() {
 }
 
 /**
- * Handle tab click event
- * Updates active states and shows/hides corresponding blogroll containers
+
+* Handle tab click event
+* Updates active states and shows/hides corresponding blogroll containers
  */
 function handleTabClick(clickedTab, allTabs, containers) {
   const { category } = clickedTab.dataset;
@@ -85,8 +89,9 @@ function handleTabClick(clickedTab, allTabs, containers) {
 }
 
 /**
- * Initialize category tabs functionality
- * Sets up click handlers and checks for URL hash on load
+
+* Initialize category tabs functionality
+* Sets up click handlers and checks for URL hash on load
  */
 export function initCategoryTabs() {
   const tabs = document.querySelectorAll('.category-tabs button');

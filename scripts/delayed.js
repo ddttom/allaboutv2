@@ -5,8 +5,8 @@ import { sampleRUM } from './aem.js';
 sampleRUM('cwv');
 
 // add more delayed functionality here
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-await-in-loop */
+/*eslint-disable no-restricted-syntax */
+/* eslint-disable no-await-in-loop*/
 // eslint-disable-next-line max-len
 // If you need any delayed stuff client-side add it to the callbackAfter3SecondsChain
 window.cmsplus.debug('callbackAfter3SecondsChain');

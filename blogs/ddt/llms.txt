@@ -5,7 +5,6 @@ Technical documentation and educational resources.
 **Last updated:** December 2025
 **Authors:** Tom Cranstoun, Cate Nisbet
 
-
 ## EDS & Integrations
 
 - [Vue Js Slide Viewer in GDocs](https://allabout.network/blogs/ddt/integrations/vue-js-version-of-slide-viewer-in-gdoc): Vue Js  Slide Viewer in GDocs
@@ -92,4 +91,3 @@ Technical documentation and educational resources.
 - [Tom's Blog Index Page](https://allabout.network/blogs/ddt/): The index page of the blogs of a seasoned AEM architect
 - [Human-Centred AI in Content Management](https://allabout.network/blogs/ddt/human-centred-ai-in-content-management): The post examines why human oversight, strategic thinking, and collaborative decision-making remain essential in AI workflows, using examples like development time reduction and engagement improvements. The key message: companies that thrive will use AI as a powerful assistant that enhances human capabilities whilst keeping people in control of the creative and strategic decisions that matter most., Rather than building systems that push humans aside, the blog advocates for human-centred AI that treats technology as a collaborative partner - one that processes data and suggests solutions while humans provide context, creativity, and final judgment calls.
 - [The Hidden Complexities of AI Code Modification: A Practical Guide](https://allabout.network/blogs/ddt/the-hidden-complexities-of-ai-code-modification-a-practical-guide): I'm sharing how to use AI effectively to modify existing code.
-

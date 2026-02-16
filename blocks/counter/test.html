@@ -611,16 +611,16 @@
       if (counter) {
         const incrementButton = counter.shadowRoot.querySelector('.counter-button:last-child');
         const startTime = performance.now();
-        
+
         for (let i = 0; i < 100; i++) {
           incrementButton.click();
         }
-        
+
         const endTime = performance.now();
         const duration = endTime - startTime;
         totalClicks += 100;
         totalTime += duration;
-        
+
         updatePerformanceStats(counter, duration);
       }
     };
@@ -630,16 +630,16 @@
       if (counter) {
         const decrementButton = counter.shadowRoot.querySelector('.counter-button:first-child');
         const startTime = performance.now();
-        
+
         for (let i = 0; i < 100; i++) {
           decrementButton.click();
         }
-        
+
         const endTime = performance.now();
         const duration = endTime - startTime;
         totalClicks += 100;
         totalTime += duration;
-        
+
         updatePerformanceStats(counter, duration);
       }
     };

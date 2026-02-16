@@ -1,11 +1,12 @@
 /**
- * Unit Tests for Cloudflare Worker Helper Functions
- *
- * These tests verify the utility functions used in the worker.
- * Run with: npm test (requires vitest or jest)
+
+* Unit Tests for Cloudflare Worker Helper Functions
+*
+* These tests verify the utility functions used in the worker.
+* Run with: npm test (requires vitest or jest)
  */
 
-/* eslint-disable max-classes-per-file, import/no-unresolved */
+/*eslint-disable max-classes-per-file, import/no-unresolved*/
 // Multiple mock classes needed for testing
 
 import {

@@ -1,10 +1,12 @@
 /*
- * The Principles That Changed How I Build for Everyone
- * MX-compliant blog post styles
- * Optimized for both human readers and machine readability
+
+* The Principles That Changed How I Build for Everyone
+* MX-compliant blog post styles
+* Optimized for both human readers and machine readability
  */
 
-/* Reset and Base Styles */
+/*Reset and Base Styles*/
+
 * {
   margin: 0;
   padding: 0;
@@ -21,7 +23,7 @@ body {
   padding: 2rem;
 }
 
-/* Header */
+/*Header*/
 header {
   background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
   color: white;
@@ -50,7 +52,7 @@ header h1 {
   margin: 0 0.5rem;
 }
 
-/* Main Content */
+/*Main Content*/
 main {
   padding: 2rem 0;
 }
@@ -59,7 +61,7 @@ article {
   background: white;
 }
 
-/* Typography */
+/*Typography*/
 h2 {
   color: #1e40af;
   font-size: 2rem;
@@ -91,7 +93,7 @@ em {
   color: #4b5563;
 }
 
-/* Links */
+/*Links*/
 a {
   color: #2563eb;
   text-decoration: none;
@@ -108,14 +110,14 @@ a:focus {
   outline-offset: 2px;
 }
 
-/* Horizontal Rules */
+/*Horizontal Rules*/
 hr {
   border: none;
   border-top: 2px solid #e5e7eb;
   margin: 3rem 0;
 }
 
-/* Footer */
+/*Footer*/
 footer {
   background: #f9fafb;
   border-top: 2px solid #e5e7eb;
@@ -131,16 +133,17 @@ footer p {
   font-size: 0.95rem;
 }
 
-/* Accessibility Improvements */
+/*Accessibility Improvements*/
 @media (prefers-reduced-motion: reduce) {
-  * {
+
+* {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
 
-/* Responsive Design */
+/*Responsive Design*/
 @media (max-width: 768px) {
   body {
     padding: 1rem;
@@ -174,7 +177,7 @@ footer p {
   }
 }
 
-/* Print Styles */
+/*Print Styles*/
 @media print {
   body {
     background: white;

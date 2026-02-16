@@ -1,7 +1,8 @@
 /*
- * Fragment Block
- * Include content on a page as a fragment.
- * https://www.aem.live/developer/block-collection/fragment
+
+* Fragment Block
+* Include content on a page as a fragment.
+* https://www.aem.live/developer/block-collection/fragment
  */
 
 // External dependencies from sibling repository
@@ -12,9 +13,10 @@ import { decorateMain } from '../../../../../../../scripts/scripts.js';
 import { loadBlocks } from '../../../../../../../scripts/aem.js';
 
 /**
- * Loads a fragment.
- * @param {string} path The path to the fragment
- * @returns {HTMLElement} The root element of the fragment
+
+* Loads a fragment.
+* @param {string} path The path to the fragment
+* @returns {HTMLElement} The root element of the fragment
  no-unused-vars, import/no-unresolved, import/no-self-import */
 export async function loadFragment(path) {
   if (path && path.startsWith('/')) {

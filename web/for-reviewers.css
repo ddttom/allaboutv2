@@ -1,4 +1,4 @@
-/* For Reviewers Page Stylesheet */
+/*For Reviewers Page Stylesheet*/
 
 * {
   margin: 0;
@@ -220,7 +220,7 @@ footer p {
   text-decoration: underline;
 }
 
-/* Floating navigation buttons */
+/*Floating navigation buttons*/
 .floating-home-button {
   position: fixed;
   top: 20px;

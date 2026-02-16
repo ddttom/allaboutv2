@@ -1,5 +1,6 @@
 /**
- * Toolbar Manager - Creates unified toolbar that adapts to current view
+
+* Toolbar Manager - Creates unified toolbar that adapts to current view
  */
 
 export function createToolbar({ config, navigationState, onHomeClick, onTreeToggle }) {

@@ -1,36 +1,38 @@
-/* eslint-disable max-len, no-restricted-syntax, no-shadow */
+/*eslint-disable max-len, no-restricted-syntax, no-shadow */
 /* eslint-disable import/no-unresolved */
-/* eslint-disable import/no-absolute-path */
+/* eslint-disable import/no-absolute-path*/
 // External image handling, part of block-party; but modified to be a plugin for PlusPlus
 import {
   createOptimizedPicture as libCreateOptimizedPicture,
 } from '/scripts/aem.js';
 
 /**
- * Gets the extension of a URL.
- * @param {string} url The URL
- * @returns {string} The extension
- * @private
- * @example
- * get_url_extension('https://example.com/foo.jpg');
- * // returns 'jpg'
- * get_url_extension('https://example.com/foo.jpg?bar=baz');
- * // returns 'jpg'
- * get_url_extension('https://example.com/foo');
- * // returns ''
- * get_url_extension('https://example.com/foo.jpg#qux');
- * // returns 'jpg'
+
+* Gets the extension of a URL.
+* @param {string} url The URL
+* @returns {string} The extension
+* @private
+* @example
+* get_url_extension('https://example.com/foo.jpg');
+* // returns 'jpg'
+* get_url_extension('https://example.com/foo.jpg?bar=baz');
+* // returns 'jpg'
+* get_url_extension('https://example.com/foo');
+* // returns ''
+* get_url_extension('https://example.com/foo.jpg#qux');
+* // returns 'jpg'
  */
 export function getUrlExtension(url) {
-  return url.split(/[#?]/)[0].split('.').pop().trim();
+  return url.split[/[#?]/](0).split('.').pop().trim();
 }
 
 /**
-   * Checks if an element is an external image.
-   * @param {Element} element The element
-   * @param {string} externalImageMarker The marker for external images
-   * @returns {boolean} Whether the element is an external image
-   * @private
+
+* Checks if an element is an external image.
+* @param {Element} element The element
+* @param {string} externalImageMarker The marker for external images
+* @returns {boolean} Whether the element is an external image
+* @private
    */
 export function isExternalImage(element, externalImageMarker) {
   // if the element is not an anchor, it's not an external image
@@ -53,14 +55,15 @@ export function isExternalImage(element, externalImageMarker) {
 }
 
 /*
-   * Appends query params to a URL
-   * @param {string} url The URL to append query params to
-   * @param {object} params The query params to append
-   * @returns {string} The URL with query params appended
-   * @private
-   * @example
-   * appendQueryParams('https://example.com', { foo: 'bar' });
-   * // returns 'https://example.com?foo=bar'
+
+* Appends query params to a URL
+* @param {string} url The URL to append query params to
+* @param {object} params The query params to append
+* @returns {string} The URL with query params appended
+* @private
+* @example
+* appendQueryParams('https://example.com', { foo: 'bar' });
+* // returns 'https://example.com?foo=bar'
    */
 export function appendQueryParams(url, params) {
   const {
@@ -75,14 +78,16 @@ export function appendQueryParams(url, params) {
 }
 
 /**
-   * Creates an optimized picture element for an image.
-   * If the image is not an absolute URL, it will be passed to libCreateOptimizedPicture.
-   * @param {string} src The image source URL
-   * @param {string} alt The image alt text
-   * @param {boolean} eager Whether to load the image eagerly
-   * @param {object[]} breakpoints The breakpoints to use
-   * @returns {Element} The picture element
-   *
+
+* Creates an optimized picture element for an image.
+* If the image is not an absolute URL, it will be passed to libCreateOptimizedPicture.
+* @param {string} src The image source URL
+* @param {string} alt The image alt text
+* @param {boolean} eager Whether to load the image eagerly
+* @param {object[]} breakpoints The breakpoints to use
+* @returns {Element} The picture element
+*
+
    */
 export function createOptimizedPicture(src, alt = '', eager = false, breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }]) {
   const isAbsoluteUrl = /^https?:\/\//i.test(src);
@@ -127,12 +132,13 @@ export function createOptimizedPicture(src, alt = '', eager = false, breakpoints
 }
 
 /*
-   * Decorates external images with a picture element
-   * @param {Element} ele The element
-   * @param {string} deliveryMarker The marker for external images
-   * @private
-   * @example
-   * decorateExternalImages(main, '//External Image//');
+
+* Decorates external images with a picture element
+* @param {Element} ele The element
+* @param {string} deliveryMarker The marker for external images
+* @private
+* @example
+* decorateExternalImages(main, '//External Image//');
    */
 export function decorateExternalImages(ele, deliveryMarker) {
   const extImages = ele.querySelectorAll('a');
@@ -141,7 +147,7 @@ export function decorateExternalImages(ele, deliveryMarker) {
       const extImageSrc = extImage.getAttribute('href');
       const extPicture = createOptimizedPicture(extImageSrc);
 
-      /* copy query params from link to img */
+      /*copy query params from link to img*/
       const extImageUrl = new URL(extImageSrc);
       const {
         searchParams,

@@ -120,8 +120,9 @@ const CONFIG = {
 };
 
 /**
- * Decorates the spectrum card block
- * @param {HTMLElement} block - The block element to decorate
+
+* Decorates the spectrum card block
+* @param {HTMLElement} block - The block element to decorate
  */
 export default function decorate(block) {
   ensureThemeContext();

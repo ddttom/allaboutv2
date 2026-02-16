@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Fade Animation - Fade in, fade out, and crossfade effects.
 
@@ -15,7 +15,6 @@ import numpy as np
 from core.gif_builder import GIFBuilder
 from core.frame_composer import create_blank_frame, draw_emoji_enhanced
 from core.easing import interpolate
-
 
 def create_fade_animation(
     object_type: str = 'emoji',
@@ -145,7 +144,6 @@ def create_fade_animation(
 
     return frames
 
-
 def apply_opacity(image: Image.Image, opacity: float) -> Image.Image:
     """
     Apply opacity to an RGBA image.
@@ -170,7 +168,6 @@ def apply_opacity(image: Image.Image, opacity: float) -> Image.Image:
 
     # Merge back
     return Image.merge('RGBA', (r, g, b, a))
-
 
 def create_crossfade(
     object1_data: dict,
@@ -247,7 +244,6 @@ def create_crossfade(
 
     return frames
 
-
 def create_fade_to_color(
     start_color: tuple[int, int, int],
     end_color: tuple[int, int, int],
@@ -286,8 +282,8 @@ def create_fade_to_color(
 
     return frames
 
-
 # Example usage
+
 if __name__ == '__main__':
     print("Creating fade animations...")
 

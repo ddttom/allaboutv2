@@ -1,6 +1,6 @@
-/* eslint-disable max-len, no-restricted-syntax, no-shadow */
+/*eslint-disable max-len, no-restricted-syntax, no-shadow */
 /* eslint-disable import/prefer-default-export */
-/* eslint-disable no-console */
+/* eslint-disable no-console*/
 function toggleDebugPanel() {
   const debugPanel = document.getElementById('debug-panel');
   debugPanel.style.display = debugPanel.style.display === 'block' ? 'none' : 'block';
@@ -50,7 +50,7 @@ function createDebugPanel() {
     for (const match of matches) {
       const token = match.replace('$', '').replace(':', '');
       content = `<strong>${token}:</strong> ${window.siteConfig[token]}<br>${content}`;
-      content = `<h3>Unmatched Replaceable Tokens</h3>${content}`;
+      content =`<h3>Unmatched Replaceable Tokens</h3>${content}`;
     }
   }
   content += '<h3>site configuration</h3>';

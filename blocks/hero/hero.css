@@ -1,6 +1,6 @@
-/* Block specific CSS */
+/*Block specific CSS*/
 
-/* Hero container styles */
+/*Hero container styles*/
 main .hero-container > div {
     max-width: unset;
 }
@@ -9,7 +9,7 @@ main .hero-container {
     padding: 0;
 }
 
-/* General hero styles */
+/*General hero styles */
 main .hero {
     position: relative;
     padding: 32px;
@@ -17,10 +17,10 @@ main .hero {
     display: flex;
     justify-content: flex-start; /* Align items to the start horizontally */
     align-items: center; /* Center items vertically */
-    text-align: left; /* Align text to the left */
+    text-align: left; /* Align text to the left*/
 }
 
-/* Hero picture styles */
+/*Hero picture styles*/
 main .hero picture {
     position: absolute;
     z-index: -1;
@@ -29,7 +29,7 @@ main .hero picture {
     box-sizing: border-box;
 }
 
-/* Hero image styles */
+/*Hero image styles*/
 main .hero img {
     object-fit: cover;
     width: 100%;
@@ -44,15 +44,13 @@ body.techem hero-wrapper a {
     color: white;
 }
 
-
-/* Styles for .hero.manual */
+/*Styles for .hero.manual */
 .hero-wrapper .hero.manual {
     color: white; /* Text color */
-    padding-top: 100px; /* Top padding */
+    padding-top: 100px; /* Top padding*/
 
     /* Additional styles for .hero.Manual */
 }
-
 
 .hero-wrapper .hero.manual > div:last-child h2 {
     line-height: 69px;
@@ -60,7 +58,7 @@ body.techem hero-wrapper a {
     padding-inline: 0;
 }
 
-/* Additional general hero styles */
+/*Additional general hero styles*/
 .section .hero-wrapper {
     max-width: 120rem;
     margin-top: 5rem;
@@ -74,7 +72,6 @@ body.techem hero-wrapper a {
     height: 32.5rem;
     min-height: auto;
 }
-
 
 .hero-wrapper .hero > div:last-child h2 {
     line-height: 69px;

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Typography System - Professional text rendering with outlines, shadows, and effects.
 
@@ -9,8 +9,8 @@ in GIFs, with outlines for readability and effects for visual impact.
 from PIL import Image, ImageDraw, ImageFont
 from typing import Optional
 
-
 # Typography scale - proportional sizing system
+
 TYPOGRAPHY_SCALE = {
     'h1': 60,      # Large headers
     'h2': 48,      # Medium headers
@@ -20,7 +20,6 @@ TYPOGRAPHY_SCALE = {
     'small': 20,   # Small text
     'tiny': 16,    # Tiny text
 }
-
 
 def get_font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
     """
@@ -53,7 +52,6 @@ def get_font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
 
     # Ultimate fallback
     return ImageFont.load_default()
-
 
 def draw_text_with_outline(
     frame: Image.Image,
@@ -110,7 +108,6 @@ def draw_text_with_outline(
 
     return frame
 
-
 def draw_text_with_shadow(
     frame: Image.Image,
     text: str,
@@ -159,7 +156,6 @@ def draw_text_with_shadow(
     draw.text(position, text, fill=text_color, font=font)
 
     return frame
-
 
 def draw_text_with_glow(
     frame: Image.Image,
@@ -213,7 +209,6 @@ def draw_text_with_glow(
     draw.text(position, text, fill=text_color, font=font)
 
     return frame
-
 
 def draw_text_in_box(
     frame: Image.Image,
@@ -290,7 +285,6 @@ def draw_text_in_box(
 
     return frame
 
-
 def get_text_size(text: str, font_size: int, bold: bool = True) -> tuple[int, int]:
     """
     Get the dimensions of text without drawing it.
@@ -311,7 +305,6 @@ def get_text_size(text: str, font_size: int, bold: bool = True) -> tuple[int, in
     width = bbox[2] - bbox[0]
     height = bbox[3] - bbox[1]
     return (width, height)
-
 
 def get_optimal_font_size(text: str, max_width: int, max_height: int,
                           start_size: int = 60) -> int:
@@ -334,7 +327,6 @@ def get_optimal_font_size(text: str, max_width: int, max_height: int,
             return font_size
         font_size -= 2
     return 10  # Minimum font size
-
 
 def scale_font_for_frame(base_size: int, frame_width: int, frame_height: int) -> int:
     """

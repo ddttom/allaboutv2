@@ -94,7 +94,7 @@ var C = { exports: {} };
   });
 })();
 var b = C.exports;
-const P = /* @__PURE__ */ V(b), j = /* @__PURE__ */ O({
+const P = /*@__PURE__ */ V(b), j = /* @__PURE__*/ O({
   __proto__: null,
   default: P
 }, [b]);

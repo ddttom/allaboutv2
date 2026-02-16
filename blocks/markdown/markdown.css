@@ -28,21 +28,21 @@
   line-height: 1.5;
 }
 
-/* Syntax highlighting colors */
+/*Syntax highlighting colors*/
 .markdown-content .string { color: #a31515; }
 .markdown-content .keyword { color: #00f; }
 .markdown-content .comment { color: #008000; }
 .markdown-content .number { color: #09885a; }
 .markdown-content .function { color: #795e26; }
 
-/* Responsive design */
+/*Responsive design*/
 @media (width <= 768px) {
   .markdown-content {
     padding: calc(var(--markdown-padding) / 2);
   }
 }
 
-/* Removed background color from code blocks */
+/*Removed background color from code blocks*/
 .markdown-content pre code {
   display: block;
   padding: 10px;

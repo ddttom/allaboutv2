@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Pulse Animation - Scale objects rhythmically for emphasis.
 
@@ -15,7 +15,6 @@ from PIL import Image
 from core.gif_builder import GIFBuilder
 from core.frame_composer import create_blank_frame, draw_emoji_enhanced, draw_circle
 from core.easing import interpolate
-
 
 def create_pulse_animation(
     object_type: str = 'emoji',
@@ -152,7 +151,6 @@ def create_pulse_animation(
 
     return frames
 
-
 def create_attention_pulse(
     emoji: str = '⚠️',
     num_frames: int = 20,
@@ -183,7 +181,6 @@ def create_attention_pulse(
         frame_height=frame_size,
         bg_color=bg_color
     )
-
 
 def create_breathing_animation(
     object_type: str = 'emoji',
@@ -227,8 +224,8 @@ def create_breathing_animation(
         bg_color=bg_color
     )
 
-
 # Example usage
+
 if __name__ == '__main__':
     print("Creating pulse animations...")
 

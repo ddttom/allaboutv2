@@ -1,6 +1,6 @@
-/* eslint-disable max-len */
+/*eslint-disable max-len */
 /* eslint-disable guard-for-in */
-/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-restricted-syntax*/
 
 export function removeMeta() {
   const keepMetadataNames = [

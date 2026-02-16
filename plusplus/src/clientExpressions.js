@@ -1,5 +1,5 @@
-/* eslint-disable import/no-absolute-path */
-/* eslint-disable import/no-unresolved */
+/*eslint-disable import/no-absolute-path */
+/* eslint-disable import/no-unresolved*/
 import { createExpression } from '/plusplus/plugins/expressions/src/expressions.js';
 import {
   a, div, p, h3, h2,

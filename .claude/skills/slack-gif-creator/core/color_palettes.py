@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Color Palettes - Professional, harmonious color schemes for GIFs.
 
@@ -8,7 +8,6 @@ and polished instead of random and amateurish.
 
 from typing import Optional
 import colorsys
-
 
 # Professional color palettes - hand-picked for GIF compression and visual appeal
 
@@ -93,6 +92,7 @@ MONOCHROME = {
 }
 
 # Map of palette names
+
 PALETTES = {
     'vibrant': VIBRANT,
     'pastel': PASTEL,
@@ -103,7 +103,6 @@ PALETTES = {
     'cool': COOL,
     'monochrome': MONOCHROME,
 }
-
 
 def get_palette(name: str = 'vibrant') -> dict:
     """
@@ -116,7 +115,6 @@ def get_palette(name: str = 'vibrant') -> dict:
         Dictionary of color roles to RGB tuples
     """
     return PALETTES.get(name.lower(), VIBRANT)
-
 
 def get_text_color_for_background(bg_color: tuple[int, int, int]) -> tuple[int, int, int]:
     """
@@ -136,7 +134,6 @@ def get_text_color_for_background(bg_color: tuple[int, int, int]) -> tuple[int, 
 
     # Return black for light backgrounds, white for dark
     return (0, 0, 0) if luminance > 0.5 else (255, 255, 255)
-
 
 def get_complementary_color(color: tuple[int, int, int]) -> tuple[int, int, int]:
     """
@@ -159,7 +156,6 @@ def get_complementary_color(color: tuple[int, int, int]) -> tuple[int, int, int]
     r_comp, g_comp, b_comp = colorsys.hsv_to_rgb(h_comp, s, v)
     return (int(r_comp * 255), int(g_comp * 255), int(b_comp * 255))
 
-
 def lighten_color(color: tuple[int, int, int], amount: float = 0.3) -> tuple[int, int, int]:
     """
     Lighten a color by a given amount.
@@ -177,7 +173,6 @@ def lighten_color(color: tuple[int, int, int], amount: float = 0.3) -> tuple[int
     b = min(255, int(b + (255 - b) * amount))
     return (r, g, b)
 
-
 def darken_color(color: tuple[int, int, int], amount: float = 0.3) -> tuple[int, int, int]:
     """
     Darken a color by a given amount.
@@ -194,7 +189,6 @@ def darken_color(color: tuple[int, int, int], amount: float = 0.3) -> tuple[int,
     g = max(0, int(g * (1 - amount)))
     b = max(0, int(b * (1 - amount)))
     return (r, g, b)
-
 
 def blend_colors(color1: tuple[int, int, int], color2: tuple[int, int, int],
                  ratio: float = 0.5) -> tuple[int, int, int]:
@@ -218,7 +212,6 @@ def blend_colors(color1: tuple[int, int, int], color2: tuple[int, int, int],
 
     return (r, g, b)
 
-
 def create_gradient_colors(start_color: tuple[int, int, int],
                            end_color: tuple[int, int, int],
                            steps: int) -> list[tuple[int, int, int]]:
@@ -239,8 +232,8 @@ def create_gradient_colors(start_color: tuple[int, int, int],
         colors.append(blend_colors(start_color, end_color, ratio))
     return colors
 
-
 # Impact/emphasis colors that work well across palettes
+
 IMPACT_COLORS = {
     'flash': (255, 255, 240),       # Bright flash (cream)
     'explosion': (255, 150, 0),     # Orange explosion
@@ -251,7 +244,6 @@ IMPACT_COLORS = {
     'warning': (255, 200, 0),       # Warning yellow
     'magic': (200, 100, 255),       # Magic purple
 }
-
 
 def get_impact_color(effect_type: str = 'flash') -> tuple[int, int, int]:
     """
@@ -265,8 +257,8 @@ def get_impact_color(effect_type: str = 'flash') -> tuple[int, int, int]:
     """
     return IMPACT_COLORS.get(effect_type, IMPACT_COLORS['flash'])
 
-
 # Emoji-safe palettes (work well at 128x128 with 32-64 colors)
+
 EMOJI_PALETTES = {
     'simple': [
         (255, 255, 255),  # White
@@ -287,7 +279,6 @@ EMOJI_PALETTES = {
         (68, 255, 200),   # Cyan
     ]
 }
-
 
 def get_emoji_palette(name: str = 'simple') -> list[tuple[int, int, int]]:
     """

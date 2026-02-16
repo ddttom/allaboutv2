@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Spin Animation - Rotate objects continuously or with variation.
 
@@ -15,7 +15,6 @@ from PIL import Image
 from core.gif_builder import GIFBuilder
 from core.frame_composer import create_blank_frame, draw_emoji_enhanced, draw_circle
 from core.easing import interpolate
-
 
 def create_spin_animation(
     object_type: str = 'emoji',
@@ -145,7 +144,6 @@ def create_spin_animation(
 
     return frames
 
-
 def create_loading_spinner(
     num_frames: int = 20,
     spinner_type: str = 'dots',  # 'dots', 'arc', 'emoji'
@@ -230,8 +228,8 @@ def create_loading_spinner(
 
     return frames
 
-
 # Example usage
+
 if __name__ == '__main__':
     print("Creating spin animations...")
 

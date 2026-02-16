@@ -1,8 +1,9 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Extract structured text content from PowerPoint presentations.
 
 This module provides functionality to:
+
 - Extract all text content from PowerPoint shapes
 - Preserve paragraph formatting (alignment, bullets, fonts, spacing)
 - Handle nested GroupShapes recursively with correct absolute positions
@@ -36,6 +37,7 @@ from pptx.enum.text import PP_ALIGN
 from pptx.shapes.base import BaseShape
 
 # Type aliases for cleaner signatures
+
 JsonValue = Union[str, int, float, bool, None]
 ParagraphDict = Dict[str, JsonValue]
 ShapeDict = Dict[
@@ -45,7 +47,6 @@ InventoryData = Dict[
     str, Dict[str, "ShapeData"]
 ]  # Dict of slide_id -> {shape_id -> ShapeData}
 InventoryDict = Dict[str, Dict[str, ShapeDict]]  # JSON-serializable inventory
-
 
 def main():
     """Main entry point for command-line usage."""
@@ -61,11 +62,12 @@ Examples:
     Extracts only text shapes that have overflow or overlap issues
 
 The output JSON includes:
-  - All text content organized by slide and shape
-  - Correct absolute positions for shapes in groups
-  - Visual position and size in inches
-  - Paragraph properties and formatting
-  - Issue detection: text overflow and shape overlaps
+
+- All text content organized by slide and shape
+- Correct absolute positions for shapes in groups
+- Visual position and size in inches
+- Paragraph properties and formatting
+- Issue detection: text overflow and shape overlaps
         """,
     )
 
@@ -124,7 +126,6 @@ The output JSON includes:
         traceback.print_exc()
         sys.exit(1)
 
-
 @dataclass
 class ShapeWithPosition:
     """A shape with its absolute position on the slide."""
@@ -132,7 +133,6 @@ class ShapeWithPosition:
     shape: BaseShape
     absolute_left: int  # in EMUs
     absolute_top: int  # in EMUs
-
 
 class ParagraphData:
     """Data structure for paragraph properties extracted from a PowerPoint paragraph."""
@@ -261,7 +261,6 @@ class ParagraphData:
             result["line_spacing"] = self.line_spacing
 
         return result
-
 
 class ShapeData:
     """Data structure for shape properties extracted from a PowerPoint shape."""
@@ -738,7 +737,6 @@ class ShapeData:
 
         return result
 
-
 def is_valid_shape(shape: BaseShape) -> bool:
     """Check if a shape contains meaningful text content."""
     # Must have a text frame with content
@@ -761,7 +759,6 @@ def is_valid_shape(shape: BaseShape) -> bool:
                 return False
 
     return True
-
 
 def collect_shapes_with_absolute_positions(
     shape: BaseShape, parent_left: int = 0, parent_top: int = 0
@@ -815,7 +812,6 @@ def collect_shapes_with_absolute_positions(
 
     return []
 
-
 def sort_shapes_by_position(shapes: List[ShapeData]) -> List[ShapeData]:
     """Sort shapes by visual position (top-to-bottom, left-to-right).
 
@@ -844,7 +840,6 @@ def sort_shapes_by_position(shapes: List[ShapeData]) -> List[ShapeData]:
     # Don't forget the last row
     result.extend(sorted(row, key=lambda s: s.left))
     return result
-
 
 def calculate_overlap(
     rect1: Tuple[float, float, float, float],
@@ -878,7 +873,6 @@ def calculate_overlap(
 
     return False, 0
 
-
 def detect_overlaps(shapes: List[ShapeData]) -> None:
     """Detect overlapping shapes and update their overlapping_shapes dictionaries.
 
@@ -909,7 +903,6 @@ def detect_overlaps(shapes: List[ShapeData]) -> None:
                 # Add shape IDs with overlap area in square inches
                 shape1.overlapping_shapes[shape2.shape_id] = overlap_area
                 shape2.overlapping_shapes[shape1.shape_id] = overlap_area
-
 
 def extract_text_inventory(
     pptx_path: Path, prs: Optional[Any] = None, issues_only: bool = False
@@ -973,7 +966,6 @@ def extract_text_inventory(
 
     return inventory
 
-
 def get_inventory_as_dict(pptx_path: Path, issues_only: bool = False) -> InventoryDict:
     """Extract text inventory and return as JSON-serializable dictionaries.
 
@@ -999,7 +991,6 @@ def get_inventory_as_dict(pptx_path: Path, issues_only: bool = False) -> Invento
 
     return dict_inventory
 
-
 def save_inventory(inventory: InventoryData, output_path: Path) -> None:
     """Save inventory to JSON file with proper formatting.
 
@@ -1014,7 +1005,6 @@ def save_inventory(inventory: InventoryData, output_path: Path) -> None:
 
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(json_inventory, f, indent=2, ensure_ascii=False)
-
 
 if __name__ == "__main__":
     main()

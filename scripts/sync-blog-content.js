@@ -1,30 +1,32 @@
-#!/usr/bin/env node
+# !/usr/bin/env node
 /**
- * Sync Blog Content Utility
- *
- * Finds and updates all llms.txt and my-blog.json files in the project.
- * Fetches latest content from query-index.json and updates files based on lastModified dates.
- *
- * Usage:
- *   node scripts/sync-blog-content.js --target=llms    # Update all llms.txt files
- *   node scripts/sync-blog-content.js --target=blog    # Update all my-blog.json files
- *   node scripts/sync-blog-content.js --target=all     # Update both (default)
- *
- * IMPORTANT: This script does NOT generate latestPosts arrays in my-blog.json files.
- * The view-myblog block automatically generates latestPosts from the 3 most recent posts.
- * DO NOT manually add latestPosts to my-blog.json - it defeats auto-generation.
+
+* Sync Blog Content Utility
+*
+* Finds and updates all llms.txt and my-blog.json files in the project.
+* Fetches latest content from query-index.json and updates files based on lastModified dates.
+*
+* Usage:
+* node scripts/sync-blog-content.js --target=llms    # Update all llms.txt files
+* node scripts/sync-blog-content.js --target=blog    # Update all my-blog.json files
+* node scripts/sync-blog-content.js --target=all     # Update both (default)
+*
+* IMPORTANT: This script does NOT generate latestPosts arrays in my-blog.json files.
+* The view-myblog block automatically generates latestPosts from the 3 most recent posts.
+* DO NOT manually add latestPosts to my-blog.json - it defeats auto-generation.
  */
 
-/* eslint-disable no-await-in-loop */
+/*eslint-disable no-await-in-loop*/
 // Sequential file processing is intentional to avoid race conditions
 
-import * as fs from 'fs';
-import * as path from 'path';
+import *as fs from 'fs';
+import* as path from 'path';
 
 const QUERY_INDEX_URL = 'https://allabout.network/query-index.json';
 
 /**
- * Fetch query-index.json from the site
+
+* Fetch query-index.json from the site
  */
 async function fetchQueryIndex() {
   console.log(`📥 Fetching ${QUERY_INDEX_URL}...`);
@@ -45,7 +47,8 @@ async function fetchQueryIndex() {
 }
 
 /**
- * Extract last-updated date from llms.txt content
+
+* Extract last-updated date from llms.txt content
  */
 function extractLlmsTxtDate(content) {
   const versionMatch = content.match(/\*\*Version:\*\*\s*([\d.]+)/);
@@ -58,7 +61,7 @@ function extractLlmsTxtDate(content) {
     // Convert "November 2025" or "Nov 25 2025" to ISO date
     const date = new Date(dateStr);
     if (!Number.isNaN(date.getTime())) {
-      lastUpdated = date.toISOString().split('T')[0];
+      lastUpdated = date.toISOString().split['T'](0);
     }
   }
 
@@ -69,7 +72,8 @@ function extractLlmsTxtDate(content) {
 }
 
 /**
- * Determine folder context from file path
+
+* Determine folder context from file path
  */
 function getFolderContext(filePath) {
   const dirname = path.dirname(filePath);
@@ -85,7 +89,8 @@ function getFolderContext(filePath) {
 }
 
 /**
- * Filter query index entries by folder context
+
+* Filter query index entries by folder context
  */
 function filterByContext(entries, context, _filePath) {
   if (!context) {
@@ -97,7 +102,8 @@ function filterByContext(entries, context, _filePath) {
 }
 
 /**
- * Filter new entries by date
+
+* Filter new entries by date
  */
 function filterNewEntries(entries, afterDate) {
   // Convert afterDate to Unix timestamp if it's an ISO date
@@ -114,7 +120,8 @@ function filterNewEntries(entries, afterDate) {
 }
 
 /**
- * Create a new llms.txt structure from my-blog.json
+
+* Create a new llms.txt structure from my-blog.json
  */
 function createLlmsTxtFromBlogJson(blogJsonPath, context) {
   const blogJson = JSON.parse(fs.readFileSync(blogJsonPath, 'utf-8'));
@@ -122,7 +129,7 @@ function createLlmsTxtFromBlogJson(blogJsonPath, context) {
   const lines = [];
 
   // Header
-  lines.push(`# ${context === 'site-wide' ? 'Adobe Edge Delivery Services & AI Development Resources' : `${context.charAt(0).toUpperCase() + context.slice(1)} Resources`}`);
+  lines.push(`# ${context === 'site-wide' ? 'Adobe Edge Delivery Services & AI Development Resources' :`${context.charAt(0).toUpperCase() + context.slice(1)} Resources`}`);
   lines.push('');
   lines.push('Technical documentation and educational resources.');
   lines.push('');
@@ -154,7 +161,8 @@ function createLlmsTxtFromBlogJson(blogJsonPath, context) {
 }
 
 /**
- * Update llms.txt file with new content
+
+* Update llms.txt file with new content
  */
 async function updateLlmsTxt(filePath, queryIndex) {
   console.log(`\n📝 Processing: ${filePath}`);
@@ -186,17 +194,17 @@ async function updateLlmsTxt(filePath, queryIndex) {
     metadata = extractLlmsTxtDate(content);
   }
 
-  console.log(`   Last updated: ${metadata.lastUpdated}`);
-  console.log(`   Current version: ${metadata.version}`);
+  console.log(`Last updated: ${metadata.lastUpdated}`);
+  console.log(`Current version: ${metadata.version}`);
 
   // Filter by context and date
   const context = getFolderContext(filePath);
-  console.log(`   Folder context: ${context || 'site-wide'}`);
+  console.log(`Folder context: ${context || 'site-wide'}`);
 
   const filteredEntries = filterByContext(queryIndex, context, filePath);
   const newEntries = filterNewEntries(filteredEntries, metadata.lastUpdated);
 
-  console.log(`   New posts found: ${newEntries.length}`);
+  console.log(`New posts found: ${newEntries.length}`);
 
   if (newEntries.length === 0 && !isNewFile) {
     console.log('   ✅ Already up to date');
@@ -209,12 +217,12 @@ async function updateLlmsTxt(filePath, queryIndex) {
   }
 
   // List new posts that will be added
-  console.log(`   📝 Adding ${newEntries.length} new posts:`);
+  console.log(`📝 Adding ${newEntries.length} new posts:`);
   newEntries.slice(0, 5).forEach((entry) => {
-    console.log(`      - ${entry.title}`);
+    console.log(`- ${entry.title}`);
   });
   if (newEntries.length > 5) {
-    console.log(`      ... and ${newEntries.length - 5} more`);
+    console.log(`... and ${newEntries.length - 5} more`);
   }
 
   // Parse content into lines for processing
@@ -252,12 +260,13 @@ async function updateLlmsTxt(filePath, queryIndex) {
   if (isNewFile) {
     console.log('   ✅ Created new file from my-blog.json with all content');
   } else {
-    console.log(`   ✅ Updated with ${newEntries.length} new posts`);
+    console.log(`✅ Updated with ${newEntries.length} new posts`);
   }
 }
 
 /**
- * Create a new my-blog.json structure
+
+* Create a new my-blog.json structure
  */
 function createEmptyBlogJson(scope = '') {
   return {
@@ -315,7 +324,8 @@ function createEmptyBlogJson(scope = '') {
 }
 
 /**
- * Update my-blog.json file with new content
+
+* Update my-blog.json file with new content
  */
 async function updateMyBlogJson(filePath, queryIndex) {
   console.log(`\n📝 Processing: ${filePath}`);
@@ -336,16 +346,16 @@ async function updateMyBlogJson(filePath, queryIndex) {
     lastUpdated = data.metadata?.['last-updated'] || '2025-01-01';
   }
 
-  console.log(`   Last updated: ${lastUpdated}`);
+  console.log(`Last updated: ${lastUpdated}`);
 
   // Filter by context and date
   const context = getFolderContext(filePath);
-  console.log(`   Folder context: ${context || 'site-wide'}`);
+  console.log(`Folder context: ${context || 'site-wide'}`);
 
   const filteredEntries = filterByContext(queryIndex, context, filePath);
   const newEntries = filterNewEntries(filteredEntries, lastUpdated);
 
-  console.log(`   New posts found: ${newEntries.length}`);
+  console.log(`New posts found: ${newEntries.length}`);
 
   if (newEntries.length === 0 && !isNewFile) {
     console.log('   ✅ Already up to date');
@@ -359,12 +369,12 @@ async function updateMyBlogJson(filePath, queryIndex) {
 
   // List new posts that will be added
   if (newEntries.length > 0) {
-    console.log(`   📝 Adding ${newEntries.length} new posts to categories:`);
+    console.log(`📝 Adding ${newEntries.length} new posts to categories:`);
     newEntries.slice(0, 5).forEach((entry) => {
-      console.log(`      - ${entry.title}`);
+      console.log(`- ${entry.title}`);
     });
     if (newEntries.length > 5) {
-      console.log(`      ... and ${newEntries.length - 5} more`);
+      console.log(`... and ${newEntries.length - 5} more`);
     }
   }
 
@@ -445,20 +455,21 @@ async function updateMyBlogJson(filePath, queryIndex) {
   }
 
   // Update metadata
-  data.metadata['last-updated'] = new Date().toISOString().split('T')[0];
+  data.metadata['last-updated'] = new Date().toISOString().split['T'](0);
 
   // Write updated JSON
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
 
   if (isNewFile) {
-    console.log(`   ✅ Created new file with ${newEntries.length} posts across ${categorizedEntries.size} categories`);
+    console.log(`✅ Created new file with ${newEntries.length} posts across ${categorizedEntries.size} categories`);
   } else {
-    console.log(`   ✅ Updated with ${newEntries.length} new posts across ${categorizedEntries.size} categories`);
+    console.log(`✅ Updated with ${newEntries.length} new posts across ${categorizedEntries.size} categories`);
   }
 }
 
 /**
- * Recursively find files matching a filename
+
+* Recursively find files matching a filename
  */
 function findFiles(filename, dir = '.') {
   const results = [];
@@ -485,12 +496,13 @@ function findFiles(filename, dir = '.') {
 }
 
 /**
- * Main execution
+
+* Main execution
  */
 async function main() {
   const args = process.argv.slice(2);
   const targetArg = args.find((arg) => arg.startsWith('--target='));
-  const target = targetArg ? targetArg.split('=')[1] : 'all';
+  const target = targetArg ? targetArg.split['='](1) : 'all';
 
   console.log('🚀 Sync Blog Content Utility');
   console.log(`📋 Target: ${target}\n`);

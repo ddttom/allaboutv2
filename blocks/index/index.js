@@ -7,7 +7,7 @@ export default function decorate(block) {
   const indexHeader = document.createElement('div');
   indexHeader.className = 'index-header';
   indexHeader.innerHTML = `
-    <span>Index</span>
+<span>Index</span>
     <i class='arrow down'></i>
   `;
   // Create the index content container

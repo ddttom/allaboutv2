@@ -1,28 +1,29 @@
 /**
- * html2pptx - Convert HTML slide to pptxgenjs slide with positioned elements
- *
- * USAGE:
- *   const pptx = new pptxgen();
- *   pptx.layout = 'LAYOUT_16x9';  // Must match HTML body dimensions
- *
- *   const { slide, placeholders } = await html2pptx('slide.html', pptx);
- *   slide.addChart(pptx.charts.LINE, data, placeholders[0]);
- *
- *   await pptx.writeFile('output.pptx');
- *
- * FEATURES:
- *   - Converts HTML to PowerPoint with accurate positioning
- *   - Supports text, images, shapes, and bullet lists
- *   - Extracts placeholder elements (class="placeholder") with positions
- *   - Handles CSS gradients, borders, and margins
- *
- * VALIDATION:
- *   - Uses body width/height from HTML for viewport sizing
- *   - Throws error if HTML dimensions don't match presentation layout
- *   - Throws error if content overflows body (with overflow details)
- *
- * RETURNS:
- *   { slide, placeholders } where placeholders is an array of { id, x, y, w, h }
+
+* html2pptx - Convert HTML slide to pptxgenjs slide with positioned elements
+*
+* USAGE:
+* const pptx = new pptxgen();
+* pptx.layout = 'LAYOUT_16x9';  // Must match HTML body dimensions
+*
+* const { slide, placeholders } = await html2pptx('slide.html', pptx);
+* slide.addChart(pptx.charts.LINE, data, placeholders[0]);
+*
+* await pptx.writeFile('output.pptx');
+*
+* FEATURES:
+* * Converts HTML to PowerPoint with accurate positioning
+* * Supports text, images, shapes, and bullet lists
+* * Extracts placeholder elements (class="placeholder") with positions
+* * Handles CSS gradients, borders, and margins
+*
+* VALIDATION:
+* * Uses body width/height from HTML for viewport sizing
+* * Throws error if HTML dimensions don't match presentation layout
+* * Throws error if content overflows body (with overflow details)
+*
+* RETURNS:
+* { slide, placeholders } where placeholders is an array of { id, x, y, w, h }
  */
 
 const { chromium } = require('playwright');
@@ -51,8 +52,8 @@ async function getBodyDimensions(page) {
   const widthOverflowPx = Math.max(0, bodyDimensions.scrollWidth - bodyDimensions.width - 1);
   const heightOverflowPx = Math.max(0, bodyDimensions.scrollHeight - bodyDimensions.height - 1);
 
-  const widthOverflowPt = widthOverflowPx * PT_PER_PX;
-  const heightOverflowPt = heightOverflowPx * PT_PER_PX;
+  const widthOverflowPt = widthOverflowPx *PT_PER_PX;
+  const heightOverflowPt = heightOverflowPx* PT_PER_PX;
 
   if (widthOverflowPt > 0 || heightOverflowPt > 0) {
     const directions = [];

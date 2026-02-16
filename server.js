@@ -1,11 +1,11 @@
-/* eslint-disable no-console */
+/*eslint-disable no-console*/
 import { createServer } from 'http';
 import { readFile, access } from 'fs/promises';
 import { join, extname, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const__dirname = dirname(__filename);
 
 // this file is a debugging artefact and it should be treated as readonly
 
@@ -168,12 +168,12 @@ async function handleRequest(req, res) {
     // If both local and proxy fail, return 404
     res.writeHead(404, { 'Content-Type': 'text/html' });
     res.end(`
-      <!DOCTYPE html>
+<!DOCTYPE html>
       <html>
         <head><title>404 Not Found</title></head>
         <body>
           <h1>404 Not Found</h1>
-          <p>The requested resource <code>${url}</code> was not found locally 
+          <p>The requested resource <code>${url}</code> was not found locally
           or on the proxy server.</p>
           <p>Attempted proxy URL: <code>${PROXY_HOST}${url}</code></p>
         </body>

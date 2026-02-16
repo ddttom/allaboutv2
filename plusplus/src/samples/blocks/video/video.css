@@ -5,7 +5,7 @@
 }
 
 .video[data-embed-is-loaded="false"]:not(.placeholder) {
-  /* reserve an approximate space to avoid extensive layout shifts */
+  /*reserve an approximate space to avoid extensive layout shifts*/
   aspect-ratio: 16 / 9;
 }
 

@@ -8,7 +8,7 @@
         <polygon points="0 0, 10 3.5, 0 7" fill="#3498db"/>
       </marker>
     </defs>
-    
+
     <rect width="800" height="400" fill="url(#bgGradient)" rx="15" ry="15"/>
     
     <!-- Server rack representation -->

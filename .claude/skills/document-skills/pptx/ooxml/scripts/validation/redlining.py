@@ -7,7 +7,6 @@ import tempfile
 import zipfile
 from pathlib import Path
 
-
 class RedliningValidator:
     """Validator for tracked changes in Word documents."""
 
@@ -273,7 +272,6 @@ class RedliningValidator:
                 paragraphs.append(paragraph_text)
 
         return "\n".join(paragraphs)
-
 
 if __name__ == "__main__":
     raise RuntimeError("This module should not be run directly.")

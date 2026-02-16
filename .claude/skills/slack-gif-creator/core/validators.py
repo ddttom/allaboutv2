@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Validators - Check if GIFs meet Slack's requirements.
 
@@ -6,7 +6,6 @@ These validators help ensure your GIFs meet Slack's size and dimension constrain
 """
 
 from pathlib import Path
-
 
 def check_slack_size(gif_path: str | Path, is_emoji: bool = True) -> tuple[bool, dict]:
     """
@@ -54,7 +53,6 @@ def check_slack_size(gif_path: str | Path, is_emoji: bool = True) -> tuple[bool,
         print(f"  Try: fewer frames, fewer colors, or simpler design")
 
     return passes, info
-
 
 def validate_dimensions(width: int, height: int, is_emoji: bool = True) -> tuple[bool, dict]:
     """
@@ -117,7 +115,6 @@ def validate_dimensions(width: int, height: int, is_emoji: bool = True) -> tuple
             passes = False
 
     return passes, info
-
 
 def validate_gif(gif_path: str | Path, is_emoji: bool = True) -> tuple[bool, dict]:
     """
@@ -196,7 +193,6 @@ def validate_gif(gif_path: str | Path, is_emoji: bool = True) -> tuple[bool, dic
 
     return all_pass, results
 
-
 def get_optimization_suggestions(results: dict) -> list[str]:
     """
     Get suggestions for optimizing a GIF based on validation results.
@@ -236,8 +232,8 @@ def get_optimization_suggestions(results: dict) -> list[str]:
 
     return suggestions
 
-
 # Convenience function for quick checks
+
 def is_slack_ready(gif_path: str | Path, is_emoji: bool = True, verbose: bool = True) -> bool:
     """
     Quick check if GIF is ready for Slack.

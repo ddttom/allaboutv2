@@ -1,12 +1,13 @@
-#!/usr/bin/env node
+# !/usr/bin/env node
 
 /**
- * Search the Adobe AEM Block Collection for blocks matching a search term
- * This version uses GitHub API to get actual block folders
- *
- * Usage: node search-block-collection-github.js <search-term>
- *
- * Example: node search-block-collection-github.js accordion
+
+* Search the Adobe AEM Block Collection for blocks matching a search term
+* This version uses GitHub API to get actual block folders
+*
+* Usage: node search-block-collection-github.js <search-term>
+*
+* Example: node search-block-collection-github.js accordion
  */
 
 import https from 'https';
@@ -20,7 +21,8 @@ const SITE_BASE_URL = 'https://main--aem-block-collection--adobe.aem.live';
 const API_URL = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${BLOCKS_PATH}`;
 
 /**
- * Fetch JSON from a URL using HTTPS
+
+* Fetch JSON from a URL using HTTPS
  */
 function fetchUrl(url) {
   return new Promise((resolve, reject) => {
@@ -54,7 +56,8 @@ function fetchUrl(url) {
 }
 
 /**
- * Get all block folders from the GitHub repository
+
+* Get all block folders from the GitHub repository
  */
 async function getBlocks() {
   try {
@@ -75,7 +78,8 @@ async function getBlocks() {
 }
 
 /**
- * Determine if a block is "Default Content" (no block code) or a "Sample Block"
+
+* Determine if a block is "Default Content" (no block code) or a "Sample Block"
  */
 function isDefaultContent(blockName) {
   // Default Content items don't have block implementations
@@ -87,7 +91,8 @@ function isDefaultContent(blockName) {
 }
 
 /**
- * Search for blocks matching the search term
+
+* Search for blocks matching the search term
  */
 function searchBlocks(blocks, searchTerm) {
   const lowerSearchTerm = searchTerm.toLowerCase();
@@ -120,7 +125,8 @@ function searchBlocks(blocks, searchTerm) {
 }
 
 /**
- * Main function
+
+* Main function
  */
 async function main() {
   const args = process.argv.slice(2);

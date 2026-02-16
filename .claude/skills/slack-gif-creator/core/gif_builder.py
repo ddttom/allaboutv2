@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 GIF Builder - Core module for assembling frames into GIFs optimized for Slack.
 
@@ -11,7 +11,6 @@ from typing import Optional
 import imageio.v3 as imageio
 from PIL import Image
 import numpy as np
-
 
 class GIFBuilder:
     """Builder for creating optimized GIFs from frames."""

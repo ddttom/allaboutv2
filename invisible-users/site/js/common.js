@@ -1,11 +1,13 @@
 /**
- * The Invisible Users - Common JavaScript
- * Shared functionality across all tutorial pages
+
+* The Invisible Users - Common JavaScript
+* Shared functionality across all tutorial pages
  */
 
 /**
- * Smooth scroll to top functionality
- * Used by the floating "Back to Top" button
+
+* Smooth scroll to top functionality
+* Used by the floating "Back to Top" button
  */
 function scrollToTop() {
   window.scrollTo({
@@ -16,8 +18,9 @@ function scrollToTop() {
 }
 
 /**
- * Initialize floating navigation buttons
- * Sets up event listeners for scroll-to-top functionality
+
+* Initialize floating navigation buttons
+* Sets up event listeners for scroll-to-top functionality
  */
 function initializeFloatingButtons() {
   const topButton = document.querySelector('.floating-top-button');
@@ -30,8 +33,9 @@ function initializeFloatingButtons() {
 }
 
 /**
- * Set page load state
- * Marks the page as fully loaded for AI agents
+
+* Set page load state
+* Marks the page as fully loaded for AI agents
  */
 function setPageLoadState() {
   const main = document.querySelector('main[role="main"]');
@@ -41,8 +45,9 @@ function setPageLoadState() {
 }
 
 /**
- * Initialize all common functionality
- * Called when DOM is ready
+
+* Initialize all common functionality
+* Called when DOM is ready
  */
 function initialize() {
   setPageLoadState();

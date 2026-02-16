@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Flip Animation - 3D-style card flip and rotation effects.
 
@@ -15,7 +15,6 @@ from PIL import Image
 from core.gif_builder import GIFBuilder
 from core.frame_composer import create_blank_frame, draw_emoji_enhanced
 from core.easing import interpolate
-
 
 def create_flip_animation(
     object1_data: dict,
@@ -191,7 +190,6 @@ def create_flip_animation(
 
     return frames
 
-
 def create_quick_flip(
     emoji_front: str,
     emoji_back: str,
@@ -223,7 +221,6 @@ def create_quick_flip(
         bg_color=(255, 255, 255)
     )
 
-
 def create_nope_flip(
     num_frames: int = 25,
     frame_width: int = 480,
@@ -252,8 +249,8 @@ def create_nope_flip(
         bg_color=(255, 255, 255)
     )
 
-
 # Example usage
+
 if __name__ == '__main__':
     print("Creating flip animations...")
 

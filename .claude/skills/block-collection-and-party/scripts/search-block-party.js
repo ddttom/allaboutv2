@@ -1,16 +1,17 @@
-#!/usr/bin/env node
+# !/usr/bin/env node
 
 /**
- * Search the AEM Block Party index for blocks, plugins, tools, and integrations
- *
- * Note: Only searches approved entries from the Block Party index
- *
- * Usage: node search-block-party.js [--category <category>] <search-term> [additional-terms...]
- *
- * Examples:
- *   node search-block-party.js breadcrumb
- *   node search-block-party.js --category "Build Tooling" sass
- *   node search-block-party.js adobe target integration
+
+* Search the AEM Block Party index for blocks, plugins, tools, and integrations
+*
+* Note: Only searches approved entries from the Block Party index
+*
+* Usage: node search-block-party.js [--category <category>] <search-term> [additional-terms...]
+*
+* Examples:
+* node search-block-party.js breadcrumb
+* node search-block-party.js --category "Build Tooling" sass
+* node search-block-party.js adobe target integration
  */
 
 import https from 'https';
@@ -19,16 +20,17 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const__dirname = path.dirname(__filename);
 
 // Block Party constants
 const BLOCK_PARTY_INDEX_URL = 'https://www.aem.live/developer/block-party/block-party.json?sheet=curated-list-new';
 const CACHE_DIR = path.join(__dirname, '..', '.cache');
 const CACHE_FILE = path.join(CACHE_DIR, 'block-party-index.json');
-const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+const CACHE_TTL = 24 *60* 60 * 1000; // 24 hours in milliseconds
 
 /**
- * Fetch data from a URL using HTTPS
+
+* Fetch data from a URL using HTTPS
  */
 function fetchUrl(url) {
   return new Promise((resolve, reject) => {
@@ -61,7 +63,8 @@ function fetchUrl(url) {
 }
 
 /**
- * Check if cached index is still valid
+
+* Check if cached index is still valid
  */
 function isCacheValid() {
   if (!fs.existsSync(CACHE_FILE)) {
@@ -75,7 +78,8 @@ function isCacheValid() {
 }
 
 /**
- * Load index from cache
+
+* Load index from cache
  */
 function loadFromCache() {
   try {
@@ -87,7 +91,8 @@ function loadFromCache() {
 }
 
 /**
- * Save index to cache
+
+* Save index to cache
  */
 function saveToCache(data) {
   try {
@@ -102,7 +107,8 @@ function saveToCache(data) {
 }
 
 /**
- * Fetch the Block Party index (with caching)
+
+* Fetch the Block Party index (with caching)
  */
 async function getBlockPartyIndex() {
   // Try cache first
@@ -124,7 +130,8 @@ async function getBlockPartyIndex() {
 }
 
 /**
- * Get all unique categories from entries (case-insensitive, preserving first occurrence)
+
+* Get all unique categories from entries (case-insensitive, preserving first occurrence)
  */
 function getUniqueCategories(entries) {
   const categoryMap = new Map(); // lowercase -> original case
@@ -143,7 +150,8 @@ function getUniqueCategories(entries) {
 }
 
 /**
- * Validate category against available categories
+
+* Validate category against available categories
  */
 function validateCategory(category, availableCategories) {
   if (!category) {
@@ -167,7 +175,8 @@ function validateCategory(category, availableCategories) {
 }
 
 /**
- * Filter entries by category
+
+* Filter entries by category
  */
 function filterByCategory(entries, category) {
   if (!category) {
@@ -183,7 +192,8 @@ function filterByCategory(entries, category) {
 }
 
 /**
- * Search entries by search terms
+
+* Search entries by search terms
  */
 function searchEntries(entries, searchTerms) {
   if (searchTerms.length === 0) {
@@ -206,7 +216,8 @@ function searchEntries(entries, searchTerms) {
 }
 
 /**
- * Format results for output
+
+* Format results for output
  */
 function formatResults(entries) {
   return entries.map(entry => ({
@@ -220,7 +231,8 @@ function formatResults(entries) {
 }
 
 /**
- * Parse command line arguments
+
+* Parse command line arguments
  */
 function parseArgs(args) {
   const result = {
@@ -245,7 +257,8 @@ function parseArgs(args) {
 }
 
 /**
- * Main function
+
+* Main function
  */
 async function main() {
   const args = process.argv.slice(2);

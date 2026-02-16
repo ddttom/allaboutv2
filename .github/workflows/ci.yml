@@ -7,31 +7,56 @@ on:
     branches: [ main ]
 
 jobs:
-  # Linting disabled - run locally with: npm run lint
-  # lint:
-  #   name: Lint Code
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '20'
-  #         cache: 'npm'
-  #
-  #     - name: Install root dependencies
-  #       run: npm ci
-  #
-  #     - name: Install Cloudflare worker dependencies
-  #       working-directory: cloudflare/files
-  #       run: npm ci
-  #
-  #     - name: Lint JavaScript
-  #       run: npm run lint:js
-  #
-  #     - name: Lint CSS
-  #       run: npm run lint:css
+
+# Linting disabled - run locally with: npm run lint
+
+# lint
+
+# name: Lint Code
+
+# runs-on: ubuntu-latest
+
+# steps
+
+# - uses: actions/checkout@v4
+
+#
+
+# - name: Setup Node.js
+
+# uses: actions/setup-node@v4
+
+# with
+
+# node-version: '20'
+
+# cache: 'npm'
+
+#
+
+# - name: Install root dependencies
+
+# run: npm ci
+
+#
+
+# - name: Install Cloudflare worker dependencies
+
+# working-directory: cloudflare/files
+
+# run: npm ci
+
+#
+
+# - name: Lint JavaScript
+
+# run: npm run lint:js
+
+#
+
+# - name: Lint CSS
+
+# run: npm run lint:css
 
   test-cloudflare-worker:
     name: Test Cloudflare Worker

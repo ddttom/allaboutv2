@@ -208,7 +208,7 @@ For detailed step-by-step workflow, see `resources/testing-workflow.md`.
 
 ### Before Committing
 
-4. Run `npm test` - all tests pass
+1. Run `npm test` - all tests pass
 2. Run `npm run lint` - linting passes
 3. Write throwaway browser test in `test/tmp/`
 4. Create test content in `drafts/tmp/`
@@ -217,7 +217,7 @@ For detailed step-by-step workflow, see `resources/testing-workflow.md`.
 
 ### Before Opening PR
 
-10. Commit and push to feature branch (test/tmp/ won't be included)
+1. Commit and push to feature branch (test/tmp/ won't be included)
 2. Verify branch preview loads
 3. Run `gh checks`
 4. Create PR with test link
@@ -225,7 +225,7 @@ For detailed step-by-step workflow, see `resources/testing-workflow.md`.
 
 ### After PR Review
 
-15. Address feedback
+1. Address feedback
 2. Re-test
 3. Verify checks pass
 

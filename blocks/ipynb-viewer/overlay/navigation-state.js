@@ -1,6 +1,7 @@
 /**
- * Navigation State Manager
- * Manages view switching, history, and state preservation
+
+* Navigation State Manager
+* Manages view switching, history, and state preservation
  */
 
 export class NavigationState {

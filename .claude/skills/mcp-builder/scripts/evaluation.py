@@ -21,12 +21,14 @@ from connections import create_connection
 EVALUATION_PROMPT = """You are an AI assistant with access to tools.
 
 When given a task, you MUST:
+
 1. Use the available tools to complete the task
 2. Provide summary of each step in your approach, wrapped in <summary> tags
 3. Provide feedback on the tools provided, wrapped in <feedback> tags
 4. Provide your final response, wrapped in <response> tags
 
 Summary Requirements:
+
 - In your <summary> tags, you must explain:
   - The steps you took to complete the task
   - Which tools you used, in what order, and why
@@ -35,6 +37,7 @@ Summary Requirements:
   - A summary for how you arrived at the response
 
 Feedback Requirements:
+
 - In your <feedback> tags, provide constructive feedback on the tools:
   - Comment on tool names: Are they clear and descriptive?
   - Comment on input parameters: Are they well-documented? Are required vs optional parameters clear?
@@ -44,6 +47,7 @@ Feedback Requirements:
   - Be specific and actionable in your suggestions
 
 Response Requirements:
+
 - Your response should be concise and directly address what was asked
 - Always wrap your final response in <response> tags
 - If you cannot solve the task return <response>NOT_FOUND</response>
@@ -51,7 +55,6 @@ Response Requirements:
 - For IDs, provide just the ID
 - For names or text, provide the exact text requested
 - Your response should go last"""
-
 
 def parse_evaluation_file(file_path: Path) -> list[dict[str, Any]]:
     """Parse XML evaluation file with qa_pair elements."""
@@ -75,13 +78,11 @@ def parse_evaluation_file(file_path: Path) -> list[dict[str, Any]]:
         print(f"Error parsing evaluation file {file_path}: {e}")
         return []
 
-
 def extract_xml_content(text: str, tag: str) -> str | None:
     """Extract content from XML tags."""
     pattern = rf"<{tag}>(.*?)</{tag}>"
     matches = re.findall(pattern, text, re.DOTALL)
     return matches[-1].strip() if matches else None
-
 
 async def agent_loop(
     client: Anthropic,
@@ -150,7 +151,6 @@ async def agent_loop(
     )
     return response_text, tool_metrics
 
-
 async def evaluate_single_task(
     client: Anthropic,
     model: str,
@@ -183,8 +183,8 @@ async def evaluate_single_task(
         "feedback": feedback,
     }
 
-
 REPORT_HEADER = """
+
 # Evaluation Report
 
 ## Summary
@@ -198,6 +198,7 @@ REPORT_HEADER = """
 """
 
 TASK_TEMPLATE = """
+
 ### Task {task_num}
 
 **Question**: {question}
@@ -215,7 +216,6 @@ TASK_TEMPLATE = """
 
 ---
 """
-
 
 async def run_evaluation(
     eval_path: Path,
@@ -271,7 +271,6 @@ async def run_evaluation(
 
     return report
 
-
 def parse_headers(header_list: list[str]) -> dict[str, str]:
     """Parse header strings in format 'Key: Value' into a dictionary."""
     headers = {}
@@ -285,7 +284,6 @@ def parse_headers(header_list: list[str]) -> dict[str, str]:
         else:
             print(f"Warning: Ignoring malformed header: {header}")
     return headers
-
 
 def parse_env_vars(env_list: list[str]) -> dict[str, str]:
     """Parse environment variable strings in format 'KEY=VALUE' into a dictionary."""
@@ -301,20 +299,23 @@ def parse_env_vars(env_list: list[str]) -> dict[str, str]:
             print(f"Warning: Ignoring malformed environment variable: {env_var}")
     return env
 
-
 async def main():
     parser = argparse.ArgumentParser(
         description="Evaluate MCP servers using test questions",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Evaluate a local stdio MCP server
+
+# Evaluate a local stdio MCP server
+
   python evaluation.py -t stdio -c python -a my_server.py eval.xml
 
-  # Evaluate an SSE MCP server
+# Evaluate an SSE MCP server
+
   python evaluation.py -t sse -u https://example.com/mcp -H "Authorization: Bearer token" eval.xml
 
-  # Evaluate an HTTP MCP server with custom model
+# Evaluate an HTTP MCP server with custom model
+
   python evaluation.py -t http -u https://example.com/mcp -m claude-3-5-sonnet-20241022 eval.xml
         """,
     )
@@ -368,6 +369,5 @@ Examples:
         else:
             print("\n" + report)
 
-
-if __name__ == "__main__":
+if **name** == "**main**":
     asyncio.run(main())

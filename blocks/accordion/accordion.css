@@ -2,7 +2,7 @@
   border: 1px solid var(--dark-color);
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
+/*stylelint-disable-next-line no-descending-specificity*/
 .accordion details + details {
   margin-top: 16px;
 }

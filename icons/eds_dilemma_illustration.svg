@@ -6,7 +6,7 @@
       <stop offset="50%" style="stop-color:#2d2d2d;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
     </linearGradient>
-    
+
     <!-- Glow effect for unified environment -->
     <filter id="glow">
       <feGaussianBlur stdDeviation="3" result="coloredBlur"/>

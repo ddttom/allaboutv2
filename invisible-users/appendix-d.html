@@ -8,7 +8,6 @@
   <meta name="description" content="Practical guidance from The Invisible Users book on designing AI agent-friendly websites" />
   <title>Appendix D: AI-Friendly HTML Guide</title>
   
-
   <link rel="canonical" href="https://allabout.network/invisible-users/appendix-d.html">
   <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
   <meta name="ai-preferred-access" content="html">
@@ -1576,12 +1575,14 @@ Complete product catalogue and customer support:
 ## Training Guidelines
 
 Permitted uses:
+
 - Answering customer queries about products
 - Generating product comparisons
 - Creating purchase recommendations
 - Summarising product specifications
 
 Prohibited uses:
+
 - Training on customer data or order history
 - Extracting or storing customer PII
 - Automated bulk scraping
@@ -1591,12 +1592,14 @@ Prohibited uses:
 ## Error Handling
 
 When encountering errors:
+
 1. Cache error details, including timestamp and URL
 2. Wait a minimum of 1 hour before retrying
 3. Check system status at status.techstore.com
 4. Contact api-support@techstore.com for persistent issues
 
 Alternative access if page is unavailable:
+
 - Product Search: /api/search?q=[query]
 - Categories: /categories/
 - Sitemap: /sitemap.xml
@@ -1777,6 +1780,7 @@ User-agent: *
 Disallow: /admin/
 
 # AI agent guidance
+
 # See /llms.txt for interaction policies
 
 Sitemap: https://example.com/sitemap.xml</code></pre>
@@ -2237,10 +2241,12 @@ class="sourceCode javascript"><code class="sourceCode javascript" data-role="cod
 <pre class="text" data-role="code-block" data-language="text"><code>## Bot Protection
 
 We use rate limiting rather than captcha for verified AI agents.
+
 - Verified agents: 100 requests/hour
 - Unverified requests: May encounter captcha
 - To verify your agent: Contact api-access@example.com with your IP ranges
 - API access available for high-volume needs</code></pre>
+
 <h3 id="traditional-http-patterns">Traditional HTTP Patterns</h3>
 <p>Single-page applications create ambiguity. Traditional patterns
 provide clarity.</p>

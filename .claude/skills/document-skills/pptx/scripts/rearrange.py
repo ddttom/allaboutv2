@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Rearrange PowerPoint slides based on a sequence of indices.
 
@@ -17,7 +17,6 @@ from pathlib import Path
 
 import six
 from pptx import Presentation
-
 
 def main():
     parser = argparse.ArgumentParser(
@@ -70,7 +69,6 @@ Note: Slide indices are 0-based (first slide is 0, second is 1, etc.)
     except Exception as e:
         print(f"Error processing presentation: {e}")
         sys.exit(1)
-
 
 def duplicate_slide(pres, index):
     """Duplicate a slide in the presentation."""
@@ -126,13 +124,11 @@ def duplicate_slide(pres, index):
 
     return new_slide
 
-
 def delete_slide(pres, index):
     """Delete a slide from the presentation."""
     rId = pres.slides._sldIdLst[index].rId
     pres.part.drop_rel(rId)
     del pres.slides._sldIdLst[index]
-
 
 def reorder_slides(pres, slide_index, target_index):
     """Move a slide from one position to another."""
@@ -144,7 +140,6 @@ def reorder_slides(pres, slide_index, target_index):
 
     # Insert at target position
     slides.insert(target_index, slide_element)
-
 
 def rearrange_presentation(template_path, output_path, slide_sequence):
     """
@@ -225,7 +220,6 @@ def rearrange_presentation(template_path, output_path, slide_sequence):
     prs.save(output_path)
     print(f"\nSaved rearranged presentation to: {output_path}")
     print(f"Final presentation has {len(prs.slides)} slides")
-
 
 if __name__ == "__main__":
     main()

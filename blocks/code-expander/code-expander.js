@@ -1,20 +1,21 @@
 /**
- * Code Expander Block
- *
- * This block enhances all <pre><code> elements on the page with:
- * - Syntax highlighting based on detected language
- * - Copy to clipboard functionality
- * - Raw/formatted view toggle
- * - Download as file option
- * - Expand/collapse for long code blocks
- * - Keyboard navigation
- *
- * Usage: Simply add an empty code-expander block anywhere on the page:
- * | code-expander |
- * | ------------- |
- *
- * The block will automatically find and enhance all <pre><code> elements
- * while preserving the original content.
+
+* Code Expander Block
+*
+* This block enhances all <pre><code> elements on the page with:
+* * Syntax highlighting based on detected language
+* * Copy to clipboard functionality
+* * Raw/formatted view toggle
+* * Download as file option
+* * Expand/collapse for long code blocks
+* * Keyboard navigation
+*
+* Usage: Simply add an empty code-expander block anywhere on the page:
+* | code-expander |
+* | ------------- |
+*
+* The block will automatically find and enhance all <pre><code> elements
+* while preserving the original content.
  */
 
 // Configuration constants
@@ -59,14 +60,15 @@ export default async function decorate(block) {
   }
 
   /**
-   * Detects the programming language of the provided code
-   * Uses a series of heuristics to determine the most likely language
-   * @param {string} code - The code to analyze
-   * @returns {string} - The detected language
+
+* Detects the programming language of the provided code
+* Uses a series of heuristics to determine the most likely language
+* @param {string} code - The code to analyze
+* @returns {string} - The detected language
    */
   function detectLanguage(code) {
     // First priority: Check for shebang line (#!/bin/bash, #!/usr/bin/env bash, etc.)
-    const firstLine = code.trim().split('\n')[0];
+    const firstLine = code.trim().split['\n'](0);
     if (firstLine.startsWith('#!')) {
       // Check for common shell interpreters
       if (firstLine.includes('/bin/bash')
@@ -160,10 +162,11 @@ export default async function decorate(block) {
   }
 
   /**
-   * Applies syntax highlighting to code based on the detected language
-   * @param {string} code - The code to highlight
-   * @param {string} language - The detected programming language
-   * @returns {string} - HTML with syntax highlighting applied
+
+* Applies syntax highlighting to code based on the detected language
+* @param {string} code - The code to highlight
+* @param {string} language - The detected programming language
+* @returns {string} - HTML with syntax highlighting applied
    */
   function highlightSyntax(code, language) {
     const encodeHtmlEntities = (text) => text
@@ -245,8 +248,9 @@ export default async function decorate(block) {
   }
 
   /**
-   * Creates a modal dialog for entering a custom filename
-   * @returns {Object} - The modal elements
+
+* Creates a modal dialog for entering a custom filename
+* @returns {Object} - The modal elements
    */
   function createFilenamePrompt() {
     const modal = document.createElement('div');
@@ -289,8 +293,9 @@ export default async function decorate(block) {
   }
 
   /**
-   * Creates an info tooltip with descriptions of each button
-   * @returns {Object} - The tooltip elements
+
+* Creates an info tooltip with descriptions of each button
+* @returns {Object} - The tooltip elements
    */
   function createInfoTooltip() {
     const tooltip = document.createElement('div');
@@ -327,10 +332,11 @@ export default async function decorate(block) {
   }
 
   /**
-   * Downloads code as a file with the specified filename
-   * @param {string} code - The code to download
-   * @param {string} language - The language of the code
-   * @param {string} customFilename - Optional custom filename
+
+* Downloads code as a file with the specified filename
+* @param {string} code - The code to download
+* @param {string} language - The language of the code
+* @param {string} customFilename - Optional custom filename
    */
   function downloadCode(code, language, customFilename = null) {
     // Determine file extension based on language
@@ -384,9 +390,10 @@ export default async function decorate(block) {
   }
 
   /**
-   * Shows the tooltip at the specified position
-   * @param {HTMLElement} tooltip - The tooltip element
-   * @param {HTMLElement} button - The button that triggered the tooltip
+
+* Shows the tooltip at the specified position
+* @param {HTMLElement} tooltip - The tooltip element
+* @param {HTMLElement} button - The button that triggered the tooltip
    */
   function showTooltip(tooltip, button) {
     // Add tooltip to document body if not already added
@@ -412,8 +419,9 @@ export default async function decorate(block) {
   }
 
   /**
-   * Hides the tooltip
-   * @param {HTMLElement} tooltip - The tooltip element
+
+* Hides the tooltip
+* @param {HTMLElement} tooltip - The tooltip element
    */
   function hideTooltip(tooltip) {
     tooltip.setAttribute('aria-hidden', 'true');
@@ -421,10 +429,11 @@ export default async function decorate(block) {
   }
 
   /**
-   * Checks if an element has overflow in the specified direction
-   * @param {HTMLElement} element - The element to check
-   * @param {string} direction - The direction to check ('horizontal' or 'vertical')
-   * @returns {boolean} - Whether the element has overflow
+
+* Checks if an element has overflow in the specified direction
+* @param {HTMLElement} element - The element to check
+* @param {string} direction - The direction to check ('horizontal' or 'vertical')
+* @returns {boolean} - Whether the element has overflow
    */
   function hasOverflow(element, direction) {
     if (direction === 'horizontal') {
@@ -436,9 +445,10 @@ export default async function decorate(block) {
   }
 
   /**
-   * Sets up keyboard navigation for scrolling in code blocks
-   * @param {HTMLElement} preElement - The pre element containing the code
-   * @param {HTMLElement} rawView - The raw view element
+
+* Sets up keyboard navigation for scrolling in code blocks
+* @param {HTMLElement} preElement - The pre element containing the code
+* @param {HTMLElement} rawView - The raw view element
    */
   function setupKeyboardNavigation(preElement, rawView) {
     // Add tabindex to make the elements focusable
@@ -481,11 +491,12 @@ export default async function decorate(block) {
   }
 
   /**
-   * Creates a code expander wrapper for a code element
-   * @param {HTMLElement} codeElement - The code element to process
-   * @param {number} index - The index of the code element
-   * @param {boolean} forceTextMode - Whether to force the language to be "text"
-   * @returns {HTMLElement} - The created wrapper element
+
+* Creates a code expander wrapper for a code element
+* @param {HTMLElement} codeElement - The code element to process
+* @param {number} index - The index of the code element
+* @param {boolean} forceTextMode - Whether to force the language to be "text"
+* @returns {HTMLElement} - The created wrapper element
    */
   function createCodeExpanderWrapper(codeElement, index, forceTextMode) {
     const code = codeElement.textContent;

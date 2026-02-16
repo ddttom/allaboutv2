@@ -1,5 +1,5 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-use-before-define */
+/*eslint-disable no-unused-vars */
+/* eslint-disable no-use-before-define*/
 export default function decorate(block) {
   const headers = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
   const indexBlock = document.querySelector('.index');
@@ -7,7 +7,7 @@ export default function decorate(block) {
   const indexHeader = document.createElement('div');
   indexHeader.className = 'index-header';
   indexHeader.innerHTML = `
-    <span>Index</span>
+<span>Index</span>
     <i class='arrow down'></i>
   `;
   // Create the index content container

@@ -13,7 +13,7 @@
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
     }
-    
+
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -64,7 +64,7 @@
 <body>
   <div class="container">
     <h1>🎴 Shoelace Card - Self-Contained Component Test</h1>
-    
+
     <div class="test-section">
       <h2>Default Configuration</h2>
       <p>Testing with default query path: /slides/query-index.json</p>
@@ -136,7 +136,7 @@
     // Auto-decorate all shoelace-card blocks
     document.addEventListener('DOMContentLoaded', () => {
       const blocks = document.querySelectorAll('.shoelace-card.block');
-      
+
       blocks.forEach(async (block, index) => {
         try {
           console.log(`Decorating shoelace-card block ${index + 1}`);
@@ -156,7 +156,7 @@
         const modal = document.createElement('div');
         modal.className = 'shoelace-card-modal';
         modal.style.backgroundImage = 'url(https://images.unsplash.com/photo-1559209172-0ff8f6d49ff7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80)';
-        
+
         const overlay = document.createElement('div');
         overlay.className = 'shoelace-card-modal-overlay';
         overlay.innerHTML = `
@@ -169,19 +169,19 @@
             </div>
           </div>
         `;
-        
+
         modal.appendChild(overlay);
         document.body.appendChild(modal);
-        
+
         // Add close functionality
         overlay.querySelector('.shoelace-card-modal-close').addEventListener('click', () => {
           modal.remove();
         });
-        
+
         modal.addEventListener('click', (e) => {
           if (e.target === modal) modal.remove();
         });
-        
+
         document.addEventListener('keydown', function closeOnEsc(e) {
           if (e.key === 'Escape') {
             modal.remove();
@@ -189,7 +189,7 @@
           }
         });
       },
-      
+
       checkShoelaceLoaded: () => {
         console.log('Shoelace components loaded:', {
           'sl-card': !!customElements.get('sl-card'),

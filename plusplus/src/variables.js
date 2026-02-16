@@ -1,5 +1,5 @@
-/* eslint-disable max-len, no-restricted-syntax, no-shadow */
-/* eslint-disable no-console */
+/*eslint-disable max-len, no-restricted-syntax, no-shadow */
+/* eslint-disable no-console*/
 export async function readVariables(configUrl) {
   try {
     const response = await fetch(configUrl);
@@ -59,7 +59,7 @@ export function convertToISODate(input) {
   }
 
   // Custom parsing for more specific formats
-  const regex = /^(\d{1,2})?\s*([a-zA-Z]+)?\s*(\d{1,2})[,\s]?\s*(\d{4})(?:\s*([0-9:]+\s*[aApP][mM])?)?\s*$/i;
+  const regex = /^(\d{1,2})?\s*([a-zA-Z]+)?\s*[\d{1,2}](,\s)?\s*(\d{4})(?:\s*([0-9:]+\s*[aApP][mM])?)?\s*$/i;
   const match = regex.exec(input);
 
   if (match) {

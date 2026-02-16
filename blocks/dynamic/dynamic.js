@@ -1,11 +1,11 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 // External dependencies from sibling repository
-/* eslint-disable import/no-unresolved */
+/*eslint-disable import/no-unresolved */
 import {
   a, div, li, p, h3, span, ul,
 } from '../../../../../../../plusplus/block-party/dom-helpers.js';
 import ffetch from '../../../../../../../plusplus/block-party/ffetch.js';
-/* eslint-enable import/no-unresolved */
+/* eslint-enable import/no-unresolved*/
 
 export default async function decorate(block) {
 // Use the block parameter directly

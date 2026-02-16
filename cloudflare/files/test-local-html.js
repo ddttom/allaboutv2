@@ -1,10 +1,11 @@
 /**
- * Local HTML Processing Test
- *
- * Reads the actual test.html file and processes it through the worker's
- * string handling functions to validate HTML processing.
- *
- * Run with: node test-local-html.js
+
+* Local HTML Processing Test
+*
+* Reads the actual test.html file and processes it through the worker's
+* string handling functions to validate HTML processing.
+*
+* Run with: node test-local-html.js
  */
 
 import { readFileSync } from 'fs';
@@ -21,7 +22,7 @@ import {
 
 // Get current directory for ES modules
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const__dirname = dirname(__filename);
 
 // ANSI color codes
 const GREEN = '\x1b[32m';
@@ -34,7 +35,7 @@ function testResult(name, passed, message) {
   const icon = passed ? '✓' : '✗';
   const color = passed ? GREEN : RED;
   // eslint-disable-next-line no-console
-  console.log(`${color}${icon} ${name}${NC}${message ? `: ${message}` : ''}`);
+  console.log(`${color}${icon} ${name}${NC}${message ?`: ${message}`: ''}`);
   return passed;
 }
 

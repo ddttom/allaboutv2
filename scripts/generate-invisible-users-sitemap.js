@@ -27,9 +27,10 @@ const DEFAULT_RULES = { priority: 0.7, changefreq: 'yearly' };
 const APPENDIX_RULES = { priority: 0.8, changefreq: 'monthly' };
 
 /**
- * Get file metadata (priority and changefreq) based on filename
- * @param {string} filename - The name of the file
- * @returns {Object} Object with priority and changefreq
+
+* Get file metadata (priority and changefreq) based on filename
+* @param {string} filename - The name of the file
+* @returns {Object} Object with priority and changefreq
  */
 function getFileMetadata(filename) {
   // Check for exact match in RULES
@@ -48,26 +49,28 @@ function getFileMetadata(filename) {
 }
 
 /**
- * Get last modified date from file system
- * @param {string} filepath - Full path to the file
- * @returns {string} ISO date string (YYYY-MM-DD)
+
+* Get last modified date from file system
+* @param {string} filepath - Full path to the file
+* @returns {string} ISO date string (YYYY-MM-DD)
  */
 function getLastModDate(filepath) {
   try {
     const stats = fs.statSync(filepath);
     const date = new Date(stats.mtime);
-    return date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    return date.toISOString().split['T'](0); // Format as YYYY-MM-DD
   } catch (error) {
     // eslint-disable-next-line no-console
     console.warn(`Warning: Could not get modification date for ${filepath}, using current date`);
-    return new Date().toISOString().split('T')[0];
+    return new Date().toISOString().split['T'](0);
   }
 }
 
 /**
- * Generate XML sitemap from entries array
- * @param {Array} entries - Array of entry objects with url, lastmod, changefreq, priority
- * @returns {string} Complete XML sitemap string
+
+* Generate XML sitemap from entries array
+* @param {Array} entries - Array of entry objects with url, lastmod, changefreq, priority
+* @returns {string} Complete XML sitemap string
  */
 function generateSitemapXML(entries) {
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
@@ -75,10 +78,10 @@ function generateSitemapXML(entries) {
 
   entries.forEach((entry) => {
     xml += '  <url>\n';
-    xml += `    <loc>${entry.url}</loc>\n`;
-    xml += `    <lastmod>${entry.lastmod}</lastmod>\n`;
-    xml += `    <changefreq>${entry.changefreq}</changefreq>\n`;
-    xml += `    <priority>${entry.priority.toFixed(1)}</priority>\n`;
+    xml += `<loc>${entry.url}</loc>\n`;
+    xml += `<lastmod>${entry.lastmod}</lastmod>\n`;
+    xml += `<changefreq>${entry.changefreq}</changefreq>\n`;
+    xml += `<priority>${entry.priority.toFixed(1)}</priority>\n`;
     xml += '  </url>\n';
   });
 
@@ -87,8 +90,9 @@ function generateSitemapXML(entries) {
 }
 
 /**
- * Scan directory for HTML and PDF files
- * @returns {Array} Array of filenames (not full paths)
+
+* Scan directory for HTML and PDF files
+* @returns {Array} Array of filenames (not full paths)
  */
 function scanDirectory() {
   try {
@@ -118,7 +122,8 @@ function scanDirectory() {
 }
 
 /**
- * Main function to generate sitemap
+
+* Main function to generate sitemap
  */
 function main() {
   // eslint-disable-next-line no-console
@@ -174,7 +179,7 @@ function main() {
     // eslint-disable-next-line no-console
     console.log(`\n✅ Sitemap generated successfully: ${CONFIG.OUTPUT_FILE}`);
     // eslint-disable-next-line no-console
-    console.log(`   ${entries.length} URLs included`);
+    console.log(`${entries.length} URLs included`);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('\n❌ Error writing sitemap file:', error.message);

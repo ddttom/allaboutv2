@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Shake Animation Template - Creates shaking/vibrating motion.
 
@@ -14,7 +14,6 @@ sys.path.append(str(Path(__file__).parent.parent))
 from core.gif_builder import GIFBuilder
 from core.frame_composer import create_blank_frame, draw_circle, draw_emoji, draw_text
 from core.easing import ease_out_quad
-
 
 def create_shake_animation(
     object_type: str = 'emoji',
@@ -108,8 +107,8 @@ def create_shake_animation(
 
     return frames
 
-
 # Example usage
+
 if __name__ == '__main__':
     print("Creating shake GIF...")
 

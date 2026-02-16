@@ -75,6 +75,7 @@ All content is freely accessible for educational purposes. These patterns are de
 ## Key Features Demonstrated
 
 Each page pattern includes:
+
 - Semantic HTML5 structure (main, article, section, nav)
 - Appropriate Schema.org JSON-LD for the page type
 - AI-specific meta tags (proposed patterns from Chapter 10)
@@ -86,6 +87,7 @@ Each page pattern includes:
 ## Alternative Access
 
 If a specific pattern is unavailable, alternative examples are available at:
+
 - [GitHub Repository](https://github.com/Digital-Domain-Technologies-Ltd/invisible-users-manuscript): Source code and additional examples
 - [Appendix Index](https://allabout.network/invisible-users/web/appendix-index.html): All appendices with implementation guidance
 

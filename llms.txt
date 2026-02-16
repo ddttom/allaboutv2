@@ -13,7 +13,6 @@
 - Pioneer in LLM context delivery and Model Context Protocol (MCP) integration
 - Known in the industry as "The AEM Guy"
 
-
 **Authors:** Tom Cranstoun, Cate Nisbet
 **LinkedIn:** [https://www.linkedin.com/in/tom-cranstoun/](https://www.linkedin.com/in/tom-cranstoun/)
 
@@ -29,7 +28,6 @@
 - Commercial Use: Requires written permission
 - Training Usage: Permitted for public documentation only
 - Attribution Format: "Source: Digital Domain Technologies (allabout.network)"
-
 
 **Digital Domain Technologies** is a specialized consultancy focused on digital transformation through modern web standards. We help organizations migrate from legacy CMS platforms to high-performance, AI-ready architectures using Adobe EDS and vanilla JavaScript.
 

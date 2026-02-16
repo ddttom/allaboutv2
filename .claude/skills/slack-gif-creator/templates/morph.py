@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Morph Animation - Transform between different emojis or shapes.
 
@@ -15,7 +15,6 @@ import numpy as np
 from core.gif_builder import GIFBuilder
 from core.frame_composer import create_blank_frame, draw_emoji_enhanced, draw_circle
 from core.easing import interpolate
-
 
 def create_morph_animation(
     object1_data: dict,
@@ -196,7 +195,6 @@ def create_morph_animation(
 
     return frames
 
-
 def create_reaction_morph(
     emoji_start: str,
     emoji_end: str,
@@ -227,7 +225,6 @@ def create_reaction_morph(
         frame_height=frame_size,
         bg_color=(255, 255, 255)
     )
-
 
 def create_shape_morph(
     shapes: list[dict],
@@ -281,8 +278,8 @@ def create_shape_morph(
 
     return frames
 
-
 # Example usage
+
 if __name__ == '__main__':
     print("Creating morph animations...")
 

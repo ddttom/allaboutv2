@@ -14,28 +14,31 @@ function getTextNodes(root) {
 }
 
 /**
- * Sets the current expression regex
- * @param newRegex
+
+* Sets the current expression regex
+* @param newRegex
  */
 export function setExpressionRegex(newRegex) {
   regex = newRegex;
 }
 
 /**
- * Creates an expression
- * The renderer may return a valid HTMLElement, a string or undefined.
- * In the latter case, nothing will be rendered.
- * @param name The name of the expression
- * @param renderer The renderer function
+
+* Creates an expression
+* The renderer may return a valid HTMLElement, a string or undefined.
+* In the latter case, nothing will be rendered.
+* @param name The name of the expression
+* @param renderer The renderer function
  */
 export function createExpression(name, renderer) {
   expressions.set(name.toLowerCase(), renderer);
 }
 
 /**
- * Renders expressions
- * @param root The root element to search for expressions
- * @param context The data to pass to the renderer
+
+* Renders expressions
+* @param root The root element to search for expressions
+* @param context The data to pass to the renderer
  */
 export function renderExpressions(root = document.body, context = undefined) {
   getTextNodes(root).forEach((textNode) => {

@@ -15,7 +15,7 @@
   <g id="react-section">
     <!-- React Logo Area -->
     <rect x="50" y="80" width="500" height="280" rx="10" fill="#282c34" stroke="#61dafb" stroke-width="3"/>
-    
+
     <!-- React Logo -->
     <g transform="translate(300, 180)">
       <circle cx="0" cy="0" r="20" fill="none" stroke="#61dafb" stroke-width="3"/>
@@ -41,7 +41,7 @@
   <!-- Edge Delivery Services Section -->
   <g id="eds-section">
     <rect x="650" y="80" width="500" height="280" rx="10" fill="#ff0000" fill-opacity="0.1" stroke="#ff0000" stroke-width="3"/>
-    
+
     <!-- Adobe Logo representation -->
     <path d="M 750 220 L 800 120 L 800 220 Z" fill="#ff0000"/>
     <path d="M 850 220 L 850 120 L 800 120 Z" fill="#ff0000"/>
@@ -76,7 +76,7 @@
   <g id="features">
     <circle cx="150" cy="420" r="25" fill="#4CAF50"/>
     <text x="150" y="426" text-anchor="middle" font-size="16" fill="white" font-weight="bold">JSX</text>
-    
+
     <circle cx="270" cy="420" r="25" fill="#2196F3"/>
     <text x="270" y="426" text-anchor="middle" font-size="14" fill="white" font-weight="bold">Hooks</text>
     
@@ -110,7 +110,7 @@
   <!-- Deployment Options -->
   <g id="deployment">
     <text x="600" y="600" text-anchor="middle" font-size="20" font-weight="bold" fill="#333">Deployment Options</text>
-    
+
     <!-- Standalone Page -->
     <rect x="150" y="620" width="350" height="150" rx="10" fill="#e6f3ff" stroke="#1e90ff" stroke-width="2"/>
     <text x="325" y="650" text-anchor="middle" font-size="16" font-weight="bold" fill="#1e90ff">Standalone Page</text>

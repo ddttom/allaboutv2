@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Explode Animation - Break objects into pieces that fly outward.
 
@@ -18,7 +18,6 @@ from core.gif_builder import GIFBuilder
 from core.frame_composer import create_blank_frame, draw_emoji_enhanced
 from core.visual_effects import ParticleSystem
 from core.easing import interpolate
-
 
 def create_explode_animation(
     object_type: str = 'emoji',
@@ -236,7 +235,6 @@ def create_explode_animation(
 
     return frames
 
-
 def create_particle_burst(
     num_frames: int = 25,
     particle_count: int = 30,
@@ -292,8 +290,8 @@ def create_particle_burst(
 
     return frames
 
-
 # Example usage
+
 if __name__ == '__main__':
     print("Creating explode animations...")
 

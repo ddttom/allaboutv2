@@ -7,7 +7,6 @@ from pathlib import Path
 
 import lxml.etree
 
-
 class BaseSchemaValidator:
     """Base validator with common validation logic for document files."""
 
@@ -945,7 +944,6 @@ class BaseSchemaValidator:
             elem.tail = process_text_content(elem.tail, "tail content")
 
         return lxml.etree.ElementTree(xml_copy), warnings
-
 
 if __name__ == "__main__":
     raise RuntimeError("This module should not be run directly.")

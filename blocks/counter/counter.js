@@ -1,6 +1,7 @@
 /*
- * Counter Block
- * A simple counter component using web components
+
+* Counter Block
+* A simple counter component using web components
  */
 
 // Configuration object for the counter block
@@ -44,7 +45,7 @@ class CounterElement extends HTMLElement {
           --counter-display-bg: var(--color-background, #f8f9fa);
           --counter-display-color: var(--color-text, #212529);
         }
-        
+
         .counter-wrapper {
           display: flex;
           align-items: center;
@@ -117,8 +118,9 @@ class CounterElement extends HTMLElement {
 customElements.define('counter-element', CounterElement);
 
 /**
- * Decorates the counter block
- * @param {HTMLElement} block - The block element
+
+* Decorates the counter block
+* @param {HTMLElement} block - The block element
  */
 export default function decorate(block) {
   try {

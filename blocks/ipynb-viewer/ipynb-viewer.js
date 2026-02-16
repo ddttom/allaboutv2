@@ -1,9 +1,10 @@
 /**
- * IPynb Viewer Block
- * Displays Jupyter notebook (.ipynb) files with interactive JavaScript execution
+
+* IPynb Viewer Block
+* Displays Jupyter notebook (.ipynb) files with interactive JavaScript execution
  */
 
-/* eslint-disable no-use-before-define */
+/*eslint-disable no-use-before-define*/
 // Note: This file uses function hoisting patterns where functions call each other
 // before their definitions. This is valid JavaScript and the functions are properly
 // hoisted. The complex nested structure makes reordering impractical.
@@ -148,9 +149,10 @@ const DEFAULT_CONFIG = {
 const SVG_INLINE_CACHE = new Map();
 
 /**
- * Generate a URL-friendly slug from text
- * @param {string} text - Text to convert to slug
- * @returns {string} URL-friendly slug
+
+* Generate a URL-friendly slug from text
+* @param {string} text - Text to convert to slug
+* @returns {string} URL-friendly slug
  */
 function generateSlug(text) {
   return text
@@ -163,12 +165,13 @@ function generateSlug(text) {
 }
 
 /**
- * Parse markdown text to HTML (enhanced implementation)
- * @param {string} markdown - Markdown text
- * @param {string} [repoUrl] - Optional repository URL for converting .md links
- * @param {string} [branch='main'] - GitHub branch to use for .md links
- * @param {string} [currentFilePath] - Optional current file path for resolving relative links
- * @returns {string} HTML string
+
+* Parse markdown text to HTML (enhanced implementation)
+* @param {string} markdown - Markdown text
+* @param {string} [repoUrl] - Optional repository URL for converting .md links
+* @param {string} [branch='main'] - GitHub branch to use for .md links
+* @param {string} [currentFilePath] - Optional current file path for resolving relative links
+* @returns {string} HTML string
  */
 function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePath = null) {
   let html = markdown;
@@ -207,7 +210,7 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
   // Extract inline code and protect it with placeholders
   const inlineCodePlaceholders = [];
   html = html.replace(/`([^`]+)`/g, (match, code) => {
-    const placeholder = `__INLINECODE_${inlineCodePlaceholders.length}__`;
+    const placeholder =`__INLINECODE_${inlineCodePlaceholders.length}__`;
     inlineCodePlaceholders.push(code);
     return placeholder;
   });
@@ -238,7 +241,7 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
   // Helper function to create a table row (defined outside loop to avoid closure issues)
   const createTableRow = (tableCells, isFirstRow) => {
     const tag = isFirstRow ? 'th' : 'td';
-    return `<tr>${tableCells.map((cell) => `<${tag}>${cell.trim()}</${tag}>`).join('')}</tr>`;
+    return `<tr>${tableCells.map((cell) =>`<${tag}>${cell.trim()}</${tag}>`).join('')}</tr>`;
   };
 
   lines.forEach((line) => {
@@ -281,10 +284,10 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
 
   // Headers (process in order from most specific to least)
   // Add IDs to h2 headers for navigation
-  html = html.replace(/^###### (.*$)/gim, '<h6>$1</h6>');
-  html = html.replace(/^##### (.*$)/gim, '<h5>$1</h5>');
-  html = html.replace(/^#### (.*$)/gim, '<h4>$1</h4>');
-  html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+  html = html.replace(/^###### (._$)/gim, '<h6>$1</h6>');
+  html = html.replace(/^##### (._$)/gim, '<h5>$1</h5>');
+  html = html.replace(/^#### (._$)/gim, '<h4>$1</h4>');
+  html = html.replace(/^### (._$)/gim, '<h3>$1</h3>');
   html = html.replace(/^## (.*$)/gim, (match, text) => {
     // Generate ID from text (lowercase, replace spaces with hyphens, remove special chars)
     const id = text
@@ -300,14 +303,14 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
   html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
 
   // Horizontal rules (must be before bold/italic to avoid conflicts)
-  // Matches: ---, ***, or ___ (3 or more, with optional spaces)
-  html = html.replace(/^(?:[-*_]\s*){3,}$/gim, '<hr>');
+  // Matches: ---, *_*, or ___ (3 or more, with optional spaces)
+  html = html.replace(/^(?:[-*_]\s_){3,}$/gim, '<hr>');
 
   // Images - process BEFORE links since images use ![alt](url) syntax
-  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_match, alt, url) => {
-    // Auto-convert PNG illustrations to SVG (pattern: illustrations/*.png → illustrations/*.svg)
+  html = html.replace(/!\[([^\]]_)\]\(([^)]+)\)/g, (_match, alt, url) => {
+    // Auto-convert PNG illustrations to SVG (pattern: illustrations/_.png → illustrations/_.svg)
     let processedUrl = url;
-    if (url.match(/illustrations\/.*\.png$/i)) {
+    if (url.match(/illustrations\/._\.png$/i)) {
       processedUrl = url.replace(/\.png$/i, '.svg');
     }
 
@@ -349,7 +352,7 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
   // Links - convert .md files to repo URLs if repo is available
   // Process AFTER images (images also use bracket syntax but with ! prefix)
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
-    // Auto-convert PNG illustrations to SVG (pattern: illustrations/*.png → illustrations/*.svg)
+    // Auto-convert PNG illustrations to SVG (pattern: illustrations/_.png → illustrations/_.svg)
     let processedUrl = url;
     if (url.match(/illustrations\/.*\.png$/i)) {
       processedUrl = url.replace(/\.png$/i, '.svg');
@@ -424,7 +427,7 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
 
   linesWithLists.forEach((line) => {
     // Match list items with indentation
-    const ulMatch = line.match(/^(\s*)[-*] (.+)$/);
+    const ulMatch = line.match(/^[\s*](-*) (.+)$/);
     const olMatch = line.match(/^(\s*)\d+\. (.+)$/);
 
     if (ulMatch || olMatch) {
@@ -586,10 +589,11 @@ function parseMarkdown(markdown, repoUrl = null, branch = 'main', currentFilePat
 }
 
 /**
- * Display splash screen image that auto-dismisses after duration
- * @param {string} imageUrl - URL of splash screen image
- * @param {number} minDuration - Display duration in milliseconds (default 3000, should match config.defaultSplashDuration)
- * @returns {Promise<void>} Promise that resolves after splash fades out
+
+* Display splash screen image that auto-dismisses after duration
+* @param {string} imageUrl - URL of splash screen image
+* @param {number} minDuration - Display duration in milliseconds (default 3000, should match config.defaultSplashDuration)
+* @returns {Promise<void>} Promise that resolves after splash fades out
  */
 function showSplashScreen(imageUrl, minDuration = 3000) {
 
@@ -733,11 +737,12 @@ function showSplashScreen(imageUrl, minDuration = 3000) {
 }
 
 /**
- * Create help button click handler with two-tier fallback strategy
- * @param {string} repoUrl - Notebook's repository URL
- * @param {string} branch - GitHub branch from metadata
- * @param {Object} overlayContext - Context object containing createGitHubMarkdownOverlay parameters
- * @returns {Function} Async click handler for help button
+
+* Create help button click handler with two-tier fallback strategy
+* @param {string} repoUrl - Notebook's repository URL
+* @param {string} branch - GitHub branch from metadata
+* @param {Object} overlayContext - Context object containing createGitHubMarkdownOverlay parameters
+* @returns {Function} Async click handler for help button
  */
 function createHelpButtonHandler(repoUrl, branch, overlayContext, config) {
   return async () => {
@@ -791,9 +796,10 @@ function createHelpButtonHandler(repoUrl, branch, overlayContext, config) {
 }
 
 /**
- * Create dropdown close handler for clicking outside
- * @param {Array} dropdowns - Array of {dropdown, button} objects
- * @returns {Function} Click handler for document
+
+* Create dropdown close handler for clicking outside
+* @param {Array} dropdowns - Array of {dropdown, button} objects
+* @returns {Function} Click handler for document
  */
 function createDropdownCloseHandler(dropdowns) {
   return (e) => {
@@ -808,11 +814,12 @@ function createDropdownCloseHandler(dropdowns) {
 }
 
 /**
- * Create tree toggle button click handler
- * @param {HTMLElement} navTreePanel - Navigation tree panel element
- * @param {HTMLElement} treeToggleButton - Tree toggle button element
- * @param {object} config - Configuration object
- * @returns {Function} Click handler for tree toggle button
+
+* Create tree toggle button click handler
+* @param {HTMLElement} navTreePanel - Navigation tree panel element
+* @param {HTMLElement} treeToggleButton - Tree toggle button element
+* @param {object} config - Configuration object
+* @returns {Function} Click handler for tree toggle button
  */
 function createTreeToggleHandler(navTreePanel, treeToggleButton, config = DEFAULT_CONFIG) {
   return () => {
@@ -834,10 +841,11 @@ function createTreeToggleHandler(navTreePanel, treeToggleButton, config = DEFAUL
 }
 
 /**
- * Fetch SVG content with timeout
- * @param {string} url - URL of SVG file
- * @param {number} timeout - Timeout in milliseconds
- * @returns {Promise<string|null>} SVG text content or null on error
+
+* Fetch SVG content with timeout
+* @param {string} url - URL of SVG file
+* @param {number} timeout - Timeout in milliseconds
+* @returns {Promise<string|null>} SVG text content or null on error
  */
 async function fetchSVGContent(url, timeout) {
   const controller = new AbortController();
@@ -863,10 +871,11 @@ async function fetchSVGContent(url, timeout) {
 }
 
 /**
- * Sanitize SVG content and add accessibility
- * @param {string} svgText - Raw SVG XML text
- * @param {string} altText - Alt text to add as title
- * @returns {string|null} Sanitized SVG HTML string or null on error
+
+* Sanitize SVG content and add accessibility
+* @param {string} svgText - Raw SVG XML text
+* @param {string} altText - Alt text to add as title
+* @returns {string|null} Sanitized SVG HTML string or null on error
  */
 function sanitizeSVG(svgText, altText) {
   try {
@@ -908,12 +917,13 @@ function sanitizeSVG(svgText, altText) {
 }
 
 /**
- * Inline SVG illustrations in HTML
- * @param {string} htmlString - HTML string with img tags
- * @param {Object} options - SVG inlining options
- * @param {RegExp} options.pattern - Pattern to match SVG paths (default: /\/illustrations\/[^/]+\.svg$/i)
- * @param {number} options.timeout - Fetch timeout in ms (default: 10000)
- * @returns {Promise<string>} HTML string with inlined SVGs
+
+* Inline SVG illustrations in HTML
+* @param {string} htmlString - HTML string with img tags
+* @param {Object} options - SVG inlining options
+* @param {RegExp} options.pattern - Pattern to match SVG paths (default: /\/illustrations\/[^/]+\.svg$/i)
+* @param {number} options.timeout - Fetch timeout in ms (default: 10000)
+* @returns {Promise<string>} HTML string with inlined SVGs
  */
 async function inlineSVGIllustrations(htmlString, options = {}) {
   // Default options
@@ -988,10 +998,11 @@ async function inlineSVGIllustrations(htmlString, options = {}) {
 }
 
 /**
- * Detect cell type based on content patterns
- * @param {string} content - Cell content
- * @param {number} index - Cell index
- * @returns {string} Cell type: 'hero', 'intro', 'transition', or 'content'
+
+* Detect cell type based on content patterns
+* @param {string} content - Cell content
+* @param {number} index - Cell index
+* @returns {string} Cell type: 'hero', 'intro', 'transition', or 'content'
  */
 function detectCellType(content, index) {
   // Hero cell is the first cell with large heading
@@ -1016,10 +1027,11 @@ function detectCellType(content, index) {
 }
 
 /**
- * Wrap markdown content with appropriate styling classes
- * @param {string} html - Parsed HTML content
- * @param {string} cellType - Cell type
- * @returns {string} Wrapped HTML
+
+* Wrap markdown content with appropriate styling classes
+* @param {string} html - Parsed HTML content
+* @param {string} cellType - Cell type
+* @returns {string} Wrapped HTML
  */
 function wrapMarkdownContent(html, cellType) {
   switch (cellType) {
@@ -1036,10 +1048,11 @@ function wrapMarkdownContent(html, cellType) {
 }
 
 /**
- * Style action cards in a cell content element
- * Detects <!-- action-cards --> marker and transforms following list into styled cards
- * Also fixes links at runtime by finding matching headings
- * @param {HTMLElement} contentElement - Cell content element
+
+* Style action cards in a cell content element
+* Detects <!-- action-cards --> marker and transforms following list into styled cards
+* Also fixes links at runtime by finding matching headings
+* @param {HTMLElement} contentElement - Cell content element
  */
 function styleActionCards(contentElement) {
   // Find the ul element that follows the action-cards comment
@@ -1120,15 +1133,16 @@ function styleActionCards(contentElement) {
 }
 
 /**
- * Create a markdown cell element
- * @param {object} cell - Notebook cell data
- * @param {number} index - Cell index
- * @param {string} [repoUrl] - Optional repository URL for converting .md links
- * @param {boolean} [autoWrap=false] - Whether to auto-wrap with styling classes (notebook mode)
- * @param {string} [branch='main'] - GitHub branch to use for .md links
- * @param {Array} [parentHistory=null] - Optional parent overlay's history array
- * @param {Object} [config=null] - Configuration object (injected dependency)
- * @returns {Promise<HTMLElement>} Cell element
+
+* Create a markdown cell element
+* @param {object} cell - Notebook cell data
+* @param {number} index - Cell index
+* @param {string} [repoUrl] - Optional repository URL for converting .md links
+* @param {boolean} [autoWrap=false] - Whether to auto-wrap with styling classes (notebook mode)
+* @param {string} [branch='main'] - GitHub branch to use for .md links
+* @param {Array} [parentHistory=null] - Optional parent overlay's history array
+* @param {Object} [config=null] - Configuration object (injected dependency)
+* @returns {Promise<HTMLElement>} Cell element
  */
 async function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false, branch = 'main', parentHistory = null, config = null) {
   const cellDiv = document.createElement('div');
@@ -1145,7 +1159,7 @@ async function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false,
   // Strip "Part X:" prefix from Part/Chapter headings in viewer pane
   // Pattern: "Part 1:", "Chapter 2:", etc.
   // Note: H2 tags have id attributes, so we need to match those
-  html = html.replace(/<h2([^>]*)>(Part|Chapter)\s+\d+:\s*(.+?)<\/h2>/gi, '<h2$1>$3</h2>');
+  html = html.replace(/<h2([^>]_)>(Part|Chapter)\s+\d+:\s_(.+?)<\/h2>/gi, '<h2$1>$3</h2>');
 
   // Inline SVG illustrations
   html = await inlineSVGIllustrations(html);
@@ -1182,11 +1196,12 @@ async function createMarkdownCell(cell, index, repoUrl = null, autoWrap = false,
 }
 
 /**
- * Create a code cell element with execution button
- * @param {object} cell - Notebook cell data
- * @param {number} index - Overall cell index
- * @param {boolean} autorun - Whether to hide run button (autorun mode)
- * @returns {HTMLElement} Cell element
+
+* Create a code cell element with execution button
+* @param {object} cell - Notebook cell data
+* @param {number} index - Overall cell index
+* @param {boolean} autorun - Whether to hide run button (autorun mode)
+* @returns {HTMLElement} Cell element
  */
 function createCodeCell(cell, index, autorun = false, config = DEFAULT_CONFIG) {
   const cellDiv = document.createElement('div');
@@ -1242,8 +1257,9 @@ function createCodeCell(cell, index, autorun = false, config = DEFAULT_CONFIG) {
 }
 
 /**
- * Execute JavaScript code in a cell
- * @param {HTMLElement} cellDiv - Cell element
+
+* Execute JavaScript code in a cell
+* @param {HTMLElement} cellDiv - Cell element
  */
 async function executeCodeCell(cellDiv) {
   const { code } = cellDiv.dataset;
@@ -1328,9 +1344,10 @@ async function executeCodeCell(cellDiv) {
 window.ipynbExecuteCell = executeCodeCell;
 
 /**
- * Load and parse notebook file
- * @param {string} notebookPath - Path to .ipynb file
- * @returns {Promise<object>} Parsed notebook data
+
+* Load and parse notebook file
+* @param {string} notebookPath - Path to .ipynb file
+* @returns {Promise<object>} Parsed notebook data
  */
 async function loadNotebook(notebookPath) {
   try {
@@ -1347,10 +1364,11 @@ async function loadNotebook(notebookPath) {
 }
 
 /**
- * Check if a markdown cell should be grouped with the next code cell
- * @param {HTMLElement} cell - Current cell
- * @param {HTMLElement} nextCell - Next cell
- * @returns {boolean} True if cells should be grouped
+
+* Check if a markdown cell should be grouped with the next code cell
+* @param {HTMLElement} cell - Current cell
+* @param {HTMLElement} nextCell - Next cell
+* @returns {boolean} True if cells should be grouped
  */
 function shouldGroupWithNext(cell, nextCell) {
   if (!cell || !nextCell) return false;
@@ -1378,9 +1396,10 @@ function shouldGroupWithNext(cell, nextCell) {
 }
 
 /**
- * Create page groups from cells for smart pagination
- * @param {Array<HTMLElement>} cells - Array of cell elements
- * @returns {Array<Object>} Array of page objects with grouped cells
+
+* Create page groups from cells for smart pagination
+* @param {Array<HTMLElement>} cells - Array of cell elements
+* @returns {Array<Object>} Array of page objects with grouped cells
  */
 function createPageGroups(cells, maxCodeGroupSize = 3) {
   const pages = [];
@@ -1425,16 +1444,18 @@ function createPageGroups(cells, maxCodeGroupSize = 3) {
 }
 
 /**
- * Maximum number of history entries to track per overlay instance
+
+* Maximum number of history entries to track per overlay instance
  */
 
 /**
- * Add entry to navigation history for a specific overlay instance
- * @param {Array} historyArray - The history array for this overlay instance
- * @param {string} title - Title of the entry
- * @param {string} type - Type: 'cell' or 'markdown'
- * @param {number} [cellIndex] - Cell index for cell entries
- * @param {string} [url] - URL for markdown entries
+
+* Add entry to navigation history for a specific overlay instance
+* @param {Array} historyArray - The history array for this overlay instance
+* @param {string} title - Title of the entry
+* @param {string} type - Type: 'cell' or 'markdown'
+* @param {number} [cellIndex] - Cell index for cell entries
+* @param {string} [url] - URL for markdown entries
  */
 function addToHistory(historyArray, title, type, cellIndex = null, url = null, maxEntries = 25) {
   const entry = {
@@ -1463,17 +1484,18 @@ function addToHistory(historyArray, title, type, cellIndex = null, url = null, m
 }
 
 /**
- * Create standardized history context object for passing to GitHub markdown overlays
- * Ensures all necessary properties (splash config, navigation tree, history) are included
- * @param {object} options - Configuration options
- * @param {Array} options.historyArray - The history array for this overlay instance
- * @param {Array} options.navigationTree - Navigation tree structure
- * @param {HTMLElement} [options.navTreePanel] - Tree panel element for re-rendering
- * @param {object} [options.treeState] - Tree state for expand/collapse
- * @param {Function} [options.handleTreeNodeClick] - Click handler for tree nodes
- * @param {string} [options.splashUrl] - URL for splash screen image
- * @param {number} [options.splashDuration] - Duration to show splash screen in ms
- * @returns {object} Standardized history context object
+
+* Create standardized history context object for passing to GitHub markdown overlays
+* Ensures all necessary properties (splash config, navigation tree, history) are included
+* @param {object} options - Configuration options
+* @param {Array} options.historyArray - The history array for this overlay instance
+* @param {Array} options.navigationTree - Navigation tree structure
+* @param {HTMLElement} [options.navTreePanel] - Tree panel element for re-rendering
+* @param {object} [options.treeState] - Tree state for expand/collapse
+* @param {Function} [options.handleTreeNodeClick] - Click handler for tree nodes
+* @param {string} [options.splashUrl] - URL for splash screen image
+* @param {number} [options.splashDuration] - Duration to show splash screen in ms
+* @returns {object} Standardized history context object
  */
 function createHistoryContext({
   historyArray,
@@ -1496,22 +1518,25 @@ function createHistoryContext({
 }
 
 /**
- * Bookmark Management - localStorage-based bookmarks per notebook
+
+* Bookmark Management - localStorage-based bookmarks per notebook
  */
 
 /**
- * Get localStorage key for bookmarks based on notebook path/title
- * @param {string} notebookId - Unique identifier for the notebook
- * @returns {string} localStorage key
+
+* Get localStorage key for bookmarks based on notebook path/title
+* @param {string} notebookId - Unique identifier for the notebook
+* @returns {string} localStorage key
  */
 function getBookmarkStorageKey(notebookId) {
   return `ipynb-bookmarks-${notebookId}`;
 }
 
 /**
- * Get all bookmarks for a notebook
- * @param {string} notebookId - Unique identifier for the notebook
- * @returns {Array<{title: string, type: string, pageIndex: number|null, url: string|null, timestamp: number}>}
+
+* Get all bookmarks for a notebook
+* @param {string} notebookId - Unique identifier for the notebook
+* @returns {Array<{title: string, type: string, pageIndex: number|null, url: string|null, timestamp: number}>}
  */
 function getBookmarks(notebookId) {
   try {
@@ -1524,13 +1549,14 @@ function getBookmarks(notebookId) {
 }
 
 /**
- * Save a bookmark for the current page or markdown file
- * @param {string} notebookId - Unique identifier for the notebook
- * @param {string} title - Title of the page
- * @param {string} type - Type: 'cell' or 'markdown'
- * @param {number|null} pageIndex - Page index to bookmark (for cells)
- * @param {string|null} url - URL to bookmark (for markdown)
- * @returns {boolean} Success status
+
+* Save a bookmark for the current page or markdown file
+* @param {string} notebookId - Unique identifier for the notebook
+* @param {string} title - Title of the page
+* @param {string} type - Type: 'cell' or 'markdown'
+* @param {number|null} pageIndex - Page index to bookmark (for cells)
+* @param {string|null} url - URL to bookmark (for markdown)
+* @returns {boolean} Success status
  */
 function saveBookmark(notebookId, title, type, pageIndex = null, url = null) {
   try {
@@ -1567,12 +1593,13 @@ function saveBookmark(notebookId, title, type, pageIndex = null, url = null) {
 }
 
 /**
- * Remove a specific bookmark
- * @param {string} notebookId - Unique identifier for the notebook
- * @param {string} type - Type: 'cell' or 'markdown'
- * @param {number|null} pageIndex - Page index to remove (for cells)
- * @param {string|null} url - URL to remove (for markdown)
- * @returns {boolean} Success status
+
+* Remove a specific bookmark
+* @param {string} notebookId - Unique identifier for the notebook
+* @param {string} type - Type: 'cell' or 'markdown'
+* @param {number|null} pageIndex - Page index to remove (for cells)
+* @param {string|null} url - URL to remove (for markdown)
+* @returns {boolean} Success status
  */
 function removeBookmark(notebookId, type, pageIndex = null, url = null) {
   try {
@@ -1593,9 +1620,10 @@ function removeBookmark(notebookId, type, pageIndex = null, url = null) {
 }
 
 /**
- * Clear all bookmarks for a notebook
- * @param {string} notebookId - Unique identifier for the notebook
- * @returns {boolean} Success status
+
+* Clear all bookmarks for a notebook
+* @param {string} notebookId - Unique identifier for the notebook
+* @returns {boolean} Success status
  */
 function clearAllBookmarks(notebookId) {
   try {
@@ -1608,13 +1636,15 @@ function clearAllBookmarks(notebookId) {
 }
 
 /**
- * Navigation Tree Building Functions
+
+* Navigation Tree Building Functions
  */
 
 /**
- * Extract heading text from markdown cell
- * @param {HTMLElement} cell - Cell element
- * @returns {Object|null} Heading object with text and level, or null
+
+* Extract heading text from markdown cell
+* @param {HTMLElement} cell - Cell element
+* @returns {Object|null} Heading object with text and level, or null
  */
 function extractHeading(cell) {
   const content = cell.querySelector('.ipynb-cell-content');
@@ -1630,9 +1660,10 @@ function extractHeading(cell) {
 }
 
 /**
- * Extract all markdown file paths from cells
- * @param {HTMLElement} cellsContainer - Container with all cells
- * @returns {Array<string>} Array of unique .md file paths
+
+* Extract all markdown file paths from cells
+* @param {HTMLElement} cellsContainer - Container with all cells
+* @returns {Array<string>} Array of unique .md file paths
  */
 function extractMarkdownPaths(cellsContainer) {
   const paths = new Set(); // Automatic deduplication
@@ -1655,9 +1686,10 @@ function extractMarkdownPaths(cellsContainer) {
 }
 
 /**
- * Extract markdown paths from a specific element (for dynamic scanning)
- * @param {HTMLElement} element - Element to scan for markdown links
- * @returns {Array<string>} Array of markdown file paths
+
+* Extract markdown paths from a specific element (for dynamic scanning)
+* @param {HTMLElement} element - Element to scan for markdown links
+* @returns {Array<string>} Array of markdown file paths
  */
 function extractMarkdownPathsFromElement(element) {
   const paths = new Set();
@@ -1681,9 +1713,10 @@ function extractMarkdownPathsFromElement(element) {
 }
 
 /**
- * Add new markdown paths to the navigation tree dynamically
- * @param {Array} tree - Navigation tree array
- * @param {Array<string>} newPaths - New markdown file paths to add
+
+* Add new markdown paths to the navigation tree dynamically
+* @param {Array} tree - Navigation tree array
+* @param {Array<string>} newPaths - New markdown file paths to add
  */
 function addMarkdownPathsToTree(tree, newPaths, config = DEFAULT_CONFIG) {
   // Find the Repository root node
@@ -1736,10 +1769,11 @@ function addMarkdownPathsToTree(tree, newPaths, config = DEFAULT_CONFIG) {
 }
 
 /**
- * Build hierarchical file tree from markdown paths
- * @param {Array<string>} paths - Array of file paths (e.g., 'docs/help.md')
- * @param {string} _helpPath - Path to help.md (no longer used - kept for API compatibility)
- * @returns {Array} Tree nodes for files with folder hierarchy
+
+* Build hierarchical file tree from markdown paths
+* @param {Array<string>} paths - Array of file paths (e.g., 'docs/help.md')
+* @param {string} _helpPath - Path to help.md (no longer used - kept for API compatibility)
+* @returns {Array} Tree nodes for files with folder hierarchy
  */
 function buildFileTree(paths, _helpPath, config = DEFAULT_CONFIG) {
   const tree = [];
@@ -1844,9 +1878,10 @@ function buildFileTree(paths, _helpPath, config = DEFAULT_CONFIG) {
 }
 
 /**
- * Fetch and parse help documentation to build help tree node
- * @param {Object} config - Configuration object with help repo settings
- * @returns {Promise<Object|null>} Help tree node or null if failed to load
+
+* Fetch and parse help documentation to build help tree node
+* @param {Object} config - Configuration object with help repo settings
+* @returns {Promise<Object|null>} Help tree node or null if failed to load
  */
 async function buildHelpTreeNode(config = DEFAULT_CONFIG) {
   try {
@@ -1930,13 +1965,14 @@ async function buildHelpTreeNode(config = DEFAULT_CONFIG) {
 }
 
 /**
- * Build navigation tree from notebook cells and repository files
- * @param {Array<HTMLElement>} cells - Array of cell elements
- * @param {HTMLElement} cellsContainer - Container for extracting markdown paths
- * @param {string} _helpRepoUrl - DEPRECATED: No longer used, kept for API compatibility
- * @param {object} notebookData - Raw notebook data with cells array
- * @param {object} config - Configuration object with tree labels
- * @returns {Promise<Array>} Root tree nodes (async to support help loading)
+
+* Build navigation tree from notebook cells and repository files
+* @param {Array<HTMLElement>} cells - Array of cell elements
+* @param {HTMLElement} cellsContainer - Container for extracting markdown paths
+* @param {string} _helpRepoUrl - DEPRECATED: No longer used, kept for API compatibility
+* @param {object} notebookData - Raw notebook data with cells array
+* @param {object} config - Configuration object with tree labels
+* @returns {Promise<Array>} Root tree nodes (async to support help loading)
  */
 async function buildNavigationTree(cells, cellsContainer, _helpRepoUrl, notebookData = null, config = DEFAULT_CONFIG) {
   const tree = [];
@@ -2199,15 +2235,17 @@ async function buildNavigationTree(cells, cellsContainer, _helpRepoUrl, notebook
 }
 
 /**
- * Navigation Tree Rendering Functions
+
+* Navigation Tree Rendering Functions
  */
 
 /**
- * Render navigation tree
- * @param {Array} tree - Tree data structure
- * @param {HTMLElement} container - Tree container element
- * @param {Object} treeState - State object with expandedNodes Set and selectedNode
- * @param {Function} onNodeClick - Click handler for tree nodes
+
+* Render navigation tree
+* @param {Array} tree - Tree data structure
+* @param {HTMLElement} container - Tree container element
+* @param {Object} treeState - State object with expandedNodes Set and selectedNode
+* @param {Function} onNodeClick - Click handler for tree nodes
  */
 function renderNavigationTree(tree, container, treeState, onNodeClick) {
   container.innerHTML = '';
@@ -2267,12 +2305,13 @@ function renderNavigationTree(tree, container, treeState, onNodeClick) {
 }
 
 /**
- * Render single tree node recursively
- * @param {Object} node - Tree node
- * @param {HTMLElement} parentElement - Parent DOM element
- * @param {HTMLElement} treeContainer - Root tree container (for re-rendering)
- * @param {Object} treeState - State object
- * @param {Function} onNodeClick - Click handler
+
+* Render single tree node recursively
+* @param {Object} node - Tree node
+* @param {HTMLElement} parentElement - Parent DOM element
+* @param {HTMLElement} treeContainer - Root tree container (for re-rendering)
+* @param {Object} treeState - State object
+* @param {Function} onNodeClick - Click handler
  */
 function renderTreeNode(node, parentElement, treeContainer, treeState, onNodeClick) {
   const isExpanded = treeState.expandedNodes.has(node.id);
@@ -2339,11 +2378,12 @@ function renderTreeNode(node, parentElement, treeContainer, treeState, onNodeCli
 }
 
 /**
- * Toggle node expansion state
- * @param {string} nodeId - Node ID to toggle
- * @param {Object} treeState - State object
- * @param {HTMLElement} container - Tree container
- * @param {Function} onNodeClick - Click handler
+
+* Toggle node expansion state
+* @param {string} nodeId - Node ID to toggle
+* @param {Object} treeState - State object
+* @param {HTMLElement} container - Tree container
+* @param {Function} onNodeClick - Click handler
  */
 function toggleTreeNode(nodeId, treeState, container, onNodeClick) {
   const wasExpanded = treeState.expandedNodes.has(nodeId);
@@ -2370,11 +2410,12 @@ function toggleTreeNode(nodeId, treeState, container, onNodeClick) {
 }
 
 /**
- * Expand all parent nodes to make a target node visible
- * @param {Array} tree - Tree structure
- * @param {string} targetNodeId - Node ID to make visible
- * @param {Object} treeState - State object
- * @returns {boolean} - True if node was found and parents expanded
+
+* Expand all parent nodes to make a target node visible
+* @param {Array} tree - Tree structure
+* @param {string} targetNodeId - Node ID to make visible
+* @param {Object} treeState - State object
+* @returns {boolean} - True if node was found and parents expanded
  */
 function expandParentsOfNode(tree, targetNodeId, treeState) {
   // Recursive function to find node and expand all parents
@@ -2403,11 +2444,12 @@ function expandParentsOfNode(tree, targetNodeId, treeState) {
 }
 
 /**
- * Select node (highlight as active)
- * @param {string} nodeId - Node ID to select
- * @param {Object} treeState - State object
- * @param {HTMLElement} container - Tree container
- * @param {Function} onNodeClick - Click handler
+
+* Select node (highlight as active)
+* @param {string} nodeId - Node ID to select
+* @param {Object} treeState - State object
+* @param {HTMLElement} container - Tree container
+* @param {Function} onNodeClick - Click handler
  */
 function selectTreeNode(nodeId, treeState, container, onNodeClick) {
   treeState.selectedNode = nodeId;
@@ -2429,10 +2471,11 @@ function selectTreeNode(nodeId, treeState, container, onNodeClick) {
 }
 
 /**
- * Find node by ID in tree (recursive)
- * @param {Array} tree - Tree structure
- * @param {string} nodeId - Node ID to find
- * @returns {Object|null} - Found node or null
+
+* Find node by ID in tree (recursive)
+* @param {Array} tree - Tree structure
+* @param {string} nodeId - Node ID to find
+* @returns {Object|null} - Found node or null
  */
 function findNodeById(tree, nodeId) {
   // Use .reduce() instead of for...of to avoid eslint no-restricted-syntax
@@ -2449,19 +2492,20 @@ function findNodeById(tree, nodeId) {
 }
 
 /**
- * Create full-screen overlay for paged variation
- * @param {HTMLElement} container - The notebook container
- * @param {HTMLElement} cellsContainer - Container with cells
- * @param {boolean} autorun - Whether to autorun code cells
- * @param {boolean} isNotebookMode - Whether this is notebook mode (close button always visible)
- * @param {string} [repoUrl] - Optional repository URL for markdown .md links
- * @param {string} [notebookTitle] - Optional notebook title for top bar
- * @param {string} [branch] - GitHub branch to use
- * @param {boolean} [hideTopbar] - Whether to hide the top bar
- * @param {object} [notebook] - Raw notebook data with cells array
- * @param {object} [config] - Configuration object with settings (injected dependency)
- * @param {number} [splashDuration] - Splash screen duration in ms (from metadata or config)
- * @returns {object} Overlay controls
+
+* Create full-screen overlay for paged variation
+* @param {HTMLElement} container - The notebook container
+* @param {HTMLElement} cellsContainer - Container with cells
+* @param {boolean} autorun - Whether to autorun code cells
+* @param {boolean} isNotebookMode - Whether this is notebook mode (close button always visible)
+* @param {string} [repoUrl] - Optional repository URL for markdown .md links
+* @param {string} [notebookTitle] - Optional notebook title for top bar
+* @param {string} [branch] - GitHub branch to use
+* @param {boolean} [hideTopbar] - Whether to hide the top bar
+* @param {object} [notebook] - Raw notebook data with cells array
+* @param {object} [config] - Configuration object with settings (injected dependency)
+* @param {number} [splashDuration] - Splash screen duration in ms (from metadata or config)
+* @returns {object} Overlay controls
  */
 async function createPagedOverlay(container, cellsContainer, autorun = false, isNotebookMode = false, repoUrl = null, notebookTitle = 'Jupyter Notebook', branch = 'main', hideTopbar = false, notebook = null, config = null, splashDuration = 3000) {
   // Config is required - fail with clear error if missing
@@ -2530,7 +2574,6 @@ async function createPagedOverlay(container, cellsContainer, autorun = false, is
     splashDuration, // Add splash duration from metadata/config
   };
 
-
   // Create overlay structure
   const overlay = document.createElement('div');
   overlay.className = 'ipynb-paged-overlay';
@@ -2580,8 +2623,9 @@ async function createPagedOverlay(container, cellsContainer, autorun = false, is
   // Previously hidden in notebook mode, now always shown for better UX
 
   /**
-   * Get the home page index from metadata opening-page
-   * @returns {number} Page index for the home page
+
+* Get the home page index from metadata opening-page
+* @returns {number} Page index for the home page
    */
   function getHomePageIndex() {
     const openingPage = notebook?.metadata?.['opening-page'];
@@ -2623,7 +2667,8 @@ async function createPagedOverlay(container, cellsContainer, autorun = false, is
   }
 
   /**
-   * Navigate to home page (from metadata opening-page)
+
+* Navigate to home page (from metadata opening-page)
    */
   async function navigateToHome() {
     const homePageIndex = getHomePageIndex();
@@ -2655,9 +2700,10 @@ async function createPagedOverlay(container, cellsContainer, autorun = false, is
   }
 
   /**
-   * Creates a dropdown menu element
-   * @param {string} className - CSS class name for the dropdown
-   * @returns {HTMLElement} The dropdown element
+
+* Creates a dropdown menu element
+* @param {string} className - CSS class name for the dropdown
+* @returns {HTMLElement} The dropdown element
    */
   function createDropdown(className) {
     const dropdown = document.createElement('div');
@@ -2668,12 +2714,13 @@ async function createPagedOverlay(container, cellsContainer, autorun = false, is
   }
 
   /**
-   * Creates a dropdown toggle handler
-   * @param {HTMLElement} button - The button element
-   * @param {HTMLElement} dropdown - The dropdown element
-   * @param {Function} updateFn - Optional update function to call before showing
-   * @param {Array} allDropdowns - Array of all dropdown objects to close others
-   * @returns {Function} The click event handler
+
+* Creates a dropdown toggle handler
+* @param {HTMLElement} button - The button element
+* @param {HTMLElement} dropdown - The dropdown element
+* @param {Function} updateFn - Optional update function to call before showing
+* @param {Array} allDropdowns - Array of all dropdown objects to close others
+* @returns {Function} The click event handler
    */
   function createDropdownToggleHandler(button, dropdown, updateFn = null, allDropdowns = []) {
     return (e) => {
@@ -2695,14 +2742,15 @@ async function createPagedOverlay(container, cellsContainer, autorun = false, is
   }
 
   /**
-   * Creates a menu item for history or bookmarks
-   * @param {Object} options - Configuration options
-   * @param {string} options.type - 'history' or 'bookmark'
-   * @param {Object} options.item - The history entry or bookmark object
-   * @param {Function} options.onNavigate - Callback for navigation (cell or markdown)
-   * @param {Function} options.onClose - Callback to close the dropdown
-   * @param {Function} options.onRemove - Optional callback to remove bookmark
-   * @returns {HTMLElement} The menu item button
+
+* Creates a menu item for history or bookmarks
+* @param {Object} options - Configuration options
+* @param {string} options.type - 'history' or 'bookmark'
+* @param {Object} options.item - The history entry or bookmark object
+* @param {Function} options.onNavigate - Callback for navigation (cell or markdown)
+* @param {Function} options.onClose - Callback to close the dropdown
+* @param {Function} options.onRemove - Optional callback to remove bookmark
+* @returns {HTMLElement} The menu item button
    */
   function createNavigationMenuItem({
     type,
@@ -3713,12 +3761,13 @@ async function createPagedOverlay(container, cellsContainer, autorun = false, is
 }
 
 /**
- * Create unified home button for both paged overlay and GitHub markdown overlay
- * @param {Object} config - Configuration object
- * @param {string} config.context - Context identifier ('notebook' or 'github')
- * @param {Function} config.onClick - Click handler function
- * @param {string} [config.ariaLabel='Go home'] - Aria label for accessibility
- * @returns {HTMLElement} Home button element
+
+* Create unified home button for both paged overlay and GitHub markdown overlay
+* @param {Object} config - Configuration object
+* @param {string} config.context - Context identifier ('notebook' or 'github')
+* @param {Function} config.onClick - Click handler function
+* @param {string} [config.ariaLabel='Go home'] - Aria label for accessibility
+* @returns {HTMLElement} Home button element
  */
 function createHomeButton(config) {
   const { context, onClick, ariaLabel = 'Go home' } = config;
@@ -3730,7 +3779,6 @@ function createHomeButton(config) {
   homeButton.setAttribute('aria-label', ariaLabel);
   homeButton.setAttribute('title', 'Home');
   homeButton.setAttribute('data-context', context); // Track which context this button belongs to
-
 
   // Add click handler with comprehensive logging (async to await onClick)
   homeButton.addEventListener('click', async (e) => {
@@ -3748,14 +3796,14 @@ function createHomeButton(config) {
 
   });
 
-
   return homeButton;
 }
 
 /**
- * Create start button for paged variation
- * @param {object} config - Configuration object
- * @returns {HTMLElement} Start button element
+
+* Create start button for paged variation
+* @param {object} config - Configuration object
+* @returns {HTMLElement} Start button element
  */
 function createPagedStartButton(config = DEFAULT_CONFIG) {
   const startButton = document.createElement('button');
@@ -3766,10 +3814,11 @@ function createPagedStartButton(config = DEFAULT_CONFIG) {
 }
 
 /**
- * Convert GitHub blob URL to raw content URL, or return local path as-is
- * @param {string} blobUrl - GitHub blob URL or local path
- * @param {string} [branch='main'] - GitHub branch to use (only applies to GitHub URLs)
- * @returns {string} Raw content URL or local path
+
+* Convert GitHub blob URL to raw content URL, or return local path as-is
+* @param {string} blobUrl - GitHub blob URL or local path
+* @param {string} [branch='main'] - GitHub branch to use (only applies to GitHub URLs)
+* @returns {string} Raw content URL or local path
  */
 function convertToRawUrl(blobUrl, _branch = 'main') {
   // If it's a local path (starts with /), return as-is
@@ -3789,15 +3838,16 @@ function convertToRawUrl(blobUrl, _branch = 'main') {
 }
 
 /**
- * Create GitHub markdown overlay for displaying markdown files from GitHub
- * @param {string} githubUrl - Full GitHub blob URL or local path
- * @param {string} title - Title to display in overlay header
- * @param {string} [_helpRepoUrl] - DEPRECATED: No longer used, kept for API compatibility
- * @param {string} [branch='main'] - GitHub branch to use
- * @param {Array} [parentHistory=null] - Optional parent overlay's history array
- * @param {boolean} [hideTopbar=false] - Whether to hide the top bar
- * @param {object} [config=null] - Configuration object with settings (injected dependency)
- * @returns {Object} Object with openOverlay and closeOverlay functions
+
+* Create GitHub markdown overlay for displaying markdown files from GitHub
+* @param {string} githubUrl - Full GitHub blob URL or local path
+* @param {string} title - Title to display in overlay header
+* @param {string} [_helpRepoUrl] - DEPRECATED: No longer used, kept for API compatibility
+* @param {string} [branch='main'] - GitHub branch to use
+* @param {Array} [parentHistory=null] - Optional parent overlay's history array
+* @param {boolean} [hideTopbar=false] - Whether to hide the top bar
+* @param {object} [config=null] - Configuration object with settings (injected dependency)
+* @returns {Object} Object with openOverlay and closeOverlay functions
  */
 function createGitHubMarkdownOverlay(githubUrl, title, _helpRepoUrl = null, branch = 'main', parentHistory = null, hideTopbar = false, config = null) {
   // Config is required for icons and UI text - fail if missing
@@ -4495,17 +4545,17 @@ function createGitHubMarkdownOverlay(githubUrl, title, _helpRepoUrl = null, bran
 }
 
 /**
- * Check for hash in URL and navigate to that markdown file if present
- * @param {string} repoUrl - Repository URL
- * @param {string} branch - GitHub branch
- * @param {Object} pagedOverlay - The paged overlay object with navigation methods
- * @param {Object} metadata - Notebook metadata (may contain opening-page)
- * @param {Object} config - Configuration object (injected dependency)
+
+* Check for hash in URL and navigate to that markdown file if present
+* @param {string} repoUrl - Repository URL
+* @param {string} branch - GitHub branch
+* @param {Object} pagedOverlay - The paged overlay object with navigation methods
+* @param {Object} metadata - Notebook metadata (may contain opening-page)
+* @param {Object} config - Configuration object (injected dependency)
  */
 async function checkHashNavigation(repoUrl, branch, pagedOverlay, metadata = {}, config = null) {
   const { hash } = window.location;
   let targetPath = null;
-
 
   // Check URL hash first (takes precedence)
   if (hash && hash !== '#') {
@@ -4552,8 +4602,9 @@ async function checkHashNavigation(repoUrl, branch, pagedOverlay, metadata = {},
 }
 
 /**
- * Decorate the ipynb-viewer block
- * @param {HTMLElement} block - Block element
+
+* Decorate the ipynb-viewer block
+* @param {HTMLElement} block - Block element
  */
 export default async function decorate(block) {
   // Configuration - Use DEFAULT_CONFIG defined at top of file

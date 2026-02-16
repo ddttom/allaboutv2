@@ -1,43 +1,46 @@
 /*
- * Copyright 2023 Adobe. All rights reserved.
- * This file is licensed to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License. You may obtain a copy
- * of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under
- * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
- * OF ANY KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
+
+* Copyright 2023 Adobe. All rights reserved.
+* This file is licensed to you under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License. You may obtain a copy
+* of the License at http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software distributed under
+* the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+* OF ANY KIND, either express or implied. See the License for the specific language
+* governing permissions and limitations under the License.
  */
 
-/* eslint-disable no-param-reassign */
+/*eslint-disable no-param-reassign*/
 
 /**
- * Example Usage:
- *
- * domEl('main',
- *  div({ class: 'card' },
- *  a({ href: item.path },
- *    div({ class: 'card-thumb' },
- *     createOptimizedPicture(item.image, item.title, 'lazy', [{ width: '800' }]),
- *    ),
- *   div({ class: 'card-caption' },
- *      h3(item.title),
- *      p({ class: 'card-description' }, item.description),
- *      p({ class: 'button-container' },
- *       a({ href: item.path, 'aria-label': 'Read More', class: 'button primary' }, 'Read More'),
- *     ),
- *   ),
- *  ),
- * )
+
+* Example Usage:
+*
+* domEl('main',
+* div({ class: 'card' },
+* a({ href: item.path },
+* div({ class: 'card-thumb' },
+*     createOptimizedPicture(item.image, item.title, 'lazy', [{ width: '800' }]),
+* ),
+* div({ class: 'card-caption' },
+*      h3(item.title),
+*      p({ class: 'card-description' }, item.description),
+*      p({ class: 'button-container' },
+*       a({ href: item.path, 'aria-label': 'Read More', class: 'button primary' }, 'Read More'),
+*     ),
+* ),
+* ),
+* )
  */
 
 /**
- * Helper for more concisely generating DOM Elements with attributes and children
- * @param {string} tag HTML tag of the desired element
- * @param  {[Object?, ...Element]} items: First item can optionally be an object of attributes,
- *  everything else is a child element
- * @returns {Element} The constructed DOM Element
+
+* Helper for more concisely generating DOM Elements with attributes and children
+* @param {string} tag HTML tag of the desired element
+* @param  {[Object?, ...Element]} items: First item can optionally be an object of attributes,
+* everything else is a child element
+* @returns {Element} The constructed DOM Element
  */
 export function domEl(tag, ...items) {
   const element = document.createElement(tag);

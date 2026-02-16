@@ -1,28 +1,29 @@
-#!/usr/bin/env node
+# !/usr/bin/env node
 
 /**
- * Find pages containing a specific block in AEM Edge Delivery projects.
- *
- * This script queries the query-index to find instances of a block,
- * helping developers identify existing content for testing during development.
- *
- * Usage:
- *   node find-block-content.js <block-name> [host] [variant]
- *
- * Examples:
- *   node find-block-content.js hero
- *   node find-block-content.js hero localhost:3000
- *   node find-block-content.js hero main--mysite--owner.aem.live
- *   node find-block-content.js hero main--mysite--owner.aem.page
- *   node find-block-content.js hero localhost:3000 dark
- *   node find-block-content.js cards main--mysite--owner.aem.live three-up
- *
- * The script will:
- * 1. Query the site's query-index for all pages
- * 2. Check each page for the specified block (and variant if provided)
- * 3. Report all pages containing the block with their URLs
- *
- * Defaults to localhost:3000 if no host specified
+
+* Find pages containing a specific block in AEM Edge Delivery projects.
+*
+* This script queries the query-index to find instances of a block,
+* helping developers identify existing content for testing during development.
+*
+* Usage:
+* node find-block-content.js <block-name> [host] [variant]
+*
+* Examples:
+* node find-block-content.js hero
+* node find-block-content.js hero localhost:3000
+* node find-block-content.js hero main--mysite--owner.aem.live
+* node find-block-content.js hero main--mysite--owner.aem.page
+* node find-block-content.js hero localhost:3000 dark
+* node find-block-content.js cards main--mysite--owner.aem.live three-up
+*
+* The script will:
+* 1. Query the site's query-index for all pages
+* 1. Check each page for the specified block (and variant if provided)
+* 1. Report all pages containing the block with their URLs
+*
+* Defaults to localhost:3000 if no host specified
  */
 
 import { JSDOM } from 'jsdom';
@@ -30,12 +31,13 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const__dirname = dirname(__filename);
 
 /**
- * Fetch all URLs from the query index with pagination
- * @param {string} host - The host to query
- * @returns {Promise<string[]>} Array of page paths
+
+* Fetch all URLs from the query index with pagination
+* @param {string} host - The host to query
+* @returns {Promise<string[]>} Array of page paths
  */
 async function fetchQueryIndex(host) {
   const limit = 512;
@@ -82,12 +84,13 @@ async function fetchQueryIndex(host) {
 }
 
 /**
- * Check if a page contains the specified block (and optional variant)
- * @param {string} host - The host to query
- * @param {string} path - The page path
- * @param {string} blockName - Name of block to find
- * @param {string} variant - Optional variant name to match
- * @returns {Promise<boolean>} True if block is found
+
+* Check if a page contains the specified block (and optional variant)
+* @param {string} host - The host to query
+* @param {string} path - The page path
+* @param {string} blockName - Name of block to find
+* @param {string} variant - Optional variant name to match
+* @returns {Promise<boolean>} True if block is found
  */
 async function pageContainsBlock(host, path, blockName, variant = null) {
   try {
@@ -130,13 +133,14 @@ async function pageContainsBlock(host, path, blockName, variant = null) {
 }
 
 /**
- * Process URLs in batches with concurrency control
- * @param {string} host - The host to query
- * @param {string[]} paths - Array of page paths
- * @param {string} blockName - Name of block to find
- * @param {string} variant - Optional variant name
- * @param {number} concurrency - Number of concurrent requests
- * @returns {Promise<string[]>} Array of paths containing the block
+
+* Process URLs in batches with concurrency control
+* @param {string} host - The host to query
+* @param {string[]} paths - Array of page paths
+* @param {string} blockName - Name of block to find
+* @param {string} variant - Optional variant name
+* @param {number} concurrency - Number of concurrent requests
+* @returns {Promise<string[]>} Array of paths containing the block
  */
 async function findBlockInPages(host, paths, blockName, variant = null, concurrency = 10) {
   const matches = [];
@@ -171,9 +175,10 @@ async function findBlockInPages(host, paths, blockName, variant = null, concurre
 }
 
 /**
- * Get the host to query
- * @param {string} host - Host string or undefined for default
- * @returns {string} The host to query
+
+* Get the host to query
+* @param {string} host - Host string or undefined for default
+* @returns {string} The host to query
  */
 function getHost(host) {
   if (!host) {
@@ -185,7 +190,8 @@ function getHost(host) {
 }
 
 /**
- * Main execution
+
+* Main execution
  */
 async function main() {
   const blockName = process.argv[2];

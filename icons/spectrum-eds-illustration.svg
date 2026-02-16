@@ -4,7 +4,7 @@
     /* Base styles */
     .svg-text { font-family: Adobe Clean, -apple-system, sans-serif; }
     .svg-mono { font-family: monospace; }
-    
+
     /* Responsive font sizes */
     .title-text { font-size: 32px; font-weight: 600; fill: #2c2c2c; }
     .subtitle-text { font-size: 18px; fill: #6e6e6e; }
@@ -117,7 +117,7 @@
       <rect x="60" y="200" width="100" height="28" rx="4" class="bg-primary interactive"/>
       <text x="110" y="218" text-anchor="middle" class="svg-text button-text">Read More →</text>
     </g>
-    
+
     <!-- Card 2 -->
     <g transform="translate(200, 0)" class="interactive">
       <rect x="0" y="0" width="180" height="240" rx="8" class="bg-white border-light"/>

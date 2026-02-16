@@ -1,8 +1,9 @@
 /*
- * Table Block
- * Recreate a table
- * https://www.hlx.live/developer/block-collection/table
- * Modified to add aria
+
+* Table Block
+* Recreate a table
+* https://www.hlx.live/developer/block-collection/table
+* Modified to add aria
  */
 
 function buildCell(rowIndex) {

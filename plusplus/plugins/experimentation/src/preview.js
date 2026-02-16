@@ -1,13 +1,14 @@
 /*
- * Copyright 2022 Adobe. All rights reserved.
- * This file is licensed to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License. You may obtain a copy
- * of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under
- * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
- * OF ANY KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
+
+* Copyright 2022 Adobe. All rights reserved.
+* This file is licensed to you under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License. You may obtain a copy
+* of the License at http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software distributed under
+* the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+* OF ANY KIND, either express or implied. See the License for the specific language
+* governing permissions and limitations under the License.
  */
 
 const DOMAIN_KEY_NAME = 'aem-domainkey';
@@ -67,7 +68,7 @@ function createPopupItem(item) {
   const div = document.createElement('div');
   div.className = `hlx-popup-item${item.isSelected ? ' is-selected' : ''}`;
   div.innerHTML = `
-    <h5 class="hlx-popup-item-label">${typeof item === 'object' ? item.label : item}</h5>
+<h5 class="hlx-popup-item-label">${typeof item === 'object' ? item.label : item}</h5>
     ${item.description ? `<div class="hlx-popup-item-description">${item.description}</div>` : ''}
     ${actions.length ? `<div class="hlx-popup-item-actions">${actions}</div>` : ''}`;
   const buttons = [...div.querySelectorAll('.hlx-button a')];
@@ -88,7 +89,7 @@ function createPopupDialog(header, items = []) {
   const popup = document.createElement('div');
   popup.className = 'hlx-popup hlx-hidden';
   popup.innerHTML = `
-    <div class="hlx-popup-header">
+<div class="hlx-popup-header">
       <h5 class="hlx-popup-header-label">${typeof header === 'object' ? header.label : header}</h5>
       ${header.description ? `<div class="hlx-popup-header-description">${header.description}</div>` : ''}
       ${actions.length ? `<div class="hlx-popup-header-actions">${actions}</div>` : ''}
@@ -175,7 +176,7 @@ function createVariant(experiment, variantName, config, options) {
   return {
     label: `<code>${variantName}</code>`,
     description: `
-      <p>${variant.label}</p>
+<p>${variant.label}</p>
       <p class="percentage">(${percentage} split)</p>
       <p class="performance"></p>`,
     actions: [{ label: 'Simulate', href: experimentURL.href }],
@@ -289,23 +290,23 @@ function populatePerformanceMetrics(div, config, {
 }, conversionName = 'click') {
   // add summary
   const summary = div.querySelector('.hlx-info');
-  summary.innerHTML = `Showing results for ${bigcountformat.format(totals.total_experimentations)} visits and ${bigcountformat.format(totals.total_conversions)} conversions: `;
+  summary.innerHTML = `Showing results for ${bigcountformat.format(totals.total_experimentations)} visits and ${bigcountformat.format(totals.total_conversions)} conversions:`;
   if (totals.total_conversion_events < 500 && winner.p_value > 0.05) {
-    summary.innerHTML += ` not yet enough data to determine a winner. Keep going until you get ${bigcountformat.format((500 * totals.total_experimentations) / totals.total_conversion_events)} visits.`;
+    summary.innerHTML += `not yet enough data to determine a winner. Keep going until you get ${bigcountformat.format((500 * totals.total_experimentations) / totals.total_conversion_events)} visits.`;
   } else if (winner.p_value > 0.05) {
     summary.innerHTML += ' no significant difference between variants. In doubt, stick with <code>control</code>.';
   } else if (winner.variant === 'control') {
     summary.innerHTML += ' Stick with <code>control</code>. No variant is better than the control.';
   } else {
-    summary.innerHTML += ` <code>${winner.variant}</code> is the winner.`;
+    summary.innerHTML += `<code>${winner.variant}</code> is the winner.`;
   }
 
   // add traffic allocation to control and each variant
   config.variantNames.forEach((variantName, index) => {
-    const variantDiv = document.querySelector('aem-experimentation-bar')?.shadowRoot.querySelectorAll('.hlx-popup-item')[index];
+    const variantDiv = document.querySelector('aem-experimentation-bar')?.shadowRoot.querySelectorAll['.hlx-popup-item'](index);
     const percentage = variantDiv.querySelector('.percentage');
     percentage.innerHTML = `
-      <span title="${countformat.format(richVariants[variantName].variant_conversion_events)} real events">${bigcountformat.format(richVariants[variantName].variant_conversions)} ${conversionName} events</span> /
+<span title="${countformat.format(richVariants[variantName].variant_conversion_events)} real events">${bigcountformat.format(richVariants[variantName].variant_conversions)} ${conversionName} events</span> /
       <span title="${countformat.format(richVariants[variantName].variant_experimentation_events)} real events">${bigcountformat.format(richVariants[variantName].variant_experimentations)} visits</span>
       <span>(${percentformat.format(richVariants[variantName].variant_experimentations / totals.total_experimentations)} split)</span>
     `;
@@ -313,11 +314,11 @@ function populatePerformanceMetrics(div, config, {
 
   // add click rate and significance to each variant
   variantsAsNums.forEach((result) => {
-    const variant = document.querySelector('aem-experimentation-bar')?.shadowRoot.querySelectorAll('.hlx-popup-item')[config.variantNames.indexOf(result.variant)];
+    const variant = document.querySelector('aem-experimentation-bar')?.shadowRoot.querySelectorAll['.hlx-popup-item'](config.variantNames.indexOf(result.variant));
     if (variant) {
       const performance = variant.querySelector('.performance');
       performance.innerHTML = `
-        <span>${conversionName} conversion rate: ${percentformat.format(result.variant_conversion_rate)}</span>
+<span>${conversionName} conversion rate: ${percentformat.format(result.variant_conversion_rate)}</span>
         <span>vs. ${percentformat.format(result.control_conversion_rate)}</span>
         <span title="p value: ${result.p_value}" class="significance ${significanceformat.format(result.p_value).replace(/ /, '-')}">${significanceformat.format(result.p_value)}</span>
       `;
@@ -326,8 +327,9 @@ function populatePerformanceMetrics(div, config, {
 }
 
 /**
- * Create Badge if a Page is enlisted in a AEM Experiment
- * @return {Object} returns a badge or empty string
+
+* Create Badge if a Page is enlisted in a AEM Experiment
+* @return {Object} returns a badge or empty string
  */
 async function decorateExperimentPill(overlay, options, context) {
   const config = window?.hlx?.experiment;
@@ -347,7 +349,7 @@ async function decorateExperimentPill(overlay, options, context) {
     {
       label: config.label,
       description: `
-        <div class="hlx-details">
+<div class="hlx-details">
           ${config.status}
           ${config.resolvedAudiences ? ', ' : ''}
           ${config.resolvedAudiences && config.resolvedAudiences.length ? config.resolvedAudiences[0] : ''}
@@ -416,8 +418,9 @@ function createCampaign(campaign, isSelected, options) {
 }
 
 /**
- * Create Badge if a Page is enlisted in a AEM Campaign
- * @return {Object} returns a badge or empty string
+
+* Create Badge if a Page is enlisted in a AEM Campaign
+* @return {Object} returns a badge or empty string
  */
 async function decorateCampaignPill(overlay, options, context) {
   const campaigns = context.getAllMetadata(options.campaignsMetaTagPrefix);
@@ -443,7 +446,7 @@ async function decorateCampaignPill(overlay, options, context) {
     {
       label: 'Campaigns on this page:',
       description: `
-        <div class="hlx-details">
+<div class="hlx-details">
           ${audiences.length && resolvedAudiences?.length ? `Audience: ${resolvedAudiences[0]}` : ''}
           ${audiences.length && !resolvedAudiences?.length ? 'No audience resolved' : ''}
           ${!audiences.length || !resolvedAudiences ? 'No audience configured' : ''}
@@ -475,8 +478,9 @@ function createAudience(audience, isSelected, options) {
 }
 
 /**
- * Create Badge if a Page is enlisted in a AEM Audiences
- * @return {Object} returns a badge or empty string
+
+* Create Badge if a Page is enlisted in a AEM Audiences
+* @return {Object} returns a badge or empty string
  */
 async function decorateAudiencesPill(overlay, options, context) {
   const audiences = context.getAllMetadata(options.audiencesMetaTagPrefix);
@@ -509,8 +513,9 @@ async function decorateAudiencesPill(overlay, options, context) {
 }
 
 /**
- * Decorates Preview mode badges and overlays
- * @return {Object} returns a badge or empty string
+
+* Decorates Preview mode badges and overlays
+* @return {Object} returns a badge or empty string
  */
 export default async function decoratePreviewMode(document, options, context) {
   try {

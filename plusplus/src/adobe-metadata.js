@@ -1,6 +1,6 @@
-/* eslint-disable max-len, no-restricted-syntax, no-shadow */
+/*eslint-disable max-len, no-restricted-syntax, no-shadow */
 /* adobe specific meta data handling */
-/* NO CLIENT CODE IN HERE JUST SETUP FOR ADOBE */
+/* NO CLIENT CODE IN HERE JUST SETUP FOR ADOBE*/
 
 import { replaceTokens, getConfigTruth } from './variables.js';
 

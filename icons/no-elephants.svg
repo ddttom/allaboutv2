@@ -6,7 +6,7 @@
         <stop offset="50%" style="stop-color:#334155;stop-opacity:1" />
         <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
       </linearGradient>
-      
+
       <!-- Text shadow -->
       <filter id="textShadow">
         <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3"/>

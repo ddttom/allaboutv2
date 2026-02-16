@@ -1,9 +1,10 @@
 /**
- * View MyBlog Block Styles
- * Reproduces the styling from my-blog.html
+
+* View MyBlog Block Styles
+* Reproduces the styling from my-blog.html
  */
 
-/* Base block styles */
+/*Base block styles*/
 .view-myblog {
   font-size: 14px;
   line-height: 1.5;
@@ -13,9 +14,9 @@
   overflow-x: hidden;
 }
 
-/* Ensure all children use border-box */
+/*Ensure all children use border-box*/
 .view-myblog *,
-.view-myblog *::before,
+.view-myblog*::before,
 .view-myblog *::after {
   box-sizing: border-box;
 }
@@ -27,7 +28,7 @@
   width: 100%;
 }
 
-/* Featured sections container */
+/*Featured sections container*/
 .view-myblog-featured {
   margin-top: 0;
   padding: 1.5rem 1.5rem 0;
@@ -36,7 +37,7 @@
   z-index: 2;
 }
 
-/* Section styles */
+/*Section styles*/
 .view-myblog-section {
   background: white;
   border-radius: 8px;
@@ -47,7 +48,7 @@
   box-sizing: border-box;
 }
 
-/* Latest Posts section - blue gradient */
+/*Latest Posts section - blue gradient*/
 .view-myblog-section--latest {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   border-left: 4px solid #667eea;
@@ -57,7 +58,7 @@
   color: #667eea;
 }
 
-/* Most Visited section - orange gradient */
+/*Most Visited section - orange gradient*/
 .view-myblog-section--popular {
   background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
   border-left: 4px solid #e17055;
@@ -74,7 +75,7 @@
   border-bottom: 3px solid currentcolor;
 }
 
-/* Blog entries */
+/*Blog entries*/
 .view-myblog-entry {
   background: white;
   padding: 0.75rem;
@@ -120,14 +121,14 @@
   line-height: 1.2;
 }
 
-/* Categories container */
+/*Categories container*/
 .view-myblog-categories {
   margin: 0 1.5rem;
   width: calc(100% - 3rem);
   box-sizing: border-box;
 }
 
-/* Category Map */
+/*Category Map*/
 .view-myblog-category-map {
   background: white;
   border-radius: 8px;
@@ -193,7 +194,7 @@
   color: #666;
 }
 
-/* Loading and error states */
+/*Loading and error states*/
 .view-myblog-loading,
 .view-myblog-error {
   text-align: center;
@@ -207,7 +208,7 @@
   border-radius: 8px;
 }
 
-/* Mobile responsive */
+/*Mobile responsive*/
 @media (width <= 768px) {
   .view-myblog-header h1 {
     font-size: 1.6rem;

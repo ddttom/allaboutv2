@@ -216,6 +216,7 @@
 
         <div class="mock-data">
 Expected behavior:
+
 1. Fetch fails (404 or network error)
 2. Error logged to console: "Error fetching the JSON data:"
 3. Block remains empty (no items displayed)
@@ -234,9 +235,11 @@ Expected behavior:
         </p>
 
         <div class="mock-data">
+
 Current page path: <span id="current-path"></span>
 
 Expected behavior:
+
 1. Block fetches query-index.json
 2. Filters items: item.path.includes("developer-guide")
 3. Excludes current page: item.path !== currentPath
@@ -259,7 +262,9 @@ Expected behavior:
         </p>
 
         <div class="mock-data">
+
 Required fields from query-index.json data items:
+
 - path (string): URL path to the blog post
 - title (string): Article title
 - image (string): Featured image URL
@@ -294,6 +299,7 @@ Expected data structure:
 
         <div class="mock-data">
 Date formatting logic:
+
 1. Input: Unix timestamp (seconds) from lastModified field
 2. Convert to milliseconds: timestamp * 1000
 3. Create Date object: new Date(milliseconds)
@@ -346,12 +352,14 @@ Output: "15/November/2023"
 
         <div class="mock-data">
 CSS Grid Configuration:
+
 - Desktop (>600px): grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
 - Mobile (≤600px): grid-template-columns: 1fr
 - Gap: 20px
 - Min column width: 300px
 
 Test Instructions:
+
 1. Resize browser window to >600px width
    → Should see multiple columns (2-4 depending on width)
 2. Resize browser window to ≤600px width
@@ -371,6 +379,7 @@ Test Instructions:
         </p>
 
         <div class="mock-data">
+
 Sorting logic (line 17-19 in bloglist.js):
 const sortedBlogItems = filteredBlogItems.sort((a, b) =>
   a.title.localeCompare(b.title)
@@ -404,6 +413,7 @@ const filteredBlogItems = data.data.filter((item) =>
 );
 
 Behavior:
+
 - Includes: /blogs/developer-guide/article
 - Includes: /developer-guide/test
 - Includes: /path/developer-guide-extra/page
@@ -425,6 +435,7 @@ Behavior:
         </p>
 
         <div class="mock-data">
+
 Limit logic (line 22 in bloglist.js):
 const limitedBlogItems = sortedBlogItems.slice(0, 4);
 
@@ -462,6 +473,7 @@ Expected HTML structure per item:
 &lt;/div&gt;
 
 Elements:
+
 - .blog-item: Container for each blog card
 - a: Link wrapper for image and title
 - img: Blog post featured image
@@ -742,5 +754,6 @@ Elements:
             </div>
         `;
     </script>
+
 </body>
 </html>

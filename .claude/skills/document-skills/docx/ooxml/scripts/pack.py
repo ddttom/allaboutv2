@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Tool to pack a directory into a .docx, .pptx, or .xlsx file with XML formatting undone.
 
@@ -14,7 +14,6 @@ import tempfile
 import defusedxml.minidom
 import zipfile
 from pathlib import Path
-
 
 def main():
     parser = argparse.ArgumentParser(description="Pack a directory into an Office file")
@@ -40,7 +39,6 @@ def main():
 
     except ValueError as e:
         sys.exit(f"Error: {e}")
-
 
 def pack_document(input_dir, output_file, validate=False):
     """Pack a directory into an Office file (.docx/.pptx/.xlsx).
@@ -86,7 +84,6 @@ def pack_document(input_dir, output_file, validate=False):
 
     return True
 
-
 def validate_document(doc_path):
     """Validate document by converting to HTML with soffice."""
     # Determine the correct filter based on file extension
@@ -129,7 +126,6 @@ def validate_document(doc_path):
             print(f"Validation error: {e}", file=sys.stderr)
             return False
 
-
 def condense_xml(xml_file):
     """Strip unnecessary whitespace and remove comments."""
     with open(xml_file, "r", encoding="utf-8") as f:
@@ -153,7 +149,6 @@ def condense_xml(xml_file):
     # Write back the condensed XML
     with open(xml_file, "wb") as f:
         f.write(dom.toxml(encoding="UTF-8"))
-
 
 if __name__ == "__main__":
     main()

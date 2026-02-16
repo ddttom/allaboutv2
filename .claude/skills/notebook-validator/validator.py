@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Generic Jupyter Notebook Validator
 
@@ -21,7 +21,6 @@ import sys
 import argparse
 from typing import Dict, List, Tuple, Optional
 from pathlib import Path
-
 
 class NotebookValidator:
     """Generic notebook validator with configurable parameters."""
@@ -502,7 +501,6 @@ class NotebookValidator:
 
         return overall_score >= 90  # Return True if production ready
 
-
 def main():
     parser = argparse.ArgumentParser(
         description='Validate Jupyter notebooks for production readiness',
@@ -568,7 +566,6 @@ Examples:
         print(f"Score: {validator.calculate_overall_score()}/100")
 
     return 0 if is_ready else 1
-
 
 if __name__ == '__main__':
     sys.exit(main())

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Utilities for editing OOXML documents.
 
@@ -36,7 +36,6 @@ from typing import Optional, Union
 
 import defusedxml.minidom
 import defusedxml.sax
-
 
 class XMLEditor:
     """
@@ -341,7 +340,6 @@ class XMLEditor:
         elements = [n for n in nodes if n.nodeType == n.ELEMENT_NODE]
         assert elements, "Fragment must contain at least one element"
         return nodes
-
 
 def _create_line_tracking_parser():
     """

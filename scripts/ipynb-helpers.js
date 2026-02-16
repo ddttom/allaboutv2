@@ -1,26 +1,30 @@
 /**
- * IPYNB Helper Functions for Browser Testing
- *
- * Simple helper functions for testing EDS blocks in Jupyter notebooks.
- * Just import and use - no initialization needed!
- *
- * Usage in any cell:
- * ```javascript
- * const { testBlock, showPreview, getRepoUrl } = await import('/scripts/ipynb-helpers.js');
- * const block = await testBlock('accordion', '<div>content</div>');
- * await showPreview('accordion', '<div>content</div>');
- * const repo = getRepoUrl(); // Get repo URL from notebook metadata
- * return block.outerHTML;
- * ```
- *
- * **NOTE**: Cell code executes in async context automatically (via AsyncFunction).
- * Just write your code naturally with `await` and `return` - no IIFE wrapper needed!
+
+* IPYNB Helper Functions for Browser Testing
+*
+* Simple helper functions for testing EDS blocks in Jupyter notebooks.
+* Just import and use - no initialization needed!
+*
+* Usage in any cell:
+
+* ```javascript
+* const { testBlock, showPreview, getRepoUrl } = await import('/scripts/ipynb-helpers.js');
+* const block = await testBlock('accordion', '<div>content</div>');
+* await showPreview('accordion', '<div>content</div>');
+* const repo = getRepoUrl(); // Get repo URL from notebook metadata
+* return block.outerHTML;
+
+* ```
+*
+* **NOTE**: Cell code executes in async context automatically (via AsyncFunction).
+* Just write your code naturally with `await` and `return` - no IIFE wrapper needed!
  */
 
 /**
- * Get repository URL from notebook metadata
- * Looks for 'repo' attribute in the ipynb-viewer block's data-* attributes
- * @returns {string|null} Repository URL or null if not found
+
+* Get repository URL from notebook metadata
+* Looks for 'repo' attribute in the ipynb-viewer block's data-* attributes
+* @returns {string|null} Repository URL or null if not found
  */
 export function getRepoUrl() {
   // Find the ipynb-viewer block
@@ -35,10 +39,11 @@ export function getRepoUrl() {
 }
 
 /**
- * Test a block's decoration in browser
- * @param {string} blockName - Name of the block to test
- * @param {string} [innerHTML=''] - HTML content to place inside the block
- * @returns {Promise<HTMLElement>} The decorated block element
+
+* Test a block's decoration in browser
+* @param {string} blockName - Name of the block to test
+* @param {string} [innerHTML=''] - HTML content to place inside the block
+* @returns {Promise<HTMLElement>} The decorated block element
  */
 export async function testBlock(blockName, innerHTML = '') {
   // Create block element
@@ -63,19 +68,20 @@ export async function testBlock(blockName, innerHTML = '') {
 }
 
 /**
- * Create and show overlay preview with styled block
- *
- * IMPORTANT: This function detects notebook mode and adjusts behavior accordingly:
- * - In notebook mode (ipynb-viewer paged overlay): uses z-index 99999, shows only close button
- * - In normal mode: uses z-index 10000, shows mobile/tablet/desktop view buttons
- *
- * Fixed 2025-11-21: Enhanced to work properly in notebook mode paged overlays
- * See: docs/for-ai/fixes/showpreview-notebook-mode-fix.md
- *
- * @param {string} blockName - Name of the block (must exist in /blocks/)
- * @param {string} [innerHTML=''] - HTML content to place inside the block
- * @returns {Promise<string>} Success message
- * @throws {Error} If block module doesn't exist or fails to decorate
+
+* Create and show overlay preview with styled block
+*
+* IMPORTANT: This function detects notebook mode and adjusts behavior accordingly:
+* * In notebook mode (ipynb-viewer paged overlay): uses z-index 99999, shows only close button
+* * In normal mode: uses z-index 10000, shows mobile/tablet/desktop view buttons
+*
+* Fixed 2025-11-21: Enhanced to work properly in notebook mode paged overlays
+* See: docs/for-ai/fixes/showpreview-notebook-mode-fix.md
+*
+* @param {string} blockName - Name of the block (must exist in /blocks/)
+* @param {string} [innerHTML=''] - HTML content to place inside the block
+* @returns {Promise<string>} Success message
+* @throws {Error} If block module doesn't exist or fails to decorate
  */
 export async function showPreview(blockName, innerHTML = '') {
   // Remove existing overlay if present
@@ -128,7 +134,7 @@ export async function showPreview(blockName, innerHTML = '') {
           <button class="ipynb-preview-btn ipynb-close-btn">✕</button>`;
 
   overlay.innerHTML = `
-    <style>
+<style>
       .ipynb-preview-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:${isNotebookMode ? '99999' : '10000'};display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
       .ipynb-preview-container{background:#fff;border-radius:8px;width:95%;height:75vh;display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(0,0,0,0.4);transition:width .3s ease,height .3s ease}
       .ipynb-preview-container.mobile{width:375px;height:667px}
@@ -264,7 +270,7 @@ export async function showPreview(blockName, innerHTML = '') {
     const contentArea = overlay.querySelector('.ipynb-preview-content');
     if (contentArea) {
       contentArea.innerHTML = `
-        <div style="padding: 20px; color: #d32f2f; background: #ffebee; border-radius: 4px; border-left: 4px solid #d32f2f;">
+<div style="padding: 20px; color: #d32f2f; background: #ffebee; border-radius: 4px; border-left: 4px solid #d32f2f;">
           <h3 style="margin-top: 0;">❌ Failed to load block: ${blockName}</h3>
           <p><strong>Error:</strong> ${error.message}</p>
           <p style="margin-bottom: 0;"><em>Check the console for more details.</em></p>

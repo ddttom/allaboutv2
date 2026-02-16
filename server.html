@@ -445,7 +445,7 @@ Proxying request to: https://allabout.network/missing-file.json
   &lt;head&gt;&lt;title&gt;404 Not Found&lt;/title&gt;&lt;/head&gt;
   &lt;body&gt;
     &lt;h1&gt;404 Not Found&lt;/h1&gt;
-    &lt;p&gt;The requested resource &lt;code&gt;/path&lt;/code&gt; was not found locally 
+    &lt;p&gt;The requested resource &lt;code&gt;/path&lt;/code&gt; was not found locally
     or on the proxy server.&lt;/p&gt;
     &lt;p&gt;Attempted proxy URL: &lt;code&gt;https://allabout.network/path&lt;/code&gt;&lt;/p&gt;
   &lt;/body&gt;
@@ -500,9 +500,11 @@ Proxying request to: https://allabout.network/missing-file.json
 lsof -i :3000
 
 # Kill existing process
+
 pkill -f "node server.js"
 
 # Restart server
+
 npm run debug</code></pre>
 
         <h4>Files not loading:</h4>

@@ -1,14 +1,17 @@
-#!/bin/bash
+# !/bin/bash
 
 # Pre-push hook to remind about step-commit workflow
+
 # This hook runs before git push operations
 
 # Check if we're in a git repository
+
 if ! git rev-parse --git-dir > /dev/null 2>&1; then
     exit 0
 fi
 
 # Check for uncommitted changes
+
 if ! git diff-index --quiet HEAD --; then
     echo "⚠️  WARNING: You have uncommitted changes."
     echo "Consider using the step-commit workflow:"
@@ -25,6 +28,7 @@ if ! git diff-index --quiet HEAD --; then
 fi
 
 # Check if recent commits have proper attribution
+
 recent_commits=$(git log -5 --format=%B)
 if ! echo "$recent_commits" | grep -q "Claude Code"; then
     echo "ℹ️  NOTE: Recent commits may be missing AI attribution."
@@ -33,6 +37,7 @@ if ! echo "$recent_commits" | grep -q "Claude Code"; then
 fi
 
 # Check if documentation files need updates
+
 last_code_change=$(git log -1 --format=%ct -- . ':!*.md')
 last_readme_change=$(git log -1 --format=%ct -- README.md 2>/dev/null || echo 0)
 last_claude_change=$(git log -1 --format=%ct -- CLAUDE.md 2>/dev/null || echo 0)

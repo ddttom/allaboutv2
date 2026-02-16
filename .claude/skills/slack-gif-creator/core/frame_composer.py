@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Frame Composer - Utilities for composing visual elements into frames.
 
@@ -9,7 +9,6 @@ together to create animation frames.
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 from typing import Optional
-
 
 def create_blank_frame(width: int, height: int, color: tuple[int, int, int] = (255, 255, 255)) -> Image.Image:
     """
@@ -24,7 +23,6 @@ def create_blank_frame(width: int, height: int, color: tuple[int, int, int] = (2
         PIL Image
     """
     return Image.new('RGB', (width, height), color)
-
 
 def draw_circle(frame: Image.Image, center: tuple[int, int], radius: int,
                 fill_color: Optional[tuple[int, int, int]] = None,
@@ -50,7 +48,6 @@ def draw_circle(frame: Image.Image, center: tuple[int, int], radius: int,
     draw.ellipse(bbox, fill=fill_color, outline=outline_color, width=outline_width)
     return frame
 
-
 def draw_rectangle(frame: Image.Image, top_left: tuple[int, int], bottom_right: tuple[int, int],
                    fill_color: Optional[tuple[int, int, int]] = None,
                    outline_color: Optional[tuple[int, int, int]] = None,
@@ -73,7 +70,6 @@ def draw_rectangle(frame: Image.Image, top_left: tuple[int, int], bottom_right: 
     draw.rectangle([top_left, bottom_right], fill=fill_color, outline=outline_color, width=outline_width)
     return frame
 
-
 def draw_line(frame: Image.Image, start: tuple[int, int], end: tuple[int, int],
               color: tuple[int, int, int] = (0, 0, 0), width: int = 2) -> Image.Image:
     """
@@ -92,7 +88,6 @@ def draw_line(frame: Image.Image, start: tuple[int, int], end: tuple[int, int],
     draw = ImageDraw.Draw(frame)
     draw.line([start, end], fill=color, width=width)
     return frame
-
 
 def draw_text(frame: Image.Image, text: str, position: tuple[int, int],
               font_size: int = 40, color: tuple[int, int, int] = (0, 0, 0),
@@ -130,7 +125,6 @@ def draw_text(frame: Image.Image, text: str, position: tuple[int, int],
     draw.text(position, text, fill=color, font=font)
     return frame
 
-
 def draw_emoji(frame: Image.Image, emoji: str, position: tuple[int, int], size: int = 60) -> Image.Image:
     """
     Draw emoji text on a frame (requires system emoji support).
@@ -155,7 +149,6 @@ def draw_emoji(frame: Image.Image, emoji: str, position: tuple[int, int], size: 
 
     draw.text(position, emoji, font=font, embedded_color=True)
     return frame
-
 
 def composite_layers(base: Image.Image, overlay: Image.Image,
                      position: tuple[int, int] = (0, 0), alpha: float = 1.0) -> Image.Image:
@@ -185,7 +178,6 @@ def composite_layers(base: Image.Image, overlay: Image.Image,
 
     # Convert back to RGB
     return base_rgba.convert('RGB')
-
 
 def draw_stick_figure(frame: Image.Image, position: tuple[int, int], scale: float = 1.0,
                       color: tuple[int, int, int] = (0, 0, 0), line_width: int = 3) -> Image.Image:
@@ -231,7 +223,6 @@ def draw_stick_figure(frame: Image.Image, position: tuple[int, int], scale: floa
 
     return frame
 
-
 def create_gradient_background(width: int, height: int,
                                top_color: tuple[int, int, int],
                                bottom_color: tuple[int, int, int]) -> Image.Image:
@@ -265,7 +256,6 @@ def create_gradient_background(width: int, height: int,
         draw.line([(0, y), (width, y)], fill=(r, g, b))
 
     return frame
-
 
 def draw_emoji_enhanced(frame: Image.Image, emoji: str, position: tuple[int, int],
                        size: int = 60, shadow: bool = True,
@@ -319,7 +309,6 @@ def draw_emoji_enhanced(frame: Image.Image, emoji: str, position: tuple[int, int
 
     return frame
 
-
 def draw_circle_with_shadow(frame: Image.Image, center: tuple[int, int], radius: int,
                             fill_color: tuple[int, int, int],
                             shadow_offset: tuple[int, int] = (3, 3),
@@ -357,7 +346,6 @@ def draw_circle_with_shadow(frame: Image.Image, center: tuple[int, int], radius:
 
     return frame
 
-
 def draw_rounded_rectangle(frame: Image.Image, top_left: tuple[int, int],
                           bottom_right: tuple[int, int], radius: int,
                           fill_color: Optional[tuple[int, int, int]] = None,
@@ -387,7 +375,6 @@ def draw_rounded_rectangle(frame: Image.Image, top_left: tuple[int, int],
                           fill=fill_color, outline=outline_color, width=outline_width)
 
     return frame
-
 
 def add_vignette(frame: Image.Image, strength: float = 0.5) -> Image.Image:
     """
@@ -430,7 +417,6 @@ def add_vignette(frame: Image.Image, strength: float = 0.5) -> Image.Image:
     result = (result * 255).astype(np.uint8)
 
     return Image.fromarray(result)
-
 
 def draw_star(frame: Image.Image, center: tuple[int, int], size: int,
              fill_color: tuple[int, int, int],

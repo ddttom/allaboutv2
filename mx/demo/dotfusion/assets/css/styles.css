@@ -1,18 +1,19 @@
 /**
- * Dotfusion Digital - MX Demo Stylesheet
- * MX Technologies Ltd - 2026
- *
- * Design system implementing WCAG 2.1 AA accessibility standards
- * Color palette derived from Dotfusion's brand identity
- * Demonstrates MX improvements: semantic structure, performance, accessibility
+
+* Dotfusion Digital - MX Demo Stylesheet
+* MX Technologies Ltd - 2026
+*
+* Design system implementing WCAG 2.1 AA accessibility standards
+* Color palette derived from Dotfusion's brand identity
+* Demonstrates MX improvements: semantic structure, performance, accessibility
  */
 
-/* ========================================
+/*========================================
    CSS CUSTOM PROPERTIES (Design Tokens)
-   ======================================== */
+   ========================================*/
 
 :root {
-  /* Color Palette - Dotfusion Brand */
+  /*Color Palette - Dotfusion Brand */
   --primary: #0f1923;        /* Deep navy (tech, trust) */
   --primary-light: #1a2d3d;  /* Lighter navy */
   --secondary: #e84c3d;      /* Coral red (Dotfusion accent) */
@@ -25,13 +26,13 @@
   --border: #e1e5eb;         /* Light border */
   --success: #27ae60;        /* Green (positive scores) */
   --warning: #f39c12;        /* Orange (medium scores) */
-  --danger: #e74c3c;         /* Red (low scores) */
+  --danger: #e74c3c;         /* Red (low scores)*/
 
-  /* Typography */
+  /*Typography*/
   --font-heading: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   --font-body: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 
-  /* Font Sizes */
+  /*Font Sizes*/
   --font-size-xs: 0.875rem;
   --font-size-sm: 1rem;
   --font-size-md: 1.125rem;
@@ -40,7 +41,7 @@
   --font-size-2xl: 2.5rem;
   --font-size-3xl: 3rem;
 
-  /* Spacing */
+  /*Spacing*/
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
   --spacing-md: 1.5rem;
@@ -48,15 +49,15 @@
   --spacing-xl: 3rem;
   --spacing-2xl: 4rem;
 
-  /* Layout */
+  /*Layout*/
   --max-width: 1200px;
   --border-radius: 6px;
   --transition: 0.2s ease;
 }
 
-/* ========================================
+/*========================================
    RESET & BASE STYLES
-   ======================================== */
+   ========================================*/
 
 *,
 *::before,
@@ -81,9 +82,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ========================================
+/*========================================
    TYPOGRAPHY
-   ======================================== */
+   ========================================*/
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
@@ -117,9 +118,9 @@ a:focus {
   outline-offset: 2px;
 }
 
-/* ========================================
+/*========================================
    ACCESSIBILITY - SKIP LINK
-   ======================================== */
+   ========================================*/
 
 .skip-link {
   position: absolute;
@@ -136,9 +137,9 @@ a:focus {
   top: 0;
 }
 
-/* ========================================
+/*========================================
    HEADER & NAVIGATION
-   ======================================== */
+   ========================================*/
 
 header {
   background-color: var(--primary);
@@ -203,9 +204,9 @@ nav[aria-label="Main navigation"] a[aria-current="page"] {
   color: var(--background);
 }
 
-/* ========================================
+/*========================================
    MAIN CONTENT LAYOUT
-   ======================================== */
+   ========================================*/
 
 main[id="main-content"] {
   min-height: 60vh;
@@ -258,9 +259,9 @@ main[id="main-content"] {
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* ========================================
+/*========================================
    HERO SECTION
-   ======================================== */
+   ========================================*/
 
 .hero {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
@@ -322,9 +323,9 @@ main[id="main-content"] {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* ========================================
+/*========================================
    GRID LAYOUTS
-   ======================================== */
+   ========================================*/
 
 .grid {
   display: grid;
@@ -343,9 +344,9 @@ main[id="main-content"] {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
-/* ========================================
+/*========================================
    CARDS
-   ======================================== */
+   ========================================*/
 
 .card {
   background-color: var(--background);
@@ -382,9 +383,9 @@ main[id="main-content"] {
   color: var(--secondary-light);
 }
 
-/* ========================================
+/*========================================
    SCORE DISPLAY
-   ======================================== */
+   ========================================*/
 
 .scores {
   display: grid;
@@ -437,9 +438,9 @@ main[id="main-content"] {
 .score__fill--medium { background: var(--warning); }
 .score__fill--low { background: var(--danger); }
 
-/* ========================================
+/*========================================
    CASE STUDIES
-   ======================================== */
+   ========================================*/
 
 .case-study {
   background: var(--background);
@@ -479,9 +480,9 @@ main[id="main-content"] {
   margin-bottom: var(--spacing-xs);
 }
 
-/* ========================================
+/*========================================
    FORM STYLES
-   ======================================== */
+   ========================================*/
 
 .form-group {
   margin-bottom: var(--spacing-lg);
@@ -526,9 +527,9 @@ main[id="main-content"] {
   margin-top: var(--spacing-xs);
 }
 
-/* ========================================
+/*========================================
    COMPARISON TABLE
-   ======================================== */
+   ========================================*/
 
 .comparison {
   width: 100%;
@@ -553,9 +554,9 @@ main[id="main-content"] {
   background: var(--background-alt);
 }
 
-/* ========================================
+/*========================================
    BADGES
-   ======================================== */
+   ========================================*/
 
 .badge {
   display: inline-block;
@@ -572,9 +573,9 @@ main[id="main-content"] {
 .badge--danger { background: #f8d7da; color: #721c24; }
 .badge--info { background: #d1ecf1; color: #0c5460; }
 
-/* ========================================
+/*========================================
    FOOTER
-   ======================================== */
+   ========================================*/
 
 footer {
   background-color: var(--primary);
@@ -631,9 +632,9 @@ footer .container {
   font-size: var(--font-size-xs);
 }
 
-/* ========================================
+/*========================================
    RESPONSIVE DESIGN
-   ======================================== */
+   ========================================*/
 
 @media (max-width: 768px) {
   :root {
@@ -692,9 +693,9 @@ footer .container {
   }
 }
 
-/* ========================================
+/*========================================
    PRINT STYLES
-   ======================================== */
+   ========================================*/
 
 @media print {
   header, nav, footer { display: none; }
@@ -703,9 +704,9 @@ footer .container {
   .section { page-break-inside: avoid; }
 }
 
-/* ========================================
+/*========================================
    UTILITY CLASSES
-   ======================================== */
+   ========================================*/
 
 .text-center { text-align: center; }
 .text-primary { color: var(--primary); }
@@ -719,7 +720,6 @@ footer .container {
 .mt-md { margin-top: var(--spacing-md); }
 .mt-lg { margin-top: var(--spacing-lg); }
 .mt-xl { margin-top: var(--spacing-xl); }
-
 
 .cta-group {
   display: flex;

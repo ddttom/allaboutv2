@@ -1,9 +1,11 @@
 /*
- * The Invisible Users - Shared Styles
- * Common CSS for all tutorial pages
+
+* The Invisible Users - Shared Styles
+* Common CSS for all tutorial pages
  */
 
-/* Reset and Base Styles */
+/*Reset and Base Styles*/
+
 * {
   margin: 0;
   padding: 0;
@@ -17,7 +19,7 @@ body {
   background: #ffffff;
 }
 
-/* Header */
+/*Header*/
 header {
   background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
   color: white;
@@ -38,14 +40,14 @@ header p {
   color: #e0e7ff;
 }
 
-/* Container */
+/*Container*/
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 3rem 2rem;
 }
 
-/* Buttons */
+/*Buttons*/
 .btn {
   display: inline-block;
   background: #2563eb;
@@ -73,7 +75,7 @@ header p {
   color: #1d4ed8;
 }
 
-/* Cards */
+/*Cards*/
 .feature-card,
 .pricing-card,
 .tier-card {
@@ -113,7 +115,7 @@ header p {
   color: #4b5563;
 }
 
-/* Lists */
+/*Lists*/
 .feature-card ul,
 .pricing-card ul,
 .tier-card ul,
@@ -142,7 +144,7 @@ header p {
   font-weight: 700;
 }
 
-/* Grids */
+/*Grids*/
 .features-grid,
 .pricing-grid,
 .service-tiers {
@@ -152,7 +154,7 @@ header p {
   margin: 4rem 0;
 }
 
-/* Price Display */
+/*Price Display*/
 .price-tag,
 .pricing-card .price,
 .tier-card .price {
@@ -169,7 +171,7 @@ header p {
   border-radius: 8px;
 }
 
-/* Sections */
+/*Sections*/
 .what-you-get,
 .process-section,
 .audience-section {
@@ -189,7 +191,7 @@ header p {
   font-size: 2rem;
 }
 
-/* Call to Action */
+/*Call to Action*/
 .cta-box,
 .cta-section {
   background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
@@ -213,7 +215,7 @@ header p {
   color: #e0e7ff;
 }
 
-/* Footer */
+/*Footer*/
 footer {
   background: #f9fafb;
   border-top: 1px solid #e5e7eb;
@@ -241,7 +243,7 @@ footer p {
   text-decoration: underline;
 }
 
-/* Floating Navigation Buttons */
+/*Floating Navigation Buttons*/
 .floating-home-button {
   position: fixed;
   top: 20px;
@@ -293,7 +295,7 @@ footer p {
   transform: translateY(-2px);
 }
 
-/* Responsive Design */
+/*Responsive Design*/
 @media (max-width: 768px) {
   header h1 {
     font-size: 2rem;

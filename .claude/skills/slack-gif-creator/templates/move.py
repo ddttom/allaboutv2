@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Move Animation - Move objects along paths with various motion types.
 
@@ -14,7 +14,6 @@ sys.path.append(str(Path(__file__).parent.parent))
 from core.gif_builder import GIFBuilder
 from core.frame_composer import create_blank_frame, draw_circle, draw_emoji_enhanced
 from core.easing import interpolate, calculate_arc_motion
-
 
 def create_move_animation(
     object_type: str = 'emoji',
@@ -156,7 +155,6 @@ def create_move_animation(
 
     return frames
 
-
 def create_path_from_points(points: list[tuple[int, int]],
                             num_frames: int = 60,
                             easing: str = 'ease_in_out') -> list[tuple[int, int]]:
@@ -194,7 +192,6 @@ def create_path_from_points(points: list[tuple[int, int]],
             path.append((int(x), int(y)))
 
     return path
-
 
 def apply_trail_effect(frames: list, trail_length: int = 5,
                       fade_alpha: float = 0.3) -> list:
@@ -236,8 +233,8 @@ def apply_trail_effect(frames: list, trail_length: int = 5,
 
     return trailed_frames
 
-
 # Example usage
+
 if __name__ == '__main__':
     print("Creating movement examples...")
 

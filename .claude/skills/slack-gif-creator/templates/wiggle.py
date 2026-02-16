@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Wiggle Animation - Smooth, organic wobbling and jiggling motions.
 
@@ -15,7 +15,6 @@ from PIL import Image
 from core.gif_builder import GIFBuilder
 from core.frame_composer import create_blank_frame, draw_emoji_enhanced
 from core.easing import interpolate
-
 
 def create_wiggle_animation(
     object_type: str = 'emoji',
@@ -229,7 +228,6 @@ def create_wiggle_animation(
 
     return frames
 
-
 def create_excited_wiggle(
     emoji: str = '🎉',
     num_frames: int = 20,
@@ -259,8 +257,8 @@ def create_excited_wiggle(
         bg_color=(255, 255, 255)
     )
 
-
 # Example usage
+
 if __name__ == '__main__':
     print("Creating wiggle animations...")
 

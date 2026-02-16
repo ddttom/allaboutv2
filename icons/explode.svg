@@ -6,7 +6,7 @@
             function resetAnimations() {
                 // Get all animations
                 const animations = document.querySelectorAll('animate, animateTransform');
-                
+
                 // Reset each animation
                 animations.forEach(animation => {
                     animation.setAttribute('begin', 'indefinite');

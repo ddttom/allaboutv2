@@ -1,32 +1,32 @@
-/* Theme Variables
+/*Theme Variables
    ============================================ */
 .dam {
-  /* Colors */
+  /* Colors*/
   --dam-background: var(--background-code, #f5f5f5);
   --dam-text-color: var(--text-color, #333);
   --dam-border-color: var(--border-color, #ddd);
   
-  /* Spacing */
+  /*Spacing*/
   --dam-padding: var(--spacing-m, 1rem);
   --dam-margin: var(--spacing-m, 1rem);
   
-  /* Typography */
+  /*Typography*/
   --dam-font-family: var(--fixed-font-family, monospace);
   --dam-font-size: var(--body-font-size-s, 14px);
   --dam-line-height: var(--body-line-height, 1.5);
   
-  /* Layout */
+  /*Layout*/
   --dam-border-radius: var(--border-radius, 4px);
 }
 
-/* Layout
-   ============================================ */
+/*Layout
+   ============================================*/
 .dam-wrapper {
   margin: var(--dam-margin) 0;
 }
 
-/* Code Display
-   ============================================ */
+/*Code Display
+   ============================================*/
 .dam .dam-code {
   background-color: var(--dam-background);
   color: var(--dam-text-color);
@@ -39,8 +39,8 @@
   margin: 0;
 }
 
-/* Responsive Design
-   ============================================ */
+/*Responsive Design
+   ============================================*/
 @media (width <= 768px) {
   .dam .dam-code {
     font-size: var(--dam-font-size);
@@ -48,8 +48,8 @@
   }
 }
 
-/* Accessibility Enhancements
-   ============================================ */
+/*Accessibility Enhancements
+   ============================================*/
 .dam .dam-code:focus-visible {
   outline: 2px solid var(--dam-text-color);
   outline-offset: 2px;

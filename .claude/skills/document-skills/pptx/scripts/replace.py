@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """Apply text replacements to PowerPoint presentation.
 
 Usage:
@@ -22,7 +22,6 @@ from pptx.enum.text import PP_ALIGN
 from pptx.oxml.xmlchemy import OxmlElement
 from pptx.util import Pt
 
-
 def clear_paragraph_bullets(paragraph):
     """Clear bullet formatting from a paragraph."""
     pPr = paragraph._element.get_or_add_pPr()
@@ -38,7 +37,6 @@ def clear_paragraph_bullets(paragraph):
             pPr.remove(child)
 
     return pPr
-
 
 def apply_paragraph_properties(paragraph, para_data: Dict[str, Any]):
     """Apply formatting properties to a paragraph."""
@@ -109,7 +107,6 @@ def apply_paragraph_properties(paragraph, para_data: Dict[str, Any]):
     # Apply font properties
     apply_font_properties(run, para_data)
 
-
 def apply_font_properties(run, para_data: Dict[str, Any]):
     """Apply font properties to a text run."""
     if "bold" in para_data:
@@ -139,7 +136,6 @@ def apply_font_properties(run, para_data: Dict[str, Any]):
         except AttributeError:
             print(f"  WARNING: Unknown theme color name '{theme_name}'")
 
-
 def detect_frame_overflow(inventory: InventoryData) -> Dict[str, Dict[str, float]]:
     """Detect text overflow in shapes (text exceeding shape bounds).
 
@@ -157,7 +153,6 @@ def detect_frame_overflow(inventory: InventoryData) -> Dict[str, Dict[str, float
                 overflow_map[slide_key][shape_key] = shape_data.frame_overflow_bottom
 
     return overflow_map
-
 
 def validate_replacements(inventory: InventoryData, replacements: Dict) -> List[str]:
     """Validate that all shapes in replacements exist in inventory.
@@ -200,7 +195,6 @@ def validate_replacements(inventory: InventoryData, replacements: Dict) -> List[
 
     return errors
 
-
 def check_duplicate_keys(pairs):
     """Check for duplicate keys when loading JSON."""
     result = {}
@@ -209,7 +203,6 @@ def check_duplicate_keys(pairs):
             raise ValueError(f"Duplicate key found in JSON: '{key}'")
         result[key] = value
     return result
-
 
 def apply_replacements(pptx_file: str, json_file: str, output_file: str):
     """Apply text replacements from JSON to PowerPoint presentation."""
@@ -352,7 +345,6 @@ def apply_replacements(pptx_file: str, json_file: str, output_file: str):
     print(f"  - Shapes cleared: {shapes_cleared}")
     print(f"  - Shapes replaced: {shapes_replaced}")
 
-
 def main():
     """Main entry point for command-line usage."""
     if len(sys.argv) != 4:
@@ -379,7 +371,6 @@ def main():
 
         traceback.print_exc()
         sys.exit(1)
-
 
 if __name__ == "__main__":
     main()

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Zoom Animation - Scale objects dramatically for emphasis.
 
@@ -15,7 +15,6 @@ from PIL import Image, ImageFilter
 from core.gif_builder import GIFBuilder
 from core.frame_composer import create_blank_frame, draw_emoji_enhanced
 from core.easing import interpolate
-
 
 def create_zoom_animation(
     object_type: str = 'emoji',
@@ -147,7 +146,6 @@ def create_zoom_animation(
 
     return frames
 
-
 def create_explosion_zoom(
     emoji: str = '💥',
     num_frames: int = 20,
@@ -217,7 +215,6 @@ def create_explosion_zoom(
 
     return frames
 
-
 def create_mind_blown_zoom(
     emoji: str = '🤯',
     num_frames: int = 30,
@@ -278,8 +275,8 @@ def create_mind_blown_zoom(
 
     return frames
 
-
 # Example usage
+
 if __name__ == '__main__':
     print("Creating zoom animations...")
 

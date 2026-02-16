@@ -102,7 +102,7 @@ export default async function decorate(block) {
     const {
       image, title, description, path,
     } = slideData;
-    const imageUrl = image.split('?')[0];
+    const imageUrl = image.split['?'](0);
 
     const slideItem = document.createElement('div');
     slideItem.classList.add('slide-builder-item');

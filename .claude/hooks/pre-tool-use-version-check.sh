@@ -1,23 +1,34 @@
-#!/bin/bash
+# !/bin/bash
 
 # Pre-Tool-Use Hook: Cloudflare Worker Validation
+
 #
-# This hook monitors edits to cloudflare/files/ and ensures:
+
+# This hook monitors edits to cloudflare/files/ and ensures
+
 # 1. WORKER_VERSION constant is incremented for worker.js changes
+
 # 2. Two-file rule is followed (only .js and .test.js files)
+
 # 3. Pure function pattern is maintained
+
 #
+
 # Triggered by: Edit, MultiEdit, Write tools
+
 # Target files: cloudflare/files/*
+
 # Action: Warn if rules are violated
 
 set -euo pipefail
 
 # Configuration
+
 WORKER_FILE="cloudflare/files/cloudflare-worker.js"
 VERSION_PATTERN='export const WORKER_VERSION = '\''\([0-9]\+\.[0-9]\+\.[0-9]\+\)'\''';'
 
 # Function to extract version from file
+
 get_current_version() {
   if [[ ! -f "$WORKER_FILE" ]]; then
     echo ""
@@ -28,27 +39,32 @@ get_current_version() {
 }
 
 # Function to get version from git history
+
 get_previous_version() {
   if ! git rev-parse --git-dir > /dev/null 2>&1; then
     echo ""
     return
   fi
 
-  # Get the last committed version
+# Get the last committed version
+
   git show HEAD:"$WORKER_FILE" 2>/dev/null | grep "WORKER_VERSION" | sed -n "s/.*WORKER_VERSION = '\([0-9.]*\)'.*/\1/p" || echo ""
 }
 
 # Function to check if file is being modified
+
 is_worker_file_modified() {
   local tool_name="${1:-}"
   local file_path="${2:-}"
 
-  # Check if the tool is Edit, MultiEdit, or Write
+# Check if the tool is Edit, MultiEdit, or Write
+
   if [[ "$tool_name" != "Edit" && "$tool_name" != "MultiEdit" && "$tool_name" != "Write" ]]; then
     return 1
   fi
 
-  # Check if the file being modified is the worker file
+# Check if the file being modified is the worker file
+
   if [[ "$file_path" == *"$WORKER_FILE"* ]]; then
     return 0
   fi
@@ -57,16 +73,19 @@ is_worker_file_modified() {
 }
 
 # Function to check if any cloudflare/files/ file is being modified
+
 is_cloudflare_file_modified() {
   local tool_name="${1:-}"
   local file_path="${2:-}"
 
-  # Check if the tool is Edit, MultiEdit, or Write
+# Check if the tool is Edit, MultiEdit, or Write
+
   if [[ "$tool_name" != "Edit" && "$tool_name" != "MultiEdit" && "$tool_name" != "Write" ]]; then
     return 1
   fi
 
-  # Check if the file is in cloudflare/files/
+# Check if the file is in cloudflare/files/
+
   if [[ "$file_path" == *"cloudflare/files/"* ]]; then
     return 0
   fi
@@ -75,20 +94,24 @@ is_cloudflare_file_modified() {
 }
 
 # Function to check for two-file rule violations
+
 check_two_file_rule() {
   local file_path="${1:-}"
 
-  # Only check if creating a new test file
+# Only check if creating a new test file
+
   if [[ "$file_path" != *".test.js" ]]; then
     return 0
   fi
 
-  # Check if the file is a new test file (not cloudflare-worker.test.js)
+# Check if the file is a new test file (not cloudflare-worker.test.js)
+
   if [[ "$file_path" == *"cloudflare-worker.test.js" ]]; then
     return 0
   fi
 
-  # Check if it's in cloudflare/files/
+# Check if it's in cloudflare/files/
+
   if [[ "$file_path" == *"cloudflare/files/"* && "$file_path" == *".test.js" ]]; then
     cat >&2 <<EOF
 
@@ -103,27 +126,31 @@ The two-file rule requires:
   File 2: cloudflare-worker.test.js (unified tests)
 
 ❌ DO NOT create separate test files like:
-  - cloudflare-worker.unit.test.js
-  - cloudflare-worker.integration.test.js
-  - Any other .test.js files
+
+- cloudflare-worker.unit.test.js
+- cloudflare-worker.integration.test.js
+- Any other .test.js files
 
 ✅ ALL tests must be in: cloudflare-worker.test.js
 
 Why this matters:
+
 - Cloudflare Workers runtime APIs (HTMLRewriter) don't exist in Node.js
 - Pure functions are testable; runtime-specific handlers are not
 - One unified test file ensures all logic is testable
 
 What to do:
+
   1. Add your tests to cloudflare-worker.test.js
   2. Implement core logic as pure functions (string → string)
   3. Use HTMLRewriter only for features that require it
   4. Run: /check-cloudflare-tests to validate structure
 
 For complete details:
-  - cloudflare/files/TESTING.md (two-file rule documentation)
-  - cloudflare/files/README.md (testing requirements)
-  - CLAUDE.md (Cloudflare Worker Two-File Testing System)
+
+- cloudflare/files/TESTING.md (two-file rule documentation)
+- cloudflare/files/README.md (testing requirements)
+- CLAUDE.md (Cloudflare Worker Two-File Testing System)
 
 EOF
     exit 1
@@ -133,6 +160,7 @@ EOF
 }
 
 # Function to warn about pure function requirements
+
 warn_about_pure_functions() {
   cat >&2 <<EOF
 
@@ -143,6 +171,7 @@ You are modifying Cloudflare worker files.
 ⚠️  CRITICAL: Follow the two-file rule
 
 Required structure:
+
   1. cloudflare-worker.js - Pure JavaScript functions
   2. cloudflare-worker.test.js - All tests (unit + integration)
 
@@ -164,6 +193,7 @@ Required structure:
   };
 
 Before committing:
+
   1. Ensure all logic is pure functions
   2. Export all functions for testing
   3. Run: cd cloudflare/files && npm test
@@ -175,15 +205,20 @@ EOF
 }
 
 # Main hook logic
+
 main() {
-  # Get hook parameters
+
+# Get hook parameters
+
   local tool_name="${1:-}"
   local file_path="${2:-}"
 
-  # Check for two-file rule violations (blocks operation if violated)
+# Check for two-file rule violations (blocks operation if violated)
+
   check_two_file_rule "$file_path"
 
-  # Show reminder if any cloudflare/files/ file is being modified
+# Show reminder if any cloudflare/files/ file is being modified
+
   if is_cloudflare_file_modified "$tool_name" "$file_path"; then
     # Only show reminder for .js files (not package.json, README.md, etc.)
     if [[ "$file_path" == *".js" && "$file_path" != *".test.js" ]]; then
@@ -191,23 +226,27 @@ main() {
     fi
   fi
 
-  # Only proceed with version check if worker file is being modified
+# Only proceed with version check if worker file is being modified
+
   if ! is_worker_file_modified "$tool_name" "$file_path"; then
     exit 0
   fi
 
-  # Get versions
+# Get versions
+
   local current_version
   local previous_version
   current_version=$(get_current_version)
   previous_version=$(get_previous_version)
 
-  # If we can't determine versions, skip check
+# If we can't determine versions, skip check
+
   if [[ -z "$current_version" || -z "$previous_version" ]]; then
     exit 0
   fi
 
-  # Compare versions
+# Compare versions
+
   if [[ "$current_version" == "$previous_version" ]]; then
     cat >&2 <<EOF
 
@@ -227,6 +266,7 @@ Version increment rules:
   PATCH (1.0.x) - Bug fixes, refactoring, documentation
 
 How to increment version:
+
   1. Update WORKER_VERSION constant in cloudflare-worker.js (line 20)
   2. Update @version comment in file header (line 15)
   3. Update version in package.json to keep in sync
@@ -241,7 +281,8 @@ EOF
     exit 0
   fi
 
-  # Version was incremented, show confirmation
+# Version was incremented, show confirmation
+
   cat >&2 <<EOF
 
 ✅ Cloudflare Worker Version Updated
@@ -250,6 +291,7 @@ Previous version: $previous_version
 New version:      $current_version
 
 Remember to update all four version locations:
+
   1. WORKER_VERSION constant (line 20) - ✓ Already done
   2. @version comment (line 15) - Check this!
   3. package.json version field - Check this!
@@ -263,4 +305,5 @@ EOF
 }
 
 # Run main function with all arguments
+
 main "$@"

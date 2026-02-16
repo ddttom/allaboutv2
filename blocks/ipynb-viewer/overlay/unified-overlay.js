@@ -1,6 +1,7 @@
 /**
- * Unified Overlay Manager
- * Single overlay with content switching (no nesting!)
+
+* Unified Overlay Manager
+* Single overlay with content switching (no nesting!)
  */
 
 import { NavigationState } from './navigation-state.js';
@@ -339,11 +340,12 @@ export function createUnifiedOverlay({
 }
 
 /**
- * Expand all parent nodes to make a target node visible
- * @param {Array} tree - Tree structure
- * @param {string} targetNodeId - Node ID to make visible
- * @param {Object} treeState - State object
- * @returns {boolean} - True if node was found and parents expanded
+
+* Expand all parent nodes to make a target node visible
+* @param {Array} tree - Tree structure
+* @param {string} targetNodeId - Node ID to make visible
+* @param {Object} treeState - State object
+* @returns {boolean} - True if node was found and parents expanded
  */
 function expandParentsOfNode(tree, targetNodeId, treeState) {
   // Recursive function to find node and expand all parents
@@ -372,14 +374,15 @@ function expandParentsOfNode(tree, targetNodeId, treeState) {
 }
 
 /**
- * Update tree to highlight and scroll to a specific node
- * Unified function for both notebook cells and markdown files
- * @param {string} nodeId - Node ID to highlight (e.g., 'cell-5' or 'appendix-a.md')
- * @param {Array} navigationTree - Tree structure
- * @param {Object} treeState - State object
- * @param {HTMLElement} navTreePanel - Tree panel DOM element
- * @param {Function} renderNavigationTree - Tree rendering function
- * @param {Function} handleTreeNodeClick - Node click handler
+
+* Update tree to highlight and scroll to a specific node
+* Unified function for both notebook cells and markdown files
+* @param {string} nodeId - Node ID to highlight (e.g., 'cell-5' or 'appendix-a.md')
+* @param {Array} navigationTree - Tree structure
+* @param {Object} treeState - State object
+* @param {HTMLElement} navTreePanel - Tree panel DOM element
+* @param {Function} renderNavigationTree - Tree rendering function
+* @param {Function} handleTreeNodeClick - Node click handler
  */
 function updateTreeHighlight(nodeId, navigationTree, treeState, navTreePanel, renderNavigationTree, handleTreeNodeClick) {
   if (!renderNavigationTree || !nodeId) return;

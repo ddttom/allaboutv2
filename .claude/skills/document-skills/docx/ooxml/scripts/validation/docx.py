@@ -10,7 +10,6 @@ import lxml.etree
 
 from .base import BaseSchemaValidator
 
-
 class DOCXSchemaValidator(BaseSchemaValidator):
     """Validator for Word document XML files against XSD schemas."""
 
@@ -268,7 +267,6 @@ class DOCXSchemaValidator(BaseSchemaValidator):
         diff = new_count - original_count
         diff_str = f"+{diff}" if diff > 0 else str(diff)
         print(f"\nParagraphs: {original_count} → {new_count} ({diff_str})")
-
 
 if __name__ == "__main__":
     raise RuntimeError("This module should not be run directly.")

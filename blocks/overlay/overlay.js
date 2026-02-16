@@ -1,14 +1,15 @@
 /**
- * Overlay Block
- * Creates a button that triggers a full-viewport overlay with content
- *
- * Structure (from author perspective):
- * Row 1: "Overlay" (block name - processed by EDS)
- * Row 2: Button text
- * Row 3: Overlay content
- *
- * Note: EDS processes the header row before the decorate function runs,
- * so extractedRows[0] contains Row 2 (button text) and extractedRows[1] contains Row 3 (content)
+
+* Overlay Block
+* Creates a button that triggers a full-viewport overlay with content
+*
+* Structure (from author perspective):
+* Row 1: "Overlay" (block name - processed by EDS)
+* Row 2: Button text
+* Row 3: Overlay content
+*
+* Note: EDS processes the header row before the decorate function runs,
+* so extractedRows[0] contains Row 2 (button text) and extractedRows[1] contains Row 3 (content)
  no-unused-vars, import/no-unresolved, import/no-self-import */
 
 // Configuration
@@ -21,10 +22,11 @@ const CONFIG = {
 };
 
 /**
- * Creates the overlay structure
- * @param {string} title - The header title for the overlay
- * @param {HTMLElement} contentElement - The content to display in the overlay
- * @returns {HTMLElement} The overlay container element
+
+* Creates the overlay structure
+* @param {string} title - The header title for the overlay
+* @param {HTMLElement} contentElement - The content to display in the overlay
+* @returns {HTMLElement} The overlay container element
  no-unused-vars, import/no-unresolved, import/no-self-import */
 function createOverlay(title, contentElement) {
   // Create overlay container (backdrop)
@@ -71,8 +73,9 @@ function createOverlay(title, contentElement) {
 }
 
 /**
- * Closes the overlay with animation
- * @param {HTMLElement} overlay - The overlay element to close
+
+* Closes the overlay with animation
+* @param {HTMLElement} overlay - The overlay element to close
  no-unused-vars, import/no-unresolved, import/no-self-import */
 function closeOverlay(overlay) {
   // Start exit animation
@@ -93,8 +96,9 @@ function closeOverlay(overlay) {
 }
 
 /**
- * Sets up event handlers for the overlay
- * @param {HTMLElement} overlay - The overlay element
+
+* Sets up event handlers for the overlay
+* @param {HTMLElement} overlay - The overlay element
  no-unused-vars, import/no-unresolved, import/no-self-import */
 function setupOverlayEventHandlers(overlay) {
   const closeButton = overlay.querySelector('.overlay-close');
@@ -144,9 +148,10 @@ function setupOverlayEventHandlers(overlay) {
 }
 
 /**
- * Shows the overlay with animation
- * @param {HTMLElement} overlay - The overlay element to show
- * @param {HTMLElement} triggerButton - The button that triggered the overlay (for focus return)
+
+* Shows the overlay with animation
+* @param {HTMLElement} overlay - The overlay element to show
+* @param {HTMLElement} triggerButton - The button that triggered the overlay (for focus return)
  no-unused-vars, import/no-unresolved, import/no-self-import */
 function showOverlay(overlay, triggerButton) {
   // Add to DOM
@@ -170,21 +175,22 @@ function showOverlay(overlay, triggerButton) {
 }
 
 /**
- * Decorates the overlay block
- * @param {HTMLElement} block - The block element
- *
- * Expected structure (from author perspective):
- * Row 1: "Overlay" (block name)
- * Row 2: Button text
- * Row 3: Overlay content
- *
- * Note: EDS extracts only data rows, so:
- * - extractedRows[0] = Row 2 (button text)
- * - extractedRows[1] = Row 3 (overlay content)
- *
- * Variations:
- * - Default: Shows trigger button, clicking opens overlay with close button
- * - Notebook (.notebook): Same as default - shows trigger button, close button visible
+
+* Decorates the overlay block
+* @param {HTMLElement} block - The block element
+*
+* Expected structure (from author perspective):
+* Row 1: "Overlay" (block name)
+* Row 2: Button text
+* Row 3: Overlay content
+*
+* Note: EDS extracts only data rows, so:
+* * extractedRows[0] = Row 2 (button text)
+* * extractedRows[1] = Row 3 (overlay content)
+*
+* Variations:
+* * Default: Shows trigger button, clicking opens overlay with close button
+* * Notebook (.notebook): Same as default - shows trigger button, close button visible
  no-unused-vars, import/no-unresolved, import/no-self-import */
 export default function decorate(block) {
   try {
@@ -240,5 +246,6 @@ export default function decorate(block) {
     block.innerHTML = `<p class="error-message" style="padding: 1rem; background: #fee; border: 1px solid #fcc; border-radius: 4px; color: #c00;">
       Unable to load overlay: ${error.message}
     </p>`;
+
   }
 }

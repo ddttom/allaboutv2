@@ -5,7 +5,7 @@
       <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
     </linearGradient>
-    
+
     <linearGradient id="secondaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#f093fb;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#f5576c;stop-opacity:1" />
@@ -54,7 +54,7 @@
   <!-- Web Components Foundation (left side) -->
   <g transform="translate(80, 120)">
     <rect x="0" y="0" width="200" height="250" rx="15" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.3)" stroke-width="2" filter="url(#dropShadow)"/>
-    
+
     <text x="100" y="30" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="bold">
       Web Components
     </text>
@@ -90,7 +90,7 @@
   <!-- EDS Block Structure (center) -->
   <g transform="translate(420, 120)">
     <rect x="0" y="0" width="240" height="250" rx="15" fill="rgba(255,255,255,0.25)" stroke="rgba(255,255,255,0.4)" stroke-width="2" filter="url(#dropShadow)"/>
-    
+
     <text x="120" y="30" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="bold">
       EDS Block Architecture
     </text>
@@ -138,7 +138,7 @@
   <!-- Shoelace Card Component (right side) -->
   <g transform="translate(820, 120)">
     <rect x="0" y="0" width="280" height="250" rx="15" fill="rgba(255,255,255,0.3)" stroke="rgba(255,255,255,0.5)" stroke-width="2" filter="url(#dropShadow)"/>
-    
+
     <text x="140" y="30" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="bold">
       Shoelace Card Component
     </text>
@@ -180,7 +180,7 @@
   <!-- Development Workflow (bottom section) -->
   <g transform="translate(100, 450)">
     <rect x="0" y="0" width="1000" height="120" rx="15" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.25)" stroke-width="2" filter="url(#dropShadow)"/>
-    
+
     <text x="500" y="30" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="18" font-weight="bold">
       Development Workflow
     </text>
@@ -242,7 +242,7 @@
     <text x="500" y="30" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="18" font-weight="bold">
       Key Benefits
     </text>
-    
+
     <rect x="50" y="50" width="200" height="60" rx="10" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
     <text x="150" y="70" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="600">
       Native Browser Support
@@ -292,6 +292,5 @@
   <text x="600" y="770" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="Arial, sans-serif" font-size="14" font-weight="600">
     Complete implementation: github.com/ddttom/webcomponents-with-eds
   </text>
-  
   
 </svg>

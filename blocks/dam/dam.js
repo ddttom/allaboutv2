@@ -19,9 +19,10 @@ const DAM_CONFIG = {
 };
 
 /**
- * Extracts the path from an image or link element
- * @param {HTMLElement} element - The element containing the image or link
- * @returns {string} The extracted path
+
+* Extracts the path from an image or link element
+* @param {HTMLElement} element - The element containing the image or link
+* @returns {string} The extracted path
  */
 function extractPath(element) {
   const img = element.querySelector(DAM_CONFIG.SELECTORS.IMAGE);
@@ -41,9 +42,10 @@ function extractPath(element) {
 }
 
 /**
- * Creates a JSON representation of the DAM data
- * @param {HTMLElement} block - The DAM block element
- * @returns {string} Formatted JSON string
+
+* Creates a JSON representation of the DAM data
+* @param {HTMLElement} block - The DAM block element
+* @returns {string} Formatted JSON string
  */
 function createDamJson(block) {
   if (!block || !block.children.length) {
@@ -68,9 +70,10 @@ function createDamJson(block) {
 }
 
 /**
- * Creates the code display element
- * @param {string} jsonString - The formatted JSON string
- * @returns {HTMLElement} The code display element
+
+* Creates the code display element
+* @param {string} jsonString - The formatted JSON string
+* @returns {HTMLElement} The code display element
  */
 function createCodeDisplay(jsonString) {
   const pre = document.createElement('pre');
@@ -88,8 +91,9 @@ function createCodeDisplay(jsonString) {
 }
 
 /**
- * Decorates the DAM block
- * @param {HTMLElement} block - The block element
+
+* Decorates the DAM block
+* @param {HTMLElement} block - The block element
  */
 export default async function decorate(block) {
   try {

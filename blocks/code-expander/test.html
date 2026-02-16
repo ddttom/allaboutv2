@@ -236,6 +236,7 @@ def process_data(data: List[Dict]) -> pd.DataFrame:
     return df
 
 # Example usage
+
 raw_data = [
     {'name': 'Alice', 'age': 30, 'score': 95},
     {'name': 'Bob', 'age': 25, 'score': 87},
@@ -257,31 +258,38 @@ print(processed_df.head())</code></pre>
             <div class="code-wrapper">
                 <div class="code-expander block"></div>
                 <pre><code>#!/bin/bash
+
 # Deploy script for production
 
 # Set variables
+
 DEPLOY_DIR="/var/www/production"
 BACKUP_DIR="/var/backups/$(date +%Y%m%d)"
 
 # Create backup
+
 echo "Creating backup..."
 mkdir -p "$BACKUP_DIR"
 cp -r "$DEPLOY_DIR" "$BACKUP_DIR/"
 
 # Pull latest changes
+
 echo "Pulling latest code..."
 cd "$DEPLOY_DIR" || exit 1
 git pull origin main
 
 # Install dependencies
+
 echo "Installing dependencies..."
 npm install --production
 
 # Build project
+
 echo "Building project..."
 npm run build
 
 # Restart services
+
 echo "Restarting services..."
 systemctl restart nginx
 systemctl restart app-service
@@ -357,7 +365,8 @@ echo "Deployment complete!"</code></pre>
   --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Reset and base styles */
+/*Reset and base styles*/
+
 * {
   margin: 0;
   padding: 0;
@@ -371,7 +380,7 @@ body {
   background-color: var(--background-color);
 }
 
-/* Header styles */
+/*Header styles*/
 .site-header {
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   padding: 2rem;
@@ -384,7 +393,7 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Navigation styles */
+/*Navigation styles*/
 nav ul {
   display: flex;
   gap: 1rem;
@@ -403,7 +412,7 @@ nav a:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Responsive design */
+/*Responsive design*/
 @media (max-width: 768px) {
   .site-header {
     padding: 1rem;
@@ -535,10 +544,11 @@ For questions or issues, please contact [support@example.com](mailto:support@exa
             <div class="code-wrapper">
                 <div class="code-expander block"></div>
                 <pre><code>/**
- * Code Expander Block - Complete Implementation
- *
- * This is a long code example to test the expand/collapse functionality.
- * When code exceeds 40 lines, the block should show an expand button.
+
+* Code Expander Block - Complete Implementation
+*
+* This is a long code example to test the expand/collapse functionality.
+* When code exceeds 40 lines, the block should show an expand button.
  */
 
 const CODE_EXPANDER_CONFIG = {
@@ -569,7 +579,7 @@ export default async function decorate(block) {
   }
 
   function detectLanguage(code) {
-    const firstLine = code.trim().split('\n')[0];
+    const firstLine = code.trim().split['\n'](0);
 
     if (firstLine.startsWith('#!')) {
       if (firstLine.includes('/bin/bash') ||
@@ -657,14 +667,15 @@ export default async function decorate(block) {
                 <pre><code>This is plain text content that should not be syntax highlighted.
 
 Even if it contains code-like patterns:
-- function example() { return true; }
-- const variable = "value";
-- <html><body>Tags</body></html>
+* function example() { return true; }
+* const variable = "value";
+* <html><body>Tags</body></html>
 
 None of the above should trigger syntax highlighting because
 the code-expander block has the "text" variation class applied.
 
 This is useful for:
+
 1. Displaying configuration files that shouldn't be highlighted
 2. Showing command output or logs
 3. Presenting formatted text content

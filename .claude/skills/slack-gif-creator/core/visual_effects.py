@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Visual Effects - Particles, motion blur, impacts, and other effects for GIFs.
 
@@ -11,7 +11,6 @@ import numpy as np
 import math
 import random
 from typing import Optional
-
 
 class Particle:
     """A single particle in a particle system."""
@@ -101,7 +100,6 @@ class Particle:
                 (x + size // 2, y),
             ]
             draw.line(points, fill=color, width=2)
-
 
 class ParticleSystem:
     """Manages a collection of particles."""
@@ -209,7 +207,6 @@ class ParticleSystem:
         """Get number of active particles."""
         return len(self.particles)
 
-
 def add_motion_blur(frame: Image.Image, prev_frame: Optional[Image.Image],
                     blur_amount: float = 0.5) -> Image.Image:
     """
@@ -234,7 +231,6 @@ def add_motion_blur(frame: Image.Image, prev_frame: Optional[Image.Image],
     blended = np.clip(blended, 0, 255).astype(np.uint8)
 
     return Image.fromarray(blended)
-
 
 def create_impact_flash(frame: Image.Image, position: tuple[int, int],
                         radius: int = 100, intensity: float = 0.7) -> Image.Image:
@@ -271,7 +267,6 @@ def create_impact_flash(frame: Image.Image, position: tuple[int, int],
     frame_rgba = Image.alpha_composite(frame_rgba, overlay)
     return frame_rgba.convert('RGB')
 
-
 def create_shockwave_rings(frame: Image.Image, position: tuple[int, int],
                            radii: list[int], color: tuple[int, int, int] = (255, 200, 0),
                            width: int = 3) -> Image.Image:
@@ -296,7 +291,6 @@ def create_shockwave_rings(frame: Image.Image, position: tuple[int, int],
         draw.ellipse(bbox, outline=color, width=width)
 
     return frame
-
 
 def create_explosion_effect(frame: Image.Image, position: tuple[int, int],
                             radius: int, progress: float,
@@ -336,7 +330,6 @@ def create_explosion_effect(frame: Image.Image, position: tuple[int, int],
     frame_rgba = Image.alpha_composite(frame_rgba, overlay)
     return frame_rgba.convert('RGB')
 
-
 def add_glow_effect(frame: Image.Image, mask_color: tuple[int, int, int],
                     glow_color: tuple[int, int, int],
                     blur_radius: int = 10) -> Image.Image:
@@ -368,7 +361,6 @@ def add_glow_effect(frame: Image.Image, mask_color: tuple[int, int, int],
     # Blend with original
     blended = Image.blend(frame, glow, 0.5)
     return blended
-
 
 def add_drop_shadow(frame: Image.Image, object_bounds: tuple[int, int, int, int],
                     shadow_offset: tuple[int, int] = (5, 5),
@@ -405,7 +397,6 @@ def add_drop_shadow(frame: Image.Image, object_bounds: tuple[int, int, int, int]
     frame_rgba.paste(obj, (x1, y1))
 
     return frame_rgba.convert('RGB')
-
 
 def create_speed_lines(frame: Image.Image, position: tuple[int, int],
                        direction: float, length: int = 50,
@@ -451,7 +442,6 @@ def create_speed_lines(frame: Image.Image, position: tuple[int, int],
 
     return frame
 
-
 def create_screen_shake_offset(intensity: int, frame_index: int) -> tuple[int, int]:
     """
     Calculate screen shake offset for a frame.
@@ -469,7 +459,6 @@ def create_screen_shake_offset(intensity: int, frame_index: int) -> tuple[int, i
     offset_y = random.randint(-intensity, intensity)
     random.seed()  # Reset seed
     return (offset_x, offset_y)
-
 
 def apply_screen_shake(frame: Image.Image, intensity: int, frame_index: int) -> Image.Image:
     """

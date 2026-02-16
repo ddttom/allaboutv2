@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Create thumbnail grids from PowerPoint presentation slides.
 
@@ -9,10 +9,12 @@ slides, multiple numbered grid files are created automatically.
 The program outputs the names of all files created.
 
 Output:
+
 - Single grid: {prefix}.jpg (if slides fit in one grid)
 - Multiple grids: {prefix}-1.jpg, {prefix}-2.jpg, etc.
 
 Grid limits by column count:
+
 - 3 cols: max 12 slides per grid (3×4)
 - 4 cols: max 20 slides per grid (4×5)
 - 5 cols: max 30 slides per grid (5×6) [default]
@@ -51,6 +53,7 @@ from PIL import Image, ImageDraw, ImageFont
 from pptx import Presentation
 
 # Constants
+
 THUMBNAIL_WIDTH = 300  # Fixed thumbnail width in pixels
 CONVERSION_DPI = 100  # DPI for PDF to image conversion
 MAX_COLS = 6  # Maximum number of columns
@@ -58,11 +61,11 @@ DEFAULT_COLS = 5  # Default number of columns
 JPEG_QUALITY = 95  # JPEG compression quality
 
 # Grid layout constants
+
 GRID_PADDING = 20  # Padding between thumbnails
 BORDER_WIDTH = 2  # Border width around thumbnails
 FONT_SIZE_RATIO = 0.12  # Font size as fraction of thumbnail width
 LABEL_PADDING_RATIO = 0.4  # Label padding as fraction of font size
-
 
 def main():
     parser = argparse.ArgumentParser(
@@ -145,7 +148,6 @@ def main():
         print(f"Error: {e}")
         sys.exit(1)
 
-
 def create_hidden_slide_placeholder(size):
     """Create placeholder image for hidden slides."""
     img = Image.new("RGB", size, color="#F0F0F0")
@@ -154,7 +156,6 @@ def create_hidden_slide_placeholder(size):
     draw.line([(0, 0), size], fill="#CCCCCC", width=line_width)
     draw.line([(size[0], 0), (0, size[1])], fill="#CCCCCC", width=line_width)
     return img
-
 
 def get_placeholder_regions(pptx_path):
     """Extract ALL text regions from the presentation.
@@ -192,7 +193,6 @@ def get_placeholder_regions(pptx_path):
             placeholder_regions[slide_idx] = regions
 
     return placeholder_regions, (slide_width_inches, slide_height_inches)
-
 
 def convert_to_images(pptx_path, temp_dir, dpi):
     """Convert PowerPoint to images via PDF, handling hidden slides."""
@@ -270,7 +270,6 @@ def convert_to_images(pptx_path, temp_dir, dpi):
 
     return all_images
 
-
 def create_grids(
     image_paths,
     cols,
@@ -317,7 +316,6 @@ def create_grids(
 
     return grid_files
 
-
 def create_grid(
     image_paths,
     cols,
@@ -327,8 +325,8 @@ def create_grid(
     slide_dimensions=None,
 ):
     """Create thumbnail grid from slide images with optional placeholder outlining."""
-    font_size = int(width * FONT_SIZE_RATIO)
-    label_padding = int(font_size * LABEL_PADDING_RATIO)
+    font_size = int(width *FONT_SIZE_RATIO)
+    label_padding = int(font_size* LABEL_PADDING_RATIO)
 
     # Get dimensions
     with Image.open(image_paths[0]) as img:
@@ -444,7 +442,6 @@ def create_grid(
                 )
 
     return grid
-
 
 if __name__ == "__main__":
     main()

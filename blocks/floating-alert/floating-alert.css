@@ -1,4 +1,4 @@
-/* Floating Alert Block Configuration */
+/*Floating Alert Block Configuration*/
 :root {
   --alert-bg-color: rgb(255 165 0 / 0.15);
   --alert-border-color: rgb(255 165 0 / 0.3);
@@ -12,7 +12,7 @@
   --alert-backdrop-blur: 10px;
 }
 
-/* Base Modal Styles */
+/*Base Modal Styles*/
 .floating-alert {
   z-index: 1000;
   background: var(--alert-bg-color);
@@ -31,7 +31,7 @@
   position: relative;
 }
 
-/* Content Styles */
+/*Content Styles*/
 .floating-alert-content {
   position: relative;
   z-index: 1;
@@ -39,7 +39,7 @@
   padding-right: 2.5rem;
 }
 
-/* Alert Title Styles */
+/*Alert Title Styles*/
 .floating-alert-title {
   margin: 0 0 1rem;
   font-size: 1.25rem;
@@ -48,7 +48,7 @@
   line-height: 1.3;
 }
 
-/* Separator Styles */
+/*Separator Styles*/
 .floating-alert-separator {
   margin: 1rem 0;
   border: none;
@@ -70,7 +70,7 @@
   opacity: 0.8;
 }
 
-/* Close Button Styles */
+/*Close Button Styles*/
 .floating-alert-close {
   position: absolute;
   top: 0.5rem;
@@ -96,7 +96,7 @@
   outline-offset: 2px;
 }
 
-/* Sparkle Effect */
+/*Sparkle Effect*/
 .floating-alert-sparkle {
   position: absolute;
   width: 4px;
@@ -107,7 +107,7 @@
   animation: floating-alert-sparkle 1s ease-out forwards;
 }
 
-/* Animations */
+/*Animations*/
 @keyframes floating-alert-fade-in {
   from {
     opacity: 0;
@@ -148,12 +148,12 @@
   }
 }
 
-/* Dismissing State */
+/*Dismissing State*/
 .floating-alert--dismissing {
   animation: floating-alert-fade-out var(--alert-transition-duration) forwards;
 }
 
-/* Responsive Adjustments */
+/*Responsive Adjustments*/
 @media (width <= 480px) {
   .floating-alert {
     --alert-padding: 1rem;
@@ -161,13 +161,13 @@
   }
 }
 
-/* Focus Styles for Accessibility */
+/*Focus Styles for Accessibility*/
 .floating-alert:focus-within {
   outline: 2px solid var(--alert-text-color);
   outline-offset: 2px;
 }
 
-/* Overlay Styles */
+/*Overlay Styles*/
 .floating-alert-overlay {
   position: fixed;
   top: 0;
@@ -181,7 +181,7 @@
   justify-content: center;
 }
 
-/* Modal should be above overlay */
+/*Modal should be above overlay*/
 .floating-alert {
   z-index: 1000;
 }

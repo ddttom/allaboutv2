@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Quick validation script for skills - minimal version
 """
@@ -11,7 +11,7 @@ from pathlib import Path
 def validate_skill(skill_path):
     """Basic validation of a skill"""
     skill_path = Path(skill_path)
-    
+
     # Check SKILL.md exists
     skill_md = skill_path / 'SKILL.md'
     if not skill_md.exists():
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python quick_validate.py <skill_directory>")
         sys.exit(1)
-    
+
     valid, message = validate_skill(sys.argv[1])
     print(message)
     sys.exit(0 if valid else 1)

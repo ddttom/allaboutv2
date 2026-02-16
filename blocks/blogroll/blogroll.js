@@ -45,7 +45,7 @@ function groupAndSortPosts(posts, config) {
       // console.log('No matches found using current directory filter (path=*).');
       // We don't attempt title fallback for path=*
     }
-  // *** Priority 2: Handle regular pathFilters only if path=* wasn't used ***
+  // ***Priority 2: Handle regular pathFilters only if path=* wasn't used***
   } else if (pathFilters.length > 0) {
     // console.log('Applying regular path filters:', pathFilters);
 
@@ -104,7 +104,7 @@ function groupAndSortPosts(posts, config) {
     return []; // Return an empty array directly
   }
 
-  // *** Grouping and Sorting Logic (only runs if filteredPosts is not empty) ***
+  // ***Grouping and Sorting Logic (only runs if filteredPosts is not empty)***
   // console.log('Grouping and sorting filtered posts. Count:', filteredPosts.length);
   const seriesMap = new Map();
 
@@ -150,7 +150,7 @@ function groupAndSortPosts(posts, config) {
         && typeof postsInSeries[0].title === 'string'
         ? postsInSeries[0].title : '';
       const seriesName = firstPostTitle.includes(' - Part')
-        ? firstPostTitle.split(' - Part')[0] : firstPostTitle;
+        ? firstPostTitle.split[' - Part'](0) : firstPostTitle;
       return [seriesName, postsInSeries];
     }); // Return array of [seriesName, sortedPostsArray]
 }
@@ -214,7 +214,7 @@ function getConfig(block) {
     });
   }
 
-  // Fallback mechanism: Set default path=* when no configuration is present
+  // Fallback mechanism: Set default path=*when no configuration is present
   // If all filter arrays are empty and no currentDirFilter is set, apply path=* as default
   if (config.acceptList.length === 0
     && config.pathFilters.length === 0
@@ -305,7 +305,7 @@ function updatePanelContent(container, groupedPosts) {
 }
 
 // Function to create the compact blogroll panel
-function createCompactBlogrollPanel(groupedPosts, _originalPosts, _config) {
+function createCompactBlogrollPanel(groupedPosts, _originalPosts,_config) {
   const panel = document.createElement('div');
   panel.className = 'blogroll-panel';
 

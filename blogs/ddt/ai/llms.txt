@@ -5,7 +5,6 @@ Technical documentation and educational resources.
 **Last updated:** December 2025
 **Authors:** Tom Cranstoun, Cate Nisbet
 
-
 ## Core AI/LLM Topics
 
 - [Slides for Mathematics behind AI](https://allabout.network/blogs/ddt/ai/mathematics-behind-ai): The mathematics behind AI
@@ -27,4 +26,3 @@ Technical documentation and educational resources.
 - [The "No Elephants" Problem - Why AI Struggles With What NOT to Do](https://allabout.network/blogs/ddt/ai/the-no-elephants-problem-why-ai-struggles-with-what-not-to-do): Exploring why AI systems consistently fail at understanding negation and what this reveals about their fundamental limitations
 - [You Built Software for Humans - Now Build It for AI](https://allabout.network/blogs/ddt/ai/you-built-software-for-humans-now-build-it-for-ai): Software that works brilliantly for humans often confuses AI assistants completely - and that's becoming a serious business problem.
 - [The Flyball Governor - How Victorian Engineering Gave Us the Language of AI](https://allabout.network/blogs/ddt/ai/the-flyball-governor-how-victorian-engineering-gave-us-the-language-of-ai): Exploring the surprising connections between steam engine governors and modern AI systems
-

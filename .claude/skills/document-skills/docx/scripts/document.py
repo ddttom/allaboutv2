@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Library for working with Word documents: comments, tracked changes, and editing.
 
@@ -41,8 +41,8 @@ from ooxml.scripts.validation.redlining import RedliningValidator
 from .utilities import XMLEditor
 
 # Path to template files
-TEMPLATE_DIR = Path(__file__).parent / "templates"
 
+TEMPLATE_DIR = Path(__file__).parent / "templates"
 
 class DocxXMLEditor(XMLEditor):
     """XMLEditor that automatically applies RSID, author, and date to new elements.
@@ -592,7 +592,6 @@ class DocxXMLEditor(XMLEditor):
         else:
             raise ValueError(f"Element must be w:r or w:p, got {elem.nodeName}")
 
-
 def _generate_hex_id() -> str:
     """Generate random 8-character hex ID for para/durable IDs.
 
@@ -603,11 +602,9 @@ def _generate_hex_id() -> str:
     """
     return f"{random.randint(1, 0x7FFFFFFE):08X}"
 
-
 def _generate_rsid() -> str:
     """Generate random 8-character hex RSID."""
     return "".join(random.choices("0123456789ABCDEF", k=8))
-
 
 class Document:
     """Manages comments in unpacked Word documents."""

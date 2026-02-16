@@ -1,17 +1,18 @@
 /**
- * LPC Design + Print - Website Stylesheet
- * MX Technologies Ltd - 2026
- *
- * Design System implementing WCAG 2.1 AA accessibility standards
- * Color palette appropriate for traditional printing industry
+
+* LPC Design + Print - Website Stylesheet
+* MX Technologies Ltd - 2026
+*
+* Design System implementing WCAG 2.1 AA accessibility standards
+* Color palette appropriate for traditional printing industry
  */
 
-/* ========================================
+/*========================================
    CSS CUSTOM PROPERTIES (Design Tokens)
-   ======================================== */
+   ========================================*/
 
 :root {
-  /* Color Palette - Print Industry Appropriate */
+  /*Color Palette - Print Industry Appropriate */
   --primary: #1a472a;        /* Deep green (stability, traditional) */
   --secondary: #c9a961;      /* Gold (quality, established) */
   --accent: #d64545;         /* Red (energy, attention) */
@@ -19,39 +20,39 @@
   --text-light: #666666;     /* Gray (secondary text) */
   --background: #ffffff;     /* White (clean, professional) */
   --background-alt: #f8f8f8; /* Off-white (sections) */
-  --border: #dddddd;         /* Light gray borders */
+  --border: #dddddd;         /* Light gray borders*/
 
-  /* Typography */
+  /*Typography*/
   --font-heading: 'Georgia', 'Times New Roman', serif;
   --font-body: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   --font-mono: 'Courier New', 'Courier', monospace;
 
-  /* Font Sizes (Fluid Typography) */
+  /*Font Sizes (Fluid Typography) */
   --font-size-xs: 0.875rem;   /* 14px */
   --font-size-sm: 1rem;        /* 16px */
   --font-size-md: 1.125rem;    /* 18px */
   --font-size-lg: 1.5rem;      /* 24px */
   --font-size-xl: 2rem;        /* 32px */
   --font-size-2xl: 2.5rem;     /* 40px */
-  --font-size-3xl: 3rem;       /* 48px */
+  --font-size-3xl: 3rem;       /* 48px*/
 
-  /* Spacing */
+  /*Spacing */
   --spacing-xs: 0.5rem;   /* 8px */
   --spacing-sm: 1rem;     /* 16px */
   --spacing-md: 1.5rem;   /* 24px */
   --spacing-lg: 2rem;     /* 32px */
   --spacing-xl: 3rem;     /* 48px */
-  --spacing-2xl: 4rem;    /* 64px */
+  --spacing-2xl: 4rem;    /* 64px*/
 
-  /* Layout */
+  /*Layout*/
   --max-width: 1200px;
   --border-radius: 4px;
   --transition: 0.2s ease;
 }
 
-/* ========================================
+/*========================================
    RESET & BASE STYLES
-   ======================================== */
+   ========================================*/
 
 *,
 *::before,
@@ -76,9 +77,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ========================================
+/*========================================
    TYPOGRAPHY
-   ======================================== */
+   ========================================*/
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
@@ -135,9 +136,9 @@ em {
   font-style: italic;
 }
 
-/* ========================================
+/*========================================
    ACCESSIBILITY - SKIP LINK
-   ======================================== */
+   ========================================*/
 
 .skip-link {
   position: absolute;
@@ -154,9 +155,9 @@ em {
   top: 0;
 }
 
-/* ========================================
+/*========================================
    HEADER & NAVIGATION
-   ======================================== */
+   ========================================*/
 
 header[role="banner"] {
   background-color: var(--primary);
@@ -215,9 +216,9 @@ nav[role="navigation"] a[aria-current="page"] {
   color: var(--primary);
 }
 
-/* ========================================
+/*========================================
    MAIN CONTENT LAYOUT
-   ======================================== */
+   ========================================*/
 
 main[role="main"] {
   min-height: 60vh;
@@ -252,9 +253,9 @@ main[role="main"] {
   font-size: var(--font-size-md);
 }
 
-/* ========================================
+/*========================================
    HERO SECTION
-   ======================================== */
+   ========================================*/
 
 .hero {
   background: linear-gradient(135deg, var(--primary) 0%, #0d2315 100%);
@@ -304,9 +305,9 @@ main[role="main"] {
   outline-offset: 4px;
 }
 
-/* ========================================
+/*========================================
    GRID LAYOUTS
-   ======================================== */
+   ========================================*/
 
 .grid {
   display: grid;
@@ -321,9 +322,9 @@ main[role="main"] {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-/* ========================================
+/*========================================
    CARDS
-   ======================================== */
+   ========================================*/
 
 .card {
   background-color: var(--background);
@@ -365,7 +366,7 @@ main[role="main"] {
   color: var(--secondary);
 }
 
-/* Badge styles */
+/*Badge styles*/
 .badge {
   display: inline-block;
   background: var(--secondary);
@@ -382,9 +383,9 @@ main[role="main"] {
   letter-spacing: 0.5px;
 }
 
-/* ========================================
+/*========================================
    REVIEWS / TESTIMONIALS
-   ======================================== */
+   ========================================*/
 
 .review {
   background-color: var(--background);
@@ -428,9 +429,9 @@ main[role="main"] {
   margin-right: var(--spacing-xs);
 }
 
-/* ========================================
+/*========================================
    FOOTER
-   ======================================== */
+   ========================================*/
 
 footer[role="contentinfo"] {
   background-color: var(--primary);
@@ -487,9 +488,9 @@ footer .container {
   font-size: var(--font-size-xs);
 }
 
-/* ========================================
+/*========================================
    CONTACT PAGE
-   ======================================== */
+   ========================================*/
 
 .contact__info {
   font-size: var(--font-size-md);
@@ -502,16 +503,16 @@ footer .container {
   min-width: 100px;
 }
 
-/* ========================================
+/*========================================
    RESPONSIVE DESIGN
-   ======================================== */
+   ========================================*/
 
-/* Tablet (768px and below) */
+/*Tablet (768px and below) */
 @media (max-width: 768px) {
   :root {
     --font-size-3xl: 2rem;     /* 32px */
     --font-size-2xl: 1.75rem;  /* 28px */
-    --font-size-xl: 1.5rem;    /* 24px */
+    --font-size-xl: 1.5rem;    /* 24px*/
   }
 
   header .container {
@@ -531,11 +532,11 @@ footer .container {
   }
 }
 
-/* Mobile (640px and below) */
+/*Mobile (640px and below) */
 @media (max-width: 640px) {
   :root {
     --spacing-2xl: 2rem;  /* Reduce from 4rem */
-    --spacing-xl: 2rem;   /* Reduce from 3rem */
+    --spacing-xl: 2rem;   /* Reduce from 3rem*/
   }
 
   .hero {
@@ -556,9 +557,9 @@ footer .container {
   }
 }
 
-/* ========================================
+/*========================================
    PRINT STYLES
-   ======================================== */
+   ========================================*/
 
 @media print {
   header,
@@ -582,9 +583,9 @@ footer .container {
   }
 }
 
-/* ========================================
+/*========================================
    UTILITY CLASSES
-   ======================================== */
+   ========================================*/
 
 .text-center {
   text-align: center;
@@ -612,7 +613,7 @@ footer .container {
 .mt-lg { margin-top: var(--spacing-lg); }
 .mt-xl { margin-top: var(--spacing-xl); }
 
-/* Visually hidden but accessible to screen readers */
+/*Visually hidden but accessible to screen readers*/
 .sr-only {
   position: absolute;
   width: 1px;

@@ -1,18 +1,19 @@
 /*
- * Based on Adobe's Cloudflare Worker template
- * Original copyright 2022 Adobe. Licensed under Apache License, Version 2.0
- * Modified by Digital Domain Technologies Ltd
- *
- * This file is licensed to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License. You may obtain a copy
- * of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under
- * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
- * OF ANY KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
- *
- * @version 1.1.5
+
+* Based on Adobe's Cloudflare Worker template
+* Original copyright 2022 Adobe. Licensed under Apache License, Version 2.0
+* Modified by Digital Domain Technologies Ltd
+*
+* This file is licensed to you under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License. You may obtain a copy
+* of the License at http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software distributed under
+* the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+* OF ANY KIND, either express or implied. See the License for the specific language
+* governing permissions and limitations under the License.
+*
+* @version 1.1.5
  */
 
 // Worker version - hardcoded for compatibility
@@ -39,10 +40,11 @@ export const isMediaRequest = (url) => (
 export const isRUMRequest = (url) => /\/\.(rum|optel)\/.*/.test(url.pathname);
 
 /**
- * Converts 2-digit year to 4-digit year using century inference
- * Years 00-49 -> 2000-2049, Years 50-99 -> 1950-1999
- * @param {number} year - 2 or 4-digit year
- * @returns {number} 4-digit year
+
+* Converts 2-digit year to 4-digit year using century inference
+* Years 00-49 -> 2000-2049, Years 50-99 -> 1950-1999
+* @param {number} year - 2 or 4-digit year
+* @returns {number} 4-digit year
  */
 export const normalizeYear = (year) => {
   if (year >= 100) return year; // Already 4-digit
@@ -51,11 +53,12 @@ export const normalizeYear = (year) => {
 };
 
 /**
- * Formats a date string to ISO 8601 format (YYYY-MM-DD)
- * Handles UK date format (dd/mm/yyyy or dd/mm/yy) as default and month names (Dec, December)
- * Supports both 2-digit and 4-digit years with century inference
- * @param {string} dateString - Date string in various formats
- * @returns {string|null} ISO 8601 formatted date or null if invalid
+
+* Formats a date string to ISO 8601 format (YYYY-MM-DD)
+* Handles UK date format (dd/mm/yyyy or dd/mm/yy) as default and month names (Dec, December)
+* Supports both 2-digit and 4-digit years with century inference
+* @param {string} dateString - Date string in various formats
+* @returns {string|null} ISO 8601 formatted date or null if invalid
  */
 export const formatISO8601Date = (dateString) => {
   if (!dateString || typeof dateString !== 'string') return null;
@@ -103,7 +106,7 @@ export const formatISO8601Date = (dateString) => {
   // Try to parse dates with month names first
   // Patterns: "10 December 2024", "December 10, 2024", "10 Dec 25", "12/dec/25"
   // eslint-disable-next-line max-len
-  const monthNamePattern = /(\d{1,2})[\s/-]*([a-zA-Z]+)[\s,/-]*(\d{2,4})|([a-zA-Z]+)[\s/-]*(\d{1,2})[\s,/-]*(\d{2,4})/i;
+  const monthNamePattern = /[\d{1,2}](\s/-)*[[a-zA-Z]+](\s,/-)*(\d{2,4})|[[a-zA-Z]+](\s/-)*[\d{1,2}](\s,/-)*(\d{2,4})/i;
   const monthMatch = trimmed.match(monthNamePattern);
 
   if (monthMatch) {
@@ -153,10 +156,11 @@ export const formatISO8601Date = (dateString) => {
 };
 
 /**
- * Builds JSON-LD object from article metadata
- * @param {Object} article - Article metadata
- * @param {string} hostname - Publisher hostname
- * @returns {Object} JSON-LD object
+
+* Builds JSON-LD object from article metadata
+* @param {Object} article - Article metadata
+* @param {string} hostname - Publisher hostname
+* @returns {Object} JSON-LD object
  */
 export const buildJsonLd = (article, hostname) => {
   const jsonLd = {
@@ -206,16 +210,17 @@ export const buildJsonLd = (article, hostname) => {
 };
 
 /**
- * Replaces picture placeholder pattern in HTML content
- * Detects <div><div>Picture Here</div></div> and replaces with author image
- * Pure string replacement - fully testable without Cloudflare Workers runtime
- * @param {string} html - HTML content to process
- * @returns {string} Processed HTML with placeholders replaced
+
+* Replaces picture placeholder pattern in HTML content
+* Detects <div><div>Picture Here</div></div> and replaces with author image
+* Pure string replacement - fully testable without Cloudflare Workers runtime
+* @param {string} html - HTML content to process
+* @returns {string} Processed HTML with placeholders replaced
  */
 export const replacePicturePlaceholder = (html) => {
   // Build replacement: just the img tag (preserves outer div)
-  const replacement = `<img src="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL}" `
-    + `alt="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_ALT}">`;
+  const replacement = `<img src="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL}"`
+  * `alt="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_ALT}">`;
 
   // Case-insensitive comparison using trigger text from config
   // Escape special regex characters in trigger text
@@ -230,10 +235,11 @@ export const replacePicturePlaceholder = (html) => {
 };
 
 /**
- * Removes all HTML comments from content
- * Pure string replacement - fully testable without Cloudflare Workers runtime
- * @param {string} html - HTML content to process
- * @returns {string} Processed HTML with comments removed
+
+* Removes all HTML comments from content
+* Pure string replacement - fully testable without Cloudflare Workers runtime
+* @param {string} html - HTML content to process
+* @returns {string} Processed HTML with comments removed
  */
 export const removeHtmlComments = (html) => (
   // Regex pattern: <!-- followed by any characters (non-greedy), then -->
@@ -241,12 +247,13 @@ export const removeHtmlComments = (html) => (
 );
 
 /**
- * Removes non-social metadata tags from HTML
- * Keeps author and linkedin meta tags for social sharing
- * Removes: author-url, publication-date, modified-date, longdescription, jsonld
- * Pure string replacement - fully testable without Cloudflare Workers runtime
- * @param {string} html - HTML content to process
- * @returns {string} Processed HTML with non-social metadata removed
+
+* Removes non-social metadata tags from HTML
+* Keeps author and linkedin meta tags for social sharing
+* Removes: author-url, publication-date, modified-date, longdescription, jsonld
+* Pure string replacement - fully testable without Cloudflare Workers runtime
+* @param {string} html - HTML content to process
+* @returns {string} Processed HTML with non-social metadata removed
  */
 export const removeNonSocialMetadata = (html) => {
   // List of meta tag names to remove (keeps author and linkedin)
@@ -274,10 +281,11 @@ export const removeNonSocialMetadata = (html) => {
 };
 
 /**
- * Extracts meta tag content using regex
- * @param {string} html - HTML content
- * @param {string} selector - Meta tag selector (e.g., 'name="jsonld"', 'property="og:title"')
- * @returns {string|null} Content attribute value or null
+
+* Extracts meta tag content using regex
+* @param {string} html - HTML content
+* @param {string} selector - Meta tag selector (e.g., 'name="jsonld"', 'property="og:title"')
+* @returns {string|null} Content attribute value or null
  */
 export const extractMetaContent = (html, selector) => {
   // Build regex pattern for meta tag with the given selector
@@ -287,10 +295,11 @@ export const extractMetaContent = (html, selector) => {
 };
 
 /**
- * Checks if JSON-LD generation should be triggered
- * Looks for meta tag or error script that indicates JSON-LD is needed
- * @param {string} html - HTML content
- * @returns {boolean} True if JSON-LD should be generated
+
+* Checks if JSON-LD generation should be triggered
+* Looks for meta tag or error script that indicates JSON-LD is needed
+* @param {string} html - HTML content
+* @returns {boolean} True if JSON-LD should be generated
  */
 export const shouldGenerateJsonLd = (html) => {
   // Check for meta tag trigger
@@ -305,12 +314,13 @@ export const shouldGenerateJsonLd = (html) => {
 };
 
 /**
- * Injects JSON-LD structured data into HTML
- * Pure string function - parses meta tags with regex and injects JSON-LD script
- * Fully testable without Cloudflare Workers runtime
- * @param {string} html - HTML content to process
- * @param {string} hostname - Publisher hostname for JSON-LD
- * @returns {string} Processed HTML with JSON-LD injected
+
+* Injects JSON-LD structured data into HTML
+* Pure string function - parses meta tags with regex and injects JSON-LD script
+* Fully testable without Cloudflare Workers runtime
+* @param {string} html - HTML content to process
+* @param {string} hostname - Publisher hostname for JSON-LD
+* @returns {string} Processed HTML with JSON-LD injected
  */
 export const injectJsonLd = (html, hostname) => {
   // Check if JSON-LD generation is triggered
@@ -352,10 +362,11 @@ export const injectJsonLd = (html, hostname) => {
 };
 
 /**
- * Injects Speculation Rules API script into HTML for near-instant navigation
- * Pure string function - fully testable without Cloudflare Workers runtime
- * @param {string} html - HTML content to process
- * @returns {string} Processed HTML with speculation rules injected
+
+* Injects Speculation Rules API script into HTML for near-instant navigation
+* Pure string function - fully testable without Cloudflare Workers runtime
+* @param {string} html - HTML content to process
+* @returns {string} Processed HTML with speculation rules injected
  */
 export const injectSpeculationRules = (html) => {
   // Create speculation rules script tag

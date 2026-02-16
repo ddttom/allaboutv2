@@ -1,6 +1,6 @@
-/* eslint-disable no-unsafe-optional-chaining */
+/*eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable import/no-absolute-path */
-/* eslint-disable import/no-unresolved */
+/* eslint-disable import/no-unresolved*/
 // Place any Client-Centered Code/Configuration in here
 import { loadScript } from '/scripts/aem.js';
 import { getConfigTruth } from './variables.js';

@@ -186,7 +186,7 @@ export default function decorate(block) {
     if (!lastModifiedDate) {
       return 'Invalid Date';
     }
-    return new Date(lastModifiedDate.getTime() + reviewPeriod * 24 * 60 * 60 * 1000);
+    return new Date(lastModifiedDate.getTime() + reviewPeriod *24* 60 *60* 1000);
   }
 
   function calculateExpiryDate(lastModified) {
@@ -198,7 +198,7 @@ export default function decorate(block) {
     if (!lastModifiedDate) {
       return 'Invalid Date';
     }
-    return new Date(lastModifiedDate.getTime() + expiryPeriod * 24 * 60 * 60 * 1000);
+    return new Date(lastModifiedDate.getTime() + expiryPeriod *24* 60 *60* 1000);
   }
 
   function addEventListeners() {

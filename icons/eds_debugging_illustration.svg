@@ -5,7 +5,7 @@
       <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
     </linearGradient>
-    
+
     <linearGradient id="pipelineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" style="stop-color:#0066cc;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#4d94ff;stop-opacity:1" />
@@ -51,7 +51,7 @@
   <!-- EDS Processing Pipeline -->
   <g id="pipeline">
     <text x="60" y="90" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="bold">EDS Pipeline:</text>
-    
+
     <!-- Pipeline stages -->
     <rect x="60" y="100" width="140" height="60" rx="8" fill="url(#pipelineGradient)" filter="url(#shadow)"/>
     <text x="130" y="125" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Document</text>
@@ -93,7 +93,7 @@
     <circle cx="490" cy="180" r="8" fill="#ff4444" filter="url(#glow)"/>
     <circle cx="670" cy="180" r="8" fill="#ff4444" filter="url(#glow)"/>
     <circle cx="850" cy="180" r="8" fill="#ff4444" filter="url(#glow)"/>
-    
+
     <text x="60" y="200" fill="#ff6b6b" font-family="Arial, sans-serif" font-size="12" font-style="italic">
       Potential Failure Points
     </text>
@@ -104,7 +104,7 @@
     <!-- Basic Debugging -->
     <rect x="60" y="250" width="300" height="150" rx="12" fill="url(#basicGradient)" opacity="0.9" filter="url(#shadow)"/>
     <text x="210" y="275" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="18" font-weight="bold">Basic Debugging</text>
-    
+
     <!-- Console icon -->
     <rect x="80" y="290" width="60" height="40" rx="4" fill="#2d5a27" stroke="#ffffff" stroke-width="2"/>
     <text x="110" y="308" text-anchor="middle" fill="#00ff00" font-family="monospace" font-size="10">console.log</text>
@@ -185,7 +185,7 @@
   <!-- Action Plan Flow -->
   <g id="actionPlan">
     <text x="60" y="600" fill="#ffffff" font-family="Arial, sans-serif" font-size="18" font-weight="bold">Your Debugging Journey</text>
-    
+
     <!-- Phase arrows -->
     <rect x="60" y="620" width="120" height="40" rx="20" fill="url(#basicGradient)" filter="url(#shadow)"/>
     <text x="120" y="645" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Phase 1</text>

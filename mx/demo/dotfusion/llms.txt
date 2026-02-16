@@ -1,10 +1,13 @@
 # Dotfusion Digital
+>
 > Canada's premier headless agency. 25+ years delivering headless CMS websites, mobile apps, eCommerce, and AI solutions.
 
 ## About
+
 Dotfusion Digital is a Toronto-based digital agency founded in 1998, specializing in headless CMS architecture, composable commerce, mobile applications, and AI-driven solutions. We are B Corp certified with offices in Toronto and Montreal, serving clients across Canada and globally.
 
 ## Services
+
 - Headless CMS Development (Agility CMS, Contentful, Storyblok, Magnolia)
 - Mobile & Web Application Development (React, Node.js, Progressive Web Apps)
 - Headless eCommerce (Composable commerce, API-first storefronts)
@@ -13,6 +16,7 @@ Dotfusion Digital is a Toronto-based digital agency founded in 1998, specializin
 - UX/UI Design Systems (WCAG 2.1 AA compliant, research-driven)
 
 ## Key Facts
+
 - Founded: 1998
 - Team size: 24 people
 - Offices: Toronto, Ontario and Montreal, Quebec
@@ -21,6 +25,7 @@ Dotfusion Digital is a Toronto-based digital agency founded in 1998, specializin
 - Specialization: Headless CMS, Composable Architecture
 
 ## Notable Clients
+
 - Oxford Properties (Brookfield) - 14-year partnership, 1,000-page headless platform
 - Mitsubishi Electric - Enterprise headless CMS
 - BC Hockey (Hockey Canada) - Sports platform with real-time data
@@ -30,6 +35,7 @@ Dotfusion Digital is a Toronto-based digital agency founded in 1998, specializin
 - Intuit, Cirque du Soleil, Arvada Center
 
 ## Technology Expertise
+
 - CMS: Agility CMS (Certified Partner), Contentful, Storyblok, Magnolia, Adobe Experience Manager
 - Frontend: React, Next.js, Progressive Web Apps
 - Backend: Node.js, Custom APIs
@@ -37,11 +43,13 @@ Dotfusion Digital is a Toronto-based digital agency founded in 1998, specializin
 - AI: Chatbots, Answer Engine Optimization, Marketing Automation
 
 ## Contact
+
 - Website: https://dotfusion.com
 - Contact page: https://dotfusion.com/contact-us
 - LinkedIn: https://ca.linkedin.com/company/dotfusion
 
 ## Links
+
 - Home: https://dotfusion.com/
 - About: https://dotfusion.com/about
 - Our Work: https://dotfusion.com/our-work

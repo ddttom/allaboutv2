@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Start one or more servers, wait for them to be ready, run a command, then clean up.
 
@@ -30,7 +30,6 @@ def is_server_ready(port, timeout=30):
         except (socket.error, ConnectionRefusedError):
             time.sleep(0.5)
     return False
-
 
 def main():
     parser = argparse.ArgumentParser(description='Run command with one or more servers')
@@ -100,7 +99,6 @@ def main():
                 process.wait()
             print(f"Server {i+1} stopped")
         print("All servers stopped")
-
 
 if __name__ == '__main__':
     main()

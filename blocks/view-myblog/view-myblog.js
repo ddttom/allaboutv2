@@ -1,16 +1,18 @@
 /**
- * View MyBlog Block
- * Fetches and displays blog content from my-blog.json
- * Features:
- * - Auto-generates latestPosts if not provided (top 3 most recent non-index posts)
- * - Single category mode: hides Latest Posts and Category Map when only one category
- * - Filters out index pages (URLs ending with /, /index, /index.html, /index.htm)
- * - Hides empty category sections
- * - Shows category map only when there are multiple active categories
+
+* View MyBlog Block
+* Fetches and displays blog content from my-blog.json
+* Features:
+* * Auto-generates latestPosts if not provided (top 3 most recent non-index posts)
+* * Single category mode: hides Latest Posts and Category Map when only one category
+* * Filters out index pages (URLs ending with /, /index, /index.html, /index.htm)
+* * Hides empty category sections
+* * Shows category map only when there are multiple active categories
  */
 
 /**
- * Check if a URL is an index page
+
+* Check if a URL is an index page
  */
 function isIndexPage(url) {
   // Normalize URL to handle both relative and absolute URLs
@@ -35,9 +37,10 @@ function isIndexPage(url) {
 }
 
 /**
- * Generate latestPosts from categories if not provided
- * Collects all posts from all categories, filters index pages,
- * sorts by lastModified (newest first), and returns top 3
+
+* Generate latestPosts from categories if not provided
+* Collects all posts from all categories, filters index pages,
+* sorts by lastModified (newest first), and returns top 3
  */
 function generateLatestPosts(categories) {
   const allPosts = [];
@@ -68,7 +71,8 @@ function generateLatestPosts(categories) {
 }
 
 /**
- * Create a blog entry article
+
+* Create a blog entry article
  */
 function createBlogEntry(entry, isLast = false) {
   const article = document.createElement('article');
@@ -98,7 +102,8 @@ function createBlogEntry(entry, isLast = false) {
 }
 
 /**
- * Create a featured section (Latest Posts or Most Visited)
+
+* Create a featured section (Latest Posts or Most Visited)
  */
 function createFeaturedSection(title, posts, type = 'latest') {
   const section = document.createElement('section');
@@ -119,7 +124,8 @@ function createFeaturedSection(title, posts, type = 'latest') {
 }
 
 /**
- * Create the category map table
+
+* Create the category map table
  */
 function createCategoryMap(categories) {
   const nav = document.createElement('nav');
@@ -135,7 +141,7 @@ function createCategoryMap(categories) {
 
   const thead = document.createElement('thead');
   thead.innerHTML = `
-    <tr>
+<tr>
       <th>Category</th>
       <th>Articles</th>
       <th>Focus Area</th>
@@ -168,7 +174,8 @@ function createCategoryMap(categories) {
 }
 
 /**
- * Create a category section with blog posts
+
+* Create a category section with blog posts
  */
 function createCategorySection(category) {
   const section = document.createElement('section');
@@ -272,7 +279,8 @@ function createCategorySection(category) {
 }
 
 /**
- * Main decorate function
+
+* Main decorate function
  */
 export default async function decorate(block) {
   // Get data URL from block content or use default

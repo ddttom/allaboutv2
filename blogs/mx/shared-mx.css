@@ -1,10 +1,10 @@
-/* WCAG 2.1 AA Compliant Shared Styles for MX Blog Posts */
+/*WCAG 2.1 AA Compliant Shared Styles for MX Blog Posts */
 /* This stylesheet consolidates common styles across all MX blog posts */
-/* with support for dark mode, high contrast mode, and modern CSS architecture */
+/* with support for dark mode, high contrast mode, and modern CSS architecture*/
 
-/* Root Variables - Light Mode Default */
+/*Root Variables - Light Mode Default */
 :root {
-  /* Colors - Light Mode */
+  /* Colors - Light Mode*/
   --primary-bg: #ffffff;
   --primary-text: #1a1a1a;
   --secondary-text: #4a4a4a;
@@ -19,15 +19,15 @@
   --skip-link-bg: #000000;
   --skip-link-text: #ffffff;
 
-  /* Typography */
+  /*Typography*/
   --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 
-  /* Spacing */
+  /*Spacing*/
   --max-width: 800px;
   --spacing-unit: 1rem;
 
-  /* Typography Scale */
+  /*Typography Scale*/
   --font-size-h1: 2.5rem;
   --font-size-h2: 1.875rem;
   --font-size-h3: 1.5rem;
@@ -36,7 +36,7 @@
   --font-size-h6: 1rem;
 }
 
-/* Dark Mode Support */
+/*Dark Mode Support*/
 @media (prefers-color-scheme: dark) {
   :root {
     --primary-bg: #1a1a1a;
@@ -55,7 +55,7 @@
   }
 }
 
-/* High Contrast Mode Support */
+/*High Contrast Mode Support*/
 @media (prefers-contrast: high) {
   :root {
     --primary-text: #000000;
@@ -67,7 +67,8 @@
   }
 }
 
-/* Reset and Base Styles */
+/*Reset and Base Styles*/
+
 * {
   margin: 0;
   padding: 0;
@@ -89,7 +90,7 @@ body {
   padding: 2rem 1rem;
 }
 
-/* Skip to Content Link (WCAG Accessibility) */
+/*Skip to Content Link (WCAG Accessibility)*/
 .skip-link {
   position: absolute;
   top: -40px;
@@ -107,7 +108,7 @@ body {
   outline-offset: 2px;
 }
 
-/* Blog Introduction */
+/*Blog Introduction*/
 .blog-introduction {
   background-color: var(--intro-bg);
   border-left: 4px solid var(--accent-color);
@@ -179,7 +180,7 @@ body {
   color: var(--accent-hover);
 }
 
-/* Table of Contents (Index) */
+/*Table of Contents (Index)*/
 .table-of-contents {
   background-color: var(--intro-bg);
   border: 1px solid var(--border-color);
@@ -247,7 +248,7 @@ body {
   text-decoration: underline;
 }
 
-/* Article Header */
+/*Article Header*/
 article header h1 {
   font-size: var(--font-size-h1);
   line-height: 1.2;
@@ -264,7 +265,7 @@ article header h1 {
   gap: 0.5rem;
 }
 
-/* Article Content - Typography Hierarchy */
+/*Article Content - Typography Hierarchy*/
 article h2 {
   font-size: var(--font-size-h2);
   margin-top: 3rem;
@@ -322,7 +323,7 @@ article li {
   margin-bottom: 0.5rem;
 }
 
-/* Code Blocks */
+/*Code Blocks*/
 pre {
   background-color: var(--code-bg);
   border: 1px solid var(--code-border);
@@ -345,7 +346,7 @@ li code {
   padding: 0.2em 0.4em;
 }
 
-/* Links */
+/*Links*/
 a {
   color: var(--accent-color);
   text-decoration: none;
@@ -362,7 +363,7 @@ a:focus {
   text-decoration: underline;
 }
 
-/* Tables */
+/*Tables*/
 table {
   width: 100%;
   border-collapse: collapse;
@@ -389,7 +390,7 @@ th {
   color: var(--heading-color);
 }
 
-/* Images and Figures */
+/*Images and Figures*/
 img {
   max-width: 100%;
   height: auto;
@@ -408,14 +409,14 @@ figcaption {
   font-style: italic;
 }
 
-/* Horizontal Rules */
+/*Horizontal Rules*/
 hr {
   border: none;
   border-top: 1px solid var(--border-color);
   margin: 3rem 0;
 }
 
-/* Footnotes */
+/*Footnotes*/
 .footnotes {
   margin-top: 3rem;
   padding-top: 1.5rem;
@@ -437,7 +438,7 @@ hr {
   margin-bottom: 0.75rem;
 }
 
-/* Nested lists inside footnotes (for reference lists) */
+/*Nested lists inside footnotes (for reference lists)*/
 .footnotes ul {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -449,7 +450,7 @@ hr {
   margin-bottom: 0.5rem;
 }
 
-/* Paragraphs inside footnotes */
+/*Paragraphs inside footnotes*/
 .footnotes p {
   margin-bottom: 0.75rem;
 }
@@ -467,7 +468,7 @@ sup a:hover {
   text-decoration: underline;
 }
 
-/* Author Bio Link */
+/*Author Bio Link*/
 .author-bio-link {
   margin-top: 3rem;
   padding-top: 2rem;
@@ -494,7 +495,7 @@ sup a:hover {
   color: var(--accent-hover);
 }
 
-/* Floating Back to Top Button */
+/*Floating Back to Top Button*/
 .back-to-top {
   position: fixed;
   bottom: 2rem;
@@ -522,7 +523,7 @@ sup a:hover {
   outline-offset: 2px;
 }
 
-/* Footer */
+/*Footer*/
 footer {
   margin-top: 4rem;
   padding-top: 2rem;
@@ -532,7 +533,7 @@ footer {
   font-size: 0.9rem;
 }
 
-/* Reduced Motion Support (WCAG 2.3.3) */
+/*Reduced Motion Support (WCAG 2.3.3)*/
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -544,7 +545,7 @@ footer {
   }
 }
 
-/* Print Styles */
+/*Print Styles*/
 @media print {
   .skip-link,
   .back-to-top,
@@ -573,7 +574,7 @@ footer {
   }
 }
 
-/* Responsive Design */
+/*Responsive Design*/
 @media (max-width: 768px) {
   body {
     padding: 1rem;

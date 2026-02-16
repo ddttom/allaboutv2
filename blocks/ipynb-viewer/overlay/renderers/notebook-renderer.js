@@ -1,6 +1,7 @@
 /**
- * Notebook Content Renderer
- * Renders paged notebook cells with pagination controls
+
+* Notebook Content Renderer
+* Renders paged notebook cells with pagination controls
  */
 
 export function renderNotebookContent(contentArea, {

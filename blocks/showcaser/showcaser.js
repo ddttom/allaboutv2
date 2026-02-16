@@ -14,9 +14,10 @@ function decodeHtmlEntities(text) {
 }
 
 /**
- * Detects the programming language of the given code snippet
- * @param {string} code - The code snippet to analyze
- * @returns {string} The detected language
+
+* Detects the programming language of the given code snippet
+* @param {string} code - The code snippet to analyze
+* @returns {string} The detected language
  no-unused-vars, import/no-unresolved, import/no-self-import */
 function detectLanguage(code) {
   const decodedCode = decodeHtmlEntities(code);
@@ -58,10 +59,11 @@ function detectLanguage(code) {
 }
 
 /**
- * Applies syntax highlighting to the given code based on the detected language
- * @param {string} code - The code to highlight
- * @param {string} language - The detected language
- * @returns {string} HTML string with syntax highlighting
+
+* Applies syntax highlighting to the given code based on the detected language
+* @param {string} code - The code to highlight
+* @param {string} language - The detected language
+* @returns {string} HTML string with syntax highlighting
  no-unused-vars, import/no-unresolved, import/no-self-import */
 function highlightSyntax(code, language) {
   const encodeHtmlEntities = (text) => text
@@ -89,8 +91,9 @@ function highlightSyntax(code, language) {
 }
 
 /**
- * Main function to decorate the Showcaser block
- * @param {HTMLElement} block - The block element to decorate
+
+* Main function to decorate the Showcaser block
+* @param {HTMLElement} block - The block element to decorate
  no-unused-vars, import/no-unresolved, import/no-self-import */
 export default async function decorate(block) {
   // Create container and book structure

@@ -1,34 +1,34 @@
-/* Spectrum Card Block Styles */
+/*Spectrum Card Block Styles*/
 .spectrum-card {
   display: block;
   margin: 1rem 0;
 }
 
-/* Override any default block styles if needed */
+/*Override any default block styles if needed*/
 .spectrum-card sp-card {
   margin: 0;
 }
 
-/* NUCLEAR APPROACH: Remove ALL possible bullet points */
+/*NUCLEAR APPROACH: Remove ALL possible bullet points*/
 
-/* Target every possible element and pseudo-element */
+/*Target every possible element and pseudo-element*/
 .spectrum-card *,
-.spectrum-card *::before,
+.spectrum-card*::before,
 .spectrum-card *::after,
-sp-card *,
+sp-card*,
 sp-card *::before,
-sp-card *::after {
+sp-card*::after {
   list-style: none !important;
   list-style: none outside none !important;
   content: none !important;
 }
 
-/* Specifically target description slots */
+/*Specifically target description slots*/
 [slot="description"],
 [slot="description"] *,
 [slot="description"]::before,
 [slot="description"]::after,
-[slot="description"] *::before,
+[slot="description"]*::before,
 [slot="description"] *::after {
   list-style: none !important;
   list-style-type: none !important;
@@ -46,7 +46,7 @@ sp-card::part(*) {
   list-style-type: none !important;
 }
 
-/* Force override ALL pseudo-elements globally within cards */
+/*Force override ALL pseudo-elements globally within cards*/
 .spectrum-card ::before,
 .spectrum-card ::after {
   content: none !important;
@@ -59,14 +59,14 @@ sp-card::slotted(*) {
   list-style-type: none !important;
 }
 
-/* Override any inherited styles from parent elements */
+/*Override any inherited styles from parent elements*/
 .spectrum-card,
 .spectrum-card * {
   list-style: none !important;
   list-style-type: none !important;
 }
 
-/* Modal Styles */
+/*Modal Styles*/
 .spectrum-card-modal-overlay {
   backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
@@ -89,7 +89,7 @@ sp-card::slotted(*) {
 }
 
 .spectrum-card-modal-content {
-  /* Custom scrollbar for modal content */
+  /*Custom scrollbar for modal content*/
   scrollbar-width: thin;
   scrollbar-color: rgb(255 255 255 / 0.3) transparent;
 }
@@ -111,7 +111,7 @@ sp-card::slotted(*) {
   background-color: rgb(255 255 255 / 0.5);
 }
 
-/* Responsive modal styles */
+/*Responsive modal styles*/
 @media (width <= 768px) {
   .spectrum-card-modal {
     margin: 10px;

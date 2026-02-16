@@ -1,25 +1,27 @@
 /*
- * Copyright 2024 Adobe. All rights reserved.
- * This file is licensed to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License. You may obtain a copy
- * of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under
- * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
- * OF ANY KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
+
+* Copyright 2024 Adobe. All rights reserved.
+* This file is licensed to you under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License. You may obtain a copy
+* of the License at http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software distributed under
+* the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+* OF ANY KIND, either express or implied. See the License for the specific language
+* governing permissions and limitations under the License.
  */
 
-/* eslint-env browser */
+/*eslint-env browser*/
 
 /**
- * log RUM if part of the sample.
- * @param {string} checkpoint identifies the checkpoint in funnel
- * @param {Object} data additional data for RUM sample
- * @param {string} data.source DOM node that is the source of a checkpoint event,
- * identified by #id or .classname
- * @param {string} data.target subject of the checkpoint event,
- * for instance the href of a link, or a search term
+
+* log RUM if part of the sample.
+* @param {string} checkpoint identifies the checkpoint in funnel
+* @param {Object} data additional data for RUM sample
+* @param {string} data.source DOM node that is the source of a checkpoint event,
+* identified by #id or .classname
+* @param {string} data.target subject of the checkpoint event,
+* for instance the href of a link, or a search term
  */
 function sampleRUM(checkpoint, data = {}) {
   const SESSION_STORAGE_KEY = 'aem-rum';
@@ -69,7 +71,7 @@ function sampleRUM(checkpoint, data = {}) {
       // eslint-disable-next-line max-len
       rumSessionStorage.pages = (rumSessionStorage.pages ? rumSessionStorage.pages : 0)
         + 1
-        /* noise */ + (Math.floor(Math.random() * 20) - 10);
+        /*noise*/ + (Math.floor(Math.random() * 20) - 10);
       sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(rumSessionStorage));
       // eslint-disable-next-line object-curly-newline, max-len
       window.hlx.rum = {
@@ -146,7 +148,8 @@ function sampleRUM(checkpoint, data = {}) {
 }
 
 /**
- * Setup block utils.
+
+* Setup block utils.
  */
 function setup() {
   window.hlx = window.hlx || {};
@@ -166,7 +169,8 @@ function setup() {
 }
 
 /**
- * Auto initializiation.
+
+* Auto initializiation.
  */
 
 function init() {
@@ -185,9 +189,10 @@ function init() {
 }
 
 /**
- * Sanitizes a string for use as class name.
- * @param {string} name The unsanitized string
- * @returns {string} The class name
+
+* Sanitizes a string for use as class name.
+* @param {string} name The unsanitized string
+* @returns {string} The class name
  */
 function toClassName(name) {
   return typeof name === 'string'
@@ -200,18 +205,20 @@ function toClassName(name) {
 }
 
 /**
- * Sanitizes a string for use as a js property name.
- * @param {string} name The unsanitized string
- * @returns {string} The camelCased name
+
+* Sanitizes a string for use as a js property name.
+* @param {string} name The unsanitized string
+* @returns {string} The camelCased name
  */
 function toCamelCase(name) {
   return toClassName(name).replace(/-([a-z])/g, (g) => g[1].toUpperCase());
 }
 
 /**
- * Extracts the config from a block.
- * @param {Element} block The block element
- * @returns {object} The block config
+
+* Extracts the config from a block.
+* @param {Element} block The block element
+* @returns {object} The block config
  */
 // eslint-disable-next-line import/prefer-default-export
 function readBlockConfig(block) {
@@ -253,8 +260,9 @@ function readBlockConfig(block) {
 }
 
 /**
- * Loads a CSS file.
- * @param {string} href URL to the CSS file
+
+* Loads a CSS file.
+* @param {string} href URL to the CSS file
  */
 async function loadCSS(href) {
   return new Promise((resolve, reject) => {
@@ -272,9 +280,10 @@ async function loadCSS(href) {
 }
 
 /**
- * Loads a non module JS file.
- * @param {string} src URL to the JS file
- * @param {Object} attrs additional optional attributes
+
+* Loads a non module JS file.
+* @param {string} src URL to the JS file
+* @param {Object} attrs additional optional attributes
  */
 async function loadScript(src, attrs) {
   return new Promise((resolve, reject) => {
@@ -297,10 +306,11 @@ async function loadScript(src, attrs) {
 }
 
 /**
- * Retrieves the content of metadata tags.
- * @param {string} name The metadata name (or property)
- * @param {Document} doc Document object to query for metadata. Defaults to the window's document
- * @returns {string} The metadata value(s)
+
+* Retrieves the content of metadata tags.
+* @param {string} name The metadata name (or property)
+* @param {Document} doc Document object to query for metadata. Defaults to the window's document
+* @returns {string} The metadata value(s)
  */
 function getMetadata(name, doc = document) {
   const attr = name && name.includes(':') ? 'property' : 'name';
@@ -311,12 +321,13 @@ function getMetadata(name, doc = document) {
 }
 
 /**
- * Returns a picture element with webp and fallbacks
- * @param {string} src The image URL
- * @param {string} [alt] The image alternative text
- * @param {boolean} [eager] Set loading attribute to eager
- * @param {Array} [breakpoints] Breakpoints and corresponding params (eg. width)
- * @returns {Element} The picture element
+
+* Returns a picture element with webp and fallbacks
+* @param {string} src The image URL
+* @param {string} [alt] The image alternative text
+* @param {boolean} [eager] Set loading attribute to eager
+* @param {Array} [breakpoints] Breakpoints and corresponding params (eg. width)
+* @returns {Element} The picture element
  */
 function createOptimizedPicture(
   src,
@@ -358,7 +369,8 @@ function createOptimizedPicture(
 }
 
 /**
- * Set template (page structure) and theme (page styles).
+
+* Set template (page structure) and theme (page styles).
  */
 function decorateTemplateAndTheme() {
   const addClasses = (element, classes) => {
@@ -373,8 +385,9 @@ function decorateTemplateAndTheme() {
 }
 
 /**
- * Wrap inline text content of block cells within a <p> tag.
- * @param {Element} block the block element
+
+* Wrap inline text content of block cells within a <p> tag.
+* @param {Element} block the block element
  */
 function wrapTextNodes(block) {
   const validWrappers = [
@@ -415,8 +428,9 @@ function wrapTextNodes(block) {
 }
 
 /**
- * Decorates paragraphs containing a single link as buttons.
- * @param {Element} element container element
+
+* Decorates paragraphs containing a single link as buttons.
+* @param {Element} element container element
  */
 function decorateButtons(element) {
   element.querySelectorAll('a').forEach((a) => {
@@ -453,10 +467,11 @@ function decorateButtons(element) {
 }
 
 /**
- * Add <img> for icon, prefixed with codeBasePath and optional prefix.
- * @param {Element} [span] span element with icon classes
- * @param {string} [prefix] prefix to be added to icon src
- * @param {string} [alt] alt text to be added to icon
+
+* Add <img> for icon, prefixed with codeBasePath and optional prefix.
+* @param {Element} [span] span element with icon classes
+* @param {string} [prefix] prefix to be added to icon src
+* @param {string} [alt] alt text to be added to icon
  */
 function decorateIcon(span, prefix = '', alt = '') {
   const iconName = Array.from(span.classList)
@@ -471,9 +486,10 @@ function decorateIcon(span, prefix = '', alt = '') {
 }
 
 /**
- * Add <img> for icons, prefixed with codeBasePath and optional prefix.
- * @param {Element} [element] Element containing icons
- * @param {string} [prefix] prefix to be added to icon the src
+
+* Add <img> for icons, prefixed with codeBasePath and optional prefix.
+* @param {Element} [element] Element containing icons
+* @param {string} [prefix] prefix to be added to icon the src
  */
 function decorateIcons(element, prefix = '') {
   const icons = [...element.querySelectorAll('span.icon')];
@@ -483,8 +499,9 @@ function decorateIcons(element, prefix = '') {
 }
 
 /**
- * Decorates all sections in a container element.
- * @param {Element} main The container element
+
+* Decorates all sections in a container element.
+* @param {Element} main The container element
  */
 function decorateSections(main) {
   main.querySelectorAll(':scope > div').forEach((section) => {
@@ -525,9 +542,10 @@ function decorateSections(main) {
 }
 
 /**
- * Gets placeholders object.
- * @param {string} [prefix] Location of placeholders
- * @returns {object} Window placeholders object
+
+* Gets placeholders object.
+* @param {string} [prefix] Location of placeholders
+* @returns {object} Window placeholders object
  */
 // eslint-disable-next-line import/prefer-default-export
 async function fetchPlaceholders(prefix = 'default') {
@@ -562,8 +580,9 @@ async function fetchPlaceholders(prefix = 'default') {
 }
 
 /**
- * Updates all section status in a container element.
- * @param {Element} main The container element
+
+* Updates all section status in a container element.
+* @param {Element} main The container element
  */
 function updateSectionsStatus(main) {
   const sections = [...main.querySelectorAll(':scope > div.section')];
@@ -586,9 +605,10 @@ function updateSectionsStatus(main) {
 }
 
 /**
- * Builds a block DOM Element from a two dimensional array, string, or object
- * @param {string} blockName name of the block
- * @param {*} content two dimensional array or string or object of content
+
+* Builds a block DOM Element from a two dimensional array, string, or object
+* @param {string} blockName name of the block
+* @param {*} content two dimensional array or string or object of content
  */
 function buildBlock(blockName, content) {
   const table = Array.isArray(content) ? content : [[content]];
@@ -617,8 +637,9 @@ function buildBlock(blockName, content) {
 }
 
 /**
- * Loads JS and CSS for a block.
- * @param {Element} block The block element
+
+* Loads JS and CSS for a block.
+* @param {Element} block The block element
  */
 async function loadBlock(block) {
   const status = block.dataset.blockStatus;
@@ -654,8 +675,9 @@ async function loadBlock(block) {
 }
 
 /**
- * Loads JS and CSS for all blocks in a container element.
- * @param {Element} main The container element
+
+* Loads JS and CSS for all blocks in a container element.
+* @param {Element} main The container element
  */
 async function loadBlocks(main) {
   updateSectionsStatus(main);
@@ -668,8 +690,9 @@ async function loadBlocks(main) {
 }
 
 /**
- * Decorates a block.
- * @param {Element} block The block element
+
+* Decorates a block.
+* @param {Element} block The block element
  */
 function decorateBlock(block) {
   const shortBlockName = block.classList[0];
@@ -686,17 +709,19 @@ function decorateBlock(block) {
 }
 
 /**
- * Decorates all blocks in a container element.
- * @param {Element} main The container element
+
+* Decorates all blocks in a container element.
+* @param {Element} main The container element
  */
 function decorateBlocks(main) {
   main.querySelectorAll('div.section > div > div').forEach(decorateBlock);
 }
 
 /**
- * Loads a block named 'header' into header
- * @param {Element} header header element
- * @returns {Promise}
+
+* Loads a block named 'header' into header
+* @param {Element} header header element
+* @returns {Promise}
  */
 async function loadHeader(header) {
   const headerBlock = buildBlock('header', '');
@@ -706,9 +731,10 @@ async function loadHeader(header) {
 }
 
 /**
- * Loads a block named 'footer' into footer
- * @param footer footer element
- * @returns {Promise}
+
+* Loads a block named 'footer' into footer
+* @param footer footer element
+* @returns {Promise}
  */
 async function loadFooter(footer) {
   const footerBlock = buildBlock('footer', '');
@@ -718,8 +744,9 @@ async function loadFooter(footer) {
 }
 
 /**
- * Load LCP block and/or wait for LCP in default content.
- * @param {Array} lcpBlocks Array of blocks
+
+* Load LCP block and/or wait for LCP in default content.
+* @param {Array} lcpBlocks Array of blocks
  */
 async function waitForLCP(lcpBlocks) {
   const block = document.querySelector('.block');

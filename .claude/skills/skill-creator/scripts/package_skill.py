@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Skill Packager - Creates a distributable zip file of a skill folder
 
@@ -14,7 +14,6 @@ import sys
 import zipfile
 from pathlib import Path
 from quick_validate import validate_skill
-
 
 def package_skill(skill_path, output_dir=None):
     """
@@ -81,7 +80,6 @@ def package_skill(skill_path, output_dir=None):
         print(f"❌ Error creating zip file: {e}")
         return None
 
-
 def main():
     if len(sys.argv) < 2:
         print("Usage: python utils/package_skill.py <path/to/skill-folder> [output-directory]")
@@ -104,7 +102,6 @@ def main():
         sys.exit(0)
     else:
         sys.exit(1)
-
 
 if __name__ == "__main__":
     main()

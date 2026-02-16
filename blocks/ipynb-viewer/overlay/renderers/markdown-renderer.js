@@ -1,6 +1,7 @@
 /**
- * Markdown Content Renderer
- * Fetches and renders markdown files from GitHub
+
+* Markdown Content Renderer
+* Fetches and renders markdown files from GitHub
  */
 
 function convertToRawUrl(blobUrl) {
@@ -9,13 +10,14 @@ function convertToRawUrl(blobUrl) {
 }
 
 /**
- * Parse markdown to HTML
- * Comprehensive markdown parser matching the main ipynb-viewer implementation
- * @param {string} markdown - Raw markdown text
- * @param {string} repoUrl - Repository URL for resolving relative links
- * @param {string} branch - GitHub branch
- * @param {string} currentFilePath - Current file path for resolving relative paths
- * @returns {string} HTML string
+
+* Parse markdown to HTML
+* Comprehensive markdown parser matching the main ipynb-viewer implementation
+* @param {string} markdown - Raw markdown text
+* @param {string} repoUrl - Repository URL for resolving relative links
+* @param {string} branch - GitHub branch
+* @param {string} currentFilePath - Current file path for resolving relative paths
+* @returns {string} HTML string
  */
 function markdownToHtml(markdown, repoUrl = null, branch = 'main', currentFilePath = null) {
   let html = markdown;
@@ -44,7 +46,7 @@ function markdownToHtml(markdown, repoUrl = null, branch = 'main', currentFilePa
   // Extract inline code and protect it
   const inlineCodePlaceholders = [];
   html = html.replace(/`([^`]+)`/g, (match, code) => {
-    const placeholder = `__INLINECODE_${inlineCodePlaceholders.length}__`;
+    const placeholder =`__INLINECODE_${inlineCodePlaceholders.length}__`;
     inlineCodePlaceholders.push(code);
     return placeholder;
   });
@@ -70,7 +72,7 @@ function markdownToHtml(markdown, repoUrl = null, branch = 'main', currentFilePa
 
   const createTableRow = (tableCells, isFirstRow) => {
     const tag = isFirstRow ? 'th' : 'td';
-    return `<tr>${tableCells.map((cell) => `<${tag}>${cell.trim()}</${tag}>`).join('')}</tr>`;
+    return `<tr>${tableCells.map((cell) =>`<${tag}>${cell.trim()}</${tag}>`).join('')}</tr>`;
   };
 
   lines.forEach((line) => {
@@ -104,25 +106,25 @@ function markdownToHtml(markdown, repoUrl = null, branch = 'main', currentFilePa
 
   // Headers - Add IDs to h2 headers for navigation
   // Also strip Pandoc/LaTeX class attributes like {.unnumbered .unlisted}
-  html = html.replace(/^###### (.*?)(\s*\{\.[\w\s.-]+\})?\s*$/gim, '<h6>$1</h6>');
-  html = html.replace(/^##### (.*?)(\s*\{\.[\w\s.-]+\})?\s*$/gim, '<h5>$1</h5>');
-  html = html.replace(/^#### (.*?)(\s*\{\.[\w\s.-]+\})?\s*$/gim, '<h4>$1</h4>');
-  html = html.replace(/^### (.*?)(\s*\{\.[\w\s.-]+\})?\s*$/gim, '<h3>$1</h3>');
-  html = html.replace(/^## (.*?)(\s*\{\.[\w\s.-]+\})?\s*$/gim, (match, text) => {
+  html = html.replace(/^###### (._?)(\s_\{\.[\w\s.-]+\})?\s*$/gim, '<h6>$1</h6>');
+  html = html.replace(/^##### (._?)(\s_\{\.[\w\s.-]+\})?\s*$/gim, '<h5>$1</h5>');
+  html = html.replace(/^#### (._?)(\s_\{\.[\w\s.-]+\})?\s*$/gim, '<h4>$1</h4>');
+  html = html.replace(/^### (._?)(\s_\{\.[\w\s.-]+\})?\s*$/gim, '<h3>$1</h3>');
+  html = html.replace(/^## (._?)(\s_\{\.[\w\s.-]+\})?\s*$/gim, (match, text) => {
     const cleanText = text.trim();
     const id = cleanText.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-')
       .replace(/-+/g, '-').replace(/^-+|-+$/g, '').trim();
     return `<h2 id="${id}">${cleanText}</h2>`;
   });
-  html = html.replace(/^# (.*?)(\s*\{\.[\w\s.-]+\})?\s*$/gim, '<h1>$1</h1>');
+  html = html.replace(/^# (._?)(\s_\{\.[\w\s.-]+\})?\s*$/gim, '<h1>$1</h1>');
 
   // Horizontal rules
-  html = html.replace(/^(?:[-*_]\s*){3,}$/gim, '<hr>');
+  html = html.replace(/^(?:[-__]\s_){3,}$/gim, '<hr>');
 
   // Images - process BEFORE links
-  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_match, alt, url) => {
+  html = html.replace(/!\[([^\]]_)\]\(([^)]+)\)/g, (_match, alt, url) => {
     let processedUrl = url;
-    if (url.match(/illustrations\/.*\.png$/i)) {
+    if (url.match(/illustrations\/._\.png$/i)) {
       processedUrl = url.replace(/\.png$/i, '.svg');
     }
 
@@ -201,7 +203,7 @@ function markdownToHtml(markdown, repoUrl = null, branch = 'main', currentFilePa
   let lastIndent = -1;
 
   linesWithLists.forEach((line) => {
-    const ulMatch = line.match(/^(\s*)[-*] (.+)$/);
+    const ulMatch = line.match(/^[\s*](-*) (.+)$/);
     const olMatch = line.match(/^(\s*)\d+\. (.+)$/);
 
     if (ulMatch || olMatch) {

@@ -1,24 +1,25 @@
-/* Overlay Block Styles */
+/*Overlay Block Styles*/
 
 /*
- * Trigger button (.overlay-trigger) inherits from global button styles in styles.css:
- * - Display: inline-block
- * - Padding: 5px 30px
- * - Font-weight: 600
- * - Background: var(--link-color)
- * - Color: var(--background-color)
- * - Border-radius: 30px (pill shape)
- * - Cursor: pointer
- *
- * No additional button styles needed - global styles provide everything.
+
+* Trigger button (.overlay-trigger) inherits from global button styles in styles.css:
+* * Display: inline-block
+* * Padding: 5px 30px
+* * Font-weight: 600
+* * Background: var(--link-color)
+* * Color: var(--background-color)
+* * Border-radius: 30px (pill shape)
+* * Cursor: pointer
+*
+* No additional button styles needed - global styles provide everything.
  */
 
-/* Prevent body scroll when overlay is open */
+/*Prevent body scroll when overlay is open*/
 body.overlay-open {
   overflow: hidden;
 }
 
-/* Overlay backdrop (full-screen overlay) */
+/*Overlay backdrop (full-screen overlay)*/
 .overlay-backdrop {
   position: fixed;
   top: 0;
@@ -35,17 +36,17 @@ body.overlay-open {
   transition: opacity 0.3s ease-in-out;
 }
 
-/* Visible state */
+/*Visible state*/
 .overlay-backdrop--visible {
   opacity: 1;
 }
 
-/* Dismissing state */
+/*Dismissing state*/
 .overlay-backdrop--dismissing {
   opacity: 0;
 }
 
-/* Modal window */
+/*Modal window*/
 .overlay-modal {
   position: relative;
   background-color: var(--background-color);
@@ -60,17 +61,17 @@ body.overlay-open {
   transition: transform 0.3s ease-in-out;
 }
 
-/* Modal visible state */
+/*Modal visible state*/
 .overlay-backdrop--visible .overlay-modal {
   transform: scale(1);
 }
 
-/* Modal dismissing state */
+/*Modal dismissing state*/
 .overlay-backdrop--dismissing .overlay-modal {
   transform: scale(0.95);
 }
 
-/* Header */
+/*Header*/
 .overlay-header {
   position: relative;
   padding: 1.5rem 3.5rem 1.5rem 2rem;
@@ -85,7 +86,7 @@ body.overlay-open {
   color: var(--text-color);
 }
 
-/* Close button */
+/*Close button*/
 .overlay-close {
   position: absolute;
   top: 0.75rem;
@@ -118,14 +119,14 @@ body.overlay-open {
   transform: rotate(90deg) scale(0.95);
 }
 
-/* Content area */
+/*Content area*/
 .overlay-content {
   padding: 2rem;
   overflow-y: auto;
   flex: 1;
 }
 
-/* Content styling */
+/*Content styling*/
 .overlay-content h3 {
   margin-top: 0;
   color: var(--text-color);
@@ -160,7 +161,7 @@ body.overlay-open {
   font-weight: 600;
 }
 
-/* Responsive adjustments - Tablet and Mobile (768px and below) */
+/*Responsive adjustments - Tablet and Mobile (768px and below)*/
 @media (width <= 768px) {
   .overlay-backdrop {
     padding: 0.5rem;
@@ -193,7 +194,7 @@ body.overlay-open {
   }
 }
 
-/* Small mobile (480px and below) */
+/*Small mobile (480px and below)*/
 @media (width <= 480px) {
   .overlay-modal {
     max-height: 95vh;
@@ -219,12 +220,12 @@ body.overlay-open {
   }
 }
 
-/* Smooth scrolling for content */
+/*Smooth scrolling for content*/
 .overlay-content {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar for webkit browsers */
+/*Custom scrollbar for webkit browsers*/
 .overlay-content::-webkit-scrollbar {
   width: 8px;
 }
@@ -243,7 +244,7 @@ body.overlay-open {
   background: rgba(0 0 0 / 0.3);
 }
 
-/* Focus styles for accessibility */
+/*Focus styles for accessibility*/
 .overlay-modal:focus {
   outline: none;
 }
@@ -253,7 +254,7 @@ body.overlay-open {
   outline-offset: 2px;
 }
 
-/* Error state */
+/*Error state*/
 .overlay .error-message {
   padding: 1rem;
   background-color: #fee;

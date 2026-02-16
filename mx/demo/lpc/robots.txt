@@ -1,12 +1,16 @@
 # Robots.txt for LPC Design + Print
+
 # Allows all crawlers to index the entire site
+
 # Demonstrates MX methodology: AI agent discoverability
 
 User-agent: *
 Allow: /
 
 # XML Sitemap location for efficient crawling
+
 Sitemap: https://www.lpcprint.co.uk/sitemap.xml
 
 # Crawl delay (optional - 1 second between requests)
+
 Crawl-delay: 1

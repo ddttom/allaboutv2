@@ -1,7 +1,7 @@
 .dynamic {
   position: relative;
   margin: 0;
-} 
+}
 
 .dynamic.blog {
   background-color: var(--color-white);

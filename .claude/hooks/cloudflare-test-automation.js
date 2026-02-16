@@ -1,16 +1,17 @@
-#!/usr/bin/env node
+# !/usr/bin/env node
 /**
- * Cloudflare Worker Test Automation System
- *
- * Automatically generates and updates tests when cloudflare-worker.js changes.
- *
- * Features:
- * - Detects worker changes via git diff
- * - Auto-generates tests for new functions
- * - Auto-updates test expectations for modified functions
- * - Generates comprehensive coverage report
- * - Creates backups with rollback capability
- * - Runs all test suites (unit + integration + browser)
+
+* Cloudflare Worker Test Automation System
+*
+* Automatically generates and updates tests when cloudflare-worker.js changes.
+*
+* Features:
+* * Detects worker changes via git diff
+* * Auto-generates tests for new functions
+* * Auto-updates test expectations for modified functions
+* * Generates comprehensive coverage report
+* * Creates backups with rollback capability
+* * Runs all test suites (unit + integration + browser)
  */
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
@@ -20,7 +21,7 @@ import { execSync } from 'child_process';
 
 // Get current directory for ES modules
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const__dirname = dirname(__filename);
 
 // ANSI color codes
 const COLORS = {
@@ -34,7 +35,8 @@ const COLORS = {
 };
 
 /**
- * Main orchestrator class
+
+* Main orchestrator class
  */
 class CloudflareTestAutomation {
   constructor(projectRoot) {
@@ -63,7 +65,8 @@ class CloudflareTestAutomation {
   }
 
   /**
-   * Main entry point
+
+* Main entry point
    */
   async run() {
     try {
@@ -109,7 +112,8 @@ class CloudflareTestAutomation {
   }
 
   /**
-   * Print header
+
+* Print header
    */
   printHeader() {
     console.log(`${COLORS.BLUE}${'='.repeat(60)}${COLORS.NC}`);
@@ -119,7 +123,8 @@ class CloudflareTestAutomation {
   }
 
   /**
-   * Analyze worker changes using git diff
+
+* Analyze worker changes using git diff
    */
   async analyzeWorkerChanges() {
     try {
@@ -178,21 +183,21 @@ class CloudflareTestAutomation {
       if (this.results.newFunctions.length > 0) {
         console.log(`${COLORS.GREEN}✓ Found ${this.results.newFunctions.length} new function(s):${COLORS.NC}`);
         this.results.newFunctions.forEach(fn => {
-          console.log(`  - ${fn.name} (${fn.type})`);
+          console.log(`- ${fn.name} (${fn.type})`);
         });
       }
 
       if (this.results.modifiedFunctions.length > 0) {
         console.log(`${COLORS.YELLOW}✓ Found ${this.results.modifiedFunctions.length} modified function(s):${COLORS.NC}`);
         this.results.modifiedFunctions.forEach(({ current }) => {
-          console.log(`  - ${current.name}`);
+          console.log(`- ${current.name}`);
         });
       }
 
       if (this.results.deletedFunctions.length > 0) {
         console.log(`${COLORS.RED}✓ Found ${this.results.deletedFunctions.length} deleted function(s):${COLORS.NC}`);
         this.results.deletedFunctions.forEach(fn => {
-          console.log(`  - ${fn.name}`);
+          console.log(`- ${fn.name}`);
         });
       }
 
@@ -203,7 +208,8 @@ class CloudflareTestAutomation {
   }
 
   /**
-   * Extract exported functions from JavaScript code
+
+* Extract exported functions from JavaScript code
    */
   extractExportedFunctions(code) {
     const functions = [];
@@ -242,7 +248,8 @@ class CloudflareTestAutomation {
   }
 
   /**
-   * Create backups of all test files
+
+* Create backups of all test files
    */
   async createBackups() {
     // Ensure backup directory exists
@@ -273,7 +280,8 @@ class CloudflareTestAutomation {
   }
 
   /**
-   * Generate tests for new functions
+
+* Generate tests for new functions
    */
   async generateTests() {
     for (const fn of this.results.newFunctions) {
@@ -298,7 +306,8 @@ class CloudflareTestAutomation {
   }
 
   /**
-   * Update tests for modified functions
+
+* Update tests for modified functions
    */
   async updateTests() {
     for (const { current } of this.results.modifiedFunctions) {
@@ -323,7 +332,8 @@ class CloudflareTestAutomation {
   }
 
   /**
-   * Run all test suites
+
+* Run all test suites
    */
   async runAllTests() {
     try {
@@ -352,7 +362,8 @@ class CloudflareTestAutomation {
   }
 
   /**
-   * Generate comprehensive coverage report
+
+* Generate comprehensive coverage report
    */
   async generateCoverageReport() {
     const report = this.buildCoverageReport();
@@ -366,7 +377,8 @@ class CloudflareTestAutomation {
   }
 
   /**
-   * Build coverage report content
+
+* Build coverage report content
    */
   buildCoverageReport() {
     const timestamp = new Date().toISOString();
@@ -450,7 +462,8 @@ class CloudflareTestAutomation {
   }
 
   /**
-   * Print summary
+
+* Print summary
    */
   printSummary() {
     console.log('');
@@ -469,7 +482,8 @@ class CloudflareTestAutomation {
   }
 
   /**
-   * Handle failure - restore from backups if needed
+
+* Handle failure - restore from backups if needed
    */
   async handleFailure() {
     if (this.results.errors.length > 0 && Object.keys(this.backups).length > 0) {

@@ -1,13 +1,14 @@
 /*
- * Copyright 2022 Adobe. All rights reserved.
- * This file is licensed to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License. You may obtain a copy
- * of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under
- * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
- * OF ANY KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
+
+* Copyright 2022 Adobe. All rights reserved.
+* This file is licensed to you under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License. You may obtain a copy
+* of the License at http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software distributed under
+* the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+* OF ANY KIND, either express or implied. See the License for the specific language
+* governing permissions and limitations under the License.
  */
 const MAX_SAMPLING_RATE = 10; // At a maximum we sample 1 in 10 requests
 
@@ -32,18 +33,20 @@ export const DEFAULT_OPTIONS = {
 };
 
 /**
- * Checks if the current engine is detected as being a bot.
- * @returns `true` if the current engine is detected as being, `false` otherwise
+
+* Checks if the current engine is detected as being a bot.
+* @returns `true` if the current engine is detected as being, `false` otherwise
  */
 function isBot() {
   return navigator.userAgent.match(/bot|crawl|spider/i);
 }
 
 /**
- * Checks if any of the configured audiences on the page can be resolved.
- * @param {string[]} applicableAudiences a list of configured audiences for the page
- * @param {object} options the plugin options
- * @returns Returns the names of the resolved audiences, or `null` if no audience is configured
+
+* Checks if any of the configured audiences on the page can be resolved.
+* @param {string[]} applicableAudiences a list of configured audiences for the page
+* @param {object} options the plugin options
+* @returns Returns the names of the resolved audiences, or `null` if no audience is configured
  */
 export async function getResolvedAudiences(applicableAudiences, options, context) {
   if (!applicableAudiences.length || !Object.keys(options.audiences).length) {
@@ -73,10 +76,11 @@ export async function getResolvedAudiences(applicableAudiences, options, context
 }
 
 /**
- * Replaces element with content from path
- * @param {string} path
- * @param {HTMLElement} main
- * @return Returns the path that was loaded or null if the loading failed
+
+* Replaces element with content from path
+* @param {string} path
+* @param {HTMLElement} main
+* @return Returns the path that was loaded or null if the loading failed
  */
 async function replaceInner(path, main) {
   try {
@@ -101,25 +105,27 @@ async function replaceInner(path, main) {
 }
 
 /**
- * Parses the experimentation configuration sheet and creates an internal model.
- *
- * Output model is expected to have the following structure:
- *      {
- *        id: <string>,
- *        label: <string>,
- *        blocks: <string>,
- *        audiences: [<string>],
- *        status: Active | Inactive,
- *        variantNames: [<string>],
- *        variants: {
- *          [variantName]: {
- *            label: <string>
- *            percentageSplit: <number 0-1>,
- *            pages: <string>,
- *            blocks: <string>,
- *          }
- *        }
- *      };
+
+* Parses the experimentation configuration sheet and creates an internal model.
+*
+* Output model is expected to have the following structure:
+*      {
+*        id: <string>,
+*        label: <string>,
+*        blocks: <string>,
+*        audiences: [<string>],
+*        status: Active | Inactive,
+*        variantNames: [<string>],
+*        variants: {
+*          [variantName]: {
+*            label: <string>
+*            percentageSplit: <number 0-1>,
+*            pages: <string>,
+*            blocks: <string>,
+*          }
+*        }
+*      };
+
  */
 function parseExperimentConfig(json, context) {
   const config = {};
@@ -170,9 +176,10 @@ function parseExperimentConfig(json, context) {
 }
 
 /**
- * Checks if the given config is a valid experimentation configuration.
- * @param {object} config the config to check
- * @returns `true` if it is valid, `false` otherwise
+
+* Checks if the given config is a valid experimentation configuration.
+* @param {object} config the config to check
+* @returns `true` if it is valid, `false` otherwise
  */
 export function isValidExperimentationConfig(config) {
   if (!config.variantNames
@@ -191,12 +198,13 @@ export function isValidExperimentationConfig(config) {
 }
 
 /**
- * Calculates percentage split for variants where the percentage split is not
- * explicitly configured.
- * Substracts from 100 the explicitly configured percentage splits,
- * and divides the remaining percentage, among the variants without explicit
- * percentage split configured
- * @param {Array} variant objects
+
+* Calculates percentage split for variants where the percentage split is not
+* explicitly configured.
+* Substracts from 100 the explicitly configured percentage splits,
+* and divides the remaining percentage, among the variants without explicit
+* percentage split configured
+* @param {Array} variant objects
  */
 function inferEmptyPercentageSplits(variants) {
   const variantsWithoutPercentage = [];
@@ -217,11 +225,12 @@ function inferEmptyPercentageSplits(variants) {
 }
 
 /**
- * Gets experiment config from the metadata.
- *
- * @param {string} experimentId The experiment identifier
- * @param {string} instantExperiment The list of varaints
- * @returns {object} the experiment manifest
+
+* Gets experiment config from the metadata.
+*
+* @param {string} experimentId The experiment identifier
+* @param {string} instantExperiment The list of varaints
+* @returns {object} the experiment manifest
  */
 function getConfigForInstantExperiment(
   experimentId,
@@ -276,21 +285,22 @@ function getConfigForInstantExperiment(
 }
 
 /**
- * Gets experiment config from the manifest and transforms it to more easily
- * consumable structure.
- *
- * the manifest consists of two sheets "settings" and "experiences", by default
- *
- * "settings" is applicable to the entire test and contains information
- * like "Audience", "Status" or "Blocks".
- *
- * "experience" hosts the experiences in rows, consisting of:
- * a "Percentage Split", "Label" and a set of "Links".
- *
- *
- * @param {string} experimentId The experiment identifier
- * @param {object} pluginOptions The plugin options
- * @returns {object} containing the experiment manifest
+
+* Gets experiment config from the manifest and transforms it to more easily
+* consumable structure.
+*
+* the manifest consists of two sheets "settings" and "experiences", by default
+*
+* "settings" is applicable to the entire test and contains information
+* like "Audience", "Status" or "Blocks".
+*
+* "experience" hosts the experiences in rows, consisting of:
+* a "Percentage Split", "Label" and a set of "Links".
+*
+*
+* @param {string} experimentId The experiment identifier
+* @param {object} pluginOptions The plugin options
+* @returns {object} containing the experiment manifest
  */
 async function getConfigForFullExperiment(experimentId, pluginOptions, context) {
   let path;
@@ -428,7 +438,7 @@ export async function runExperiment(document, options, context) {
 
   const usp = new URLSearchParams(window.location.search);
   const forcedVariant = usp.has(pluginOptions.experimentsQueryParameter)
-    ? usp.get(pluginOptions.experimentsQueryParameter).split('/')[1]
+    ? usp.get(pluginOptions.experimentsQueryParameter).split['/'](1)
     : null;
   if (!experimentConfig.run && !forcedVariant) {
     // eslint-disable-next-line no-console

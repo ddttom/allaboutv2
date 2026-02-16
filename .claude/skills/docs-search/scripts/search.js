@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+# !/usr/bin/env node
 
 import fs from 'fs';
 import path from 'path';
@@ -6,9 +6,9 @@ import { fileURLToPath } from 'url';
 import https from 'https';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const__dirname = path.dirname(__filename);
 const CACHE_DIR = path.join(__dirname, '..', '.cache');
-const CACHE_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
+const CACHE_DURATION_MS = 24 *60* 60 * 1000; // 24 hours
 
 // Stop words to ignore in searches
 const STOP_WORDS = new Set([
@@ -26,7 +26,8 @@ const SCORE_WEIGHTS = {
 };
 
 /**
- * Fetch JSON from URL with caching
+
+* Fetch JSON from URL with caching
  */
 async function fetchWithCache(url, cacheFileName) {
   const cacheFilePath = path.join(CACHE_DIR, cacheFileName);
@@ -63,7 +64,8 @@ async function fetchWithCache(url, cacheFileName) {
 }
 
 /**
- * Filter keywords to remove stop words
+
+* Filter keywords to remove stop words
  */
 function filterKeywords(keywords) {
   return keywords
@@ -72,7 +74,8 @@ function filterKeywords(keywords) {
 }
 
 /**
- * Count keyword occurrences in text (case-insensitive)
+
+* Count keyword occurrences in text (case-insensitive)
  */
 function countMatches(text, keyword) {
   if (!text) return 0;
@@ -82,7 +85,8 @@ function countMatches(text, keyword) {
 }
 
 /**
- * Clean up content noise from the beginning of text
+
+* Clean up content noise from the beginning of text
  */
 function cleanContent(text) {
   if (!text) return '';
@@ -97,7 +101,8 @@ function cleanContent(text) {
 }
 
 /**
- * Extract full sentences around keyword match
+
+* Extract full sentences around keyword match
  */
 function extractSnippet(text, keyword) {
   if (!text) return '';
@@ -163,7 +168,8 @@ function extractSnippet(text, keyword) {
 }
 
 /**
- * Extract first few sentences up to maxLength
+
+* Extract first few sentences up to maxLength
  */
 function extractFirstSentences(text, maxLength = 200) {
   text = cleanContent(text);
@@ -191,7 +197,8 @@ function extractFirstSentences(text, maxLength = 200) {
 }
 
 /**
- * Calculate relevance score for a document
+
+* Calculate relevance score for a document
  */
 function calculateScore(doc, keywords) {
   let score = 0;
@@ -240,7 +247,8 @@ function calculateScore(doc, keywords) {
 }
 
 /**
- * Search documents
+
+* Search documents
  */
 function searchDocuments(docs, keywords, type = 'doc') {
   const results = [];
@@ -281,7 +289,8 @@ function searchDocuments(docs, keywords, type = 'doc') {
 }
 
 /**
- * Main search function
+
+* Main search function
  */
 async function search(keywords, limit = 10) {
   // Filter keywords
@@ -329,7 +338,8 @@ async function search(keywords, limit = 10) {
 }
 
 /**
- * CLI entry point
+
+* CLI entry point
  */
 async function main() {
   const args = process.argv.slice(2);

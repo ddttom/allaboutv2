@@ -12,7 +12,7 @@
   <g transform="translate(400, 250)">
     <!-- Agent circle -->
     <circle cx="0" cy="0" r="70" fill="#4dabf7" opacity="0.9"/>
-    
+
     <!-- AI text -->
     <text x="0" y="0" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="white" font-weight="bold">Agentic</text>
     <text x="0" y="30" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="white" font-weight="bold">AI</text>
@@ -26,7 +26,7 @@
     <text x="580" y="255" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">Decision</text>
     <line x1="470" y1="250" x2="540" y2="250" stroke="#333" stroke-width="2"/>
     <polygon points="540,250 530,245 530,255" fill="#333"/>
-    
+
     <!-- Plan (new) -->
     <circle cx="220" cy="250" r="40" fill="#e9ecef" stroke="#adb5bd" stroke-width="2"/>
     <text x="220" y="255" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#333">Plan</text>
@@ -61,7 +61,7 @@
   <!-- Human Oversight -->
   <g transform="translate(400, 120)">
     <circle cx="0" cy="0" r="40" fill="#e9ecef" stroke="#adb5bd" stroke-width="2"/>
-    
+
     <!-- Simplified human figure -->
     <circle cx="0" cy="-15" r="12" fill="#adb5bd"/>
     <path d="M-15,5 C-15,20 15,20 15,5 Z" fill="#adb5bd"/>
@@ -78,7 +78,7 @@
     <!-- A2A Architecture -->
     <g transform="translate(185, 450)">
       <rect x="-125" y="-40" width="250" height="80" rx="10" ry="10" fill="#e7f5ff" stroke="#4dabf7" stroke-width="2"/>
-      
+
       <text x="0" y="-15" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#333" font-weight="bold">A2A Architecture</text>
       <text x="0" y="10" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#555">Agent-to-Agent</text>
       <text x="0" y="30" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#555">Communication</text>
@@ -134,7 +134,7 @@
   <!-- Business Systems Box at bottom -->
   <g transform="translate(400, 550)">
     <rect x="-350" y="-30" width="700" height="60" rx="10" ry="10" fill="#f1f3f5" stroke="#868e96" stroke-width="2"/>
-    
+
     <text x="0" y="5" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="#333" font-weight="bold">Business Systems and Infrastructure</text>
     
     <!-- Connection lines from components to business systems -->

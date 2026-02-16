@@ -62,11 +62,13 @@
 ## Key Concepts Explained
 
 **Training vs. Learning vs. Codification:**
+
 - Training: What AI providers do before deployment (updating neural weights, millions in compute)
 - In-Context Learning: What AI does during conversations (temporary, disappears when session ends)
 - Codification: Capturing learned patterns in executable code (permanent, reusable forever)
 
 **The 5-Stage Agent Journey:**
+
 1. Discovery (Training): Agents learn your site exists through crawling and indexing
 2. Understanding (Runtime): Agents parse HTML, extract entities, comprehend structure
 3. Comparison (Runtime): Agents compare options across sites based on structured data

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Bounce Animation Template - Creates bouncing motion for objects.
 
@@ -9,12 +9,12 @@ import sys
 from pathlib import Path
 
 # Add parent directory to path
+
 sys.path.append(str(Path(__file__).parent.parent))
 
 from core.gif_builder import GIFBuilder
 from core.frame_composer import create_blank_frame, draw_circle, draw_emoji
 from core.easing import ease_out_bounce, interpolate
-
 
 def create_bounce_animation(
     object_type: str = 'circle',
@@ -83,8 +83,8 @@ def create_bounce_animation(
 
     return frames
 
-
 # Example usage
+
 if __name__ == '__main__':
     print("Creating bouncing ball GIF...")
 

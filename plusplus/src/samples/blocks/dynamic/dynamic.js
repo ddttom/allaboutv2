@@ -1,8 +1,8 @@
-/* eslint-disable import/no-absolute-path */
+/*eslint-disable import/no-absolute-path */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable function-paren-newline */
 /* eslint-disable import/extensions */
-/* eslint-disable no-alert */
+/* eslint-disable no-alert*/
 
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import {

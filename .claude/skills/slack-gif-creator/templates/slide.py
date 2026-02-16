@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Slide Animation - Slide elements in from edges with overshoot/bounce.
 
@@ -14,7 +14,6 @@ from PIL import Image
 from core.gif_builder import GIFBuilder
 from core.frame_composer import create_blank_frame, draw_emoji_enhanced
 from core.easing import interpolate
-
 
 def create_slide_animation(
     object_type: str = 'emoji',
@@ -136,7 +135,6 @@ def create_slide_animation(
 
     return frames
 
-
 def create_multi_slide(
     objects: list[dict],
     num_frames: int = 30,
@@ -230,8 +228,8 @@ def create_multi_slide(
 
     return frames
 
-
 # Example usage
+
 if __name__ == '__main__':
     print("Creating slide animations...")
 

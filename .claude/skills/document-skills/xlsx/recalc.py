@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 """
 Excel Formula Recalculation Script
 Recalculates all formulas in an Excel file using LibreOffice
@@ -12,14 +12,13 @@ import platform
 from pathlib import Path
 from openpyxl import load_workbook
 
-
 def setup_libreoffice_macro():
     """Setup LibreOffice macro for recalculation if not already configured"""
     if platform.system() == 'Darwin':
         macro_dir = os.path.expanduser('~/Library/Application Support/LibreOffice/4/user/basic/Standard')
     else:
         macro_dir = os.path.expanduser('~/.config/libreoffice/4/user/basic/Standard')
-    
+
     macro_file = os.path.join(macro_dir, 'Module1.xba')
     
     if os.path.exists(macro_file):
@@ -41,7 +40,7 @@ def setup_libreoffice_macro():
       ThisComponent.close(True)
     End Sub
 </script:module>'''
-    
+
     try:
         with open(macro_file, 'w') as f:
             f.write(macro_content)
@@ -49,11 +48,10 @@ def setup_libreoffice_macro():
     except Exception:
         return False
 
-
 def recalc(filename, timeout=30):
     """
     Recalculate formulas in Excel file and report any errors
-    
+
     Args:
         filename: Path to Excel file
         timeout: Maximum time to wait for recalculation (seconds)
@@ -154,7 +152,6 @@ def recalc(filename, timeout=30):
     except Exception as e:
         return {'error': str(e)}
 
-
 def main():
     if len(sys.argv) < 2:
         print("Usage: python recalc.py <excel_file> [timeout_seconds]")
@@ -166,13 +163,12 @@ def main():
         print("  - error_summary: Breakdown by error type with locations")
         print("    - #VALUE!, #DIV/0!, #REF!, #NAME?, #NULL!, #NUM!, #N/A")
         sys.exit(1)
-    
+
     filename = sys.argv[1]
     timeout = int(sys.argv[2]) if len(sys.argv) > 2 else 30
     
     result = recalc(filename, timeout)
     print(json.dumps(result, indent=2))
-
 
 if __name__ == '__main__':
     main()

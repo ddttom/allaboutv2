@@ -2,10 +2,10 @@
   width: 100%;
   overflow-x: auto;
 
-  /* Define pale blue color for first-line styling */
+  /*Define pale blue color for first-line styling*/
   --table-first-line-bg: #e6f2ff;
 
-  /* define background color for striped tables */
+  /*define background color for striped tables*/
   --overlay-background-color: rgb(0 0 0 / 0.05);
 }
 
@@ -47,33 +47,33 @@
   text-align: left;
 }
 
-/* no header variant */
+/*no header variant*/
 .table.no-header table tbody tr {
   border-top: 1px solid;
 }
 
-/* striped variant */
+/*striped variant*/
 .table.striped tbody tr:nth-child(odd) {
   background-color: var(--overlay-background-color);
 }
 
-/* Additional selector for striped tables with data rows in thead */
+/*Additional selector for striped tables with data rows in thead*/
 .table.striped thead tr:nth-child(odd):not(:first-child) {
   background-color: var(--overlay-background-color);
 }
 
-/* bordered variant */
+/*bordered variant*/
 .table.bordered table th,
 .table.bordered table td {
   border: 1px solid;
 }
 
-/* first-line variant - applies pale blue background to the first row */
+/*first-line variant - applies pale blue background to the first row*/
 .table.first-line table tbody tr:first-child {
   background-color: var(--table-first-line-bg);
 }
 
-/* Handle case where first line is in thead - target the first row */
+/*Handle case where first line is in thead - target the first row*/
 .table.first-line table thead tr:first-child {
   background-color: var(--table-first-line-bg);
 }

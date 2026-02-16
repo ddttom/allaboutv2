@@ -1,11 +1,12 @@
-/* 
- * Markdown FAQ Block - Styling
- *
- * This CSS defines the visual presentation of the FAQ block, including
- * animations, responsive layouts, and interactive elements.
+/*
+
+* Markdown FAQ Block - Styling
+*
+* This CSS defines the visual presentation of the FAQ block, including
+* animations, responsive layouts, and interactive elements.
  */
 
-/* Base container styling */
+/*Base container styling*/
 .block.dfs {
   max-width: 1000px;
   margin: 2rem auto;
@@ -13,7 +14,7 @@
   color: var(--text-color, #333);
 }
 
-/* Header styling */
+/*Header styling*/
 .faq-header {
   margin-bottom: 2rem;
   border-bottom: 1px solid #ddd;
@@ -34,7 +35,7 @@
   color: #666;
 }
 
-/* Controls (search and filter) */
+/*Controls (search and filter)*/
 .faq-controls {
   display: flex;
   flex-direction: column;
@@ -109,7 +110,7 @@
   border-color: var(--link-color, #06c);
 }
 
-/* Fix for search and filter layout */
+/*Fix for search and filter layout*/
 .block.dfs > div:first-child {
   display: flex;
   flex-direction: column;
@@ -122,7 +123,7 @@
   margin-bottom: 1rem;
 }
 
-/* Category sections */
+/*Category sections*/
 .faq-category-section {
   margin-bottom: 3rem;
 }
@@ -142,7 +143,7 @@
   color: #444;
 }
 
-/* Individual FAQ items */
+/*Individual FAQ items*/
 .faq-item {
   margin-bottom: 1rem;
   border-radius: 6px;
@@ -165,7 +166,7 @@
   color: white;
 }
 
-/* Improve touch target size on mobile */
+/*Improve touch target size on mobile*/
 @media (width <= 767px) {
   .faq-question {
     padding: 1.2rem 1rem;
@@ -181,7 +182,7 @@
   background-color: #666;
 }
 
-/* Add focus styles for keyboard navigation */
+/*Add focus styles for keyboard navigation*/
 .faq-question:focus {
   outline: 2px solid var(--link-color, #06c);
   outline-offset: -2px;
@@ -238,7 +239,7 @@
   margin-bottom: 0.5rem;
 }
 
-/* External links container */
+/*External links container*/
 .faq-external-links {
   display: flex;
   flex-wrap: wrap;
@@ -247,7 +248,7 @@
   border-top: 1px solid #eee;
 }
 
-/* Read More link variations */
+/*Read More link variations*/
 .faq-read-more {
   display: inline-block;
 }
@@ -265,7 +266,7 @@
   box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
 }
 
-/* Make links more touch-friendly on mobile */
+/*Make links more touch-friendly on mobile*/
 @media (width <= 767px) {
   .faq-read-more-link {
     padding: 12px 18px;
@@ -284,7 +285,7 @@
   outline-offset: 2px;
 }
 
-/* Style for internal links */
+/*Style for internal links*/
 .faq-read-more-link.internal-link {
   background-color: #f0f7ff;
 }
@@ -295,7 +296,7 @@
   font-size: 14px;
 }
 
-/* Style for external links */
+/*Style for external links*/
 .faq-read-more-link.external-link {
   background-color: #f0f0f0;
 }
@@ -318,7 +319,7 @@
   margin-bottom: 0.5rem;
 }
 
-/* Empty results message */
+/*Empty results message*/
 .faq-empty-message {
   text-align: center;
   padding: 2rem;
@@ -329,7 +330,7 @@
   border: 1px solid #ddd;
 }
 
-/* Tag styling */
+/*Tag styling*/
 .faq-resources [href^="#"] {
   display: inline-block;
   background-color: #f0f0f0;
@@ -347,14 +348,14 @@
   color: #333;
 }
 
-/* Search highlighting */
+/*Search highlighting*/
 .search-highlight {
   background-color: #ffeb3b;
   padding: 0 2px;
   border-radius: 2px;
 }
 
-/* Screen reader only class */
+/*Screen reader only class*/
 .sr-only {
   position: absolute;
   width: 1px;
@@ -367,33 +368,33 @@
   border-width: 0;
 }
 
-/* Fix for search and filter layout */
+/*Fix for search and filter layout*/
 .block.dfs {
   position: relative;
 }
 
-/* Search box styling */
+/*Search box styling*/
 .block.dfs input[type="text"] {
   width: calc(100% - 200px);
   display: inline-block;
   margin-right: 10px;
 }
 
-/* Filter by styling */
+/*Filter by styling*/
 .block.dfs select {
   width: 180px;
   display: inline-block;
   vertical-align: middle;
 }
 
-/* Filter by label */
+/*Filter by label*/
 .block.dfs label {
   display: inline-block;
   margin-right: 5px;
   vertical-align: middle;
 }
 
-/* Mobile layout fixes */
+/*Mobile layout fixes*/
 @media (width <= 767px) {
   .block.dfs input[type="text"],
   .block.dfs select {
@@ -408,7 +409,7 @@
   }
 }
 
-/* Ensure the search and filter controls are visible */
+/*Ensure the search and filter controls are visible*/
 .faq-search-container,
 .faq-filter-container,
 .faq-search,
@@ -416,7 +417,7 @@
   display: block !important;
 }
 
-/* Highlight the search term in the expanded FAQ */
+/*Highlight the search term in the expanded FAQ*/
 .faq-question-text mark,
 .faq-short-answer mark,
 .faq-detailed-answer mark {
@@ -425,7 +426,7 @@
   border-radius: 2px;
 }
 
-/* Grey question bar styling */
+/*Grey question bar styling*/
 .faq-item .faq-question {
   background-color: #777;
   color: white;

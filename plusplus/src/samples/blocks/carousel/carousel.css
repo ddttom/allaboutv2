@@ -107,7 +107,7 @@
   z-index: 1;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
+/*stylelint-disable-next-line no-descending-specificity*/
 .carousel .carousel-navigation-buttons button {
   border-radius: 8px;
   margin: 0;

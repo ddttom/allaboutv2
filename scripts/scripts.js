@@ -30,16 +30,16 @@ const AUDIENCES = {
 };
 
 /**
-     * Gets all the metadata elements that are in the given scope.
+     *Gets all the metadata elements that are in the given scope.
      * @param {String} scope The scope/prefix for the metadata
-     * @returns an array of HTMLElement nodes that match the given scope
+     *@returns an array of HTMLElement nodes that match the given scope
      */
 export function getAllMetadata(scope) {
   return [...document.head.querySelectorAll(`meta[property^="${scope}:"],meta[name^="${scope}-"]`)]
     .reduce((res, meta) => {
       const id = toClassName(meta.name
         ? meta.name.substring(scope.length + 1)
-        : meta.getAttribute('property').split(':')[1]);
+        : meta.getAttribute('property').split[':'](1));
       res[id] = meta.getAttribute('content');
       return res;
     }, {});
@@ -57,8 +57,9 @@ const pluginContext = {
 };
 
 /**
- * Builds hero block and prepends to main in a new section.
- * @param {Element} main The container element
+
+* Builds hero block and prepends to main in a new section.
+* @param {Element} main The container element
  */
 function buildHeroBlock(main) {
   const h1 = main.querySelector('h1');
@@ -72,7 +73,8 @@ function buildHeroBlock(main) {
 }
 
 /**
- * load fonts.css and set a session storage flag
+
+* load fonts.css and set a session storage flag
  */
 async function loadFonts() {
   await loadCSS(`${window.hlx.codeBasePath}/styles/fonts.css`);
@@ -97,8 +99,9 @@ function autolinkModals(element) {
 }
 
 /**
- * Builds all synthetic blocks in a container element.
- * @param {Element} main The container element
+
+* Builds all synthetic blocks in a container element.
+* @param {Element} main The container element
  */
 function buildAutoBlocks(main) {
   try {
@@ -110,8 +113,9 @@ function buildAutoBlocks(main) {
 }
 
 /**
- * Decorates the main element.
- * @param {Element} main The main element
+
+* Decorates the main element.
+* @param {Element} main The main element
  */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
@@ -124,8 +128,9 @@ export function decorateMain(main) {
 }
 
 /**
- * Loads everything needed to get to LCP.
- * @param {Element} doc The container element
+
+* Loads everything needed to get to LCP.
+* @param {Element} doc The container element
  */
 async function loadEager(doc) {
   window.cmsplus.debug('loadEager');
@@ -148,7 +153,7 @@ async function loadEager(doc) {
   }
 
   try {
-    /* if desktop (proxy for fast connection) or fonts already loaded, load fonts.css */
+    /*if desktop (proxy for fast connection) or fonts already loaded, load fonts.css*/
     if (window.innerWidth >= 900 || sessionStorage.getItem('fonts-loaded')) {
       loadFonts();
     }
@@ -158,8 +163,9 @@ async function loadEager(doc) {
 }
 
 /**
- * Loads everything that doesn't need to be delayed.
- * @param {Element} doc The container element
+
+* Loads everything that doesn't need to be delayed.
+* @param {Element} doc The container element
  */
 async function loadLazy(doc) {
   window.cmsplus.debug('loadLazy');
@@ -191,8 +197,9 @@ async function loadLazy(doc) {
 }
 
 /**
- * Loads everything that happens a lot later,
- * without impacting the user experience.
+
+* Loads everything that happens a lot later,
+* without impacting the user experience.
  */
 function loadDelayed() {
   window.cmsplus.debug('loadDelayed timer start');

@@ -1,16 +1,17 @@
 /**
- * Appendix Styles for The Invisible Users
- *
- * Combined stylesheet for all appendix HTML pages
- * Includes: Pandoc base styles + custom enhancements
- *
- * Author: Tom Cranstoun
- * Last updated: January 2026
+
+* Appendix Styles for The Invisible Users
+*
+* Combined stylesheet for all appendix HTML pages
+* Includes: Pandoc base styles + custom enhancements
+*
+* Author: Tom Cranstoun
+* Last updated: January 2026
  */
 
-/* ============================================
+/*============================================
    PANDOC BASE STYLES
-   ============================================ */
+   ============================================*/
 
 html {
   color: #1a1a1a;
@@ -173,19 +174,19 @@ header {
   text-align: center;
 }
 
-#TOC li {
+# TOC li {
   list-style: none;
 }
 
-#TOC ul {
+# TOC ul {
   padding-left: 1.3em;
 }
 
-#TOC > ul {
+# TOC > ul {
   padding-left: 0;
 }
 
-#TOC a:not(:hover) {
+# TOC a:not(:hover) {
   text-decoration: none;
 }
 
@@ -195,8 +196,8 @@ div.columns{display: flex; gap: min(4vw, 1.5em);}
 div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 
-/* The extra [class] is a hack that increases specificity enough to
-   override a similar rule in reveal.js */
+/*The extra [class] is a hack that increases specificity enough to
+   override a similar rule in reveal.js*/
 ul.task-list[class]{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   font-size: inherit;
@@ -207,9 +208,9 @@ ul.task-list li input[type="checkbox"] {
 
 .display.math{display: block; text-align: center; margin: 0.5rem auto;}
 
-/* ============================================
+/*============================================
    SYNTAX HIGHLIGHTING
-   ============================================ */
+   ============================================*/
 
 html {
   -webkit-text-size-adjust: 100%;
@@ -277,7 +278,7 @@ pre.numberSource {
   }
 }
 
-/* Syntax highlighting color scheme */
+/*Syntax highlighting color scheme */
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
@@ -305,13 +306,13 @@ code span.ss { color: #bb6688; } /* SpecialString */
 code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning*/
 
-/* ============================================
+/*============================================
    CUSTOM ENHANCEMENTS
-   ============================================ */
+   ============================================*/
 
-/* Body overrides for better layout */
+/*Body overrides for better layout*/
 body {
   max-width: 900px !important;
   margin: 2rem auto !important;
@@ -332,7 +333,7 @@ body {
   }
 }
 
-/* Pre-publication header banner */
+/*Pre-publication header banner*/
 body::before {
   content: "PRE-PUBLICATION SAMPLE - FOR REVIEWERS";
   display: block;
@@ -361,7 +362,7 @@ body::before {
   }
 }
 
-/* Link styling - override Pandoc's default black links */
+/*Link styling - override Pandoc's default black links*/
 a:not(.floating-home-button):not(.floating-top-button):not(.copy-button) {
   color: #0066cc !important;
   text-decoration: underline !important;
@@ -382,9 +383,9 @@ a:not(.floating-home-button):not(.floating-top-button):not(.copy-button):active 
   text-decoration: underline !important;
 }
 
-/* ============================================
+/*============================================
    FLOATING NAVIGATION BUTTONS
-   ============================================ */
+   ============================================*/
 
 .floating-home-button {
   position: fixed;
@@ -472,11 +473,11 @@ a:not(.floating-home-button):not(.floating-top-button):not(.copy-button):active 
   }
 }
 
-/* ============================================
+/*============================================
    CODE BLOCK ENHANCEMENTS
-   ============================================ */
+   ============================================*/
 
-/* Wrapped code blocks (HTML, JavaScript, etc.) */
+/*Wrapped code blocks (HTML, JavaScript, etc.)*/
 div.sourceCode {
   position: relative !important;
   border: 2px solid #000000 !important;
@@ -502,7 +503,7 @@ pre > code.sourceCode > span {
   line-height: 1.25 !important;
 }
 
-/* Standalone code blocks (text, plain code without wrapper) */
+/*Standalone code blocks (text, plain code without wrapper)*/
 pre.text,
 pre[data-role="code-block"]:not(.sourceCode) {
   position: relative !important;
@@ -515,9 +516,9 @@ pre[data-role="code-block"]:not(.sourceCode) {
   white-space: pre-wrap !important;
 }
 
-/* ============================================
+/*============================================
    COPY TO CLIPBOARD BUTTON
-   ============================================ */
+   ============================================*/
 
 .copy-button {
   position: absolute;

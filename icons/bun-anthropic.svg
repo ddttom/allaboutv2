@@ -5,7 +5,7 @@
       <stop offset="0%" style="stop-color:#FBF3DB;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#F9C74F;stop-opacity:1" />
     </linearGradient>
-    
+
     <!-- Gradient for speed lines -->
     <linearGradient id="speedGradient" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" style="stop-color:#F94144;stop-opacity:0" />
@@ -57,7 +57,7 @@
     <!-- Node.js -->
     <rect x="60" y="150" width="80" height="60" rx="5" fill="#68A063" opacity="0.8"/>
     <text x="100" y="185" font-family="monospace" font-size="14" fill="#fff" text-anchor="middle" font-weight="bold">Node.js</text>
-    
+
     <!-- npm -->
     <rect x="60" y="230" width="80" height="60" rx="5" fill="#CB3837" opacity="0.8"/>
     <text x="100" y="265" font-family="monospace" font-size="14" fill="#fff" text-anchor="middle" font-weight="bold">npm</text>
@@ -91,7 +91,7 @@
   <g filter="url(#glow)">
     <!-- Main bun body -->
     <ellipse cx="400" cy="300" rx="90" ry="80" fill="url(#bunGradient)" stroke="#F77F00" stroke-width="3"/>
-    
+
     <!-- Sesame seeds on top -->
     <ellipse cx="370" cy="280" rx="4" ry="5" fill="#D4A373"/>
     <ellipse cx="395" cy="275" rx="4" ry="5" fill="#D4A373"/>
@@ -126,7 +126,7 @@
       <animate attributeName="x1" from="520" to="700" dur="1.4s" repeatCount="indefinite"/>
       <animate attributeName="x2" from="700" to="780" dur="1.4s" repeatCount="indefinite"/>
     </line>
-    
+
     <!-- Lightning bolt for speed -->
     <g transform="translate(600, 200)">
       <polygon points="0,0 -10,25 5,25 0,50 30,15 10,15 15,0" fill="#F94144" opacity="0.8">

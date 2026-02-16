@@ -1,5 +1,5 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/no-absolute-path */
+/*eslint-disable import/no-unresolved */
+/* eslint-disable import/no-absolute-path*/
 import { renderExpressions } from '/plusplus/plugins/expressions/src/expressions.js';
 
 // eslint-disable-next-line no-unused-vars

@@ -1,23 +1,23 @@
-/* Showcaser Block Styles */
+/*Showcaser Block Styles*/
 
 :root {
-  /* Colors */
+  /*Colors*/
   --showcaser-bg-color: #f5f5f5;
   --showcaser-text-color: #333;
   --showcaser-title-color: #06c;
   --showcaser-border-color: #ddd;
   --showcaser-active-bg: #e6f2ff;
   
-  /* Typography */
+  /*Typography*/
   --showcaser-font-family: arial, sans-serif;
   --showcaser-title-font-size: 1.2rem;
   --showcaser-content-font-size: 1rem;
   
-  /* Spacing */
+  /*Spacing*/
   --showcaser-padding: 20px;
   --showcaser-border-radius: 8px;
 
-  /* Transitions */
+  /*Transitions*/
   --showcaser-transition-duration: 0.3s;
 }
 
@@ -160,7 +160,7 @@
   transition: opacity 0.5s ease;
 }
 
-/* Syntax Highlighting Styles */
+/*Syntax Highlighting Styles*/
 .language-html .tag { color: #000080; }
 .language-html .comment { color: #008000; font-style: italic; }
 .language-javascript .comment { color: #008000; }

@@ -1,4 +1,4 @@
-/* eslint-disable max-len, no-restricted-syntax, no-shadow */
+/*eslint-disable max-len, no-restricted-syntax, no-shadow*/
 import {
   replaceTokens,
   convertToISODate,
@@ -190,7 +190,7 @@ export async function createJSON() {
   }
 
   futureDate = new Date(
-    referenceDate.getTime() + futurePeriod * 24 * 60 * 60 * 1000,
+    referenceDate.getTime() + futurePeriod *24* 60 *60* 1000,
   );
   // Convert the future date to an ISO string and assign it to the review datetime.
   co['co:reviewdatetime'] = futureDate.toISOString();
@@ -209,7 +209,7 @@ export async function createJSON() {
       window.siteConfig['$co:defaultexpiryperiod'] = futurePeriod;
     }
     futureDate = new Date(
-      referenceDate.getTime() + futurePeriod * 24 * 60 * 60 * 1000,
+      referenceDate.getTime() + futurePeriod *24* 60 *60* 1000,
     );
     co['co:expirydatetime'] = futureDate.toISOString();
   }
@@ -265,7 +265,7 @@ export async function handleMetadataJsonLd() {
     // Create and append a new script element with the processed JSON-LD data
     const script = document.createElement('script');
     script.type = 'application/ld+json';
-    script.setAttribute('data-role', content.split('/').pop().split('.')[0]); // Set role based on the final URL
+    script.setAttribute('data-role', content.split('/').pop().split['.'](0)); // Set role based on the final URL
     script.setAttribute('id', 'ldMeta');
     script.textContent = jsonString;
     document.head.appendChild(script);

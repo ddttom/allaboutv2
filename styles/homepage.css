@@ -1,6 +1,6 @@
-/* Homepage-specific styles for AllAbout.Network */
+/*Homepage-specific styles for AllAbout.Network*/
 
-/* ===== Hero Section ===== */
+/*===== Hero Section =====*/
 .hero-section {
   background: linear-gradient(135deg, var(--link-color) 0%, var(--link-hover-color) 100%);
   color: white;
@@ -63,7 +63,7 @@
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.2);
 }
 
-/* ===== Featured Section ===== */
+/*===== Featured Section =====*/
 .featured-section {
   background: var(--light-color);
   padding: 3rem 2rem;
@@ -76,7 +76,7 @@
   color: var(--text-color);
 }
 
-/* ===== Category Section ===== */
+/*===== Category Section =====*/
 .category-section {
   padding: 2rem 2rem 1rem;
   background: white;
@@ -126,7 +126,7 @@
   font-weight: bold;
 }
 
-/* ===== Blogroll Section ===== */
+/*===== Blogroll Section =====*/
 .blogroll-section {
   padding: 0 2rem 3rem;
   background: white;
@@ -141,7 +141,7 @@
   display: none;
 }
 
-/* ===== About Section ===== */
+/*===== About Section =====*/
 .about-section {
   background: var(--light-color);
   padding: 3rem 2rem;
@@ -189,9 +189,9 @@
   color: white;
 }
 
-/* ===== Responsive Design ===== */
+/*===== Responsive Design =====*/
 
-/* Tablet (600px and up) */
+/*Tablet (600px and up)*/
 @media (width >= 600px) {
   .hero-section {
     padding: 5rem 2rem;
@@ -210,7 +210,7 @@
   }
 }
 
-/* Desktop (900px and up) */
+/*Desktop (900px and up)*/
 @media (width >= 900px) {
   .hero-section {
     padding: 6rem 2rem;
@@ -237,7 +237,7 @@
   }
 }
 
-/* Large Desktop (1200px and up) */
+/*Large Desktop (1200px and up)*/
 @media (width >= 1200px) {
   .hero-container h1 {
     font-size: 64px;

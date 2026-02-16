@@ -3,7 +3,7 @@
     <text x="400" y="30" text-anchor="middle" font-size="24" font-weight="bold" fill="#333">
       Edge Delivery Services: Headless Architecture
     </text>
-    
+
     <!-- Content Creation Layer -->
     <g id="content-layer">
       <rect x="50" y="70" width="700" height="80" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" rx="8"/>

@@ -1,11 +1,12 @@
-#!/usr/bin/env node
+# !/usr/bin/env node
 
 /**
- * Search the Adobe AEM Block Collection for blocks matching a search term
- *
- * Usage: node search-block-collection.js <search-term>
- *
- * Example: node search-block-collection.js accordion
+
+* Search the Adobe AEM Block Collection for blocks matching a search term
+*
+* Usage: node search-block-collection.js <search-term>
+*
+* Example: node search-block-collection.js accordion
  */
 
 import https from 'https';
@@ -19,7 +20,8 @@ const SITE_BASE_URL = 'https://main--aem-block-collection--adobe.aem.live';
 const NAV_URL = `${SITE_BASE_URL}/nav.plain.html`;
 
 /**
- * Fetch HTML/text from a URL using HTTPS
+
+* Fetch HTML/text from a URL using HTTPS
  */
 function fetchUrl(url, parseJson = false) {
   return new Promise((resolve, reject) => {
@@ -56,7 +58,8 @@ function fetchUrl(url, parseJson = false) {
 }
 
 /**
- * Parse nav.plain.html to extract block names
+
+* Parse nav.plain.html to extract block names
  */
 function parseBlocksFromNav(html) {
   const blocks = [];
@@ -79,7 +82,8 @@ function parseBlocksFromNav(html) {
 }
 
 /**
- * Get all blocks from the Block Collection navigation
+
+* Get all blocks from the Block Collection navigation
  */
 async function getBlocks() {
   try {
@@ -91,7 +95,8 @@ async function getBlocks() {
 }
 
 /**
- * Determine if a block is "Default Content" (no block code) or a "Sample Block"
+
+* Determine if a block is "Default Content" (no block code) or a "Sample Block"
  */
 function isDefaultContent(blockName) {
   // Default Content items don't have block implementations
@@ -103,7 +108,8 @@ function isDefaultContent(blockName) {
 }
 
 /**
- * Search for blocks matching the search term
+
+* Search for blocks matching the search term
  */
 function searchBlocks(blocks, searchTerm) {
   const lowerSearchTerm = searchTerm.toLowerCase();
@@ -136,7 +142,8 @@ function searchBlocks(blocks, searchTerm) {
 }
 
 /**
- * Main function
+
+* Main function
  */
 async function main() {
   const args = process.argv.slice(2);

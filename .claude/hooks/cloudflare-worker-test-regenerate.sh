@@ -1,18 +1,29 @@
-#!/bin/bash
+# !/bin/bash
+
 #
+
 # Cloudflare Worker Test Regeneration Hook
+
 #
+
 # Purpose: Automatically regenerate test-rendered.html when cloudflare-worker.js is edited
+
 # Trigger: PostToolUse (Edit, MultiEdit, Write)
+
 # Target: cloudflare/files/cloudflare-worker.js
+
 #
+
 # This hook ensures that test-rendered.html stays synchronized with worker code changes
-# by running the local HTML test after any modifications to the worker file.
+
+# by running the local HTML test after any modifications to the worker file
 
 set -euo pipefail
 
 # Get the modified file path from the hook environment
+
 # Claude Code provides this in MODIFIED_FILES or via stdin JSON
+
 if [[ -n "${MODIFIED_FILES:-}" ]]; then
     file_path="$MODIFIED_FILES"
 else
@@ -21,16 +32,19 @@ else
 fi
 
 # Exit if no file path provided
+
 if [[ -z "$file_path" ]]; then
     exit 0
 fi
 
 # Check if the modified file is cloudflare-worker.js
+
 if [[ "$file_path" != *"cloudflare/files/cloudflare-worker.js" ]]; then
     exit 0  # Not the worker file, skip hook
 fi
 
 # Determine project root
+
 if [[ -n "${CLAUDE_PROJECT_DIR:-}" ]]; then
     PROJECT_ROOT="$CLAUDE_PROJECT_DIR"
 else
@@ -38,6 +52,7 @@ else
 fi
 
 # ANSI color codes
+
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
@@ -52,6 +67,7 @@ echo -e "${YELLOW}Running intelligent test automation...${NC}"
 echo ""
 
 # Run the intelligent test automation system
+
 if node "$PROJECT_ROOT/.claude/hooks/cloudflare-test-automation.js"; then
     echo ""
     echo -e "${GREEN}✓ Test automation completed successfully${NC}"

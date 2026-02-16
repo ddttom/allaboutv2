@@ -1,6 +1,7 @@
 /**
- * Digital Presentation System (DPS) Block
- * A block for creating and displaying interactive presentations
+
+* Digital Presentation System (DPS) Block
+* A block for creating and displaying interactive presentations
  */
 
 // Configuration object for the DPS block
@@ -24,9 +25,10 @@ let remainingTime = DPS_CONFIG.DEFAULT_TIMER_DURATION;
 let hasStartedTimer = false;
 
 /**
- * Formats seconds into MM:SS display format for the presentation timer
- * @param {number} seconds - Total seconds to format
- * @returns {string} Formatted time string (MM:SS)
+
+* Formats seconds into MM:SS display format for the presentation timer
+* @param {number} seconds - Total seconds to format
+* @returns {string} Formatted time string (MM:SS)
  */
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
@@ -35,8 +37,9 @@ function formatTime(seconds) {
 }
 
 /**
- * Main decorate function for the DPS block
- * @param {Element} block - The block element to decorate
+
+* Main decorate function for the DPS block
+* @param {Element} block - The block element to decorate
  */
 export default async function decorate(block) {
   // Add dps-block class to the container
@@ -126,10 +129,11 @@ export default async function decorate(block) {
   showPresenterNotes();
 }
 /**
- * Create header element with title and subtitle
- * @param {string} title - Presentation title
- * @param {string} subtitle - Presentation subtitle
- * @returns {Element} Header element
+
+* Create header element with title and subtitle
+* @param {string} title - Presentation title
+* @param {string} subtitle - Presentation subtitle
+* @returns {Element} Header element
  */
 function createHeader(title, subtitle) {
   const header = document.createElement('div');
@@ -139,13 +143,15 @@ function createHeader(title, subtitle) {
       <h1 id="presentation-title">${title}</h1>
       <p id="presentation-subtitle">${subtitle || ''}</p>
     </div>
+
   `;
   return header;
 }
 
 /**
- * Create presenter notes container
- * @returns {Element} Presenter notes container element
+
+* Create presenter notes container
+* @returns {Element} Presenter notes container element
  */
 function createPresenterNotesContainer() {
   const container = document.createElement('div');
@@ -161,14 +167,16 @@ function createPresenterNotesContainer() {
       </svg>
     </div>
     <div class="presenter-notes-content"></div>
+
   `;
   return container;
 }
 
 /**
- * Create footer with navigation and timer
- * @param {number} timerDuration - Timer duration in minutes
- * @returns {Element} Footer element
+
+* Create footer with navigation and timer
+* @param {number} timerDuration - Timer duration in minutes
+* @returns {Element} Footer element
  */
 function createFooter(timerDuration) {
   const footer = document.createElement('div');
@@ -196,14 +204,16 @@ function createFooter(timerDuration) {
         </button>
       </div>
     </div>
+
   `;
   return footer;
 }
 
 /**
- * Parse rows from the block to extract presentation data
- * @param {Array} rows - Array of row elements from the block
- * @returns {Object} Structured presentation data
+
+* Parse rows from the block to extract presentation data
+* @param {Array} rows - Array of row elements from the block
+* @returns {Object} Structured presentation data
  */
 function parseRows(rows) {
   // Extract configuration from first row
@@ -296,10 +306,11 @@ function parseRows(rows) {
 }
 
 /**
- * Parse an illustration cell into a structured object
- * This is a simplified approach compared to the original code
- * @param {Element} cell - The illustration cell
- * @returns {Object|null} - Parsed illustration object or null
+
+* Parse an illustration cell into a structured object
+* This is a simplified approach compared to the original code
+* @param {Element} cell - The illustration cell
+* @returns {Object|null} - Parsed illustration object or null
  */
 function parseIllustration(cell) {
   if (!cell || !cell.innerHTML.trim()) {
@@ -329,12 +340,13 @@ function parseIllustration(cell) {
 }
 
 /**
- * Extract individual illustration items from content, ensuring uniqueness
- * AND preserving the original DOM order of the first occurrence of each unique item.
- * Handles icons, images, iframes, SVGs, pictures, and links.
- * @param {string} content - HTML content of the cell (less used now, prefer cell iteration)
- * @param {Element} cell - Original cell element
- * @returns {Array} Array of unique illustration items in their original order
+
+* Extract individual illustration items from content, ensuring uniqueness
+* AND preserving the original DOM order of the first occurrence of each unique item.
+* Handles icons, images, iframes, SVGs, pictures, and links.
+* @param {string} content - HTML content of the cell (less used now, prefer cell iteration)
+* @param {Element} cell - Original cell element
+* @returns {Array} Array of unique illustration items in their original order
  */
 function extractIllustrationItems(content, cell) {
   const items = [];
@@ -466,9 +478,10 @@ function isImageUrl(url) {
 }
 
 /**
- * Build all slides in the presentation container
- * @param {Array} slides - Array of slide data
- * @param {Element} container - Container for slides
+
+* Build all slides in the presentation container
+* @param {Array} slides - Array of slide data
+* @param {Element} container - Container for slides
  */
 function buildSlides(slides, container) {
   container.innerHTML = '';
@@ -520,9 +533,10 @@ function buildSlides(slides, container) {
 }
 
 /**
- * Create HTML content for a slide
- * @param {Object} slide - Slide data
- * @returns {string} HTML content
+
+* Create HTML content for a slide
+* @param {Object} slide - Slide data
+* @returns {string} HTML content
  */
 function createSlideContent(slide) {
   let slideContent = `<div class="slide-content">
@@ -594,9 +608,10 @@ function createSlideContent(slide) {
 }
 
 /**
- * Create HTML for a sequence of illustrations
- * @param {Array} items - Array of illustration items
- * @returns {string} HTML content for the sequence
+
+* Create HTML for a sequence of illustrations
+* @param {Array} items - Array of illustration items
+* @returns {string} HTML content for the sequence
  */
 function createSequenceHTML(items) {
   if (!items || items.length === 0) {
@@ -633,8 +648,9 @@ function createSequenceHTML(items) {
 }
 
 /**
- * Show a specific slide and update UI
- * @param {number} index - Slide index to show
+
+* Show a specific slide and update UI
+* @param {number} index - Slide index to show
  */
 function showSlide(index) {
   // Get all slides
@@ -680,9 +696,10 @@ function showSlide(index) {
 }
 
 /**
- * Update the navigation buttons based on current position
- * @param {number} currentIndex - Current slide index
- * @param {number} totalSlides - Total number of slides
+
+* Update the navigation buttons based on current position
+* @param {number} currentIndex - Current slide index
+* @param {number} totalSlides - Total number of slides
  */
 function updateNavButtons(currentIndex, totalSlides) {
   const prevButton = document.querySelector('.prev-slide');
@@ -698,10 +715,11 @@ function updateNavButtons(currentIndex, totalSlides) {
 }
 
 /**
- * Update presenter notes for the current slide
- * @param {number} slideIndex - Index of the current slide
- * @param {boolean} forceNormalMode - Force normal mode display
- * @param {boolean} isPresenterToggle - Whether this is coming from presenter toggle
+
+* Update presenter notes for the current slide
+* @param {number} slideIndex - Index of the current slide
+* @param {boolean} forceNormalMode - Force normal mode display
+* @param {boolean} isPresenterToggle - Whether this is coming from presenter toggle
  */
 function updatePresenterNotes(slideIndex, forceNormalMode = false, isPresenterToggle = false) {
   const slides = document.querySelectorAll('.slide');
@@ -742,9 +760,10 @@ function updatePresenterNotes(slideIndex, forceNormalMode = false, isPresenterTo
 }
 
 /**
- * Handle navigation in image sequences
- * @param {string} direction - Direction of navigation ('prev' or 'next')
- * @returns {boolean} Whether the navigation was handled by a sequence
+
+* Handle navigation in image sequences
+* @param {string} direction - Direction of navigation ('prev' or 'next')
+* @returns {boolean} Whether the navigation was handled by a sequence
  */
 function handleSequenceNavigation(direction) {
   // Get the current slide
@@ -784,9 +803,10 @@ function handleSequenceNavigation(direction) {
 }
 
 /**
- * Update the sequence to show the specified item
- * @param {Array} items - Array of sequence items
- * @param {number} activeIndex - Index of the item to activate
+
+* Update the sequence to show the specified item
+* @param {Array} items - Array of sequence items
+* @param {number} activeIndex - Index of the item to activate
  */
 function updateSequence(items, activeIndex) {
   // Hide all items
@@ -813,7 +833,8 @@ function updateSequence(items, activeIndex) {
 }
 
 /**
- * Set up the navigation system
+
+* Set up the navigation system
  */
 function setupNavigationSystem() {
   // Set up navigation buttons
@@ -910,7 +931,8 @@ function setupNavigationSystem() {
 }
 
 /**
- * Set up the presenter toggle button
+
+* Set up the presenter toggle button
  */
 function setupPresenterToggle() {
   const presenterToggleButton = document.querySelector('.presenter-toggle');
@@ -926,7 +948,8 @@ function setupPresenterToggle() {
 }
 
 /**
- * Show presenter notes
+
+* Show presenter notes
  */
 function showPresenterNotes() {
   const presenterNotes = document.querySelector('.presenter-notes');
@@ -935,7 +958,8 @@ function showPresenterNotes() {
 }
 
 /**
- * Hide presenter notes
+
+* Hide presenter notes
  */
 function hidePresenterNotes() {
   const presenterNotes = document.querySelector('.presenter-notes');
@@ -943,7 +967,7 @@ function hidePresenterNotes() {
   DPS_CONFIG.PRESENTER_NOTES_VISIBLE = false;
 }
 /**
- * Start the presentation timer
+* Start the presentation timer
  */
 function startTimer() {
   if (!timerInterval) {
@@ -952,7 +976,8 @@ function startTimer() {
 }
 
 /**
- * Toggle the timer on/off
+
+* Toggle the timer on/off
  */
 function toggleTimer() {
   if (timerInterval) {
@@ -964,7 +989,8 @@ function toggleTimer() {
 }
 
 /**
- * Update the timer display
+
+* Update the timer display
  */
 function updateTimer() {
   if (remainingTime > 0) {
@@ -983,8 +1009,9 @@ function updateTimer() {
 }
 
 /**
- * Visual warning system for timer
- * Flashes red three times when time is running low
+
+* Visual warning system for timer
+* Flashes red three times when time is running low
  */
 function flashTimeWarning() {
   const container = document.querySelector('.dps-wrapper');
@@ -1007,7 +1034,8 @@ function flashTimeWarning() {
 }
 
 /**
- * Toggle presenter mode on/off
+
+* Toggle presenter mode on/off
  */
 function togglePresenterMode() {
   const presenterNotes = document.querySelector('.presenter-notes');
@@ -1079,7 +1107,8 @@ function togglePresenterMode() {
 }
 
 /**
- * Set up the resize handler for presenter notes
+
+* Set up the resize handler for presenter notes
  */
 function setupResizeHandler() {
   const notes = document.querySelector('.presenter-notes');
@@ -1131,7 +1160,8 @@ function setupResizeHandler() {
 }
 
 /**
- * Set up touch handling for mobile devices
+
+* Set up touch handling for mobile devices
  */
 // Touch tracking variables for swipe detection
 let touchStartX = 0;
@@ -1165,7 +1195,8 @@ function setupMobileHandling() {
 }
 
 /**
- * Handle swipe gestures for mobile navigation
+
+* Handle swipe gestures for mobile navigation
  */
 function handleSwipe() {
   const swipeThreshold = 50; // Minimum swipe distance in pixels
@@ -1197,7 +1228,8 @@ function handleSwipe() {
 }
 
 /**
- * Adjust presenter notes for mobile screens
+
+* Adjust presenter notes for mobile screens
  */
 function adjustPresenterNotesForMobile() {
   const presenterNotes = document.querySelector('.presenter-notes');
@@ -1210,7 +1242,7 @@ function adjustPresenterNotesForMobile() {
   const notesToggleButton = document.createElement('button');
   notesToggleButton.className = 'mobile-notes-toggle';
   notesToggleButton.innerHTML = `
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M3 17h18v-2H3v2zm0-4h18v-2H3v2zm0-4h18V7H3v2zm0-4h18V3H3v2z"/>
     </svg>
   `;
@@ -1255,8 +1287,9 @@ function generateQRCode(url, options = {}) {
   return qrServerUrl;
 }
 /**
- * Add CSS styles for the presentation
- * This function adds all necessary styles for the DPS block
+
+* Add CSS styles for the presentation
+* This function adds all necessary styles for the DPS block
  */
 function addStyles() {
   const style = document.createElement('style');
@@ -1283,14 +1316,14 @@ function addStyles() {
       max-width: 100%;
     }
 
-    /* Comprehensive reset for DPS block */
+    /*Comprehensive reset for DPS block*/
     .dps * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    /* Reset styles */
+    /*Reset styles*/
     html, body {
       margin: 0;
       padding: 0;
@@ -1299,7 +1332,7 @@ function addStyles() {
       overflow: hidden;
     }
 
-    /* Force full viewport mode */
+    /*Force full viewport mode */
     body.dps-fullscreen {
       overflow: hidden;
       position: fixed;
@@ -1308,7 +1341,7 @@ function addStyles() {
       top: 0;
       left: 0;
     }
-    /* hide the H1 outside the DPS block */
+    /* hide the H1 outside the DPS block*/
     body.dps-fullscreen main .section.dps-container > .default-content-wrapper {
       display: none;
     }
@@ -1334,7 +1367,7 @@ function addStyles() {
       max-width: 100% !important;
     }
 
-    /* Block wrapper styling - primary styling container */
+    /*Block wrapper styling - primary styling container*/
     .dps-wrapper {
       width: 100%;
       height: 100vh;
@@ -1347,7 +1380,7 @@ function addStyles() {
       position: relative;
     }
 
-    /* Error display */
+    /*Error display*/
     .dps-error {
       padding: 20px;
       background-color: #f8d7da;
@@ -1357,7 +1390,7 @@ function addStyles() {
       margin: 10px 0;
     }
 
-    /* Inner content wrapper for consistent margins */
+    /*Inner content wrapper for consistent margins*/
     .header-content,
     .slide-content,
     .footer-content {
@@ -1366,7 +1399,7 @@ function addStyles() {
       max-width: 100%;
     }
 
-    /* Header styling */
+    /*Header styling*/
     .dps-header {
       width: 100%;
       padding: 10px 0;
@@ -1384,7 +1417,7 @@ function addStyles() {
       opacity: 0.9;
     }
 
-    /* Content area */
+    /*Content area*/
     .slides-container {
       flex: 1;
       width: 100%;
@@ -1396,7 +1429,7 @@ function addStyles() {
       flex-direction: column;
     }
 
-    /* Slide styling */
+    /*Slide styling*/
     .slide {
       width: 100%;
       max-width: 100%;
@@ -1411,7 +1444,7 @@ function addStyles() {
       flex-direction: column;
     }
 
-    /* Slide content layout */
+    /*Slide content layout*/
     .slide-content {
       display: grid;
       grid-template-areas:
@@ -1426,7 +1459,7 @@ function addStyles() {
       min-height: 0;
     }
 
-    /* Slide title */
+    /*Slide title*/
     .slide-title {
       grid-area: title;
       font-size: 28px;
@@ -1437,7 +1470,7 @@ function addStyles() {
       width: 100%;
     }
 
-    /* First line styling */
+    /*First line styling*/
     .slide-content-text > p:first-child {
       font-size: 24px !important;
       font-weight: bold;
@@ -1446,7 +1479,7 @@ function addStyles() {
       line-height: 1.3;
     }
 
-    /* Text content area */
+    /*Text content area*/
     .slide-content-text {
       grid-area: text;
       display: flex;
@@ -1455,7 +1488,7 @@ function addStyles() {
       padding-right: 10px;
     }
 
-    /* Illustration area */
+    /*Illustration area*/
     .illustration {
       grid-area: illustration;
       display: flex;
@@ -1472,7 +1505,7 @@ function addStyles() {
       object-fit: contain;
     }
 
-    /* Picture element in illustration - fit full height */
+    /*Picture element in illustration - fit full height*/
     .illustration picture {
       display: flex;
       align-items: center;
@@ -1487,7 +1520,7 @@ function addStyles() {
       object-fit: contain;
     }
 
-    /* iframe container styling */
+    /*iframe container styling*/
     .iframe-container {
       width: 100%;
       height: 100%;
@@ -1500,7 +1533,7 @@ function addStyles() {
       position: relative;
     }
 
-    /* iframe styling */
+    /*iframe styling*/
     .iframe-container iframe {
       width: 100%;
       height: 100%;
@@ -1512,7 +1545,7 @@ function addStyles() {
       aspect-ratio: 16/9;
     }
 
-    /* Handle forced-colors mode */
+    /*Handle forced-colors mode*/
     @media (forced-colors: active) {
       .iframe-container {
         border: 1px solid CanvasText;
@@ -1523,7 +1556,7 @@ function addStyles() {
       }
     }
 
-    /* Bullet lists */
+    /*Bullet lists*/
     .bullet-list {
       list-style-type: none;
       margin: 0;
@@ -1549,7 +1582,7 @@ function addStyles() {
       border-radius: 50%;
     }
 
-    /* Plain text items in bullet list */
+    /*Plain text items in bullet list*/
     .bullet-list li.plain-text {
       padding-left: 0;
       list-style: none;
@@ -1562,7 +1595,7 @@ function addStyles() {
       display: none;
     }
 
-    /* Footer styling */
+    /*Footer styling*/
     .dps-footer {
       width: 100%;
       padding: 10px 0;
@@ -1581,7 +1614,7 @@ function addStyles() {
       padding: 0 20px;
     }
 
-    /* Navigation arrows */
+    /*Navigation arrows*/
     .nav-arrows {
       display: flex;
       gap: 20px;
@@ -1614,14 +1647,14 @@ function addStyles() {
       cursor: not-allowed;
     }
 
-    /* Timer styling */
+    /*Timer styling*/
     .timer {
       font-weight: bold;
       font-size: 16px;
       color: #2c3e50;
     }
 
-    /* Q&A slide */
+    /*Q&A slide*/
     .qanda-content {
       display: flex;
       flex-direction: column;
@@ -1652,7 +1685,7 @@ function addStyles() {
       margin-top: 20px;
     }
 
-    /* Image sequence styling */
+    /*Image sequence styling*/
     .image-sequence {
       position: relative;
       width: 100%;
@@ -1692,7 +1725,7 @@ function addStyles() {
       height: 100%;
     }
 
-    /* Presenter notes styling */
+    /*Presenter notes styling*/
     .presenter-notes {
       position: fixed;
       bottom: 60px;
@@ -1743,7 +1776,7 @@ function addStyles() {
       fill: #2c3e50;
       opacity: 0.7;
       cursor: pointer;
-      margin-left: auto; /* Push to the right side */
+      margin-left: auto; /*Push to the right side*/
       flex-shrink: 0;
       transition: opacity 0.2s ease;
     }
@@ -1761,7 +1794,7 @@ function addStyles() {
       font-size: 18px;
     }
 
-    /* Presenter toggle button styles */
+    /*Presenter toggle button styles*/
     .presenter-toggle {
       background: none;
       border: none;
@@ -1788,7 +1821,7 @@ function addStyles() {
       border-radius: 4px;
     }
 
-    /* Mobile notes toggle button */
+    /*Mobile notes toggle button */
     .mobile-notes-toggle {
       position: fixed;
       bottom: 70px;
@@ -1800,7 +1833,7 @@ function addStyles() {
       color: white;
       border: none;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      display: none; /* Hidden by default, shown only on mobile */
+      display: none; /* Hidden by default, shown only on mobile*/
       align-items: center;
       justify-content: center;
       z-index: 1001;
@@ -1820,12 +1853,12 @@ function addStyles() {
       background-color: #2980b9;
     }
 
-    /* Only show on mobile devices */
+    /*Only show on mobile devices*/
     .mobile-device .mobile-notes-toggle {
       display: flex;
     }
 
-    /* Print styles for handouts */
+    /*Print styles for handouts*/
     @media print {
       .dps-wrapper {
         height: auto;
@@ -1856,7 +1889,7 @@ function addStyles() {
       }
     }
 
-    /* Q&A slide link styling */
+    /*Q&A slide link styling*/
     .qanda-link {
       color: #3498db;
       text-decoration: none;
@@ -1869,18 +1902,18 @@ function addStyles() {
       text-decoration: underline;
     }
 
-    /* Smaller mobile devices (under 480px) */
+    /*Smaller mobile devices (under 480px) */
     @media (max-width: 480px) {
-      /* Make header more compact */
+      /* Make header more compact*/
       .dps-header h1 {
         font-size: 18px;
       }
-      
+
       .dps-header p {
         font-size: 12px;
       }
-      
-      /* Adjust slide content */
+
+      /*Adjust slide content*/
       .slide-content {
         padding: 10px;
         padding-bottom: 60px;
@@ -1892,28 +1925,28 @@ function addStyles() {
         grid-template-rows: auto auto 1fr;
         gap: 10px;
       }
-      
-      /* Make slide title smaller */
+
+      /*Make slide title smaller*/
       .slide-title {
         font-size: 20px;
         padding-bottom: 10px;
         margin-bottom: 10px;
       }
-      
-      /* Make bullet points more compact */
+
+      /*Make bullet points more compact*/
       .bullet-list li {
         font-size: 14px;
         padding-left: 20px;
         margin-bottom: 8px;
       }
-      
-      /* Make nav arrows larger for easier tapping */
+
+      /*Make nav arrows larger for easier tapping*/
       .nav-arrow svg {
         width: 32px;
         height: 32px;
       }
-      
-      /* Optimize presenter notes for mobile */
+
+      /*Optimize presenter notes for mobile*/
       .presenter-notes {
         width: 90vw;
         left: 5vw;
@@ -1921,28 +1954,28 @@ function addStyles() {
       }
     }
 
-    /* Additional media query for presenter mode on mobile */
+    /*Additional media query for presenter mode on mobile*/
     @media (max-width: 768px) {
       .presenter-notes.presenter-mode {
         width: 90%;
         left: 5%;
         height: calc(100vh - 60px);
       }
-      
+
       .presenter-notes.presenter-mode .presenter-notes-content {
         font-size: 16px;
       }
-      
-      /* Make QR code more visible on mobile */
+
+      /*Make QR code more visible on mobile*/
       .qanda-content img {
         max-width: 80%;
         height: auto;
       }
     }
 
-    /* Add touch-friendly tap targets */
+    /*Add touch-friendly tap targets*/
     @media (hover: none) and (pointer: coarse) {
-      .nav-arrow, 
+      .nav-arrow,
       .presenter-toggle,
       .presenter-notes-title .close-icon {
         min-height: 44px;
@@ -1951,8 +1984,8 @@ function addStyles() {
         align-items: center;
         justify-content: center;
       }
-      
-      /* Add better visual feedback for touch */
+
+      /*Add better visual feedback for touch*/
       .nav-arrow:active,
       .presenter-toggle:active,
       .presenter-notes-title .close-icon:active {
@@ -1961,7 +1994,7 @@ function addStyles() {
       }
     }
 
-    /* Add specific styling for mobile portrait mode */
+    /*Add specific styling for mobile portrait mode*/
     @media (max-width: 480px) and (orientation: portrait) {
       .slide-content {
         grid-template-areas:
@@ -1971,15 +2004,15 @@ function addStyles() {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto 1fr;
       }
-      
-      /* Reduce size of illustration area on portrait mobile */
+
+      /*Reduce size of illustration area on portrait mobile*/
       .illustration {
         height: 40vh;
         margin-bottom: 20px;
       }
     }
 
-    /* Add specific styling for mobile landscape mode */
+    /*Add specific styling for mobile landscape mode*/
     @media (max-height: 480px) and (orientation: landscape) {
       .slide-content {
         grid-template-areas:
@@ -1988,38 +2021,38 @@ function addStyles() {
         grid-template-columns: 40% 60%;
         padding-bottom: 50px;
       }
-      
+
       .dps-header {
         padding: 5px 0;
       }
-      
+
       .dps-header h1 {
         font-size: 16px;
         margin: 0;
       }
-      
+
       .dps-footer {
         padding: 5px 0;
       }
-      
-      /* Adjust illustration size for landscape */
+
+      /*Adjust illustration size for landscape*/
       .illustration {
         height: calc(100vh - 130px);
       }
-      
-      /* Make bullet points smaller in landscape */
+
+      /*Make bullet points smaller in landscape*/
       .bullet-list li {
         font-size: 14px;
         margin-bottom: 5px;
       }
     }
 
-    /* Fix for iPad and other tablets */
+    /*Fix for iPad and other tablets*/
     @media (min-width: 768px) and (max-width: 1024px) {
       .slide-content {
         grid-template-columns: 45% 55%;
       }
-      
+
       .presenter-notes {
         width: 50vw;
       }

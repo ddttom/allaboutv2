@@ -1,6 +1,7 @@
 /**
- * Footer Manager - Creates unified footer bar for navigation
- * Shows page navigation for notebook view, tree navigation for markdown view
+
+* Footer Manager - Creates unified footer bar for navigation
+* Shows page navigation for notebook view, tree navigation for markdown view
  */
 
 export function createFooter({ config, navigationState }) {
@@ -123,7 +124,8 @@ export function createFooter({ config, navigationState }) {
 }
 
 /**
- * Get all navigable nodes (markdown files) in tree order
+
+* Get all navigable nodes (markdown files) in tree order
  */
 function getAllNavigableNodes(tree) {
   if (!tree) {
@@ -169,7 +171,8 @@ function getAllNavigableNodes(tree) {
 }
 
 /**
- * Find a node in the tree by its path
+
+* Find a node in the tree by its path
  */
 function findNodeByPath(tree, path) {
   if (!tree || !path) {

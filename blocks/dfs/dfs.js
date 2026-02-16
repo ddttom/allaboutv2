@@ -1,14 +1,15 @@
 /**
- * Markdown FAQ Block
- *
- * This block converts a formatted franklin table into an interactive FAQ component.
- * The block expects a table with the following columns:
- * - Category
- * - Subcategory
- * - Question
- * - Short Answer
- * - Detailed Answer
- * - Related Resources/Tags
+
+* Markdown FAQ Block
+*
+* This block converts a formatted franklin table into an interactive FAQ component.
+* The block expects a table with the following columns:
+* * Category
+* * Subcategory
+* * Question
+* * Short Answer
+* * Detailed Answer
+* * Related Resources/Tags
  */
 
 export default function decorate(block) {
