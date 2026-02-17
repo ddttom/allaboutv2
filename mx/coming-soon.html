@@ -98,6 +98,39 @@
     }
     </script>
 
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is MX?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Machine Experience (MX) is a metadata layer that makes your content readable by every AI agent on earth — without making it less readable by humans. It's the companion web, a machine-readable layer alongside your existing website."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "When are the books available?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The MX Handbook launches 2 April 2026. The MX Codex launches 1 July 2026. Join our waitlist for early access and launch notifications."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Who is this for?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Content strategists, CMS professionals, digital teams, and anyone who wants their business content to work for both humans and AI agents. From individual blogs to enterprise implementations."
+                }
+            }
+        ]
+    }
+    </script>
+
     <title>MX — Your business, readable by every machine on earth | MX Technologies Ltd</title>
 
     <style>
@@ -179,15 +212,52 @@
             margin-top: 2rem;
         }
 
+        /* --- CTA Button --- */
+        .cta-container {
+            margin-top: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--mx-highlight);
+            color: var(--mx-text);
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+        }
+
+        .cta-button:hover,
+        .cta-button:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(233, 69, 96, 0.5);
+        }
+
+        .cta-subtext {
+            margin-top: 0.75rem;
+            font-size: 0.95rem;
+            color: var(--mx-text-muted);
+        }
+
         /* --- Sections --- */
         .section {
             margin-bottom: var(--mx-section-gap);
-            opacity: 0;
-            transform: translateY(20px);
+            /* Default: immediately visible */
+            opacity: 1;
+            transform: translateY(0);
             transition: opacity 0.6s ease, transform 0.6s ease;
         }
 
-        .section.visible {
+        /* Only animate sections that should scroll-reveal */
+        .section.animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .section.animate-on-scroll.visible {
             opacity: 1;
             transform: translateY(0);
         }
@@ -295,6 +365,115 @@
             font-size: 0.9rem;
         }
 
+        /* --- Social Proof --- */
+        .social-proof {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(233, 69, 96, 0.05);
+            border-radius: 0.5rem;
+        }
+
+        .proof-text {
+            font-size: 0.95rem;
+            color: var(--mx-text-muted);
+            font-style: italic;
+        }
+
+        .proof-text strong {
+            color: var(--mx-highlight);
+            font-style: normal;
+        }
+
+        /* --- Email Signup --- */
+        .signup-section {
+            text-align: center;
+            background: var(--mx-card-bg);
+            border: 1px solid var(--mx-card-border);
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .signup-intro {
+            font-size: 1.1rem;
+            color: var(--mx-text-muted);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+
+        .signup-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .form-group {
+            flex: 1 1 300px;
+        }
+
+        .signup-form input[type="email"] {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            border: 2px solid var(--mx-card-border);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--mx-text);
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .signup-form input[type="email"]:focus {
+            outline: none;
+            border-color: var(--mx-highlight);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .signup-form input[type="email"]::placeholder {
+            color: var(--mx-text-muted);
+            opacity: 0.6;
+        }
+
+        .signup-button {
+            padding: 1rem 3rem;
+            font-size: 1rem;
+            font-weight: 600;
+            background: var(--mx-highlight);
+            color: var(--mx-text);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+        }
+
+        .signup-button:hover,
+        .signup-button:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(233, 69, 96, 0.5);
+        }
+
+        .signup-privacy {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--mx-text-muted);
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
         /* --- Contact --- */
         .contact {
             text-align: center;
@@ -359,6 +538,15 @@
             .problem { padding: 1.5rem; font-size: 1rem; }
             .card-grid { grid-template-columns: 1fr; }
             .family-grid { grid-template-columns: 1fr; }
+            .signup-section {
+                padding: 2rem 1.5rem;
+            }
+            .signup-form {
+                flex-direction: column;
+            }
+            .signup-button {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -369,7 +557,15 @@
             <div class="hero-logo" role="img" aria-label="MX Technologies">MX</div>
             <h1>Your business, readable by every machine on earth</h1>
             <p class="subtitle">Machine Experience makes your content work for every AI agent — without making it less readable by humans.</p>
-            <div class="badge" role="status" aria-live="polite">Coming Soon</div>
+            <div class="badge" role="status" aria-live="polite">Join the Waitlist</div>
+
+            <!-- Primary CTA -->
+            <div class="cta-container">
+                <a href="#signup" class="cta-button" aria-label="Get early access to MX">
+                    Get Early Access
+                </a>
+                <p class="cta-subtext">Be first to know when the books launch</p>
+            </div>
         </header>
 
         <!-- The Problem -->
@@ -390,8 +586,44 @@
             </div>
         </section>
 
+        <!-- Social Proof -->
+        <section class="section social-proof" aria-label="Social Proof">
+            <p class="proof-text">
+                <strong>Featured by CMSCritic</strong> •
+                Member of Boye & Company CMS Experts Group •
+                Trusted by enterprise content teams worldwide
+            </p>
+        </section>
+
+        <!-- Email Signup -->
+        <section class="section signup-section" id="signup" aria-label="Email Signup">
+            <h2 class="section-title">Get Early Access</h2>
+            <p class="signup-intro">Be the first to know when the MX Handbook and MX Codex launch. No spam, just launch announcements and early access offers.</p>
+
+            <form class="signup-form" action="mailto:tom.cranstoun@gmail.com?subject=MX%20Early%20Access" method="post" enctype="text/plain" aria-label="Early access signup form">
+                <div class="form-group">
+                    <label for="email" class="visually-hidden">Email address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="your.email@example.com"
+                        required
+                        aria-required="true"
+                        aria-describedby="email-hint"
+                    >
+                    <p id="email-hint" class="visually-hidden">We'll only email you about the book launches</p>
+                </div>
+                <button type="submit" class="signup-button">
+                    Notify Me
+                </button>
+            </form>
+
+            <p class="signup-privacy">We respect your privacy. Unsubscribe anytime.</p>
+        </section>
+
         <!-- The Product Family -->
-        <section class="section" aria-label="The MX Product Family">
+        <section class="section animate-on-scroll" aria-label="The MX Product Family">
             <h2 class="section-title">The Product Family</h2>
             <div class="family-grid">
                 <div class="family-card">
@@ -410,24 +642,24 @@
         </section>
 
         <!-- The Books -->
-        <section class="section" aria-label="The Books">
+        <section class="section animate-on-scroll" aria-label="The Books">
             <h2 class="section-title">The Books</h2>
             <div class="card-grid">
                 <article class="card">
                     <h3>The MX Handbook</h3>
                     <p>A practical guide to adding Machine Experience to your CMS, your website, and your content workflow. Step-by-step implementations across major platforms.</p>
-                    <span class="date">2 April 2026</span>
+                    <span class="date">Launching 2 April 2026 — Reserve Your Copy</span>
                 </article>
                 <article class="card">
                     <h3>The MX Codex</h3>
                     <p>The definitive reference for those implementing MX at scale. Architecture, standards, the companion web, and enterprise implementation patterns.</p>
-                    <span class="date">1 July 2026</span>
+                    <span class="date">Launching 1 July 2026 — Reserve Your Copy</span>
                 </article>
             </div>
         </section>
 
         <!-- Contact -->
-        <section class="section contact" aria-label="Contact">
+        <section class="section animate-on-scroll contact" aria-label="Contact">
             <h2 class="section-title">Get in Touch</h2>
             <p><a href="mailto:tom.cranstoun@gmail.com">tom.cranstoun@gmail.com</a></p>
             <p><a href="https://www.linkedin.com/in/tom-cranstoun/" rel="noopener noreferrer">LinkedIn</a></p>
@@ -442,7 +674,7 @@
 
     <script>
         (function () {
-            var sections = document.querySelectorAll('.section');
+            var sections = document.querySelectorAll('.section.animate-on-scroll');
 
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 sections.forEach(function (s) { s.classList.add('visible'); });
