@@ -17,6 +17,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **CLAUDE.md comprehensive update** (2026-02-17): Synchronized CLAUDE.md with current repository state
+  - Updated counts: 22 commands (was 17), 30 skills (was 27), 3 hooks (was 2), 36 docs (was 26), 49 blocks
+  - Fixed Cloudflare worker version: v1.1.5 (was v1.1.4)
+  - Fixed ipynb-viewer overlay module list to match actual files (unified-overlay.js, navigation-state.js, toolbar.js, footer.js, renderers/)
+  - Added complete project directory structure table and key root files reference
+  - Added blocks inventory (49 blocks listed)
+  - Added 5 missing slash commands (check-cloudflare-tests, step-commit, dev-docs-update, increment-cfw-version, md-fix)
+  - Added missing NPM script (generate-sitemap:invisible-users)
+  - Removed stale "NEW:" labels from Quick Links
+  - Removed references to non-existent files (example-usage.js, overlay/README.md)
+  - Updated YAML frontmatter modified date
+
 ### Added
 
 - **ipynb-viewer Help Button in GitHub Overlays**: Added help button (❓) to GitHub markdown overlays for consistent help access across all overlay types (2026-01-16)

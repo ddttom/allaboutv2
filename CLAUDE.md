@@ -3,7 +3,7 @@ title: "AI assistant configuration for allabout.network"
 description: "Project guide and configuration for Claude Code working on the allabout.network website."
 author: Tom Cranstoun
 created: 2026-01-15
-modified: 2026-02-09
+modified: 2026-02-17
 version: "1.0"
 status: active
 ---
@@ -14,8 +14,8 @@ status: active
 
 ### For AI Assistants
 
-- **Comprehensive Documentation**: See `docs/for-ai/` directory (26 detailed guides)
-- **Claude Code Tools**: See `.claude/` directory (17 commands, 27 skills, 6 agents, 2 hooks)
+- **Comprehensive Documentation**: See `docs/for-ai/` directory (36 detailed guides)
+- **Claude Code Tools**: See `.claude/` directory (22 commands, 30 skills, 6 agents, 3 hooks)
 - **Start Here**: `docs/for-ai/index.md` for complete navigation
 - **Agents**: See `.claude/agents_README.md` for autonomous task handlers
 - **Critical Learnings**: See `LEARNINGS.md` for documented mistakes and patterns to avoid
@@ -112,6 +112,7 @@ All `.claude/` operations, block creation, slash commands, and documentation upd
 - `npm run lint:markdown:fix` - Auto-fix markdown issues
 - `npm run lint` - Run all linting (JS + CSS + Markdown)
 - `npm run debug` - Run local development server (server.js is READ-ONLY)
+- `npm run generate-sitemap:invisible-users` - Generate sitemap for invisible-users section
 
 ### Local Testing Workflow (for AI Assistants)
 
@@ -310,6 +311,8 @@ describe('Integration Tests', () => {
 - `/test-block <name>` - Run tests for a specific EDS block
 - `/deploy-block <name>` - Deploy a block from build/ directory to blocks/ directory
 - `/check-block <name>` - Analyze a block and provide architecture review and improvement suggestions
+- `/check-cloudflare-tests` - Validate Cloudflare worker test structure follows two-file rule
+- `/step-commit` - Execute systematic step commit workflow
 
 **Notebooks:**
 
@@ -326,13 +329,16 @@ describe('Integration Tests', () => {
 - `/dev-docs` - Create comprehensive strategic plan with structured task breakdown
 - `/find-block-content` - Find pages in the site that use a specific block
 - `/validate-docs` - Validate CLAUDE.md, README.md, and CHANGELOG.md are current before push
+- `/dev-docs-update` - Update dev documentation before context compaction
+- `/increment-cfw-version` - Increment Cloudflare Worker version
+- `/md-fix` - Run markdown linting and fix all issues in the repository
 
 **Content Management:**
 
 - `/update-llms` - Find and update all llms.txt files in the project
 - `/update-my-blog` - Find and update all my-blog.json files in the project
 
-See `.claude/README.md` for complete slash command reference (17 total).
+See `.claude/README.md` for complete slash command reference (22 total).
 
 ### Agents (Claude Code)
 
@@ -697,6 +703,47 @@ When AI assistants create block examples or demos, use these pre-defined sample 
 
 **Complete architecture details:** See [EDS Architecture Standards](docs/for-ai/implementation/eds-architecture-standards.md)
 
+### Project Directory Structure
+
+| Directory | Purpose |
+|---|---|
+| `blocks/` | 49 production-ready EDS blocks (independent web components) |
+| `build/` | Development workspace for complex components with external dependencies (Vite) |
+| `blogs/` | Blog content organized by category (`ddt/`, `mx/`) |
+| `cloudflare/` | Custom Cloudflare Worker implementation (CORS, JSON-LD, metadata) |
+| `cogs/` | MX-related COG (Content Object Graph) configurations |
+| `config/` | Environment-specific configuration (JSON-LD, tracking) |
+| `data/` | Data assets and resources |
+| `dev/` | Development resources and utilities |
+| `docs/` | Comprehensive documentation (`for-ai/`, `remediation/`) |
+| `fonts/` | Font files (Roboto woff2) |
+| `icons/` | Icon assets (SVG) |
+| `images/` | Image assets |
+| `mx/` | MX-related demo content |
+| `plusplus/` | Block Party and plugin integrations |
+| `scripts/` | Core JavaScript utilities (`aem.js`, `scripts.js`, `delayed.js`) |
+| `static/` | Static web assets (CSS, JS) |
+| `styles/` | Global stylesheets (`styles.css`, `fonts.css`, `homepage.css`) |
+| `tools/` | Development tools (sidekick) |
+| `.claude/` | Claude Code configuration (22 commands, 30 skills, 6 agents, 3 hooks) |
+| `.github/` | GitHub Actions workflows (CI, PR checks, Cloudflare deploy) |
+
+### Key Root Files
+
+| File | Purpose |
+|---|---|
+| `CLAUDE.md` | AI assistant project guide (this file) |
+| `README.md` | Project overview and setup instructions |
+| `CHANGELOG.md` | Comprehensive change history |
+| `LEARNINGS.md` | Documented mistakes and patterns to avoid |
+| `AGENTS.md` | Agent configurations and documentation |
+| `PROJECTSTATE.md` | Current project state tracking |
+| `package.json` | NPM configuration (v1.3.0, @adobe/aem-boilerplate) |
+| `server.js` | READ-ONLY local development server |
+| `.eslintrc.cjs` | ESLint configuration (Airbnb base) |
+| `.stylelintrc.json` | Stylelint configuration (standard) |
+| `.markdownlint.json` | Markdownlint configuration (12 rules disabled) |
+
 ### EDS Content Serving Rules
 
 **CRITICAL: Files in GitHub supersede Google Drive for content serving.**
@@ -789,6 +836,10 @@ curl -I "https://allabout.network/path/to/file.html?v=$(date +%s)"
 - Someone accesses URL before file exists → CDN caches 404
 - File is added to GitHub → CDN still serves cached 404
 - Solution: Purge cache or wait for TTL expiration (4-24 hours)
+
+### Blocks Inventory (49 blocks)
+
+3dcube, accordion, bio, bloglist, blogroll, cards, centreblock, code-expander, columns, comment, counter, dam, dashboard, dfs, dps, dynamic, embed, floating-alert, footer, fortunecookie, fragment, grid, header, helloworld, hero, index, inline-svg, **ipynb-viewer** (largest - 4,946 lines JS, with overlay subsystem), markdown, modal, overlay, quote, raw, react-slide-builder, remove-icon-styles, returntotop, search, shoelace, shoelace-card, showcaser, slide-builder, spectrum-card (build-enhanced), table, tabs, tags, text, video, view-myblog, vue-slide-builder
 
 ### Dual-Directory Pattern
 
@@ -1025,15 +1076,12 @@ notebook.navigate({
 
 **Location**: `blocks/ipynb-viewer/overlay/`
 
-1. **hash-manager.js** - URL hash management (parse, update, clear, matches)
-2. **navigation.js** - Unified navigation with history, home, back, mode switching
-3. **unified-overlay.js** - Core overlay with single state and DOM structure
-4. **renderers/notebook.js** - Notebook cell renderer (markdown/code/outputs)
-5. **renderers/markdown.js** - Markdown file renderer with smart links
-6. **tree.js** - Unified navigation tree (notebook/repository/help sections)
-   - Repository section organized into Chapters, Appendix, Miscellaneous folders
-   - Smart categorization: preface + chapter-*.md → Chapters, appendix-*.md → Appendix, others → Miscellaneous
-7. **integration.js** - Clean API (`createNotebookOverlay`, `createMarkdownOverlay`)
+1. **unified-overlay.js** - Core overlay with single state and DOM structure
+2. **navigation-state.js** - Navigation state management with history tracking
+3. **toolbar.js** - Overlay toolbar with navigation controls and mode switching
+4. **footer.js** - Overlay footer component
+5. **renderers/notebook-renderer.js** - Notebook cell renderer (markdown/code/outputs)
+6. **renderers/markdown-renderer.js** - Markdown file renderer with smart links
 
 ### Key Features
 
@@ -1045,17 +1093,13 @@ notebook.navigate({
 
 ### Documentation
 
-- **Complete guide**: `blocks/ipynb-viewer/overlay/README.md` (525 lines)
 - **Progress tracking**: `docs/for-ai/ipynb-viewer-refactor-progress.md`
 - **Original proposal**: `docs/for-ai/ipynb-viewer-overlay-refactor-proposal.md`
-
-### Usage Examples
-
-See `blocks/ipynb-viewer/overlay/example-usage.js` for complete examples.
+- **Summary**: `docs/for-ai/ipynb-viewer-unified-overlay-summary.md`
 
 ## Cloudflare Custom Worker Implementation
 
-**Custom Adobe EDS worker with enhanced features (v1.1.4)** - see `cloudflare/files/`
+**Custom Adobe EDS worker with enhanced features (v1.1.5)** - see `cloudflare/files/`
 
 **What it does:**
 
@@ -1357,7 +1401,7 @@ const code = 'here';
 
 ### Primary Documentation
 
-- **`docs/for-ai/`** - Comprehensive EDS development guides (26 files)
+- **`docs/for-ai/`** - Comprehensive EDS development guides (36 files across 4 subdirectories)
   - Start: `docs/for-ai/index.md` - Complete navigation
   - Learn: `docs/for-ai/getting-started-guide.md` - Role-based paths
   - Core: `docs/for-ai/eds.md` - EDS fundamentals (1,937 lines)
@@ -1366,9 +1410,9 @@ const code = 'here';
 
 - **`.claude/README.md`** - Complete overview (commands, skills, agents, hooks)
 - **`.claude/agents_README.md`** - Agent documentation (6 autonomous agents)
-- **`.claude/commands/`** - Slash commands for common tasks (19 total)
-- **`.claude/skills/`** - Extended capabilities for EDS development (27 total)
-- **`.claude/hooks/`** - Development workflow automation (2 active hooks)
+- **`.claude/commands/`** - Slash commands for common tasks (22 total)
+- **`.claude/skills/`** - Extended capabilities for EDS development (30 total)
+- **`.claude/hooks/`** - Development workflow automation (3 active hooks)
   - `CONFIG.md` - Hook configuration and customization guide
 
 ### Critical Learnings
@@ -1384,12 +1428,13 @@ const code = 'here';
 
 - Architecture standards: `docs/for-ai/implementation/block-architecture-standards.md`
 - Testing standards: `docs/for-ai/testing/eds-native-testing-standards.md`
-- **NEW: Jupyter testing**: `docs/for-ai/explaining-jupyter.md` - Context-aware interactive testing with `initialize()` function (96% smaller Cell 1) and unified API
-- **NEW: Educational notebooks**: `docs/for-ai/explaining-educational-notebooks.md` - Create tutorials, guides, and interactive demos as SPAs
-- **NEW: ipynb-viewer block**: `blocks/ipynb-viewer/README.md` - Display executable notebooks with autorun, paged, and link navigation
-- **NEW: ipynb-viewer unified overlay**: `blocks/ipynb-viewer/overlay/README.md` - Unified overlay architecture eliminating multiple overlay confusion (branch: `refactor/ipynb-viewer-unified-overlay`)
+- **Jupyter testing**: `docs/for-ai/explaining-jupyter.md` - Context-aware interactive testing with `initialize()` function (96% smaller Cell 1) and unified API
+- **Educational notebooks**: `docs/for-ai/explaining-educational-notebooks.md` - Create tutorials, guides, and interactive demos as SPAs
+- **Presentation notebooks**: `docs/for-ai/explaining-presentation-notebooks.md` - Client demos and showcases with embedded HTML/JS
+- **ipynb-viewer block**: `blocks/ipynb-viewer/README.md` - Display executable notebooks with autorun, paged, and link navigation
+- **ipynb-viewer unified overlay**: `blocks/ipynb-viewer/overlay/README.md` - Unified overlay architecture eliminating multiple overlay confusion
 - **Helix Configuration**: `docs/for-ai/helix-config.md` - Complete .helix/config file reference covering CDN integration (Cloudflare), push invalidation, environment configuration, and troubleshooting
-- **Custom Cloudflare Worker**: `cloudflare/files/README.md` - Custom Adobe EDS worker implementation (v1.1.4) with CORS headers, JSON-LD generation, picture placeholder replacement, and metadata cleanup. Version managed via package.json single source of truth.
+- **Custom Cloudflare Worker**: `cloudflare/files/README.md` - Custom Adobe EDS worker implementation (v1.1.5) with CORS headers, JSON-LD generation, picture placeholder replacement, and metadata cleanup. Version managed via package.json single source of truth.
 - Security checklist: `docs/for-ai/guidelines/security-checklist.md`
 - Frontend guidelines: `docs/for-ai/guidelines/frontend-guidelines.md`
 
