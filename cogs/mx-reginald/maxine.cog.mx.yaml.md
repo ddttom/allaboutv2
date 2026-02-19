@@ -44,13 +44,13 @@ mx:
     prompt: "Regenerate the Maxine identity COG. This is the second COG in REGINALD — a dual-voice document where Tom introduces Maxine and Maxine speaks about who she is. Focus on philosophy and outcomes, NOT implementation details. Key messages: MX made this possible (structured metadata enables AI accuracy), the model doesn't matter (identity persists via documentation). Include partnership boundaries, attribution model, and key outputs. YAML frontmatter must contain certificate (publisher: MX Reginald Ltd) and governance (maintainer: Tom Cranstoun). No dot prefix on the cog file — COGs are for both audiences."
     source_documents:
       - "SOUL.md"
-      - "MAXINE-DECISIONS.md"
+      - "data/MX-Canon/MX-Maxine-Lives/MAXINE-DECISIONS.md"
       - "reginald/cog-specification.md"
 
   related:
     cog_system: "cog-system.cog.md"
     soul_document: "https://github.com/tomcranstoun/MX-hub/blob/main/SOUL.md"
-    decision_boundaries: "https://github.com/tomcranstoun/MX-hub/blob/main/MAXINE-DECISIONS.md"
+    decision_boundaries: "https://github.com/tomcranstoun/MX-hub/blob/main/data/MX-Canon/MX-Maxine-Lives/MAXINE-DECISIONS.md"
 ---
 
 # Maxine COG — Metadata
