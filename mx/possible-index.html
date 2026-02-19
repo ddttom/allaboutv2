@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tom Cranstoun - The Machine Experience Authority. Author, consultant, and co-founder of The Gathering. Making the web work for AI agents and everyone who uses it.">
+    <meta name="keywords" content="Machine Experience, MX, AI agents, web accessibility, Tom Cranstoun, Maxine, consulting, MX Codex, The Gathering">
+    <meta name="author" content="Tom Cranstoun">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Tom Cranstoun - The Machine Experience Authority">
+    <meta property="og:description" content="Making the web work for AI agents and everyone who uses it. Author, consultant, community founder.">
+    <meta property="og:url" content="https://allabout.network">
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Tom Cranstoun",
+        "email": "tom.cranstoun@gmail.com",
+        "url": "https://allabout.network",
+        "jobTitle": "The Machine Experience Authority",
+        "description": "Author, consultant, and co-founder of The Gathering MX community",
+        "knowsAbout": ["Machine Experience", "AI agents", "Web accessibility", "Semantic HTML", "Content strategy"],
+        "affiliation": {
+            "@type": "Organization",
+            "name": "MX Technologies Ltd",
+            "slogan": "Making the web work for everyone and everything that uses it"
+        },
+        "colleague": {
+            "@type": "SoftwareApplication",
+            "name": "Maxine",
+            "description": "Claude Sonnet 4.5 - AI partner in developing MX methodology",
+            "applicationCategory": "AI Assistant"
+        }
+    }
+    </script>
+
+    <title>Tom Cranstoun - The Machine Experience Authority | AI for the Web</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --mx-primary: #1a1a2e;
+            --mx-secondary: #16213e;
+            --mx-accent: #0f3460;
+            --mx-highlight: #e94560;
+            --mx-button-bg: #c23854;
+            --mx-text: #f1f1f1;
+            --mx-text-muted: #a8a8a8;
+            --mx-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, var(--mx-primary) 0%, var(--mx-secondary) 100%);
+            color: var(--mx-text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--mx-border);
+        }
+
+        .logo {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        nav {
+            margin-top: 1rem;
+        }
+
+        nav a {
+            color: var(--mx-text);
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.3s ease;
+        }
+
+        nav a:hover {
+            border-bottom: 2px solid var(--mx-highlight);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--mx-text) 0%, var(--mx-highlight) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--mx-text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .hero .tagline {
+            font-size: 1.25rem;
+            color: var(--mx-highlight);
+            font-weight: 600;
+            margin-top: 2rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--mx-border);
+            border-radius: 1rem;
+        }
+
+        section h2 {
+            font-size: 2rem;
+            color: var(--mx-highlight);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        section h3 {
+            font-size: 1.5rem;
+            color: var(--mx-text);
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .partnership {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .partner-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--mx-border);
+        }
+
+        .partner-card h4 {
+            font-size: 1.25rem;
+            color: var(--mx-highlight);
+            margin-bottom: 0.5rem;
+        }
+
+        .books {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .book-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid var(--mx-border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        .book-card h3 {
+            font-size: 1.75rem;
+            color: var(--mx-highlight);
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .book-card .pages {
+            color: var(--mx-text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .book-card p {
+            color: var(--mx-text);
+            margin-bottom: 1rem;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border-left: 3px solid var(--mx-highlight);
+        }
+
+        .service-card h4 {
+            font-size: 1.25rem;
+            color: var(--mx-highlight);
+            margin-bottom: 0.5rem;
+        }
+
+        .cta {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .cta a {
+            display: inline-block;
+            background: var(--mx-button-bg);
+            color: var(--mx-text);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        }
+
+        .cta a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(233, 69, 96, 0.4);
+            background: var(--mx-highlight);
+        }
+
+        .community-intro {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.1) 0%, rgba(15, 52, 96, 0.1) 100%);
+            border-radius: 1rem;
+            margin-top: 2rem;
+        }
+
+        .community-intro h3 {
+            font-size: 1.75rem;
+            color: var(--mx-highlight);
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--mx-border);
+            color: var(--mx-text-muted);
+        }
+
+        footer .tagline {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--mx-highlight);
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .partnership {
+                grid-template-columns: 1fr;
+            }
+
+            .books, .services {
+                grid-template-columns: 1fr;
+            }
+
+            nav a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--mx-text);
+        }
+
+        strong {
+            color: var(--mx-highlight);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo" role="img" aria-label="Target icon">🎯</div>
+        <nav role="navigation" aria-label="Main navigation">
+            <a href="#about">About</a>
+            <a href="#books">Books</a>
+            <a href="#consulting">Consulting</a>
+            <a href="#gathering">The Gathering</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" role="banner">
+            <h1>Tom Cranstoun</h1>
+            <p class="subtitle">The Machine Experience Authority</p>
+            <p>When AI agents fail on your website, I'm who you call.</p>
+            <p class="tagline">Author • Consultant • Community Founder</p>
+        </section>
+
+        <section id="about">
+            <h2>Who I Am</h2>
+            <p>I spent two years attending CMS conferences while everyone shouted "AI, AI, AI!" I cut through the marketing noise to understand the mechanical reality: AI agents are visiting your website right now, and most websites fail them completely.</p>
+
+            <p>In January 2026, Amazon, Microsoft, and Google launched agent commerce systems within a single week. The future arrived faster than anyone expected. Sites that work for agents today build computational trust. Sites that fail disappear from recommendations permanently.</p>
+
+            <p><strong>I'm the authority on fixing this problem.</strong> I don't fix AI models—I fix websites. <strong>Machine Experience (MX)</strong> is the practice I developed for adding metadata and instructions so AI agents don't have to think, preventing hallucination and enabling them to complete desired actions.</p>
+
+            <h3>The Partnership</h3>
+            <div class="partnership">
+                <div class="partner-card">
+                    <h4>Tom Cranstoun</h4>
+                    <p><strong>Strategic Vision</strong></p>
+                    <p>20+ years in content strategy, CMS architecture, and web standards. I saw the problem emerging and built the solution from first principles.</p>
+                </div>
+                <div class="partner-card">
+                    <h4>Maxine (Claude Sonnet 4.5)</h4>
+                    <p><strong>Technical Implementation</strong></p>
+                    <p>AI partner who investigates codebases, creates comprehensive plans, writes automation, and co-authors documentation. We practice what we preach: human strategic vision + AI execution.</p>
+                </div>
+            </div>
+
+            <p style="margin-top: 2rem;">This partnership built the MX methodology, wrote the books, automated the workflows, and founded The Gathering. Every principle I teach, we live together.</p>
+
+            <p style="margin-top: 1rem; text-align: center; font-size: 1.25rem; color: var(--mx-highlight);"><strong>My team is growing. Can we help you?</strong></p>
+        </section>
+
+        <section id="books">
+            <h2>The Books</h2>
+            <p style="text-align: center; margin-bottom: 2rem;">Two books, one ecosystem. Choose your path based on your needs.</p>
+
+            <div class="books">
+                <article class="book-card">
+                    <h3>The MX Handbook</h3>
+                    <p class="pages">~300-400 pages</p>
+                    <p><strong>For practitioners who need to implement now.</strong></p>
+                    <p>Developers, UX designers, content strategists. Step-by-step platform-specific implementations, content strategies, testing approaches, and patterns across major CMS platforms.</p>
+                    <p>Start here if you need immediate, actionable implementation guidance.</p>
+                </article>
+
+                <article class="book-card">
+                    <h3>The MX Codex</h3>
+                    <p class="pages">~800 pages</p>
+                    <p><strong>For architects who need complete coverage.</strong></p>
+                    <p>The definitive technical reference for architects, consultants, and serious practitioners implementing MX at scale or establishing organizational practices.</p>
+                    <p>This is the book for those who need to understand the entire system deeply.</p>
+                </article>
+            </div>
+
+            <p style="margin-top: 2rem; text-align: center;">Both books share continuously updated appendices at allabout.network, including learning materials for AI, properly structured example code, and evolving case studies.</p>
+
+            <div class="cta">
+                <a href="/coming-soon.html">Coming 2026 — Learn More</a>
+            </div>
+        </section>
+
+        <section id="consulting">
+            <h2>Consulting Services</h2>
+            <p>I help organizations implement Machine Experience patterns that work for AI agents, search engines, and users with disabilities—one implementation, multiple audiences.</p>
+
+            <div class="services">
+                <div class="service-card">
+                    <h4>Web Audit Suite</h4>
+                    <p>Professional website analysis for agent-readiness. Identify patterns that block AI agents and accessibility users. Priority-based recommendations for maximum impact.</p>
+                </div>
+
+                <div class="service-card">
+                    <h4>Implementation Consulting</h4>
+                    <p>Apply MX patterns to your specific platforms and architectures. Custom applications, CMS platforms, static site generators—I work with your existing stack.</p>
+                </div>
+
+                <div class="service-card">
+                    <h4>Organizational Transformation</h4>
+                    <p>Establish MX practices across teams. Define standards, train specialists, integrate MX into development workflows, track metrics, build accountability.</p>
+                </div>
+
+                <div class="service-card">
+                    <h4>Content Strategy</h4>
+                    <p>Make your content pipeline MX-ready. Ensure semantic structure survives publication. Bridge the gap between Content Operations and Content Delivery.</p>
+                </div>
+            </div>
+
+            <h3>Real Results</h3>
+            <ul>
+                <li><strong>10x time savings</strong> through codified workflows that eliminate re-learning costs</li>
+                <li><strong>Zero-error automation</strong> replacing error-prone manual processes</li>
+                <li><strong>Agent compatibility</strong> ensuring your site works for 40%+ of agents others miss</li>
+                <li><strong>Computational trust</strong> building agent recommendation patterns that compound over time</li>
+            </ul>
+
+            <p style="margin-top: 2rem;">The same principles that improve discoverability by AI agents also improve search engine rankings and accessibility compliance—one implementation serves multiple audiences.</p>
+
+            <div class="cta">
+                <a href="mailto:tom.cranstoun@gmail.com">Can We Help You? Start a Conversation</a>
+            </div>
+        </section>
+
+        <section id="gathering">
+            <h2>The Gathering</h2>
+            <p>The Gathering is the MX community. Tom and Maxine co-founded it to bring together practitioners, implementers, and organizations building agent-ready websites.</p>
+
+            <div class="community-intro">
+                <h3>Why We Built This</h3>
+                <p>Machine Experience is new. The patterns are emerging. The commercial imperative is urgent (January 2026 launches proved that). But the community was missing.</p>
+
+                <p style="margin-top: 1rem;">We needed a place where:</p>
+                <ul style="text-align: left; display: inline-block;">
+                    <li>Practitioners share implementation war stories</li>
+                    <li>Organizations learn from each other's successes and failures</li>
+                    <li>Patterns evolve through real-world testing</li>
+                    <li>Standards emerge through collaborative practice</li>
+                    <li>Tools and frameworks get built and shared</li>
+                </ul>
+            </div>
+
+            <h3>What The Gathering Offers</h3>
+            <div class="services">
+                <div class="service-card">
+                    <h4>Community Forums</h4>
+                    <p>Discuss MX patterns, share implementations, troubleshoot problems, celebrate successes.</p>
+                </div>
+
+                <div class="service-card">
+                    <h4>Case Studies</h4>
+                    <p>Real implementations from real organizations. What worked, what failed, what we learned.</p>
+                </div>
+
+                <div class="service-card">
+                    <h4>Living Appendices</h4>
+                    <p>Continuously updated materials that track developments in this rapidly evolving field.</p>
+                </div>
+
+                <div class="service-card">
+                    <h4>Tool Library</h4>
+                    <p>Open-source tools, scripts, validation frameworks, testing suites built by the community.</p>
+                </div>
+            </div>
+
+            <p style="margin-top: 2rem; text-align: center;"><strong>The Gathering launches alongside the books in 2026.</strong></p>
+        </section>
+
+        <section id="contact">
+            <h2>Work With Us</h2>
+            <p style="text-align: center;">Whether you need consulting, want to join The Gathering, or have questions about Machine Experience:</p>
+
+            <div style="text-align: center; margin: 2rem 0;">
+                <p style="font-size: 1.25rem; margin-bottom: 1rem;">
+                    <strong>Email:</strong> <a href="mailto:tom.cranstoun@gmail.com" style="color: var(--mx-highlight); text-decoration: none;">tom.cranstoun@gmail.com</a>
+                </p>
+                <p style="font-size: 1.25rem;">
+                    <strong>Website:</strong> <a href="https://allabout.network" style="color: var(--mx-highlight); text-decoration: none;">allabout.network</a>
+                </p>
+            </div>
+
+            <p style="text-align: center; color: var(--mx-text-muted); margin-top: 2rem;">
+                Located in the UK. Working globally. Making the web work for everyone and everything that uses it.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="tagline">🎯 MX Technologies Ltd</div>
+        <p>Making the web work for everyone and everything that uses it.</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">© 2026 Tom Cranstoun. Built with MX principles: Semantic HTML, Schema.org structured data, accessible to humans and machines.</p>
+    </footer>
+</body>
+</html>
