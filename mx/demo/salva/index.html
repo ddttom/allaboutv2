@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--
+Root redirect for Los Granainos Restaurant multilingual site.
+Detects browser language and redirects to /es/ or /en/ directory.
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow">
+  <title>Los Granainos - Redirecting / Redirigiendo...</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      max-width: 600px;
+      margin: 100px auto;
+      padding: 20px;
+      text-align: center;
+      line-height: 1.6;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      color: #333;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+    }
+    li {
+      margin: 1rem 0;
+    }
+    a {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #0066cc;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    a:hover {
+      background: #0052a3;
+    }
+    .loading {
+      color: #666;
+      font-size: 0.9rem;
+    }
+  </style>
+  <script>
+    (function() {
+      // Detect browser language preference
+      const userLang = (navigator.language || navigator.userLanguage).substring(0, 2);
+
+      // Define supported languages
+      const supportedLangs = ['es', 'en'];
+
+      // Default language (primary business language - Spanish)
+      const defaultLang = 'es';
+
+      // Determine target language
+      const targetLang = supportedLangs.includes(userLang) ? userLang : defaultLang;
+
+      // Redirect to appropriate language directory
+      window.location.href = `${targetLang}/index.html`;
+    })();
+  </script>
+</head>
+<body>
+  <!-- Fallback content for users with JavaScript disabled -->
+  <noscript>
+    <h1>Choose Your Language / Elige tu idioma</h1>
+    <p>Please select your preferred language:</p>
+    <p>Por favor selecciona tu idioma preferido:</p>
+    <ul>
+      <li><a href="es/index.html">Español</a></li>
+      <li><a href="en/index.html">English</a></li>
+    </ul>
+  </noscript>
+
+  <!-- Loading message (visible briefly before redirect) -->
+  <p class="loading">Redirecting / Redirigiendo...</p>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Sitemap for Los Granainos Restaurant multilingual site
+Both Spanish and English versions with hreflang annotations
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Homepage - Spanish version -->
+  <url>
+    <loc>https://allabout.network/mx/demo/salva/es/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://allabout.network/mx/demo/salva/es/index.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://allabout.network/mx/demo/salva/en/index.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://allabout.network/mx/demo/salva/es/index.html"/>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Homepage - English version -->
+  <url>
+    <loc>https://allabout.network/mx/demo/salva/en/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://allabout.network/mx/demo/salva/es/index.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://allabout.network/mx/demo/salva/en/index.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://allabout.network/mx/demo/salva/es/index.html"/>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+</urlset>
