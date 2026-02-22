@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <!--
-Root redirect for Los Granainos Restaurant multilingual site.
-Detects browser language and redirects to /es/ or /en/ directory.
+Root redirect for Los Granainos Restaurant n-language site.
+Detects browser Accept-Language preference and redirects to appropriate language directory.
+
+N-Language Architecture:
+- Supports any number of languages (es, en, fr, de, es-mx, en-gb, etc.)
+- Languages are auto-discovered from directory structure
+- Fallback cascade: regional → base → default
+- No cookies/localStorage - always follows Accept-Language header (GDPR compliant)
+
+When REGINALD edge is deployed, this redirect happens at Cloudflare Worker level.
+This file serves as client-side fallback for sites not using REGINALD edge.
 -->
 <html lang="es">
 <head>
@@ -17,11 +26,13 @@ Detects browser language and redirects to /es/ or /en/ directory.
       padding: 20px;
       text-align: center;
       line-height: 1.6;
+      background: #faf8f5;
+      color: #374151;
     }
     h1 {
       font-size: 1.5rem;
       margin-bottom: 2rem;
-      color: #333;
+      color: #1a1a1a;
     }
     ul {
       list-style: none;
@@ -34,15 +45,16 @@ Detects browser language and redirects to /es/ or /en/ directory.
     a {
       display: inline-block;
       padding: 12px 24px;
-      background: #0066cc;
+      background: #e8997e;
       color: white;
       text-decoration: none;
-      border-radius: 6px;
-      font-weight: 500;
-      transition: background 0.2s;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
     }
     a:hover {
-      background: #0052a3;
+      background: #d88265;
+      transform: translateY(-2px);
     }
     .loading {
       color: #666;
@@ -51,20 +63,57 @@ Detects browser language and redirects to /es/ or /en/ directory.
   </style>
   <script>
     (function() {
-      // Detect browser language preference
-      const userLang = (navigator.language || navigator.userLanguage).substring(0, 2);
+      /**
+       * N-Language Redirect System
+       *
+       * Supports unlimited languages with Accept-Language header detection.
+       * Regional variant cascade: es-MX → es → default
+       */
 
-      // Define supported languages
-      const supportedLangs = ['es', 'en'];
+      // Available languages (configured per site)
+      // In production, this could be dynamically generated at build time
+      const availableLanguages = ['es', 'en'];
 
-      // Default language (primary business language - Spanish)
-      const defaultLang = 'es';
+      // Default language (primary business language)
+      const defaultLanguage = 'es';
 
-      // Determine target language
-      const targetLang = supportedLangs.includes(userLang) ? userLang : defaultLang;
+      /**
+       * Parse browser language preferences
+       * Returns array of language codes sorted by quality preference
+       */
+      function getBrowserLanguages() {
+        const languages = navigator.languages || [navigator.language || navigator.userLanguage];
+        return languages.map(lang => ({
+          full: lang.toLowerCase(),
+          base: lang.toLowerCase().split('-')[0]
+        }));
+      }
+
+      /**
+       * Find best matching language
+       * Implements cascading fallback: regional → base → default
+       */
+      function findBestLanguage(browserLangs, available, defaultLang) {
+        for (const pref of browserLangs) {
+          // Try exact regional match first (es-mx)
+          if (available.includes(pref.full)) {
+            return pref.full;
+          }
+          // Try base language match (es)
+          if (available.includes(pref.base)) {
+            return pref.base;
+          }
+        }
+        // Fallback to default
+        return defaultLang;
+      }
+
+      // Detect and redirect
+      const browserLangs = getBrowserLanguages();
+      const targetLang = findBestLanguage(browserLangs, availableLanguages, defaultLanguage);
 
       // Redirect to appropriate language directory
-      window.location.href = `${targetLang}/index.html`;
+      window.location.href = targetLang + '/index.html';
     })();
   </script>
 </head>

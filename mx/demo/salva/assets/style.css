@@ -1,6 +1,9 @@
 /**
- * Styles for Los Granainos Restaurant MX Reference Implementation
- * Extracted from index.cog.html for better separation of concerns
+ * Los Granainos Restaurant - N-Language MX Reference Implementation
+ * Shared stylesheet for all language versions
+ *
+ * Architecture: /assets/style.css shared across /es/, /en/, /fr/, etc.
+ * Zero inline CSS - all styles in this single file
  */
 
 /* CSS Reset */
@@ -371,14 +374,14 @@ section {
   gap: 2rem;
   margin-top: 2rem;
   padding: 0;
-  align-items: flex-start; /* Align all stats at top */
-  justify-content: center; /* Center the stats group */
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .stat {
   text-align: center;
   flex: 1;
-  max-width: 200px; /* Limit width for better spacing */
+  max-width: 200px;
 }
 
 .stat-number {
@@ -386,7 +389,7 @@ section {
   font-weight: 700;
   color: var(--accent-coral);
   margin-bottom: 0.5rem;
-  min-height: 3rem; /* Ensure consistent height */
+  min-height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -399,18 +402,18 @@ section {
 }
 
 .stat-blue {
-  color: #0077be !important; /* Blue for 100% */
+  color: #0077be !important;
 }
 
 .stat-stars {
-  font-size: 2rem; /* Smaller to match number height */
+  font-size: 2rem;
   font-weight: 700;
-  color: #6b8e23; /* Olive green for stars */
+  color: #6b8e23;
   margin-bottom: 0.5rem;
-  min-height: 3rem; /* Match stat-number height */
+  min-height: 3rem;
   line-height: 1;
-  letter-spacing: 0.1rem; /* Space out stars evenly */
-  white-space: nowrap; /* Prevent wrapping */
+  letter-spacing: 0.1rem;
+  white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -517,14 +520,14 @@ section {
 /* Contact Section */
 #contacto-es,
 #contact-en {
-  background: var(--bg-cream); /* Light cream background like original */
-  color: var(--dark-gray); /* Dark text */
+  background: var(--bg-cream);
+  color: var(--dark-gray);
   padding: 4rem 3rem;
 }
 
 #contacto-es h2,
 #contact-en h2 {
-  color: var(--soft-blue); /* Blue heading like original */
+  color: var(--soft-blue);
   text-align: center;
   margin-bottom: 2rem;
 }
@@ -551,7 +554,7 @@ section {
 
 .contact-icon {
   font-size: 1.5rem;
-  color: var(--soft-blue); /* Blue icons like original */
+  color: var(--soft-blue);
 }
 
 .contact-details {
@@ -561,12 +564,12 @@ section {
 .contact-label {
   font-weight: 700;
   margin-bottom: 0.25rem;
-  color: var(--dark-gray); /* Dark text */
+  color: var(--dark-gray);
   font-size: 1rem;
 }
 
 .contact-details > div {
-  color: var(--dark-gray); /* Dark text */
+  color: var(--dark-gray);
   font-size: 0.95rem;
   line-height: 1.6;
 }
@@ -827,33 +830,139 @@ footer {
     font-size: 1.25rem;
   }
 
-  /* Mobile navigation */
-  nav {
-    order: 3;
-    width: 100%;
-    padding: 1rem 0 0 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    margin-top: 1rem;
+  /* Mobile navigation - hamburger menu */
+
+  /* Show hamburger button */
+  .nav-hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1001;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: none;
+    background: var(--footer-dark, #1a1a2e);
+    border-radius: 4px;
+    cursor: pointer;
   }
 
-  nav ul {
+  /* CSS-only 3-line icon */
+  .nav-hamburger-icon,
+  .nav-hamburger-icon::before,
+  .nav-hamburger-icon::after {
+    display: block;
+    position: relative;
+    width: 20px;
+    height: 2px;
+    background: var(--white, #fff);
+    border-radius: 2px;
+  }
+
+  .nav-hamburger-icon::before,
+  .nav-hamburger-icon::after {
+    content: '';
+    position: absolute;
+  }
+
+  .nav-hamburger-icon::before { top: -6px; }
+  .nav-hamburger-icon::after { top: 6px; }
+
+  /* Transform to X when expanded */
+  nav[aria-expanded="true"] .nav-hamburger-icon {
+    background: transparent;
+  }
+
+  nav[aria-expanded="true"] .nav-hamburger-icon::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+
+  nav[aria-expanded="true"] .nav-hamburger-icon::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+
+  /* Nav sections - slide-in drawer from RIGHT */
+  .nav-sections {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background: var(--footer-dark, #1a1a2e);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    padding: 4rem 1rem 1rem;
+    overflow-y: auto;
+  }
+
+  nav[aria-expanded="true"] .nav-sections {
+    right: 0;
+  }
+
+  /* Overlay */
+  nav[aria-expanded="true"]::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+
+  /* Stack nav items vertically */
+  .nav-sections ul {
     flex-direction: column;
     gap: 0;
-    text-align: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 
-  nav li {
+  .nav-sections li {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  nav a {
+  .nav-sections a {
     display: block;
-    padding: 0.75rem 0;
-    border-bottom: none;
+    padding: 1rem 0;
+    color: white;
+    text-decoration: none;
   }
 
-  nav a:hover {
+  .nav-sections a:hover {
     background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Language selector in drawer */
+  .nav-language {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .language-select {
+    width: 100%;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    color: white;
+    font-size: 1rem;
+  }
+
+  .language-select option {
+    background: #1a1a2e;
+    color: white;
+  }
+
+  /* Hide desktop language toggle on mobile */
+  .language-toggle {
+    display: none;
   }
 
   .cta-buttons {
@@ -897,6 +1006,58 @@ footer {
 
   .menu-items {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop - hide hamburger, show horizontal nav */
+@media (min-width: 900px) {
+  .nav-hamburger {
+    display: none;
+  }
+
+  .nav-sections {
+    display: flex;
+    align-items: center;
+    position: static;
+    width: auto;
+    max-width: none;
+    height: auto;
+    background: transparent;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .nav-sections ul {
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+  }
+
+  .nav-sections li {
+    border-bottom: none;
+  }
+
+  .nav-sections a {
+    padding: 0.5rem 0;
+  }
+
+  /* Language selector in main nav on desktop */
+  .nav-language {
+    margin-top: 0;
+    margin-left: 2rem;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .language-select {
+    width: auto;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Show desktop language toggle */
+  .language-toggle {
+    display: inline-block;
   }
 }
 

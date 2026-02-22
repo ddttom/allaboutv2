@@ -1,21 +1,22 @@
-# Los Granainos Restaurant - MX Reference Implementation
+# Los Granainos Restaurant - N-Language MX Reference Implementation
 
 **Live Demo:** <https://allabout.network/mx/demo/salva/>
 
-Bilingual (Spanish/English) restaurant website demonstrating MX OS multilingual SEO best practices.
+N-language (Spanish/English) restaurant website demonstrating MX OS multilingual SEO best practices with shared assets architecture.
 
 ---
 
 ## Overview
 
-Los Granainos is a single-language-toggle MX-enhanced reference implementation combining:
+Los Granainos is an n-language MX-enhanced reference implementation combining:
 
+- **N-language architecture** — Shared `/assets/` folder with language-agnostic CSS/JS
 - **Path-based multilingual SEO** — Separate `/es/` and `/en/` directories for proper search engine indexing
 - **Full Schema.org Restaurant markup** — Menu sections, items, opening hours, location
 - **WebMCP tool exposure** — AI agents can interact with menu data and language switching
 - **Interactive Leaflet maps** — OpenStreetMap integration with contact info tooltips
 - **Complete accessibility** — WCAG 2.1 AA compliance
-- **Reginald certification** — Ready for MX registry publication
+- **REGINALD-ready** — Prepared for server-side language redirect at edge layer
 
 ---
 
@@ -23,15 +24,58 @@ Los Granainos is a single-language-toggle MX-enhanced reference implementation c
 
 ```
 salva/
-├── index.html              # Root redirect (language detection)
-├── sitemap.xml             # Multilingual sitemap with hreflang
+├── assets/                 # Shared assets (n-language architecture)
+│   ├── style.css           # Shared CSS (all languages)
+│   └── script.js           # Shared JS (n-language aware)
 ├── es/                     # Spanish version
-│   ├── index.cog.html      # Spanish content (data-lang="es")
-│   └── index.cog.css       # Shared styles
-└── en/                     # English version
-    ├── index.cog.html      # English content (data-lang="en")
-    └── index.cog.css       # Shared styles
+│   └── index.cog.html      # Spanish content (lang="es")
+├── en/                     # English version
+│   └── index.cog.html      # English content (lang="en")
+├── index.html              # Root redirect (Accept-Language detection)
+├── sitemap.xml             # Multilingual sitemap with hreflang
+└── README.md               # This documentation
 ```
+
+---
+
+## N-Language Architecture
+
+### Key Principles
+
+1. **Zero duplication** — CSS and JS in `/assets/` shared across all languages
+2. **N-language support** — Add new languages by creating directory + HTML only
+3. **Language-agnostic code** — JS auto-detects current language from URL path
+4. **No persistence** — Always follows Accept-Language header (GDPR compliant)
+5. **Regional variant cascade** — `es-MX` → `es` → default language
+
+### Shared Assets
+
+**`/assets/style.css`** — Single stylesheet for all language versions:
+
+- CSS variables for consistent theming
+- Responsive breakpoints (mobile-first)
+- Hamburger menu with slide-in drawer
+- Print styles
+
+**`/assets/script.js`** — N-language aware JavaScript:
+
+- Auto-detects current language from URL path (`/es/`, `/en/`, `/fr/`)
+- Language selector works with any number of languages
+- WebMCP tool definitions
+- Hamburger menu logic
+- Smooth scroll for anchor links
+
+### Adding a New Language
+
+1. Create new directory: `mkdir fr/`
+2. Copy HTML template: `cp en/index.cog.html fr/index.cog.html`
+3. Update content to French
+4. Update `lang` attribute: `<html lang="fr">`
+5. Add option to language selector in HTML
+6. Update `index.html` available languages array
+7. Update `sitemap.xml` with new language URLs
+
+No CSS or JS changes required.
 
 ---
 
@@ -43,6 +87,21 @@ salva/
 - **English version:** `/mx/demo/salva/en/index.html`
 - **Root redirect:** `/mx/demo/salva/index.html` detects browser language
 
+### Accept-Language Detection
+
+Root `index.html` implements cascading language detection:
+
+```javascript
+// Regional variant cascade: es-MX → es → default
+function findBestLanguage(browserLangs, available, defaultLang) {
+  for (const pref of browserLangs) {
+    if (available.includes(pref.full)) return pref.full;  // es-mx
+    if (available.includes(pref.base)) return pref.base;  // es
+  }
+  return defaultLang;
+}
+```
+
 ### hreflang Configuration
 
 Both language versions include proper hreflang tags:
@@ -53,46 +112,43 @@ Both language versions include proper hreflang tags:
 <link rel="alternate" hreflang="x-default" href="https://allabout.network/mx/demo/salva/es/index.html" />
 ```
 
-### Sitemap
+### REGINALD Edge Redirect
 
-`sitemap.xml` includes both language versions with bidirectional hreflang annotations for proper search engine discovery.
+When deployed with REGINALD, server-side language detection happens at Cloudflare Workers level:
+
+- Eliminates flash of wrong content
+- Proper SEO for crawlers without JS execution
+- <10ms added latency
+- Client-side `index.html` serves as fallback
+
+See: `packages/mx-collaboration/proposals/reginald-language-redirect.md`
 
 ---
 
 ## Features
 
-### Content Presentation
+### Mobile Navigation (Hamburger Menu)
 
-- Single-language display (one language visible at a time)
-- Language toggle button navigates between `/es/` and `/en/` URLs
-- Both versions contain identical bilingual content
-- CSS controls visibility based on `data-lang` attribute on `<html>` element
+- CSS-only 3-line icon (::before/::after pseudo-elements)
+- Slide-in drawer from right (300ms transition)
+- Overlay click to close
+- Escape key to close
+- Body scroll lock when open
+- ARIA states for accessibility
 
-### Navigation
+### Language Selector
 
-Full navigation menu with sections:
-
-- **Inicio** (Home) — Hero section with restaurant overview
-- **Menú** (Menu) — Featured menu items
-- **Carta Completa** (Full Menu) — Complete categorized menu
-- **Nosotros** (About) — Restaurant history and story
-- **Contacto** (Contact) — Map, address, hours, phone
-
-### Schema.org Markup
-
-Complete Restaurant schema with:
-
-- Menu sections (Starters, Mains, Desserts, Drinks)
-- Menu items with descriptions and prices
-- Geographic coordinates
-- Opening hours
-- Contact information
+- `<select>` dropdown (n-language support, not binary toggle)
+- Inside drawer on mobile, in nav on desktop
+- Auto-selects current language based on path
+- Navigates to equivalent page in selected language
 
 ### WebMCP Tools
 
 AI agents can interact via WebMCP:
 
-- `toggle-language` — Switch between Spanish/English versions
+- `toggle-language` — Switch to any available language
+- `get-language-info` — Get current and available languages
 - `menu-query` — Query menu items by category
 - `reservation-info` — Get contact and booking information
 - `location-info` — Get geographic location data
@@ -113,7 +169,7 @@ Pixel-perfect recreation based on Playwright capture of original site:
 ### Responsive Design
 
 - Mobile-first approach
-- Collapsible navigation for small screens
+- Hamburger navigation for screens < 900px
 - Touch-friendly interactive elements
 - Optimized for all device sizes
 
@@ -127,7 +183,7 @@ Pixel-perfect recreation based on Playwright capture of original site:
 2. **Language detection:** Root `index.html` redirects based on browser language
 3. **Manual selection:** Visit `/es/index.html` or `/en/index.html` directly
 
-### Testing Multilingual SEO
+### Testing
 
 ```bash
 # Validate hreflang tags
@@ -139,68 +195,27 @@ curl https://allabout.network/mx/demo/salva/sitemap.xml
 # Test language detection redirect
 curl -L https://allabout.network/mx/demo/salva/
 
-# Validate with Google tools
-# https://search.google.com/test/rich-results
-# https://technicalseo.com/tools/hreflang/
+# Test with specific Accept-Language header
+curl -H "Accept-Language: en-US,en;q=0.9" -L https://allabout.network/mx/demo/salva/
 ```
-
----
-
-## Migration Pattern
-
-This implementation demonstrates the migration from hash-based to path-based language routing:
-
-### Before (Hash-Based) ❌
-
-```
-/restaurant.html#lang=es
-/restaurant.html#lang=en
-```
-
-**Problem:** Search engines ignore hash fragments. Both URLs are treated as one page.
-
-### After (Path-Based) ✅
-
-```
-/es/restaurant.html
-/en/restaurant.html
-```
-
-**Benefit:** Search engines index separately, proper language targeting, better rankings.
-
----
-
-## Files Modified
-
-**From original single-file hash-based version:**
-
-- Frontmatter: Updated `languages` to structured format with URLs and `hreflang` array
-- HTML: Set `lang` and `data-lang` attributes appropriately for each language version
-- JavaScript: Removed hash-based toggling, replaced with path-based navigation
-- WebMCP: Updated `toggle-language` tool to navigate between URLs
-
-**New files:**
-
-- `index.html` — Root redirect with language detection
-- `sitemap.xml` — Multilingual sitemap with hreflang annotations
-- `README.md` — This documentation
-
----
-
-## Related Documentation
-
-- **[MULTILINGUAL-SEO-GUIDE.md](../../../hub-content/mx-reference-implementations/_templates/MULTILINGUAL-SEO-GUIDE.md)** — Comprehensive multilingual SEO reference
-- **[TEMPLATE-UPDATE-NOTES.md](../../../hub-content/mx-reference-implementations/_templates/TEMPLATE-UPDATE-NOTES.md)** — Migration implementation guide
-- **[Cogify Manual](../../../hub-content/MX-Canon/MX-Maxine-Lives/manuals/manual-cogify.cog.md)** — Multilingual best practices section
 
 ---
 
 ## Version History
 
+- **v3.0.0 (2026-02-22)** — N-language architecture with shared assets
 - **v2.2.0 (2026-02-21)** — Path-based multilingual SEO implementation
 - **v2.1.0 (2026-02-20)** — Single-language toggle with hash-based routing
 - **v2.0.0 (2026-02-20)** — Multi-page consolidation with Playwright accuracy
 - **v1.0.0** — Original site extraction
+
+---
+
+## Related Documentation
+
+- **[REGINALD Language Redirect Proposal](../../../packages/mx-collaboration/proposals/reginald-language-redirect.md)** — Server-side language detection
+- **[Cogify Manual](../../../hub-content/MX-Canon/MX-Cog-Registry/cogs/cogify-this.cog.md)** — N-language architecture documentation
+- **[N-Lang Business Template](../../../hub-content/mx-reference-implementations/_templates/n-lang-business-template.cog.html)** — Template for n-language sites
 
 ---
 
