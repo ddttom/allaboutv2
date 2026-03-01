@@ -55,4 +55,4 @@ status: active
 | :----------- | :----------------------- |
 | title        | AllAbout Platform FAQ    |
 | version      | 3.1                      |
-| last_updated | 2025-11-28               |
+| lastUpdated | 2025-11-28               |

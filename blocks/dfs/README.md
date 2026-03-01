@@ -62,7 +62,7 @@ Add an optional metadata table at the end of your document to display version in
 `| metadata     |                    |`
 `| title        | Product FAQ v2.0   |`
 `| version      | 2.0                |`
-`| last_updated | 2025-11-28         |`
+`| lastUpdated | 2025-11-28         |`
 
 ## 3. Usage Examples
 
@@ -522,7 +522,7 @@ Search term highlighting only applies to visible/matched FAQ items, not all cont
 **Metadata:**
 
 - Always include metadata table for versioned documentation
-- Update last_updated date when making changes
+- Update lastUpdated date when making changes
 - Increment version number for significant updates
 
 ### For Developers
