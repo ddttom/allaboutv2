@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "bdr-002-deliverable-rename",
   "version": "1.0",
-  "description": "Business decision to rename mx.createOutputPrompt to mx.deliverable — business language replaces AI jargon",
+  "description": "Business decision to rename createOutputPrompt to deliverable — business language replaces AI jargon",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "tom.cranstoun@gmail.com",
   "license": "MIT",

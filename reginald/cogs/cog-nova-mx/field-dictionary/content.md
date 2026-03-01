@@ -126,7 +126,7 @@ namespace-policy:
 
       - standard: "HTML dataset API"
         pattern: "data-user-name (HTML) → dataset.userName (JS)"
-        mx-applies: "mx:content-type (HTML) → mx.contentType (YAML)"
+        mx-applies: "mx:content-type (HTML) → contentType (YAML under mx:)"
 
     enforcement-levels:
       mandatory:
@@ -159,9 +159,9 @@ overlap-resolution:
     overlap: false
     reason: "Different concerns. keyFields is a ROUTING.cog.md route hint — it tells agents which YAML fields matter most when reading files in that folder. tags is for discovery. keyFields says 'look at these fields', tags says 'find me by these terms'."
 
-  - fields: [audience, mx.audience.primary]
+  - fields: [audience, audience.primary]
     winner: audience
-    reason: "audience is the canonical top-level field. mx.audience.primary is a legacy namespace variant from folder metadata. Use audience."
+    reason: "audience is the canonical top-level field. audience.primary is a legacy namespace variant from folder metadata. Use audience."
 
   - fields: [created, date, creation-date]
     winner: created
@@ -504,15 +504,15 @@ fields:
     profile: core
     required: optional
 
-  - name: mx.runbook
+  - name: runbook
     type: string
-    definition: "Operational instructions for agents. Describes how to interpret and act on this document."
+    definition: "Operational instructions for agents. Describes how to interpret and act on this document. Lives under the mx: object in YAML."
     status: canonical
     profile: core
 
-  - name: mx.contentType
+  - name: contentType
     type: string
-    definition: "Machine-readable content type classification."
+    definition: "Machine-readable content type classification. Lives under the mx: object in YAML."
     status: canonical
     profile: core
 

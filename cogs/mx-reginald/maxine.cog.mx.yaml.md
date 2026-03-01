@@ -32,7 +32,7 @@ mx:
 
   lifecycle:
     created: "2026-02-08"
-    last_updated: "2026-02-08"
+    lastUpdated: "2026-02-08"
     reviewCycle: "monthly"
     updateTriggers:
       - "partnership milestones change"

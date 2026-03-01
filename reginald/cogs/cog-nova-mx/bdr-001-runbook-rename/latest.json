@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "bdr-001-runbook-rename",
   "version": "1.0",
-  "description": "Business decision to rename mx.promptingInstruction to mx.runbook — operations language replaces AI jargon",
+  "description": "Business decision to rename promptingInstruction to runbook — operations language replaces AI jargon",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "tom.cranstoun@gmail.com",
   "license": "MIT",

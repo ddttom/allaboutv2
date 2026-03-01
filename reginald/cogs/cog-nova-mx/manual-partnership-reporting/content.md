@@ -390,7 +390,7 @@ ALL reports follow this structure (from GEO sample reports):
 
 ```markdown
 ---
-[YAML frontmatter with mx.runbook: "partnership tone guidance"]
+[YAML frontmatter with runbook: "partnership tone guidance" under mx:]
 ---
 
 # [Client Name]: MX Analysis & Partnership Opportunity
@@ -557,7 +557,7 @@ Before sending ANY report, verify:
 
 ### ✅ Structure Checklist
 
-- [ ] YAML frontmatter includes `mx.runbook` with partnership tone guidance
+- [ ] YAML frontmatter includes `runbook` (under `mx:`) with partnership tone guidance
 - [ ] Partnership Context section present (explains why report exists)
 - [ ] Executive Summary highlights strengths first
 - [ ] Scores table shows benchmarks (not just raw scores)

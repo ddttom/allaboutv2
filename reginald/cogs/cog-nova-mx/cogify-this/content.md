@@ -118,10 +118,10 @@ mx:
     - tags: array of keywords
     - audience: tech|business|both|humans
 
-    MX-specific fields:
-    - mx.runtime: browser|node|runbook|shell
-    - mx.runbook: usage instructions (for action-docs)
-    - mx.deliverable: output specification (for generators)
+    MX-specific fields (under mx: in YAML):
+    - runtime: browser|node|runbook|shell
+    - runbook: usage instructions (for action-docs)
+    - deliverable: output specification (for generators)
 
     Advanced fields:
     - builds-on: dependency array
@@ -470,7 +470,7 @@ Plain markdown with basic frontmatter
 
 # Cogification process:
 1. Enhance YAML frontmatter
-2. Add MX-specific fields (mx.runbook, mx.deliverable)
+2. Add MX-specific fields (runbook, deliverable under mx:)
 3. Add builds-on dependencies
 4. Add certification metadata
 5. Validate markdown
@@ -578,7 +578,7 @@ Enhanced markdown with comprehensive metadata
 
 **Features:**
 
-- mx.runbook field
+- runbook field (under mx:)
 - Action definitions
 - Input/output schemas
 - Example usage

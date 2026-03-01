@@ -1,7 +1,7 @@
 ---
-title: "BDR: Rename mx.promptingInstruction to mx.runbook"
+title: "BDR: Rename promptingInstruction to runbook"
 name: bdr-001-runbook-rename
-description: "Business decision to rename mx.promptingInstruction to mx.runbook — operations language replaces AI jargon"
+description: "Business decision to rename promptingInstruction to runbook — operations language replaces AI jargon"
 version: "1.0"
 created: 2026-02-15
 author: Tom Cranstoun and Maxine
@@ -11,21 +11,21 @@ confidentiality: public
 tags: [metadata, terminology, business-language, runbook]
 bdr:
   number: 1
-  title: "Rename mx.promptingInstruction to mx.runbook"
+  title: "Rename promptingInstruction to runbook"
   status: accepted
   date: 2026-02-15
-  context: "The mx.promptingInstruction field in YAML frontmatter uses AI jargon. Humans are nervous of AI terminology. Business audiences read 'prompting instruction' and think 'this is an AI thing, not for me.'"
-  decision: "Rename the field to mx.runbook. Rewrite all values to read like operations runbooks, not AI prompts."
-  consequences: "204 files renamed across the hub. 13 files had jargon values rewritten. All future cogs use mx.runbook. The cog spec must be updated to reflect the new field name."
+  context: "The promptingInstruction field in YAML frontmatter uses AI jargon. Humans are nervous of AI terminology. Business audiences read 'prompting instruction' and think 'this is an AI thing, not for me.'"
+  decision: "Rename the field to runbook. Rewrite all values to read like operations runbooks, not AI prompts."
+  consequences: "204 files renamed across the hub. 13 files had jargon values rewritten. All future cogs use runbook. The cog spec must be updated to reflect the new field name."
 mx:
-  runbook: "This is a business decision record. It documents the rationale for renaming mx.promptingInstruction to mx.runbook across the entire MX ecosystem."
+  runbook: "This is a business decision record. It documents the rationale for renaming promptingInstruction to runbook across the entire MX ecosystem."
 ---
 
-# BDR 001: Rename mx.promptingInstruction to mx.runbook
+# BDR 001: Rename promptingInstruction to runbook
 
 ## Context
 
-Every cog in the MX ecosystem carries a `mx.promptingInstruction` field in its YAML frontmatter. The field tells readers how to handle the document - what to do with it, when to read it, how to apply it.
+Every cog in the MX ecosystem carries a `promptingInstruction` field in its YAML frontmatter. The field tells readers how to handle the document - what to do with it, when to read it, how to apply it.
 
 The problem: "promptingInstruction" is AI jargon. It sounds like a technical directive for a language model. When a business leader, investor, or CMS practitioner sees it in a YAML block, they read "this is AI plumbing" and disengage.
 
@@ -56,10 +56,10 @@ The problem: "promptingInstruction" is AI jargon. It sounds like a technical dir
 
 ## Consequences
 
-- All 204 files in the hub now use `mx.runbook` instead of `mx.promptingInstruction`
+- All 204 files in the hub now use `runbook` instead of `promptingInstruction`
 - The cog unified spec needs updating to reflect the new field name
 - The field dictionary (FDR) needs the entry updated
-- Future sessions will use `mx.runbook` by default (recorded in MEMORY.md)
+- Future sessions will use `runbook` by default (recorded in MEMORY.md)
 - Business audiences see familiar operations language, not AI jargon
 - The rename scripts remain in `scripts/` for reference and for applying to other repos
 

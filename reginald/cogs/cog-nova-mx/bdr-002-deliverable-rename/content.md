@@ -1,7 +1,7 @@
 ---
-title: "BDR: Rename mx.createOutputPrompt to mx.deliverable"
+title: "BDR: Rename createOutputPrompt to deliverable"
 name: bdr-002-deliverable-rename
-description: "Business decision to rename mx.createOutputPrompt to mx.deliverable — business language replaces AI jargon"
+description: "Business decision to rename createOutputPrompt to deliverable — business language replaces AI jargon"
 version: "1.0"
 created: 2026-02-15
 author: Tom Cranstoun and Maxine
@@ -11,21 +11,21 @@ confidentiality: public
 tags: [metadata, terminology, business-language, deliverable]
 bdr:
   number: 2
-  title: "Rename mx.createOutputPrompt to mx.deliverable"
+  title: "Rename createOutputPrompt to deliverable"
   status: accepted
   date: 2026-02-15
-  context: "The mx.createOutputPrompt field uses AI jargon ('prompt'). Humans are nervous of AI terminology. Companion rename to BDR-001 (promptingInstruction to runbook)."
-  decision: "Rename the field to mx.deliverable. 'Deliverable' is a business term everyone understands — it's what gets produced."
-  consequences: "33 occurrences renamed across 11 files. All future cogs use mx.deliverable. The cog spec must be updated to reflect the new field name."
+  context: "The createOutputPrompt field uses AI jargon ('prompt'). Humans are nervous of AI terminology. Companion rename to BDR-001 (promptingInstruction to runbook)."
+  decision: "Rename the field to deliverable. 'Deliverable' is a business term everyone understands — it's what gets produced."
+  consequences: "33 occurrences renamed across 11 files. All future cogs use deliverable. The cog spec must be updated to reflect the new field name."
 mx:
-  runbook: "This is a business decision record. It documents the rationale for renaming mx.createOutputPrompt to mx.deliverable across the MX ecosystem."
+  runbook: "This is a business decision record. It documents the rationale for renaming createOutputPrompt to deliverable across the MX ecosystem."
 ---
 
-# BDR 002: Rename mx.createOutputPrompt to mx.deliverable
+# BDR 002: Rename createOutputPrompt to deliverable
 
 ## Context
 
-The companion field to `mx.runbook` was called `mx.createOutputPrompt`. It contains generation instructions — what to produce, where to put it, what quality criteria to apply.
+The companion field to `runbook` was called `createOutputPrompt`. It contains generation instructions — what to produce, where to put it, what quality criteria to apply.
 
 The problem is the same as BDR-001: "createOutputPrompt" is AI jargon. "Output prompt" sounds like a directive for a language model. Business audiences see it and disengage.
 
@@ -62,9 +62,9 @@ Also updated remaining "prompting instructions" prose to "runbook" language in b
 
 ## Consequences
 
-- All active files now use `mx.deliverable` instead of `mx.createOutputPrompt`
+- All active files now use `deliverable` instead of `createOutputPrompt`
 - The cog unified spec needs updating to reflect the new field name (reminder filed)
-- Future sessions will use `mx.deliverable` by default (recorded in MEMORY.md)
+- Future sessions will use `deliverable` by default (recorded in MEMORY.md)
 - Business audiences see familiar project language, not AI jargon
 - The two core MX metadata fields are now both business terms: `runbook` + `deliverable`
 

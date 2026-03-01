@@ -15,7 +15,7 @@ COGs make content readable by both humans and AI agents. The YAML is for machine
 
 | Template | Use For | Key Fields |
 |----------|---------|------------|
-| [landing-page.cog.template.md](landing-page.cog.template.md) | Marketing pages, product intros, coming-soon pages | `mx.runbook`, `subject.scope` |
+| [landing-page.cog.template.md](landing-page.cog.template.md) | Marketing pages, product intros, coming-soon pages | `runbook` (under `mx:`), `subject.scope` |
 | [eds-block.cog.template.md](eds-block.cog.template.md) | EDS blocks documentation | `block.content_model`, `block.decoration` |
 | [documentation.cog.template.md](documentation.cog.template.md) | Technical docs, guides, specifications | `documentation.type`, `documentation.audience` |
 
