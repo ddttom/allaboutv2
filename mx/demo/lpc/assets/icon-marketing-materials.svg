@@ -1,0 +1,26 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .primary { fill: #1a472a; }
+      .secondary { fill: #c9a961; }
+      .accent { fill: #d64545; }
+    </style>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" class="secondary" opacity="0.2"/>
+
+  <!-- Leaflets/flyers fanned out -->
+  <rect x="35" y="30" width="30" height="42" rx="2" class="primary" transform="rotate(-15 50 51)"/>
+  <rect x="35" y="30" width="30" height="42" rx="2" class="secondary" transform="rotate(0 50 51)"/>
+  <rect x="35" y="30" width="30" height="42" rx="2" class="accent" transform="rotate(15 50 51)"/>
+
+  <!-- Content lines on center flyer -->
+  <line x1="40" y1="38" x2="55" y2="38" stroke="#ffffff" stroke-width="1.5"/>
+  <line x1="40" y1="43" x2="60" y2="43" stroke="#ffffff" stroke-width="1"/>
+  <line x1="40" y1="47" x2="58" y2="47" stroke="#ffffff" stroke-width="1"/>
+  <line x1="40" y1="51" x2="60" y2="51" stroke="#ffffff" stroke-width="1"/>
+
+  <!-- Label -->
+  <text x="50" y="88" text-anchor="middle" font-family="Arial" font-size="9" fill="#1a472a" font-weight="bold">MARKETING</text>
+</svg>

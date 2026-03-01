@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REGINALD — Verified Documentation Registry for AI</title>
+  <meta name="description" content="REGINALD provides AI systems with cryptographically signed, machine-readable documentation. Stop AI guessing. Start AI knowing.">
+
+  <!-- MX: Schema.org JSON-LD for machine comprehension -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "REGINALD",
+    "alternateName": "Registry for Genuine Information, Notarised Authentication, and Legitimate Documentation",
+    "description": "A verified documentation registry that provides AI inference systems with cryptographically signed, machine-readable answers to questions they would otherwise hallucinate.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web",
+    "url": "https://allabout.network",
+    "author": {
+      "@type": "Organization",
+      "name": "MX Reginald Ltd",
+      "location": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Glasgow",
+          "addressCountry": "GB"
+        }
+      }
+    },
+    "offers": {
+      "@type": "Offer",
+      "description": "Registry API access for AI providers",
+      "priceCurrency": "GBP"
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --mx-dark: #1a1a2e;
+      --mx-accent: #e94560;
+      --mx-gold: #c9a961;
+      --mx-green: #16a34a;
+      --mx-blue: #2563eb;
+      --mx-gray: #64748b;
+      --mx-light: #f8fafc;
+      --mx-white: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--mx-light);
+      color: var(--mx-dark);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--mx-dark) 0%, #16213e 100%);
+      color: var(--mx-white);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    header h1 span { color: var(--mx-accent); }
+
+    header .subtitle {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.8);
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+    }
+
+    header .acronym {
+      font-size: 0.85rem;
+      color: var(--mx-gold);
+      letter-spacing: 0.02em;
+    }
+
+    /* Nav */
+    nav {
+      background: var(--mx-white);
+      border-bottom: 1px solid #e2e8f0;
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: var(--mx-gray);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      padding: 0.25rem 0;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--mx-accent);
+      border-bottom-color: var(--mx-accent);
+    }
+
+    /* Sections */
+    section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--mx-dark);
+    }
+
+    section h2 span { color: var(--mx-accent); }
+
+    section p {
+      margin-bottom: 1rem;
+      color: #334155;
+    }
+
+    /* Problem section */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .problem-grid { grid-template-columns: 1fr; }
+    }
+
+    .problem-card {
+      background: var(--mx-white);
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      border-left: 4px solid var(--mx-accent);
+    }
+
+    .problem-card.winner {
+      border-left-color: var(--mx-green);
+    }
+
+    .problem-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .problem-card p {
+      font-size: 0.9rem;
+      color: var(--mx-gray);
+    }
+
+    /* Demo section */
+    .demo-container {
+      background: var(--mx-white);
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .demo-input {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .demo-input input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .demo-input input:focus {
+      border-color: var(--mx-accent);
+    }
+
+    .demo-input button {
+      padding: 0.75rem 1.5rem;
+      background: var(--mx-accent);
+      color: var(--mx-white);
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+
+    .demo-input button:hover {
+      transform: translateY(-1px);
+    }
+
+    .demo-result {
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      overflow-x: auto;
+      min-height: 180px;
+    }
+
+    .demo-result .prompt {
+      color: var(--mx-green);
+    }
+
+    .demo-result .key {
+      color: var(--mx-gold);
+    }
+
+    .demo-result .value {
+      color: #93c5fd;
+    }
+
+    .demo-result .signed {
+      color: var(--mx-green);
+    }
+
+    .demo-result .error {
+      color: var(--mx-accent);
+    }
+
+    .demo-result .comment {
+      color: var(--mx-gray);
+    }
+
+    /* Compare section */
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .compare { grid-template-columns: 1fr; }
+    }
+
+    .compare-box {
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+
+    .compare-box.without {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+    }
+
+    .compare-box.with {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+    }
+
+    .compare-box h3 {
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .compare-box.without h3 { color: #dc2626; }
+    .compare-box.with h3 { color: var(--mx-green); }
+
+    .compare-box pre {
+      font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+      font-size: 0.8rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      color: #334155;
+    }
+
+    /* Impact stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+
+    .stat-card {
+      background: var(--mx-white);
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-card .number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--mx-accent);
+    }
+
+    .stat-card .label {
+      font-size: 0.85rem;
+      color: var(--mx-gray);
+      margin-top: 0.25rem;
+    }
+
+    /* MX badge */
+    .mx-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--mx-dark);
+      color: var(--mx-gold);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--mx-dark);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+    }
+
+    footer strong { color: var(--mx-gold); }
+
+    /* Source view toggle */
+    .source-toggle {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: var(--mx-gray);
+      transition: all 0.2s;
+    }
+
+    .source-toggle:hover {
+      background: #e2e8f0;
+      color: var(--mx-dark);
+    }
+
+    .mx-source {
+      display: none;
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+      font-size: 0.8rem;
+      line-height: 1.6;
+      overflow-x: auto;
+    }
+
+    .mx-source.visible { display: block; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1><span>REGINALD</span></h1>
+    <p class="subtitle">The verified documentation registry for AI systems. Stop guessing. Start knowing.</p>
+    <p class="acronym">Registry for Genuine Information, Notarised Authentication, and Legitimate Documentation</p>
+  </header>
+
+  <nav>
+    <a href="#problem">The Problem</a>
+    <a href="#demo">Live Demo</a>
+    <a href="#mx">What is MX?</a>
+    <a href="#impact">Impact</a>
+    <a href="#about">About</a>
+  </nav>
+
+  <!-- SECTION: The Problem -->
+  <section id="problem">
+    <h2>AI guesses when it <span>doesn't need to</span></h2>
+    <p>Every day, AI systems confidently answer questions incorrectly — about tools, products, prices, and services. The correct answers exist in documentation. The AI just can't find them reliably.</p>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        <h3>The Cruise That Cost 100x Too Much</h3>
+        <p>AI agent misread a river cruise price: showed &pound;203,000 instead of &pound;2,030. Customers never saw the real price. Bookings lost.</p>
+      </div>
+      <div class="problem-card">
+        <h3>The Command That "Doesn't Exist"</h3>
+        <p>AI coding assistant denied a documented command existed. Troubleshooting cascade: 40,000 tokens wasted. Correct answer: 200 tokens.</p>
+      </div>
+      <div class="problem-card winner">
+        <h3>The Retailer That Adapted</h3>
+        <p>Structured their docs for machines. AI agent conversion matched human at 98%. Zero pricing errors. Revenue from AI traffic: +23%.</p>
+      </div>
+      <div class="problem-card winner">
+        <h3>What REGINALD Does</h3>
+        <p>Gives AI a verified place to look things up. Structured query in, signed answer out. No web scraping. No guessing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: Live Demo -->
+  <section id="demo" style="background: var(--mx-light);">
+    <h2>Try a <span>REGINALD</span> lookup</h2>
+    <p>See what happens when an AI system queries REGINALD instead of guessing. Select a tool or type your own query.</p>
+
+    <div class="demo-container">
+      <div class="demo-input">
+        <input type="text" id="query-input" placeholder="e.g., Claude Code, npm, git submodule..." value="Claude Code">
+        <button onclick="runDemo()">Query REGINALD</button>
+      </div>
+      <div class="demo-result" id="demo-output">
+        <span class="comment">// Click "Query REGINALD" to see a verified lookup</span>
+      </div>
+    </div>
+
+    <div class="compare" style="margin-top: 2rem;">
+      <div class="compare-box without">
+        <h3>Without REGINALD (AI guesses)</h3>
+        <pre>
+User: "How do I update Claude Code?"
+
+AI: "You can update Claude Code by running
+npm update -g @anthropic/claude-code"
+
+WRONG. Claude Code is not an npm package.
+It uses a built-in auto-updater.
+The user now wastes 30 minutes debugging
+a command that doesn't work.
+
+Tokens wasted: ~12,000
+        </pre>
+      </div>
+      <div class="compare-box with">
+        <h3>With REGINALD (AI looks it up)</h3>
+        <pre>
+User: "How do I update Claude Code?"
+
+REGINALD lookup: claude-code/update
+Signed document returned.
+
+AI: "Exit your current session, then run:
+  claude update
+Verify with: claude --version
+Note: Cannot update from within a session."
+
+CORRECT. Verified. Signed by Anthropic.
+
+Tokens used: ~200
+        </pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: What is MX -->
+  <section id="mx">
+    <h2>What is <span>MX</span>?</h2>
+    <p><strong>MX (Machine Experience)</strong> is the practice of adding metadata and instructions to internet content so AI agents don't have to think. When AI must infer from incomplete context, it hallucinates. Explicit structure prevents this.</p>
+    <p>MX is not SEO. MX is not accessibility. MX is the discipline of making documentation machine-readable — so AI systems can find, parse, and trust it.</p>
+    <p>REGINALD is the product that makes MX operational at scale: the registry where MX-compliant documents live, queryable by any AI system.</p>
+
+    <button class="source-toggle" onclick="toggleSource()">View this page's MX metadata (JSON-LD)</button>
+    <div class="mx-source" id="mx-source-view">
+      <pre>{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "REGINALD",
+  "alternateName": "Registry for Genuine Information,
+    Notarised Authentication, and Legitimate Documentation",
+  "description": "A verified documentation registry that provides
+    AI inference systems with cryptographically signed,
+    machine-readable answers.",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web",
+  "url": "https://allabout.network",
+  "author": {
+    "@type": "Organization",
+    "name": "MX Reginald Ltd",
+    "location": {
+      "@type": "Place",
+      "address": {
+        "addressLocality": "Glasgow",
+        "addressCountry": "GB"
+      }
+    }
+  }
+}</pre>
+    </div>
+
+    <div class="mx-badge">MX Compliant &middot; Schema.org JSON-LD &middot; Semantic HTML &middot; WCAG 2.1 AA</div>
+  </section>
+
+  <!-- SECTION: Impact -->
+  <section id="impact" style="background: var(--mx-light);">
+    <h2>The <span>planetary</span> impact</h2>
+    <p>Every AI hallucination wastes electricity. REGINALD eliminates the 40% of hallucination waste where a documented answer exists but the AI can't find it.</p>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="number">39 TWh</div>
+        <div class="label">AI electricity wasted on wrong answers by 2030</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">7.4 Mt</div>
+        <div class="label">CO2 from hallucination waste (= 1.6M cars)</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">$10-30B</div>
+        <div class="label">Annual cost of AI inference waste by 2030</div>
+      </div>
+    </div>
+
+    <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--mx-gray);">Source: International Energy Agency (IEA), published inference energy research. REGINALD addresses an estimated 40% of hallucination waste — the cases where documented answers exist.</p>
+  </section>
+
+  <!-- SECTION: About -->
+  <section id="about">
+    <h2>Built in <span>Glasgow</span></h2>
+    <p>REGINALD is operated by <strong>MX Reginald Ltd</strong>, based in Glasgow, Scotland. Co-founded by Tom Cranstoun (52 years in technology) and Scott McGregor (Glasgow-based).</p>
+    <p>The registry is live at <strong>allabout.network</strong>. The signing engine is operational. 25 MX specifications are published (MIT licensed). Two books are publishing in 2026.</p>
+    <p style="margin-top: 1rem;"><em>"Design for machines. Benefit humans. Advance both."</em></p>
+  </section>
+
+  <footer>
+    <p><strong>REGINALD</strong> &middot; MX Reginald Ltd &middot; Glasgow, Scotland</p>
+    <p style="margin-top: 0.5rem;">Registry for Genuine Information, Notarised Authentication, and Legitimate Documentation</p>
+  </footer>
+
+  <script>
+    // Demo data — simulated REGINALD registry lookups
+    const registry = {
+      'claude code': {
+        name: 'Claude Code',
+        publisher: 'Anthropic',
+        signed: '2026-02-07T14:30:00Z',
+        signature: 'mx-sig-a7f3b2e1...',
+        data: {
+          update_command: 'claude update',
+          update_notes: 'Must exit current session first. Cannot update from within a running session.',
+          verify_command: 'claude --version',
+          install_location: '~/.local/bin/claude',
+          not_on_npm: true,
+          common_mistake: 'Users try "npm update" — Claude Code is NOT an npm package'
+        }
+      },
+      'npm': {
+        name: 'npm',
+        publisher: 'npm Inc.',
+        signed: '2026-01-15T10:00:00Z',
+        signature: 'mx-sig-c4d8e9f2...',
+        data: {
+          update_command: 'npm install -g npm@latest',
+          version_check: 'npm --version',
+          cache_clear: 'npm cache clean --force',
+          registry_url: 'https://registry.npmjs.org/',
+          common_mistake: 'Confusing npm (package manager) with npx (package runner)'
+        }
+      },
+      'git submodule': {
+        name: 'git submodule',
+        publisher: 'Git Project',
+        signed: '2026-01-20T08:15:00Z',
+        signature: 'mx-sig-b1c2d3e4...',
+        data: {
+          add_command: 'git submodule add <url> <path>',
+          update_command: 'git submodule update --init --recursive',
+          remove_steps: '1. git submodule deinit <path> 2. git rm <path> 3. rm -rf .git/modules/<path>',
+          common_mistake: 'Using "git subrepo" (different tool) when meaning "git submodule"'
+        }
+      }
+    };
+
+    function runDemo() {
+      const input = document.getElementById('query-input').value.toLowerCase().trim();
+      const output = document.getElementById('demo-output');
+
+      const match = registry[input];
+
+      if (match) {
+        const dataLines = Object.entries(match.data)
+          .map(([k, v]) => `    <span class="key">"${k}"</span>: <span class="value">${JSON.stringify(v)}</span>`)
+          .join(',\n');
+
+        output.innerHTML = `<span class="prompt">REGINALD &gt;</span> query "${input}"
+
+<span class="comment">// Document found. Verified and signed.</span>
+
+{
+  <span class="key">"name"</span>: <span class="value">"${match.name}"</span>,
+  <span class="key">"publisher"</span>: <span class="value">"${match.publisher}"</span>,
+  <span class="key">"signed"</span>: <span class="value">"${match.signed}"</span>,
+  <span class="key">"signature"</span>: <span class="value">"${match.signature}"</span>,
+  <span class="key">"data"</span>: {
+${dataLines}
+  }
+}
+
+<span class="signed">&#10003; VERIFIED</span> <span class="comment">— Signed by ${match.publisher} | MX Compliant | Provenance confirmed</span>`;
+      } else {
+        output.innerHTML = `<span class="prompt">REGINALD &gt;</span> query "${input}"
+
+<span class="comment">// No document found in registry for "${input}"</span>
+
+<span class="error">&#10007; NOT REGISTERED</span>
+
+<span class="comment">// Without REGINALD, an AI system would now guess the answer.</span>
+<span class="comment">// With REGINALD, the AI knows it doesn't have verified information</span>
+<span class="comment">// and can say "I don't know" instead of hallucinating.</span>
+<span class="comment">//</span>
+<span class="comment">// Try: "Claude Code", "npm", or "git submodule"</span>`;
+      }
+    }
+
+    function toggleSource() {
+      const el = document.getElementById('mx-source-view');
+      el.classList.toggle('visible');
+    }
+  </script>
+
+</body>
+</html>

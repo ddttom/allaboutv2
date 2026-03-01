@@ -1,0 +1,29 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "mx-boot",
+  "version": "1.0",
+  "description": "The MX OS bootstrapper. Takes any machine from zero to operational — checks prerequisites, installs dependencies, configures the environment, initialises the session, and reports status. Three entry points: INSTALLME action cog (bare metal), npm run boot (Node available), /mx-boot skill (session init).",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "boot",
+    "bootstrap",
+    "install",
+    "preflight",
+    "init",
+    "session",
+    "zero-to-operational",
+    "entry-point",
+    "mx-os"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-11",
+  "modified": "2026-02-11",
+  "source_path": "scripts/cogs/mx-boot.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/mx-boot.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/mx-boot/content.md"
+}

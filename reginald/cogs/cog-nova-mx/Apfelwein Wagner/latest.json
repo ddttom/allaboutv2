@@ -1,0 +1,31 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "Apfelwein Wagner",
+  "version": "1.0",
+  "description": "Traditional Frankfurt restaurant specialising in Hessian cuisine and handcrafted apple wine. Family-run since 1931.",
+  "author": "MX Demo",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "venue",
+  "tags": [
+    "restaurant",
+    "dining",
+    "frankfurt",
+    "german-cuisine",
+    "hessian",
+    "apple-wine",
+    "vegetarian",
+    "wheelchair-accessible",
+    "step-free",
+    "accessible-toilet",
+    "outdoor-seating"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-12",
+  "modified": "2026-02-12",
+  "source_path": "mx-maxine-app/demo-cogs/restaurant.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-maxine-app/demo-cogs/restaurant.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/Apfelwein Wagner/content.md"
+}

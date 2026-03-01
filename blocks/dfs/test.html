@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DFS Block Test - Dynamic FAQ System</title>
+
+  <!-- EDS Core Styles -->
+  <link rel="stylesheet" href="/styles/styles.css">
+
+  <!-- Block-specific CSS -->
+  <link rel="stylesheet" href="dfs.css">
+
+  <style>
+    /* Test page specific styles */
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    .test-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .test-header {
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+    }
+
+    .test-header h1 {
+      margin: 0 0 10px 0;
+      color: #333;
+    }
+
+    .test-header p {
+      margin: 5px 0;
+      color: #666;
+    }
+
+    .test-controls {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .test-controls h3 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .test-controls button {
+      background: #0066cc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .test-controls button:hover {
+      background: #0052a3;
+    }
+
+    .test-controls button:active {
+      background: #003d7a;
+    }
+
+    .test-info {
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      border-left: 4px solid #2196F3;
+    }
+
+    .test-info h3 {
+      margin-top: 0;
+      color: #1976D2;
+    }
+
+    .test-info ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+
+    .test-info code {
+      background: #fff;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+    }
+
+    /* Make the block stand out in test environment */
+    .block.dfs {
+      border: 2px dashed #ccc;
+      padding: 20px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <div class="test-header">
+      <h1>DFS Block Test Page</h1>
+      <p><strong>Block:</strong> Dynamic FAQ System (DFS)</p>
+      <p><strong>Purpose:</strong> Browser-based testing with EDS core integration</p>
+      <p><strong>Last Updated:</strong> 2025-11-28</p>
+    </div>
+
+    <div class="test-info">
+      <h3>Testing Instructions</h3>
+      <ul>
+        <li>The FAQ block below is rendered with test data from JavaScript</li>
+        <li>Use the search box to test real-time filtering (300ms debounce)</li>
+        <li>Try the category filter to filter by main category</li>
+        <li>Click questions to expand/collapse answers</li>
+        <li>Test keyboard navigation (Tab, Enter, Space)</li>
+        <li>Test external and internal links</li>
+        <li>Resize window to test responsive behavior (breakpoint: 768px)</li>
+        <li>Open browser console to see analytics events and debug logs</li>
+      </ul>
+    </div>
+
+    <div class="test-controls">
+      <h3>Test Controls</h3>
+      <button onclick="testSearch()">Auto-fill Search: "password"</button>
+      <button onclick="testCategoryFilter()">Select Category: "Billing"</button>
+      <button onclick="testExpandAll()">Expand All FAQs</button>
+      <button onclick="testCollapseAll()">Collapse All FAQs</button>
+      <button onclick="testClearFilters()">Clear All Filters</button>
+      <button onclick="testAccessibility()">Test Keyboard Navigation</button>
+      <button onclick="testAnalytics()">Enable Debug Mode</button>
+    </div>
+
+    <!-- DFS Block Container -->
+    <div class="block dfs" id="dfs-test-block">
+      <!-- Table structure will be inserted here by JavaScript -->
+      <div>
+        <div>Category</div>
+        <div>Subcategory</div>
+        <div>Question</div>
+        <div>Short Answer</div>
+        <div>Detailed Answer</div>
+        <div>External Link</div>
+        <div>Related Resources/Tags</div>
+      </div>
+      <!-- FAQ Data Rows -->
+      <div>
+        <div>Account</div>
+        <div>Registration</div>
+        <div>How do I create an account?</div>
+        <div>Visit our homepage and click "Sign Up"</div>
+        <div>To create an account: <ol><li>Navigate to our website</li><li>Click the "Sign Up" button in the top right corner</li><li>Fill out your information including email and password</li><li>Verify your email by clicking the link we send you</li><li>Complete your profile setup</li></ol></div>
+        <div>Complete Guide: https://allabout.network/docs/signup<br>Video Tutorial: https://allabout.network/videos/getting-started</div>
+        <div><a href="https://allabout.network/">Getting Started</a> #account #registration #setup</div>
+      </div>
+      <div>
+        <div>Account</div>
+        <div>Password</div>
+        <div>How do I reset my password?</div>
+        <div>Click "Forgot Password" on the login screen</div>
+        <div>If you've forgotten your password, don't worry! To reset: <ol><li>Go to the login page</li><li>Click the "Forgot Password?" link below the login form</li><li>Enter your email address</li><li>Check your email for a password reset link (check spam folder if needed)</li><li>Click the link and create a new password</li><li>Log in with your new password</li></ol></div>
+        <div>Password Security Tips: https://allabout.network/security/passwords<br>Reset Instructions: /help/reset-password</div>
+        <div><a href="https://allabout.network/">Security Help</a> #password #security #account-recovery</div>
+      </div>
+      <div>
+        <div>Account</div>
+        <div>Email</div>
+        <div>How do I change my email address?</div>
+        <div>Update it in Account Settings</div>
+        <div>To change your email address: <ol><li>Navigate to Settings &gt; Account</li><li>Click "Change Email"</li><li>Enter your new email address</li><li>Enter your current password to confirm</li><li>Check both old and new email for verification messages</li><li>Click the verification link in your new email address</li></ol> The change will take effect immediately after verification.</div>
+        <div>Email Settings Guide: /help/email-settings</div>
+        <div><a href="https://allabout.network/">Account Management</a> #email #account #settings</div>
+      </div>
+      <div>
+        <div>Billing</div>
+        <div>Subscription</div>
+        <div>How am I billed?</div>
+        <div>Monthly or annually depending on your plan</div>
+        <div>Your subscription is billed according to the cycle you selected during signup (monthly or annual). Monthly subscriptions are charged on the same day each month. Annual subscriptions are charged once per year and receive a 20% discount compared to monthly billing. You'll receive email receipts for all charges, and you can view your billing history in the Billing section of your account settings.</div>
+        <div>Billing FAQ: https://allabout.network/pricing#billing<br>Payment Methods: /billing/methods</div>
+        <div><a href="https://allabout.network/pricing">Pricing Plans</a> #billing #subscription #payment</div>
+      </div>
+      <div>
+        <div>Billing</div>
+        <div>Payment</div>
+        <div>What payment methods do you accept?</div>
+        <div>Major credit cards and PayPal</div>
+        <div>We accept all major credit cards including Visa, Mastercard, American Express, and Discover. We also accept PayPal for your convenience. All payments are processed securely through Stripe, and we never store your full card details on our servers. You can manage your payment methods in the Billing section of your account.</div>
+        <div>Payment Security: https://allabout.network/security/payments<br>Add Payment Method: /billing/add-payment</div>
+        <div><a href="https://allabout.network/billing">Billing Help</a> #payment #billing #credit-card</div>
+      </div>
+      <div>
+        <div>Billing</div>
+        <div>Refunds</div>
+        <div>What is your refund policy?</div>
+        <div>30-day money-back guarantee on annual plans</div>
+        <div>We offer a 30-day money-back guarantee on all annual subscriptions. If you're not satisfied within the first 30 days, contact our support team for a full refund. Monthly subscriptions are billed pro-rata and can be cancelled at any time with no further charges. Refunds are processed within 5-7 business days to your original payment method.</div>
+        <div>Refund Policy: https://allabout.network/terms/refunds<br>Contact Support: /support/contact</div>
+        <div><a href="https://allabout.network/terms">Terms of Service</a> #refund #billing #cancellation</div>
+      </div>
+      <div>
+        <div>Technical</div>
+        <div>API</div>
+        <div>How do I get an API key?</div>
+        <div>Generate one in your account settings</div>
+        <div>API keys are available for Pro and Enterprise accounts. To generate an API key: <ol><li>Navigate to Settings &gt; API Access</li><li>Click "Generate New Key"</li><li>Give your key a descriptive name (e.g., "Production Server")</li><li>Copy the key immediately as it will only be shown once</li><li>Store it securely - treat it like a password</li></ol> You can generate multiple keys for different applications and revoke them individually if needed.</div>
+        <div>API Documentation: https://api.allabout.network/docs<br>Authentication Guide: https://api.allabout.network/auth</div>
+        <div><a href="https://allabout.network/developers">Developer Resources</a> #api #authentication #developer</div>
+      </div>
+      <div>
+        <div>Technical</div>
+        <div>Integration</div>
+        <div>How do I integrate your API?</div>
+        <div>Follow our comprehensive API documentation</div>
+        <div>Our API uses REST architecture with JSON responses for easy integration. Authentication requires an API key passed in the Authorization header. To get started: <ol><li>Obtain an API key from your settings</li><li>Review our API documentation</li><li>Make a test request to verify your key works</li><li>Implement your integration following our code examples</li><li>Monitor your usage in the API dashboard</li></ol> Rate limits apply based on your plan tier.</div>
+        <div>Getting Started: https://api.allabout.network/docs/start<br>Code Examples: https://github.com/allabout/api-samples<br>API Reference: https://api.allabout.network/reference</div>
+        <div><a href="https://allabout.network/developers">Developer Portal</a> <a href="https://github.com/allabout">GitHub Examples</a> #api #integration #developer #rest</div>
+      </div>
+      <div>
+        <div>Support</div>
+        <div>Contact</div>
+        <div>How do I contact support?</div>
+        <div>Use the support form or email support@allabout.network</div>
+        <div>We offer multiple ways to get help: <ol><li>Search this FAQ for instant answers</li><li>Submit a support ticket through the Help Center (logged-in users get faster response)</li><li>Email us at support@allabout.network</li><li>Live chat during business hours (Mon-Fri 9am-5pm EST) for Pro and Enterprise customers</li></ol> We aim to respond to all inquiries within 24 hours, with priority support for paid accounts.</div>
+        <div>Submit Ticket: /support/ticket<br>Help Center: /help</div>
+        <div><a href="https://allabout.network/contact">Contact Us</a> #support #help #contact</div>
+      </div>
+      <div>
+        <div>Support</div>
+        <div>Response Time</div>
+        <div>What is your support response time?</div>
+        <div>24 hours for email, instant for live chat</div>
+        <div>Response times vary by support channel and account type. <strong>Email support:</strong> We respond to all emails within 24 hours on business days. <strong>Priority support (Pro/Enterprise):</strong> Response within 4 hours during business hours. <strong>Live chat:</strong> Available to Pro and Enterprise customers during business hours (Mon-Fri 9am-5pm EST) for immediate assistance. <strong>Emergency issues:</strong> Enterprise customers have access to 24/7 emergency support.</div>
+        <div>Support Plans: /support/plans<br>Upgrade Account: /upgrade</div>
+        <div><a href="https://allabout.network/support">Support Options</a> #support #response-time #sla</div>
+      </div>
+      <!-- Metadata Table -->
+      <div>
+        <div>metadata</div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div>
+        <div>title</div>
+        <div>Test FAQ System</div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div>
+        <div>version</div>
+        <div>1.0</div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div>
+        <div>last_updated</div>
+        <div>2025-11-28</div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Block JavaScript -->
+  <script type="module">
+    // Import and decorate the block
+    import decorate from './dfs.js';
+
+    // Wait for DOM to be ready
+    document.addEventListener('DOMContentLoaded', () => {
+      const block = document.getElementById('dfs-test-block');
+
+      // Log that we're starting decoration
+      console.log('🔧 Starting DFS block decoration...');
+
+      // Decorate the block
+      decorate(block);
+
+      console.log('✅ DFS block decorated successfully');
+
+      // Log initial state
+      console.log('📊 Block state:', {
+        faqItems: block.querySelectorAll('.faq-item').length,
+        categories: block.querySelectorAll('.faq-category-section').length,
+        hasSearch: !!block.querySelector('.faq-search'),
+        hasFilter: !!block.querySelector('.faq-category-filter')
+      });
+    });
+  </script>
+
+  <!-- Test Helper Functions -->
+  <script>
+    // Test helper functions
+    function testSearch() {
+      const searchInput = document.querySelector('.faq-search');
+      if (searchInput) {
+        searchInput.value = 'password';
+        searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+        console.log('✅ Search test: Filled with "password"');
+      }
+    }
+
+    function testCategoryFilter() {
+      const categoryFilter = document.querySelector('.faq-category-filter');
+      if (categoryFilter) {
+        categoryFilter.value = 'Billing';
+        categoryFilter.dispatchEvent(new Event('change', { bubbles: true }));
+        console.log('✅ Category filter test: Selected "Billing"');
+      }
+    }
+
+    function testExpandAll() {
+      const questions = document.querySelectorAll('.faq-question[aria-expanded="false"]');
+      questions.forEach(q => q.click());
+      console.log(`✅ Expand all test: Expanded ${questions.length} FAQs`);
+    }
+
+    function testCollapseAll() {
+      const questions = document.querySelectorAll('.faq-question[aria-expanded="true"]');
+      questions.forEach(q => q.click());
+      console.log(`✅ Collapse all test: Collapsed ${questions.length} FAQs`);
+    }
+
+    function testClearFilters() {
+      const searchInput = document.querySelector('.faq-search');
+      const categoryFilter = document.querySelector('.faq-category-filter');
+
+      if (searchInput) {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+
+      if (categoryFilter) {
+        categoryFilter.value = '';
+        categoryFilter.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+
+      console.log('✅ Clear filters test: All filters cleared');
+    }
+
+    function testAccessibility() {
+      const firstQuestion = document.querySelector('.faq-question');
+      if (firstQuestion) {
+        firstQuestion.focus();
+        console.log('✅ Accessibility test: First question focused. Try Tab, Enter, Space keys');
+
+        // Log ARIA attributes
+        console.log('📋 ARIA attributes:', {
+          role: firstQuestion.getAttribute('role'),
+          expanded: firstQuestion.getAttribute('aria-expanded'),
+          controls: firstQuestion.getAttribute('aria-controls'),
+          tabindex: firstQuestion.getAttribute('tabindex')
+        });
+      }
+    }
+
+    function testAnalytics() {
+      console.log('🔍 Debug mode enabled - link clicks will be logged');
+      console.log('💡 Tip: Click any "Read More" link to see analytics event in console');
+
+      // Create a mock dataLayer if it doesn't exist
+      if (!window.dataLayer) {
+        window.dataLayer = [];
+        console.log('📊 Created mock dataLayer for testing');
+      }
+
+      // Add listener to log dataLayer pushes
+      const originalPush = window.dataLayer.push;
+      window.dataLayer.push = function(...args) {
+        console.log('📊 Analytics event:', ...args);
+        return originalPush.apply(this, args);
+      };
+    }
+
+    // Log when page is ready
+    window.addEventListener('load', () => {
+      console.log('✅ Test page loaded successfully');
+      console.log('💡 Use the test controls above to interact with the FAQ block');
+      console.log('💡 Open DevTools to see console logs and network requests');
+    });
+  </script>
+</body>
+</html>

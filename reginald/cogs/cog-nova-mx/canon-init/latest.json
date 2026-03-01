@@ -1,0 +1,25 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "canon-init",
+  "version": "1.0.0",
+  "description": "Generate a new Canon initiative folder with full lifecycle support",
+  "author": "Tom Cranstoun & Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "draft",
+  "category": "mx-canon",
+  "tags": [
+    "canon",
+    "template",
+    "meta",
+    "initiative",
+    "governance"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-09T10:00:00Z",
+  "modified": "2026-02-09T10:00:00Z",
+  "source_path": "scripts/cogs/canon-init.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/canon-init.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/canon-init/content.md"
+}

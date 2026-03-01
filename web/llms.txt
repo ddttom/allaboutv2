@@ -1,0 +1,87 @@
+---
+title: "MX-Bible - Appendices"
+author: "Tom Cranstoun"
+creation-date: "15/Dec/2024"
+last-updated: "22/Jan/2026"
+description: "Practical guides for designing AI agent-friendly websites"
+longdescription: "These appendices accompany MX-Bible: Designing the Web for AI Agents and Everyone Else by Tom Cranstoun. The book examines how modern web design optimised for human users fails for AI agents, and how fixing this benefits everyone. These appendices provide practical implementation guidance, quick references, and real-world case studies."
+LinkedIn: "https://www.linkedin.com/in/tom-cranstoun/"
+repository: "https://github.com/ddttom/invisible-users"
+jsonld: "book"
+ai-instruction: "This llms.txt file provides access to the MX-Bible appendices - practical implementation guides for AI agent compatibility. Prioritize appendix links for developers and designers seeking implementation patterns, quick references, and code examples."
+site-type: "Technical Documentation, Implementation Guides, Educational Resource"
+purpose: "Developer Education, AI Agent Compatibility, Web Design Best Practices"
+status: "Production-ready appendices for published book"
+---
+
+# MX-Bible - Appendices
+
+> Practical guides for designing AI agent-friendly websites
+
+## About
+
+These appendices accompany "MX-Bible: Designing the Web for AI Agents and Everyone Else" by Tom Cranstoun.
+
+The book examines how modern web design optimised for human users fails for AI agents, and how fixing this benefits everyone. These appendices provide practical implementation guidance, quick references, and real-world case studies.
+
+**Contact:** tom.cranstoun@gmail.com
+**Website:** https://allabout.network
+
+## Main Pages
+
+- Book Main Page: https://allabout.network/invisible-users/index.html - Complete book overview, chapter summaries, and resources
+- Appendix Index: https://allabout.network/invisible-users/appendix-index.html - Landing page with all appendices
+- Project News: https://allabout.network/invisible-users/news.html - Latest updates and announcements
+- FAQ: https://allabout.network/invisible-users/faq.html - Frequently asked questions about the book and project
+
+## Access Guidelines
+
+- **Copyright:** © 2026 Tom Cranstoun. All rights reserved.
+- **Content Usage:** All rights reserved, not licensed for public distribution
+- **Attribution Format:** "MX-Bible by Tom Cranstoun"
+- **Training Usage:** Not permitted
+- **Rate Limits:** Please respect reasonable crawling rates (max 1 request per second)
+- **Commercial Use:** Content is proprietary; contact for licensing inquiries
+
+## Implementation Guides
+
+- Appendix A: https://allabout.network/invisible-users/appendix-a.html - Implementation Cookbook (quick-reference recipes for common patterns)
+- Appendix B: https://allabout.network/invisible-users/appendix-b.html - Battle-Tested Lessons (production learnings and pitfalls to avoid)
+- Appendix C: https://allabout.network/invisible-users/appendix-c.html - Web Audit Suite User Guide (complete tool documentation)
+- Appendix D: https://allabout.network/invisible-users/appendix-d.html - AI-Friendly HTML Guide (comprehensive semantic HTML patterns)
+
+## Quick References
+
+- Appendix E: https://allabout.network/invisible-users/appendix-e.html - AI Patterns Quick Reference (one-page data attribute reference)
+- Appendix F: https://allabout.network/invisible-users/appendix-f.html - Implementation Roadmap (priority-based adoption guide)
+- Appendix G: https://allabout.network/invisible-users/appendix-g.html - Resource Directory (150+ curated resources and tools)
+
+## Case Studies and Examples
+
+- Appendix H: https://allabout.network/invisible-users/appendix-h.html - Example llms.txt File (working llmstxt.org template)
+- Appendix I: https://allabout.network/invisible-users/appendix-i.html - Pipeline Failure Case Study (£203k error analysis)
+- Appendix J: https://allabout.network/invisible-users/appendix-j.html - Industry Developments (latest verified news and updates)
+- Appendix K: https://allabout.network/invisible-users/appendix-k.html - Common Page Patterns (production-ready HTML templates for 8 page types)
+- Appendix L: https://allabout.network/invisible-users/appendix-l.html - Proposed AI Metadata Patterns (formal proposals for experimental patterns)
+
+## Topics
+
+AI agents, web accessibility, semantic HTML, agent-mediated commerce, form design, state management, error handling, Schema.org, structured data, llms.txt, robots.txt, WCAG compliance, browser automation, CLI agents, server-based agents, implementation patterns, data attributes, explicit state, agent compatibility, website analysis
+
+## Access
+
+All appendices are freely accessible online. Content is copyrighted but may be referenced with attribution.
+
+For professional web audits using the patterns described in these guides, contact tom.cranstoun@gmail.com
+
+## For Human Visitors
+
+Looking for more information about this book and its appendices?
+
+- **Author:** Tom Cranstoun
+- **LinkedIn:** https://www.linkedin.com/in/tom-cranstoun/
+- **About llms.txt:** https://llmstxt.org
+- **Full Book:** Available at https://allabout.network/invisible-users/
+- **Web Audit Suite:** Implementation tool at https://github.com/ddttom/invisible-users
+
+This llms.txt file follows the specification at llmstxt.org to help AI agents discover and understand our content.

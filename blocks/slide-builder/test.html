@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slide Builder Block - Test Page</title>
+
+  <!-- EDS Core Styles -->
+  <link rel="stylesheet" href="/styles/styles.css">
+
+  <!-- Block-specific Styles -->
+  <link rel="stylesheet" href="slide-builder.css">
+
+  <style>
+    /* Test page specific styles */
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f5f5f5;
+    }
+
+    .test-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-top: 0;
+      color: #333;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 0.5rem;
+    }
+
+    .test-info {
+      background: #e7f3ff;
+      border-left: 4px solid #007bff;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+    }
+
+    .test-info h2 {
+      margin-top: 0;
+      color: #0056b3;
+      font-size: 1.2rem;
+    }
+
+    .test-info p {
+      margin: 0.5rem 0;
+    }
+
+    .test-info code {
+      background: #fff;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+
+    .test-section {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #fafafa;
+    }
+
+    .test-section h2 {
+      margin-top: 0;
+      color: #555;
+      font-size: 1.3rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+
+    .controls button {
+      padding: 0.6rem 1.2rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+
+    .controls button:hover {
+      background: #0056b3;
+    }
+
+    .controls button.secondary {
+      background: #6c757d;
+    }
+
+    .controls button.secondary:hover {
+      background: #545b62;
+    }
+
+    .status {
+      margin: 1rem 0;
+      padding: 1rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+    }
+
+    .status.success {
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+    }
+
+    .status.error {
+      background: #f8d7da;
+      border: 1px solid #f5c6cb;
+      color: #721c24;
+    }
+
+    .status.info {
+      background: #d1ecf1;
+      border: 1px solid #bee5eb;
+      color: #0c5460;
+    }
+
+    /* Device Preview Styles */
+    .device-preview {
+      border: 2px solid #333;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+
+    .device-preview.mobile {
+      max-width: 375px;
+      margin: 1rem auto;
+    }
+
+    .device-preview.tablet {
+      max-width: 768px;
+      margin: 1rem auto;
+    }
+
+    .device-preview.desktop {
+      max-width: 100%;
+    }
+
+    .device-label {
+      background: #333;
+      color: white;
+      padding: 0.5rem;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .slide-builder {
+      background: white;
+    }
+
+    /* Console Output */
+    .console-output {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 1rem;
+      border-radius: 4px;
+      max-height: 300px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      margin: 1rem 0;
+    }
+
+    .console-output .log {
+      color: #4fc3f7;
+    }
+
+    .console-output .error {
+      color: #f44336;
+    }
+
+    .console-output .warn {
+      color: #ffb74d;
+    }
+
+    .console-output .timestamp {
+      color: #9e9e9e;
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1>Slide Builder Block - Test Page</h1>
+
+    <div class="test-info">
+      <h2>About This Test</h2>
+      <p><strong>Block:</strong> slide-builder</p>
+      <p><strong>Data Source:</strong> <code>/slides/query-index.json</code></p>
+      <p><strong>Purpose:</strong> Interactive slide gallery with overlay panels</p>
+      <p><strong>Features:</strong> Lazy image loading, WebP support, responsive behavior, supporting text extraction</p>
+    </div>
+
+    <!-- Test Controls -->
+    <div class="test-section">
+      <h2>Test Controls</h2>
+      <div class="controls">
+        <button onclick="reloadBlock()">Reload Block</button>
+        <button onclick="testFetch()" class="secondary">Test JSON Fetch</button>
+        <button onclick="checkWebPSupport()" class="secondary">Check WebP Support</button>
+        <button onclick="simulateMobile()">Simulate Mobile</button>
+        <button onclick="simulateDesktop()">Simulate Desktop</button>
+        <button onclick="clearConsole()" class="secondary">Clear Console</button>
+      </div>
+      <div id="status" class="status info">Ready to test. Click "Reload Block" to start.</div>
+    </div>
+
+    <!-- Console Output -->
+    <div class="test-section">
+      <h2>Console Output</h2>
+      <div id="console" class="console-output"></div>
+    </div>
+
+    <!-- Block Test - Mobile Preview -->
+    <div class="test-section">
+      <h2>Mobile Preview (≤799px)</h2>
+      <div class="device-preview mobile">
+        <div class="device-label">Mobile - 375px</div>
+        <div class="slide-builder" id="slide-builder-mobile"></div>
+      </div>
+    </div>
+
+    <!-- Block Test - Desktop Preview -->
+    <div class="test-section">
+      <h2>Desktop Preview (>799px)</h2>
+      <div class="device-preview desktop">
+        <div class="device-label">Desktop - Full Width</div>
+        <div class="slide-builder" id="slide-builder-desktop"></div>
+      </div>
+    </div>
+
+    <!-- Data Structure Test -->
+    <div class="test-section">
+      <h2>Data Structure Verification</h2>
+      <p>Expected fields in query-index.json:</p>
+      <ul>
+        <li><code>path</code> - Slide page path</li>
+        <li><code>title</code> - Slide title</li>
+        <li><code>description</code> - Brief description</li>
+        <li><code>image</code> - Background image URL</li>
+        <li><code>lastModified</code> - Timestamp (optional)</li>
+      </ul>
+      <button onclick="verifyDataStructure()">Verify Data Structure</button>
+      <div id="data-status"></div>
+    </div>
+
+    <!-- Feature Tests -->
+    <div class="test-section">
+      <h2>Feature Tests</h2>
+      <div class="controls">
+        <button onclick="testLazyLoading()">Test Lazy Loading</button>
+        <button onclick="testPanelCreation()">Test Panel Creation</button>
+        <button onclick="testSupportingText()">Test Supporting Text</button>
+        <button onclick="testWebPFallback()">Test WebP Fallback</button>
+      </div>
+      <div id="feature-status"></div>
+    </div>
+
+    <!-- Performance Metrics -->
+    <div class="test-section">
+      <h2>Performance Metrics</h2>
+      <button onclick="measurePerformance()">Measure Load Time</button>
+      <div id="performance-status"></div>
+    </div>
+
+  </div>
+
+  <!-- Load Block JavaScript -->
+  <script type="module">
+    // Import the block's decorate function
+    import decorate from './slide-builder.js';
+
+    // Console logging wrapper
+    const consoleOutput = document.getElementById('console');
+    const originalConsole = {
+      log: console.log,
+      error: console.error,
+      warn: console.warn
+    };
+
+    function addToConsole(message, type = 'log') {
+      const timestamp = new Date().toLocaleTimeString();
+      const entry = document.createElement('div');
+      entry.className = type;
+      entry.innerHTML = `<span class="timestamp">[${timestamp}]</span> ${message}`;
+      consoleOutput.appendChild(entry);
+      consoleOutput.scrollTop = consoleOutput.scrollHeight;
+    }
+
+    // Override console methods
+    console.log = function(...args) {
+      originalConsole.log.apply(console, args);
+      addToConsole(args.join(' '), 'log');
+    };
+
+    console.error = function(...args) {
+      originalConsole.error.apply(console, args);
+      addToConsole(args.join(' '), 'error');
+    };
+
+    console.warn = function(...args) {
+      originalConsole.warn.apply(console, args);
+      addToConsole(args.join(' '), 'warn');
+    };
+
+    // Make functions available globally
+    window.decorate = decorate;
+    window.testStartTime = null;
+
+    // Test functions
+    window.reloadBlock = async function() {
+      const status = document.getElementById('status');
+      status.className = 'status info';
+      status.textContent = 'Loading block...';
+
+      try {
+        window.testStartTime = performance.now();
+
+        // Clear existing content
+        const mobileBlock = document.getElementById('slide-builder-mobile');
+        const desktopBlock = document.getElementById('slide-builder-desktop');
+        mobileBlock.innerHTML = '';
+        desktopBlock.innerHTML = '';
+
+        // Decorate both blocks
+        await decorate(mobileBlock);
+        await decorate(desktopBlock);
+
+        const loadTime = (performance.now() - window.testStartTime).toFixed(2);
+
+        status.className = 'status success';
+        status.textContent = `Block loaded successfully in ${loadTime}ms`;
+        console.log(`Block decoration completed in ${loadTime}ms`);
+      } catch (error) {
+        status.className = 'status error';
+        status.textContent = `Error loading block: ${error.message}`;
+        console.error('Block decoration failed:', error);
+      }
+    };
+
+    window.testFetch = async function() {
+      const status = document.getElementById('status');
+      status.className = 'status info';
+      status.textContent = 'Fetching query-index.json...';
+
+      try {
+        const response = await fetch('/slides/query-index.json');
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        const json = await response.json();
+
+        status.className = 'status success';
+        status.textContent = `Fetch successful. Found ${json.data.length} slides.`;
+        console.log('Query index data:', json);
+      } catch (error) {
+        status.className = 'status error';
+        status.textContent = `Fetch failed: ${error.message}`;
+        console.error('Fetch error:', error);
+      }
+    };
+
+    window.checkWebPSupport = function() {
+      const supportsWebP = window.createImageBitmap &&
+        window.createImageBitmap.toString().includes("native code");
+
+      const status = document.getElementById('status');
+      status.className = supportsWebP ? 'status success' : 'status info';
+      status.textContent = `WebP Support: ${supportsWebP ? 'YES' : 'NO'}`;
+      console.log(`Browser WebP support: ${supportsWebP}`);
+    };
+
+    window.simulateMobile = function() {
+      // This is a visual simulation only - actual behavior depends on window.innerWidth
+      const status = document.getElementById('status');
+      status.className = 'status info';
+      status.textContent = 'Mobile simulation: Resize browser window to <800px to test actual mobile behavior';
+      console.log('Mobile mode: HTML content fetches on-demand when slides are clicked');
+    };
+
+    window.simulateDesktop = function() {
+      const status = document.getElementById('status');
+      status.className = 'status info';
+      status.textContent = 'Desktop mode: Resize browser window to >799px to test actual desktop behavior';
+      console.log('Desktop mode: HTML content pre-fetched for all slides');
+    };
+
+    window.clearConsole = function() {
+      consoleOutput.innerHTML = '';
+      console.log('Console cleared');
+    };
+
+    window.verifyDataStructure = async function() {
+      const dataStatus = document.getElementById('data-status');
+      dataStatus.innerHTML = '<div class="status info">Verifying data structure...</div>';
+
+      try {
+        const response = await fetch('/slides/query-index.json');
+        const json = await response.json();
+
+        if (!json.data || !Array.isArray(json.data)) {
+          throw new Error('Missing or invalid "data" array in JSON');
+        }
+
+        const requiredFields = ['path', 'title', 'description', 'image'];
+        const missingFields = [];
+
+        json.data.forEach((slide, index) => {
+          requiredFields.forEach(field => {
+            if (!slide[field]) {
+              missingFields.push(`Slide ${index}: missing "${field}"`);
+            }
+          });
+        });
+
+        if (missingFields.length > 0) {
+          dataStatus.innerHTML = `<div class="status error">Data structure issues:<br>${missingFields.join('<br>')}</div>`;
+        } else {
+          dataStatus.innerHTML = `<div class="status success">Data structure valid! All ${json.data.length} slides have required fields.</div>`;
+        }
+
+        console.log('Data structure verification complete:', json.data.length, 'slides checked');
+      } catch (error) {
+        dataStatus.innerHTML = `<div class="status error">Verification failed: ${error.message}</div>`;
+        console.error('Data verification error:', error);
+      }
+    };
+
+    window.testLazyLoading = function() {
+      const featureStatus = document.getElementById('feature-status');
+      featureStatus.innerHTML = '<div class="status info">Scroll the page to test lazy loading. Check console for image load events.</div>';
+      console.log('Lazy loading test: Scroll down to trigger IntersectionObserver');
+    };
+
+    window.testPanelCreation = function() {
+      const featureStatus = document.getElementById('feature-status');
+      featureStatus.innerHTML = '<div class="status info">Click any slide to test panel creation. Check console for fetch events.</div>';
+      console.log('Panel creation test: Click a slide item to open overlay panel');
+    };
+
+    window.testSupportingText = function() {
+      const featureStatus = document.getElementById('feature-status');
+      featureStatus.innerHTML = '<div class="status info">Check desktop preview for supporting text below descriptions. Mobile hides this text.</div>';
+      console.log('Supporting text test: First paragraph after h2 extracted from HTML content');
+    };
+
+    window.testWebPFallback = function() {
+      const featureStatus = document.getElementById('feature-status');
+      const supportsWebP = window.createImageBitmap &&
+        window.createImageBitmap.toString().includes("native code");
+
+      featureStatus.innerHTML = `<div class="status ${supportsWebP ? 'success' : 'info'}">
+        WebP Support: ${supportsWebP ? 'Enabled' : 'Disabled'}<br>
+        Images will use ${supportsWebP ? 'WebP format with optimization params' : 'original format without conversion'}
+      </div>`;
+      console.log(`WebP fallback test: Browser ${supportsWebP ? 'supports' : 'does not support'} WebP`);
+    };
+
+    window.measurePerformance = async function() {
+      const perfStatus = document.getElementById('performance-status');
+      perfStatus.innerHTML = '<div class="status info">Measuring performance...</div>';
+
+      const startTime = performance.now();
+
+      try {
+        // Measure JSON fetch
+        const fetchStart = performance.now();
+        const response = await fetch('/slides/query-index.json');
+        const json = await response.json();
+        const fetchTime = (performance.now() - fetchStart).toFixed(2);
+
+        // Measure HTML fetch for first slide
+        const htmlStart = performance.now();
+        const htmlResponse = await fetch(`${json.data[0].path}.plain.html`);
+        await htmlResponse.text();
+        const htmlTime = (performance.now() - htmlStart).toFixed(2);
+
+        const totalTime = (performance.now() - startTime).toFixed(2);
+
+        perfStatus.innerHTML = `<div class="status success">
+          <strong>Performance Metrics:</strong><br>
+          JSON Fetch: ${fetchTime}ms<br>
+          HTML Fetch (sample): ${htmlTime}ms<br>
+          Total Time: ${totalTime}ms<br>
+          Slides Count: ${json.data.length}
+        </div>`;
+
+        console.log('Performance metrics:', {
+          jsonFetch: fetchTime + 'ms',
+          htmlFetch: htmlTime + 'ms',
+          total: totalTime + 'ms',
+          slideCount: json.data.length
+        });
+      } catch (error) {
+        perfStatus.innerHTML = `<div class="status error">Performance test failed: ${error.message}</div>`;
+        console.error('Performance measurement error:', error);
+      }
+    };
+
+    // Auto-load on page load
+    console.log('Test page loaded. Click "Reload Block" to initialize.');
+    window.reloadBlock();
+  </script>
+</body>
+</html>

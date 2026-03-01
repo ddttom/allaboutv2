@@ -1,0 +1,24 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "maxine-identity",
+  "version": "1.0",
+  "description": "The public identity of Maxine — Tom Cranstoun's AI partner in building Machine Experience",
+  "author": "Tom Cranstoun",
+  "maintainer": [],
+  "license": "MIT",
+  "status": "draft",
+  "category": "identity",
+  "tags": [
+    "maxine",
+    "identity",
+    "ai-partner",
+    "mx-reginald"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-08",
+  "modified": "2026-02-28",
+  "source_path": "allaboutv2/cogs/mx-reginald/maxine.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/allaboutv2/cogs/mx-reginald/maxine.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/maxine-identity/content.md"
+}

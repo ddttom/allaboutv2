@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .test-info {
+            background: #f8f9fa;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-family: system-ui, -apple-system, sans-serif;
+            flex: 1;
+        }
+
+        .test-info h1 {
+            margin: 0 0 1rem 0;
+            color: #333;
+            font-size: 2rem;
+        }
+
+        .test-info h2 {
+            margin: 2rem 0 1rem 0;
+            color: #667eea;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .test-info h3 {
+            margin: 1.5rem 0 0.5rem 0;
+            color: #555;
+            font-size: 1.2rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .test-info code {
+            background: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+            border: 1px solid #dee2e6;
+        }
+
+        .test-info ul, .test-info ol {
+            margin: 0.5rem 0;
+            padding-left: 2rem;
+            line-height: 1.8;
+        }
+
+        .test-info li {
+            margin: 0.25rem 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .status-loading {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+        }
+
+        .feature-card h4 {
+            margin: 0 0 0.5rem 0;
+            color: #667eea;
+            font-size: 1rem;
+        }
+
+        .feature-card p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .test-section {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .content-area {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #fff;
+            min-height: 40vh;
+            flex: 1;
+        }
+
+        .content-area h2 {
+            color: #333;
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-area p {
+            line-height: 1.8;
+            color: #555;
+        }
+
+        /* Footer at bottom */
+        footer {
+            margin-top: auto;
+        }
+
+        .footer-preview {
+            border-top: 3px solid #667eea;
+            margin-top: 2rem;
+            padding-top: 1rem;
+        }
+
+        .spacer {
+            height: 3rem;
+            background: linear-gradient(to bottom, #f8f9fa 0%, transparent 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h1>Footer Block Test</h1>
+        <p><strong>Block:</strong> <code>footer</code></p>
+        <p><strong>Fragment Source:</strong> <code id="footer-source">Loading...</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status-badge status-loading">Initializing...</span></p>
+
+        <h2>Features Being Tested</h2>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4>🎯 Fragment Loading</h4>
+                <p>Footer content loaded from /footer document via fragment block</p>
+            </div>
+            <div class="feature-card">
+                <h4>📱 Responsive Design</h4>
+                <p>Footer adapts to all viewport sizes based on content structure</p>
+            </div>
+            <div class="feature-card">
+                <h4>🔧 Custom Paths</h4>
+                <p>Support for custom footer documents via metadata</p>
+            </div>
+            <div class="feature-card">
+                <h4>♿ Accessibility</h4>
+                <p>Semantic HTML with proper footer landmark element</p>
+            </div>
+            <div class="feature-card">
+                <h4>🎨 Flexible Structure</h4>
+                <p>Supports any content layout via fragment document</p>
+            </div>
+            <div class="feature-card">
+                <h4>⚡ Performance</h4>
+                <p>Lightweight implementation with minimal JavaScript</p>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>Testing Instructions</h3>
+
+            <h4>Visual Testing</h4>
+            <ol>
+                <li>Verify footer appears at bottom of page below this test info</li>
+                <li>Check that footer content is correctly formatted</li>
+                <li>Verify all links in footer are clickable</li>
+                <li>Check that footer background and text colors are visible</li>
+                <li>Verify footer is centered and has proper max-width (1200px)</li>
+            </ol>
+
+            <h4>Responsive Testing</h4>
+            <ol>
+                <li>Resize browser window to various widths (mobile, tablet, desktop)</li>
+                <li>Verify footer content adapts appropriately</li>
+                <li>Check that multi-column layouts stack on mobile if applicable</li>
+                <li>Ensure all content remains readable at all viewport sizes</li>
+                <li>Verify no horizontal scrolling occurs on mobile</li>
+            </ol>
+
+            <h4>Accessibility Testing</h4>
+            <ol>
+                <li>Press <kbd>Tab</kbd> to navigate through footer links</li>
+                <li>Verify all links are keyboard accessible</li>
+                <li>Check that focus indicators are visible</li>
+                <li>Use screen reader to verify footer content is announced correctly</li>
+                <li>Check that footer is within <code>&lt;footer&gt;</code> landmark</li>
+            </ol>
+
+            <h4>Fragment Loading Testing</h4>
+            <ol>
+                <li>Open browser DevTools Network tab</li>
+                <li>Reload page and look for <code>/footer.plain.html</code> request</li>
+                <li>Verify footer fragment loads successfully (200 status)</li>
+                <li>Check console for any loading errors</li>
+                <li>Verify footer content matches <code>/footer</code> document</li>
+            </ol>
+
+            <h4>Custom Path Testing</h4>
+            <ol>
+                <li>Add <code>&lt;meta name="footer" content="/custom-footer"&gt;</code> to head</li>
+                <li>Create a custom footer document at <code>/custom-footer.md</code></li>
+                <li>Reload page</li>
+                <li>Verify custom footer content loads instead of default</li>
+                <li>Check that "Fragment Source" above shows custom path</li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h3>What to Look For</h3>
+            <ul>
+                <li><strong>Footer loads successfully</strong> - Check status indicator above</li>
+                <li><strong>Proper positioning</strong> - Footer at bottom of page</li>
+                <li><strong>Content structure</strong> - Footer content is well-formatted</li>
+                <li><strong>Links work</strong> - All footer links are clickable (may 404 in test)</li>
+                <li><strong>Styling applied</strong> - Footer has background color and padding</li>
+                <li><strong>Max-width constraint</strong> - Footer content doesn't exceed 1200px</li>
+                <li><strong>Centered layout</strong> - Footer is centered on wide viewports</li>
+                <li><strong>No console errors</strong> - Check DevTools console</li>
+                <li><strong>Fragment loads</strong> - Network tab shows successful fragment fetch</li>
+                <li><strong>Semantic HTML</strong> - Footer is inside <code>&lt;footer&gt;</code> element</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>Document-Level Operations</h3>
+            <p>✅ This block uses standard EDS patterns and does not require global selectors.</p>
+            <ul>
+                <li><strong>Fragment loading</strong> - Uses <code>loadFragment()</code> from fragment block</li>
+                <li><strong>Block decoration</strong> - Standard EDS block pattern</li>
+                <li><strong>No global side effects</strong> - All operations scoped to block element</li>
+            </ul>
+            <p>Unlike the header block, the footer does not need document-level operations like scroll control or global keyboard listeners.</p>
+        </div>
+
+        <div class="test-section">
+            <h3>Browser Console Testing</h3>
+            <p>Open DevTools Console (F12) and run these commands to test functionality:</p>
+            <ul>
+                <li><code>document.querySelector('.footer.block')</code> - Get footer block element</li>
+                <li><code>document.querySelector('footer')</code> - Get footer landmark element</li>
+                <li><code>document.querySelectorAll('.footer a')</code> - List all footer links</li>
+                <li><code>getComputedStyle(document.querySelector('.footer')).maxWidth</code> - Check max-width</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>Creating Test Footer Content</h3>
+            <p>To test the footer block, create a <code>/footer.md</code> document with content like:</p>
+            <code>
+                | Company | Products | Support |<br>
+                |---------|----------|---------|<br>
+                | [About](/about) | [Product A](/product-a) | [Help](/help) |<br>
+                | [Careers](/careers) | [Product B](/product-b) | [Contact](/contact) |<br>
+                <br>
+                ---<br>
+                <br>
+                © 2024 Company Name. All rights reserved.
+            </code>
+        </div>
+    </div>
+
+    <div class="content-area">
+        <h2>Sample Page Content</h2>
+        <p>This is sample content to demonstrate how the footer appears at the bottom of a page. The footer should remain at the bottom even with varying amounts of page content.</p>
+
+        <h3>Content Section</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+
+        <h3>More Content</h3>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+        <h3>Additional Section</h3>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="footer-preview">
+        <h2 style="text-align: center; color: #667eea; margin: 0 0 1rem 0; font-size: 1.2rem;">⬇️ Footer Block Below ⬇️</h2>
+    </div>
+
+    <!-- Footer Block -->
+    <footer>
+        <div class="footer block">
+            <!-- Footer content will be loaded here -->
+        </div>
+    </footer>
+
+    <script type="module">
+        import { loadBlock, decorateBlock } from '/scripts/aem.js';
+
+        // Update status function
+        function updateStatus(message, type = 'loading') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status-badge status-${type}`;
+        }
+
+        // Initialize the footer block using EDS patterns
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                // Get the footer block element
+                const block = document.querySelector('.footer.block');
+
+                if (!block) {
+                    throw new Error('Footer block element not found');
+                }
+
+                updateStatus('Decorating footer block...', 'loading');
+
+                // EDS pattern: decorateBlock adds .block class and other EDS classes
+                decorateBlock(block);
+
+                updateStatus('Loading footer fragment...', 'loading');
+
+                // Load the block (fetches JS/CSS and runs decorate function)
+                await loadBlock(block);
+
+                // Determine footer source
+                const footerMeta = document.querySelector('meta[name="footer"]');
+                const footerSource = footerMeta ? footerMeta.getAttribute('content') : '/footer (default)';
+                document.getElementById('footer-source').textContent = footerSource;
+
+                updateStatus('Footer loaded successfully! ✓', 'success');
+
+                // Log success
+                console.log('✅ Footer block loaded successfully');
+                console.log('📍 Footer source:', footerSource);
+                console.log('🎨 Block element:', block);
+
+                // Check footer content
+                const footerElement = document.querySelector('footer');
+                if (footerElement) {
+                    console.log('✅ Footer landmark element found');
+                    const linkCount = footerElement.querySelectorAll('a').length;
+                    console.log(`🔗 Footer contains ${linkCount} link(s)`);
+                    console.log('📊 Footer structure:', {
+                        'tagName': footerElement.tagName,
+                        'classes': footerElement.className,
+                        'hasContent': footerElement.textContent.trim().length > 0
+                    });
+                } else {
+                    console.warn('⚠️ Footer landmark element not found');
+                }
+
+                // Log styling info
+                const footerBlock = document.querySelector('.footer.block');
+                if (footerBlock) {
+                    const styles = getComputedStyle(footerBlock.parentElement);
+                    console.log('🎨 Footer styling:', {
+                        'padding': styles.padding,
+                        'backgroundColor': styles.backgroundColor,
+                        'fontSize': styles.fontSize
+                    });
+
+                    const footerContent = footerBlock.querySelector('div');
+                    if (footerContent) {
+                        const contentStyles = getComputedStyle(footerContent);
+                        console.log('📏 Footer content:', {
+                            'maxWidth': contentStyles.maxWidth,
+                            'margin': contentStyles.margin
+                        });
+                    }
+                }
+
+            } catch (error) {
+                console.error('❌ Failed to load footer block:', error);
+                updateStatus(`Error: ${error.message}`, 'error');
+
+                // Show error in footer source
+                document.getElementById('footer-source').textContent = `Error: ${error.message}`;
+                document.getElementById('footer-source').style.color = '#721c24';
+            }
+        }
+
+        // Start initialization
+        init();
+
+        // Log fragment loading
+        const originalFetch = window.fetch;
+        window.fetch = function(...args) {
+            const url = args[0];
+            if (typeof url === 'string' && url.includes('footer') && url.includes('.plain.html')) {
+                console.log('📥 Loading footer fragment:', url);
+                return originalFetch.apply(this, args).then(response => {
+                    if (response.ok) {
+                        console.log('✅ Footer fragment loaded successfully');
+                    } else {
+                        console.error('❌ Footer fragment failed to load:', response.status, response.statusText);
+                    }
+                    return response;
+                });
+            }
+            return originalFetch.apply(this, args);
+        };
+
+        // Test footer accessibility on load
+        setTimeout(() => {
+            const footerElement = document.querySelector('footer');
+            const footerLinks = footerElement ? footerElement.querySelectorAll('a') : [];
+
+            console.log('♿ Accessibility check:');
+            console.log(`  - Footer landmark: ${footerElement ? '✅' : '❌'}`);
+            console.log(`  - Focusable links: ${footerLinks.length}`);
+
+            if (footerLinks.length > 0) {
+                console.log('  - Testing first link focus...');
+                footerLinks[0].focus();
+                const focused = document.activeElement === footerLinks[0];
+                console.log(`  - Link focusable: ${focused ? '✅' : '❌'}`);
+            }
+
+            // Log footer position
+            if (footerElement) {
+                const rect = footerElement.getBoundingClientRect();
+                const atBottom = rect.bottom >= window.innerHeight - 100;
+                console.log(`📍 Footer position: ${atBottom ? '✅ At bottom' : '⚠️ Not at bottom'}`);
+                console.log(`  - Bottom: ${rect.bottom}px`);
+                console.log(`  - Viewport height: ${window.innerHeight}px`);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

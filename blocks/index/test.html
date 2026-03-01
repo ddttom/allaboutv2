@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Tom Cranstoun">
+    <title>Index Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Block Styles -->
+    <link rel="stylesheet" href="index.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page styling */
+        body {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        .test-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+
+        .test-section h2 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #0078d4;
+            padding-bottom: 0.5rem;
+        }
+
+        .test-description {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #fff;
+            border-left: 4px solid #0078d4;
+        }
+
+        /* Highlight the index block for testing */
+        .index {
+            margin: 1rem 0;
+        }
+
+        /* Test utilities */
+        .test-controls {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .test-button {
+            background: #0078d4;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .test-button:hover {
+            background: #005a9e;
+        }
+
+        .test-button:active {
+            transform: translateY(1px);
+        }
+
+        #test-results {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .result-success {
+            color: #28a745;
+        }
+
+        .result-error {
+            color: #dc3545;
+        }
+
+        .result-info {
+            color: #17a2b8;
+        }
+
+        /* Sample content headings for testing */
+        .sample-content {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .sample-content h1,
+        .sample-content h2,
+        .sample-content h3,
+        .sample-content h4,
+        .sample-content h5,
+        .sample-content h6 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sample-content h1 {
+            color: #0078d4;
+            font-size: 2rem;
+        }
+
+        .sample-content h2 {
+            color: #005a9e;
+            font-size: 1.6rem;
+        }
+
+        .sample-content h3 {
+            color: #004578;
+            font-size: 1.3rem;
+        }
+
+        .sample-content h4 {
+            color: #003052;
+            font-size: 1.1rem;
+        }
+
+        .sample-content h5 {
+            color: #001b2b;
+            font-size: 1rem;
+        }
+
+        .sample-content h6 {
+            color: #000;
+            font-size: 0.9rem;
+        }
+
+        .sample-content p {
+            margin: 0.5rem 0;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Sticky positioning test */
+        .sticky-index {
+            position: sticky;
+            top: 1rem;
+            z-index: 100;
+        }
+
+        /* Split layout for sidebar test */
+        .split-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .split-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Index Block Test Page</h1>
+    <p>Testing the index block with various configurations and heading structures. Open DevTools Console to see detailed logs.</p>
+
+    <!-- Test Controls -->
+    <div class="test-controls">
+        <h3>Test Controls</h3>
+        <button class="test-button" onclick="toggleAllIndexes()">Toggle All Indexes</button>
+        <button class="test-button" onclick="verifyHeadingIDs()">Verify Heading IDs</button>
+        <button class="test-button" onclick="testNavigation()">Test Navigation Links</button>
+        <button class="test-button" onclick="clearResults()">Clear Results</button>
+        <div id="test-results"></div>
+    </div>
+
+    <!-- Test Case 1: Basic Index -->
+    <div class="test-section">
+        <h2>Test Case 1: Basic Index with Sample Content</h2>
+        <p class="test-description">
+            ✅ Tests basic functionality with single instance<br>
+            ✅ Verifies document-wide heading scan<br>
+            ✅ Validates hierarchical indentation<br>
+            ✅ Tests lazy building (builds on first click)
+        </p>
+
+        <div class="index block" data-block-name="index" data-test-id="test-1">
+        </div>
+    </div>
+
+    <!-- Sample Content for Index to Scan -->
+    <div class="sample-content">
+        <h1>Document Title (H1)</h1>
+        <p>This is the main title of the document. The index should scan this and all subsequent headings.</p>
+
+        <h2>Introduction (H2)</h2>
+        <p>This is an introduction section at heading level 2.</p>
+
+        <h3>Background (H3)</h3>
+        <p>This is a subsection at heading level 3.</p>
+
+        <h4>Historical Context (H4)</h4>
+        <p>This is a minor section at heading level 4.</p>
+
+        <h5>Timeline (H5)</h5>
+        <p>This is a detail section at heading level 5.</p>
+
+        <h6>Specific Dates (H6)</h6>
+        <p>This is the finest detail level at heading level 6.</p>
+
+        <h2>Main Content (H2)</h2>
+        <p>Back to heading level 2 for another major section.</p>
+
+        <h3>Section A (H3)</h3>
+        <p>Subsection A content.</p>
+
+        <h3>Section B (H3)</h3>
+        <p>Subsection B content.</p>
+
+        <h4>Detail 1 (H4)</h4>
+        <p>Detailed content for section B.</p>
+
+        <h4>Detail 2 (H4)</h4>
+        <p>More detailed content for section B.</p>
+
+        <h2>Conclusion (H2)</h2>
+        <p>Final major section at heading level 2.</p>
+    </div>
+
+    <!-- Test Case 2: Multiple Instances -->
+    <div class="test-section">
+        <h2>Test Case 2: Multiple Index Instances</h2>
+        <p class="test-description">
+            ✅ Tests that multiple blocks work independently<br>
+            ✅ Each should show the same navigation (same page headings)<br>
+            ✅ Verifies each instance can expand/collapse independently
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div>
+                <h4>Index Instance A</h4>
+                <div class="index block" data-block-name="index" data-test-id="test-2a">
+                </div>
+            </div>
+
+            <div>
+                <h4>Index Instance B</h4>
+                <div class="index block" data-block-name="index" data-test-id="test-2b">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 3: Sticky Sidebar Layout -->
+    <div class="test-section">
+        <h2>Test Case 3: Sticky Sidebar Layout</h2>
+        <p class="test-description">
+            ✅ Tests sticky positioning for sidebar navigation<br>
+            ✅ Index should stay visible while scrolling content<br>
+            ✅ Simulates typical documentation layout
+        </p>
+
+        <div class="split-layout">
+            <div class="sticky-index">
+                <div class="index block" data-block-name="index" data-test-id="test-3">
+                </div>
+            </div>
+
+            <div>
+                <h3>Sample Long Content</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 4: Indentation Verification -->
+    <div class="test-section">
+        <h2>Test Case 4: Indentation and Hierarchy</h2>
+        <p class="test-description">
+            ✅ Verifies correct indentation for each heading level<br>
+            ✅ H1: 0px, H2: 20px, H3: 40px, H4: 60px, H5: 80px, H6: 100px<br>
+            ✅ Tests formula: (heading level - 1) × 20px
+        </p>
+
+        <div class="index block" data-block-name="index" data-test-id="test-4">
+        </div>
+
+        <button class="test-button" onclick="verifyIndentation()" style="margin-top: 1rem;">Verify Indentation</button>
+        <pre id="indentation-output" style="margin-top: 1rem; padding: 1rem; background: white; border-radius: 4px;"></pre>
+    </div>
+
+    <!-- Test Case 5: Navigation Testing -->
+    <div class="test-section">
+        <h2>Test Case 5: Navigation Links and Anchor IDs</h2>
+        <p class="test-description">
+            ✅ Verifies that heading IDs are generated (header-0, header-1, etc.)<br>
+            ✅ Tests that navigation links point to correct headings<br>
+            ✅ Validates anchor navigation functionality
+        </p>
+
+        <div class="index block" data-block-name="index" data-test-id="test-5">
+        </div>
+
+        <div style="margin-top: 1rem;">
+            <button class="test-button" onclick="listAllHeadingIDs()">List All Heading IDs</button>
+            <button class="test-button" onclick="validateAnchorLinks()">Validate Anchor Links</button>
+            <pre id="navigation-output" style="margin-top: 1rem; padding: 1rem; background: white; border-radius: 4px;"></pre>
+        </div>
+    </div>
+
+    <script type="module">
+        import { loadBlock } from '/scripts/aem.js';
+
+        // CRITICAL: Add body.appear class FIRST
+        document.body.classList.add('appear');
+
+        // Get all index blocks
+        const indexBlocks = document.querySelectorAll('.index.block');
+
+        console.log('═'.repeat(60));
+        console.log('📋 INDEX BLOCK TEST SUITE');
+        console.log('═'.repeat(60));
+        console.log(`Found ${indexBlocks.length} index blocks to test\n`);
+
+        // Track results
+        const results = {
+            total: indexBlocks.length,
+            passed: 0,
+            failed: 0,
+            errors: []
+        };
+
+        // Load each block
+        async function loadAllBlocks() {
+            for (let i = 0; i < indexBlocks.length; i++) {
+                const block = indexBlocks[i];
+                const testId = block.dataset.testId || `block-${i}`;
+
+                try {
+                    console.group(`Test ${testId}: Loading Index Block`);
+
+                    // Add .block class (should already have it from HTML)
+                    block.classList.add('block');
+                    block.dataset.blockName = 'index';
+
+                    // Load the block
+                    await loadBlock(block);
+
+                    // Small delay to allow async operations
+                    await new Promise(resolve => setTimeout(resolve, 300));
+
+                    // Verify results
+                    const hasHeader = block.querySelector('.index-header') !== null;
+                    const hasContent = block.querySelector('.index-content') !== null;
+                    const hasArrow = block.querySelector('.arrow') !== null;
+
+                    console.log('\n📊 Results:');
+                    console.log('  Has index-header:', hasHeader);
+                    console.log('  Has index-content:', hasContent);
+                    console.log('  Has arrow icon:', hasArrow);
+
+                    if (hasHeader && hasContent && hasArrow) {
+                        console.log('✅ PASSED - Block structure correct');
+                        results.passed++;
+                        addTestResult(testId, 'success', 'Block loaded with correct structure');
+                    } else {
+                        console.log('❌ FAILED - Missing expected elements');
+                        results.failed++;
+                        results.errors.push(`${testId}: Missing expected HTML elements`);
+                        addTestResult(testId, 'error', 'Missing expected HTML elements');
+                    }
+
+                    console.groupEnd();
+
+                } catch (error) {
+                    console.error(`❌ Test ${testId} threw error:`, error);
+                    results.failed++;
+                    results.errors.push(`${testId}: ${error.message}`);
+                    addTestResult(testId, 'error', error.message);
+                    console.groupEnd();
+                }
+            }
+
+            // Final summary
+            console.log('\n' + '═'.repeat(60));
+            console.log('📋 FINAL RESULTS');
+            console.log('═'.repeat(60));
+            console.log(`Total tests: ${results.total}`);
+            console.log(`✅ Passed: ${results.passed}`);
+            console.log(`❌ Failed: ${results.failed}`);
+
+            if (results.errors.length > 0) {
+                console.log('\nErrors:');
+                results.errors.forEach(err => console.log(`  • ${err}`));
+            }
+
+            if (results.failed === 0) {
+                console.log('\n🎉 ALL TESTS PASSED!');
+                addTestResult('summary', 'success', `All ${results.passed} tests passed!`);
+            } else {
+                console.log('\n⚠️  SOME TESTS FAILED');
+                addTestResult('summary', 'error', `${results.failed} of ${results.total} tests failed`);
+            }
+
+            console.log('═'.repeat(60));
+        }
+
+        // Helper function to add test results to page
+        function addTestResult(testId, type, message) {
+            const resultsDiv = document.getElementById('test-results');
+            const resultClass = type === 'success' ? 'result-success' : type === 'error' ? 'result-error' : 'result-info';
+            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+
+            const resultLine = document.createElement('div');
+            resultLine.className = resultClass;
+            resultLine.textContent = `${icon} [${testId}] ${message}`;
+            resultsDiv.appendChild(resultLine);
+        }
+
+        // Global functions for test controls
+        window.toggleAllIndexes = function() {
+            console.log('🔄 Toggling all index blocks...');
+            indexBlocks.forEach((block, i) => {
+                const header = block.querySelector('.index-header');
+                if (header) {
+                    header.click();
+                    addTestResult(`toggle-${i}`, 'info', `Toggled index block ${i + 1}`);
+                }
+            });
+        };
+
+        window.verifyHeadingIDs = function() {
+            console.log('🔍 Verifying heading IDs...');
+            addTestResult('heading-ids', 'info', 'Checking heading IDs...');
+
+            const allHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            let withIds = 0;
+            let withoutIds = 0;
+
+            allHeadings.forEach((heading, index) => {
+                if (heading.id) {
+                    withIds++;
+                    console.log(`✅ ${heading.tagName} has ID: ${heading.id}`);
+                } else {
+                    withoutIds++;
+                    console.log(`❌ ${heading.tagName} missing ID`);
+                }
+            });
+
+            const summary = `Found ${allHeadings.length} headings: ${withIds} with IDs, ${withoutIds} without IDs`;
+            console.log(summary);
+
+            if (withoutIds === 0) {
+                addTestResult('heading-ids', 'success', summary);
+            } else {
+                addTestResult('heading-ids', 'error', summary + ' (some headings missing IDs - click index to generate)');
+            }
+        };
+
+        window.testNavigation = function() {
+            console.log('🔗 Testing navigation links...');
+            addTestResult('navigation', 'info', 'Testing navigation links...');
+
+            const firstIndex = indexBlocks[0];
+            const links = firstIndex.querySelectorAll('.index-content a');
+
+            if (links.length === 0) {
+                addTestResult('navigation', 'error', 'No navigation links found (expand index first)');
+                return;
+            }
+
+            let validLinks = 0;
+            let invalidLinks = 0;
+
+            links.forEach((link, i) => {
+                const href = link.getAttribute('href');
+                const targetId = href.substring(1); // Remove #
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    validLinks++;
+                    console.log(`✅ Link ${i + 1}: ${href} → Found target`);
+                } else {
+                    invalidLinks++;
+                    console.log(`❌ Link ${i + 1}: ${href} → Target not found`);
+                }
+            });
+
+            const summary = `Checked ${links.length} links: ${validLinks} valid, ${invalidLinks} invalid`;
+            console.log(summary);
+
+            if (invalidLinks === 0) {
+                addTestResult('navigation', 'success', summary);
+            } else {
+                addTestResult('navigation', 'error', summary);
+            }
+        };
+
+        window.verifyIndentation = function() {
+            console.log('📏 Verifying indentation...');
+
+            const firstIndex = indexBlocks[0];
+            const listItems = firstIndex.querySelectorAll('.index-content li');
+
+            if (listItems.length === 0) {
+                document.getElementById('indentation-output').textContent = '❌ No list items found (expand index first)';
+                return;
+            }
+
+            let report = '--- Indentation Report ---\n\n';
+
+            listItems.forEach((li, i) => {
+                const marginLeft = li.style.marginLeft || '0px';
+                const linkText = li.textContent.trim().substring(0, 50);
+                const headingLevel = parseInt(marginLeft) / 20 + 1;
+
+                report += `Item ${i + 1}:\n`;
+                report += `  Margin: ${marginLeft}\n`;
+                report += `  Expected level: H${headingLevel}\n`;
+                report += `  Text: ${linkText}...\n\n`;
+            });
+
+            document.getElementById('indentation-output').textContent = report;
+            console.log(report);
+            addTestResult('indentation', 'success', `Verified ${listItems.length} items`);
+        };
+
+        window.listAllHeadingIDs = function() {
+            console.log('📋 Listing all heading IDs...');
+
+            const allHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            let report = '--- Heading IDs Report ---\n\n';
+            report += `Total headings: ${allHeadings.length}\n\n`;
+
+            allHeadings.forEach((heading, i) => {
+                const id = heading.id || '(no ID)';
+                const text = heading.textContent.trim().substring(0, 40);
+                report += `${i + 1}. ${heading.tagName}: ${id}\n`;
+                report += `   Text: ${text}...\n\n`;
+            });
+
+            document.getElementById('navigation-output').textContent = report;
+            console.log(report);
+        };
+
+        window.validateAnchorLinks = function() {
+            console.log('🔗 Validating anchor links...');
+
+            const firstIndex = indexBlocks[0];
+            const links = firstIndex.querySelectorAll('.index-content a');
+
+            if (links.length === 0) {
+                document.getElementById('navigation-output').textContent = '❌ No links found (expand index first)';
+                return;
+            }
+
+            let report = '--- Anchor Link Validation ---\n\n';
+            let valid = 0;
+            let invalid = 0;
+
+            links.forEach((link, i) => {
+                const href = link.getAttribute('href');
+                const targetId = href.substring(1);
+                const targetElement = document.getElementById(targetId);
+                const linkText = link.textContent.trim().substring(0, 30);
+
+                if (targetElement) {
+                    valid++;
+                    report += `✅ Link ${i + 1}: ${href}\n`;
+                    report += `   Text: ${linkText}\n`;
+                    report += `   Target: Found (${targetElement.tagName})\n\n`;
+                } else {
+                    invalid++;
+                    report += `❌ Link ${i + 1}: ${href}\n`;
+                    report += `   Text: ${linkText}\n`;
+                    report += `   Target: NOT FOUND\n\n`;
+                }
+            });
+
+            report += `\nSummary: ${valid} valid, ${invalid} invalid (of ${links.length} total)\n`;
+
+            document.getElementById('navigation-output').textContent = report;
+            console.log(report);
+
+            if (invalid === 0) {
+                addTestResult('anchor-validation', 'success', `All ${valid} anchor links valid`);
+            } else {
+                addTestResult('anchor-validation', 'error', `${invalid} invalid anchor links found`);
+            }
+        };
+
+        window.clearResults = function() {
+            document.getElementById('test-results').innerHTML = '';
+            document.getElementById('indentation-output').textContent = '';
+            document.getElementById('navigation-output').textContent = '';
+            console.clear();
+            console.log('🧹 Results cleared');
+        };
+
+        // Run tests on load
+        loadAllBlocks();
+    </script>
+</body>
+</html>

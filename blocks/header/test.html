@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            padding-top: var(--nav-height);
+        }
+
+        .test-info {
+            background: #f8f9fa;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info h1 {
+            margin: 0 0 1rem 0;
+            color: #333;
+            font-size: 2rem;
+        }
+
+        .test-info h2 {
+            margin: 2rem 0 1rem 0;
+            color: #667eea;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .test-info h3 {
+            margin: 1.5rem 0 0.5rem 0;
+            color: #555;
+            font-size: 1.2rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .test-info code {
+            background: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+            border: 1px solid #dee2e6;
+        }
+
+        .test-info ul, .test-info ol {
+            margin: 0.5rem 0;
+            padding-left: 2rem;
+            line-height: 1.8;
+        }
+
+        .test-info li {
+            margin: 0.25rem 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .status-loading {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+        }
+
+        .feature-card h4 {
+            margin: 0 0 0.5rem 0;
+            color: #667eea;
+            font-size: 1rem;
+        }
+
+        .feature-card p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .test-section {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .viewport-info {
+            background: #e7f3ff;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .content-area {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #fff;
+            min-height: 60vh;
+        }
+
+        .content-area h2 {
+            color: #333;
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-area p {
+            line-height: 1.8;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Block -->
+    <header>
+        <div class="header block">
+            <!-- Header content will be loaded here -->
+        </div>
+    </header>
+
+    <div class="test-info">
+        <h1>Header Block Test</h1>
+        <p><strong>Block:</strong> <code>header</code></p>
+        <p><strong>Fragment Source:</strong> <code id="nav-source">Loading...</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status-badge status-loading">Initializing...</span></p>
+
+        <div class="viewport-info">
+            <strong>Viewport Width:</strong> <span id="viewport-width">-</span>px<br>
+            <strong>Layout Mode:</strong> <span id="layout-mode">-</span><br>
+            <strong>Breakpoint:</strong> 900px (desktop) / &lt;900px (mobile)
+        </div>
+
+        <h2>Features Being Tested</h2>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4>📱 Responsive Layout</h4>
+                <p>Mobile hamburger menu below 900px, horizontal nav above</p>
+            </div>
+            <div class="feature-card">
+                <h4>🎯 Fragment Loading</h4>
+                <p>Navigation loaded from /nav document via fragment block</p>
+            </div>
+            <div class="feature-card">
+                <h4>⌨️ Keyboard Access</h4>
+                <p>Full keyboard navigation with Escape, Enter, Space keys</p>
+            </div>
+            <div class="feature-card">
+                <h4>📋 Dropdown Menus</h4>
+                <p>Nested navigation with click/hover dropdowns (desktop)</p>
+            </div>
+            <div class="feature-card">
+                <h4>🔒 Scroll Control</h4>
+                <p>Body scroll locked when mobile menu is open</p>
+            </div>
+            <div class="feature-card">
+                <h4>♿ Accessibility</h4>
+                <p>ARIA labels, focus management, screen reader support</p>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>Testing Instructions</h3>
+
+            <h4>Desktop Testing (>= 900px)</h4>
+            <ol>
+                <li>Resize browser window to at least 900px wide</li>
+                <li>Verify horizontal navigation bar is visible</li>
+                <li>Hover over navigation items with nested menus (if any)</li>
+                <li>Click dropdown menu items to expand/collapse</li>
+                <li>Press <kbd>Tab</kbd> to navigate through links</li>
+                <li>Press <kbd>Enter</kbd> or <kbd>Space</kbd> on dropdown triggers</li>
+                <li>Press <kbd>Escape</kbd> to close open dropdowns</li>
+                <li>Verify only one dropdown is open at a time</li>
+            </ol>
+
+            <h4>Mobile Testing (&lt; 900px)</h4>
+            <ol>
+                <li>Resize browser window to less than 900px wide</li>
+                <li>Verify hamburger menu icon appears (three horizontal lines)</li>
+                <li>Click hamburger to open navigation</li>
+                <li>Verify full-screen navigation overlay appears</li>
+                <li>Verify body scroll is locked (page doesn't scroll behind menu)</li>
+                <li>Click hamburger again (now showing X) to close menu</li>
+                <li>Press <kbd>Escape</kbd> to close mobile menu</li>
+                <li>Verify all navigation sections are accessible in mobile view</li>
+            </ol>
+
+            <h4>Keyboard Accessibility Testing</h4>
+            <ol>
+                <li>Press <kbd>Tab</kbd> to move focus through navigation</li>
+                <li>Verify visible focus indicators on all links</li>
+                <li>Use <kbd>Enter</kbd> to activate links</li>
+                <li>Use <kbd>Space</kbd> to toggle dropdowns (desktop)</li>
+                <li>Use <kbd>Escape</kbd> to close dropdowns or mobile menu</li>
+                <li>Verify focus returns to appropriate element after closing</li>
+            </ol>
+
+            <h4>Responsive Behavior Testing</h4>
+            <ol>
+                <li>Start with desktop view (>= 900px)</li>
+                <li>Open a dropdown menu</li>
+                <li>Slowly resize browser to mobile width (&lt; 900px)</li>
+                <li>Verify menu adapts smoothly without breaking</li>
+                <li>Resize back to desktop width</li>
+                <li>Verify layout returns to horizontal navigation</li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h3>What to Look For</h3>
+            <ul>
+                <li><strong>Navigation loads successfully</strong> - Check status indicator above</li>
+                <li><strong>Responsive breakpoint works</strong> - Layout changes at 900px</li>
+                <li><strong>Hamburger animation</strong> - Smooth transition from ☰ to ✕</li>
+                <li><strong>Dropdown positioning</strong> - Dropdowns appear correctly positioned</li>
+                <li><strong>Dropdown arrow indicators</strong> - Visual cue for items with nested menus</li>
+                <li><strong>Focus indicators</strong> - Clear visual feedback for keyboard navigation</li>
+                <li><strong>ARIA attributes</strong> - Check DevTools for proper aria-expanded, aria-label</li>
+                <li><strong>No console errors</strong> - Open DevTools console to check for errors</li>
+                <li><strong>Body scroll lock</strong> - Page doesn't scroll when mobile menu is open</li>
+                <li><strong>Smooth transitions</strong> - Menu open/close animations are smooth</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>Document-Level Operations (Expected)</h3>
+            <p>⚠️ This block intentionally uses global selectors for document-level functionality:</p>
+            <ul>
+                <li><strong>window.matchMedia</strong> - Monitors viewport width for responsive behavior</li>
+                <li><strong>document.body.style.overflowY</strong> - Controls page scroll when mobile menu is open</li>
+                <li><strong>window.addEventListener</strong> - Listens for Escape key globally</li>
+                <li><strong>document.activeElement</strong> - Manages keyboard focus for accessibility</li>
+                <li><strong>document.getElementById('nav')</strong> - Accesses navigation element for state management</li>
+            </ul>
+            <p>These are by design and necessary for proper header functionality.</p>
+        </div>
+
+        <div class="test-section">
+            <h3>Browser Console Testing</h3>
+            <p>Open DevTools Console (F12) and run these commands to test functionality:</p>
+            <ul>
+                <li><code>document.querySelector('nav').getAttribute('aria-expanded')</code> - Check nav state</li>
+                <li><code>document.body.style.overflowY</code> - Check scroll lock state</li>
+                <li><code>document.querySelectorAll('.nav-drop')</code> - List dropdown items</li>
+                <li><code>window.matchMedia('(min-width: 900px)').matches</code> - Check desktop mode</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content-area">
+        <h2>Sample Page Content</h2>
+        <p>This is sample content to demonstrate how the header appears at the top of a page. The header is fixed position and should remain visible as you scroll.</p>
+
+        <h3>Scroll Test</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+        <h3>More Content</h3>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+
+        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+
+        <h3>Additional Sections</h3>
+        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
+
+        <p>Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>
+
+        <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
+    </div>
+
+    <script type="module">
+        import { loadBlock, decorateBlock } from '/scripts/aem.js';
+
+        // Update status function
+        function updateStatus(message, type = 'loading') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status-badge status-${type}`;
+        }
+
+        // Update viewport info
+        function updateViewportInfo() {
+            const width = window.innerWidth;
+            const isDesktop = width >= 900;
+
+            document.getElementById('viewport-width').textContent = width;
+            document.getElementById('layout-mode').textContent = isDesktop ? 'Desktop' : 'Mobile';
+            document.getElementById('layout-mode').style.color = isDesktop ? '#28a745' : '#007bff';
+        }
+
+        // Initialize viewport monitoring
+        updateViewportInfo();
+        window.addEventListener('resize', updateViewportInfo);
+
+        // Initialize the header block using EDS patterns
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                // Get the header block element
+                const block = document.querySelector('.header.block');
+
+                if (!block) {
+                    throw new Error('Header block element not found');
+                }
+
+                updateStatus('Decorating header block...', 'loading');
+
+                // EDS pattern: decorateBlock adds .block class and other EDS classes
+                decorateBlock(block);
+
+                updateStatus('Loading navigation fragment...', 'loading');
+
+                // Load the block (fetches JS/CSS and runs decorate function)
+                await loadBlock(block);
+
+                // Determine navigation source
+                const navMeta = document.querySelector('meta[name="nav"]');
+                const navSource = navMeta ? navMeta.getAttribute('content') : '/nav (default)';
+                document.getElementById('nav-source').textContent = navSource;
+
+                updateStatus('Header loaded successfully! ✓', 'success');
+
+                // Log success
+                console.log('✅ Header block loaded successfully');
+                console.log('📍 Navigation source:', navSource);
+                console.log('🎨 Block element:', block);
+                console.log('📱 Breakpoint: 900px');
+
+                // Log document-level operations
+                console.log('🌐 Document-level operations active:');
+                console.log('  - window.matchMedia: Monitoring viewport width');
+                console.log('  - document.body.style.overflowY: Scroll control');
+                console.log('  - window.addEventListener: Escape key listener');
+                console.log('  - document.activeElement: Focus management');
+
+                // Check if nav element was created
+                const nav = document.getElementById('nav');
+                if (nav) {
+                    console.log('✅ Navigation element created (id="nav")');
+                    console.log('📊 Initial state:', {
+                        'aria-expanded': nav.getAttribute('aria-expanded'),
+                        'classes': nav.className
+                    });
+                } else {
+                    console.warn('⚠️ Navigation element not found. Check fragment loading.');
+                }
+
+            } catch (error) {
+                console.error('❌ Failed to load header block:', error);
+                updateStatus(`Error: ${error.message}`, 'error');
+
+                // Show error in nav source
+                document.getElementById('nav-source').textContent = `Error: ${error.message}`;
+                document.getElementById('nav-source').style.color = '#721c24';
+            }
+        }
+
+        // Start initialization
+        init();
+
+        // Monitor navigation state changes (for testing)
+        let navStateCheckInterval;
+        setTimeout(() => {
+            const nav = document.getElementById('nav');
+            if (nav) {
+                console.log('🔄 Starting navigation state monitor...');
+                navStateCheckInterval = setInterval(() => {
+                    const expanded = nav.getAttribute('aria-expanded');
+                    const scrollLocked = document.body.style.overflowY === 'hidden';
+
+                    if (expanded === 'true' || scrollLocked) {
+                        console.log('📊 Navigation state:', {
+                            'aria-expanded': expanded,
+                            'body scroll': scrollLocked ? 'locked' : 'unlocked',
+                            'viewport': window.innerWidth >= 900 ? 'desktop' : 'mobile'
+                        });
+                    }
+                }, 1000);
+            }
+        }, 2000);
+
+        // Log keyboard events (for testing)
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Escape' || e.code === 'Enter' || e.code === 'Space') {
+                const nav = document.getElementById('nav');
+                if (nav && nav.getAttribute('aria-expanded') === 'true') {
+                    console.log(`⌨️ Keyboard event: ${e.code} (navigation is open)`);
+                }
+            }
+        });
+
+        // Cleanup on unload
+        window.addEventListener('beforeunload', () => {
+            if (navStateCheckInterval) {
+                clearInterval(navStateCheckInterval);
+            }
+        });
+    </script>
+</body>
+</html>

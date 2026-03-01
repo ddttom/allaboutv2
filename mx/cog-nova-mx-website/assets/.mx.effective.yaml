@@ -1,0 +1,35 @@
+# .mx.effective.yaml
+# Computed effective values with inheritance resolved
+# Generated automatically by mx-effective.js - DO NOT EDIT
+
+title: Assets
+description: Assets directory
+purpose: Organize assets-related content
+created: 2026-02-01
+createdBy: Tom Cranstoun
+lastUpdated: 2026-02-03
+stability: stable
+status: active
+lifecycle: production
+folderType: content
+hasSubfolders: false
+inherits: ../.mx.yaml.md
+audience:
+  - both
+  - humans
+  - machines
+primaryLanguages:
+  - javascript
+  - markdown
+mx:
+  version: '1.0'
+  contentType: folder-metadata
+  domain: assets
+  ai:
+    assistance: welcome
+    editable: true
+    generation:
+      allowed: true
+      reviewRequired: true
+    contextProvides:
+      - Assets context and structure

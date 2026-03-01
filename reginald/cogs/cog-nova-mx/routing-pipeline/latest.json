@@ -1,0 +1,27 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "routing-pipeline",
+  "version": "1.0.0",
+  "description": "Preprocess user prompts with spell correction, route matching, and context injection. Cut inference cost by telling Claude where to look before it starts searching.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "routing",
+    "inference-reduction",
+    "preprocessing",
+    "hook",
+    "aspell",
+    "pipeline",
+    "sop"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-13",
+  "modified": "2026-02-13",
+  "source_path": "scripts/cogs/routing-pipeline.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/routing-pipeline.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/routing-pipeline/content.md"
+}

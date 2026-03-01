@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inline SVG Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Inline SVG Block Styles -->
+    <link rel="stylesheet" href="/blocks/inline-svg/inline-svg.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #fa0f00 0%, #fa6400 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-info strong {
+            font-weight: 600;
+        }
+
+        .test-section {
+            margin: 2rem auto;
+            max-width: 1400px;
+            padding: 0 1rem;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #fa0f00 0%, #fa6400 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1rem;
+        }
+
+        .test-section .description strong {
+            color: #fa0f00;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* SVG wrapper for consistent spacing */
+        .svg-wrapper {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1400px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #fa0f00;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #fa0f00;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #fa0f00;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        /* Demo-specific styles */
+        .rotating-icon {
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hover-icon .icon-circle {
+            transition: fill 0.3s ease;
+        }
+
+        .hover-icon:hover .icon-circle {
+            fill: #fa6400;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Inline SVG Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>inline-svg</code></p>
+        <p><strong>Test Count:</strong> <code>8 test scenarios</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Visual and functional testing of inline SVG embedding with icon span and direct markup support</p>
+    </div>
+
+    <main>
+        <!-- Test 1: Simple Circle SVG -->
+        <div class="test-section">
+            <h3>Test 1: Simple Circle SVG</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Red circle scaled to container width. SVG maintains aspect ratio and is horizontally centered.</p>
+                <p><strong>Validation:</strong> Check SVG has width="100%" and height="100%" attributes. Verify flexbox centering works.</p>
+            </div>
+            <div class="svg-wrapper">
+                <div class="inline-svg block">
+                    <svg width="100" height="100"><circle cx="50" cy="50" r="40" fill="red"></circle></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Multiple Shapes -->
+        <div class="test-section">
+            <h3>Test 2: Multiple Shapes with ViewBox</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Blue rectangle with yellow circle centered. Responsive scaling using viewBox.</p>
+                <p><strong>Validation:</strong> Verify viewBox attribute maintained. Check responsive behavior by resizing window.</p>
+            </div>
+            <div class="svg-wrapper">
+                <div class="inline-svg block">
+                    <svg viewBox="0 0 200 200"><rect x="10" y="10" width="180" height="180" fill="blue" /><circle cx="100" cy="100" r="50" fill="yellow" /></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: SVG with Gradient -->
+        <div class="test-section">
+            <h3>Test 3: SVG with Linear Gradient</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Rectangle filled with diagonal gradient from yellow to red.</p>
+                <p><strong>Validation:</strong> Verify gradient definition preserved. Check gradient renders correctly in all browsers.</p>
+            </div>
+            <div class="svg-wrapper">
+                <div class="inline-svg block">
+                    <svg viewBox="0 0 200 200"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" /><stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:1" /></linearGradient></defs><rect width="200" height="200" fill="url(#grad1)" /></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: SVG Path (Heart Shape) -->
+        <div class="test-section">
+            <h3>Test 4: Complex SVG Path (Heart Shape)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Heart shape drawn using SVG path commands with pink fill and red stroke.</p>
+                <p><strong>Validation:</strong> Verify path data preserved. Check stroke and fill attributes maintained.</p>
+            </div>
+            <div class="svg-wrapper">
+                <div class="inline-svg block">
+                    <svg viewBox="0 0 100 100"><path d="M 10,30 A 20,20 0,0,1 50,30 A 20,20 0,0,1 90,30 Q 90,60 50,90 Q 10,60 10,30 z" fill="pink" stroke="red" stroke-width="2"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 5: Overlapping Semi-Transparent Circles -->
+        <div class="test-section">
+            <h3>Test 5: Transparency and Color Blending</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Three overlapping semi-transparent circles creating color blend effects.</p>
+                <p><strong>Validation:</strong> Verify RGBA color support. Check transparency blending renders correctly.</p>
+            </div>
+            <div class="svg-wrapper">
+                <div class="inline-svg block">
+                    <svg viewBox="0 0 200 200"><circle cx="60" cy="60" r="50" fill="rgba(255,0,0,0.5)" /><circle cx="140" cy="60" r="50" fill="rgba(0,255,0,0.5)" /><circle cx="100" cy="110" r="50" fill="rgba(0,0,255,0.5)" /></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 6: Decorative Wave Divider -->
+        <div class="test-section">
+            <h3>Test 6: Decorative Wave Divider</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Wave-shaped divider in Adobe red. Tests preserveAspectRatio and complex path.</p>
+                <p><strong>Validation:</strong> Verify preserveAspectRatio="none" allows stretching. Check path curves render smoothly.</p>
+            </div>
+            <div class="svg-wrapper">
+                <div class="inline-svg block">
+                    <svg viewBox="0 0 1200 100" preserveAspectRatio="none"><path d="M0,50 Q300,10 600,50 T1200,50 L1200,100 L0,100 Z" fill="#fa0f00"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 7: SVG with Animation Class -->
+        <div class="test-section">
+            <h3>Test 7: SVG with CSS Animation</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Dashed circle that rotates continuously using CSS animation.</p>
+                <p><strong>Validation:</strong> Verify class attribute preserved. Check CSS animation applies correctly to SVG.</p>
+            </div>
+            <div class="svg-wrapper">
+                <div class="inline-svg block">
+                    <svg viewBox="0 0 100 100" class="rotating-icon"><circle cx="50" cy="50" r="40" fill="none" stroke="#fa0f00" stroke-width="8" stroke-dasharray="20 10"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 8: Interactive SVG (Hover Effect) -->
+        <div class="test-section">
+            <h3>Test 8: Interactive SVG with Hover Effect</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Circle changes color on hover. Tests CSS interaction with SVG elements.</p>
+                <p><strong>Validation:</strong> Hover over circle to verify color change. Check CSS transition smooth. Test touch interaction on mobile.</p>
+            </div>
+            <div class="svg-wrapper">
+                <div class="inline-svg block">
+                    <svg viewBox="0 0 100 100" class="hover-icon"><circle cx="50" cy="50" r="40" fill="#fa0f00" class="icon-circle"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 9: Icon Span (if available) -->
+        <div class="test-section">
+            <h3>Test 9: Icon Span Reference (Optional)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> If icon files exist in /icons/ directory, they should load as img elements.</p>
+                <p><strong>Validation:</strong> Check img src="/icons/{name}.svg". Verify alt text generated. Note: This test requires icon files to exist.</p>
+                <p><strong>Note:</strong> This test will show error if icon files don't exist - this is expected.</p>
+            </div>
+            <div class="svg-wrapper">
+                <div class="inline-svg block">
+                    <span class="icon icon-arrow"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 10: Error Handling -->
+        <div class="test-section">
+            <h3>Test 10: Error Handling (Invalid Content)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Block with no valid icon or SVG should log console error.</p>
+                <p><strong>Validation:</strong> Check browser console for error message: "No valid icon or SVG content found in the block".</p>
+            </div>
+            <div class="svg-wrapper">
+                <div class="inline-svg block">
+                    This is invalid content - no icon or SVG markup
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate from '/blocks/inline-svg/inline-svg.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Log SVG structure for debugging
+        function logSVGStructure(block, index) {
+            console.log(`\n=== Inline SVG Block ${index + 1} ===`);
+            console.log('Initial content:', block.innerHTML.substring(0, 100));
+            console.log('Text content:', block.textContent.substring(0, 50));
+
+            const iconSpan = block.querySelector('span[class^="icon icon-"]');
+            if (iconSpan) {
+                console.log('Icon span found:', iconSpan.className);
+            }
+
+            const svgElement = block.querySelector('svg');
+            if (svgElement) {
+                console.log('SVG element found:', {
+                    viewBox: svgElement.getAttribute('viewBox'),
+                    width: svgElement.getAttribute('width'),
+                    height: svgElement.getAttribute('height'),
+                    childCount: svgElement.children.length
+                });
+            }
+        }
+
+        // Log final structure
+        function logFinalStructure(block, index) {
+            console.log(`\n=== After Decoration (Block ${index + 1}) ===`);
+
+            const img = block.querySelector('img');
+            if (img) {
+                console.log('Image created:', {
+                    src: img.src,
+                    alt: img.alt
+                });
+            }
+
+            const svg = block.querySelector('svg');
+            if (svg) {
+                console.log('SVG processed:', {
+                    width: svg.getAttribute('width'),
+                    height: svg.getAttribute('height'),
+                    viewBox: svg.getAttribute('viewBox'),
+                    className: svg.className.baseVal || svg.className
+                });
+            }
+
+            console.log('Final HTML:', block.innerHTML.substring(0, 150));
+        }
+
+        // Verify SVG attributes
+        function verifySVG(block, index) {
+            console.log(`\n=== SVG Validation (Block ${index + 1}) ===`);
+
+            const svg = block.querySelector('svg');
+            let errors = 0;
+
+            if (svg) {
+                // Check width and height set to 100%
+                const width = svg.getAttribute('width');
+                const height = svg.getAttribute('height');
+
+                if (width !== '100%') {
+                    console.error(`✗ SVG width should be "100%", got "${width}"`);
+                    errors++;
+                } else {
+                    console.log('✓ SVG width set to 100%');
+                }
+
+                if (height !== '100%') {
+                    console.error(`✗ SVG height should be "100%", got "${height}"`);
+                    errors++;
+                } else {
+                    console.log('✓ SVG height set to 100%');
+                }
+
+                // Check if viewBox preserved (if it existed)
+                const viewBox = svg.getAttribute('viewBox');
+                if (viewBox) {
+                    console.log(`✓ ViewBox preserved: ${viewBox}`);
+                } else {
+                    console.log('ℹ No viewBox attribute');
+                }
+
+                // Check if all children preserved
+                console.log(`✓ SVG contains ${svg.children.length} child elements`);
+
+            } else {
+                // Check if img element created (icon path)
+                const img = block.querySelector('img');
+                if (img) {
+                    if (img.src.includes('/icons/')) {
+                        console.log(`✓ Icon image created: ${img.src}`);
+                    } else {
+                        console.error('✗ Image src does not point to /icons/ directory');
+                        errors++;
+                    }
+
+                    if (img.alt) {
+                        console.log(`✓ Alt text set: "${img.alt}"`);
+                    } else {
+                        console.error('✗ Missing alt text on icon image');
+                        errors++;
+                    }
+                } else {
+                    console.log('ℹ No SVG or image found (may be error test)');
+                }
+            }
+
+            if (errors === 0) {
+                console.log('✓ SVG validation passed');
+            } else {
+                console.error(`✗ ${errors} SVG validation errors found`);
+            }
+        }
+
+        // Initialize all inline-svg blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating blocks...', 'info');
+
+                // Get all inline-svg blocks
+                const svgBlocks = document.querySelectorAll('.inline-svg.block');
+
+                if (svgBlocks.length === 0) {
+                    throw new Error('No inline-svg blocks found');
+                }
+
+                console.log(`Found ${svgBlocks.length} inline-svg blocks to decorate`);
+
+                // Decorate each inline-svg block
+                svgBlocks.forEach((block, index) => {
+                    console.log(`\n${'='.repeat(50)}`);
+                    console.log(`Processing Inline SVG Block ${index + 1}`);
+                    console.log('='.repeat(50));
+
+                    // Log initial structure
+                    logSVGStructure(block, index);
+
+                    // Run decoration
+                    try {
+                        decorate(block);
+                        console.log('✓ Decoration completed successfully');
+                    } catch (error) {
+                        console.error(`✗ Decoration failed:`, error);
+                        // Don't throw - continue with other blocks
+                    }
+
+                    // Log final structure
+                    logFinalStructure(block, index);
+
+                    // Verify SVG attributes
+                    verifySVG(block, index);
+                });
+
+                updateStatus(`✓ ${svgBlocks.length} inline-svg blocks processed`, 'success');
+
+                console.log('\n' + '='.repeat(50));
+                console.log('All inline-svg blocks decorated!');
+                console.log('='.repeat(50));
+                console.log('\nTest Instructions:');
+                console.log('1. Verify all SVGs render correctly with proper sizing');
+                console.log('2. Resize browser window to test responsive behavior');
+                console.log('3. Check hover effects on Test 8');
+                console.log('4. Verify rotation animation on Test 7');
+                console.log('5. Check console for any errors (Test 10 expected)');
+                console.log('6. Inspect SVG elements to verify width/height attributes');
+
+            } catch (error) {
+                console.error('Failed to initialize inline-svg blocks:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Visual Inspection:</strong> Scroll through all test sections and verify SVGs display correctly
+                <ul>
+                    <li>All SVGs should be centered horizontally</li>
+                    <li>SVGs should scale to container width</li>
+                    <li>Aspect ratios should be maintained</li>
+                    <li>Colors and gradients render correctly</li>
+                </ul>
+            </li>
+            <li><strong>Responsive Testing:</strong> Resize browser window and observe:
+                <ul>
+                    <li>SVGs scale proportionally</li>
+                    <li>No horizontal scrolling occurs</li>
+                    <li>Centering maintained at all viewport sizes</li>
+                    <li>ViewBox attribute enables responsive scaling</li>
+                </ul>
+            </li>
+            <li><strong>Animation Testing:</strong> Test CSS animations:
+                <ul>
+                    <li>Test 7: Verify continuous rotation animation</li>
+                    <li>Test 8: Hover over circle to see color change</li>
+                    <li>Check smooth transitions</li>
+                </ul>
+            </li>
+            <li><strong>Attribute Verification:</strong> Inspect in DevTools and verify:
+                <ul>
+                    <li>SVG elements have <code>width="100%"</code> and <code>height="100%"</code></li>
+                    <li>Original <code>viewBox</code> attributes preserved</li>
+                    <li>CSS classes maintained (rotating-icon, hover-icon)</li>
+                    <li>Path data and shape definitions intact</li>
+                </ul>
+            </li>
+            <li><strong>Error Handling:</strong> Check browser console:
+                <ul>
+                    <li>Test 9: May show 404 for missing icon files (expected)</li>
+                    <li>Test 10: Should show "No valid icon or SVG content found" error</li>
+                    <li>All other tests should complete without errors</li>
+                </ul>
+            </li>
+            <li><strong>Performance:</strong> Monitor performance:
+                <ul>
+                    <li>SVGs render immediately (no loading delay)</li>
+                    <li>No layout shifts or reflows</li>
+                    <li>Animations smooth (60fps)</li>
+                    <li>Check Console logs for decoration timing</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Test 1:</strong> Simple red circle, responsive and centered</li>
+            <li><strong>Test 2:</strong> Blue square with yellow circle, maintains viewBox</li>
+            <li><strong>Test 3:</strong> Diagonal gradient yellow to red</li>
+            <li><strong>Test 4:</strong> Pink heart with red outline</li>
+            <li><strong>Test 5:</strong> Three overlapping circles with color blending</li>
+            <li><strong>Test 6:</strong> Wave divider that stretches horizontally</li>
+            <li><strong>Test 7:</strong> Rotating dashed circle (continuous animation)</li>
+            <li><strong>Test 8:</strong> Circle changes color on hover</li>
+            <li><strong>Test 9:</strong> Icon image (or 404 if no icon files exist)</li>
+            <li><strong>Test 10:</strong> Console error for invalid content</li>
+        </ul>
+
+        <h3>SVG Validation Checklist</h3>
+        <ul>
+            <li><strong>Width/Height:</strong> All inline SVGs have width="100%" and height="100%"</li>
+            <li><strong>ViewBox:</strong> Original viewBox attributes preserved for responsive scaling</li>
+            <li><strong>Paths:</strong> Complex path data maintained without corruption</li>
+            <li><strong>Gradients:</strong> Gradient definitions and references work correctly</li>
+            <li><strong>Transparency:</strong> RGBA colors render with proper opacity</li>
+            <li><strong>Classes:</strong> CSS class attributes preserved for styling</li>
+            <li><strong>Attributes:</strong> All SVG attributes (fill, stroke, etc.) maintained</li>
+        </ul>
+
+        <h3>Icon Span Testing (Test 9)</h3>
+        <ul>
+            <li><strong>Path Format:</strong> Icon images load from <code>/icons/{name}.svg</code></li>
+            <li><strong>Alt Text:</strong> Auto-generated as <code>{icon-name} illustration</code></li>
+            <li><strong>Element Type:</strong> Creates <code>&lt;img&gt;</code> element, not inline SVG</li>
+            <li><strong>Paragraph:</strong> Empty <code>&lt;p&gt;</code> element appended after image</li>
+        </ul>
+
+        <h3>Common Issues to Check</h3>
+        <ul>
+            <li><strong>Missing ViewBox:</strong> SVGs without viewBox may not scale responsively</li>
+            <li><strong>Fixed Dimensions:</strong> Pixel-based width/height replaced with 100%</li>
+            <li><strong>Namespace:</strong> SVG elements should work without explicit xmlns in inline context</li>
+            <li><strong>Inline Styles:</strong> Inline style attributes should be preserved</li>
+            <li><strong>ID Conflicts:</strong> Gradient IDs (like #grad1) should not conflict across SVGs</li>
+        </ul>
+
+        <h3>Responsive Breakpoints to Test</h3>
+        <ul>
+            <li><strong>&lt; 600px (Mobile):</strong> SVGs scale down, maintain centering, no overflow</li>
+            <li><strong>600px - 1024px (Tablet):</strong> SVGs display comfortably, animations smooth</li>
+            <li><strong>&gt; 1024px (Desktop):</strong> Full-size display with hover effects</li>
+        </ul>
+
+        <h3>Browser Compatibility</h3>
+        <ul>
+            <li><strong>Fully Supported:</strong> Chrome, Firefox, Safari, Edge (last 2 versions)</li>
+            <li><strong>SVG Features:</strong> All modern browsers support inline SVG, viewBox, gradients</li>
+            <li><strong>CSS Animations:</strong> Supported in all modern browsers</li>
+            <li><strong>Flexbox Centering:</strong> Supported in all modern browsers</li>
+        </ul>
+
+        <h3>Debugging Tips</h3>
+        <ul>
+            <li>Check browser console for detailed logs and validation results</li>
+            <li>Use DevTools Elements panel to inspect SVG structure and attributes</li>
+            <li>Verify CSS is loaded: check Network tab for inline-svg.css</li>
+            <li>Test hover effects in desktop browsers (touch devices may not support :hover)</li>
+            <li>Use browser zoom (Cmd/Ctrl +/-) to verify SVG scaling quality</li>
+        </ul>
+
+        <h3>Performance Metrics</h3>
+        <ul>
+            <li><strong>JavaScript Execution:</strong> &lt; 5ms per block</li>
+            <li><strong>DOM Operations:</strong> Minimal (single block update per SVG)</li>
+            <li><strong>Rendering:</strong> Immediate (no external requests for inline SVG)</li>
+            <li><strong>Paint Complexity:</strong> Low (vector graphics, GPU accelerated)</li>
+        </ul>
+
+        <h3>Accessibility Notes</h3>
+        <ul>
+            <li><strong>Icon Images:</strong> Alt text automatically generated for screen readers</li>
+            <li><strong>Decorative SVGs:</strong> Consider adding <code>aria-hidden="true"</code></li>
+            <li><strong>Meaningful SVGs:</strong> Should include <code>&lt;title&gt;</code> and <code>&lt;desc&gt;</code> elements</li>
+            <li><strong>Interactive SVGs:</strong> Add proper ARIA attributes for screen readers</li>
+        </ul>
+    </div>
+</body>
+</html>

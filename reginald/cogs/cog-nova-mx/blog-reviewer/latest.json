@@ -1,0 +1,28 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "blog-reviewer",
+  "version": "1.0.0",
+  "description": "Review any blog post — scan for AI writing patterns, check dual-audience balance, interview the author, gather specifics, rewrite. Accepts markdown, HTML, or plain text.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-content",
+  "tags": [
+    "blog",
+    "review",
+    "humanizer",
+    "dual-audience",
+    "interview",
+    "rewrite",
+    "content-quality",
+    "sales-enablement"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-11",
+  "modified": "2026-02-11",
+  "source_path": "scripts/cogs/blog-reviewer.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/blog-reviewer.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/blog-reviewer/content.md"
+}

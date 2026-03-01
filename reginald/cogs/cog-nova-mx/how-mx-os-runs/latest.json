@@ -1,0 +1,31 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "how-mx-os-runs",
+  "version": "1.0",
+  "description": "The MX OS runtime model. How an AI agent boots, discovers cogs, routes tasks, executes action-docs, and chains actions through invokes. The operating system explained from the inside.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "runtime",
+    "boot-sequence",
+    "routing",
+    "execution",
+    "kernel",
+    "shell",
+    "invokes",
+    "ipc",
+    "mx-os",
+    "sop-agent",
+    "entry-points"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-09",
+  "modified": "2026-02-10",
+  "source_path": "scripts/cogs/how-mx-os-runs.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/how-mx-os-runs.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/how-mx-os-runs/content.md"
+}

@@ -1,0 +1,342 @@
+{
+  "url": "https://allabout.network/",
+  "extractedAt": "2025-12-07T19:51:19.753Z",
+  "metadata": {
+    "projectName": "AllAboutV2",
+    "extractionTool": "Design Language Analyzer",
+    "designPhilosophy": "Flat design, minimal effects, self-hosted fonts",
+    "notes": "Design language from production site. CSS variables verified against styles/styles.css lines 15-41."
+  },
+  "logo": {
+    "note": "Logo location and specifications to be documented",
+    "primaryUsage": "Site header and branding"
+  },
+  "favicons": [
+    {
+      "type": "og:image",
+      "url": "https://allabout.network/media_174e3e1a2ea13297a33d07d684a725d4cbbe7b902.png?width=1200&format=pjpg&optimize=medium",
+      "sizes": null
+    },
+    {
+      "type": "twitter:image",
+      "url": "https://allabout.network/media_174e3e1a2ea13297a33d07d684a725d4cbbe7b902.png?width=1200&format=pjpg&optimize=medium",
+      "sizes": null
+    },
+    {
+      "type": "favicon.ico",
+      "url": "https://allabout.network/favicon.ico",
+      "sizes": null
+    }
+  ],
+  "colors": {
+    "semantic": {
+      "primary": "rgb(3, 95, 230)"
+    },
+    "palette": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "normalized": "#ffffff",
+        "count": 29,
+        "confidence": "high",
+        "sources": [
+          "hero",
+          "button"
+        ]
+      },
+      {
+        "color": "rgb(3, 95, 230)",
+        "normalized": "#035fe6",
+        "count": 8,
+        "confidence": "high",
+        "sources": [
+          "button"
+        ]
+      },
+      {
+        "color": "rgb(204, 204, 204)",
+        "normalized": "#cccccc",
+        "count": 4,
+        "confidence": "low",
+        "sources": []
+      },
+      {
+        "color": "rgb(19, 111, 246)",
+        "normalized": "#136ff6",
+        "count": 1,
+        "confidence": "medium",
+        "sources": [
+          "hover/focus"
+        ]
+      }
+    ],
+    "cssVariables": {
+      "--dark-color": "#ccc",
+      "--link-hover-color": "#136ff6",
+      "--light-color": "#eee",
+      "--background-color": "white",
+      "--text-color": "black"
+    }
+  },
+  "typography": {
+    "styles": [
+      {
+        "context": "heading-1",
+        "family": "roboto",
+        "fallbacks": "roboto-fallback",
+        "size": "60px (3.75rem)",
+        "weight": 600,
+        "lineHeight": "1.25",
+        "spacing": null,
+        "transform": null
+      },
+      {
+        "context": "heading-1",
+        "family": "roboto",
+        "fallbacks": "roboto-fallback",
+        "size": "48px (3.00rem)",
+        "weight": 600,
+        "lineHeight": "1.25",
+        "spacing": null,
+        "transform": null
+      },
+      {
+        "context": "heading-1",
+        "family": "roboto",
+        "fallbacks": "roboto-fallback",
+        "size": "36px (2.25rem)",
+        "weight": 600,
+        "lineHeight": "1.25",
+        "spacing": null,
+        "transform": null
+      },
+      {
+        "context": "heading-1",
+        "family": "roboto",
+        "fallbacks": "roboto-fallback",
+        "size": "22px (1.38rem)",
+        "weight": 400,
+        "lineHeight": "1.60",
+        "spacing": null,
+        "transform": null
+      },
+      {
+        "context": "link",
+        "family": "roboto",
+        "fallbacks": "roboto-fallback",
+        "size": "22px (1.38rem)",
+        "weight": 400,
+        "lineHeight": "1.60",
+        "spacing": null,
+        "transform": null
+      },
+      {
+        "context": "link",
+        "family": "roboto",
+        "fallbacks": "roboto-fallback",
+        "size": "22px (1.38rem)",
+        "weight": 600,
+        "lineHeight": "1.60",
+        "spacing": null,
+        "transform": null
+      }
+    ],
+    "sources": {
+      "googleFonts": [],
+      "adobeFonts": false,
+      "variableFonts": false,
+      "selfHosted": true,
+      "fontFiles": [
+        "/fonts/roboto-regular.woff2 (weight: 400)",
+        "/fonts/roboto-bold.woff2 (weight: 700)"
+      ],
+      "fallback": "roboto-fallback (size-adjust: 100.06%, Arial)"
+    }
+  },
+  "spacing": {
+    "scaleType": "8px",
+    "commonValues": [
+      {
+        "px": "5px",
+        "rem": "0.31rem",
+        "count": 4,
+        "numericValue": 5
+      },
+      {
+        "px": "16px",
+        "rem": "1.00rem",
+        "count": 12,
+        "numericValue": 16
+      },
+      {
+        "px": "18px",
+        "rem": "1.13rem",
+        "count": 5,
+        "numericValue": 18
+      },
+      {
+        "px": "22px",
+        "rem": "1.38rem",
+        "count": 54,
+        "numericValue": 22
+      },
+      {
+        "px": "24px",
+        "rem": "1.50rem",
+        "count": 6,
+        "numericValue": 24
+      },
+      {
+        "px": "30px",
+        "rem": "1.88rem",
+        "count": 1,
+        "numericValue": 30
+      },
+      {
+        "px": "32px",
+        "rem": "2.00rem",
+        "count": 4,
+        "numericValue": 32
+      },
+      {
+        "px": "36px",
+        "rem": "2.25rem",
+        "count": 1,
+        "numericValue": 36
+      },
+      {
+        "px": "48px",
+        "rem": "3.00rem",
+        "count": 6,
+        "numericValue": 48
+      },
+      {
+        "px": "60px",
+        "rem": "3.75rem",
+        "count": 1,
+        "numericValue": 60
+      },
+      {
+        "px": "64px",
+        "rem": "4.00rem",
+        "count": 4,
+        "numericValue": 64
+      },
+      {
+        "px": "80px",
+        "rem": "5.00rem",
+        "count": 1,
+        "numericValue": 80
+      }
+    ]
+  },
+  "borderRadius": {
+    "values": [
+      {
+        "value": "30px",
+        "count": 2,
+        "elements": [
+          "button"
+        ],
+        "confidence": "low",
+        "numericValue": 30
+      }
+    ]
+  },
+  "borders": {
+    "combinations": [
+      {
+        "width": "1px",
+        "style": "solid",
+        "color": "rgb(204, 204, 204)",
+        "count": 4,
+        "elements": [
+          "li"
+        ],
+        "confidence": "medium"
+      }
+    ]
+  },
+  "shadows": [],
+  "components": {
+    "buttons": [
+      {
+        "states": {
+          "default": {
+            "backgroundColor": "rgb(3, 95, 230)",
+            "color": "rgb(255, 255, 255)",
+            "padding": "5px 30px",
+            "borderRadius": "30px",
+            "border": "2px solid rgba(0, 0, 0, 0)",
+            "boxShadow": "none",
+            "outline": "rgb(255, 255, 255) none 0px",
+            "transform": "none",
+            "opacity": "1"
+          },
+          "hover": {
+            "color": "var(--link-hover-color)",
+            "backgroundColor": "var(--light-color)"
+          },
+          "active": null,
+          "focus": {
+            "backgroundColor": "var(--link-hover-color)"
+          }
+        },
+        "fontWeight": "600",
+        "fontSize": "22px",
+        "classes": "button primary",
+        "confidence": "medium"
+      }
+    ],
+    "inputs": {
+      "text": [],
+      "checkbox": [],
+      "radio": [],
+      "select": []
+    },
+    "links": [
+      {
+        "color": "rgb(3, 95, 230)",
+        "textDecoration": "none",
+        "fontWeight": "400",
+        "states": {
+          "default": {
+            "color": "rgb(3, 95, 230)",
+            "textDecoration": "none"
+          },
+          "hover": {
+            "color": "var(--link-hover-color)",
+            "textDecoration": "underline"
+          }
+        }
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "textDecoration": "none",
+        "fontWeight": "600",
+        "states": {
+          "default": {
+            "color": "rgb(255, 255, 255)",
+            "textDecoration": "none"
+          },
+          "hover": {
+            "color": "var(--link-hover-color)",
+            "textDecoration": "underline"
+          }
+        }
+      }
+    ]
+  },
+  "breakpoints": [
+    {
+      "px": "600px"
+    },
+    {
+      "px": "900px"
+    }
+  ],
+  "iconSystem": {
+    "type": "none",
+    "note": "Icon system usage to be documented if present in blocks"
+  },
+  "frameworks": []
+}

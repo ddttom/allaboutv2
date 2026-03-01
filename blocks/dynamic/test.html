@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Tom Cranstoun">
+    <title>Dynamic Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="dynamic.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page styling */
+        body {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #f5f5f5;
+        }
+
+        .test-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .test-section h2 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #0078d4;
+            padding-bottom: 0.5rem;
+        }
+
+        .test-description {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f0f8ff;
+            border-left: 4px solid #0078d4;
+            border-radius: 4px;
+        }
+
+        .test-controls {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #fff8e1;
+            border-radius: 4px;
+            border: 1px solid #ffc107;
+        }
+
+        .test-button {
+            background: #0078d4;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.5rem;
+            font-size: 14px;
+        }
+
+        .test-button:hover {
+            background: #005a9e;
+        }
+
+        .test-results {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        /* Highlight the dynamic blocks for testing */
+        .dynamic {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: white;
+            border: 2px dashed #0078d4;
+            min-height: 100px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 1rem;
+        }
+
+        .status-loading {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-loaded {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dynamic Block Test Page</h1>
+    <p>Testing the dynamic block with various configurations. Open DevTools Console to see detailed logs.</p>
+
+    <div class="test-controls">
+        <strong>Test Controls:</strong>
+        <button class="test-button" onclick="reloadAllBlocks()">Reload All Blocks</button>
+        <button class="test-button" onclick="toggleDebugMode()">Toggle Debug Mode</button>
+        <button class="test-button" onclick="showQueryIndex()">Show query-index.json</button>
+        <button class="test-button" onclick="clearResults()">Clear Results</button>
+    </div>
+
+    <div id="debug-output" class="test-results" style="display: none;">
+        <strong>Debug Output:</strong>
+        <pre id="debug-content"></pre>
+    </div>
+
+    <!-- Test Case 1: Default Blog Listing -->
+    <div class="test-section">
+        <h2>Test Case 1: Default Blog Listing <span class="status-indicator status-loading" id="status-1">LOADING</span></h2>
+        <p class="test-description">
+            ✅ Should display 8 most recent blog posts by default<br>
+            ✅ Filters content from /blog/ paths<br>
+            ✅ Excludes /template and /test pages<br>
+            ✅ Excludes current page<br>
+            ✅ Sorts by lastModified descending
+        </p>
+
+        <div class="dynamic block" data-block-name="dynamic" data-test-id="1">
+            <div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 2: Custom Max Return (4 items) -->
+    <div class="test-section">
+        <h2>Test Case 2: Custom Max Return (4 items) <span class="status-indicator status-loading" id="status-2">LOADING</span></h2>
+        <p class="test-description">
+            ✅ Should display only 4 items<br>
+            ✅ Uses data-maxreturn attribute
+        </p>
+
+        <div class="dynamic block" data-block-name="dynamic" data-maxreturn="4" data-test-id="2">
+            <div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 3: Blog Variation -->
+    <div class="test-section">
+        <h2>Test Case 3: Blog Variation <span class="status-indicator status-loading" id="status-3">LOADING</span></h2>
+        <p class="test-description">
+            ✅ Uses 'blog' variation class for styling<br>
+            ✅ Filters content from /blog/ paths
+        </p>
+
+        <div class="dynamic blog block" data-block-name="dynamic" data-test-id="3">
+            <div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 4: Flexible Cards Variation -->
+    <div class="test-section">
+        <h2>Test Case 4: Flexible Cards Variation <span class="status-indicator status-loading" id="status-4">LOADING</span></h2>
+        <p class="test-description">
+            ✅ Uses 'flexible-cards' variation for responsive column layout<br>
+            ✅ Should display in 1, 2, or 3 columns based on viewport width
+        </p>
+
+        <div class="dynamic flexible-cards block" data-block-name="dynamic" data-maxreturn="6" data-test-id="4">
+            <div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 5: Multiple Variations Combined -->
+    <div class="test-section">
+        <h2>Test Case 5: Multiple Variations Combined <span class="status-indicator status-loading" id="status-5">LOADING</span></h2>
+        <p class="test-description">
+            ✅ Combines blog and flexible-cards variations<br>
+            ✅ Should apply both sets of styles
+        </p>
+
+        <div class="dynamic blog flexible-cards block" data-block-name="dynamic" data-maxreturn="6" data-test-id="5">
+            <div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 6: Unlimited Results -->
+    <div class="test-section">
+        <h2>Test Case 6: Unlimited Results (maxReturn: -1) <span class="status-indicator status-loading" id="status-6">LOADING</span></h2>
+        <p class="test-description">
+            ✅ Uses -1 to return up to 1000 items<br>
+            ⚠️ May take longer to load with large datasets
+        </p>
+
+        <div class="dynamic block" data-block-name="dynamic" data-maxreturn="-1" data-test-id="6">
+            <div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Case 7: Empty Block (No Matching Content) -->
+    <div class="test-section">
+        <h2>Test Case 7: Non-existent Path Filter <span class="status-indicator status-loading" id="status-7">LOADING</span></h2>
+        <p class="test-description">
+            ✅ Uses a path that doesn't exist in query-index<br>
+            ✅ Should display empty block gracefully
+        </p>
+
+        <div class="dynamic nonexistent-path block" data-block-name="dynamic" data-test-id="7">
+            <div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import decorate from './dynamic.js';
+
+        // Debug mode flag
+        let debugMode = false;
+        const testResults = {};
+
+        // CRITICAL: Add body.appear class FIRST
+        document.body.classList.add('appear');
+
+        // Get all dynamic blocks
+        const dynamicBlocks = document.querySelectorAll('.dynamic.block');
+
+        console.log('═'.repeat(80));
+        console.log('🧪 DYNAMIC BLOCK TEST SUITE');
+        console.log('═'.repeat(80));
+        console.log(`Found ${dynamicBlocks.length} dynamic blocks to test\n`);
+
+        // Load each block
+        async function loadBlocks() {
+            for (let i = 0; i < dynamicBlocks.length; i++) {
+                const block = dynamicBlocks[i];
+                const testId = block.dataset.testId;
+                const statusIndicator = document.getElementById(`status-${testId}`);
+
+                try {
+                    console.group(`Test ${testId}: ${block.className}`);
+                    console.log('Max return:', block.dataset.maxreturn || 'default (8)');
+                    console.log('Variations:', block.className.replace('dynamic', '').replace('block', '').trim() || 'none');
+
+                    const startTime = performance.now();
+                    await decorate(block);
+                    const endTime = performance.now();
+                    const loadTime = (endTime - startTime).toFixed(2);
+
+                    // Count loaded items
+                    const items = block.querySelectorAll('li');
+                    const itemCount = items.length;
+
+                    console.log('📊 Results:');
+                    console.log('  Items loaded:', itemCount);
+                    console.log('  Load time:', loadTime, 'ms');
+
+                    // Verify card structure
+                    if (itemCount > 0) {
+                        const firstCard = items[0];
+                        const hasImage = !!firstCard.querySelector('.card-image img');
+                        const hasHeadline = !!firstCard.querySelector('h3');
+                        const hasDescription = !!firstCard.querySelector('p');
+                        const hasLink = !!firstCard.querySelector('a[href]');
+
+                        console.log('  Card structure:');
+                        console.log('    - Image:', hasImage ? '✅' : '❌');
+                        console.log('    - Headline:', hasHeadline ? '✅' : '❌');
+                        console.log('    - Description:', hasDescription ? '✅' : '❌');
+                        console.log('    - Link:', hasLink ? '✅' : '❌');
+
+                        // Sample first card data
+                        if (debugMode) {
+                            console.log('  First card data:');
+                            console.log('    - Image src:', firstCard.querySelector('img')?.src);
+                            console.log('    - Headline:', firstCard.querySelector('h3')?.textContent);
+                            console.log('    - Link:', firstCard.querySelector('a')?.href);
+                        }
+                    }
+
+                    // Update status
+                    statusIndicator.textContent = `LOADED (${itemCount} items, ${loadTime}ms)`;
+                    statusIndicator.className = 'status-indicator status-loaded';
+
+                    // Store results
+                    testResults[testId] = {
+                        status: 'success',
+                        itemCount,
+                        loadTime,
+                        variations: block.className.replace('dynamic', '').replace('block', '').trim()
+                    };
+
+                    console.log('✅ PASSED');
+                    console.groupEnd();
+
+                } catch (error) {
+                    console.error(`❌ Test ${testId} threw error:`, error);
+                    statusIndicator.textContent = 'ERROR';
+                    statusIndicator.className = 'status-indicator status-error';
+
+                    testResults[testId] = {
+                        status: 'error',
+                        error: error.message
+                    };
+
+                    console.groupEnd();
+                }
+            }
+
+            // Final summary
+            console.log('\n' + '═'.repeat(80));
+            console.log('📋 FINAL RESULTS');
+            console.log('═'.repeat(80));
+            console.table(testResults);
+
+            const successCount = Object.values(testResults).filter(r => r.status === 'success').length;
+            const errorCount = Object.values(testResults).filter(r => r.status === 'error').length;
+
+            console.log(`\nTotal tests: ${dynamicBlocks.length}`);
+            console.log(`✅ Success: ${successCount}`);
+            console.log(`❌ Errors: ${errorCount}`);
+
+            if (errorCount === 0) {
+                console.log('\n🎉 ALL TESTS PASSED!');
+            } else {
+                console.log('\n⚠️  SOME TESTS FAILED');
+            }
+
+            console.log('═'.repeat(80));
+        }
+
+        // Test control functions
+        window.reloadAllBlocks = async function() {
+            console.clear();
+            location.reload();
+        };
+
+        window.toggleDebugMode = function() {
+            debugMode = !debugMode;
+            const debugOutput = document.getElementById('debug-output');
+            debugOutput.style.display = debugMode ? 'block' : 'none';
+            console.log('Debug mode:', debugMode ? 'ON' : 'OFF');
+        };
+
+        window.showQueryIndex = async function() {
+            try {
+                const response = await fetch('/query-index.json');
+                const data = await response.json();
+                const debugContent = document.getElementById('debug-content');
+                debugContent.textContent = JSON.stringify(data, null, 2);
+                document.getElementById('debug-output').style.display = 'block';
+                console.log('query-index.json loaded:', data);
+            } catch (error) {
+                console.error('Failed to load query-index.json:', error);
+                alert('Failed to load query-index.json. Make sure the file exists.');
+            }
+        };
+
+        window.clearResults = function() {
+            document.getElementById('debug-content').textContent = '';
+            document.getElementById('debug-output').style.display = 'none';
+        };
+
+        // Initialize tests
+        loadBlocks();
+    </script>
+</body>
+</html>

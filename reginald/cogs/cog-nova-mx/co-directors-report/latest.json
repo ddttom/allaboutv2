@@ -1,0 +1,28 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "co-directors-report",
+  "version": "1.0",
+  "description": "Generates time-segmented session reports for co-directors and stakeholders. Each day has up to three segments (morning, afternoon, evening). Interviews Tom, reads all available data sources, produces a report covering the current segment, and updates REMINDERS.md with next steps.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "reporting",
+    "governance",
+    "co-directors",
+    "session",
+    "board",
+    "stakeholders",
+    "archive",
+    "sop"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "YYYY-MM-DD",
+  "modified": "2026-02-14",
+  "source_path": "scripts/cogs/co-directors-report.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/co-directors-report.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/co-directors-report/content.md"
+}

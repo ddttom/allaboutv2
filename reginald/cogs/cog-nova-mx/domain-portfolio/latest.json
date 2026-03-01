@@ -1,0 +1,26 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "domain-portfolio",
+  "version": "1.0.0",
+  "description": "Catalogue of domains held under GoDaddy, grouped by brand and purpose, with live status, protection level, and intended use.",
+  "author": "Tom Cranstoun",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "active",
+  "category": "business",
+  "tags": [
+    "domains",
+    "dns",
+    "brand",
+    "godaddy",
+    "infrastructure",
+    "launch-readiness"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-15",
+  "modified": "2026-02-15",
+  "source_path": "mx-canon/mx-maxine-lives/management/domain-portfolio.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/management/domain-portfolio.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/domain-portfolio/content.md"
+}

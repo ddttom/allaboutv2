@@ -1,0 +1,26 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "conventions",
+  "version": "1.0",
+  "description": "Operational conventions for MX-The-Books. Every naming pattern, file location, assumed rule, and operational standard. The things you need to know to work here without guessing.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "convention",
+  "tags": [
+    "conventions",
+    "naming",
+    "locations",
+    "patterns",
+    "operations",
+    "registry"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-15",
+  "modified": "2026-02-15",
+  "source_path": "scripts/cogs/2026-02-15-conventions.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/2026-02-15-conventions.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/conventions/content.md"
+}

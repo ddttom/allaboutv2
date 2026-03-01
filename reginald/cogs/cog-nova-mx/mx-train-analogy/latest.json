@@ -1,0 +1,29 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "mx-train-analogy",
+  "version": "1.0.0",
+  "description": "The railway analogy for MX OS. A physical metaphor that maps every MX concept to something everyone already understands.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "analogy",
+    "pitch",
+    "railway",
+    "train",
+    "metaphor",
+    "cog-railway",
+    "accessible",
+    "non-technical",
+    "investor"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-11",
+  "modified": "2026-02-11",
+  "source_path": "mx-canon/mx-os/mx-train-analogy.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-os/mx-train-analogy.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/mx-train-analogy/content.md"
+}

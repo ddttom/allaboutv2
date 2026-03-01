@@ -1,0 +1,27 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "multilingual-automation-suite",
+  "version": "1.0",
+  "description": "Complete toolkit for building, validating, and deploying multilingual websites with proper SEO, hreflang annotations, and Google best practices.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "reference-implementation",
+  "tags": [
+    "multilingual",
+    "automation",
+    "seo",
+    "workflow",
+    "internationalization",
+    "i18n",
+    "tools"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-21",
+  "modified": "2026-02-28",
+  "source_path": "scripts/reference-tools/README.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/reference-tools/README.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/multilingual-automation-suite/content.md"
+}

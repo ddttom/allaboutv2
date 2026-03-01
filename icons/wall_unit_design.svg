@@ -1,0 +1,229 @@
+<svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- 
+  SCALE INFORMATION:
+  Drawing Scale: 1mm = 0.2px
+  Scale Check: 215mm horizontal = 43px in the drawing
+  TV opening: 1000mm W x 580mm H = 200px W x 116px H
+  TV screen: 952mm x 536mm = 190px x 107px
+  -->
+  
+  <!-- Background wall -->
+  <rect x="0" y="0" width="800" height="800" fill="#f5f5f5"/>
+  
+  <!-- Floor line -->
+  <line x1="0" y1="580" x2="800" y2="580" stroke="#333" stroke-width="2"/>
+  
+  <!-- Internal Measurements Box -->
+  <rect x="300" y="630" width="200" height="80" fill="#ffffff" stroke="#333" stroke-width="1"/>
+  <text x="400" y="645" text-anchor="middle" fill="#333" font-family="Arial" font-size="8" font-weight="bold">INTERNAL MEASUREMENTS</text>
+  <line x1="305" y1="648" x2="595" y2="648" stroke="#333" stroke-width="1"/>
+  
+  <text x="310" y="660" fill="#333" font-family="Arial" font-size="7">TV Clearances - Above: 80mm, Left: 200mm, Right: 200mm, Below: 230mm</text>
+  <text x="310" y="672" fill="#333" font-family="Arial" font-size="7">Shelf - Gap below TV: 100mm, Thickness: 20mm, Gap to cabinets: 110mm</text>
+  <text x="310" y="684" fill="#333" font-family="Arial" font-size="7">TV Center Height: 1530mm from floor</text>
+  <text x="310" y="696" fill="#333" font-family="Arial" font-size="7">Scale: 1mm = 0.2px (215mm = 43px)</text>
+  
+  <!-- Main unit frame (2100mm W x 2200mm H) -->
+  <!-- Scale: 420px width for 2100mm, 500px height for 2200mm -->
+  <rect x="190" y="80" width="420" height="500" fill="none" stroke="#666" stroke-width="2"/>
+  
+  <!-- Upper cabinets (528mm high) -->
+  <rect x="190" y="80" width="420" height="120" fill="#d4d4d4" stroke="#999" stroke-width="1"/>
+  
+  <!-- Upper cabinet doors (6 doors at 350mm = 70px each) -->
+  <rect x="193" y="83" width="70" height="114" fill="#c9c9c9" stroke="#999" stroke-width="1"/>
+  <rect x="263" y="83" width="70" height="114" fill="#c9c9c9" stroke="#999" stroke-width="1"/>
+  <rect x="333" y="83" width="70" height="114" fill="#c9c9c9" stroke="#999" stroke-width="1"/>
+  <rect x="403" y="83" width="70" height="114" fill="#c9c9c9" stroke="#999" stroke-width="1"/>
+  <rect x="473" y="83" width="70" height="114" fill="#c9c9c9" stroke="#999" stroke-width="1"/>
+  <rect x="543" y="83" width="64" height="114" fill="#c9c9c9" stroke="#999" stroke-width="1"/>
+  
+  <!-- Upper cabinet handles (alternating right/left pattern) -->
+  <circle cx="253" cy="140" r="2" fill="#666"/>
+  <circle cx="273" cy="140" r="2" fill="#666"/>
+  <circle cx="393" cy="140" r="2" fill="#666"/>
+  <circle cx="413" cy="140" r="2" fill="#666"/>
+  <circle cx="533" cy="140" r="2" fill="#666"/>
+  <circle cx="553" cy="140" r="2" fill="#666"/>
+  
+  <!-- Left side storage (350mm = 70px wide, repositioned to align with lower cabinets) -->
+  <rect x="193" y="200" width="70" height="178" fill="#d4d4d4" stroke="#999" stroke-width="1"/>
+  
+  <!-- Left side shelf ledges (2 ledges, one-third apart) -->
+  <rect x="193" y="259" width="70" height="3" fill="#999" stroke="#888" stroke-width="1"/>
+  <rect x="193" y="319" width="70" height="3" fill="#999" stroke="#888" stroke-width="1"/>
+  
+  <!-- TV opening (1000mm W x 580mm H = 200px W x 116px H) -->
+  <!-- Properly proportioned with realistic bezel clearance -->
+  <rect x="303" y="216" width="200" height="116" fill="#1a1a1a" stroke="#8B4513" stroke-width="6"/>
+  
+  <!-- TV screen (952mm x 536mm = 190px x 107px) -->
+  <!-- Centered in opening with 23mm (4.5px) gaps -->
+  <rect x="308" y="221" width="190" height="107" fill="#000" stroke="#333" stroke-width="2"/>
+  
+  <!-- TV specification text inside screen -->
+  <text x="403" y="272" text-anchor="middle" fill="#666" font-family="Arial" font-size="10">43" diagonal TV</text>
+  <text x="403" y="286" text-anchor="middle" fill="#666" font-family="Arial" font-size="10">952mm x 536mm</text>
+  
+  <!-- Floating shelf (100mm below TV opening bottom, 1200mm wide, 20mm thick) -->
+  <!-- At scale 1mm = 0.2px: 100mm gap = 20px, 20mm thick = 4px -->
+  <rect x="283" y="352" width="240" height="4" fill="#b8b8b8" stroke="#888" stroke-width="1"/>
+  <rect x="278" y="350" width="250" height="2" fill="#999"/> <!-- shelf depth shadow -->
+  
+  <!-- Right side storage (350mm = 70px wide, ending at lower cabinet level, aligned with cabinet edge) -->
+  <rect x="543" y="200" width="64" height="194" fill="#d4d4d4" stroke="#999" stroke-width="1"/>
+  
+  <!-- Right side shelf ledges (2 ledges, one-third apart) -->
+  <rect x="543" y="265" width="64" height="3" fill="#999" stroke="#888" stroke-width="1"/>
+  <rect x="543" y="329" width="64" height="3" fill="#999" stroke="#888" stroke-width="1"/>
+  
+  <!-- Lower cabinets (repositioned for correct scale) -->
+  <rect x="190" y="378" width="420" height="202" fill="#d4d4d4" stroke="#999" stroke-width="1"/>
+  
+  <!-- Lower cabinet doors (6 doors at 350mm = 70px each) -->
+  <rect x="193" y="381" width="70" height="196" fill="#c9c9c9" stroke="#999" stroke-width="1"/>
+  <rect x="263" y="381" width="70" height="196" fill="#c9c9c9" stroke="#999" stroke-width="1"/>
+  <rect x="333" y="381" width="70" height="196" fill="#c9c9c9" stroke="#999" stroke-width="1"/>
+  <rect x="403" y="381" width="70" height="196" fill="#c9c9c9" stroke="#999" stroke-width="1"/>
+  <rect x="473" y="381" width="70" height="196" fill="#c9c9c9" stroke="#999" stroke-width="1"/>
+  <rect x="543" y="381" width="64" height="196" fill="#c9c9c9" stroke="#999" stroke-width="1"/>
+  
+  <!-- Door handles (alternating right/left pattern) -->
+  <circle cx="253" cy="479" r="2" fill="#666"/>
+  <circle cx="273" cy="479" r="2" fill="#666"/>
+  <circle cx="393" cy="479" r="2" fill="#666"/>
+  <circle cx="413" cy="479" r="2" fill="#666"/>
+  <circle cx="533" cy="479" r="2" fill="#666"/>
+  <circle cx="553" cy="479" r="2" fill="#666"/>
+  
+  <!-- Dimension lines and labels -->
+  <!-- TV center height (1530mm from floor) - pointing to correct TV center -->
+  <line x1="80" y1="274" x2="110" y2="274" stroke="#ff0000" stroke-width="2"/>
+  <text x="30" y="279" fill="#ff0000" font-family="Arial" font-size="10">1530mm</text>
+  
+  <!-- Unit height -->
+  <line x1="650" y1="80" x2="650" y2="580" stroke="#0066cc" stroke-width="2"/>
+  <text x="660" y="335" fill="#0066cc" font-family="Arial" font-size="10">2200mm</text>
+  
+  <!-- Upper cabinet dimensions -->
+  <line x1="190" y1="60" x2="610" y2="60" stroke="#009900" stroke-width="1"/>
+  <line x1="190" y1="55" x2="190" y2="65" stroke="#009900" stroke-width="1"/>
+  <line x1="610" y1="55" x2="610" y2="65" stroke="#009900" stroke-width="1"/>
+  <text x="400" y="55" text-anchor="middle" fill="#009900" font-family="Arial" font-size="10">Upper Cabinets: 2100mm W x 528mm H</text>
+  
+  <!-- Upper cabinet height (left side) -->
+  <line x1="170" y1="80" x2="170" y2="200" stroke="#009900" stroke-width="1"/>
+  <line x1="165" y1="80" x2="175" y2="80" stroke="#009900" stroke-width="1"/>
+  <line x1="165" y1="200" x2="175" y2="200" stroke="#009900" stroke-width="1"/>
+  <text x="155" y="145" fill="#009900" font-family="Arial" font-size="8" transform="rotate(-90 155 145)">528mm</text>
+  
+  <!-- Lower cabinet dimensions -->
+  <line x1="190" y1="600" x2="610" y2="600" stroke="#009900" stroke-width="1"/>
+  <line x1="190" y1="595" x2="190" y2="605" stroke="#009900" stroke-width="1"/>
+  <line x1="610" y1="595" x2="610" y2="605" stroke="#009900" stroke-width="1"/>
+  <text x="400" y="615" text-anchor="middle" fill="#009900" font-family="Arial" font-size="10">Lower Cabinets: 2100mm W x 1010mm H</text>
+  
+  <!-- Lower cabinet height (left side) -->
+  <line x1="170" y1="394" x2="170" y2="580" stroke="#009900" stroke-width="1"/>
+  <line x1="165" y1="394" x2="175" y2="394" stroke="#009900" stroke-width="1"/>
+  <line x1="165" y1="580" x2="175" y2="580" stroke="#009900" stroke-width="1"/>
+  <text x="155" y="490" fill="#009900" font-family="Arial" font-size="8" transform="rotate(-90 155 490)">818mm</text>
+  
+  <!-- Individual cabinet width -->
+  <line x1="193" y1="75" x2="263" y2="75" stroke="#666" stroke-width="1"/>
+  <text x="228" y="72" text-anchor="middle" fill="#666" font-family="Arial" font-size="8">350mm ea.</text>
+  
+  <!-- Left side storage dimensions -->
+  <line x1="193" y1="190" x2="263" y2="190" stroke="#8A2BE2" stroke-width="1"/>
+  <line x1="193" y1="185" x2="193" y2="195" stroke="#8A2BE2" stroke-width="1"/>
+  <line x1="263" y1="185" x2="263" y2="195" stroke="#8A2BE2" stroke-width="1"/>
+  <text x="228" y="187" text-anchor="middle" fill="#8A2BE2" font-family="Arial" font-size="8">350mm W</text>
+  
+  <!-- Left side storage height -->
+  <line x1="175" y1="200" x2="175" y2="378" stroke="#8A2BE2" stroke-width="1"/>
+  <line x1="170" y1="200" x2="180" y2="200" stroke="#8A2BE2" stroke-width="1"/>
+  <line x1="170" y1="378" x2="180" y2="378" stroke="#8A2BE2" stroke-width="1"/>
+  <text x="165" y="290" fill="#8A2BE2" font-family="Arial" font-size="8" transform="rotate(-90 165 290)">890mm H</text>
+  
+  <!-- Left shelf compartment heights -->
+  <text x="120" y="230" fill="#8A2BE2" font-family="Arial" font-size="7">295mm</text>
+  <text x="120" y="289" fill="#8A2BE2" font-family="Arial" font-size="7">300mm</text>
+  <text x="120" y="349" fill="#8A2BE2" font-family="Arial" font-size="7">295mm</text>
+  
+  <!-- Right side storage dimensions -->
+  <line x1="543" y1="190" x2="607" y2="190" stroke="#8A2BE2" stroke-width="1"/>
+  <line x1="543" y1="185" x2="543" y2="195" stroke="#8A2BE2" stroke-width="1"/>
+  <line x1="607" y1="185" x2="607" y2="195" stroke="#8A2BE2" stroke-width="1"/>
+  <text x="575" y="187" text-anchor="middle" fill="#8A2BE2" font-family="Arial" font-size="8">320mm W</text>
+  
+  <!-- Right side storage height -->
+  <line x1="630" y1="200" x2="630" y2="378" stroke="#8A2BE2" stroke-width="1"/>
+  <line x1="625" y1="200" x2="635" y2="200" stroke="#8A2BE2" stroke-width="1"/>
+  <line x1="625" y1="378" x2="635" y2="378" stroke="#8A2BE2" stroke-width="1"/>
+  <text x="640" y="290" fill="#8A2BE2" font-family="Arial" font-size="8" transform="rotate(-90 640 290)">890mm H</text>
+  
+  <!-- Right shelf compartment heights -->
+  <text x="675" y="230" fill="#8A2BE2" font-family="Arial" font-size="7">325mm</text>
+  <text x="675" y="289" fill="#8A2BE2" font-family="Arial" font-size="7">320mm</text>
+  <text x="675" y="349" fill="#8A2BE2" font-family="Arial" font-size="7">245mm</text>
+  
+  <!-- TV opening dimensions -->
+  <line x1="303" y1="205" x2="503" y2="205" stroke="#FF1493" stroke-width="1"/>
+  <line x1="303" y1="200" x2="303" y2="210" stroke="#FF1493" stroke-width="1"/>
+  <line x1="503" y1="200" x2="503" y2="210" stroke="#FF1493" stroke-width="1"/>
+  <text x="403" y="202" text-anchor="middle" fill="#FF1493" font-family="Arial" font-size="8">TV Opening: 1000mm W</text>
+  
+  <!-- TV opening height -->
+  <line x1="680" y1="216" x2="680" y2="332" stroke="#FF1493" stroke-width="1"/>
+  <line x1="675" y1="216" x2="685" y2="216" stroke="#FF1493" stroke-width="1"/>
+  <line x1="675" y1="332" x2="685" y2="332" stroke="#FF1493" stroke-width="1"/>
+  <text x="690" y="274" fill="#FF1493" font-family="Arial" font-size="8" transform="rotate(-90 690 274)">580mm H</text>
+  
+  <!-- Above TV clearance -->
+  <line x1="280" y1="200" x2="280" y2="216" stroke="#ff6600" stroke-width="1"/>
+  <line x1="275" y1="200" x2="285" y2="200" stroke="#ff6600" stroke-width="1"/>
+  <line x1="275" y1="216" x2="285" y2="216" stroke="#ff6600" stroke-width="1"/>
+  <text x="260" y="209" fill="#ff6600" font-family="Arial" font-size="8">80mm</text>
+  
+  <!-- Left of TV clearance -->
+  <line x1="263" y1="274" x2="303" y2="274" stroke="#ff6600" stroke-width="1"/>
+  <line x1="263" y1="269" x2="263" y2="279" stroke="#ff6600" stroke-width="1"/>
+  <line x1="303" y1="269" x2="303" y2="279" stroke="#ff6600" stroke-width="1"/>
+  <text x="275" y="271" fill="#ff6600" font-family="Arial" font-size="8">200mm</text>
+  
+  <!-- Right of TV clearance -->
+  <line x1="503" y1="274" x2="543" y2="274" stroke="#ff6600" stroke-width="1"/>
+  <line x1="503" y1="269" x2="503" y2="279" stroke="#ff6600" stroke-width="1"/>
+  <line x1="543" y1="269" x2="543" y2="279" stroke="#ff6600" stroke-width="1"/>
+  <text x="518" y="271" fill="#ff6600" font-family="Arial" font-size="8">200mm</text>
+  
+  <!-- Below TV clearance -->
+  <line x1="280" y1="332" x2="280" y2="378" stroke="#ff6600" stroke-width="1"/>
+  <line x1="275" y1="332" x2="285" y2="332" stroke="#ff6600" stroke-width="1"/>
+  <line x1="275" y1="378" x2="285" y2="378" stroke="#ff6600" stroke-width="1"/>
+  <text x="260" y="357" fill="#ff6600" font-family="Arial" font-size="8">230mm</text>
+  
+  <!-- Floating shelf gap below TV -->
+  <line x1="520" y1="332" x2="520" y2="352" stroke="#ff6600" stroke-width="1"/>
+  <line x1="515" y1="332" x2="525" y2="332" stroke="#ff6600" stroke-width="1"/>
+  <line x1="515" y1="352" x2="525" y2="352" stroke="#ff6600" stroke-width="1"/>
+  <text x="525" y="343" fill="#ff6600" font-family="Arial" font-size="8">100mm gap</text>
+  
+  <!-- Shelf thickness dimension -->
+  <line x1="535" y1="352" x2="535" y2="356" stroke="#8A2BE2" stroke-width="1"/>
+  <line x1="530" y1="352" x2="540" y2="352" stroke="#8A2BE2" stroke-width="1"/>
+  <line x1="530" y1="356" x2="540" y2="356" stroke="#8A2BE2" stroke-width="1"/>
+  <text x="545" y="355" fill="#8A2BE2" font-family="Arial" font-size="8">20mm thick</text>
+  
+  <!-- Space below shelf to cabinets -->
+  <line x1="540" y1="356" x2="540" y2="378" stroke="#ff6600" stroke-width="1"/>
+  <line x1="535" y1="356" x2="545" y2="356" stroke="#ff6600" stroke-width="1"/>
+  <line x1="535" y1="378" x2="545" y2="378" stroke="#ff6600" stroke-width="1"/>
+  <text x="550" y="368" fill="#ff6600" font-family="Arial" font-size="8">110mm</text>
+  
+  <!-- Floating shelf dimensions -->
+  <line x1="283" y1="366" x2="523" y2="366" stroke="#8A2BE2" stroke-width="1"/>
+  <line x1="283" y1="361" x2="283" y2="371" stroke="#8A2BE2" stroke-width="1"/>
+  <line x1="523" y1="361" x2="523" y2="371" stroke="#8A2BE2" stroke-width="1"/>
+  <text x="403" y="363" text-anchor="middle" fill="#8A2BE2" font-family="Arial" font-size="8">Floating Shelf: 1200mm W</text>
+</svg>

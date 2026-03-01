@@ -1,0 +1,24 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "eleanor-cranstoun",
+  "version": "1.0.0",
+  "description": "Director of Cog-Nova-MX Ltd, Tom's wife",
+  "author": "Tom Cranstoun",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "contact",
+  "tags": [
+    "contact",
+    "family",
+    "director",
+    "stakeholder"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-09",
+  "modified": "2026-02-28",
+  "source_path": "mx-crm/contacts/eleanor-cranstoun/eleanor-cranstoun.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-crm/contacts/eleanor-cranstoun/eleanor-cranstoun.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/eleanor-cranstoun/content.md"
+}

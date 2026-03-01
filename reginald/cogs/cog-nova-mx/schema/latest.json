@@ -1,0 +1,25 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "schema",
+  "version": "0.1.0",
+  "description": "Validate and generate Schema.org structured data markup",
+  "author": "Maxine (MX - Machine eXperience Engine)",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "draft",
+  "category": "mx-core",
+  "tags": [
+    "schema.org",
+    "json-ld",
+    "structured-data",
+    "seo",
+    "accessibility"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-06T12:19:00Z",
+  "modified": "2026-02-06T12:19:00Z",
+  "source_path": "scripts/cogs/schema.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/schema.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/schema/content.md"
+}

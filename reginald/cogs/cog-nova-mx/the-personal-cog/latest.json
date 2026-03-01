@@ -1,0 +1,29 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "the-personal-cog",
+  "version": "2.0",
+  "description": "The personal cog — a collection of cogs that describe YOU. Accessibility needs, interests, dietary requirements, health conditions, skills. Lives on your phone. Your AI agent decides what to share, with whom, based on context. The other half of the companion web — the world describes itself to you, and you describe yourself to the world.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "personal-cog",
+    "accessibility",
+    "interests",
+    "privacy",
+    "agent-guardrail",
+    "personalisation",
+    "commerce",
+    "identity",
+    "collection"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-09",
+  "modified": "2026-02-10",
+  "source_path": "scripts/cogs/the-personal-cog.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/the-personal-cog.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/the-personal-cog/content.md"
+}

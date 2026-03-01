@@ -1,0 +1,15 @@
+# Media219 Ltd - MX Demo
+# https://media219.com/robots.txt
+
+User-agent: *
+Disallow:
+
+# AI Agent Discovery
+# Machine-readable business description
+Allow: /llms.txt
+
+# Structured data companion document
+Allow: /media219.cog.md
+
+# Sitemap
+Sitemap: https://media219.com/sitemap.xml

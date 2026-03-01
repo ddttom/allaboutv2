@@ -1,0 +1,110 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1a1a1a" text-anchor="middle">Interactive Notebooks for EDS</text>
+  <text x="400" y="65" font-family="Arial, sans-serif" font-size="14" fill="#666" text-anchor="middle">Browser-Native • Zero Config • Read-Only</text>
+  
+  <!-- Browser Window Frame -->
+  <rect x="50" y="90" width="700" height="450" rx="8" fill="#fff" stroke="#ddd" stroke-width="2"/>
+  
+  <!-- Browser Chrome -->
+  <rect x="50" y="90" width="700" height="35" rx="8" fill="#e8eaed"/>
+  <rect x="50" y="110" width="700" height="15" fill="#e8eaed"/>
+  
+  <!-- Browser Dots -->
+  <circle cx="70" cy="102" r="5" fill="#ff5f57"/>
+  <circle cx="90" cy="102" r="5" fill="#ffbd2e"/>
+  <circle cx="110" cy="102" r="5" fill="#28ca42"/>
+  
+  <!-- URL Bar -->
+  <rect x="140" y="95" width="550" height="20" rx="10" fill="#fff" stroke="#ccc" stroke-width="1"/>
+  <text x="150" y="109" font-family="Arial, sans-serif" font-size="11" fill="#666">https://your-site.com/tutorials/accordion-demo</text>
+  
+  <!-- Markdown Cell -->
+  <rect x="70" y="145" width="660" height="60" rx="4" fill="#fefefe" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="85" y="165" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#333">Testing the Accordion Block</text>
+  <text x="85" y="185" font-family="Arial, sans-serif" font-size="11" fill="#666">This demonstration shows how the accordion block transforms nested</text>
+  <text x="85" y="200" font-family="Arial, sans-serif" font-size="11" fill="#666">divs into interactive details elements.</text>
+  
+  <!-- Code Cell 1 -->
+  <rect x="70" y="220" width="660" height="120" rx="4" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+  <rect x="70" y="220" width="660" height="30" rx="4" fill="#e8eaed"/>
+  <rect x="640" y="227" width="75" height="22" rx="4" fill="#1a73e8" stroke="#1557b0" stroke-width="1"/>
+  <text x="677.5" y="242" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">▶ Run</text>
+  
+  <!-- Import Highlight -->
+  <rect x="80" y="257" width="400" height="18" rx="2" fill="#fff3cd" opacity="0.5"/>
+  <text x="85" y="269" font-family="Courier New, monospace" font-size="10" fill="#0066cc">const { testBlock } = await import('/scripts/ipynb-helpers.js');</text>
+  <text x="85" y="288" font-family="Courier New, monospace" font-size="10" fill="#333">const content = `&lt;div&gt;&lt;div&gt;Question&lt;/div&gt;...&lt;/div&gt;`;</text>
+  <text x="85" y="304" font-family="Courier New, monospace" font-size="10" fill="#333">const block = await testBlock('accordion', content);</text>
+  <text x="85" y="320" font-family="Courier New, monospace" font-size="10" fill="#0066cc">return block.outerHTML;</text>
+  
+  <!-- Output Cell -->
+  <rect x="70" y="345" width="660" height="50" rx="4" fill="#f9f9f9" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="85" y="362" font-family="Courier New, monospace" font-size="9" fill="#0a0">✓ Block decorated</text>
+  <text x="85" y="378" font-family="Courier New, monospace" font-size="9" fill="#666">&lt;details class="accordion-item"&gt;&lt;summary&gt;Question&lt;/summary&gt;...</text>
+  
+  <!-- Code Cell 2 -->
+  <rect x="70" y="410" width="660" height="80" rx="4" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+  <rect x="70" y="410" width="660" height="30" rx="4" fill="#e8eaed"/>
+  <rect x="640" y="417" width="75" height="22" rx="4" fill="#1a73e8" stroke="#1557b0" stroke-width="1"/>
+  <text x="677.5" y="432" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">▶ Run</text>
+  <rect x="80" y="447" width="410" height="18" rx="2" fill="#fff3cd" opacity="0.5"/>
+  <text x="85" y="459" font-family="Courier New, monospace" font-size="10" fill="#0066cc">const { showPreview } = await import('/scripts/ipynb-helpers.js');</text>
+  <text x="85" y="476" font-family="Courier New, monospace" font-size="10" fill="#333">await showPreview('accordion', content);</text>
+  
+  <!-- Overlay Backdrop -->
+  <rect x="500" y="200" width="250" height="300" rx="6" fill="#000" opacity="0.15"/>
+  
+  <!-- Preview Window -->
+  <rect x="490" y="190" width="250" height="300" rx="6" fill="#fff" stroke="#333" stroke-width="2"/>
+  <rect x="490" y="190" width="250" height="35" rx="6" fill="#2c3e50"/>
+  <text x="615" y="212" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">Preview Overlay</text>
+  <circle cx="720" cy="207" r="10" fill="#ff5f57"/>
+  <text x="720" y="211" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">×</text>
+  
+  <!-- Accordion Items in Preview -->
+  <rect x="510" y="240" width="210" height="35" rx="4" fill="#e3f2fd" stroke="#1976d2" stroke-width="1"/>
+  <text x="520" y="262" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#1565c0">▶ What is EDS?</text>
+  
+  <rect x="510" y="285" width="210" height="100" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1"/>
+  <text x="520" y="307" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#2e7d32">▼ How do blocks work?</text>
+  <text x="530" y="327" font-family="Arial, sans-serif" font-size="9" fill="#555">Blocks transform DOM</text>
+  <text x="530" y="342" font-family="Arial, sans-serif" font-size="9" fill="#555">elements using JavaScript</text>
+  <text x="530" y="357" font-family="Arial, sans-serif" font-size="9" fill="#555">decoration functions...</text>
+  
+  <rect x="510" y="395" width="210" height="35" rx="4" fill="#fff3e0" stroke="#f57c00" stroke-width="1"/>
+  <text x="520" y="417" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#e65100">▶ Why notebooks?</text>
+  
+  <!-- ESC Hint -->
+  <rect x="515" y="455" width="160" height="20" rx="10" fill="#f0f0f0" stroke="#999" stroke-width="1"/>
+  <text x="595" y="469" font-family="Arial, sans-serif" font-size="9" fill="#666" text-anchor="middle">Press ESC to close</text>
+  
+  <!-- Arrow -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#1a73e8"/>
+    </marker>
+  </defs>
+  <line x1="450" y1="280" x2="485" y2="315" stroke="#1a73e8" stroke-width="2" marker-end="url(#arrowhead)" stroke-dasharray="5,5"/>
+  <text x="440" y="295" font-family="Arial, sans-serif" font-size="10" fill="#1a73e8" font-weight="bold">Click Run</text>
+  
+  <!-- Features -->
+  <circle cx="80" cy="555" r="15" fill="#4caf50" opacity="0.2"/>
+  <text x="80" y="560" font-size="18" text-anchor="middle">🚀</text>
+  <text x="105" y="560" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">No Setup</text>
+  
+  <circle cx="230" cy="555" r="15" fill="#2196f3" opacity="0.2"/>
+  <text x="230" y="560" font-size="18" text-anchor="middle">📦</text>
+  <text x="255" y="560" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Import as Needed</text>
+  
+  <circle cx="420" cy="555" r="15" fill="#ff9800" opacity="0.2"/>
+  <text x="420" y="560" font-size="18" text-anchor="middle">🔒</text>
+  <text x="445" y="560" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Read-Only</text>
+  
+  <circle cx="580" cy="555" r="15" fill="#9c27b0" opacity="0.2"/>
+  <text x="580" y="560" font-size="18" text-anchor="middle">👁️</text>
+  <text x="605" y="560" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#333">Live Previews</text>
+</svg>

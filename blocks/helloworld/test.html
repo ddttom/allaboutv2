@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Hello World Block Styles -->
+    <link rel="stylesheet" href="/blocks/helloworld/helloworld.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-info strong {
+            font-weight: 600;
+        }
+
+        .test-section {
+            margin: 2rem auto;
+            max-width: 1400px;
+            padding: 0 1rem;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Block wrapper for consistent spacing */
+        .block-wrapper {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1400px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #667eea;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Hello World Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>helloworld</code></p>
+        <p><strong>Test Count:</strong> <code>4 test scenarios</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Visual and functional testing of the simplest EDS block for learning and validation</p>
+    </div>
+
+    <main>
+        <!-- Test 1: Basic Hello World -->
+        <div class="test-section">
+            <h3>Test 1: Basic Hello World Block</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Gray box with centered, bold "Hello World" text. Background color #f0f0f0, text color #333, 20px padding, 5px border radius.</p>
+                <p><strong>Validation:</strong> Check DOM structure has single div child with "Hello World" text. Verify CSS styling applied.</p>
+            </div>
+            <div class="block-wrapper">
+                <div class="helloworld block">
+                    <!-- Content will be replaced by decorate function -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Multiple Blocks -->
+        <div class="test-section">
+            <h3>Test 2: Multiple Hello World Blocks</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Three separate Hello World blocks, each independently decorated. Each should display "Hello World" with identical styling.</p>
+                <p><strong>Validation:</strong> Verify each block decorated separately. No interference between blocks. All have correct styling.</p>
+            </div>
+            <div class="block-wrapper">
+                <div class="helloworld block">
+                    <!-- First block -->
+                </div>
+
+                <p style="margin: 2rem 0; text-align: center; color: #666;">Content between blocks (should be visible)</p>
+
+                <div class="helloworld block">
+                    <!-- Second block -->
+                </div>
+
+                <p style="margin: 2rem 0; text-align: center; color: #666;">More content between blocks</p>
+
+                <div class="helloworld block">
+                    <!-- Third block -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: With Initial Content -->
+        <div class="test-section">
+            <h3>Test 3: Block with Initial Content (Replaced)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Block starts with initial content, but decorate function clears it and replaces with "Hello World".</p>
+                <p><strong>Validation:</strong> Confirm original content is removed. Only "Hello World" displays. Demonstrates block.textContent = '' pattern.</p>
+            </div>
+            <div class="block-wrapper">
+                <div class="helloworld block">
+                    <div>This is original content from markdown</div>
+                    <div>It should be completely replaced</div>
+                    <div>You should only see "Hello World"</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: Responsive Behavior -->
+        <div class="test-section">
+            <h3>Test 4: Responsive Behavior</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Block maintains consistent appearance across all viewport sizes. No breakpoint-specific changes. Text remains readable on mobile.</p>
+                <p><strong>Validation:</strong> Resize browser window from mobile (< 600px) to desktop (> 1024px). Block should look consistent at all sizes.</p>
+            </div>
+            <div class="block-wrapper">
+                <div class="helloworld block">
+                    <!-- Test responsive behavior -->
+                </div>
+                <p style="margin-top: 1rem; text-align: center; color: #666; font-size: 0.9rem;">
+                    <strong>Test:</strong> Resize browser window to test responsive behavior
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate from '/blocks/helloworld/helloworld.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Log block structure for debugging
+        function logBlockStructure(block, index, testName) {
+            console.log(`\n=== ${testName} - Block ${index + 1} ===`);
+            console.log('Before decoration:');
+            console.log('  Children count:', block.children.length);
+            console.log('  Text content:', block.textContent.substring(0, 50) + (block.textContent.length > 50 ? '...' : ''));
+        }
+
+        // Log final structure
+        function logFinalStructure(block, index, testName) {
+            console.log(`\nAfter decoration:`);
+            console.log('  Children count:', block.children.length);
+            console.log('  First child type:', block.firstElementChild?.tagName);
+            console.log('  First child text:', block.firstElementChild?.textContent);
+
+            // Verify structure
+            if (block.children.length === 1 &&
+                block.firstElementChild.textContent === 'Hello World') {
+                console.log('✓ Structure is correct');
+            } else {
+                console.error('✗ Unexpected structure');
+            }
+        }
+
+        // Verify CSS styling
+        function verifyStyling(block, index, testName) {
+            console.log(`\n=== CSS Validation (${testName} - Block ${index + 1}) ===`);
+
+            const styles = window.getComputedStyle(block);
+            const checks = [
+                { name: 'Background color', value: styles.backgroundColor, expected: 'rgb(240, 240, 240)' },
+                { name: 'Padding', value: styles.padding, expected: '20px' },
+                { name: 'Border radius', value: styles.borderRadius, expected: '5px' },
+                { name: 'Text align', value: styles.textAlign, expected: 'center' },
+                { name: 'Font size', value: styles.fontSize, expected: '24px' },
+                { name: 'Font weight', value: styles.fontWeight, expected: '700' },
+                { name: 'Color', value: styles.color, expected: 'rgb(51, 51, 51)' }
+            ];
+
+            let errors = 0;
+            checks.forEach(check => {
+                if (check.value === check.expected) {
+                    console.log(`✓ ${check.name}: ${check.value}`);
+                } else {
+                    console.warn(`✗ ${check.name}: ${check.value} (expected: ${check.expected})`);
+                    errors++;
+                }
+            });
+
+            if (errors === 0) {
+                console.log('✓ All CSS properties correct');
+            } else {
+                console.warn(`⚠ ${errors} CSS property mismatches (may be due to browser defaults)`);
+            }
+        }
+
+        // Initialize all helloworld blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating blocks...', 'info');
+
+                // Get all helloworld blocks
+                const helloworldBlocks = document.querySelectorAll('.helloworld.block');
+
+                if (helloworldBlocks.length === 0) {
+                    throw new Error('No helloworld blocks found');
+                }
+
+                console.log(`\n${'='.repeat(60)}`);
+                console.log('Hello World Block Test Suite');
+                console.log('='.repeat(60));
+                console.log(`\nFound ${helloworldBlocks.length} blocks to decorate\n`);
+
+                // Group blocks by test section
+                const testSections = document.querySelectorAll('.test-section');
+                let totalBlocks = 0;
+
+                testSections.forEach((section, sectionIndex) => {
+                    const testName = section.querySelector('h3').textContent;
+                    const blocks = section.querySelectorAll('.helloworld.block');
+
+                    console.log(`\n${'='.repeat(60)}`);
+                    console.log(`Test ${sectionIndex + 1}: ${testName}`);
+                    console.log('='.repeat(60));
+
+                    blocks.forEach((block, blockIndex) => {
+                        console.log(`\n--- Block ${blockIndex + 1} of ${blocks.length} ---`);
+
+                        // Log initial structure
+                        logBlockStructure(block, blockIndex, testName);
+
+                        // Run decoration
+                        try {
+                            decorate(block);
+                            console.log('✓ Decoration completed successfully');
+                        } catch (error) {
+                            console.error(`✗ Decoration failed:`, error);
+                            throw error;
+                        }
+
+                        // Log final structure
+                        logFinalStructure(block, blockIndex, testName);
+
+                        // Verify styling (only for first block to avoid repetition)
+                        if (blockIndex === 0) {
+                            verifyStyling(block, blockIndex, testName);
+                        }
+
+                        totalBlocks++;
+                    });
+                });
+
+                updateStatus(`✓ ${totalBlocks} blocks loaded successfully`, 'success');
+
+                console.log('\n' + '='.repeat(60));
+                console.log('All Hello World blocks decorated successfully!');
+                console.log('='.repeat(60));
+                console.log('\nTest Instructions:');
+                console.log('1. Visually inspect each block for correct styling');
+                console.log('2. Verify "Hello World" text displays in all blocks');
+                console.log('3. Resize browser window to test responsive behavior');
+                console.log('4. Check that Test 3 replaced original content');
+                console.log('5. Review console output for validation details');
+                console.log('\nExpected Result:');
+                console.log('- All blocks show "Hello World" in gray boxes');
+                console.log('- Text is centered and bold');
+                console.log('- Consistent styling across all blocks');
+                console.log('- No JavaScript errors in console');
+
+            } catch (error) {
+                console.error('Failed to initialize helloworld blocks:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Visual Inspection:</strong> Scroll through all test sections and verify blocks display correctly
+                <ul>
+                    <li>Gray background (#f0f0f0)</li>
+                    <li>Dark gray text (#333)</li>
+                    <li>"Hello World" text centered and bold</li>
+                    <li>20px padding around content</li>
+                    <li>5px border radius (slightly rounded corners)</li>
+                </ul>
+            </li>
+            <li><strong>Structure Verification:</strong> Open browser DevTools (F12) and inspect blocks
+                <ul>
+                    <li>Block has <code>.helloworld</code> and <code>.block</code> classes</li>
+                    <li>Contains single <code>&lt;div&gt;</code> child</li>
+                    <li>Child div contains "Hello World" text</li>
+                    <li>No other elements inside block</li>
+                </ul>
+            </li>
+            <li><strong>Multiple Blocks Test:</strong> Verify Test 2 section
+                <ul>
+                    <li>Three separate blocks display</li>
+                    <li>Content between blocks is visible</li>
+                    <li>All blocks styled identically</li>
+                    <li>No interference between blocks</li>
+                </ul>
+            </li>
+            <li><strong>Content Replacement Test:</strong> Verify Test 3 section
+                <ul>
+                    <li>Original content completely removed</li>
+                    <li>Only "Hello World" displays</li>
+                    <li>No traces of initial content</li>
+                    <li>Demonstrates block.textContent = '' pattern</li>
+                </ul>
+            </li>
+            <li><strong>Responsive Testing:</strong> Resize browser window
+                <ul>
+                    <li>Mobile (< 600px): Text readable, styling consistent</li>
+                    <li>Tablet (600-1024px): Same appearance</li>
+                    <li>Desktop (> 1024px): Same appearance</li>
+                    <li>No layout changes at any breakpoint</li>
+                </ul>
+            </li>
+            <li><strong>Console Output:</strong> Review console logs
+                <ul>
+                    <li>Decoration process logged for each block</li>
+                    <li>Structure validation results</li>
+                    <li>CSS property verification</li>
+                    <li>No error messages</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Test 1:</strong> Single Hello World block with correct styling</li>
+            <li><strong>Test 2:</strong> Three independent blocks, each decorated separately</li>
+            <li><strong>Test 3:</strong> Original content replaced with "Hello World"</li>
+            <li><strong>Test 4:</strong> Consistent appearance across all viewport sizes</li>
+        </ul>
+
+        <h3>Success Criteria</h3>
+        <ul>
+            <li><strong>Visual:</strong> All blocks display "Hello World" in styled gray boxes</li>
+            <li><strong>Structure:</strong> Each block contains single div with text content</li>
+            <li><strong>Styling:</strong> CSS properties match expected values</li>
+            <li><strong>Functionality:</strong> Original content replaced, decoration successful</li>
+            <li><strong>Console:</strong> No errors, all validations pass</li>
+            <li><strong>Responsive:</strong> Consistent at all screen sizes</li>
+        </ul>
+
+        <h3>Learning Points</h3>
+        <ul>
+            <li><strong>Decorate Pattern:</strong> Function receives block element, modifies it in place</li>
+            <li><strong>DOM Manipulation:</strong> createElement, textContent, appendChild pattern</li>
+            <li><strong>Content Clearing:</strong> block.textContent = '' removes all children</li>
+            <li><strong>CSS Application:</strong> Styles applied via .helloworld class selector</li>
+            <li><strong>EDS Pipeline:</strong> Blocks automatically decorated by EDS</li>
+        </ul>
+
+        <h3>Common Issues & Solutions</h3>
+        <ul>
+            <li><strong>Block not appearing:</strong> Check JavaScript console for errors, verify files loaded</li>
+            <li><strong>No styling:</strong> Verify CSS file loads, check .helloworld class exists</li>
+            <li><strong>Original content visible:</strong> Decoration not running, check console</li>
+            <li><strong>Multiple "Hello World":</strong> Expected in Test 2, each block decorated independently</li>
+        </ul>
+
+        <h3>Next Steps</h3>
+        <ul>
+            <li>Modify JavaScript to use markdown content instead of "Hello World"</li>
+            <li>Add CSS variations (large, colored, animated)</li>
+            <li>Create your own simple block based on this template</li>
+            <li>Explore more complex blocks (tabs, accordion, cards)</li>
+        </ul>
+
+        <h3>Browser Compatibility</h3>
+        <ul>
+            <li><strong>Fully Supported:</strong> Chrome, Firefox, Safari, Edge (last 2 versions)</li>
+            <li><strong>Mobile:</strong> iOS Safari, Android Chrome (last 2 versions)</li>
+            <li><strong>APIs Used:</strong> createElement, textContent, appendChild (universal support)</li>
+        </ul>
+
+        <h3>Additional Resources</h3>
+        <ul>
+            <li><strong>README.md:</strong> Complete technical documentation</li>
+            <li><strong>EXAMPLE.md:</strong> Content author guide and usage examples</li>
+            <li><strong>helloworld.js:</strong> 6 lines of decoration code</li>
+            <li><strong>helloworld.css:</strong> 9 style declarations</li>
+        </ul>
+    </div>
+</body>
+</html>

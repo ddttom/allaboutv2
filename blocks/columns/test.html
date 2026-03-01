@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Columns Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Columns Block Styles -->
+    <link rel="stylesheet" href="/blocks/columns/columns.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-info strong {
+            font-weight: 600;
+        }
+
+        .test-section {
+            margin: 2rem auto;
+            max-width: 1400px;
+            padding: 0 1rem;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Columns wrapper for consistent spacing */
+        .columns-wrapper {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1400px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #667eea;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        /* Test-specific helpers */
+        .columns h2, .columns h3 {
+            margin-top: 0;
+        }
+
+        .columns p {
+            line-height: 1.6;
+            margin: 0.5rem 0;
+        }
+
+        .columns ul {
+            padding-left: 1.5rem;
+        }
+
+        .columns li {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Columns Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>columns</code></p>
+        <p><strong>Test Count:</strong> <code>7 test scenarios</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Visual and functional testing of multi-column layouts with responsive behavior</p>
+    </div>
+
+    <main>
+        <!-- Test 1: Basic Two Columns (Text Only) -->
+        <div class="test-section">
+            <h3>Test 1: Basic Two Columns (Text Only)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Two equal-width columns on desktop (>= 900px). Stacked vertically on mobile (< 900px). CSS class <code>.columns-2-cols</code> applied.</p>
+                <p><strong>Validation:</strong> Resize browser to test breakpoint. Check for <code>columns-2-cols</code> class. Verify 32px gap between columns on desktop.</p>
+            </div>
+            <div class="columns-wrapper">
+                <div class="columns block">
+                    <div>
+                        <div>
+                            <h3>Column 1</h3>
+                            <p>This is the first column with text content. On desktop, it appears on the left side. On mobile, it appears at the top.</p>
+                        </div>
+                        <div>
+                            <h3>Column 2</h3>
+                            <p>This is the second column with text content. On desktop, it appears on the right side. On mobile, it appears below column 1.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Image + Text (Standard Layout) -->
+        <div class="test-section">
+            <h3>Test 2: Image + Text (Standard Layout)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Image column marked with <code>.columns-img-col</code> class. On mobile, image appears first (order: 0). On desktop, side-by-side layout with image left.</p>
+                <p><strong>Validation:</strong> Check for <code>columns-img-col</code> class on image column. Verify image is full width. Test mobile ordering (image first).</p>
+            </div>
+            <div class="columns-wrapper">
+                <div class="columns block">
+                    <div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Sample image demonstrating columns layout">
+                            </picture>
+                        </div>
+                        <div>
+                            <h2>Lightning Fast Performance</h2>
+                            <p>Experience blazing fast load times with our edge delivery network. Optimized caching and global distribution ensure your content reaches users instantly, no matter where they are.</p>
+                            <p>Our platform achieves perfect Lighthouse scores out of the box with minimal configuration required.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: Text + Image (Reversed Layout) -->
+        <div class="test-section">
+            <h3>Test 3: Text + Image (Reversed Layout)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Text left, image right on desktop. On mobile, image still appears first (before text) due to <code>order: 0</code> on <code>columns-img-col</code>.</p>
+                <p><strong>Validation:</strong> Desktop: text left, image right. Mobile: image top, text bottom. Both scenarios maintain proper ordering.</p>
+            </div>
+            <div class="columns-wrapper">
+                <div class="columns block">
+                    <div>
+                        <div>
+                            <h2>Seamless Integration</h2>
+                            <p>Connect with your existing tools and workflows effortlessly. Our platform supports all major integrations and provides flexible API access for custom solutions.</p>
+                            <p>Built with developers in mind, our comprehensive documentation makes integration straightforward and maintainable.</p>
+                        </div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg" alt="Integration demonstration">
+                            </picture>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: Three Columns (Equal Width) -->
+        <div class="test-section">
+            <h3>Test 4: Three Columns (Equal Width)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Three equal-width columns (33.33% each) on desktop. CSS class <code>.columns-3-cols</code> applied. Stacks vertically on mobile.</p>
+                <p><strong>Validation:</strong> Check for <code>columns-3-cols</code> class. Verify equal widths. Test mobile stacking behavior.</p>
+            </div>
+            <div class="columns-wrapper">
+                <div class="columns block">
+                    <div>
+                        <div>
+                            <h3>Performance</h3>
+                            <p>Optimized for speed with perfect Lighthouse scores. Edge delivery ensures fast load times globally.</p>
+                        </div>
+                        <div>
+                            <h3>Authoring</h3>
+                            <p>Content creators use familiar tools. No technical knowledge required. Simple and intuitive interface.</p>
+                        </div>
+                        <div>
+                            <h3>Scalability</h3>
+                            <p>Handle unlimited traffic with ease. Built on robust infrastructure for global scale without limits.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 5: Four Columns (Features Grid) -->
+        <div class="test-section">
+            <h3>Test 5: Four Columns (Features Grid)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Four equal-width columns (25% each) on desktop. CSS class <code>.columns-4-cols</code> applied. May become crowded on smaller desktops.</p>
+                <p><strong>Validation:</strong> Check for <code>columns-4-cols</code> class. Test at various desktop widths. Verify mobile stacking.</p>
+            </div>
+            <div class="columns-wrapper">
+                <div class="columns block">
+                    <div>
+                        <div>
+                            <h3>Fast</h3>
+                            <p>Lightning quick content delivery worldwide.</p>
+                        </div>
+                        <div>
+                            <h3>Simple</h3>
+                            <p>Easy to use with familiar authoring tools.</p>
+                        </div>
+                        <div>
+                            <h3>Secure</h3>
+                            <p>Enterprise-ready security and compliance.</p>
+                        </div>
+                        <div>
+                            <h3>Scalable</h3>
+                            <p>Grows with your business needs seamlessly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 6: Rich Content (Lists, Formatting) -->
+        <div class="test-section">
+            <h3>Test 6: Rich Content (Lists, Formatting)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Columns can contain any HTML content including lists, bold text, multiple paragraphs. Content maintains formatting within columns.</p>
+                <p><strong>Validation:</strong> Verify lists render correctly. Check text formatting (bold, italic). Ensure multiple paragraphs display properly.</p>
+            </div>
+            <div class="columns-wrapper">
+                <div class="columns block">
+                    <div>
+                        <div>
+                            <h3>Features List</h3>
+                            <p><strong>Key capabilities:</strong></p>
+                            <ul>
+                                <li>Edge delivery network</li>
+                                <li>Automatic optimization</li>
+                                <li>Global CDN distribution</li>
+                                <li>Real-time updates</li>
+                            </ul>
+                            <p><em>All included in every plan.</em></p>
+                        </div>
+                        <div>
+                            <h3>Benefits Overview</h3>
+                            <p>Our platform provides <strong>comprehensive solutions</strong> for modern content delivery.</p>
+                            <p>Experience faster load times, improved SEO rankings, and better user engagement metrics across all devices.</p>
+                            <p><strong>Result:</strong> Higher conversion rates and satisfied users.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 7: Multiple Images -->
+        <div class="test-section">
+            <h3>Test 7: Multiple Images in Columns</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Multiple image columns, each marked with <code>columns-img-col</code>. Images maintain aspect ratio. All are full-width within their columns.</p>
+                <p><strong>Validation:</strong> Check each image column for <code>columns-img-col</code> class. Verify images scale properly. Test mobile stacking.</p>
+            </div>
+            <div class="columns-wrapper">
+                <div class="columns block">
+                    <div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg" alt="Sample 1">
+                            </picture>
+                        </div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg" alt="Sample 2">
+                            </picture>
+                        </div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png" alt="Sample 3">
+                            </picture>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate from '/blocks/columns/columns.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Log column structure for debugging
+        function logColumnStructure(block, index) {
+            console.log(`\n=== Columns Block ${index + 1} ===`);
+            console.log('Initial children count:', block.children.length);
+
+            const firstRow = block.firstElementChild;
+            if (firstRow) {
+                const cols = Array.from(firstRow.children);
+                console.log(`Column count: ${cols.length}`);
+                cols.forEach((col, i) => {
+                    const hasImage = col.querySelector('picture') !== null;
+                    console.log(`  Column ${i + 1}: ${hasImage ? 'IMAGE' : 'TEXT'}`);
+                });
+            }
+        }
+
+        // Log final structure
+        function logFinalStructure(block, index) {
+            console.log(`\n=== After Decoration (Block ${index + 1}) ===`);
+
+            // Check for column count class
+            const classes = Array.from(block.classList);
+            const colClass = classes.find(cls => cls.startsWith('columns-') && cls.endsWith('-cols'));
+            console.log('Column count class:', colClass || 'NOT FOUND');
+
+            // Check for image column classes
+            const imgCols = block.querySelectorAll('.columns-img-col');
+            console.log('Image columns found:', imgCols.length);
+            imgCols.forEach((col, i) => {
+                console.log(`  Image column ${i + 1}: order=${getComputedStyle(col).order}`);
+            });
+
+            // Check layout
+            const rows = block.children;
+            console.log('Rows:', rows.length);
+            Array.from(rows).forEach((row, i) => {
+                const cols = row.children;
+                console.log(`  Row ${i + 1}: ${cols.length} columns`);
+            });
+        }
+
+        // Verify responsive behavior
+        function verifyResponsive(block, index) {
+            console.log(`\n=== Responsive Check (Block ${index + 1}) ===`);
+
+            const firstRow = block.querySelector(':scope > div');
+            if (firstRow) {
+                const flexDirection = getComputedStyle(firstRow).flexDirection;
+                const gap = getComputedStyle(firstRow).gap;
+                const alignItems = getComputedStyle(firstRow).alignItems;
+
+                console.log('Flex direction:', flexDirection);
+                console.log('Gap:', gap);
+                console.log('Align items:', alignItems);
+
+                // Check viewport width
+                const width = window.innerWidth;
+                console.log('Viewport width:', width);
+                if (width >= 900) {
+                    console.log('✓ Desktop layout expected');
+                } else {
+                    console.log('✓ Mobile layout expected');
+                }
+            }
+        }
+
+        // Initialize all columns blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating blocks...', 'info');
+
+                // Get all columns blocks
+                const columnsBlocks = document.querySelectorAll('.columns.block');
+
+                if (columnsBlocks.length === 0) {
+                    throw new Error('No columns blocks found');
+                }
+
+                console.log(`Found ${columnsBlocks.length} columns blocks to decorate`);
+
+                // Decorate each columns block
+                columnsBlocks.forEach((block, index) => {
+                    console.log(`\n${'='.repeat(50)}`);
+                    console.log(`Processing Columns Block ${index + 1}`);
+                    console.log('='.repeat(50));
+
+                    // Log initial structure
+                    logColumnStructure(block, index);
+
+                    // Run decoration
+                    try {
+                        decorate(block);
+                        console.log('✓ Decoration completed successfully');
+                    } catch (error) {
+                        console.error(`✗ Decoration failed:`, error);
+                        throw error;
+                    }
+
+                    // Log final structure
+                    logFinalStructure(block, index);
+
+                    // Verify responsive behavior
+                    verifyResponsive(block, index);
+                });
+
+                updateStatus(`✓ ${columnsBlocks.length} columns blocks loaded successfully`, 'success');
+
+                console.log('\n' + '='.repeat(50));
+                console.log('All columns blocks decorated successfully!');
+                console.log('='.repeat(50));
+                console.log('\nTest Instructions:');
+                console.log('1. Resize browser window to test responsive breakpoint (900px)');
+                console.log('2. Check DevTools Elements panel for CSS classes');
+                console.log('3. Verify image columns have .columns-img-col class');
+                console.log('4. Test on actual mobile device for true mobile experience');
+                console.log('5. Check image ordering on mobile (should appear first)');
+
+            } catch (error) {
+                console.error('Failed to initialize columns blocks:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+
+        // Add resize listener to log responsive changes
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                console.log('\n=== Window Resized ===');
+                console.log('New width:', window.innerWidth);
+                if (window.innerWidth >= 900) {
+                    console.log('Desktop layout active');
+                } else {
+                    console.log('Mobile layout active');
+                }
+            }, 250);
+        });
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Visual Inspection:</strong> Scroll through all test sections and verify columns display correctly
+                <ul>
+                    <li>Desktop (>= 900px): Side-by-side columns</li>
+                    <li>Mobile (< 900px): Stacked vertically</li>
+                    <li>Images: Full width within columns</li>
+                    <li>Gap: 32px between columns on desktop</li>
+                </ul>
+            </li>
+            <li><strong>Responsive Testing:</strong> Resize browser window and observe:
+                <ul>
+                    <li>At 899px: Columns stack vertically</li>
+                    <li>At 900px: Columns switch to side-by-side</li>
+                    <li>At 1200px+: Comfortable desktop layout</li>
+                    <li>Image columns appear first on mobile</li>
+                </ul>
+            </li>
+            <li><strong>CSS Class Verification:</strong> Inspect elements in DevTools:
+                <ul>
+                    <li>Block has <code>.columns</code> and <code>.columns-N-cols</code> classes</li>
+                    <li>Image-only columns have <code>.columns-img-col</code> class</li>
+                    <li>Check computed styles: <code>flex-direction</code>, <code>gap</code>, <code>order</code></li>
+                </ul>
+            </li>
+            <li><strong>Content Testing:</strong> Verify different content types:
+                <ul>
+                    <li>Text-only columns render properly</li>
+                    <li>Image-only columns display correctly</li>
+                    <li>Mixed content (text + images) works</li>
+                    <li>Rich content (lists, formatting) maintains structure</li>
+                </ul>
+            </li>
+            <li><strong>Image Testing:</strong> Check image handling:
+                <ul>
+                    <li>Images are full width in their columns</li>
+                    <li>Aspect ratio is preserved</li>
+                    <li>Images load correctly</li>
+                    <li>Mobile: Images appear before text</li>
+                </ul>
+            </li>
+            <li><strong>Mobile Device Testing:</strong> Test on actual devices:
+                <ul>
+                    <li>iOS Safari</li>
+                    <li>Android Chrome</li>
+                    <li>Various screen sizes</li>
+                    <li>Portrait and landscape orientations</li>
+                </ul>
+            </li>
+            <li><strong>Console Output:</strong> Review console logs for:
+                <ul>
+                    <li>Column count detection</li>
+                    <li>Image column identification</li>
+                    <li>CSS class application</li>
+                    <li>Responsive layout changes</li>
+                    <li>Any errors or warnings</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Test 1:</strong> Two text columns, equal width, side-by-side on desktop</li>
+            <li><strong>Test 2:</strong> Image left, text right on desktop; image first on mobile</li>
+            <li><strong>Test 3:</strong> Text left, image right on desktop; image first on mobile</li>
+            <li><strong>Test 4:</strong> Three equal columns on desktop, stacked on mobile</li>
+            <li><strong>Test 5:</strong> Four equal columns on desktop (may be tight), stacked on mobile</li>
+            <li><strong>Test 6:</strong> Rich content (lists, formatting) renders correctly in columns</li>
+            <li><strong>Test 7:</strong> Multiple images in separate columns, all full-width</li>
+        </ul>
+
+        <h3>Key Features to Verify</h3>
+        <ul>
+            <li><strong>Automatic Column Detection:</strong> Correct <code>.columns-N-cols</code> class applied</li>
+            <li><strong>Image Column Recognition:</strong> <code>.columns-img-col</code> class on image-only columns</li>
+            <li><strong>Mobile Ordering:</strong> Image columns have <code>order: 0</code> (appear first)</li>
+            <li><strong>Desktop Layout:</strong> Flexbox horizontal layout with 32px gap</li>
+            <li><strong>Equal Widths:</strong> All columns have <code>flex: 1</code> on desktop</li>
+            <li><strong>Vertical Centering:</strong> <code>align-items: center</code> on desktop</li>
+        </ul>
+
+        <h3>Responsive Breakpoints</h3>
+        <ul>
+            <li><strong>&lt; 900px (Mobile):</strong>
+                <ul>
+                    <li><code>flex-direction: column</code></li>
+                    <li>Image columns: <code>order: 0</code></li>
+                    <li>Text columns: <code>order: 1</code></li>
+                    <li>No gap between columns</li>
+                </ul>
+            </li>
+            <li><strong>&gt;= 900px (Desktop):</strong>
+                <ul>
+                    <li><code>flex-direction: unset</code> (row)</li>
+                    <li><code>gap: 32px</code></li>
+                    <li><code>align-items: center</code></li>
+                    <li><code>flex: 1</code> on all columns</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Known Limitations</h3>
+        <ul>
+            <li><strong>Fixed Breakpoint:</strong> 900px only (no custom breakpoints)</li>
+            <li><strong>Equal Widths:</strong> Cannot specify column ratios without CSS override</li>
+            <li><strong>No Nesting:</strong> Cannot nest columns blocks</li>
+            <li><strong>Image Detection:</strong> Only works if picture is sole content in column</li>
+        </ul>
+
+        <h3>Debugging Tips</h3>
+        <ul>
+            <li>Check browser console for detailed logs and structure information</li>
+            <li>Use DevTools Elements panel to inspect CSS classes and computed styles</li>
+            <li>Resize window and watch console for responsive layout changes</li>
+            <li>Verify <code>columns.css</code> loads correctly in Network tab</li>
+            <li>Check for JavaScript errors in Console tab</li>
+            <li>Use DevTools device emulation for mobile testing</li>
+        </ul>
+
+        <h3>Browser Compatibility</h3>
+        <ul>
+            <li><strong>Supported:</strong> Chrome, Firefox, Safari, Edge (last 2 versions)</li>
+            <li><strong>Mobile:</strong> iOS Safari, Android Chrome (last 2 versions)</li>
+            <li><strong>Requirements:</strong> CSS Flexbox, ES6 JavaScript (spread operator, arrow functions)</li>
+            <li><strong>Partial:</strong> IE11 (requires Babel transpilation)</li>
+        </ul>
+
+        <h3>Performance Notes</h3>
+        <ul>
+            <li><strong>Decoration Time:</strong> < 1ms per block</li>
+            <li><strong>JavaScript Size:</strong> 568 bytes (unminified)</li>
+            <li><strong>CSS Size:</strong> 425 bytes (unminified)</li>
+            <li><strong>No Layout Shift:</strong> CSS applies before JavaScript runs</li>
+            <li><strong>No Event Listeners:</strong> Zero runtime overhead</li>
+        </ul>
+    </div>
+</body>
+</html>

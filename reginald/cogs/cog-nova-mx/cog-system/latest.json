@@ -1,0 +1,24 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "cog-system",
+  "version": "1.0",
+  "description": "What COGs are, how they work, and the ecosystem behind them",
+  "author": "Tom Cranstoun",
+  "maintainer": [],
+  "license": "MIT",
+  "status": "draft",
+  "category": "specification",
+  "tags": [
+    "cog",
+    "system",
+    "specification",
+    "mx-reginald"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-08",
+  "modified": "2026-02-28",
+  "source_path": "allaboutv2/cogs/mx-reginald/cog-system.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/allaboutv2/cogs/mx-reginald/cog-system.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/cog-system/content.md"
+}

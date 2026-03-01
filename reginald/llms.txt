@@ -1,0 +1,42 @@
+# REGINALD - MX COG Registry
+> Registry for Genuine Information, Notarised Authentication, and Legitimate Documentation
+
+This is a machine-readable registry of COGs (Contextual Operations Guides) -
+structured documentation that serves both humans and AI agents.
+
+## What is REGINALD?
+REGINALD provides verified, machine-readable documentation for AI agents.
+Instead of scraping websites and guessing, AI agents query REGINALD for
+authoritative answers with provenance and trust indicators.
+
+## API Endpoints
+- GET /reginald/api/v1/cogs.json - List all registered COGs
+- GET /reginald/api/v1/stats.json - Registry statistics
+- GET /reginald/cogs/{namespace}/{name}/latest.json - COG metadata
+- GET /reginald/cogs/{namespace}/{name}/content.md - Raw COG content
+
+## Response Format
+All JSON endpoints return structured data with:
+- namespace: Publisher identifier
+- name: COG identifier
+- version: Semantic version
+- compliance_level: Trust tier (1-5)
+- tags: Discoverable keywords
+- source_url: Original source location
+
+## Current Registry
+- Publisher: Cog-Nova-MX Ltd
+- Namespace: cog-nova-mx
+- Total COGs: 155
+- Compliance: Level 2 (Structured, no signing)
+
+## Contact
+- Website: https://allabout.network
+- Email: tom.cranstoun@gmail.com
+- Registry: https://allabout.network/reginald/
+
+## Standards
+- COG Format: https://allabout.network/reginald/docs/cog-format
+- REGINALD API: https://allabout.network/reginald/docs/api
+
+Generated: 2026-02-28T13:11:09.136Z

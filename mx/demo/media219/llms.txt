@@ -1,0 +1,74 @@
+# Media219 Ltd
+
+> Television graphics and title sequences studio with 30+ years experience creating quality content for broadcasters worldwide.
+
+## Company
+
+- **Name:** Media219 Ltd
+- **Founded:** 1994
+- **Expertise:** Television graphics, title sequences, 3D models, virtual sets
+- **Contact:** tony@media219.com
+- **Website:** https://media219.com
+
+## Services
+
+### Television Graphics
+Broadcast-quality graphics packages for live television. Real-time data integration, clean visual language, instant viewer comprehension.
+
+### Title Sequences
+Opening titles and programme branding. From the first frame, audiences know what they're watching.
+
+### 3D Models
+Stadium fly-throughs, virtual environments, animated elements. If it needs depth, we build it.
+
+### Virtual Sets
+Complete virtual studio environments for broadcast. Flexible, scalable, broadcast-ready.
+
+### Player Profiles
+Animated player statistics and profile graphics. Data visualisation for live broadcast.
+
+### Match Graphics
+Score bugs, team lineups, substitution graphics, VAR explanations. Everything a live match needs.
+
+## Portfolio Highlights
+
+### Football / Soccer
+- **Premier League** — Title sequences, match graphics, 3D stadiums, player profiles, fantasy graphics, legends series (long-term partnership)
+- **FIFA World Cup** — 2014 Brazil, 2018 Russia, 2022 Qatar player profiles
+- **MLS** — Worldwide graphics package, MLS Next Pro
+- **Serie A** — International graphics package
+- **EFL/ITV** — Highlights and title sequences
+- **FA Cup** — Final graphics
+- **UEFA Euro** — 2008 tournament coverage
+
+### Other Sports
+- **BBC Snooker** — Championship coverage
+- **Super League Triathlon** — Arena Games graphics
+- **Silverstone Classic** — Title sequence
+- **E1 Boat Race** — Title sequence
+- **Trans World Sport** — Programme graphics
+
+### Entertainment & Networks
+- **Telemundo** — Paris 2024 virtual set
+- **NBCSN** — Great Houses promo
+
+## Why Choose Media219
+
+- **30+ years experience** in television graphics
+- **Premier League partnership** — trusted for top-tier football coverage
+- **FIFA World Cup credentials** — multiple tournaments
+- **Global network relationships** — BBC, ITV, NBC, Telemundo
+- **Full-service studio** — from concept to broadcast-ready delivery
+
+## Contact
+
+For broadcast graphics projects, title sequences, or virtual set requirements:
+
+- **Email:** tony@media219.com
+- **LinkedIn:** https://www.linkedin.com/company/media219
+- **Vimeo:** https://vimeo.com/media219
+
+---
+
+This file follows the llms.txt convention for AI agent discovery.
+See: https://llmstxt.org/

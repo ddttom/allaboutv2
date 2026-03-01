@@ -1,0 +1,25 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "toast-detector",
+  "version": "0.1.0",
+  "description": "Find ephemeral UI patterns that AI and screen readers miss",
+  "author": "Maxine (MX - Machine eXperience Engine)",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "draft",
+  "category": "mx-core",
+  "tags": [
+    "toast",
+    "notifications",
+    "ephemeral",
+    "accessibility",
+    "ux"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-06T12:31:00Z",
+  "modified": "2026-02-06T12:31:00Z",
+  "source_path": "scripts/cogs/toast-detector.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/toast-detector.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/toast-detector/content.md"
+}

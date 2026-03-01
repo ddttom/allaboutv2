@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modal Block - Test Page</title>
+  <script type="module">
+    import { loadCSS } from '../../scripts/aem.js';
+
+    // Load base styles
+    await loadCSS('/styles/styles.css');
+    await loadCSS('/blocks/modal/modal.css');
+  </script>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+
+    h1 {
+      color: #2c3e50;
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 0.5rem;
+    }
+
+    h2 {
+      color: #34495e;
+      margin-top: 2rem;
+    }
+
+    .test-section {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+
+    .test-button {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      margin: 0.5rem 0.5rem 0.5rem 0;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+    }
+
+    .test-button:hover {
+      background-color: #2980b9;
+    }
+
+    .test-button.secondary {
+      background-color: #95a5a6;
+    }
+
+    .test-button.secondary:hover {
+      background-color: #7f8c8d;
+    }
+
+    .info-box {
+      background-color: #e8f4f8;
+      border-left: 4px solid #3498db;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .warning-box {
+      background-color: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .code-block {
+      background-color: #2c3e50;
+      color: #ecf0f1;
+      padding: 1rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre {
+      margin: 0;
+    }
+
+    .fragment-content {
+      display: none;
+    }
+
+    /* Test fragment styles */
+    .test-modal-content {
+      padding: 2rem;
+    }
+
+    .test-modal-content h2 {
+      margin-top: 0;
+    }
+
+    .test-modal-content p {
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Modal Block - Test Page</h1>
+
+  <div class="info-box">
+    <strong>Test Instructions:</strong> This page tests the modal block functionality.
+    Click the buttons below to test different modal scenarios.
+  </div>
+
+  <main>
+    <!-- Test Section 1: Basic Modal with Fragment Content -->
+    <div class="test-section">
+      <h2>Test 1: Basic Modal with Fragment Content</h2>
+      <p>Tests opening a modal with simple content from a fragment.</p>
+      <button class="test-button" id="test-basic-modal">Open Basic Modal</button>
+
+      <div class="code-block">
+        <pre>// JavaScript usage:
+import { createModal } from '/blocks/modal/modal.js';
+const content = document.createElement('div');
+content.innerHTML = '&lt;h2&gt;Modal Title&lt;/h2&gt;&lt;p&gt;Content here&lt;/p&gt;';
+const { showModal } = await createModal([content]);
+showModal();</pre>
+      </div>
+    </div>
+
+    <!-- Test Section 2: Modal with Rich Content -->
+    <div class="test-section">
+      <h2>Test 2: Modal with Rich Content</h2>
+      <p>Tests modal with images, formatted text, and multiple elements.</p>
+      <button class="test-button" id="test-rich-modal">Open Rich Content Modal</button>
+    </div>
+
+    <!-- Test Section 3: Modal with Form -->
+    <div class="test-section">
+      <h2>Test 3: Modal with Form</h2>
+      <p>Tests modal containing interactive form elements.</p>
+      <button class="test-button" id="test-form-modal">Open Form Modal</button>
+    </div>
+
+    <!-- Test Section 4: Modal with Scrollable Content -->
+    <div class="test-section">
+      <h2>Test 4: Modal with Scrollable Content</h2>
+      <p>Tests modal with content that exceeds viewport height.</p>
+      <button class="test-button" id="test-scroll-modal">Open Scrollable Modal</button>
+
+      <div class="warning-box">
+        <strong>Note:</strong> This modal contains long content to test scrolling behavior
+        and overscroll prevention. Body scroll should be disabled when modal is open.
+      </div>
+    </div>
+
+    <!-- Test Section 5: Multiple Modals -->
+    <div class="test-section">
+      <h2>Test 5: Multiple Modals</h2>
+      <p>Tests opening different modals sequentially.</p>
+      <button class="test-button" id="test-modal-1">Open Modal 1</button>
+      <button class="test-button secondary" id="test-modal-2">Open Modal 2</button>
+      <button class="test-button secondary" id="test-modal-3">Open Modal 3</button>
+    </div>
+
+    <!-- Test Section 6: Auto-open via Link (requires fragment path) -->
+    <div class="test-section">
+      <h2>Test 6: Auto-open via Link Pattern</h2>
+      <p>Tests automatic modal opening for links containing <code>/modals/</code> path.</p>
+      <div class="info-box">
+        <strong>Manual Test:</strong> This requires actual fragment files in a <code>/modals/</code>
+        directory. Create test fragments and use links like:
+        <br><code>&lt;a href="/modals/test"&gt;Open Modal&lt;/a&gt;</code>
+      </div>
+      <button class="test-button" id="test-link-pattern">Simulate Link Pattern</button>
+    </div>
+
+    <!-- Test Section 7: Close Behaviors -->
+    <div class="test-section">
+      <h2>Test 7: Close Behaviors</h2>
+      <p>Tests different ways to close the modal:</p>
+      <ul>
+        <li>Close button (X in top right)</li>
+        <li>Click outside modal (backdrop)</li>
+        <li>ESC key (native dialog behavior)</li>
+      </ul>
+      <button class="test-button" id="test-close-modal">Open Modal to Test Closing</button>
+    </div>
+
+    <!-- Test Section 8: Body Scroll Lock -->
+    <div class="test-section">
+      <h2>Test 8: Body Scroll Lock</h2>
+      <p>Tests that body scroll is disabled when modal is open and restored when closed.</p>
+      <button class="test-button" id="test-scroll-lock">Test Scroll Lock</button>
+      <div class="info-box">
+        <strong>How to test:</strong> Scroll down on this page, open the modal, and verify
+        you cannot scroll the body. Close the modal and verify scroll is restored.
+      </div>
+    </div>
+  </main>
+
+  <!-- Fragment Content Templates (hidden) -->
+  <div class="fragment-content">
+    <div id="basic-modal-content" class="test-modal-content">
+      <h2>Basic Modal Title</h2>
+      <p>This is a simple modal with basic text content.</p>
+      <p>It demonstrates the fundamental modal functionality including:</p>
+      <ul>
+        <li>Overlay backdrop</li>
+        <li>Centered dialog</li>
+        <li>Close button</li>
+        <li>Click-outside-to-close</li>
+      </ul>
+    </div>
+
+    <div id="rich-modal-content" class="test-modal-content">
+      <h2>Rich Content Modal</h2>
+      <img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png"
+           alt="Sample"
+           style="max-width: 100%; height: auto; border-radius: 8px; margin: 1rem 0;">
+      <p>This modal contains rich content including images, formatted text, and styling.</p>
+      <blockquote style="border-left: 4px solid #3498db; padding-left: 1rem; margin: 1rem 0; color: #555;">
+        "The modal block provides a flexible way to display overlay content while maintaining
+        focus and accessibility."
+      </blockquote>
+      <p>Additional features:</p>
+      <ul>
+        <li>Responsive design</li>
+        <li>Mobile-friendly</li>
+        <li>Accessible markup</li>
+      </ul>
+    </div>
+
+    <div id="form-modal-content" class="test-modal-content">
+      <h2>Contact Form</h2>
+      <form style="max-width: 500px;">
+        <div style="margin-bottom: 1rem;">
+          <label for="name" style="display: block; margin-bottom: 0.5rem;">Name:</label>
+          <input type="text" id="name" name="name"
+                 style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label for="email" style="display: block; margin-bottom: 0.5rem;">Email:</label>
+          <input type="email" id="email" name="email"
+                 style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label for="message" style="display: block; margin-bottom: 0.5rem;">Message:</label>
+          <textarea id="message" name="message" rows="4"
+                    style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+        </div>
+        <button type="submit" class="test-button">Submit</button>
+      </form>
+    </div>
+
+    <div id="scroll-modal-content" class="test-modal-content">
+      <h2>Scrollable Content</h2>
+      <p>This modal contains a lot of content to test scrolling behavior.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
+         ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+         ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <h3>Section 1</h3>
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+         nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+         deserunt mollit anim id est laborum.</p>
+      <h3>Section 2</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+         laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
+         architecto beatae vitae dicta sunt explicabo.</p>
+      <h3>Section 3</h3>
+      <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
+         consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+      <h3>Section 4</h3>
+      <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
+         velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam
+         quaerat voluptatem.</p>
+      <h3>Section 5</h3>
+      <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam,
+         nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in
+         ea voluptate velit esse quam nihil molestiae consequatur.</p>
+      <h3>Section 6</h3>
+      <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
+         voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
+         cupiditate non provident.</p>
+      <h3>End of Content</h3>
+      <p>You should be able to scroll within this modal while the page body remains fixed.</p>
+    </div>
+
+    <div id="modal-1-content" class="test-modal-content">
+      <h2>Modal 1</h2>
+      <p>This is the first modal in a sequence.</p>
+      <p>Each modal is independent and can be opened/closed separately.</p>
+    </div>
+
+    <div id="modal-2-content" class="test-modal-content">
+      <h2>Modal 2</h2>
+      <p>This is the second modal in a sequence.</p>
+      <p>Notice how the body scroll lock is properly managed.</p>
+    </div>
+
+    <div id="modal-3-content" class="test-modal-content">
+      <h2>Modal 3</h2>
+      <p>This is the third modal in a sequence.</p>
+      <p>The modal block handles cleanup automatically when closed.</p>
+    </div>
+
+    <div id="close-test-content" class="test-modal-content">
+      <h2>Test Close Behaviors</h2>
+      <p>Try closing this modal using these methods:</p>
+      <ol>
+        <li>Click the X button in the top right corner</li>
+        <li>Click outside the modal on the dark backdrop</li>
+        <li>Press the ESC key on your keyboard</li>
+      </ol>
+      <p>All methods should successfully close the modal and restore body scroll.</p>
+      <div class="warning-box">
+        <strong>Verify:</strong> After closing, check that <code>body.modal-open</code> class
+        is removed from the body element.
+      </div>
+    </div>
+
+    <div id="scroll-lock-content" class="test-modal-content">
+      <h2>Scroll Lock Test</h2>
+      <p>While this modal is open:</p>
+      <ul>
+        <li>Try scrolling the page body - it should be locked</li>
+        <li>The <code>body.modal-open</code> class should be present</li>
+        <li>Body overflow is set to hidden</li>
+      </ul>
+      <p>After closing the modal:</p>
+      <ul>
+        <li>Body scroll should be restored</li>
+        <li>The <code>body.modal-open</code> class should be removed</li>
+        <li>Body overflow returns to normal</li>
+      </ul>
+      <div class="info-box">
+        <strong>Dev Tools:</strong> Open browser dev tools and inspect the body element to
+        verify the class is added/removed correctly.
+      </div>
+    </div>
+
+    <div id="link-pattern-content" class="test-modal-content">
+      <h2>Link Pattern Modal</h2>
+      <p>This modal simulates the auto-open behavior for links with <code>/modals/</code> path.</p>
+      <p>In production, any link like <code>&lt;a href="/modals/terms"&gt;</code> will
+         automatically open as a modal using the fragment content.</p>
+      <div class="code-block">
+        <pre>// Automatic link interception in scripts.js:
+if (origin.href.includes('/modals/')) {
+  e.preventDefault();
+  const { openModal } = await import('/blocks/modal/modal.js');
+  openModal(origin.href);
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add some content to enable scrolling tests -->
+  <div style="height: 1000px; margin-top: 2rem; padding: 2rem; background: linear-gradient(to bottom, #f9f9f9, #e9e9e9);">
+    <h3>Scroll Test Area</h3>
+    <p>This area adds height to the page to enable scroll lock testing.</p>
+    <p>Scroll down and open a modal to verify body scroll is disabled.</p>
+  </div>
+
+  <script type="module">
+    import { createModal } from '/blocks/modal/modal.js';
+    import { decorateIcons } from '/scripts/aem.js';
+
+    // Helper to create modal from template
+    async function openTestModal(contentId) {
+      const template = document.getElementById(contentId);
+      if (!template) {
+        // eslint-disable-next-line no-console
+        console.error(`Template not found: ${contentId}`);
+        return;
+      }
+      const content = template.cloneNode(true);
+      content.style.display = 'block';
+      content.removeAttribute('id');
+
+      const { showModal } = await createModal([content]);
+      showModal();
+    }
+
+    // Test 1: Basic Modal
+    document.getElementById('test-basic-modal').addEventListener('click', () => {
+      openTestModal('basic-modal-content');
+    });
+
+    // Test 2: Rich Content Modal
+    document.getElementById('test-rich-modal').addEventListener('click', () => {
+      openTestModal('rich-modal-content');
+    });
+
+    // Test 3: Form Modal
+    document.getElementById('test-form-modal').addEventListener('click', () => {
+      openTestModal('form-modal-content');
+    });
+
+    // Test 4: Scrollable Modal
+    document.getElementById('test-scroll-modal').addEventListener('click', () => {
+      openTestModal('scroll-modal-content');
+    });
+
+    // Test 5: Multiple Modals
+    document.getElementById('test-modal-1').addEventListener('click', () => {
+      openTestModal('modal-1-content');
+    });
+
+    document.getElementById('test-modal-2').addEventListener('click', () => {
+      openTestModal('modal-2-content');
+    });
+
+    document.getElementById('test-modal-3').addEventListener('click', () => {
+      openTestModal('modal-3-content');
+    });
+
+    // Test 6: Link Pattern
+    document.getElementById('test-link-pattern').addEventListener('click', () => {
+      openTestModal('link-pattern-content');
+    });
+
+    // Test 7: Close Behaviors
+    document.getElementById('test-close-modal').addEventListener('click', () => {
+      openTestModal('close-test-content');
+    });
+
+    // Test 8: Scroll Lock
+    document.getElementById('test-scroll-lock').addEventListener('click', () => {
+      openTestModal('scroll-lock-content');
+    });
+
+    // Log initialization
+    // eslint-disable-next-line no-console
+    console.log('Modal test page initialized');
+  </script>
+</body>
+</html>

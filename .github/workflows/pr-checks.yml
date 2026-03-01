@@ -1,0 +1,196 @@
+name: Pull Request Checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  pr-validation:
+    name: PR Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check PR title format
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+
+          # Check for conventional commit format
+          if [[ "$PR_TITLE" =~ ^(feat|fix|docs|style|refactor|test|chore|perf)(\(.+\))?: ]]; then
+            echo "✓ PR title follows conventional commit format"
+          else
+            echo "⚠️  PR title should follow conventional commit format:"
+            echo "   feat(scope): description"
+            echo "   fix(scope): description"
+            echo "   docs(scope): description"
+            echo "   chore(scope): description"
+            echo ""
+            echo "   Example: feat(blocks): Add new hero block with video support"
+          fi
+
+      - name: Check for linked issues
+        run: |
+          PR_BODY="${{ github.event.pull_request.body }}"
+
+          if [[ "$PR_BODY" =~ (Fixes|Closes|Resolves)[[:space:]]+#[0-9]+ ]]; then
+            echo "✓ PR links to an issue"
+          else
+            echo "ℹ️  Consider linking this PR to an issue"
+            echo "   Use: Fixes #123, Closes #123, or Resolves #123"
+          fi
+
+      - name: Check documentation updates
+        run: |
+          # Check if code changes require doc updates
+          CODE_CHANGES=$(git diff --name-only origin/main...HEAD | grep -E '\.(js|css)$' | wc -l)
+          DOC_CHANGES=$(git diff --name-only origin/main...HEAD | grep -E '\.(md|txt)$' | wc -l)
+
+          if [ "$CODE_CHANGES" -gt 5 ] && [ "$DOC_CHANGES" -eq 0 ]; then
+            echo "⚠️  Large code changes detected without documentation updates"
+            echo "   Consider updating:"
+            echo "   - Block README.md files"
+            echo "   - CLAUDE.md if workflow changes"
+            echo "   - docs/for-ai/ if architecture changes"
+          else
+            echo "✓ Documentation changes look good"
+          fi
+
+  block-validation:
+    name: Validate Block Structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check new/modified blocks
+        run: |
+          # Find modified block files
+          MODIFIED_BLOCKS=$(git diff --name-only origin/main...HEAD | grep '^blocks/' | cut -d'/' -f2 | sort -u)
+
+          if [ -z "$MODIFIED_BLOCKS" ]; then
+            echo "ℹ️  No block changes detected"
+            exit 0
+          fi
+
+          echo "Checking modified blocks: $MODIFIED_BLOCKS"
+
+          for block in $MODIFIED_BLOCKS; do
+            BLOCK_DIR="blocks/$block"
+
+            if [ ! -d "$BLOCK_DIR" ]; then
+              continue
+            fi
+
+            echo ""
+            echo "Validating: $block"
+            echo "─────────────────────"
+
+            # Check required files
+            FILES=("${block}.js" "${block}.css" "README.md")
+            for file in "${FILES[@]}"; do
+              if [ -f "$BLOCK_DIR/$file" ]; then
+                echo "✓ $file exists"
+              else
+                echo "❌ Missing: $file"
+                exit 1
+              fi
+            done
+
+            # Check README has required sections
+            if [ -f "$BLOCK_DIR/README.md" ]; then
+              REQUIRED_SECTIONS=("# $block" "## Usage" "## Examples")
+              for section in "${REQUIRED_SECTIONS[@]}"; do
+                if grep -q "$section" "$BLOCK_DIR/README.md"; then
+                  echo "✓ README has '$section' section"
+                else
+                  echo "⚠️  README missing '$section' section"
+                fi
+              done
+            fi
+
+            # Check for CONFIG object in JS file
+            if [ -f "$BLOCK_DIR/${block}.js" ]; then
+              if grep -q "${block^^}_CONFIG" "$BLOCK_DIR/${block}.js" 2>/dev/null || \
+                 grep -q "const CONFIG" "$BLOCK_DIR/${block}.js"; then
+                echo "✓ JavaScript has CONFIG object"
+              else
+                echo "⚠️  Consider adding CONFIG object for maintainability"
+              fi
+            fi
+          done
+
+  size-check:
+    name: Check File Sizes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for large files
+        run: |
+          # Find files larger than 500KB
+          LARGE_FILES=$(git diff --name-only origin/main...HEAD | \
+            while read file; do
+              if [ -f "$file" ]; then
+                size=$(wc -c < "$file")
+                if [ "$size" -gt 512000 ]; then
+                  echo "$file ($(numfmt --to=iec-i --suffix=B $size))"
+                fi
+              fi
+            done)
+
+          if [ -n "$LARGE_FILES" ]; then
+            echo "⚠️  Large files detected (>500KB):"
+            echo "$LARGE_FILES"
+            echo ""
+            echo "Consider:"
+            echo "- Using external CDN for large assets"
+            echo "- Optimizing images/media"
+            echo "- Splitting large files"
+          else
+            echo "✓ No large files detected"
+          fi
+
+  diff-summary:
+    name: Generate PR Summary
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate change summary
+        run: |
+          echo "## PR Change Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Count changes by type
+          echo "### Files Changed" >> $GITHUB_STEP_SUMMARY
+          git diff --name-only origin/main...HEAD | \
+            awk -F'/' '{print $1}' | \
+            sort | uniq -c | \
+            awk '{printf "- **%s**: %d files\n", $2, $1}' >> $GITHUB_STEP_SUMMARY
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Line Changes" >> $GITHUB_STEP_SUMMARY
+          git diff --stat origin/main...HEAD | tail -1 >> $GITHUB_STEP_SUMMARY
+
+          # Check for specific patterns
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Change Types" >> $GITHUB_STEP_SUMMARY
+
+          if git diff origin/main...HEAD | grep -q "^+.*TODO"; then
+            echo "- ⚠️  Contains TODO comments" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if git diff origin/main...HEAD | grep -q "^+.*console.log"; then
+            echo "- ⚠️  Contains console.log statements" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if git diff origin/main...HEAD | grep -q "^+.*debugger"; then
+            echo "- ⚠️  Contains debugger statements" >> $GITHUB_STEP_SUMMARY
+          fi

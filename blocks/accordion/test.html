@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accordion Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Accordion Block Styles -->
+    <link rel="stylesheet" href="/blocks/accordion/accordion.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-info strong {
+            font-weight: 600;
+        }
+
+        .test-section {
+            margin: 2rem auto;
+            max-width: 1200px;
+            padding: 0 1rem;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Accordion wrapper for consistent spacing */
+        .accordion-wrapper {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1200px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #667eea;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Accordion Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>accordion</code></p>
+        <p><strong>Test Count:</strong> <code>6 test scenarios</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Visual and functional testing of collapsible accordion using native HTML5 details/summary elements</p>
+    </div>
+
+    <main>
+        <!-- Test 1: Basic FAQ Accordion -->
+        <div class="test-section">
+            <h3>Test 1: Basic FAQ Accordion (5 Items)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Five collapsible FAQ items. Each item has a question label and answer content. Click to expand/collapse. Multiple items can be open simultaneously.</p>
+                <p><strong>Validation:</strong> Check that clicking toggles state, chevron rotates, content appears smoothly, and styling is consistent.</p>
+            </div>
+            <div class="accordion-wrapper">
+                <div class="accordion block">
+                    <div>
+                        <div>What is Edge Delivery Services?</div>
+                    </div>
+                    <div>
+                        <div>Edge Delivery Services (EDS) is a composable platform that enables highly performant websites by combining document-based content authoring with developer flexibility. It delivers exceptional performance through edge computing.</div>
+                    </div>
+                    <div>
+                        <div>How do I get started with EDS?</div>
+                    </div>
+                    <div>
+                        <div>Begin by exploring our comprehensive documentation and tutorials. You can start creating content using familiar tools like Google Docs or Microsoft Word. No technical knowledge required to author content.</div>
+                    </div>
+                    <div>
+                        <div>What browsers are supported?</div>
+                    </div>
+                    <div>
+                        <div>Modern browsers including Chrome, Firefox, Safari, and Edge (last 2 versions) are fully supported. Internet Explorer 11 provides degraded experience but basic functionality works.</div>
+                    </div>
+                    <div>
+                        <div>Can I customize the accordion styling?</div>
+                    </div>
+                    <div>
+                        <div>Yes! The accordion uses CSS variables for colors and spacing. Override --dark-color, --light-color, and --background-color in your project's CSS file to match your brand identity.</div>
+                    </div>
+                    <div>
+                        <div>Is the accordion accessible?</div>
+                    </div>
+                    <div>
+                        <div>Absolutely. We use native HTML5 details/summary elements which are fully accessible by default, with keyboard navigation support (Tab, Enter, Space) and screen reader compatibility.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Step-by-Step Instructions -->
+        <div class="test-section">
+            <h3>Test 2: Step-by-Step Instructions</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Four accordion items representing sequential steps. Labels use "Step N:" format. Content provides detailed instructions for each step.</p>
+                <p><strong>Validation:</strong> Verify sequential presentation, clear step numbers, and logical progression through content.</p>
+            </div>
+            <div class="accordion-wrapper">
+                <div class="accordion block">
+                    <div>
+                        <div>Step 1: Create Your Document</div>
+                    </div>
+                    <div>
+                        <div>Open Google Docs and create a new document. Add your content using simple markdown tables with the Accordion block name in the first row of the table.</div>
+                    </div>
+                    <div>
+                        <div>Step 2: Format Your Content</div>
+                    </div>
+                    <div>
+                        <div>Each row of the table becomes an accordion item. The first cell is the question or label, the second cell is the answer or expandable content.</div>
+                    </div>
+                    <div>
+                        <div>Step 3: Preview and Publish</div>
+                    </div>
+                    <div>
+                        <div>Save your document and preview it on your staging site. Once satisfied with the appearance and functionality, publish to your production environment.</div>
+                    </div>
+                    <div>
+                        <div>Step 4: Test Functionality</div>
+                    </div>
+                    <div>
+                        <div>Click through each accordion item to ensure proper expansion and collapse behavior. Test on mobile devices and with keyboard navigation to verify accessibility.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: Short vs Long Content -->
+        <div class="test-section">
+            <h3>Test 3: Mixed Content Lengths</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Three accordion items with varying content lengths (short, medium, long). Tests that layout adapts to different content sizes without breaking.</p>
+                <p><strong>Validation:</strong> Check that short content doesn't look empty, long content doesn't overflow, and medium content displays naturally.</p>
+            </div>
+            <div class="accordion-wrapper">
+                <div class="accordion block">
+                    <div>
+                        <div>Short Answer</div>
+                    </div>
+                    <div>
+                        <div>Brief response.</div>
+                    </div>
+                    <div>
+                        <div>Medium Length Answer</div>
+                    </div>
+                    <div>
+                        <div>This answer provides moderate detail with a few sentences. It gives enough information to be helpful without overwhelming the reader. Good balance between brevity and completeness.</div>
+                    </div>
+                    <div>
+                        <div>Comprehensive Long Answer</div>
+                    </div>
+                    <div>
+                        <div>This is a much longer, more detailed response that covers the topic comprehensively. It includes multiple aspects of the subject matter, provides context, explains nuances, and offers practical examples. The content flows across multiple lines and paragraphs, testing how the accordion handles substantial amounts of text. It should expand smoothly and display all content without clipping or overflow issues. The styling should remain consistent regardless of content length, with proper padding and spacing maintained throughout.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: Single Item Accordion -->
+        <div class="test-section">
+            <h3>Test 4: Single Item Accordion</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> A single accordion item. Tests edge case of minimal accordion with one item. Should display and function properly.</p>
+                <p><strong>Validation:</strong> Verify single item doesn't have styling issues, expands/collapses correctly, and chevron works as expected.</p>
+            </div>
+            <div class="accordion-wrapper">
+                <div class="accordion block">
+                    <div>
+                        <div>Important Notice</div>
+                    </div>
+                    <div>
+                        <div>This is a standalone accordion item used to highlight a single piece of important information. It can be expanded to reveal detailed content when needed, providing a clean collapsed state by default.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 5: Rich Content Accordion -->
+        <div class="test-section">
+            <h3>Test 5: Accordion with Formatted Content</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Three accordion items with rich formatting including headings, bold, italic, and links. Tests that nested HTML renders correctly within accordion items.</p>
+                <p><strong>Validation:</strong> Check that all formatting is preserved, links are clickable, and nested elements don't break layout.</p>
+            </div>
+            <div class="accordion-wrapper">
+                <div class="accordion block">
+                    <div>
+                        <div>Content with <strong>Bold</strong> and <em>Italic</em></div>
+                    </div>
+                    <div>
+                        <div><p>This content includes <strong>bold text</strong> for emphasis and <em>italic text</em> for subtle highlighting. The formatting should render correctly within the accordion body.</p></div>
+                    </div>
+                    <div>
+                        <div>Content with Links</div>
+                    </div>
+                    <div>
+                        <div><p>You can include <a href="https://example.com">clickable links</a> within accordion content. Links should maintain proper styling and be fully functional when clicked.</p></div>
+                    </div>
+                    <div>
+                        <div>Content with Nested Elements</div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>This item contains multiple paragraphs and nested HTML elements.</p>
+                            <p>Second paragraph with <strong>mixed <em>formatting</em> styles</strong> to test complex nesting scenarios.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 6: Large Accordion (Many Items) -->
+        <div class="test-section">
+            <h3>Test 6: Large Accordion (10 Items)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Ten accordion items in a single block. Tests performance with many items, vertical spacing consistency, and scroll behavior.</p>
+                <p><strong>Validation:</strong> Verify spacing between items is consistent, all items function independently, and performance remains smooth when expanding/collapsing.</p>
+            </div>
+            <div class="accordion-wrapper">
+                <div class="accordion block">
+                    <div>
+                        <div>Question 1: Getting Started</div>
+                    </div>
+                    <div>
+                        <div>First question's answer providing information about getting started with the platform.</div>
+                    </div>
+                    <div>
+                        <div>Question 2: Account Setup</div>
+                    </div>
+                    <div>
+                        <div>Details about setting up your account and configuring initial settings.</div>
+                    </div>
+                    <div>
+                        <div>Question 3: Pricing Information</div>
+                    </div>
+                    <div>
+                        <div>Comprehensive pricing details including plans, features, and billing information.</div>
+                    </div>
+                    <div>
+                        <div>Question 4: Technical Requirements</div>
+                    </div>
+                    <div>
+                        <div>System requirements, browser compatibility, and technical prerequisites.</div>
+                    </div>
+                    <div>
+                        <div>Question 5: Integration Options</div>
+                    </div>
+                    <div>
+                        <div>Available integrations with third-party services and APIs.</div>
+                    </div>
+                    <div>
+                        <div>Question 6: Security Features</div>
+                    </div>
+                    <div>
+                        <div>Information about security measures, data protection, and compliance standards.</div>
+                    </div>
+                    <div>
+                        <div>Question 7: Support Channels</div>
+                    </div>
+                    <div>
+                        <div>Available support options including email, chat, phone, and community forums.</div>
+                    </div>
+                    <div>
+                        <div>Question 8: Mobile Experience</div>
+                    </div>
+                    <div>
+                        <div>Details about mobile app availability and responsive web interface functionality.</div>
+                    </div>
+                    <div>
+                        <div>Question 9: Data Migration</div>
+                    </div>
+                    <div>
+                        <div>Process for migrating existing data from other platforms or legacy systems.</div>
+                    </div>
+                    <div>
+                        <div>Question 10: Training Resources</div>
+                    </div>
+                    <div>
+                        <div>Available training materials including documentation, videos, webinars, and certification programs.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate from '/blocks/accordion/accordion.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Log accordion structure for debugging
+        function logAccordionStructure(block, index) {
+            console.log(`\n=== Accordion Block ${index + 1} ===`);
+            console.log('Initial children count:', block.children.length);
+            console.log('Initial structure:');
+
+            const rows = Array.from(block.children);
+            rows.forEach((row, i) => {
+                const cells = Array.from(row.children);
+                console.log(`  Row ${i + 1}:`);
+                cells.forEach((cell, j) => {
+                    console.log(`    Cell ${j + 1}: "${cell.textContent.trim().substring(0, 50)}..."`);
+                });
+            });
+        }
+
+        // Log final structure
+        function logFinalStructure(block, index) {
+            console.log(`\n=== After Decoration (Block ${index + 1}) ===`);
+            const details = block.querySelectorAll('details');
+            console.log('Details elements created:', details.length);
+
+            details.forEach((detail, i) => {
+                const summary = detail.querySelector('summary');
+                const body = detail.querySelector('.accordion-item-body');
+                const summaryText = summary ? summary.textContent.trim().substring(0, 50) : 'N/A';
+                const bodyText = body ? body.textContent.trim().substring(0, 50) : 'N/A';
+                const isOpen = detail.hasAttribute('open');
+
+                console.log(`  Item ${i + 1}:`);
+                console.log(`    Summary: "${summaryText}..."`);
+                console.log(`    Body: "${bodyText}..."`);
+                console.log(`    Open: ${isOpen}`);
+                console.log(`    Classes: ${detail.className}`);
+            });
+        }
+
+        // Test keyboard navigation
+        function testKeyboardNavigation() {
+            console.log('\n=== Keyboard Navigation Test ===');
+            console.log('Testing keyboard accessibility...');
+
+            const firstDetails = document.querySelector('.accordion details');
+            if (firstDetails) {
+                const summary = firstDetails.querySelector('summary');
+                if (summary) {
+                    console.log('✓ First accordion item is focusable');
+                    console.log('✓ Press Tab to navigate between items');
+                    console.log('✓ Press Enter or Space to toggle items');
+                } else {
+                    console.warn('✗ Summary element not found');
+                }
+            } else {
+                console.warn('✗ No details elements found for keyboard testing');
+            }
+        }
+
+        // Test accessibility features
+        function testAccessibility() {
+            console.log('\n=== Accessibility Test ===');
+
+            const allDetails = document.querySelectorAll('.accordion details');
+            let accessibilityScore = 0;
+            const totalTests = 5;
+
+            // Test 1: Native details/summary elements used
+            if (allDetails.length > 0) {
+                console.log('✓ Using native <details> elements (accessible by default)');
+                accessibilityScore++;
+            } else {
+                console.warn('✗ No <details> elements found');
+            }
+
+            // Test 2: Summary elements present
+            const summaries = document.querySelectorAll('.accordion summary');
+            if (summaries.length === allDetails.length) {
+                console.log('✓ All items have <summary> elements');
+                accessibilityScore++;
+            } else {
+                console.warn(`✗ Summary count mismatch: ${summaries.length} vs ${allDetails.length}`);
+            }
+
+            // Test 3: Keyboard focusable
+            const firstSummary = document.querySelector('.accordion summary');
+            if (firstSummary && firstSummary.tabIndex >= 0) {
+                console.log('✓ Accordion items are keyboard focusable');
+                accessibilityScore++;
+            }
+
+            // Test 4: Semantic HTML structure
+            const hasProperStructure = allDetails.length > 0 &&
+                                        Array.from(allDetails).every(d =>
+                                            d.querySelector('summary') &&
+                                            d.classList.contains('accordion-item')
+                                        );
+            if (hasProperStructure) {
+                console.log('✓ Proper semantic HTML structure maintained');
+                accessibilityScore++;
+            } else {
+                console.warn('✗ Some items missing proper structure');
+            }
+
+            // Test 5: No ARIA needed (native semantics)
+            console.log('✓ No custom ARIA required (native HTML semantics)');
+            accessibilityScore++;
+
+            console.log(`\nAccessibility Score: ${accessibilityScore}/${totalTests}`);
+            if (accessibilityScore === totalTests) {
+                console.log('✓ All accessibility tests passed!');
+            } else {
+                console.warn(`⚠ ${totalTests - accessibilityScore} accessibility issues found`);
+            }
+        }
+
+        // Initialize all accordion blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating accordion blocks...', 'info');
+
+                // Get all accordion blocks
+                const accordionBlocks = document.querySelectorAll('.accordion.block');
+
+                if (accordionBlocks.length === 0) {
+                    throw new Error('No accordion blocks found');
+                }
+
+                console.log(`Found ${accordionBlocks.length} accordion blocks to decorate`);
+
+                // Decorate each accordion block
+                accordionBlocks.forEach((block, index) => {
+                    console.log(`\n${'='.repeat(50)}`);
+                    console.log(`Processing Accordion Block ${index + 1}`);
+                    console.log('='.repeat(50));
+
+                    // Log initial structure
+                    logAccordionStructure(block, index);
+
+                    // Run decoration
+                    try {
+                        decorate(block);
+                        console.log('✓ Decoration completed successfully');
+                    } catch (error) {
+                        console.error(`✗ Decoration failed:`, error);
+                        throw error;
+                    }
+
+                    // Log final structure
+                    logFinalStructure(block, index);
+                });
+
+                // Run accessibility tests
+                testAccessibility();
+
+                // Test keyboard navigation
+                testKeyboardNavigation();
+
+                updateStatus(`✓ ${accordionBlocks.length} accordion blocks loaded successfully`, 'success');
+
+                console.log('\n' + '='.repeat(50));
+                console.log('All accordion blocks decorated successfully!');
+                console.log('='.repeat(50));
+                console.log('\nTest Instructions:');
+                console.log('1. Click on accordion labels to expand/collapse items');
+                console.log('2. Use Tab key to navigate between items');
+                console.log('3. Press Enter or Space to toggle items');
+                console.log('4. Verify chevron rotates on open/close');
+                console.log('5. Check hover/focus states have background color');
+                console.log('6. Test with screen reader if available');
+
+            } catch (error) {
+                console.error('Failed to initialize accordion blocks:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Visual Inspection:</strong> Scroll through all test sections and verify accordion items display correctly</li>
+            <li><strong>Interaction Testing:</strong> Click each accordion item label to expand/collapse
+                <ul>
+                    <li>Item expands smoothly with content visible</li>
+                    <li>Clicking again collapses the item</li>
+                    <li>Multiple items can be open simultaneously</li>
+                    <li>Chevron icon rotates when opening (↓ to ↑)</li>
+                </ul>
+            </li>
+            <li><strong>Keyboard Navigation:</strong> Use keyboard to test accessibility
+                <ul>
+                    <li><strong>Tab</strong> - Navigate to next accordion item</li>
+                    <li><strong>Shift + Tab</strong> - Navigate to previous item</li>
+                    <li><strong>Enter</strong> - Toggle current item open/closed</li>
+                    <li><strong>Space</strong> - Toggle current item open/closed</li>
+                    <li>Focus indicator should be visible on keyboard navigation</li>
+                </ul>
+            </li>
+            <li><strong>DOM Structure:</strong> Inspect any accordion block in DevTools Elements panel and verify:
+                <ul>
+                    <li>Outer <code>&lt;div class="accordion block"&gt;</code></li>
+                    <li>Each item is <code>&lt;details class="accordion-item"&gt;</code></li>
+                    <li>Label is <code>&lt;summary class="accordion-item-label"&gt;</code></li>
+                    <li>Body is <code>&lt;div class="accordion-item-body"&gt;</code></li>
+                </ul>
+            </li>
+            <li><strong>Styling Verification:</strong> Inspect CSS in DevTools and verify:
+                <ul>
+                    <li>Borders: 1px solid using <code>--dark-color</code></li>
+                    <li>Spacing: 16px margin between items</li>
+                    <li>Hover: Background changes to <code>--dark-color</code></li>
+                    <li>Open: Background uses <code>--light-color</code></li>
+                    <li>Chevron: CSS ::after pseudo-element with rotation</li>
+                </ul>
+            </li>
+            <li><strong>Animation Testing:</strong> Verify smooth transitions:
+                <ul>
+                    <li>Background color changes smoothly (0.2s)</li>
+                    <li>Chevron rotates smoothly (0.2s)</li>
+                    <li>Content expands/collapses smoothly</li>
+                    <li>No janky or stuttering animations</li>
+                </ul>
+            </li>
+            <li><strong>Responsive Testing:</strong> Resize browser window and verify:
+                <ul>
+                    <li>Accordion width adapts to container</li>
+                    <li>Text wraps properly on narrow screens</li>
+                    <li>Touch targets large enough on mobile (48px min)</li>
+                    <li>Chevron position remains correct</li>
+                </ul>
+            </li>
+            <li><strong>Content Length Testing:</strong> Check Test 3 (Mixed Content Lengths):
+                <ul>
+                    <li>Short content displays without issues</li>
+                    <li>Long content doesn't overflow</li>
+                    <li>Medium content looks balanced</li>
+                    <li>Padding/spacing consistent across all lengths</li>
+                </ul>
+            </li>
+            <li><strong>Console Output:</strong> Review console logs for detailed decoration process and test results</li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Test 1:</strong> Five FAQ items expand/collapse independently with smooth animations</li>
+            <li><strong>Test 2:</strong> Four step-by-step items display sequential information clearly</li>
+            <li><strong>Test 3:</strong> Three items with varying content lengths all display properly</li>
+            <li><strong>Test 4:</strong> Single item accordion functions correctly without styling issues</li>
+            <li><strong>Test 5:</strong> Rich formatted content renders correctly with links and formatting</li>
+            <li><strong>Test 6:</strong> Ten items maintain consistent spacing and performance</li>
+        </ul>
+
+        <h3>Accessibility Testing</h3>
+        <ul>
+            <li><strong>Screen Reader:</strong> If available, enable screen reader (VoiceOver on Mac, NVDA on Windows)
+                <ul>
+                    <li>Navigate to accordion items</li>
+                    <li>Should announce as "disclosure widget" or "expandable section"</li>
+                    <li>Should announce "collapsed" or "expanded" state</li>
+                    <li>Content should be readable when expanded</li>
+                </ul>
+            </li>
+            <li><strong>Keyboard Only:</strong> Disable mouse/trackpad and navigate using only keyboard
+                <ul>
+                    <li>Can reach all accordion items via Tab</li>
+                    <li>Can toggle items with Enter/Space</li>
+                    <li>Focus indicator clearly visible</li>
+                    <li>Logical tab order maintained</li>
+                </ul>
+            </li>
+            <li><strong>Color Contrast:</strong> Check contrast ratios in DevTools
+                <ul>
+                    <li>Text on background meets WCAG AA (4.5:1 min)</li>
+                    <li>Hover state has sufficient contrast</li>
+                    <li>Focus indicator is visible</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Browser Testing</h3>
+        <ul>
+            <li><strong>Chrome/Edge:</strong> Full support expected, test latest 2 versions</li>
+            <li><strong>Firefox:</strong> Full support expected, test latest 2 versions</li>
+            <li><strong>Safari:</strong> Full support expected, test latest 2 versions (macOS and iOS)</li>
+            <li><strong>Mobile Browsers:</strong> Test on iOS Safari and Android Chrome</li>
+            <li><strong>IE11:</strong> Degraded support - basic functionality should work, styling may differ</li>
+        </ul>
+
+        <h3>Performance Testing</h3>
+        <ul>
+            <li><strong>Lighthouse:</strong> Run Lighthouse audit in DevTools
+                <ul>
+                    <li>Performance: Should be 95-100</li>
+                    <li>Accessibility: Should be 100</li>
+                    <li>Best Practices: Should be 100</li>
+                    <li>SEO: Should be 100</li>
+                </ul>
+            </li>
+            <li><strong>Animation Performance:</strong> Open Performance tab in DevTools
+                <ul>
+                    <li>Record while expanding/collapsing items</li>
+                    <li>Should maintain 60fps</li>
+                    <li>No long tasks or layout thrashing</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Known Behavior</h3>
+        <ul>
+            <li><strong>Multiple Items Open:</strong> Design allows multiple accordion items to be open simultaneously (no exclusive behavior)</li>
+            <li><strong>Native HTML:</strong> Uses native <code>&lt;details&gt;</code> element, so no custom JavaScript state management needed</li>
+            <li><strong>No Animation for Open/Close:</strong> Content appears/disappears instantly - this is browser default behavior for details element</li>
+            <li><strong>Chevron Position:</strong> Fixed position on right side, may cause issues with very long label text</li>
+        </ul>
+
+        <h3>Debugging Tips</h3>
+        <ul>
+            <li>Check browser console for detailed decoration logs and test results</li>
+            <li>Inspect Network tab to verify CSS file loads correctly</li>
+            <li>Use DevTools Elements panel to verify DOM transformation</li>
+            <li>Check Computed styles to see which CSS variables are applied</li>
+            <li>Test in multiple browsers for consistency</li>
+            <li>Verify CSS variables <code>--dark-color</code>, <code>--light-color</code>, and <code>--background-color</code> are defined</li>
+        </ul>
+
+        <h3>Common Issues</h3>
+        <ul>
+            <li><strong>Chevron not visible:</strong> Check that ::after pseudo-element is rendering in DevTools</li>
+            <li><strong>No borders:</strong> Verify <code>--dark-color</code> CSS variable is defined</li>
+            <li><strong>Hover not working:</strong> Check for CSS conflicts with hover state</li>
+            <li><strong>Content clipped:</strong> Verify no height restrictions or overflow:hidden on containers</li>
+            <li><strong>Not accessible:</strong> Ensure native details/summary elements are used, not custom divs</li>
+        </ul>
+    </div>
+</body>
+</html>

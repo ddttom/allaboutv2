@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cards Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Cards Block Styles -->
+    <link rel="stylesheet" href="/blocks/cards/cards.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-info strong {
+            font-weight: 600;
+        }
+
+        .test-section {
+            margin: 2rem auto;
+            max-width: 1400px;
+            padding: 0 1rem;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Card wrapper for consistent spacing */
+        .cards-wrapper {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1400px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #667eea;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Cards Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>cards</code></p>
+        <p><strong>Test Count:</strong> <code>5 test scenarios</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Visual and functional testing of responsive card grid layout with image optimization</p>
+    </div>
+
+    <main>
+        <!-- Test 1: Basic Cards with Images -->
+        <div class="test-section">
+            <h3>Test 1: Basic Cards with Images (3 Cards)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Three cards in a responsive grid. Each card has an image (4:3 aspect ratio), heading, and body text. Grid displays 1 column on mobile, 2-3 columns on desktop.</p>
+                <p><strong>Validation:</strong> Check that images maintain aspect ratio, text is properly styled, and grid reflows on window resize.</p>
+            </div>
+            <div class="cards-wrapper">
+                <div class="cards block">
+                    <div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Feature 1">
+                            </picture>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Lightning Fast Performance</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>Optimized delivery ensures your content loads in milliseconds, providing an exceptional user experience across all devices.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg" alt="Feature 2">
+                            </picture>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Easy Content Authoring</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>Create and publish content using familiar tools like Google Docs. No technical knowledge required.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg" alt="Feature 3">
+                            </picture>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Global Scale & Reliability</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>Built on edge computing infrastructure for unlimited scalability and 99.99% uptime guarantee worldwide.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Text-Only Cards -->
+        <div class="test-section">
+            <h3>Test 2: Text-Only Cards (No Images)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Cards without images, displaying only heading and body text. Grid layout maintained, consistent spacing applied.</p>
+                <p><strong>Validation:</strong> Verify cards have proper borders, padding, and grid alignment even without images.</p>
+            </div>
+            <div class="cards-wrapper">
+                <div class="cards block">
+                    <div>
+                        <div>
+                            <h3>Getting Started</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>Begin your journey with our comprehensive onboarding guide and step-by-step tutorials.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Documentation</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>Explore detailed technical documentation, API references, and implementation examples.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Community Support</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>Join our active community forums and get help from experts and fellow developers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: Mixed Content Lengths -->
+        <div class="test-section">
+            <h3>Test 3: Mixed Content Lengths</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Cards with varying content lengths (short vs long descriptions). Grid maintains alignment, cards don't stretch awkwardly.</p>
+                <p><strong>Validation:</strong> Check that cards with shorter content don't look empty, and longer content doesn't overflow.</p>
+            </div>
+            <div class="cards-wrapper">
+                <div class="cards block">
+                    <div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg" alt="Short card">
+                            </picture>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Short Card</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>Brief description.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png" alt="Long card">
+                            </picture>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Card with Longer Content</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>This card has a much longer description that spans multiple lines. It includes detailed information about features, benefits, and use cases. The content should flow naturally within the card boundaries without causing layout issues.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png" alt="Medium card">
+                            </picture>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Medium Length Card</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>This card has a moderate amount of content that provides a good balance between information and readability.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: Large Grid (6 Cards) -->
+        <div class="test-section">
+            <h3>Test 4: Large Grid (6 Cards)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Six cards in a responsive grid. Tests grid behavior with more cards, ensuring proper wrapping and spacing.</p>
+                <p><strong>Validation:</strong> Verify grid columns adjust properly (1 col mobile, 2 cols tablet, 3-4 cols desktop). Check consistent spacing throughout.</p>
+            </div>
+            <div class="cards-wrapper">
+                <div class="cards block">
+                    <div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Card 1">
+                            </picture>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Web Development</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>Custom websites and web applications built with modern technologies and best practices.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg" alt="Card 2">
+                            </picture>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Mobile Apps</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>Native and cross-platform mobile applications for iOS and Android devices.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg" alt="Card 3">
+                            </picture>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Cloud Solutions</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>Scalable cloud infrastructure and services for modern digital businesses.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg" alt="Card 4">
+                            </picture>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Consulting</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>Strategic guidance and technical consulting for digital transformation projects.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png" alt="Card 5">
+                            </picture>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Training</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>Comprehensive training programs for teams on modern development practices.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png" alt="Card 6">
+                            </picture>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Support</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>Ongoing maintenance and support services to keep your systems running smoothly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 5: Single Card -->
+        <div class="test-section">
+            <h3>Test 5: Single Card</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> A single card in the grid. Tests edge case of minimal content, ensuring grid doesn't break with one item.</p>
+                <p><strong>Validation:</strong> Card should display properly without stretching to fill entire width (unless on mobile).</p>
+            </div>
+            <div class="cards-wrapper">
+                <div class="cards block">
+                    <div>
+                        <div>
+                            <picture>
+                                <img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Featured">
+                            </picture>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Featured Service</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>Our flagship offering combines cutting-edge technology with exceptional service delivery. Perfect for organizations looking to accelerate their digital transformation journey.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate from '/blocks/cards/cards.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Log card structure for debugging
+        function logCardStructure(block, index) {
+            console.log(`\n=== Card Block ${index + 1} ===`);
+            console.log('Initial children count:', block.children.length);
+            console.log('Initial pictures:', block.querySelectorAll('picture').length);
+
+            const divs = Array.from(block.children);
+            divs.forEach((div, i) => {
+                const hasPicture = div.querySelector('picture') !== null;
+                const hasHeading = div.querySelector('h1, h2, h3, h4, h5, h6') !== null;
+                const hasText = div.textContent.trim().length > 0;
+                console.log(`  Row ${i + 1}: Picture=${hasPicture}, Heading=${hasHeading}, Text=${hasText}`);
+            });
+        }
+
+        // Log final structure
+        function logFinalStructure(block, index) {
+            console.log(`\n=== After Decoration (Block ${index + 1}) ===`);
+            const ul = block.querySelector('ul');
+            if (ul) {
+                const items = ul.querySelectorAll('li');
+                console.log('List items created:', items.length);
+                items.forEach((li, i) => {
+                    const hasImage = li.querySelector('.cards-card-image') !== null;
+                    const hasBody = li.querySelector('.cards-card-body') !== null;
+                    console.log(`  Card ${i + 1}: Image=${hasImage}, Body=${hasBody}`);
+                });
+            } else {
+                console.error('No <ul> element found after decoration!');
+            }
+        }
+
+        // Initialize all card blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating blocks...', 'info');
+
+                // Get all card blocks
+                const cardBlocks = document.querySelectorAll('.cards.block');
+
+                if (cardBlocks.length === 0) {
+                    throw new Error('No card blocks found');
+                }
+
+                console.log(`Found ${cardBlocks.length} card blocks to decorate`);
+
+                // Decorate each card block
+                cardBlocks.forEach((block, index) => {
+                    console.log(`\n${'='.repeat(50)}`);
+                    console.log(`Processing Card Block ${index + 1}`);
+                    console.log('='.repeat(50));
+
+                    // Log initial structure
+                    logCardStructure(block, index);
+
+                    // Run decoration
+                    try {
+                        decorate(block);
+                        console.log('✓ Decoration completed successfully');
+                    } catch (error) {
+                        console.error(`✗ Decoration failed:`, error);
+                        throw error;
+                    }
+
+                    // Log final structure
+                    logFinalStructure(block, index);
+                });
+
+                updateStatus(`✓ ${cardBlocks.length} card blocks loaded successfully`, 'success');
+
+                console.log('\n' + '='.repeat(50));
+                console.log('All card blocks decorated successfully!');
+                console.log('='.repeat(50));
+                console.log('\nTest Instructions:');
+                console.log('1. Resize browser window to test responsive behavior');
+                console.log('2. Check that images maintain 4:3 aspect ratio');
+                console.log('3. Verify grid columns adjust (1 col mobile, 2-3 desktop)');
+                console.log('4. Inspect DOM to see <ul>/<li> structure');
+                console.log('5. Look for .cards-card-image and .cards-card-body classes');
+
+            } catch (error) {
+                console.error('Failed to initialize card blocks:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Visual Inspection:</strong> Scroll through all test sections and verify cards display correctly with proper spacing</li>
+            <li><strong>Responsive Testing:</strong> Resize browser window from mobile (< 600px) to desktop (> 1024px) and observe grid reflow</li>
+            <li><strong>Image Optimization:</strong> Open DevTools Network tab and check that images have srcset attributes and webp format where supported</li>
+            <li><strong>DOM Structure:</strong> Inspect any card block in DevTools Elements panel and verify:
+                <ul>
+                    <li>Outer <code>&lt;div class="cards block"&gt;</code></li>
+                    <li>Inner <code>&lt;ul&gt;</code> container</li>
+                    <li>Each card is a <code>&lt;li&gt;</code> element</li>
+                    <li>Image divs have <code>class="cards-card-image"</code></li>
+                    <li>Content divs have <code>class="cards-card-body"</code></li>
+                </ul>
+            </li>
+            <li><strong>CSS Grid:</strong> Inspect the <code>&lt;ul&gt;</code> element and verify CSS Grid properties:
+                <ul>
+                    <li><code>display: grid</code></li>
+                    <li><code>grid-template-columns: repeat(auto-fill, minmax(278px, 1fr))</code></li>
+                    <li><code>grid-gap: 16px</code></li>
+                </ul>
+            </li>
+            <li><strong>Image Aspect Ratio:</strong> All images should maintain 4:3 aspect ratio (check computed style <code>aspect-ratio: 4 / 3</code>)</li>
+            <li><strong>Console Output:</strong> Review console logs for detailed decoration process and any errors</li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Test 1:</strong> Three cards with images, headings, and body text in responsive grid</li>
+            <li><strong>Test 2:</strong> Three text-only cards without images, maintaining grid layout</li>
+            <li><strong>Test 3:</strong> Three cards with varying content lengths, proper alignment maintained</li>
+            <li><strong>Test 4:</strong> Six cards in larger grid, testing multi-row layout and wrapping</li>
+            <li><strong>Test 5:</strong> Single card displays properly without stretching excessively</li>
+        </ul>
+
+        <h3>Responsive Breakpoints to Test</h3>
+        <ul>
+            <li><strong>&lt; 600px (Mobile):</strong> Single column layout, cards stack vertically</li>
+            <li><strong>600px - 900px (Tablet):</strong> 2 columns (depending on container width)</li>
+            <li><strong>&gt; 900px (Desktop):</strong> 3-4 columns based on available space</li>
+            <li><strong>Note:</strong> No fixed breakpoints - grid uses <code>auto-fill</code> for natural reflow</li>
+        </ul>
+
+        <h3>Known Limitations</h3>
+        <ul>
+            <li><strong>Multi-Card Content Model:</strong> Current implementation groups all rows into single card - for multiple cards, create separate block instances</li>
+            <li><strong>No Variations:</strong> Block has no built-in variations - customization requires CSS overrides</li>
+            <li><strong>Static Content Only:</strong> Does not fetch dynamic data - use bloglist block for query-index.json integration</li>
+            <li><strong>IE11 Not Supported:</strong> Requires CSS Grid support (modern browsers only)</li>
+        </ul>
+
+        <h3>Debugging Tips</h3>
+        <ul>
+            <li>Check browser console for detailed decoration logs and error messages</li>
+            <li>Inspect Network tab for image loading issues (404s, CORS errors)</li>
+            <li>Use DevTools Elements panel to verify DOM transformation completed</li>
+            <li>Test in multiple browsers (Chrome, Firefox, Safari) for consistency</li>
+            <li>Verify CSS variables <code>--dark-color</code> and <code>--background-color</code> are defined</li>
+        </ul>
+    </div>
+</body>
+</html>

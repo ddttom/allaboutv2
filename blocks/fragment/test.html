@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fragment Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Fragment Block Styles -->
+    <link rel="stylesheet" href="/blocks/fragment/fragment.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-info strong {
+            font-weight: 600;
+        }
+
+        .test-section {
+            margin: 2rem auto;
+            max-width: 1400px;
+            padding: 0 1rem;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Fragment wrapper for consistent spacing */
+        .fragment-container {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            min-height: 100px;
+        }
+
+        .fragment-placeholder {
+            padding: 2rem;
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            background: #f8f9fa;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1400px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #667eea;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        /* Mock fragment content for demonstration */
+        .mock-fragment-content {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            margin: 1rem 0;
+        }
+
+        .mock-fragment-content h4 {
+            margin-top: 0;
+            color: #667eea;
+        }
+
+        .mock-fragment-content p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Loading indicator */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(102, 126, 234, 0.3);
+            border-radius: 50%;
+            border-top-color: #667eea;
+            animation: spin 1s linear infinite;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Fragment Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>fragment</code></p>
+        <p><strong>Test Count:</strong> <code>3 test scenarios</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Loading...</span></p>
+        <p><strong>Purpose:</strong> Visual and functional testing of content reuse patterns with remote fragment loading</p>
+        <p><strong>Note:</strong> This test uses mock fragment content since actual fragment pages may not exist. In production, fragments would fetch from <code>.plain.html</code> URLs.</p>
+    </div>
+
+    <main>
+        <!-- Test 1: Simple Text Fragment -->
+        <div class="test-section">
+            <h3>Test 1: Simple Text Fragment</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Fragment block replaced with simulated fragment content. Path extracted from text node. Section classes transferred to parent.</p>
+                <p><strong>Validation:</strong> Check that fragment content appears. Verify no errors in console. Inspect DOM to see fragment block replacement.</p>
+                <p><strong>Note:</strong> Mock content shown for demonstration. Real fragments fetch from <code>/fragments/disclaimer.plain.html</code></p>
+            </div>
+            <div class="fragment-container">
+                <div class="fragment block" data-test="simple">
+                    <div>
+                        <div>/fragments/disclaimer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Fragment with Link -->
+        <div class="test-section">
+            <h3>Test 2: Fragment with Link Reference</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Fragment path extracted from link href. Fragment content fetched and embedded. Link removed, content appears in place.</p>
+                <p><strong>Validation:</strong> Verify href attribute used for path. Check fragment content displays. No visible link in final result.</p>
+                <p><strong>Note:</strong> Mock content shown for demonstration. Real implementation fetches from link href.</p>
+            </div>
+            <div class="fragment-container">
+                <div class="fragment block" data-test="link">
+                    <div>
+                        <div><a href="/fragments/announcement">Special Announcement</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: Fragment with Rich Content -->
+        <div class="test-section">
+            <h3>Test 3: Fragment with Rich Content</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Fragment contains multiple elements (headings, paragraphs, images, links). All content decorated and embedded correctly. Media paths resolved.</p>
+                <p><strong>Validation:</strong> Check heading hierarchy preserved. Verify images load with absolute URLs. Test links are functional. Verify styling applied.</p>
+                <p><strong>Note:</strong> Mock content shown for demonstration. Real fragments include full EDS decoration.</p>
+            </div>
+            <div class="fragment-container">
+                <div class="fragment block" data-test="rich">
+                    <div>
+                        <div>/fragments/contact-info</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import decorate, { loadFragment } from '/blocks/fragment/fragment.js';
+
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Create mock fragment content for testing
+        // In production, this would be fetched from .plain.html URLs
+        function createMockFragment(type) {
+            const main = document.createElement('main');
+
+            if (type === 'simple') {
+                main.innerHTML = `
+                    <div class="section disclaimer-section">
+                        <div class="mock-fragment-content">
+                            <p><em>Legal Disclaimer: This content is for informational purposes only.
+                            Always consult a qualified professional before making decisions based on
+                            information provided here.</em></p>
+                            <p><strong>Last updated:</strong> November 28, 2025</p>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'link') {
+                main.innerHTML = `
+                    <div class="section announcement-section">
+                        <div class="mock-fragment-content">
+                            <h4>Special Holiday Sale!</h4>
+                            <p>Get 40% off all products this week only. Use code <code>HOLIDAY40</code>
+                            at checkout. Sale ends December 31st.</p>
+                            <p><a href="/products">Shop Now</a></p>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'rich') {
+                main.innerHTML = `
+                    <div class="section contact-section">
+                        <div class="mock-fragment-content">
+                            <h4>Get in Touch</h4>
+                            <p><strong>Email:</strong> support@example.com</p>
+                            <p><strong>Phone:</strong> 1-800-555-0100</p>
+                            <p><strong>Address:</strong> 123 Main Street, Anytown, USA</p>
+                            <hr>
+                            <p><strong>Business Hours:</strong></p>
+                            <ul>
+                                <li>Monday - Friday: 9am - 6pm EST</li>
+                                <li>Saturday: 10am - 4pm EST</li>
+                                <li>Sunday: Closed</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return main;
+        }
+
+        // Mock loadFragment for testing without real fragment pages
+        async function mockLoadFragment(path) {
+            // eslint-disable-next-line no-console
+            console.log(`[Mock] Loading fragment: ${path}`);
+
+            // Simulate network delay
+            await new Promise(resolve => setTimeout(resolve, 300));
+
+            // Determine fragment type from path
+            let type = 'simple';
+            if (path.includes('announcement')) type = 'link';
+            else if (path.includes('contact')) type = 'rich';
+
+            // Return mock content
+            return createMockFragment(type);
+        }
+
+        // Decorate fragment block with mock loading
+        async function decorateFragmentBlock(block) {
+            const testType = block.getAttribute('data-test');
+
+            // eslint-disable-next-line no-console
+            console.log(`\n=== Processing Fragment Block (${testType}) ===`);
+
+            // Extract path
+            const link = block.querySelector('a');
+            const path = link ? link.getAttribute('href') : block.textContent.trim();
+
+            // eslint-disable-next-line no-console
+            console.log('Fragment path:', path);
+
+            // Show loading state
+            block.innerHTML = '<div class="fragment-placeholder">Loading fragment content...</div>';
+
+            try {
+                // Load fragment (using mock)
+                const fragment = await mockLoadFragment(path);
+
+                if (fragment) {
+                    // Extract first section
+                    const fragmentSection = fragment.querySelector(':scope .section');
+
+                    if (fragmentSection) {
+                        // Transfer section classes to parent section
+                        const parentSection = block.closest('.section');
+                        if (parentSection) {
+                            parentSection.classList.add(...fragmentSection.classList);
+                            // eslint-disable-next-line no-console
+                            console.log('Section classes transferred:', fragmentSection.classList);
+                        }
+
+                        // Replace fragment block with content
+                        block.closest('.fragment').replaceWith(...fragment.childNodes);
+
+                        // eslint-disable-next-line no-console
+                        console.log('✓ Fragment embedded successfully');
+                    }
+                } else {
+                    throw new Error('Fragment not found');
+                }
+            } catch (error) {
+                // eslint-disable-next-line no-console
+                console.error('✗ Fragment loading failed:', error);
+                block.innerHTML = '<div class="fragment-placeholder" style="color: #721c24; background: #f8d7da;">Error loading fragment</div>';
+            }
+        }
+
+        // Log fragment structure for debugging
+        function logFragmentStructure(block, index) {
+            // eslint-disable-next-line no-console
+            console.log(`\n=== Fragment Block ${index + 1} ===`);
+            // eslint-disable-next-line no-console
+            console.log('Initial HTML:', block.innerHTML.substring(0, 100));
+
+            const link = block.querySelector('a');
+            const path = link ? link.getAttribute('href') : block.textContent.trim();
+            // eslint-disable-next-line no-console
+            console.log('Fragment path:', path);
+        }
+
+        // Initialize all fragment blocks
+        async function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                updateStatus('Decorating blocks...', 'info');
+
+                // Get all fragment blocks
+                const fragmentBlocks = document.querySelectorAll('.fragment.block');
+
+                if (fragmentBlocks.length === 0) {
+                    throw new Error('No fragment blocks found');
+                }
+
+                // eslint-disable-next-line no-console
+                console.log(`Found ${fragmentBlocks.length} fragment blocks to decorate`);
+
+                // Log initial structure
+                fragmentBlocks.forEach((block, index) => {
+                    logFragmentStructure(block, index);
+                });
+
+                // Decorate each fragment block sequentially
+                for (let i = 0; i < fragmentBlocks.length; i++) {
+                    const block = fragmentBlocks[i];
+                    // eslint-disable-next-line no-console
+                    console.log(`\n${'='.repeat(50)}`);
+                    // eslint-disable-next-line no-console
+                    console.log(`Processing Fragment Block ${i + 1}`);
+                    // eslint-disable-next-line no-console
+                    console.log('='.repeat(50));
+
+                    try {
+                        await decorateFragmentBlock(block);
+                    } catch (error) {
+                        // eslint-disable-next-line no-console
+                        console.error(`✗ Block ${i + 1} failed:`, error);
+                    }
+                }
+
+                updateStatus(`✓ ${fragmentBlocks.length} fragment blocks loaded successfully`, 'success');
+
+                // eslint-disable-next-line no-console
+                console.log('\n' + '='.repeat(50));
+                // eslint-disable-next-line no-console
+                console.log('All fragment blocks decorated successfully!');
+                // eslint-disable-next-line no-console
+                console.log('='.repeat(50));
+                // eslint-disable-next-line no-console
+                console.log('\nTest Instructions:');
+                // eslint-disable-next-line no-console
+                console.log('1. Verify fragment content appears in each test section');
+                // eslint-disable-next-line no-console
+                console.log('2. Check that original fragment blocks are replaced');
+                // eslint-disable-next-line no-console
+                console.log('3. Inspect DOM to verify section classes transferred');
+                // eslint-disable-next-line no-console
+                console.log('4. Check Network tab for mock fragment "requests"');
+                // eslint-disable-next-line no-console
+                console.log('5. Test with real fragment pages on live site');
+
+            } catch (error) {
+                // eslint-disable-next-line no-console
+                console.error('Failed to initialize fragment blocks:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+
+        <h4>Visual Inspection</h4>
+        <ol>
+            <li><strong>Fragment Content Display:</strong> Scroll through all test sections and verify mock fragment content appears in place of fragment blocks</li>
+            <li><strong>Content Replacement:</strong> Original fragment blocks should be completely replaced with fragment content</li>
+            <li><strong>Styling:</strong> Fragment content should have consistent styling and spacing</li>
+            <li><strong>Loading States:</strong> Brief "Loading..." message should appear then be replaced (300ms delay simulated)</li>
+        </ol>
+
+        <h4>DOM Inspection</h4>
+        <ol>
+            <li><strong>Open DevTools Elements panel</strong> and inspect fragment containers:
+                <ul>
+                    <li>Original <code>.fragment.block</code> elements should be gone</li>
+                    <li>Fragment content should be direct children of parent sections</li>
+                    <li>Section classes transferred: <code>.disclaimer-section</code>, <code>.announcement-section</code>, <code>.contact-section</code></li>
+                </ul>
+            </li>
+            <li><strong>Verify section class transfer:</strong>
+                <ul>
+                    <li>Inspect parent <code>.fragment-container</code> sections</li>
+                    <li>Should have additional classes from fragment's first section</li>
+                    <li>Example: <code>class="fragment-container disclaimer-section"</code></li>
+                </ul>
+            </li>
+        </ol>
+
+        <h4>Console Logs</h4>
+        <ol>
+            <li><strong>Open DevTools Console</strong> and review:
+                <ul>
+                    <li>Fragment path extraction logs</li>
+                    <li>Mock loading simulation messages</li>
+                    <li>Section class transfer confirmation</li>
+                    <li>Success/error messages for each block</li>
+                </ul>
+            </li>
+            <li><strong>Verify no errors:</strong> Console should show only info logs, no errors</li>
+        </ol>
+
+        <h4>Mock vs Real Testing</h4>
+        <p><strong>Important:</strong> This test uses mock content for demonstration purposes. In production:</p>
+        <ul>
+            <li>Fragment blocks fetch from <code>.plain.html</code> URLs</li>
+            <li>Real network requests occur (check Network tab)</li>
+            <li>Media paths are resolved using URL API</li>
+            <li>Full EDS decoration applied (decorateMain, loadBlocks)</li>
+            <li>Blocks within fragments are fully functional</li>
+        </ul>
+
+        <h3>Testing with Real Fragments</h3>
+        <p>To test with actual fragment pages:</p>
+        <ol>
+            <li><strong>Create fragment page:</strong> Create <code>/fragments/test.docx</code> in Google Docs</li>
+            <li><strong>Add content:</strong> Add sample content with images, links, formatting</li>
+            <li><strong>Publish:</strong> Publish fragment page to your site</li>
+            <li><strong>Verify accessible:</strong> Open <code>https://yoursite.com/fragments/test.plain.html</code></li>
+            <li><strong>Create test page:</strong> Add fragment block referencing <code>/fragments/test</code></li>
+            <li><strong>Publish and test:</strong> Verify fragment embeds correctly on test page</li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Test 1:</strong> Simple disclaimer text fragment with minimal formatting</li>
+            <li><strong>Test 2:</strong> Announcement fragment with heading, paragraph, link</li>
+            <li><strong>Test 3:</strong> Rich contact info fragment with headings, lists, multiple paragraphs</li>
+            <li><strong>All tests:</strong> Fragment blocks replaced, section classes transferred, no console errors</li>
+        </ul>
+
+        <h3>Media Path Resolution</h3>
+        <p>In production, the fragment block resolves relative media paths:</p>
+        <ul>
+            <li><strong>Fragment HTML contains:</strong> <code>&lt;img src="./media_abc123.png"&gt;</code></li>
+            <li><strong>Fragment path:</strong> <code>/fragments/disclaimer</code></li>
+            <li><strong>Resolved to:</strong> <code>/fragments/media_abc123.png</code> (absolute URL)</li>
+        </ul>
+        <p>Test by:</p>
+        <ol>
+            <li>Creating fragment with uploaded images</li>
+            <li>Embedding fragment on parent page</li>
+            <li>Inspecting image <code>src</code> attributes in DevTools</li>
+            <li>Verifying absolute URLs (not relative <code>./media_*</code> paths)</li>
+        </ol>
+
+        <h3>Section Class Transfer</h3>
+        <p>Fragment's first section classes are transferred to parent section:</p>
+        <ul>
+            <li><strong>Fragment has:</strong> <code>&lt;section class="announcement-section"&gt;</code></li>
+            <li><strong>Parent receives:</strong> <code>&lt;section class="fragment-container announcement-section"&gt;</code></li>
+            <li><strong>Purpose:</strong> Maintains styling context from fragment</li>
+        </ul>
+        <p>Test by:</p>
+        <ol>
+            <li>Creating fragment with styled section (add section metadata in Google Docs)</li>
+            <li>Adding CSS for section class</li>
+            <li>Embedding fragment on parent page</li>
+            <li>Verifying styling applied to parent section</li>
+        </ol>
+
+        <h3>Performance Testing</h3>
+        <ul>
+            <li><strong>Network tab:</strong> Check for <code>.plain.html</code> fetch requests</li>
+            <li><strong>Timing:</strong> Fragment load should add ~50-200ms per fragment</li>
+            <li><strong>Caching:</strong> Subsequent loads use cached fragments (faster)</li>
+            <li><strong>Multiple fragments:</strong> Test page with 3+ fragments, verify acceptable performance</li>
+        </ul>
+
+        <h3>Error Handling</h3>
+        <p>Test error scenarios:</p>
+        <ul>
+            <li><strong>Invalid path:</strong> Use non-existent fragment path (e.g., <code>/fragments/nonexistent</code>)</li>
+            <li><strong>Expected:</strong> Graceful failure, no console errors, placeholder message</li>
+            <li><strong>404 fragment:</strong> Fragment page not published or doesn't exist</li>
+            <li><strong>Expected:</strong> Empty fragment block or error message, page doesn't break</li>
+        </ul>
+
+        <h3>Browser Compatibility</h3>
+        <p>Test in multiple browsers:</p>
+        <ul>
+            <li><strong>Chrome/Edge:</strong> Last 2 versions (primary testing)</li>
+            <li><strong>Firefox:</strong> Last 2 versions</li>
+            <li><strong>Safari:</strong> Last 2 versions (test URL API compatibility)</li>
+            <li><strong>Mobile:</strong> iOS Safari, Android Chrome (responsive behavior)</li>
+        </ul>
+
+        <h3>Debugging Tips</h3>
+        <ul>
+            <li><strong>Console logs:</strong> Review detailed logs in DevTools Console</li>
+            <li><strong>Network tab:</strong> Monitor fragment fetch requests (filter: "plain.html")</li>
+            <li><strong>Elements panel:</strong> Inspect DOM structure before/after decoration</li>
+            <li><strong>Sources panel:</strong> Set breakpoints in fragment.js for step debugging</li>
+            <li><strong>Fragment page direct:</strong> Test fragment page independently first</li>
+        </ul>
+
+        <h3>Known Limitations (Mock Testing)</h3>
+        <ul>
+            <li><strong>No real network requests:</strong> Mock content injected directly (300ms simulated delay)</li>
+            <li><strong>No media path resolution:</strong> Mock content uses inline HTML (no images to resolve)</li>
+            <li><strong>No block decoration:</strong> Mock content doesn't contain other EDS blocks</li>
+            <li><strong>No cache testing:</strong> Mock always returns fresh content (no browser caching)</li>
+        </ul>
+        <p><strong>Solution:</strong> Test with real fragment pages on live/staging site for complete validation.</p>
+
+        <h3>Production Readiness Checklist</h3>
+        <ul>
+            <li>[ ] Fragment pages created and published</li>
+            <li>[ ] <code>.plain.html</code> versions accessible</li>
+            <li>[ ] Media in fragments loads correctly</li>
+            <li>[ ] Section classes transferred properly</li>
+            <li>[ ] Blocks within fragments function correctly</li>
+            <li>[ ] Fragment updates reflect on parent pages</li>
+            <li>[ ] Error handling works (404, invalid paths)</li>
+            <li>[ ] Performance acceptable (< 200ms per fragment)</li>
+            <li>[ ] Browser compatibility verified (Chrome, Firefox, Safari)</li>
+            <li>[ ] Mobile responsive behavior tested</li>
+        </ul>
+    </div>
+</body>
+</html>

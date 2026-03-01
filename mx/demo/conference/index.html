@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MX Summit 2026 - Redirecting...</title>
+  <meta name="robots" content="noindex">
+
+  <!-- hreflang for crawlers -->
+  <link rel="alternate" hreflang="en" href="https://allabout.network/mx/demo/conference/en/index.html" />
+  <link rel="alternate" hreflang="de" href="https://allabout.network/mx/demo/conference/de/index.html" />
+  <link rel="alternate" hreflang="x-default" href="https://allabout.network/mx/demo/conference/en/index.html" />
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: white;
+      text-align: center;
+    }
+    .container { padding: 2rem; }
+    h1 { margin-bottom: 1rem; }
+    a { color: #e94560; }
+    .links { margin-top: 2rem; }
+    .links a {
+      display: inline-block;
+      margin: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      text-decoration: none;
+      color: white;
+    }
+    .links a:hover { background: rgba(255,255,255,0.2); }
+  </style>
+
+  <script>
+    /**
+     * N-Language Root Redirect
+     * Detects browser language and redirects to appropriate version.
+     * GDPR compliant: no cookies, no localStorage, always follows Accept-Language.
+     */
+    (function() {
+      const availableLanguages = ['en', 'de'];
+      const defaultLanguage = 'en';
+
+      // Parse Accept-Language style preferences
+      function parseLanguagePreferences() {
+        const languages = navigator.languages || [navigator.language || navigator.userLanguage];
+        return languages.map(lang => {
+          const parts = lang.toLowerCase().split('-');
+          return {
+            full: lang.toLowerCase(),
+            base: parts[0],
+            region: parts[1] || null
+          };
+        });
+      }
+
+      // Find best matching language with regional cascade
+      function findBestLanguage(browserLangs, available, defaultLang) {
+        for (const pref of browserLangs) {
+          // Try exact match first (de-DE)
+          if (available.includes(pref.full)) return pref.full;
+          // Then base language (de)
+          if (available.includes(pref.base)) return pref.base;
+        }
+        return defaultLang;
+      }
+
+      const browserPrefs = parseLanguagePreferences();
+      const targetLang = findBestLanguage(browserPrefs, availableLanguages, defaultLanguage);
+
+      // Redirect to language-specific version
+      window.location.replace('./' + targetLang + '/');
+    })();
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>MX Summit 2026</h1>
+    <p>Detecting your language preference...</p>
+
+    <noscript>
+      <p>JavaScript is required for automatic language detection.</p>
+      <div class="links">
+        <a href="./en/">English</a>
+        <a href="./de/">Deutsch</a>
+      </div>
+    </noscript>
+  </div>
+</body>
+</html>

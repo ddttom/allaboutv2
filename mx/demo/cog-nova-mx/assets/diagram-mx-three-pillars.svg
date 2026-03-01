@@ -1,0 +1,39 @@
+<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <title>Machine Experience Three Pillars</title>
+  <rect width="600" height="400" fill="#f7f9fb"/>
+
+  <!-- Title -->
+  <text x="300" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1a5490" text-anchor="middle">Machine Experience</text>
+  <text x="300" y="65" font-family="Arial, sans-serif" font-size="16" fill="#666666" text-anchor="middle">The Three Pillars</text>
+
+  <!-- Pillar 1: Structured Data -->
+  <rect x="50" y="120" width="150" height="220" fill="#1a5490" rx="5"/>
+  <text x="125" y="160" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff" text-anchor="middle">Structured Data</text>
+  <text x="125" y="200" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">Schema.org</text>
+  <text x="125" y="220" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">JSON-LD</text>
+  <text x="125" y="240" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">Microdata</text>
+  <text x="125" y="270" font-family="Arial, sans-serif" font-size="11" fill="#c9a961" text-anchor="middle">Make meaning</text>
+  <text x="125" y="285" font-family="Arial, sans-serif" font-size="11" fill="#c9a961" text-anchor="middle">explicit</text>
+
+  <!-- Pillar 2: Accessibility -->
+  <rect x="225" y="120" width="150" height="220" fill="#1a5490" rx="5"/>
+  <text x="300" y="160" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff" text-anchor="middle">Accessibility</text>
+  <text x="300" y="200" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">WCAG 2.1 AA</text>
+  <text x="300" y="220" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">Semantic HTML</text>
+  <text x="300" y="240" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">ARIA</text>
+  <text x="300" y="270" font-family="Arial, sans-serif" font-size="11" fill="#c9a961" text-anchor="middle">Foundation for</text>
+  <text x="300" y="285" font-family="Arial, sans-serif" font-size="11" fill="#c9a961" text-anchor="middle">agent compatibility</text>
+
+  <!-- Pillar 3: Explicit Intent -->
+  <rect x="400" y="120" width="150" height="220" fill="#1a5490" rx="5"/>
+  <text x="475" y="160" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff" text-anchor="middle">Explicit Intent</text>
+  <text x="475" y="200" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">State Declaration</text>
+  <text x="475" y="220" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">Clear Labels</text>
+  <text x="475" y="240" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">No Guessing</text>
+  <text x="475" y="270" font-family="Arial, sans-serif" font-size="11" fill="#c9a961" text-anchor="middle">Machines don't</text>
+  <text x="475" y="285" font-family="Arial, sans-serif" font-size="11" fill="#c9a961" text-anchor="middle">do subtle</text>
+
+  <!-- Foundation -->
+  <rect x="50" y="355" width="500" height="30" fill="#ff6b35" rx="3"/>
+  <text x="300" y="375" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">Works for Humans AND AI Agents</text>
+</svg>

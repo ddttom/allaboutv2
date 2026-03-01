@@ -1,0 +1,30 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "what-is-installme",
+  "version": "1.0.0",
+  "description": "INSTALLME.md is a root-level cog convention that gives AI agents structured installation instructions — no hallucination, no guessing, no wasted compute.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "installme",
+    "install",
+    "convention",
+    "sop-agent",
+    "diagnostics",
+    "onboarding",
+    "hallucination",
+    "compute",
+    "two-stage-boot",
+    "mx-os"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-10",
+  "modified": "2026-02-10",
+  "source_path": "scripts/cogs/what-is-installme.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/what-is-installme.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/what-is-installme/content.md"
+}

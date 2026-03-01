@@ -1,0 +1,25 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "marp-regen",
+  "version": "1.0.0",
+  "description": "Regenerate PPTX presentations from Marp markdown files",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-tools",
+  "tags": [
+    "marp",
+    "presentation",
+    "pptx",
+    "slides",
+    "regenerate"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-26",
+  "modified": "2026-02-26",
+  "source_path": "scripts/cogs/marp-regen.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/marp-regen.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/marp-regen/content.md"
+}

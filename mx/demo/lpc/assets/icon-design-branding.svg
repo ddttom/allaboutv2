@@ -1,0 +1,22 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .primary { fill: #1a472a; }
+      .secondary { fill: #c9a961; }
+    </style>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" class="secondary" opacity="0.2"/>
+
+  <!-- Pen/pencil icon -->
+  <rect x="30" y="20" width="8" height="50" rx="2" class="primary" transform="rotate(-45 34 45)"/>
+  <path d="M 35 60 L 45 70 L 40 75 L 30 65 Z" class="accent" fill="#d64545"/>
+
+  <!-- Brand badge -->
+  <circle cx="65" cy="35" r="18" class="primary"/>
+  <path d="M 65 25 L 70 32 L 77 30 L 72 37 L 77 43 L 70 40 L 65 47 L 60 40 L 53 43 L 58 37 L 53 30 L 60 32 Z" fill="#c9a961"/>
+
+  <!-- Label -->
+  <text x="50" y="95" text-anchor="middle" font-family="Arial" font-size="11" fill="#1a472a" font-weight="bold">DESIGN</text>
+</svg>

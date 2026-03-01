@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DPS Block Test</title>
+  <script src="/scripts/aem.js" type="module"></script>
+  <script src="/scripts/scripts.js" type="module"></script>
+  <link rel="stylesheet" href="/styles/styles.css">
+  <style>
+    /* Test page specific styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .test-info {
+      background: #f0f0f0;
+      padding: 20px;
+      margin: 20px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .test-info h2 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+
+    .test-info ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+
+    .test-info li {
+      margin: 5px 0;
+    }
+
+    .test-info code {
+      background: #fff;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      color: #e74c3c;
+    }
+
+    .start-button {
+      background: #3498db;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 20px;
+      transition: background 0.3s;
+    }
+
+    .start-button:hover {
+      background: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <!-- Test Information Panel (will be hidden when presentation starts) -->
+  <div class="test-info" id="test-info">
+    <h2>DPS Block Test Page</h2>
+    <p>This test page demonstrates the Dynamic Presentation System (DPS) block with sample content.</p>
+
+    <h3>Test Features:</h3>
+    <ul>
+      <li>✅ Full-screen presentation mode</li>
+      <li>✅ Slide navigation (arrow keys and buttons)</li>
+      <li>✅ Image sequence navigation</li>
+      <li>✅ Timer functionality (25 minute countdown)</li>
+      <li>✅ Presenter notes with toggle</li>
+      <li>✅ Keyboard shortcuts</li>
+      <li>✅ Mobile touch support</li>
+      <li>✅ Responsive layout</li>
+      <li>✅ Auto-generated Q&A slide</li>
+    </ul>
+
+    <h3>Keyboard Shortcuts:</h3>
+    <ul>
+      <li><code>←</code> / <code>→</code> - Navigate slides and image sequences</li>
+      <li><code>Space</code> - Toggle timer pause/resume</li>
+      <li><code>+</code> - Show presenter notes</li>
+      <li><code>-</code> - Hide presenter notes</li>
+      <li><code>P</code> - Toggle enlarged presenter mode</li>
+      <li><code>Esc</code> - Toggle navigation bar visibility</li>
+    </ul>
+
+    <h3>Test Slides:</h3>
+    <ul>
+      <li><strong>Slide 1:</strong> Welcome (single image)</li>
+      <li><strong>Slide 2:</strong> Key Concepts (image sequence - 3 images)</li>
+      <li><strong>Slide 3:</strong> Implementation (bullet points with image)</li>
+      <li><strong>Slide 4:</strong> Benefits (mixed content)</li>
+      <li><strong>Slide 5:</strong> Q&A (auto-generated with QR code)</li>
+    </ul>
+
+    <button class="start-button" onclick="document.getElementById('test-info').style.display='none'; document.querySelector('.dps').scrollIntoView();">
+      Start Presentation Test
+    </button>
+  </div>
+
+  <!-- Main content area -->
+  <main>
+    <div>
+      <!-- DPS Block Test Content -->
+      <div class="dps block" data-block-name="dps" data-block-status="initialized">
+        <!-- Configuration Row -->
+        <div>
+          <div>Digital Transformation Strategy</div>
+          <div>Building the Future of Business - https://allabout.network</div>
+          <div>25</div>
+        </div>
+
+        <!-- Slide 1: Welcome -->
+        <div>
+          <div>Welcome</div>
+          <div>Introduction to Digital Transformation</div>
+          <div>Strategic overview and key themes</div>
+          <div>
+            <picture>
+              <source type="image/png" srcset="https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png">
+              <img loading="lazy" alt="Welcome illustration" src="https://allabout.network/media_11fa677a5c5d2563c03ba0f229be08509492ccb60.png" width="400" height="400">
+            </picture>
+          </div>
+          <div>
+            <p>Welcome everyone to this presentation on digital transformation strategy.</p>
+            <p>Today we'll explore:</p>
+            <ul>
+              <li>Current state of digital transformation</li>
+              <li>Key success factors</li>
+              <li>Implementation roadmap</li>
+              <li>Measuring outcomes</li>
+            </ul>
+            <p><strong>Presenter Tips:</strong> Start with audience poll on their current transformation stage. Allow 2-3 minutes for introduction.</p>
+          </div>
+        </div>
+
+        <!-- Slide 2: Key Concepts (Image Sequence) -->
+        <div>
+          <div>Key Concepts</div>
+          <div>Understanding the fundamentals</div>
+          <div>
+            <ul>
+              <li>Technology enablement</li>
+              <li>Process optimization</li>
+              <li>Cultural change</li>
+              <li>Data-driven decisions</li>
+            </ul>
+          </div>
+          <div>
+            <img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Concept illustration 1">
+          </div>
+          <div>
+            <p>Digital transformation is not just about technology - it's a holistic change that encompasses people, processes, and technology.</p>
+            <p><strong>Navigation:</strong> Use right arrow to show next image in sequence.</p>
+          </div>
+        </div>
+
+        <!-- Slide 2 Sequence Item 2 -->
+        <div>
+          <div>Key Concepts</div>
+          <div></div>
+          <div></div>
+          <div>
+            <img src="https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg" alt="Concept illustration 2">
+          </div>
+          <div></div>
+        </div>
+
+        <!-- Slide 2 Sequence Item 3 -->
+        <div>
+          <div>Key Concepts</div>
+          <div></div>
+          <div></div>
+          <div>
+            <img src="https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg" alt="Concept illustration 3">
+          </div>
+          <div></div>
+        </div>
+
+        <!-- Slide 3: Implementation -->
+        <div>
+          <div>Implementation Approach</div>
+          <div>Practical steps for transformation</div>
+          <div>
+            <ul>
+              <li><strong>Phase 1:</strong> Assessment and planning</li>
+              <li><strong>Phase 2:</strong> Pilot projects and learning</li>
+              <li><strong>Phase 3:</strong> Scaling successful initiatives</li>
+              <li><strong>Phase 4:</strong> Continuous improvement</li>
+            </ul>
+          </div>
+          <div>
+            <picture>
+              <source type="image/jpeg" srcset="https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg">
+              <img loading="lazy" alt="Implementation roadmap" src="https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg" width="800" height="600">
+            </picture>
+          </div>
+          <div>
+            <p>A phased approach reduces risk and allows for learning and adjustment.</p>
+            <p><strong>Key Points to Emphasize:</strong></p>
+            <ul>
+              <li>Start small with pilot projects</li>
+              <li>Measure results rigorously</li>
+              <li>Build internal capabilities</li>
+              <li>Scale what works, stop what doesn't</li>
+            </ul>
+            <p><strong>Timing:</strong> Allow 4-5 minutes for this slide. Encourage questions about specific phases.</p>
+          </div>
+        </div>
+
+        <!-- Slide 4: Benefits -->
+        <div>
+          <div>Expected Benefits</div>
+          <div>Why digital transformation matters</div>
+          <div>
+            <p style="font-size: 18px; margin-bottom: 20px;">Organizations that successfully transform see significant improvements:</p>
+            <ul>
+              <li>40% reduction in operational costs</li>
+              <li>60% faster time-to-market</li>
+              <li>3x improvement in customer satisfaction</li>
+              <li>2x increase in employee productivity</li>
+            </ul>
+          </div>
+          <div>
+            <img src="https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png" alt="Benefits chart">
+          </div>
+          <div>
+            <p>These metrics are based on industry research and case studies from leading organizations.</p>
+            <p><strong>Discussion Points:</strong></p>
+            <ul>
+              <li>Share specific examples from your industry</li>
+              <li>Discuss realistic timelines for seeing results</li>
+              <li>Address common concerns about investment and ROI</li>
+            </ul>
+            <p><strong>Timing:</strong> 3-4 minutes. Be prepared for questions about specific metrics.</p>
+          </div>
+        </div>
+
+        <!-- Q&A slide will be auto-generated by DPS block -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Load the DPS block decorator -->
+  <script type="module">
+    import decorate from './dps.js';
+
+    // Wait for DOM to be ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initBlock);
+    } else {
+      initBlock();
+    }
+
+    async function initBlock() {
+      const block = document.querySelector('.dps.block');
+
+      if (block) {
+        try {
+          // Decorate the block
+          await decorate(block);
+
+          // Log success
+          // eslint-disable-next-line no-console
+          console.log('DPS block initialized successfully');
+
+          // Add test completion marker
+          block.dataset.blockStatus = 'loaded';
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error('Error initializing DPS block:', error);
+
+          // Show error in block
+          block.innerHTML = `
+            <div style="padding: 20px; background: #fee; border: 2px solid #e00; border-radius: 8px; margin: 20px;">
+              <h2 style="color: #e00; margin-top: 0;">DPS Block Error</h2>
+              <p><strong>Error:</strong> ${error.message}</p>
+              <p>Check the browser console for more details.</p>
+            </div>
+          `;
+        }
+      }
+    }
+
+    // Add mobile device detection for testing
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) {
+      document.body.classList.add('mobile-device');
+      // eslint-disable-next-line no-console
+      console.log('Mobile device detected - touch gestures enabled');
+    }
+
+    // Test utilities
+    window.dpsTest = {
+      // Get current slide index
+      getCurrentSlide: () => {
+        const slides = document.querySelectorAll('.slide');
+        for (let i = 0; i < slides.length; i++) {
+          if (slides[i].classList.contains('active')) {
+            return i;
+          }
+        }
+        return -1;
+      },
+
+      // Get total slide count
+      getTotalSlides: () => {
+        return document.querySelectorAll('.slide').length;
+      },
+
+      // Check if presenter notes are visible
+      areNotesVisible: () => {
+        const notes = document.querySelector('.presenter-notes');
+        return notes && !notes.classList.contains('hidden');
+      },
+
+      // Get remaining timer value
+      getRemainingTime: () => {
+        const timer = document.querySelector('.timer');
+        return timer ? timer.textContent : 'N/A';
+      },
+
+      // Log test status
+      logStatus: () => {
+        // eslint-disable-next-line no-console
+        console.log('DPS Test Status:', {
+          currentSlide: window.dpsTest.getCurrentSlide(),
+          totalSlides: window.dpsTest.getTotalSlides(),
+          notesVisible: window.dpsTest.areNotesVisible(),
+          remainingTime: window.dpsTest.getRemainingTime(),
+          isMobile: document.body.classList.contains('mobile-device')
+        });
+      }
+    };
+
+    // Log test utilities availability
+    // eslint-disable-next-line no-console
+    console.log('DPS Test utilities available: window.dpsTest');
+    // eslint-disable-next-line no-console
+    console.log('Usage: window.dpsTest.logStatus() - Show current state');
+  </script>
+
+  <!-- Browser compatibility check -->
+  <script>
+    // Check for required features
+    const features = {
+      grid: CSS.supports('display', 'grid'),
+      flexbox: CSS.supports('display', 'flex'),
+      customProperties: CSS.supports('--custom', 'property'),
+      es6: typeof Symbol !== 'undefined'
+    };
+
+    const unsupported = Object.keys(features).filter(key => !features[key]);
+
+    if (unsupported.length > 0) {
+      // eslint-disable-next-line no-console
+      console.warn('Warning: Some features may not be supported:', unsupported);
+
+      // Show warning banner
+      const warning = document.createElement('div');
+      warning.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; background: #ff9800; color: white; padding: 10px; text-align: center; z-index: 9999;';
+      warning.innerHTML = `
+        <strong>Browser Compatibility Warning:</strong>
+        Your browser may not fully support this presentation.
+        For best results, use Chrome, Firefox, Safari, or Edge (latest versions).
+      `;
+      document.body.insertBefore(warning, document.body.firstChild);
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('✅ All required browser features supported');
+    }
+  </script>
+
+  <!-- Print mode styles -->
+  <style media="print">
+    .test-info,
+    .start-button {
+      display: none !important;
+    }
+
+    .dps-wrapper {
+      height: auto !important;
+    }
+
+    .slide {
+      page-break-after: always;
+      display: block !important;
+      height: auto !important;
+      min-height: 90vh;
+    }
+
+    .slide:last-child {
+      page-break-after: avoid;
+    }
+  </style>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "the-companion-web",
+  "version": "1.0",
+  "description": "The companion web — how QR codes, landing pages, and embedded metadata turn the physical world into entry points that humans and AI agents read together. Every object with a QR code becomes self-describing. Extends to robotics — the interface between physical machines and the objects they encounter.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "companion-web",
+    "qr-code",
+    "physical-digital",
+    "landing-page",
+    "metadata",
+    "embedded",
+    "discovery",
+    "ubiquity",
+    "pitch",
+    "robotics",
+    "global-os"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-09",
+  "modified": "2026-02-09",
+  "source_path": "scripts/cogs/the-companion-web.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/the-companion-web.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/the-companion-web/content.md"
+}

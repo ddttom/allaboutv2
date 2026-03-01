@@ -1,0 +1,24 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "llms-txt",
+  "version": "0.1.0",
+  "description": "Generate and validate llms.txt files for Robot-First Web compliance",
+  "author": "Maxine (MX - Machine eXperience Engine)",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "draft",
+  "category": "mx-core",
+  "tags": [
+    "llms-txt",
+    "robot-first",
+    "validation",
+    "generation"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-06T12:19:00Z",
+  "modified": "2026-02-06T12:19:00Z",
+  "source_path": "scripts/cogs/llms-txt.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/llms-txt.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/llms-txt/content.md"
+}

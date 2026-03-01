@@ -1,0 +1,140 @@
+{
+  "version": "1.0.0",
+  "generated": "2026-02-28T13:11:09.089Z",
+  "total_cogs": 155,
+  "publishers": 1,
+  "namespaces": [
+    "cog-nova-mx"
+  ],
+  "by_category": {
+    "product": 3,
+    "governance": 3,
+    "mx-core": 54,
+    "about": 1,
+    "deliverable": 2,
+    "business": 1,
+    "strategy": 2,
+    "infrastructure": 2,
+    "planning": 1,
+    "principle": 1,
+    "vision": 2,
+    "risk": 1,
+    "manual": 28,
+    "mx-os": 2,
+    "architecture": 5,
+    "adr": 1,
+    "decision-record": 2,
+    "Business Strategy": 1,
+    "template": 1,
+    "standard": 3,
+    "naming": 3,
+    "specification": 1,
+    "identity": 1,
+    "eds-block": 1,
+    "landing-page": 1,
+    "marketing": 1,
+    "creative-services": 2,
+    "mx-tools": 5,
+    "validation": 1,
+    "learning": 3,
+    "onboarding": 1,
+    "contact": 7,
+    "restaurant": 1,
+    "event": 1,
+    "venue": 1,
+    "convention": 1,
+    "mx-content": 2,
+    "mx-canon": 1,
+    "content-creation": 1,
+    "registry": 1,
+    "mx-sales": 1,
+    "mx-operations": 1,
+    "reference-implementation": 1
+  },
+  "by_type": {
+    "action-doc": 56,
+    "info-doc": 99
+  },
+  "top_tags": [
+    {
+      "tag": "manual",
+      "count": 28
+    },
+    {
+      "tag": "metadata",
+      "count": 19
+    },
+    {
+      "tag": "mx-os",
+      "count": 17
+    },
+    {
+      "tag": "validation",
+      "count": 12
+    },
+    {
+      "tag": "maxine",
+      "count": 11
+    },
+    {
+      "tag": "automation",
+      "count": 11
+    },
+    {
+      "tag": "identity",
+      "count": 10
+    },
+    {
+      "tag": "accessibility",
+      "count": 10
+    },
+    {
+      "tag": "audit",
+      "count": 9
+    },
+    {
+      "tag": "adr",
+      "count": 9
+    },
+    {
+      "tag": "registry",
+      "count": 9
+    },
+    {
+      "tag": "routing",
+      "count": 8
+    },
+    {
+      "tag": "seo",
+      "count": 8
+    },
+    {
+      "tag": "governance",
+      "count": 7
+    },
+    {
+      "tag": "multilingual",
+      "count": 7
+    },
+    {
+      "tag": "namespace",
+      "count": 7
+    },
+    {
+      "tag": "onboarding",
+      "count": 7
+    },
+    {
+      "tag": "contact",
+      "count": 7
+    },
+    {
+      "tag": "html",
+      "count": 6
+    },
+    {
+      "tag": "naming",
+      "count": 5
+    }
+  ]
+}

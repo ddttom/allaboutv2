@@ -1,0 +1,26 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "field-dictionary",
+  "version": "1.5",
+  "description": "The single source of truth for every YAML frontmatter field in the MX ecosystem. Definitions, types, profiles, and overlap resolution.",
+  "author": "The Gathering",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "active",
+  "category": "standard",
+  "tags": [
+    "fields",
+    "metadata",
+    "yaml",
+    "frontmatter",
+    "dictionary",
+    "vocabulary"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-13",
+  "modified": "2026-02-23",
+  "source_path": "mx-canon/mx-the-gathering/specifications/field-dictionary.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-the-gathering/specifications/field-dictionary.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/field-dictionary/content.md"
+}

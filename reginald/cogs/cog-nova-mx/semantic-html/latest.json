@@ -1,0 +1,25 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "semantic-html",
+  "version": "0.1.0",
+  "description": "Validate HTML semantics — structure precedes presentation",
+  "author": "Maxine (MX - Machine eXperience Engine)",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "draft",
+  "category": "mx-core",
+  "tags": [
+    "html",
+    "semantic",
+    "structure",
+    "accessibility",
+    "validation"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-06T12:31:00Z",
+  "modified": "2026-02-06T12:31:00Z",
+  "source_path": "scripts/cogs/semantic-html.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/semantic-html.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/semantic-html/content.md"
+}

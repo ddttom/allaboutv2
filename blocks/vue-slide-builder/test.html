@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Slide Builder Block Test</title>
+    <script type="module">
+        // Import EDS core library
+        import {
+            loadCSS,
+            getMetadata,
+            decorateBlock,
+            decorateBlocks,
+            decorateButtons,
+            decorateIcons,
+            decorateSections,
+            loadBlocks,
+            loadCSS as loadStyle,
+            sampleRUM,
+            loadHeader,
+            loadFooter,
+        } from '../../scripts/aem.js';
+
+        // Load block CSS
+        await loadCSS('/blocks/vue-slide-builder/vue-slide-builder.css');
+
+        // Import block decoration function
+        const { default: decorate } = await import('/blocks/vue-slide-builder/vue-slide-builder.js');
+
+        // Wait for DOM to be ready
+        if (document.readyState === 'loading') {
+            await new Promise(resolve => {
+                document.addEventListener('DOMContentLoaded', resolve);
+            });
+        }
+
+        // Get block element
+        const block = document.querySelector('.vue-slide-builder');
+
+        if (block) {
+            console.log('Decorating vue-slide-builder block...');
+
+            try {
+                // Decorate the block
+                await decorate(block);
+                console.log('Block decorated successfully');
+
+                // Add success indicator
+                const indicator = document.createElement('div');
+                indicator.style.cssText = 'position: fixed; top: 10px; right: 10px; background: #4caf50; color: white; padding: 10px 20px; border-radius: 4px; z-index: 10000;';
+                indicator.textContent = 'Block loaded successfully';
+                document.body.appendChild(indicator);
+
+                setTimeout(() => indicator.remove(), 3000);
+            } catch (error) {
+                console.error('Error decorating block:', error);
+
+                // Add error indicator
+                const errorIndicator = document.createElement('div');
+                errorIndicator.style.cssText = 'position: fixed; top: 10px; right: 10px; background: #f44336; color: white; padding: 10px 20px; border-radius: 4px; z-index: 10000;';
+                errorIndicator.textContent = `Error: ${error.message}`;
+                document.body.appendChild(errorIndicator);
+            }
+        } else {
+            console.error('Block element not found');
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .test-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .test-header {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .test-header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #42b883;
+        }
+
+        .test-header p {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+
+        .framework-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #42b883 0%, #35495e 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .test-info {
+            background: #e8f5e9;
+            border-left: 4px solid #42b883;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .test-info h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #2e7d32;
+        }
+
+        .test-info ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .test-info li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .test-info li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .block-wrapper {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .block-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .block-header h2 {
+            font-size: 24px;
+            color: #42b883;
+            margin-bottom: 5px;
+        }
+
+        .block-header .block-type {
+            font-size: 14px;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
+        /* Block container styles */
+        .vue-slide-builder {
+            width: 100%;
+            min-height: 400px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            background: #fafafa;
+        }
+
+        .test-notes {
+            background: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .test-notes h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #f57f17;
+        }
+
+        .test-notes p {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .test-notes strong {
+            color: #e65100;
+        }
+
+        .test-notes .hash-warning {
+            background: #ffecb3;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .console-output {
+            background: #263238;
+            color: #aed581;
+            padding: 20px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin-top: 30px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .console-output h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .console-line {
+            padding: 3px 0;
+        }
+
+        .console-error {
+            color: #ff5252;
+        }
+
+        .console-warn {
+            color: #ffb74d;
+        }
+
+        .console-info {
+            color: #4fc3f7;
+        }
+
+        .test-checklist {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .test-checklist h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #42b883;
+        }
+
+        .checklist-item {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-right: 15px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #42b883;
+        }
+
+        .checklist-item label {
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .test-header,
+            .block-wrapper,
+            .test-info,
+            .test-notes,
+            .test-checklist {
+                padding: 20px;
+            }
+
+            .test-header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>Vue Slide Builder Block Test</h1>
+            <span class="framework-badge">Vue.js 3 + Vite</span>
+            <p>Framework Integration Testing Environment</p>
+        </div>
+
+        <div class="test-info">
+            <h2>Test Configuration</h2>
+            <ul>
+                <li>Block Type: Framework Integration (Vue.js)</li>
+                <li>Build Tool: Vite (Modern Build Tool)</li>
+                <li>Loading Strategy: Dynamic Script Injection</li>
+                <li>Bundle Path: /assets/index-UbQ-77Ai.js (hash-based)</li>
+                <li>Style Path: /assets/index-DMC9YjsP.css (hash-based)</li>
+                <li>Container ID: vue-slide-app</li>
+            </ul>
+        </div>
+
+        <div class="test-notes">
+            <h3>Testing Instructions</h3>
+            <p><strong>1. Bundle Availability:</strong> Ensure the Vue bundle is deployed to /assets/index-UbQ-77Ai.js</p>
+            <p><strong>2. Style Availability:</strong> Ensure the CSS bundle is deployed to /assets/index-DMC9YjsP.css</p>
+            <p><strong>3. Hash Management:</strong> Verify hash in block code matches deployed bundle hash</p>
+            <p><strong>4. Loading Process:</strong> Watch the console for bundle loading messages</p>
+            <p><strong>5. Vue Bootstrap:</strong> Verify the Vue app creates and mounts in the container below</p>
+            <p><strong>6. Functionality:</strong> Test all reactive features of the slide builder</p>
+
+            <div class="hash-warning">
+                <strong>Important:</strong> After rebuilding the Vue app, update the hash-based filenames in vue-slide-builder.js to match the new build output.
+            </div>
+        </div>
+
+        <div class="block-wrapper">
+            <div class="block-header">
+                <h2>Vue Slide Builder Block</h2>
+                <span class="block-type">Vue.js Framework Integration Block</span>
+            </div>
+
+            <!-- Block element that will be decorated -->
+            <div class="vue-slide-builder"></div>
+        </div>
+
+        <div class="test-checklist">
+            <h2>Testing Checklist</h2>
+
+            <div class="checklist-item">
+                <input type="checkbox" id="check1">
+                <label for="check1">Block container renders correctly</label>
+            </div>
+
+            <div class="checklist-item">
+                <input type="checkbox" id="check2">
+                <label for="check2">Vue bundle script loads without errors</label>
+            </div>
+
+            <div class="checklist-item">
+                <input type="checkbox" id="check3">
+                <label for="check3">CSS stylesheet loads and applies correctly</label>
+            </div>
+
+            <div class="checklist-item">
+                <input type="checkbox" id="check4">
+                <label for="check4">Vue app creates and mounts in the container</label>
+            </div>
+
+            <div class="checklist-item">
+                <input type="checkbox" id="check5">
+                <label for="check5">Vue app UI renders completely</label>
+            </div>
+
+            <div class="checklist-item">
+                <input type="checkbox" id="check6">
+                <label for="check6">Reactive features work as expected</label>
+            </div>
+
+            <div class="checklist-item">
+                <input type="checkbox" id="check7">
+                <label for="check7">Slide creation functionality works</label>
+            </div>
+
+            <div class="checklist-item">
+                <input type="checkbox" id="check8">
+                <label for="check8">Slide editing functionality works</label>
+            </div>
+
+            <div class="checklist-item">
+                <input type="checkbox" id="check9">
+                <label for="check9">Component reactivity works correctly</label>
+            </div>
+
+            <div class="checklist-item">
+                <input type="checkbox" id="check10">
+                <label for="check10">No console errors or warnings</label>
+            </div>
+
+            <div class="checklist-item">
+                <input type="checkbox" id="check11">
+                <label for="check11">Responsive behavior works on different screen sizes</label>
+            </div>
+
+            <div class="checklist-item">
+                <input type="checkbox" id="check12">
+                <label for="check12">Bundle hash matches deployed files</label>
+            </div>
+        </div>
+
+        <div class="console-output" id="console-output">
+            <h3>Console Output</h3>
+            <div id="console-lines"></div>
+        </div>
+    </div>
+
+    <script>
+        // Capture console output
+        const consoleLines = document.getElementById('console-lines');
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        const originalInfo = console.info;
+
+        function addConsoleLine(message, type = 'log') {
+            const line = document.createElement('div');
+            line.className = `console-line console-${type}`;
+            line.textContent = `[${type.toUpperCase()}] ${message}`;
+            consoleLines.appendChild(line);
+            consoleLines.parentElement.scrollTop = consoleLines.parentElement.scrollHeight;
+        }
+
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addConsoleLine(args.join(' '), 'log');
+        };
+
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addConsoleLine(args.join(' '), 'error');
+        };
+
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            addConsoleLine(args.join(' '), 'warn');
+        };
+
+        console.info = function(...args) {
+            originalInfo.apply(console, args);
+            addConsoleLine(args.join(' '), 'info');
+        };
+
+        // Save checklist state
+        document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                localStorage.setItem(e.target.id, e.target.checked);
+            });
+
+            // Restore state
+            const saved = localStorage.getItem(checkbox.id);
+            if (saved === 'true') {
+                checkbox.checked = true;
+            }
+        });
+
+        // Initial console message
+        console.info('Test page loaded. Waiting for block decoration...');
+        console.info('Build tool: Vite');
+        console.info('Framework: Vue.js 3');
+        console.info('Loading strategy: Hash-based bundle names');
+    </script>
+</body>
+</html>

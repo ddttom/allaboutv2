@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shoelace Block Test</title>
+  <script src="/test-utils.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f5f5f5;
+    }
+
+    .test-section {
+      background: white;
+      margin: 2rem 0;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .test-section h2 {
+      margin-top: 0;
+      color: #1e40af;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 0.5rem;
+    }
+
+    .test-section h3 {
+      color: #374151;
+      margin-top: 1.5rem;
+    }
+
+    .test-container {
+      margin: 1rem 0;
+      padding: 1rem;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+    }
+
+    .shoelace {
+      padding: 1rem;
+      background: white;
+      border-radius: 4px;
+    }
+
+    .test-controls {
+      display: flex;
+      gap: 1rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+
+    .test-controls button {
+      padding: 0.5rem 1rem;
+      border: 1px solid #d1d5db;
+      background: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .test-controls button:hover {
+      background: #f3f4f6;
+    }
+
+    .test-output {
+      margin: 1rem 0;
+      padding: 1rem;
+      background: #1f2937;
+      color: #e5e7eb;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .test-output .log-entry {
+      margin: 0.25rem 0;
+    }
+
+    .test-output .log-success {
+      color: #10b981;
+    }
+
+    .test-output .log-error {
+      color: #ef4444;
+    }
+
+    .test-output .log-info {
+      color: #3b82f6;
+    }
+
+    /* Spacing between Shoelace components */
+    .shoelace sl-button,
+    .shoelace sl-input,
+    .shoelace sl-select,
+    .shoelace sl-card,
+    .shoelace sl-alert {
+      margin: 0.5rem;
+    }
+
+    .shoelace sl-card {
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Shoelace Block Test Suite</h1>
+  <p>Browser-based testing for the Shoelace Web Components integration block.</p>
+
+  <!-- Test 1: Basic Button -->
+  <div class="test-section">
+    <h2>Test 1: Basic Button Component</h2>
+    <p>Tests loading Shoelace library and creating a basic button component.</p>
+
+    <div class="test-container">
+      <div id="test1" class="shoelace"></div>
+    </div>
+
+    <div class="test-controls">
+      <button onclick="runTest1()">Run Test 1</button>
+      <button onclick="clearTest('test1')">Clear</button>
+    </div>
+
+    <div id="test1-output" class="test-output">
+      <div class="log-info">Ready to run test...</div>
+    </div>
+  </div>
+
+  <!-- Test 2: Multiple Button Variants -->
+  <div class="test-section">
+    <h2>Test 2: Button Variants</h2>
+    <p>Tests different button variants (default, primary, success, neutral, warning, danger).</p>
+
+    <div class="test-container">
+      <div id="test2" class="shoelace"></div>
+    </div>
+
+    <div class="test-controls">
+      <button onclick="runTest2()">Run Test 2</button>
+      <button onclick="clearTest('test2')">Clear</button>
+    </div>
+
+    <div id="test2-output" class="test-output">
+      <div class="log-info">Ready to run test...</div>
+    </div>
+  </div>
+
+  <!-- Test 3: Dialog Component -->
+  <div class="test-section">
+    <h2>Test 3: Dialog Component</h2>
+    <p>Tests dialog/modal component with open button.</p>
+
+    <div class="test-container">
+      <div id="test3" class="shoelace"></div>
+    </div>
+
+    <div class="test-controls">
+      <button onclick="runTest3()">Run Test 3</button>
+      <button onclick="clearTest('test3')">Clear</button>
+    </div>
+
+    <div id="test3-output" class="test-output">
+      <div class="log-info">Ready to run test...</div>
+    </div>
+  </div>
+
+  <!-- Test 4: Form Elements -->
+  <div class="test-section">
+    <h2>Test 4: Form Components</h2>
+    <p>Tests input, select, checkbox, and radio form elements.</p>
+
+    <div class="test-container">
+      <div id="test4" class="shoelace"></div>
+    </div>
+
+    <div class="test-controls">
+      <button onclick="runTest4()">Run Test 4</button>
+      <button onclick="clearTest('test4')">Clear</button>
+    </div>
+
+    <div id="test4-output" class="test-output">
+      <div class="log-info">Ready to run test...</div>
+    </div>
+  </div>
+
+  <!-- Test 5: Card Component -->
+  <div class="test-section">
+    <h2>Test 5: Card Component</h2>
+    <p>Tests card component with header, body, and footer.</p>
+
+    <div class="test-container">
+      <div id="test5" class="shoelace"></div>
+    </div>
+
+    <div class="test-controls">
+      <button onclick="runTest5()">Run Test 5</button>
+      <button onclick="clearTest('test5')">Clear</button>
+    </div>
+
+    <div id="test5-output" class="test-output">
+      <div class="log-info">Ready to run test...</div>
+    </div>
+  </div>
+
+  <!-- Test 6: Alert Component -->
+  <div class="test-section">
+    <h2>Test 6: Alert Component</h2>
+    <p>Tests alert component with different variants.</p>
+
+    <div class="test-container">
+      <div id="test6" class="shoelace"></div>
+    </div>
+
+    <div class="test-controls">
+      <button onclick="runTest6()">Run Test 6</button>
+      <button onclick="clearTest('test6')">Clear</button>
+    </div>
+
+    <div id="test6-output" class="test-output">
+      <div class="log-info">Ready to run test...</div>
+    </div>
+  </div>
+
+  <!-- Test 7: Tab Navigation -->
+  <div class="test-section">
+    <h2>Test 7: Tab Navigation</h2>
+    <p>Tests tab group component for navigation.</p>
+
+    <div class="test-container">
+      <div id="test7" class="shoelace"></div>
+    </div>
+
+    <div class="test-controls">
+      <button onclick="runTest7()">Run Test 7</button>
+      <button onclick="clearTest('test7')">Clear</button>
+    </div>
+
+    <div id="test7-output" class="test-output">
+      <div class="log-info">Ready to run test...</div>
+    </div>
+  </div>
+
+  <!-- Test 8: Progress and Spinner -->
+  <div class="test-section">
+    <h2>Test 8: Progress Indicators</h2>
+    <p>Tests progress bar and spinner components.</p>
+
+    <div class="test-container">
+      <div id="test8" class="shoelace"></div>
+    </div>
+
+    <div class="test-controls">
+      <button onclick="runTest8()">Run Test 8</button>
+      <button onclick="clearTest('test8')">Clear</button>
+    </div>
+
+    <div id="test8-output" class="test-output">
+      <div class="log-info">Ready to run test...</div>
+    </div>
+  </div>
+
+  <script type="module">
+    // Import the block's decorate function
+    import decorate from './shoelace.js';
+
+    // Helper function to log messages
+    function log(testId, message, type = 'info') {
+      const output = document.getElementById(`${testId}-output`);
+      const entry = document.createElement('div');
+      entry.className = `log-entry log-${type}`;
+      entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      output.appendChild(entry);
+      output.scrollTop = output.scrollHeight;
+    }
+
+    // Helper function to clear test
+    window.clearTest = function(testId) {
+      const container = document.getElementById(testId);
+      container.innerHTML = '';
+      const output = document.getElementById(`${testId}-output`);
+      output.innerHTML = '<div class="log-info">Test cleared. Ready to run again...</div>';
+    };
+
+    // Test 1: Basic Button
+    window.runTest1 = async function() {
+      const testId = 'test1';
+      log(testId, 'Starting Test 1: Basic Button', 'info');
+
+      try {
+        const block = document.getElementById(testId);
+        block.innerHTML = '';
+
+        log(testId, 'Running decorate function...', 'info');
+        await decorate(block);
+
+        log(testId, 'Checking for sl-button element...', 'info');
+        const button = block.querySelector('sl-button');
+
+        if (button) {
+          log(testId, 'SUCCESS: Button component rendered', 'success');
+          log(testId, `Button text: ${button.textContent}`, 'success');
+        } else {
+          log(testId, 'ERROR: Button component not found', 'error');
+        }
+      } catch (error) {
+        log(testId, `ERROR: ${error.message}`, 'error');
+      }
+    };
+
+    // Test 2: Button Variants
+    window.runTest2 = async function() {
+      const testId = 'test2';
+      log(testId, 'Starting Test 2: Button Variants', 'info');
+
+      try {
+        const block = document.getElementById(testId);
+        block.innerHTML = '';
+
+        const variants = ['default', 'primary', 'success', 'neutral', 'warning', 'danger'];
+
+        log(testId, 'Creating button variants...', 'info');
+
+        for (const variant of variants) {
+          const button = document.createElement('sl-button');
+          button.setAttribute('variant', variant);
+          button.textContent = variant.charAt(0).toUpperCase() + variant.slice(1);
+          block.appendChild(button);
+          log(testId, `Created ${variant} button`, 'info');
+        }
+
+        log(testId, 'SUCCESS: All button variants created', 'success');
+      } catch (error) {
+        log(testId, `ERROR: ${error.message}`, 'error');
+      }
+    };
+
+    // Test 3: Dialog Component
+    window.runTest3 = async function() {
+      const testId = 'test3';
+      log(testId, 'Starting Test 3: Dialog Component', 'info');
+
+      try {
+        const block = document.getElementById(testId);
+        block.innerHTML = '';
+
+        log(testId, 'Creating dialog component...', 'info');
+
+        const dialog = document.createElement('sl-dialog');
+        dialog.setAttribute('label', 'Welcome Dialog');
+        dialog.innerHTML = `
+          <p>This is a Shoelace dialog component. It demonstrates modal functionality with Shadow DOM encapsulation.</p>
+          <sl-button slot="footer" variant="primary">Close</sl-button>
+        `;
+
+        const openButton = document.createElement('sl-button');
+        openButton.textContent = 'Open Dialog';
+        openButton.addEventListener('click', () => {
+          dialog.show();
+          log(testId, 'Dialog opened', 'info');
+        });
+
+        dialog.querySelector('sl-button').addEventListener('click', () => {
+          dialog.hide();
+          log(testId, 'Dialog closed', 'info');
+        });
+
+        block.appendChild(openButton);
+        block.appendChild(dialog);
+
+        log(testId, 'SUCCESS: Dialog component created', 'success');
+      } catch (error) {
+        log(testId, `ERROR: ${error.message}`, 'error');
+      }
+    };
+
+    // Test 4: Form Elements
+    window.runTest4 = async function() {
+      const testId = 'test4';
+      log(testId, 'Starting Test 4: Form Components', 'info');
+
+      try {
+        const block = document.getElementById(testId);
+        block.innerHTML = '';
+
+        log(testId, 'Creating form components...', 'info');
+
+        // Input
+        const input = document.createElement('sl-input');
+        input.setAttribute('label', 'Name');
+        input.setAttribute('placeholder', 'Enter your name');
+        block.appendChild(input);
+        log(testId, 'Created text input', 'info');
+
+        // Select
+        const select = document.createElement('sl-select');
+        select.setAttribute('label', 'Choose an option');
+        select.innerHTML = `
+          <sl-option value="1">Option 1</sl-option>
+          <sl-option value="2">Option 2</sl-option>
+          <sl-option value="3">Option 3</sl-option>
+        `;
+        block.appendChild(select);
+        log(testId, 'Created select dropdown', 'info');
+
+        // Checkbox
+        const checkbox = document.createElement('sl-checkbox');
+        checkbox.textContent = 'I agree to the terms';
+        block.appendChild(checkbox);
+        log(testId, 'Created checkbox', 'info');
+
+        log(testId, 'SUCCESS: All form components created', 'success');
+      } catch (error) {
+        log(testId, `ERROR: ${error.message}`, 'error');
+      }
+    };
+
+    // Test 5: Card Component
+    window.runTest5 = async function() {
+      const testId = 'test5';
+      log(testId, 'Starting Test 5: Card Component', 'info');
+
+      try {
+        const block = document.getElementById(testId);
+        block.innerHTML = '';
+
+        log(testId, 'Creating card component...', 'info');
+
+        const card = document.createElement('sl-card');
+        card.innerHTML = `
+          <div slot="header">
+            <strong>Featured Card</strong>
+          </div>
+          <p>This is a Shoelace card component with header, body, and footer slots. Cards are great for organizing content into distinct sections.</p>
+          <div slot="footer">
+            <sl-button variant="primary">Learn More</sl-button>
+          </div>
+        `;
+
+        block.appendChild(card);
+
+        log(testId, 'SUCCESS: Card component created', 'success');
+      } catch (error) {
+        log(testId, `ERROR: ${error.message}`, 'error');
+      }
+    };
+
+    // Test 6: Alert Component
+    window.runTest6 = async function() {
+      const testId = 'test6';
+      log(testId, 'Starting Test 6: Alert Component', 'info');
+
+      try {
+        const block = document.getElementById(testId);
+        block.innerHTML = '';
+
+        log(testId, 'Creating alert components...', 'info');
+
+        const variants = ['primary', 'success', 'neutral', 'warning', 'danger'];
+        const messages = {
+          primary: 'This is a primary alert',
+          success: 'Operation completed successfully',
+          neutral: 'This is a neutral notification',
+          warning: 'Please review this warning',
+          danger: 'Error: Action could not be completed'
+        };
+
+        for (const variant of variants) {
+          const alert = document.createElement('sl-alert');
+          alert.setAttribute('variant', variant);
+          alert.setAttribute('open', '');
+          alert.innerHTML = `
+            <sl-icon slot="icon" name="info-circle"></sl-icon>
+            <strong>${variant.charAt(0).toUpperCase() + variant.slice(1)}</strong><br>
+            ${messages[variant]}
+          `;
+          block.appendChild(alert);
+          log(testId, `Created ${variant} alert`, 'info');
+        }
+
+        log(testId, 'SUCCESS: All alert variants created', 'success');
+      } catch (error) {
+        log(testId, `ERROR: ${error.message}`, 'error');
+      }
+    };
+
+    // Test 7: Tab Navigation
+    window.runTest7 = async function() {
+      const testId = 'test7';
+      log(testId, 'Starting Test 7: Tab Navigation', 'info');
+
+      try {
+        const block = document.getElementById(testId);
+        block.innerHTML = '';
+
+        log(testId, 'Creating tab navigation...', 'info');
+
+        const tabGroup = document.createElement('sl-tab-group');
+        tabGroup.innerHTML = `
+          <sl-tab slot="nav" panel="general">General</sl-tab>
+          <sl-tab slot="nav" panel="advanced">Advanced</sl-tab>
+          <sl-tab slot="nav" panel="settings">Settings</sl-tab>
+
+          <sl-tab-panel name="general">
+            <h3>General Settings</h3>
+            <p>These are the general settings for your application.</p>
+          </sl-tab-panel>
+
+          <sl-tab-panel name="advanced">
+            <h3>Advanced Options</h3>
+            <p>Configure advanced features and functionality.</p>
+          </sl-tab-panel>
+
+          <sl-tab-panel name="settings">
+            <h3>User Settings</h3>
+            <p>Manage your user preferences and account settings.</p>
+          </sl-tab-panel>
+        `;
+
+        block.appendChild(tabGroup);
+
+        log(testId, 'SUCCESS: Tab navigation created', 'success');
+      } catch (error) {
+        log(testId, `ERROR: ${error.message}`, 'error');
+      }
+    };
+
+    // Test 8: Progress Indicators
+    window.runTest8 = async function() {
+      const testId = 'test8';
+      log(testId, 'Starting Test 8: Progress Indicators', 'info');
+
+      try {
+        const block = document.getElementById(testId);
+        block.innerHTML = '';
+
+        log(testId, 'Creating progress indicators...', 'info');
+
+        // Progress bar
+        const progressLabel = document.createElement('p');
+        progressLabel.textContent = 'Upload Progress:';
+        block.appendChild(progressLabel);
+
+        const progressBar = document.createElement('sl-progress-bar');
+        progressBar.setAttribute('value', '45');
+        block.appendChild(progressBar);
+        log(testId, 'Created progress bar (45%)', 'info');
+
+        // Indeterminate progress
+        const progressLabel2 = document.createElement('p');
+        progressLabel2.textContent = 'Loading...';
+        progressLabel2.style.marginTop = '1rem';
+        block.appendChild(progressLabel2);
+
+        const progressIndeterminate = document.createElement('sl-progress-bar');
+        progressIndeterminate.setAttribute('indeterminate', '');
+        block.appendChild(progressIndeterminate);
+        log(testId, 'Created indeterminate progress bar', 'info');
+
+        // Spinner
+        const spinnerLabel = document.createElement('p');
+        spinnerLabel.textContent = 'Spinner:';
+        spinnerLabel.style.marginTop = '1rem';
+        block.appendChild(spinnerLabel);
+
+        const spinner = document.createElement('sl-spinner');
+        spinner.style.fontSize = '3rem';
+        block.appendChild(spinner);
+        log(testId, 'Created spinner', 'info');
+
+        log(testId, 'SUCCESS: All progress indicators created', 'success');
+      } catch (error) {
+        log(testId, `ERROR: ${error.message}`, 'error');
+      }
+    };
+
+    // Auto-run Test 1 on page load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        log('test1', 'Page loaded. Auto-running Test 1...', 'info');
+        runTest1();
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

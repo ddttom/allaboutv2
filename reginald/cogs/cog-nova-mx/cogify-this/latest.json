@@ -1,0 +1,27 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "cogify-this",
+  "version": "1.0",
+  "description": "Convert existing content into MX-enhanced format with comprehensive metadata, accessibility, and WebMCP integration",
+  "author": "Cog-Nova-MX Ltd",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "mx-tools",
+  "tags": [
+    "cogify",
+    "conversion",
+    "mx-enhancement",
+    "metadata",
+    "webmcp",
+    "accessibility",
+    "transformation"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-20",
+  "modified": "2026-02-20",
+  "source_path": "datalake/registries/cog-staging/cogify-this.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/datalake/registries/cog-staging/cogify-this.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/cogify-this/content.md"
+}

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Block Test</title>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <!-- Grid Block Styles -->
+    <link rel="stylesheet" href="/blocks/grid/grid.css">
+
+    <style>
+        /* EDS pattern - ensure body appears */
+        body.appear {
+            display: block;
+        }
+
+        /* Test page specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .test-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.75rem;
+        }
+
+        .test-info p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .test-info code {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .test-info strong {
+            font-weight: 600;
+        }
+
+        .test-section {
+            margin: 2rem auto;
+            max-width: 1400px;
+            padding: 0 1rem;
+        }
+
+        .test-section h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-section .description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 1rem;
+        }
+
+        .test-section .description strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .test-section .description p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        /* Status indicators */
+        .status {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Grid wrapper for consistent spacing */
+        .grid-wrapper {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Instructions section */
+        .instructions {
+            margin: 3rem auto;
+            max-width: 1400px;
+            padding: 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .instructions ol, .instructions ul {
+            line-height: 1.8;
+            padding-left: 1.5rem;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+
+        .instructions strong {
+            color: #667eea;
+        }
+
+        .instructions code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        /* Placeholder images for testing */
+        .placeholder-logo {
+            width: 100px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 4px;
+        }
+
+        /* Icon placeholder */
+        .icon-placeholder {
+            width: 40px;
+            height: 40px;
+            background: #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h2>Grid Block Test Suite</h2>
+        <p><strong>Block:</strong> <code>grid</code></p>
+        <p><strong>Test Count:</strong> <code>6 grid variations</code></p>
+        <p><strong>Status:</strong> <span id="status" class="status info">Ready</span></p>
+        <p><strong>Purpose:</strong> Visual testing of CSS-only grid layouts with multiple responsive variations</p>
+        <p><strong>Note:</strong> This is a CSS-only block. No JavaScript decoration needed.</p>
+    </div>
+
+    <main>
+        <!-- Test 1: Base Grid -->
+        <div class="test-section">
+            <h3>Test 1: Base Grid (No Variation)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Basic grid with default gap spacing. Flexible column layout based on content.</p>
+                <p><strong>Validation:</strong> Check that grid displays with proper spacing. Should use design system gap tokens.</p>
+            </div>
+            <div class="grid-wrapper">
+                <div class="grid block">
+                    <div><div>Item 1: Basic grid item with default spacing</div></div>
+                    <div><div>Item 2: Another grid item</div></div>
+                    <div><div>Item 3: Third item</div></div>
+                    <div><div>Item 4: Fourth item</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Two-Column Grid -->
+        <div class="test-section">
+            <h3>Test 2: Two-Column Grid</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Single column on mobile (< 992px), two equal columns on desktop (>= 992px).</p>
+                <p><strong>Validation:</strong> Resize browser to verify responsive behavior. Columns should be equal width on desktop.</p>
+            </div>
+            <div class="grid-wrapper">
+                <div class="grid two-cols block">
+                    <div>
+                        <div>
+                            <h3>Left Column</h3>
+                            <p>This is the left column content with detailed information. It contains multiple sentences to demonstrate how content flows within the two-column layout. The text wraps naturally and maintains good readability.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Right Column</h3>
+                            <p>This is the right column content with complementary information. It should align horizontally with the left column on desktop screens. On mobile, it stacks below the left column for optimal readability.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: Logo Grid -->
+        <div class="test-section">
+            <h3>Test 3: Logo Grid</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Responsive logo grid - 1 column (mobile), 3 columns (576px+), 5 columns (992px+). Logos centered and sized to max 50px height. Section has top/bottom borders.</p>
+                <p><strong>Validation:</strong> Check responsive column changes at breakpoints. Verify logos are centered and consistently sized.</p>
+            </div>
+            <div class="grid-wrapper">
+                <div class="section">
+                    <div class="logo-grid block">
+                        <div><div><div class="placeholder-logo">Logo 1</div></div></div>
+                        <div><div><div class="placeholder-logo">Logo 2</div></div></div>
+                        <div><div><div class="placeholder-logo">Logo 3</div></div></div>
+                        <div><div><div class="placeholder-logo">Logo 4</div></div></div>
+                        <div><div><div class="placeholder-logo">Logo 5</div></div></div>
+                        <div><div><div class="placeholder-logo">Logo 6</div></div></div>
+                        <div><div><div class="placeholder-logo">Logo 7</div></div></div>
+                        <div><div><div class="placeholder-logo">Logo 8</div></div></div>
+                        <div><div><div class="placeholder-logo">Logo 9</div></div></div>
+                        <div><div><div class="placeholder-logo">Logo 10</div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: Icon Cards -->
+        <div class="test-section">
+            <h3>Test 4: Icon Cards</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Responsive card grid - 1 col (mobile), 2 cols (576px+), 3 cols (992px+), 4 cols (1200px+). Cards have shadow, hover effects, and rotated icon containers.</p>
+                <p><strong>Validation:</strong> Check responsive columns, hover effects (background changes), and icon styling. Icons should appear in diamond-shaped containers.</p>
+            </div>
+            <div class="grid-wrapper">
+                <div class="icon-cards block">
+                    <div>
+                        <div class="icon"><div class="icon-placeholder">★</div></div>
+                        <h5>Premium Quality</h5>
+                        <p>Exceptional quality standards with rigorous testing and validation processes</p>
+                    </div>
+                    <div>
+                        <div class="icon"><div class="icon-placeholder">✓</div></div>
+                        <h5>Guaranteed Results</h5>
+                        <p>Proven methodologies that deliver measurable outcomes and success</p>
+                    </div>
+                    <div>
+                        <div class="icon"><div class="icon-placeholder">⚡</div></div>
+                        <h5>Fast Performance</h5>
+                        <p>Lightning-fast delivery with optimized processes and efficient workflows</p>
+                    </div>
+                    <div>
+                        <div class="icon"><div class="icon-placeholder">🛡</div></div>
+                        <h5>Secure & Reliable</h5>
+                        <p>Enterprise-grade security with 99.99% uptime guarantee</p>
+                    </div>
+                    <div>
+                        <div class="icon"><div class="icon-placeholder">📱</div></div>
+                        <h5>Mobile Optimized</h5>
+                        <p>Full functionality on any device with responsive design</p>
+                    </div>
+                    <div>
+                        <div class="icon"><div class="icon-placeholder">🚀</div></div>
+                        <h5>Fast Deployment</h5>
+                        <p>Get up and running quickly with streamlined processes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 5: Bulleted Grid -->
+        <div class="test-section">
+            <h3>Test 5: Bulleted Grid</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Grid with icon bullets on left side. Icons take 8.33% width, content flows next to icons. Flexbox layout within each item.</p>
+                <p><strong>Validation:</strong> Check that icons align properly on left, content flows correctly, and layout is responsive.</p>
+            </div>
+            <div class="grid-wrapper">
+                <div class="grid bulleted block">
+                    <div>
+                        <div>
+                            <span class="icon"><div class="icon-placeholder">✓</div></span>
+                            <div>Feature one: Comprehensive description of the first feature with detailed explanation</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <span class="icon"><div class="icon-placeholder">✓</div></span>
+                            <div>Feature two: Detailed explanation of the second feature with supporting information</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <span class="icon"><div class="icon-placeholder">✓</div></span>
+                            <div>Feature three: Additional context for the third feature with relevant details</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <span class="icon"><div class="icon-placeholder">✓</div></span>
+                            <div>Feature four: Supporting information for the fourth feature with extra context</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 6: Combined Layout Test -->
+        <div class="test-section">
+            <h3>Test 6: Multiple Grids (Real-World Example)</h3>
+            <div class="description">
+                <p><strong>Expected Behavior:</strong> Multiple grid variations on same page. Tests that variations don't conflict with each other.</p>
+                <p><strong>Validation:</strong> Verify each grid maintains its own styling and responsive behavior. No style bleed between variations.</p>
+            </div>
+            <div class="grid-wrapper">
+                <h2>Our Partners</h2>
+                <div class="section">
+                    <div class="logo-grid block">
+                        <div><div><div class="placeholder-logo">Partner 1</div></div></div>
+                        <div><div><div class="placeholder-logo">Partner 2</div></div></div>
+                        <div><div><div class="placeholder-logo">Partner 3</div></div></div>
+                        <div><div><div class="placeholder-logo">Partner 4</div></div></div>
+                        <div><div><div class="placeholder-logo">Partner 5</div></div></div>
+                    </div>
+                </div>
+
+                <h2 style="margin-top: 3rem;">Key Features</h2>
+                <div class="icon-cards block">
+                    <div>
+                        <div class="icon"><div class="icon-placeholder">★</div></div>
+                        <h5>Feature 1</h5>
+                        <p>Description of first feature</p>
+                    </div>
+                    <div>
+                        <div class="icon"><div class="icon-placeholder">✓</div></div>
+                        <h5>Feature 2</h5>
+                        <p>Description of second feature</p>
+                    </div>
+                    <div>
+                        <div class="icon"><div class="icon-placeholder">⚡</div></div>
+                        <h5>Feature 3</h5>
+                        <p>Description of third feature</p>
+                    </div>
+                </div>
+
+                <h2 style="margin-top: 3rem;">Comparison</h2>
+                <div class="grid two-cols block">
+                    <div>
+                        <div>
+                            <h3>Before</h3>
+                            <p>Traditional approach with limitations</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h3>After</h3>
+                            <p>Modern solution with improvements</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        // Update status function
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Initialize
+        function init() {
+            try {
+                // Add body.appear class (required to show page)
+                document.body.classList.add('appear');
+
+                // Count grid blocks
+                const gridBlocks = document.querySelectorAll('.grid, .logo-grid, .icon-cards');
+                console.log(`Found ${gridBlocks.length} grid blocks`);
+
+                // Log grid variations
+                gridBlocks.forEach((block, index) => {
+                    const classes = Array.from(block.classList);
+                    console.log(`Grid ${index + 1}:`, classes.join(', '));
+                });
+
+                updateStatus(`✓ ${gridBlocks.length} grid blocks loaded (CSS-only)`, 'success');
+
+                console.log('\n' + '='.repeat(50));
+                console.log('Grid Block Test Suite Ready');
+                console.log('='.repeat(50));
+                console.log('\nTest Instructions:');
+                console.log('1. Resize browser window to test responsive behavior');
+                console.log('2. Check breakpoints:');
+                console.log('   - < 576px: Mobile layout');
+                console.log('   - 576px - 992px: Tablet layout');
+                console.log('   - > 992px: Desktop layout');
+                console.log('   - > 1200px: Large desktop layout');
+                console.log('3. Verify logo grid columns: 1 → 3 → 5');
+                console.log('4. Verify icon cards columns: 1 → 2 → 3 → 4');
+                console.log('5. Hover over icon cards to test hover effects');
+                console.log('6. Inspect DOM to verify CSS classes applied');
+
+            } catch (error) {
+                console.error('Failed to initialize grid test:', error);
+                updateStatus(`✗ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Start initialization
+        init();
+    </script>
+
+    <div class="instructions">
+        <h3>Testing Instructions</h3>
+        <ol>
+            <li><strong>Visual Inspection:</strong> Scroll through all test sections and verify each grid variation displays correctly</li>
+            <li><strong>Responsive Testing:</strong> Resize browser window and observe grid behavior:
+                <ul>
+                    <li><strong>< 576px:</strong> All grids single column (except base grid)</li>
+                    <li><strong>576px - 992px:</strong> Logo grid 3 cols, Icon cards 2 cols, Two-cols still 1 col</li>
+                    <li><strong>> 992px:</strong> Logo grid 5 cols, Icon cards 3 cols, Two-cols 2 cols</li>
+                    <li><strong>> 1200px:</strong> Icon cards 4 cols</li>
+                </ul>
+            </li>
+            <li><strong>CSS-Only Verification:</strong> Open DevTools Console and verify:
+                <ul>
+                    <li>No JavaScript errors</li>
+                    <li>All grids use CSS Grid (<code>display: grid</code>)</li>
+                    <li>Design system tokens are applied</li>
+                </ul>
+            </li>
+            <li><strong>DOM Structure:</strong> Inspect elements in DevTools:
+                <ul>
+                    <li>Base: <code>&lt;div class="grid block"&gt;</code></li>
+                    <li>Two-cols: <code>&lt;div class="grid two-cols block"&gt;</code></li>
+                    <li>Logo grid: <code>&lt;div class="logo-grid block"&gt;</code></li>
+                    <li>Icon cards: <code>&lt;div class="icon-cards block"&gt;</code></li>
+                    <li>Bulleted: <code>&lt;div class="grid bulleted block"&gt;</code></li>
+                </ul>
+            </li>
+            <li><strong>Hover Effects:</strong> Test icon cards hover:
+                <ul>
+                    <li>Background changes to primary color</li>
+                    <li>Text changes to on-primary color</li>
+                    <li>Smooth transition</li>
+                </ul>
+            </li>
+            <li><strong>Section Styling:</strong> Verify logo grid section:
+                <ul>
+                    <li>Top and bottom borders visible</li>
+                    <li>Extra padding around grid</li>
+                    <li>Minimum height applied</li>
+                </ul>
+            </li>
+            <li><strong>Browser Testing:</strong> Test in Chrome, Firefox, Safari for consistency</li>
+        </ol>
+
+        <h3>Expected Results</h3>
+        <ul>
+            <li><strong>Test 1:</strong> Base grid with flexible columns and default gap</li>
+            <li><strong>Test 2:</strong> Two-column grid that stacks on mobile, splits on desktop</li>
+            <li><strong>Test 3:</strong> Logo grid with responsive columns (1-3-5) and section borders</li>
+            <li><strong>Test 4:</strong> Icon cards with shadows, hover effects, and responsive columns (1-2-3-4)</li>
+            <li><strong>Test 5:</strong> Bulleted grid with icon bullets on left side</li>
+            <li><strong>Test 6:</strong> Multiple grids coexisting without style conflicts</li>
+        </ul>
+
+        <h3>Responsive Breakpoints to Test</h3>
+        <ul>
+            <li><strong>320px (Mobile S):</strong> All single column except base grid</li>
+            <li><strong>576px (Mobile L):</strong> Logo grid 1→3, Icon cards 1→2</li>
+            <li><strong>768px (Tablet):</strong> Maintains columns (no change)</li>
+            <li><strong>992px (Desktop):</strong> Logo grid 3→5, Icon cards 2→3, Two-cols 1→2</li>
+            <li><strong>1200px (Desktop L):</strong> Icon cards 3→4</li>
+        </ul>
+
+        <h3>CSS-Only Block Characteristics</h3>
+        <ul>
+            <li><strong>No JavaScript:</strong> grid.js is intentionally empty</li>
+            <li><strong>Pure CSS:</strong> All functionality in grid.css</li>
+            <li><strong>No DOM manipulation:</strong> Structure comes from EDS markdown transformation</li>
+            <li><strong>No event listeners:</strong> Only CSS hover effects</li>
+            <li><strong>Lightweight:</strong> ~6KB CSS, 0KB JavaScript</li>
+            <li><strong>Performant:</strong> Hardware-accelerated CSS Grid rendering</li>
+        </ul>
+
+        <h3>Design System Integration</h3>
+        <ul>
+            <li><strong>Spacing:</strong> Uses ROS semantic spacing tokens (gap, padding)</li>
+            <li><strong>Colors:</strong> Uses ROS semantic color tokens (borders, backgrounds)</li>
+            <li><strong>Typography:</strong> Uses ROS font tokens (headings, body text)</li>
+            <li><strong>Shadows:</strong> Uses ROS drop shadow tokens (icon cards)</li>
+            <li><strong>Borders:</strong> Uses ROS border tokens (radius, width)</li>
+        </ul>
+
+        <h3>Known Limitations</h3>
+        <ul>
+            <li><strong>IE11 Not Supported:</strong> Requires CSS Grid (modern browsers only)</li>
+            <li><strong>:has() Selector:</strong> Section styling requires :has() support (Safari 15.4+, Chrome 105+)</li>
+            <li><strong>No Custom Column Counts:</strong> Fixed column counts per variation (not configurable via content)</li>
+            <li><strong>No Animation Controls:</strong> Transitions are CSS-only, not customizable per instance</li>
+        </ul>
+
+        <h3>Debugging Tips</h3>
+        <ul>
+            <li>Check browser console for any CSS loading errors</li>
+            <li>Use DevTools Elements panel to inspect computed styles</li>
+            <li>Verify <code>display: grid</code> is applied to grid containers</li>
+            <li>Check <code>grid-template-columns</code> matches expected column count</li>
+            <li>Test in multiple browsers for CSS Grid support</li>
+            <li>Verify design system tokens (CSS variables) are defined</li>
+            <li>Use DevTools device toolbar for precise breakpoint testing</li>
+        </ul>
+    </div>
+</body>
+</html>

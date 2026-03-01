@@ -1,0 +1,26 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "maxine-lives",
+  "version": "conventional",
+  "description": "The gestalt's brain. Where Tom and Maxine record assumptions, resolve doubts, capture notes, track actions, make plans, and register decisions. The meta-layer that governs Canon.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "active",
+  "category": "mx-core",
+  "tags": [
+    "gestalt",
+    "brain",
+    "decisions",
+    "memory",
+    "institutional-memory",
+    "meta-layer"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-12",
+  "modified": "2026-02-13",
+  "source_path": "mx-canon/mx-maxine-lives/README.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/README.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/maxine-lives/content.md"
+}

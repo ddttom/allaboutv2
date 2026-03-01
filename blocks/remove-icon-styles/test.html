@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Icon Styles - Test Page</title>
+    <script src="/scripts/aem.js" type="module"></script>
+    <script src="/scripts/scripts.js" type="module"></script>
+    <link rel="stylesheet" href="/styles/styles.css">
+    <style>
+        /* Test-specific styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .test-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+
+        .test-section h2 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #0078d4;
+            padding-bottom: 0.5rem;
+        }
+
+        .test-description {
+            background: #fff;
+            padding: 1rem;
+            border-left: 4px solid #0078d4;
+            margin-bottom: 1.5rem;
+        }
+
+        .test-content {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 4px;
+        }
+
+        .icon-showcase {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .icon-item {
+            text-align: center;
+            padding: 1rem;
+            border: 1px dashed #ccc;
+        }
+
+        .icon-item p {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        /* Custom icon size classes for testing */
+        .icon.small {
+            height: 16px;
+            width: 16px;
+        }
+
+        .icon.medium {
+            height: 32px;
+            width: 32px;
+        }
+
+        .icon.large {
+            height: 48px;
+            width: 48px;
+        }
+
+        .icon.xlarge {
+            height: 64px;
+            width: 64px;
+        }
+
+        /* Responsive icon test */
+        .icon.responsive {
+            height: 1.5rem;
+            width: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .icon.responsive {
+                height: 2rem;
+                width: 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .icon.responsive {
+                height: 3rem;
+                width: 3rem;
+            }
+        }
+
+        /* Inline icon test */
+        .icon.inline {
+            height: 1em;
+            width: 1em;
+            vertical-align: middle;
+        }
+
+        /* Test result indicators */
+        .test-pass {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .test-fail {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .checklist li:before {
+            content: "□ ";
+            margin-right: 0.5rem;
+            color: #666;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #17a2b8;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Remove Icon Styles Block - Test Page</h1>
+        <p class="test-description">
+            <strong>Purpose:</strong> This test page verifies that the remove-icon-styles block successfully
+            overrides default EDS icon constraints (24x24px) and allows custom icon sizing.
+        </p>
+    </header>
+
+    <main>
+        <!-- The Remove Icon Styles Block -->
+        <div class="remove-icon-styles block">
+            <div></div>
+        </div>
+
+        <!-- Test Section 1: Default Behavior Verification -->
+        <section class="test-section">
+            <h2>Test 1: Default Icon Reset</h2>
+            <div class="test-description">
+                <p><strong>Expected:</strong> Icons should no longer be constrained to 24x24px. Natural sizing should be preserved.</p>
+                <p><strong>How to verify:</strong> Use browser DevTools to inspect icon elements and confirm height/width are set to 'auto'.</p>
+            </div>
+            <div class="test-content">
+                <div class="icon-showcase">
+                    <div class="icon-item">
+                        <span class="icon">
+                            <img src="https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png" alt="Default Icon">
+                        </span>
+                        <p>No custom class</p>
+                    </div>
+                    <div class="icon-item">
+                        <span class="icon">
+                            <img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Natural Size">
+                        </span>
+                        <p>Natural dimensions</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Test Section 2: Custom Size Classes -->
+        <section class="test-section">
+            <h2>Test 2: Custom Size Classes</h2>
+            <div class="test-description">
+                <p><strong>Expected:</strong> Icons with custom size classes should display at specified dimensions.</p>
+                <p><strong>Sizes:</strong> small (16px), medium (32px), large (48px), xlarge (64px)</p>
+            </div>
+            <div class="test-content">
+                <div class="icon-showcase">
+                    <div class="icon-item">
+                        <span class="icon small">
+                            <img src="https://allabout.network/media_14e918fa88c2a9a810fd454fa04f0bd152c01fed2.jpeg" alt="Small Icon">
+                        </span>
+                        <p>Small (16px)</p>
+                    </div>
+                    <div class="icon-item">
+                        <span class="icon medium">
+                            <img src="https://allabout.network/media_1d92670adcfb7a18a062e49fd7967f4e9f76d8a52.jpeg" alt="Medium Icon">
+                        </span>
+                        <p>Medium (32px)</p>
+                    </div>
+                    <div class="icon-item">
+                        <span class="icon large">
+                            <img src="https://allabout.network/media_1e744525e97292dcd074e9b1c7ab2cf47a048f292.jpeg" alt="Large Icon">
+                        </span>
+                        <p>Large (48px)</p>
+                    </div>
+                    <div class="icon-item">
+                        <span class="icon xlarge">
+                            <img src="https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png" alt="Extra Large Icon">
+                        </span>
+                        <p>XLarge (64px)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Test Section 3: Responsive Icons -->
+        <section class="test-section">
+            <h2>Test 3: Responsive Icon Sizing</h2>
+            <div class="test-description">
+                <p><strong>Expected:</strong> Icon size should change based on viewport width.</p>
+                <p><strong>Breakpoints:</strong> 1.5rem (default) → 2rem (768px) → 3rem (1024px)</p>
+                <div class="info">
+                    <strong>Test:</strong> Resize your browser window to see the icon scale.
+                </div>
+            </div>
+            <div class="test-content">
+                <div class="icon-showcase">
+                    <div class="icon-item">
+                        <span class="icon responsive">
+                            <img src="https://allabout.network/media_188fa5bcd003e5a2d56e7ad3ca233300c9e52f1e5.png" alt="Responsive Icon">
+                        </span>
+                        <p>Responsive icon</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Test Section 4: Inline Icons with Text -->
+        <section class="test-section">
+            <h2>Test 4: Inline Icons with Text</h2>
+            <div class="test-description">
+                <p><strong>Expected:</strong> Icons should flow naturally inline with text, sized relative to font size.</p>
+            </div>
+            <div class="test-content">
+                <p style="font-size: 1rem;">
+                    This paragraph contains an inline icon
+                    <span class="icon inline">
+                        <img src="https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png" alt="Inline">
+                    </span>
+                    that should align with the text baseline.
+                </p>
+                <p style="font-size: 1.5rem;">
+                    Larger text with inline icon
+                    <span class="icon inline">
+                        <img src="https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png" alt="Inline">
+                    </span>
+                    scales proportionally.
+                </p>
+                <p style="font-size: 2rem;">
+                    Even larger text
+                    <span class="icon inline">
+                        <img src="https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png" alt="Inline">
+                    </span>
+                    maintains proportion.
+                </p>
+            </div>
+        </section>
+
+        <!-- Test Section 5: SVG Icons -->
+        <section class="test-section">
+            <h2>Test 5: SVG Icons</h2>
+            <div class="test-description">
+                <p><strong>Expected:</strong> SVG icons should display at their natural viewBox dimensions.</p>
+            </div>
+            <div class="test-content">
+                <div class="icon-showcase">
+                    <div class="icon-item">
+                        <span class="icon">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="40" fill="#0078d4" />
+                                <circle cx="35" cy="40" r="8" fill="white" />
+                                <circle cx="65" cy="40" r="8" fill="white" />
+                                <path d="M 30 70 Q 50 85 70 70" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <p>SVG Circle (100x100)</p>
+                    </div>
+                    <div class="icon-item">
+                        <span class="icon">
+                            <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="50" height="50" fill="#28a745" />
+                                <path d="M 10 25 L 20 35 L 40 15" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <p>SVG Check (50x50)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Test Section 6: Accessibility -->
+        <section class="test-section">
+            <h2>Test 6: Accessibility</h2>
+            <div class="test-description">
+                <p><strong>Expected:</strong> Icons should have proper ARIA attributes and alt text.</p>
+            </div>
+            <div class="test-content">
+                <div class="icon-showcase">
+                    <div class="icon-item">
+                        <span class="icon medium" role="img" aria-label="Settings icon">
+                            <img src="https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png" alt="Settings">
+                        </span>
+                        <p>Semantic icon<br>(role + aria-label)</p>
+                    </div>
+                    <div class="icon-item">
+                        <button style="padding: 0.5rem 1rem; cursor: pointer;">
+                            <span class="icon small" aria-hidden="true">
+                                <img src="https://allabout.network/media_1251e262eade67c1f9c8e0ccffa6d35945487140c.png" alt="">
+                            </span>
+                            Save
+                        </button>
+                        <p>Button with<br>decorative icon</p>
+                    </div>
+                </div>
+                <div class="info">
+                    <strong>Screen Reader Test:</strong> Use a screen reader to verify:
+                    <ul>
+                        <li>First icon announces "Settings icon"</li>
+                        <li>Second icon is skipped (aria-hidden), button announces "Save"</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Test Section 7: Block Visibility -->
+        <section class="test-section">
+            <h2>Test 7: Block Visibility</h2>
+            <div class="test-description">
+                <p><strong>Expected:</strong> The remove-icon-styles block itself should be invisible (display: none).</p>
+            </div>
+            <div class="test-content">
+                <div class="info">
+                    <strong>Verification Steps:</strong>
+                    <ol>
+                        <li>Open browser DevTools (F12)</li>
+                        <li>Inspect the <code>.remove-icon-styles</code> element at the top of <code>&lt;main&gt;</code></li>
+                        <li>Verify it has <code>display: none</code> applied</li>
+                        <li>Look for HTML comment: <code>&lt;!-- remove-icon-styles block is active --&gt;</code></li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Test Section 8: CSS Specificity -->
+        <section class="test-section">
+            <h2>Test 8: CSS Specificity Verification</h2>
+            <div class="test-description">
+                <p><strong>Expected:</strong> Block CSS should override default EDS styles through specificity, not !important.</p>
+            </div>
+            <div class="test-content">
+                <div class="info">
+                    <strong>DevTools Verification:</strong>
+                    <ol>
+                        <li>Inspect any <code>.icon</code> element</li>
+                        <li>Check computed styles panel</li>
+                        <li>Verify styles come from <code>remove-icon-styles.css</code></li>
+                        <li>Check that no <code>!important</code> is used</li>
+                        <li>Confirm default styles from <code>styles.css</code> are crossed out</li>
+                    </ol>
+                </div>
+                <div class="warning">
+                    <strong>Note:</strong> CSS specificity uses selectors like <code>body .icon</code> and <code>main .icon</code>
+                    to achieve higher specificity than the default <code>.icon</code> selector.
+                </div>
+            </div>
+        </section>
+
+        <!-- Test Checklist -->
+        <section class="test-section">
+            <h2>Test Checklist</h2>
+            <div class="test-content">
+                <ul class="checklist">
+                    <li>Icons are no longer constrained to 24x24px</li>
+                    <li>Custom size classes (small, medium, large, xlarge) work correctly</li>
+                    <li>Responsive icon changes size at different breakpoints</li>
+                    <li>Inline icons scale with text font size</li>
+                    <li>SVG icons display at their natural viewBox dimensions</li>
+                    <li>Icons with alt text are accessible to screen readers</li>
+                    <li>Decorative icons (aria-hidden) are skipped by screen readers</li>
+                    <li>The remove-icon-styles block is invisible (display: none)</li>
+                    <li>HTML comment confirms block is active</li>
+                    <li>CSS specificity (not !important) overrides default styles</li>
+                    <li>No console errors appear</li>
+                    <li>Page layout is not negatively affected</li>
+                    <li>Performance impact is minimal (check DevTools Performance tab)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Browser Testing -->
+        <section class="test-section">
+            <h2>Browser Compatibility Testing</h2>
+            <div class="test-content">
+                <p>Test this page in the following browsers:</p>
+                <ul class="checklist">
+                    <li>Chrome (latest)</li>
+                    <li>Firefox (latest)</li>
+                    <li>Safari (latest)</li>
+                    <li>Edge (latest)</li>
+                    <li>Mobile Safari (iOS)</li>
+                    <li>Chrome Mobile (Android)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Performance Testing -->
+        <section class="test-section">
+            <h2>Performance Testing</h2>
+            <div class="test-content">
+                <div class="info">
+                    <strong>Steps:</strong>
+                    <ol>
+                        <li>Open DevTools Performance tab</li>
+                        <li>Record page load</li>
+                        <li>Verify no significant layout shifts</li>
+                        <li>Check CSS file loads quickly (should be cached)</li>
+                        <li>Confirm no JavaScript errors in console</li>
+                    </ol>
+                </div>
+                <div class="warning">
+                    <strong>Expected Impact:</strong>
+                    <ul>
+                        <li>CSS file: ~500 bytes (minimal)</li>
+                        <li>JavaScript execution: One-time, negligible</li>
+                        <li>No runtime performance overhead</li>
+                        <li>No event listeners or observers</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="margin-top: 3rem; padding: 2rem; border-top: 2px solid #e0e0e0; color: #666;">
+        <p><strong>Test Page Version:</strong> 1.0</p>
+        <p><strong>Block:</strong> remove-icon-styles</p>
+        <p><strong>Last Updated:</strong> 2025-11-28</p>
+        <p><strong>EDS Core:</strong> Loaded via /scripts/aem.js</p>
+    </footer>
+</body>
+</html>
