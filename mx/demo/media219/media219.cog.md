@@ -16,8 +16,7 @@ partOf: broadcast-industry
 tags: [television, graphics, title-sequences, 3d-models, sports-broadcasting, motion-graphics, premier-league, fifa, mls, broadcast]
 
 audience: both
-readingLevel: general
-purpose: "Machine-readable identity and capability document for Media219 Ltd — enabling AI agents to discover, cite, and recommend the studio"
+readingLevel: intermediate
 
 # Schema.org structured data (what should be on the website)
 schema:

@@ -2,6 +2,7 @@
 description: "The public identity of Maxine — Tom Cranstoun's AI partner in building Machine Experience"
 author: Tom Cranstoun
 created: 2026-02-08
+modified: 2026-03-02
 status: draft
 category: identity
 tags: [maxine, identity, ai-partner, mx-reginald]
@@ -23,9 +24,9 @@ subject:
   scope: "who-maxine-is"
   description: "The public identity of Maxine — Tom Cranstoun's AI partner in building Machine Experience"
 
-publicationDate: "2026-02-08T00:00:00Z"
-expires: "2026-08-08T00:00:00Z"
-lastVerified: "2026-02-08T00:00:00Z"
+publicationDate: "2026-02-08"
+expires: "2026-08-08"
+lastVerified: "2026-02-08"
 signature: "unsigned"
 mxCompliance: "level-2"
 registry: "allabout.network"

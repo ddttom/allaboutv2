@@ -2,6 +2,7 @@
 description: "Responsive site header with navigation, hamburger menu, and brand identity"
 author: Tom Cranstoun
 created: 2026-02-22
+modified: 2026-03-02
 status: draft
 category: eds-block
 tags: [eds, block, header, navigation]
@@ -23,9 +24,9 @@ subject:
   scope: "navigation"
   description: "Responsive site header with navigation, hamburger menu, and brand identity"
 
-publicationDate: "2026-02-22T00:00:00Z"
-expires: "2026-08-22T00:00:00Z"
-lastVerified: "2026-02-22T00:00:00Z"
+publicationDate: "2026-02-22"
+expires: "2026-08-22"
+lastVerified: "2026-02-22"
 signature: "unsigned"
 mxCompliance: "level-2"
 registry: "allabout.network"
@@ -104,7 +105,7 @@ block:
     breakpoints: [900]
 
 contentType: "eds-block"
-audience: ["developers", "machines"]
+audience: ["tech", "machines"]
 runbook: |
 ---
 
