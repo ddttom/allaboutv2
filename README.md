@@ -3,7 +3,7 @@ title: "AllAbout V2 Project"
 description: "Adobe Edge Delivery Services website with custom Cloudflare worker and blog-focused homepage"
 author: Tom Cranstoun
 created: 2026-01-15
-modified: 2026-02-09
+modified: 2026-03-02
 version: "1.0"
 status: active
 ---
@@ -251,7 +251,7 @@ Specialized agents for complex tasks:
 - **refactor-planner** - Plan code refactoring strategies
 - **web-research-specialist** - Research technical issues
 
-See [`.claude/agents/README.md`](.claude/agents/README.md) for details.
+See `.claude/agents/` for agent definitions.
 
 ## Development Guidelines
 
@@ -316,15 +316,14 @@ Each block should include:
   - Features auto-wrapping (90% less code), hamburger TOC, and pure markdown authoring
   - View with ipynb-viewer in notebook mode for best experience
 
-**📖 The Invisible Users** - Book companion notebook
+**📖 MX: The Handbook** - Book companion notebook
 
 - **[invisible-users/notebook.ipynb](invisible-users/notebook.ipynb)** - Interactive exploration of AI agents and modern web design
-  - Companion to "The Invisible Users" book by Tom Cranstoun
+  - Companion to "MX: The Handbook" by Tom Cranstoun
   - 10 parts covering all book chapters with interactive demonstrations
   - 36 cells including 9 interactive JavaScript visualizations
   - Validated at 100/100 production readiness score
   - Complete metadata (title, description, author)
-  - Links to full manuscript at [github.com/ddttom/invisible-users](https://github.com/ddttom/invisible-users)
   - 60-75 minutes to complete
 
 ### Site Remediation & SEO
