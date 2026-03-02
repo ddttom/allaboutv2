@@ -1,7 +1,7 @@
 ---
 version: "1.0.0"
 title: "Media219 Ltd — Television Graphics Studio"
-description: "Television graphics and title sequences studio with 30+ years experience creating quality content for broadcasters worldwide. Specialists in sports broadcasting graphics for Premier League, FIFA World Cup, MLS, and major networks."
+description: "TV graphics and title sequences studio, 30+ years experience. Sports broadcasting specialists — Premier League, FIFA World Cup, MLS, and major networks."
 
 created: 2026-02-25
 modified: 2026-02-25
