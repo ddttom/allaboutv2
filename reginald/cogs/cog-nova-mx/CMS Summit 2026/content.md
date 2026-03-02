@@ -7,7 +7,7 @@ modified: 2026-02-12
 version: "1.0"
 status: active
 category: event
-type: info-doc
+contentType: info-doc
 tags: [conference, cms, content-management, frankfurt, may-2026, speaker, professional, digital-transformation, headless-cms, ai-strategy, boye-company]
 
 event:

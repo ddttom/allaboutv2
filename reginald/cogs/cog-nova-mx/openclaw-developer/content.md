@@ -1,6 +1,6 @@
 ---
 name: openclaw-developer
-type: contact
+contentType: contact
 description: OpenClaw framework developer — agent skills and cog integration
 author: Tom Cranstoun
 created: 2026-02-09

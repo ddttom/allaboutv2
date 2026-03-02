@@ -1,6 +1,6 @@
 ---
 name: michael-andrews
-type: contact
+contentType: contact
 description: Content metadata expert, author of "No More Silos"
 author: Tom Cranstoun
 created: 2026-02-09

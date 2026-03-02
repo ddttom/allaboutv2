@@ -6,7 +6,7 @@ modified: 2026-02-23
 version: "2.2"
 status: active
 category: marketing
-type: info-doc
+contentType: info-doc
 tags: [mx, landing-page, codex, handbook, coming-soon, machine-experience, books, companion-web, ai-agents, waitlist, email-signup]
 audience: ["humans", "machines"]
 buildsOn: [mx-messaging, mx-concepts]

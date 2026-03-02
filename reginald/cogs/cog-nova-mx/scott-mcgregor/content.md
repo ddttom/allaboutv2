@@ -1,6 +1,6 @@
 ---
 name: scott-mcgregor
-type: contact
+contentType: contact
 description: Business partner, LPC (printing, web development, web applications)
 author: Tom Cranstoun
 created: 2026-02-09

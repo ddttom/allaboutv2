@@ -7,7 +7,7 @@ modified: 2026-02-12
 version: "1.0"
 status: active
 category: product
-type: info-doc
+contentType: info-doc
 tags: [maxine, plan, architecture, roadmap, product, master-plan]
 audience: ["humans", "machines"]
 purpose: "master-plan"

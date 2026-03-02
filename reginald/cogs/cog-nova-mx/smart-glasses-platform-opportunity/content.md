@@ -8,12 +8,12 @@ modified: 2026-02-14
 version: "1.0"
 status: active
 category: vision
-type: info-doc
+contentType: info-doc
 tags: [smart-glasses, meta, platform, wearables, companion-web, strategy, market-opportunity, competitive-analysis, google, apple, samsung]
 audience: ["business", "investors"]
 purpose: "strategic-opportunity"
 buildsOn: [mx-messaging, the-companion-web]
-confidentiality: confidential
+confidential: true
 contentType: "strategic-analysis"
 runbook: "This is a strategic opportunity document for the advisory board and investors. Dual-audience: business claim first, technical evidence underneath. Market data cites sources. Write like a blog — informative, not technical."
 ---

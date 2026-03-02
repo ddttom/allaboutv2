@@ -3,7 +3,7 @@ name: The Highland Kitchen
 description: Farm-to-table Scottish cuisine in Edinburgh
 created: 2026-02-01
 category: restaurant
-type: venue
+contentType: venue
 status: active
 version: "1.0"
 author: The Highland Kitchen

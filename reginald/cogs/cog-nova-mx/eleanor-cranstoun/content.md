@@ -1,6 +1,6 @@
 ---
 name: eleanor-cranstoun
-type: contact
+contentType: contact
 description: Director of Cog-Nova-MX Ltd, Tom's wife
 author: Tom Cranstoun
 created: 2026-02-09

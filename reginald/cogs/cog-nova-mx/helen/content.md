@@ -1,6 +1,6 @@
 ---
 name: helen
-type: contact
+contentType: contact
 description: Business advisor, 30-year friend
 author: Tom Cranstoun
 created: 2026-02-09

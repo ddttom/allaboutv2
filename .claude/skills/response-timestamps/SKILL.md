@@ -1,7 +1,7 @@
 ---
 name: response-timestamps
 description: Automatically adds timestamps and execution duration to all Claude responses
-type: guardrail
+contentType: guardrail
 enforcement: suggest
 priority: high
 ---

@@ -8,7 +8,7 @@ modified: 2026-02-15
 version: "1.0"
 status: active
 category: deliverable
-type: info-doc
+contentType: info-doc
 tags: [metadata, conventions, html, javascript, css, file-types, embrace-extend, blocks, namespace]
 audience: [tech, business]
 purpose: "implementation-spec"

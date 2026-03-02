@@ -7,7 +7,7 @@ modified: 2026-02-12
 version: "0.2"
 status: active
 category: strategy
-type: info-doc
+contentType: info-doc
 tags: [messaging, audiences, terminology, positioning, fear, control, strategy, investor, sponsor, certification, reginald, maxine]
 audience: ["gestalt"]
 purpose: "messaging-framework"

@@ -7,7 +7,6 @@ created: 2026-02-15
 author: Tom Cranstoun and Maxine
 status: accepted
 category: decision-record
-confidentiality: public
 tags: [metadata, terminology, business-language, deliverable]
 bdr:
   number: 2

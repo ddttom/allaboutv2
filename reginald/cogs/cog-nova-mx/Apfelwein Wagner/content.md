@@ -7,7 +7,7 @@ modified: 2026-02-12
 version: "1.0"
 status: active
 category: venue
-type: info-doc
+contentType: info-doc
 tags: [restaurant, dining, frankfurt, german-cuisine, hessian, apple-wine, vegetarian, wheelchair-accessible, step-free, accessible-toilet, outdoor-seating]
 
 location:

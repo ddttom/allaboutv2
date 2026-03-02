@@ -1,6 +1,6 @@
 ---
 name: salva
-type: contact
+contentType: contact
 description: Adobe AEM Master, advisory board member, long-time friend
 author: Tom Cranstoun
 created: 2026-02-09

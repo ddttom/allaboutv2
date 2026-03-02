@@ -1,6 +1,6 @@
 ---
 mxSpecVersion: "1.0"
-type: "cog-metadata"
+contentType: "cog-metadata"
 subject: "Maxine"
 scope: "who-maxine-is"
 description: "MX metadata for the Maxine identity COG — who Maxine is, why the partnership works, and what it produces."

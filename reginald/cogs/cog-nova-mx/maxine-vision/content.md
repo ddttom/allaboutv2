@@ -7,7 +7,7 @@ modified: 2026-02-11
 version: "1.0"
 status: active
 category: product
-type: info-doc
+contentType: info-doc
 tags: [maxine, joymaker, vision, architecture, product, distributed, pwa, voice]
 audience: ["humans", "machines"]
 purpose: "product-vision"

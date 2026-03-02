@@ -8,7 +8,7 @@ modified: 2026-02-24
 version: "1.1"
 status: active
 category: onboarding
-type: guide
+contentType: guide
 tags: [onboarding, team, setup, mx-os, getting-started]
 audience: ["humans"]
 purpose: "team-onboarding"

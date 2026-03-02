@@ -8,7 +8,7 @@ modified: 2026-02-13
 version: "1.0"
 status: published
 category: deliverable
-type: info-doc
+contentType: info-doc
 tags: [maxine, architecture, server, client, electron, pwa, dashboard, websocket, api, ipc, distributed]
 audience: [tech, business]
 purpose: "architectural-overview"

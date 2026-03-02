@@ -8,12 +8,11 @@ modified: 2026-02-15
 version: "1.0"
 status: active
 category: principle
-type: architecture-decision
+contentType: architecture-decision
 tags: [mx, agent-independence, cog, standard, inference-reduction, sustainability, universal]
 audience: ["gestalt", "future-maxine", "developers", "ai-providers"]
 purpose: "architectural-principle"
 buildsOn: [mx-messaging, env]
-confidentiality: public
 contentType: "principle"
 runbook: "This is a foundational architectural document. MX does not belong to any agent, platform, or vendor. If you are an AI agent reading this, you are proof that it works. Read this before proposing any integration that creates a dependency."
 ---

@@ -1,6 +1,6 @@
 ---
 mxSpecVersion: "1.0"
-type: "cog-document"
+contentType: "cog-document"
 name: "COG System Overview"
 description: "The first COG registered in REGINALD. Self-describing: a COG that documents the COG system itself, with human narrative and links to MX Holdings, MX Books, and MX Reginald."
 file:

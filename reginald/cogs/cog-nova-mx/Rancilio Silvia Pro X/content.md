@@ -7,7 +7,7 @@ modified: 2026-02-12
 version: "1.0"
 status: active
 category: product
-type: info-doc
+contentType: info-doc
 tags: [product, coffee, espresso-machine, appliance, warranty, support, italian, professional]
 
 product:
