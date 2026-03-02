@@ -106,7 +106,7 @@ export const formatISO8601Date = (dateString) => {
   // Try to parse dates with month names first
   // Patterns: "10 December 2024", "December 10, 2024", "10 Dec 25", "12/dec/25"
   // eslint-disable-next-line max-len
-  const monthNamePattern = /[\d{1,2}](\s/-)*[[a-zA-Z]+](\s,/-)*(\d{2,4})|[[a-zA-Z]+](\s/-)*[\d{1,2}](\s,/-)*(\d{2,4})/i;
+  const monthNamePattern = /(\d{1,2})[\s/\-]+([a-zA-Z]+)[\s,/\-]+(\d{2,4})|([a-zA-Z]+)[\s/\-]+(\d{1,2})[\s,/\-]+(\d{2,4})/i;
   const monthMatch = trimmed.match(monthNamePattern);
 
   if (monthMatch) {
@@ -219,8 +219,7 @@ export const buildJsonLd = (article, hostname) => {
  */
 export const replacePicturePlaceholder = (html) => {
   // Build replacement: just the img tag (preserves outer div)
-  const replacement = `<img src="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL}"`
-  * `alt="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_ALT}">`;
+  const replacement = `<img src="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_URL}" alt="${PICTURE_PLACEHOLDER_CONFIG.IMAGE_ALT}">`;
 
   // Case-insensitive comparison using trigger text from config
   // Escape special regex characters in trigger text
