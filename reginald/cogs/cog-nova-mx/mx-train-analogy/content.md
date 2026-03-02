@@ -1,5 +1,4 @@
 ---
-name: mx-train-analogy
 version: "1.0.0"
 description: "The railway analogy for MX OS. A physical metaphor that maps every MX concept to something everyone already understands."
 
@@ -7,19 +6,22 @@ created: 2026-02-11
 modified: 2026-02-11
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, mx-phrasebook, mx-principles]
-buildsOn: [what-is-mx-os, mx-phrasebook]
-tags: [analogy, pitch, railway, train, metaphor, cog-railway, accessible, non-technical, investor]
+mx:
+  name: mx-train-analogy
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: both
-readingLevel: accessible
-purpose: Canonical reference for the railway analogy — use when pitching MX to non-technical audiences
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, mx-phrasebook, mx-principles]
+  buildsOn: [what-is-mx-os, mx-phrasebook]
+  tags: [analogy, pitch, railway, train, metaphor, cog-railway, accessible, non-technical, investor]
+
+  audience: both
+  readingLevel: accessible
+  purpose: Canonical reference for the railway analogy — use when pitching MX to non-technical audiences
 ---
 
 # The Railway Analogy

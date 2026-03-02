@@ -1,5 +1,4 @@
 ---
-name: access-and-guardrails
 version: "1.0"
 description: How cogs are protected. Access control for content and execution — encryption, authentication, and the guardrail pattern where one cog unlocks another.
 
@@ -7,60 +6,63 @@ created: 2026-02-09
 modified: 2026-02-09
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec]
-buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
-tags: [access-control, security, encryption, oauth, guardrail, permissions, trust, authentication]
+mx:
+  name: access-and-guardrails
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: developers
-readingLevel: technical
-purpose: Document the access control layer of MX OS — how cogs are protected, how agents gain access, and the guardrail pattern
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec]
+  buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
+  tags: [access-control, security, encryption, oauth, guardrail, permissions, trust, authentication]
 
-contentType: "action-doc"
-runbook: "mx exec access-and-guardrails"
-execute:
-  runtime: runbook
-  command: mx cog access
-  actions:
-    - name: explain
-      description: Present the access control model to any audience
-      usage: Read this cog and explain the five access types, the guardrail pattern, and the relationship between trust and access
-      outputs:
-        - name: explanation
-          type: string
-          description: Clear explanation of cog access control
+  audience: developers
+  readingLevel: technical
+  purpose: Document the access control layer of MX OS — how cogs are protected, how agents gain access, and the guardrail pattern
 
-    - name: check
-      description: Check the access requirements of a specific cog
-      usage: Read the target cog's frontmatter, look for the access object, and report what is required to read or execute it
-      inputs:
-        - name: cog-name
-          type: string
-          required: true
-          description: Name of the cog to check
-      outputs:
-        - name: access-report
-          type: object
-          description: Access type, gate requirements, and how to proceed
+  contentType: "action-doc"
+  runbook: "mx exec access-and-guardrails"
+  execute:
+    runtime: runbook
+    command: mx cog access
+    actions:
+      - name: explain
+        description: Present the access control model to any audience
+        usage: Read this cog and explain the five access types, the guardrail pattern, and the relationship between trust and access
+        outputs:
+          - name: explanation
+            type: string
+            description: Clear explanation of cog access control
 
-    - name: gate
-      description: Execute a guardrail check for a protected cog
-      usage: Read the guardrail action-doc named in the access.gate field, execute its check action, and report whether access is granted
-      inputs:
-        - name: target-cog
-          type: string
-          required: true
-          description: The cog the agent wants to access
-      invokes: []
-      outputs:
-        - name: access-result
-          type: object
-          description: Whether access was granted or denied, with reasoning
+      - name: check
+        description: Check the access requirements of a specific cog
+        usage: Read the target cog's frontmatter, look for the access object, and report what is required to read or execute it
+        inputs:
+          - name: cog-name
+            type: string
+            required: true
+            description: Name of the cog to check
+        outputs:
+          - name: access-report
+            type: object
+            description: Access type, gate requirements, and how to proceed
+
+      - name: gate
+        description: Execute a guardrail check for a protected cog
+        usage: Read the guardrail action-doc named in the access.gate field, execute its check action, and report whether access is granted
+        inputs:
+          - name: target-cog
+            type: string
+            required: true
+            description: The cog the agent wants to access
+        invokes: []
+        outputs:
+          - name: access-result
+            type: object
+            description: Whether access was granted or denied, with reasoning
 ---
 
 # Access and Guardrails

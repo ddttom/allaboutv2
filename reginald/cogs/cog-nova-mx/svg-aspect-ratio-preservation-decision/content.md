@@ -1,25 +1,27 @@
 ---
-name: svg-aspect-ratio-preservation-decision
 version: "1.0"
 description: "ADR #6: SVG-to-PNG aspect ratio preservation with tool cascade — fixing qlmanage square thumbnail bug for professional PDF layout."
 created: 2026-02-18
 author: Tom Cranstoun and Maxine
-status: accepted
-category: architecture
-partOf: mx-maxine-lives
-tags: [adr, pdf-generation, svg, png, aspect-ratio, rsvg-convert, imagemagick, qlmanage, illustration-pipeline]
-audience: [developers, technical]
 
-adr:
-  number: 6
-  title: "SVG-to-PNG Aspect Ratio Preservation with Tool Cascade"
+mx:
+  name: svg-aspect-ratio-preservation-decision
   status: accepted
-  date: 2026-02-18
-  context: "MX Handbook PDF generation (Feb 2026) revealed critical image clipping issue: landscape SVG diagrams (900×600, 3:2 ratio) were converted to square PNGs (2700×2700) with letterbox padding by qlmanage, causing LaTeX to scale incorrectly and clip content outside page margins."
-  decision: "Implement tool cascade for SVG-to-PNG conversion: rsvg-convert (primary) → ImageMagick (fallback) → qlmanage (last resort). Always preserve source aspect ratio. Document qlmanage square thumbnail limitation."
-  consequences: "All book diagrams maintain 3:2 aspect ratio (2700×1800 PNG from 900×600 SVG). Images scale properly in LaTeX without clipping. Professional PDF layout with readable diagrams. Universal workflow across all MX publications."
+  category: architecture
+  partOf: mx-maxine-lives
+  tags: [adr, pdf-generation, svg, png, aspect-ratio, rsvg-convert, imagemagick, qlmanage, illustration-pipeline]
+  audience: [developers, technical]
 
-buildsOn: [pdf-generator, png-workflow-pdf-generation-decision, illustration-generator]
+  adr:
+    number: 6
+    title: "SVG-to-PNG Aspect Ratio Preservation with Tool Cascade"
+    status: accepted
+    date: 2026-02-18
+    context: "MX Handbook PDF generation (Feb 2026) revealed critical image clipping issue: landscape SVG diagrams (900×600, 3:2 ratio) were converted to square PNGs (2700×2700) with letterbox padding by qlmanage, causing LaTeX to scale incorrectly and clip content outside page margins."
+    decision: "Implement tool cascade for SVG-to-PNG conversion: rsvg-convert (primary) → ImageMagick (fallback) → qlmanage (last resort). Always preserve source aspect ratio. Document qlmanage square thumbnail limitation."
+    consequences: "All book diagrams maintain 3:2 aspect ratio (2700×1800 PNG from 900×600 SVG). Images scale properly in LaTeX without clipping. Professional PDF layout with readable diagrams. Universal workflow across all MX publications."
+
+  buildsOn: [pdf-generator, png-workflow-pdf-generation-decision, illustration-generator]
 ---
 
 # SVG-to-PNG Aspect Ratio Preservation with Tool Cascade

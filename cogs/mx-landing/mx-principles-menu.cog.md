@@ -3,60 +3,62 @@ description: "Navigation page linking to core MX principles and concepts"
 author: Tom Cranstoun
 created: 2026-02-22
 modified: 2026-03-02
-status: draft
-category: landing-page
-tags: [mx, principles, navigation, landing]
 version: "1.0"
-cogId: "cog-mx-landing-principles-menu-20260222"
-cogType: "certificate-of-genuineness"
-license: "MIT"
 
-publisher:
-  name: "Cog-Nova-MX Ltd"
-  verified: false
-  signedBy: "unsigned"
-  contact: "tom.cranstoun@gmail.com"
-  website: "https://allabout.network"
+mx:
+  status: draft
+  category: landing-page
+  tags: [mx, principles, navigation, landing]
+  cogId: "cog-mx-landing-principles-menu-20260222"
+  cogType: "certificate-of-genuineness"
+  license: "MIT"
 
-subject:
-  name: "MX Principles Menu"
-  category: "landing-page"
-  scope: "navigation-hub"
-  description: "Navigation page linking to core MX principles and concepts"
+  publisher:
+    name: "Cog-Nova-MX Ltd"
+    verified: false
+    signedBy: "unsigned"
+    contact: "tom.cranstoun@gmail.com"
+    website: "https://allabout.network"
 
-publicationDate: "2026-02-22"
-expires: "2026-08-22"
-lastVerified: "2026-02-22"
-signature: "unsigned"
-mxCompliance: "level-2"
-registry: "allabout.network"
+  subject:
+    name: "MX Principles Menu"
+    category: "landing-page"
+    scope: "navigation-hub"
+    description: "Navigation page linking to core MX principles and concepts"
 
-maintainer:
-  name: "Tom Cranstoun"
-  role: "MX Authority"
-  contact: "tom.cranstoun@gmail.com"
-  escalation: "tom.cranstoun@gmail.com"
+  publicationDate: "2026-02-22"
+  expires: "2026-08-22"
+  lastVerified: "2026-02-22"
+  signature: "unsigned"
+  mxCompliance: "level-2"
+  registry: "allabout.network"
 
-reviewCycle: "quarterly"
-updateTriggers:
-  - "new MX principle added"
-  - "principle content restructured"
-  - "navigation path change"
-  - "user-reported broken link"
+  maintainer:
+    name: "Tom Cranstoun"
+    role: "MX Authority"
+    contact: "tom.cranstoun@gmail.com"
+    escalation: "tom.cranstoun@gmail.com"
 
-accuracyCommitment: "Links verified against current MX content structure"
-correctionSla: "72 hours"
+  reviewCycle: "quarterly"
+  updateTriggers:
+    - "new MX principle added"
+    - "principle content restructured"
+    - "navigation path change"
+    - "user-reported broken link"
 
-usage:
-  sopInference: "permitted"
-  caching: "permitted for 24 hours"
-  redistribution: "with attribution"
-  commercialUse: "permitted"
-  aiTraining: "permitted with attribution"
+  accuracyCommitment: "Links verified against current MX content structure"
+  correctionSla: "72 hours"
 
-contentType: "landing-page"
-audience: ["humans", "machines"]
-runbook: |
+  usage:
+    sopInference: "permitted"
+    caching: "permitted for 24 hours"
+    redistribution: "with attribution"
+    commercialUse: "permitted"
+    aiTraining: "permitted with attribution"
+
+  contentType: "landing-page"
+  audience: ["humans", "machines"]
+  runbook: |
 ---
 
 # MX Principles Menu

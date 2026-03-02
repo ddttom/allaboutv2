@@ -1,21 +1,23 @@
 ---
-name: mx-standards-alignment
 title: "MX Standards Alignment"
 version: "1.0"
-status: active
 created: 2026-02-17
 modified: 2026-02-17
 author: The Gathering
-license: proprietary
-category: standard
-partOf: mx-the-gathering
-buildsOn: [cog-unified-spec, field-dictionary]
 description: "How MX metadata conventions align with established web standards — Schema.org, Dublin Core, Open Graph. Explains governance, naming conventions, and context-specific rules."
-tags: [standards, alignment, schema-org, dublin-core, open-graph, governance, naming-conventions]
-audience: [humans, machines]
 
-contentType: standards-alignment
-runbook: "This document explains how MX follows existing web metadata standards. Read it when implementing validators, designing new fields, or explaining MX's design decisions. The governance section clarifies namespace ownership. The naming-conventions section explains context-dependent rules. The standards-precedents section provides citations."
+mx:
+  name: mx-standards-alignment
+  status: active
+  license: proprietary
+  category: standard
+  partOf: mx-the-gathering
+  buildsOn: [cog-unified-spec, field-dictionary]
+  tags: [standards, alignment, schema-org, dublin-core, open-graph, governance, naming-conventions]
+  audience: [humans, machines]
+
+  contentType: standards-alignment
+  runbook: "This document explains how MX follows existing web metadata standards. Read it when implementing validators, designing new fields, or explaining MX's design decisions. The governance section clarifies namespace ownership. The naming-conventions section explains context-dependent rules. The standards-precedents section provides citations."
 ---
 
 # MX Standards Alignment

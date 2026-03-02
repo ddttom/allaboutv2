@@ -1,25 +1,27 @@
 ---
-name: png-workflow-pdf-generation-decision
 version: "1.0"
 description: "ADR #4: PNG conversion workflow for PDF generation — deliberate architectural choice prioritizing reliability over format purity."
 created: 2026-02-18
 author: Tom Cranstoun and Maxine
-status: accepted
-category: architecture
-partOf: mx-maxine-lives
-tags: [adr, pdf-generation, svg, png, illustration-pipeline, latex, build-system]
-audience: [developers, technical]
 
-adr:
-  number: 4
-  title: "PNG Conversion Workflow for PDF Generation"
+mx:
+  name: png-workflow-pdf-generation-decision
   status: accepted
-  date: 2026-02-18
-  context: "MX uses .cog.svg files with YAML frontmatter for illustrations. While pandoc theoretically supports direct SVG embedding in PDFs, this causes XML parsing errors in LaTeX when YAML metadata is present in SVG comments, and produces inconsistent CSS rendering."
-  decision: "Convert all SVG illustrations to PNG at 2700px width before PDF generation. Use qlmanage (macOS WebKit rendering) for accurate CSS rendering. Treat PNG workflow as deliberate architecture, not limitation."
-  consequences: "Clean separation between design (rich .cog.svg with metahub-content/CSS) and build (flattened PNG bitmap). Guaranteed consistent rendering across all PDF outputs. Eliminates LaTeX/SVG interaction edge cases. Print quality maintained at 2700px resolution. Future-proofs against xelatex parsing changes."
+  category: architecture
+  partOf: mx-maxine-lives
+  tags: [adr, pdf-generation, svg, png, illustration-pipeline, latex, build-system]
+  audience: [developers, technical]
 
-buildsOn: [pdf-generator, illustration-generator, block-architecture-decision]
+  adr:
+    number: 4
+    title: "PNG Conversion Workflow for PDF Generation"
+    status: accepted
+    date: 2026-02-18
+    context: "MX uses .cog.svg files with YAML frontmatter for illustrations. While pandoc theoretically supports direct SVG embedding in PDFs, this causes XML parsing errors in LaTeX when YAML metadata is present in SVG comments, and produces inconsistent CSS rendering."
+    decision: "Convert all SVG illustrations to PNG at 2700px width before PDF generation. Use qlmanage (macOS WebKit rendering) for accurate CSS rendering. Treat PNG workflow as deliberate architecture, not limitation."
+    consequences: "Clean separation between design (rich .cog.svg with metahub-content/CSS) and build (flattened PNG bitmap). Guaranteed consistent rendering across all PDF outputs. Eliminates LaTeX/SVG interaction edge cases. Print quality maintained at 2700px resolution. Future-proofs against xelatex parsing changes."
+
+  buildsOn: [pdf-generator, illustration-generator, block-architecture-decision]
 ---
 
 # PNG Conversion Workflow for PDF Generation

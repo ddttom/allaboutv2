@@ -1,15 +1,17 @@
 ---
-name: glasgow-training-course
 title: "Glasgow Training Course"
 description: "2-day MX team training — AI foundations and business strategy"
 created: 2026-02-14
 modified: 2026-02-14
 author: Tom Cranstoun and Maxine
-status: planning
-category: planning
-priority: high
-urgency: ASAP
-tags: [training, team, glasgow, ai, business]
+
+mx:
+  name: glasgow-training-course
+  status: planning
+  category: planning
+  priority: high
+  urgency: ASAP
+  tags: [training, team, glasgow, ai, business]
 ---
 
 # Glasgow Training Course

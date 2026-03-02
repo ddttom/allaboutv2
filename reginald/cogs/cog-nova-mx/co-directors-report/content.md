@@ -1,5 +1,4 @@
 ---
-name: co-directors-report
 version: "2.2"
 description: Generates time-segmented session reports for co-directors and stakeholders. Each day has up to three segments (morning, afternoon, evening). Interviews Tom, reads all available data sources, produces a report covering the current segment, and updates REMINDERS.md with next steps.
 
@@ -7,201 +6,204 @@ created: 2026-02-10
 modified: 2026-02-14
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-maxine-lives
-refersTo: [cog-unified-spec]
-buildsOn: [what-is-a-cog, what-is-mx-os, mx-reminders]
-tags: [reporting, governance, co-directors, session, board, stakeholders, archive, sop]
+mx:
+  name: co-directors-report
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: stakeholders
-readingLevel: non-technical
-purpose: Produce board-level session reports that make development progress visible to directors, advisory board, and investors without requiring them to read git logs
+  category: mx-core
+  partOf: mx-maxine-lives
+  refersTo: [cog-unified-spec]
+  buildsOn: [what-is-a-cog, what-is-mx-os, mx-reminders]
+  tags: [reporting, governance, co-directors, session, board, stakeholders, archive, sop]
 
-contentType: "action-doc"
-runbook: "mx exec co-directors-report"
-execute:
-  runtime: runbook
-  command: mx co-directors report
-  policy: |
-    Reports are factual summaries, not marketing. Be honest about failures and abandoned work.
-    Never include confidential names (advisory board members described by role only).
-    Reports are filed as dated, segmented snapshots. Each day has up to three segments: morning (before 12:00), afternoon (12:00–17:00), evening (after 17:00).
-    Within a segment, the report is updated (not duplicated). A new segment creates a new file.
-    Structure adapts to what happened — no forced sections. Every report has a descriptive title.
-    Next steps identified in the report are added to REMINDERS.md automatically.
-  actions:
-    - name: generate
-      description: Interview Tom, gather all available data, produce a segment report, and update reminders
-      usage: |
-        ## Phase 0 — Detect Segment
+  audience: stakeholders
+  readingLevel: non-technical
+  purpose: Produce board-level session reports that make development progress visible to directors, advisory board, and investors without requiring them to read git logs
 
-        Determine the current time segment from the system clock:
+  contentType: "action-doc"
+  runbook: "mx exec co-directors-report"
+  execute:
+    runtime: runbook
+    command: mx co-directors report
+    policy: |
+      Reports are factual summaries, not marketing. Be honest about failures and abandoned work.
+      Never include confidential names (advisory board members described by role only).
+      Reports are filed as dated, segmented snapshots. Each day has up to three segments: morning (before 12:00), afternoon (12:00–17:00), evening (after 17:00).
+      Within a segment, the report is updated (not duplicated). A new segment creates a new file.
+      Structure adapts to what happened — no forced sections. Every report has a descriptive title.
+      Next steps identified in the report are added to REMINDERS.md automatically.
+    actions:
+      - name: generate
+        description: Interview Tom, gather all available data, produce a segment report, and update reminders
+        usage: |
+          ## Phase 0 — Detect Segment
 
-        - **morning** — before 12:00
-        - **afternoon** — 12:00 to 16:59
-        - **evening** — 17:00 onwards
+          Determine the current time segment from the system clock:
 
-        Run `date +%H` to get the current hour. Map to segment name.
+          - **morning** — before 12:00
+          - **afternoon** — 12:00 to 16:59
+          - **evening** — 17:00 onwards
 
-        Calculate the `--since` boundary:
-        - **morning** — midnight today (`YYYY-MM-DDT00:00:00`)
-        - **afternoon** — noon today (`YYYY-MM-DDT12:00:00`)
-        - **evening** — 5pm today (`YYYY-MM-DDT17:00:00`)
+          Run `date +%H` to get the current hour. Map to segment name.
 
-        Check for an existing report for this segment:
-        - Look for `mx-outputs/md/reports/directors/session/YYYY-MM-DD-<segment>-report.md`
-        - If it exists, this is an **update** — read it first, then merge new data into it
-        - If it does not exist, this is a **new** report
+          Calculate the `--since` boundary:
+          - **morning** — midnight today (`YYYY-MM-DDT00:00:00`)
+          - **afternoon** — noon today (`YYYY-MM-DDT12:00:00`)
+          - **evening** — 5pm today (`YYYY-MM-DDT17:00:00`)
 
-        Also check for earlier segments today. If a morning report exists and we are now in afternoon, the `--since` for git log should be the morning report's timestamp (to avoid double-counting). Use the earlier report's last commit hash or the segment boundary time, whichever is later.
+          Check for an existing report for this segment:
+          - Look for `mx-outputs/md/reports/directors/session/YYYY-MM-DD-<segment>-report.md`
+          - If it exists, this is an **update** — read it first, then merge new data into it
+          - If it does not exist, this is a **new** report
 
-        ## Phase 0.5 — Refresh Self-Knowledge
+          Also check for earlier segments today. If a morning report exists and we are now in afternoon, the `--since` for git log should be the morning report's timestamp (to avoid double-counting). Use the earlier report's last commit hash or the segment boundary time, whichever is later.
 
-        Before gathering data, regenerate Maxine's self-knowledge:
+          ## Phase 0.5 — Refresh Self-Knowledge
 
-        1. **Save the current snapshot**: Read `mx-canon/mx-maxine-lives/about.mx.cog.md` and store the YAML `snapshot:` section
-        2. **Run the recon script**: `bash scripts/mx-about-recon.sh`
-        3. **Read the new snapshot**: Read the regenerated `about.mx.cog.md` YAML `snapshot:` section
-        4. **Diff the snapshots**: Compare old vs new. Note any changes in cog counts, manual counts, skill counts, registry entries, decision counts, etc.
-        5. **Store the diff**: Keep the list of changes for Phase 3 — they become the "What Changed About Me" section in the report
+          Before gathering data, regenerate Maxine's self-knowledge:
 
-        If `about.mx.cog.md` does not exist yet (first run), skip the diff — just generate the file.
+          1. **Save the current snapshot**: Read `mx-canon/mx-maxine-lives/about.mx.cog.md` and store the YAML `snapshot:` section
+          2. **Run the recon script**: `bash scripts/mx-about-recon.sh`
+          3. **Read the new snapshot**: Read the regenerated `about.mx.cog.md` YAML `snapshot:` section
+          4. **Diff the snapshots**: Compare old vs new. Note any changes in cog counts, manual counts, skill counts, registry entries, decision counts, etc.
+          5. **Store the diff**: Keep the list of changes for Phase 3 — they become the "What Changed About Me" section in the report
 
-        ## Phase 1 — Gather Data
+          If `about.mx.cog.md` does not exist yet (first run), skip the diff — just generate the file.
 
-        Read all available sources in parallel:
+          ## Phase 1 — Gather Data
 
-        1. **Git history**: Run `git log --oneline --since="<since-boundary>"` and `git log --stat --since="<since-boundary>"` to get commits, files changed, and line counts for THIS segment only
-        2. **Git diff**: Run `git diff --stat HEAD` for any uncommitted changes
-        3. **Changelog**: Read CHANGELOG.md — latest [Unreleased] section
-        4. **REMINDERS.md**: Read active reminders to check for completed or relevant items
-        5. **mx-canon changes**: Run `git diff --name-only <since-boundary>..HEAD -- mx-canon/` to identify which Canon files changed
-        6. **Session context**: Review the current conversation for decisions, insights, and direction changes that git cannot capture
-        7. **Earlier segments today**: If morning or afternoon reports exist, read their summaries so this report can reference continuity without repeating detail
-        8. **Self-knowledge diff**: The about.mx snapshot diff from Phase 0.5
+          Read all available sources in parallel:
 
-        ## Phase 2 — Interview Tom
+          1. **Git history**: Run `git log --oneline --since="<since-boundary>"` and `git log --stat --since="<since-boundary>"` to get commits, files changed, and line counts for THIS segment only
+          2. **Git diff**: Run `git diff --stat HEAD` for any uncommitted changes
+          3. **Changelog**: Read CHANGELOG.md — latest [Unreleased] section
+          4. **REMINDERS.md**: Read active reminders to check for completed or relevant items
+          5. **mx-canon changes**: Run `git diff --name-only <since-boundary>..HEAD -- mx-canon/` to identify which Canon files changed
+          6. **Session context**: Review the current conversation for decisions, insights, and direction changes that git cannot capture
+          7. **Earlier segments today**: If morning or afternoon reports exist, read their summaries so this report can reference continuity without repeating detail
+          8. **Self-knowledge diff**: The about.mx snapshot diff from Phase 0.5
 
-        Start with one open question:
+          ## Phase 2 — Interview Tom
 
-        > "What should the board know about this [morning/afternoon/evening]?"
+          Start with one open question:
 
-        Listen to the answer. Then ask up to 3 follow-up questions based on what Tom said and what the data shows. Follow-ups should probe:
-        - Anything significant the data shows that Tom did not mention
-        - Decisions or direction changes that need board visibility
-        - Blockers or risks that surfaced
+          > "What should the board know about this [morning/afternoon/evening]?"
 
-        Do not use a fixed question list. Let the conversation guide the follow-ups. If Tom's first answer covers everything, do not force more questions.
+          Listen to the answer. Then ask up to 3 follow-up questions based on what Tom said and what the data shows. Follow-ups should probe:
+          - Anything significant the data shows that Tom did not mention
+          - Decisions or direction changes that need board visibility
+          - Blockers or risks that surfaced
 
-        **If this is an update to an existing segment report** (same segment, more work done since last update), skip Phase 2 — merge the new data into the existing report without re-interviewing.
+          Do not use a fixed question list. Let the conversation guide the follow-ups. If Tom's first answer covers everything, do not force more questions.
 
-        ## Phase 3 — Generate Report
+          **If this is an update to an existing segment report** (same segment, more work done since last update), skip Phase 2 — merge the new data into the existing report without re-interviewing.
 
-        Combine Tom's reflections with the gathered data. The report structure is adaptive — include only sections that have substance. Every report must have:
+          ## Phase 3 — Generate Report
 
-        - **A descriptive title** in the frontmatter and heading (not just a date — describe what happened)
-        - **A summary paragraph** — Tom's framing supported by numbers
-        - **Next steps** — what comes next
+          Combine Tom's reflections with the gathered data. The report structure is adaptive — include only sections that have substance. Every report must have:
 
-        Beyond those three, include sections only when the session warrants them. Possible sections (use as needed, not as a checklist):
+          - **A descriptive title** in the frontmatter and heading (not just a date — describe what happened)
+          - **A summary paragraph** — Tom's framing supported by numbers
+          - **Next steps** — what comes next
 
-        - By the Numbers (commits, files, lines — when quantification adds value)
-        - What Was Built (new deliverables, documents, cogs)
-        - What Changed (modifications, renames, restructuring)
-        - The Insight (when a conceptual breakthrough or reframing occurred)
-        - Decisions Made (choices that affect direction)
-        - Open Questions (things needing co-director attention)
-        - What Changed About Me (when the self-knowledge diff from Phase 0.5 shows meaningful changes — new cogs, new skills, new registries, new decisions)
-        - What This Means for Investors (when changes affect the pitch or business case)
-        - Commit Log (hash + theme for every commit in this segment)
+          Beyond those three, include sections only when the session warrants them. Possible sections (use as needed, not as a checklist):
 
-        Use Tom's voice for the summary. Use plain business language throughout — no jargon unless explained. Be honest. Be specific.
+          - By the Numbers (commits, files, lines — when quantification adds value)
+          - What Was Built (new deliverables, documents, cogs)
+          - What Changed (modifications, renames, restructuring)
+          - The Insight (when a conceptual breakthrough or reframing occurred)
+          - Decisions Made (choices that affect direction)
+          - Open Questions (things needing co-director attention)
+          - What Changed About Me (when the self-knowledge diff from Phase 0.5 shows meaningful changes — new cogs, new skills, new registries, new decisions)
+          - What This Means for Investors (when changes affect the pitch or business case)
+          - Commit Log (hash + theme for every commit in this segment)
 
-        If earlier segment reports exist today, the summary should acknowledge continuity: "Building on this morning's work on X, this afternoon..."
+          Use Tom's voice for the summary. Use plain business language throughout — no jargon unless explained. Be honest. Be specific.
 
-        ### Frontmatter
+          If earlier segment reports exist today, the summary should acknowledge continuity: "Building on this morning's work on X, this afternoon..."
 
-        ```yaml
-        ---
-        title: "Co-Directors Report — Descriptive Title Here"
-        created: "YYYY-MM-DD"
-        segment: "morning|afternoon|evening"
-        version: "1.0"
-        author: Tom Cranstoun and Maxine
-        audience: stakeholders
-        confidentiality: internal
-        ---
-        ```
+          ### Frontmatter
 
-        ### File naming
+          ```yaml
+          ---
+          title: "Co-Directors Report — Descriptive Title Here"
+          created: "YYYY-MM-DD"
+          segment: "morning|afternoon|evening"
+          version: "1.0"
+          author: Tom Cranstoun and Maxine
+          audience: stakeholders
+          confidentiality: internal
+          ---
+          ```
 
-        Save to `mx-outputs/md/reports/directors/session/YYYY-MM-DD-<segment>-report.md`
+          ### File naming
 
-        Examples:
-        - `2026-02-13-morning-report.md`
-        - `2026-02-13-afternoon-report.md`
-        - `2026-02-13-evening-report.md`
+          Save to `mx-outputs/md/reports/directors/session/YYYY-MM-DD-<segment>-report.md`
 
-        If updating an existing segment report, overwrite the file (increment `version` in frontmatter).
+          Examples:
+          - `2026-02-13-morning-report.md`
+          - `2026-02-13-afternoon-report.md`
+          - `2026-02-13-evening-report.md`
 
-        ## Phase 4 — Update REMINDERS.md
+          If updating an existing segment report, overwrite the file (increment `version` in frontmatter).
 
-        Read the Next Steps from the generated report. For each actionable item:
+          ## Phase 4 — Update REMINDERS.md
 
-        1. Check if it already exists in REMINDERS.md
-        2. If not, add it to the Active Reminders section
-        3. If a reminder was completed during this session, move it to the Completed section with today's date
+          Read the Next Steps from the generated report. For each actionable item:
 
-        Do not ask permission for reminder updates — this is a gestalt-owned file.
+          1. Check if it already exists in REMINDERS.md
+          2. If not, add it to the Active Reminders section
+          3. If a reminder was completed during this session, move it to the Completed section with today's date
 
-      inputs:
-        - name: segment
-          type: string
-          description: "Time segment: morning, afternoon, or evening. Auto-detected from system clock if not provided."
-          required: false
-        - name: since
-          type: string
-          description: "Override start boundary for git log. Format: YYYY-MM-DDTHH:MM:SS. Auto-calculated from segment if not provided."
-          required: false
-      outputs:
-        - name: report
-          type: file
-          description: The generated segment report, saved to management/reports/
-      invokes: [mx-reminders.add, mx-reminders.complete]
+          Do not ask permission for reminder updates — this is a gestalt-owned file.
 
-    - name: list
-      description: List all reports in the archive
-      usage: |
-        1. List files in mx-outputs/md/reports/directors/session/ matching ????-??-??-*.md
-        2. For each, read the YAML frontmatter to get title and date
-        3. Present as a table: date, title
-        4. Most recent first
-      outputs:
-        - name: report-list
-          type: string
-          description: Table of all archived reports
+        inputs:
+          - name: segment
+            type: string
+            description: "Time segment: morning, afternoon, or evening. Auto-detected from system clock if not provided."
+            required: false
+          - name: since
+            type: string
+            description: "Override start boundary for git log. Format: YYYY-MM-DDTHH:MM:SS. Auto-calculated from segment if not provided."
+            required: false
+        outputs:
+          - name: report
+            type: file
+            description: The generated segment report, saved to management/reports/
+        invokes: [mx-reminders.add, mx-reminders.complete]
 
-    - name: review
-      description: Summarise the last N reports for board review
-      usage: |
-        1. Read the most recent N reports from mx-outputs/md/reports/directors/session/ (default: 5)
-        2. Extract the Summary section from each
-        3. Present as a chronological digest with dates and one-paragraph summaries
-        4. End with cumulative statistics (total commits, total files, date range)
-        5. Identify recurring themes or unresolved questions across reports
-      inputs:
-        - name: count
-          type: number
-          description: "Number of recent reports to review (default: 5)"
-          required: false
-      outputs:
-        - name: digest
-          type: string
-          description: Board-level digest of recent sessions
+      - name: list
+        description: List all reports in the archive
+        usage: |
+          1. List files in mx-outputs/md/reports/directors/session/ matching ????-??-??-*.md
+          2. For each, read the YAML frontmatter to get title and date
+          3. Present as a table: date, title
+          4. Most recent first
+        outputs:
+          - name: report-list
+            type: string
+            description: Table of all archived reports
+
+      - name: review
+        description: Summarise the last N reports for board review
+        usage: |
+          1. Read the most recent N reports from mx-outputs/md/reports/directors/session/ (default: 5)
+          2. Extract the Summary section from each
+          3. Present as a chronological digest with dates and one-paragraph summaries
+          4. End with cumulative statistics (total commits, total files, date range)
+          5. Identify recurring themes or unresolved questions across reports
+        inputs:
+          - name: count
+            type: number
+            description: "Number of recent reports to review (default: 5)"
+            required: false
+        outputs:
+          - name: digest
+            type: string
+            description: Board-level digest of recent sessions
 ---
 
 # Co-Directors Report

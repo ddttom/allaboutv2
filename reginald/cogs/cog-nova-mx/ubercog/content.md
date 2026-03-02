@@ -1,5 +1,4 @@
 ---
-name: ubercog
 version: "1.5.0"
 description: The repo-level briefing. What this repository is, what lives where, how to route. Any agent reading this can navigate the MX-Hub.
 
@@ -7,55 +6,58 @@ created: 2026-02-14
 modified: 2026-02-26
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, mx-principles]
-buildsOn: [what-is-mx-os]
-tags: [ubercog, gateway, briefing, routing, repo, mx-hub, onboarding]
+mx:
+  name: ubercog
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: both
-readingLevel: accessible
-purpose: Brief any AI agent on this repository — what it contains, how it is structured, and how to route to the right place
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, mx-principles]
+  buildsOn: [what-is-mx-os]
+  tags: [ubercog, gateway, briefing, routing, repo, mx-hub, onboarding]
 
-contentType: "briefing-doc"
-runbook: "mx exec ubercog"
-execute:
-  runtime: runbook
-  command: mx ubercog
-  actions:
-    - name: brief
-      description: Give any AI agent the full repo context in one pass
-      usage: Read this cog top to bottom. The agent should understand the repo structure, Canon layout, and boot chain. After reading, the agent can navigate without guessing.
-      inputs: []
-      outputs:
-        - name: briefing
-          type: object
-          description: Complete repo context for any AI agent
+  audience: both
+  readingLevel: accessible
+  purpose: Brief any AI agent on this repository — what it contains, how it is structured, and how to route to the right place
 
-    - name: route
-      description: Route a query to the right location in the repo
-      usage: Given a question or intent, use the routing tables in this cog to identify the correct directory, file, or Canon initiative. Return the path, what to read first, and why.
-      inputs:
-        - name: query
-          type: string
-          description: What the agent is looking for
-      outputs:
-        - name: route
-          type: object
-          description: Path, read-first file, and rationale
+  contentType: "briefing-doc"
+  runbook: "mx exec ubercog"
+  execute:
+    runtime: runbook
+    command: mx ubercog
+    actions:
+      - name: brief
+        description: Give any AI agent the full repo context in one pass
+        usage: Read this cog top to bottom. The agent should understand the repo structure, Canon layout, and boot chain. After reading, the agent can navigate without guessing.
+        inputs: []
+        outputs:
+          - name: briefing
+            type: object
+            description: Complete repo context for any AI agent
 
-    - name: status
-      description: Report the current state of the repo
-      usage: Check git status, submodule status, and npm scripts. Report whether submodules are initialised and what commands are available.
-      inputs: []
-      outputs:
-        - name: status-report
-          type: object
-          description: Current repo state
+      - name: route
+        description: Route a query to the right location in the repo
+        usage: Given a question or intent, use the routing tables in this cog to identify the correct directory, file, or Canon initiative. Return the path, what to read first, and why.
+        inputs:
+          - name: query
+            type: string
+            description: What the agent is looking for
+        outputs:
+          - name: route
+            type: object
+            description: Path, read-first file, and rationale
+
+      - name: status
+        description: Report the current state of the repo
+        usage: Check git status, submodule status, and npm scripts. Report whether submodules are initialised and what commands are available.
+        inputs: []
+        outputs:
+          - name: status-report
+            type: object
+            description: Current repo state
 ---
 
 # The Repo Uber Cog

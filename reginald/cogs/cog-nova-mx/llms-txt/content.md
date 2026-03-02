@@ -1,5 +1,4 @@
 ---
-name: llms-txt
 version: 0.1.0
 description: Generate and validate llms.txt files for Robot-First Web compliance
 
@@ -7,54 +6,57 @@ created: 2026-02-06T12:19:00Z
 modified: 2026-02-06T12:19:00Z
 
 author: Maxine (MX - Machine eXperience Engine)
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: draft
 
-category: mx-core
-partOf: mx-core
-refersTo: [robots-txt, sitemap, link-checker]
-tags: [llms-txt, robot-first, validation, generation]
+mx:
+  name: llms-txt
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: draft
 
-execute:
-  runtime: runbook
-  command: mx cog llms-txt
-  actions:
-    - name: generate
-      description: Generate llms.txt from a website
-      usage: mx cog llms-txt generate <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: Website URL to analyze
-      outputs:
-        - name: llms.txt
-          type: file
-          description: Generated llms.txt content
-    
-    - name: validate
-      description: Validate an existing llms.txt
-      usage: mx cog llms-txt validate <url|file>
-      inputs:
-        - name: source
-          type: string
-          required: true
-          description: URL or local file path
-      outputs:
-        - name: report
-          type: object
-          description: Validation results with errors/warnings
+  category: mx-core
+  partOf: mx-core
+  refersTo: [robots-txt, sitemap, link-checker]
+  tags: [llms-txt, robot-first, validation, generation]
 
-requires:
-  bins: []
-  cogs: []
+  execute:
+    runtime: runbook
+    command: mx cog llms-txt
+    actions:
+      - name: generate
+        description: Generate llms.txt from a website
+        usage: mx cog llms-txt generate <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: Website URL to analyze
+        outputs:
+          - name: llms.txt
+            type: file
+            description: Generated llms.txt content
 
-contentType: "action-doc"
-runbook: "mx exec llms-txt"
-convergence: true
-accessibility: true
-semantic: true
+      - name: validate
+        description: Validate an existing llms.txt
+        usage: mx cog llms-txt validate <url|file>
+        inputs:
+          - name: source
+            type: string
+            required: true
+            description: URL or local file path
+        outputs:
+          - name: report
+            type: object
+            description: Validation results with errors/warnings
+
+  requires:
+    bins: []
+    cogs: []
+
+  contentType: "action-doc"
+  runbook: "mx exec llms-txt"
+  convergence: true
+  accessibility: true
+  semantic: true
 ---
 
 # llms-txt

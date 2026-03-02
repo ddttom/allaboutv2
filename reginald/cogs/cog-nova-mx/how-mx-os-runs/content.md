@@ -1,5 +1,4 @@
 ---
-name: how-mx-os-runs
 version: "1.0"
 description: The MX OS runtime model. How an AI agent boots, discovers cogs, routes tasks, executes action-docs, and chains actions through invokes. The operating system explained from the inside.
 
@@ -7,65 +6,68 @@ created: 2026-02-09
 modified: 2026-02-10
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, cog-registry, mx-principles]
-buildsOn: [what-is-a-cog, what-is-mx-os, cog-registry, what-is-mx-environment]
-tags: [runtime, boot-sequence, routing, execution, kernel, shell, invokes, ipc, mx-os, sop-agent, entry-points]
+mx:
+  name: how-mx-os-runs
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: developers
-readingLevel: technical
-purpose: Document how MX OS actually runs — the boot sequence, discovery, routing, execution, and inter-cog communication that make the system work
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, cog-registry, mx-principles]
+  buildsOn: [what-is-a-cog, what-is-mx-os, cog-registry, what-is-mx-environment]
+  tags: [runtime, boot-sequence, routing, execution, kernel, shell, invokes, ipc, mx-os, sop-agent, entry-points]
 
-contentType: "action-doc"
-runbook: "mx exec how-mx-os-runs"
-execute:
-  runtime: runbook
-  command: mx cog runtime
-  actions:
-    - name: explain
-      description: Present the MX OS runtime model to any audience
-      usage: Read this cog and explain the five-layer runtime stack, using the boot sequence and ASCII diagrams
-      outputs:
-        - name: explanation
-          type: string
-          description: Clear explanation of the MX OS runtime
+  audience: developers
+  readingLevel: technical
+  purpose: Document how MX OS actually runs — the boot sequence, discovery, routing, execution, and inter-cog communication that make the system work
 
-    - name: boot
-      description: Execute the MX OS boot sequence for this session
-      usage: Read cog-registry.cog.md (know what programs exist) and what-comes-next.cog.md (know current priorities). Report what was loaded.
-      invokes: [cog-registry.list, what-comes-next.brief]
-      outputs:
-        - name: boot-report
-          type: object
-          description: Summary of what the agent now knows after booting
+  contentType: "action-doc"
+  runbook: "mx exec how-mx-os-runs"
+  execute:
+    runtime: runbook
+    command: mx cog runtime
+    actions:
+      - name: explain
+        description: Present the MX OS runtime model to any audience
+        usage: Read this cog and explain the five-layer runtime stack, using the boot sequence and ASCII diagrams
+        outputs:
+          - name: explanation
+            type: string
+            description: Clear explanation of the MX OS runtime
 
-    - name: route
-      description: Given a task description, find the right cog to handle it
-      usage: Read the registry, match the task against cog metadata (category, tags, audience, description), and recommend which cog to read
-      inputs:
-        - name: task
-          type: string
-          required: true
-          description: What the user wants to do
-      invokes: [cog-registry.search]
-      outputs:
-        - name: recommendation
-          type: object
-          description: The recommended cog(s) to read, with reasoning
+      - name: boot
+        description: Execute the MX OS boot sequence for this session
+        usage: Read cog-registry.cog.md (know what programs exist) and what-comes-next.cog.md (know current priorities). Report what was loaded.
+        invokes: [cog-registry.list, what-comes-next.brief]
+        outputs:
+          - name: boot-report
+            type: object
+            description: Summary of what the agent now knows after booting
 
-    - name: diagnose
-      description: Check the health of the MX OS runtime — are all layers working?
-      usage: Verify bootloader (CLAUDE.md exists), registry (cog-registry.cog.md readable), SOULs (root SOUL.md exists), builds-on graph (no broken references)
-      invokes: [cog-registry.validate]
-      outputs:
-        - name: health-report
-          type: object
-          description: Health status of each runtime layer
+      - name: route
+        description: Given a task description, find the right cog to handle it
+        usage: Read the registry, match the task against cog metadata (category, tags, audience, description), and recommend which cog to read
+        inputs:
+          - name: task
+            type: string
+            required: true
+            description: What the user wants to do
+        invokes: [cog-registry.search]
+        outputs:
+          - name: recommendation
+            type: object
+            description: The recommended cog(s) to read, with reasoning
+
+      - name: diagnose
+        description: Check the health of the MX OS runtime — are all layers working?
+        usage: Verify bootloader (CLAUDE.md exists), registry (cog-registry.cog.md readable), SOULs (root SOUL.md exists), builds-on graph (no broken references)
+        invokes: [cog-registry.validate]
+        outputs:
+          - name: health-report
+            type: object
+            description: Health status of each runtime layer
 ---
 
 # How MX OS Runs

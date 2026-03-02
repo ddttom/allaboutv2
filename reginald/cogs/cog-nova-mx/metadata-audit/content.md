@@ -1,59 +1,61 @@
 ---
-name: metadata-audit
 version: "1.0"
 description: "Audit all YAML frontmatter across the entire hub — compare every field against the canonical field dictionary, detect deprecated fields, namespace errors, missing required fields, and mx: object sprawl."
 created: 2026-02-16
 modified: 2026-02-16
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
-category: mx-tools
-partOf: mx-os
-refersTo: [field-dictionary, cog-unified-spec, mx-metadata-conventions]
-buildsOn: [what-is-a-cog]
-tags: [audit, metadata, standards, compliance, field-dictionary, namespace, deprecated-fields, frontmatter, yaml]
-audience: both
-readingLevel: practical
-purpose: "Ecosystem-wide metadata health check. Scans every .md file, parses frontmatter, compares against the field dictionary, and generates a prioritised report."
 
-execute:
-  runtime: runbook
-  command: npm run audit:metadata
-  actions:
-    - name: audit
-      description: Run the full metadata audit across the hub
-      usage: |
-        Run `npm run audit:metadata` or `node scripts/mx-audit.js`.
+mx:
+  name: metadata-audit
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
+  category: mx-tools
+  partOf: mx-os
+  refersTo: [field-dictionary, cog-unified-spec, mx-metadata-conventions]
+  buildsOn: [what-is-a-cog]
+  tags: [audit, metadata, standards, compliance, field-dictionary, namespace, deprecated-fields, frontmatter, yaml]
+  audience: both
+  readingLevel: practical
+  purpose: "Ecosystem-wide metadata health check. Scans every .md file, parses frontmatter, compares against the field dictionary, and generates a prioritised report."
 
-        What it does:
-        1. Parses the field dictionary (source of truth for all YAML fields)
-        2. Walks every .md file in the hub (main repo + all submodules)
-        3. Extracts YAML frontmatter from each file
-        4. Compares every field against the dictionary
-        5. Detects deprecated fields, unknown fields, missing required fields
-        6. Inventories every sub-field inside the mx: YAML object
-        7. Scans prose for namespace attribution errors (mx: belongs to The Gathering, not Cog-Nova-MX)
-        8. Generates a 9-section markdown report
+  execute:
+    runtime: runbook
+    command: npm run audit:metadata
+    actions:
+      - name: audit
+        description: Run the full metadata audit across the hub
+        usage: |
+          Run `npm run audit:metadata` or `node scripts/mx-audit.js`.
 
-        Supports flags:
-          --json     Output JSON instead of markdown report
-          --summary  Console summary only, no report file
-          --help     Usage information
-      inputs: []
-      outputs:
-        - name: report
-          type: file
-          description: "Timestamped markdown report in mx-outputs/md/reports/validation/"
-        - name: console-summary
-          type: string
-          description: "Key metrics printed to terminal"
+          What it does:
+          1. Parses the field dictionary (source of truth for all YAML fields)
+          2. Walks every .md file in the hub (main repo + all submodules)
+          3. Extracts YAML frontmatter from each file
+          4. Compares every field against the dictionary
+          5. Detects deprecated fields, unknown fields, missing required fields
+          6. Inventories every sub-field inside the mx: YAML object
+          7. Scans prose for namespace attribution errors (mx: belongs to The Gathering, not Cog-Nova-MX)
+          8. Generates a 9-section markdown report
 
-semantic: true
-convergence: true
-accessibility: true
-contentType: action-doc
-runbook: "mx exec metadata-audit"
+          Supports flags:
+            --json     Output JSON instead of markdown report
+            --summary  Console summary only, no report file
+            --help     Usage information
+        inputs: []
+        outputs:
+          - name: report
+            type: file
+            description: "Timestamped markdown report in mx-outputs/md/reports/validation/"
+          - name: console-summary
+            type: string
+            description: "Key metrics printed to terminal"
+
+  semantic: true
+  convergence: true
+  accessibility: true
+  contentType: action-doc
+  runbook: "mx exec metadata-audit"
 ---
 
 # Metadata Audit

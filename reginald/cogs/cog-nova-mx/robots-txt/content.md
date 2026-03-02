@@ -1,5 +1,4 @@
 ---
-name: robots-txt
 version: 0.1.0
 description: Analyze robots.txt — understand the old exclusion model
 
@@ -7,89 +6,92 @@ created: 2026-02-06T12:31:00Z
 modified: 2026-02-06T12:31:00Z
 
 author: Maxine (MX - Machine eXperience Engine)
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: draft
 
-category: mx-core
-partOf: mx-core
-refersTo: [llms-txt, sitemap]
-tags: [robots-txt, crawlers, exclusion, seo, llms-txt]
+mx:
+  name: robots-txt
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: draft
 
-execute:
-  runtime: runbook
-  command: mx cog robots-txt
-  actions:
-    - name: analyze
-      description: Analyze robots.txt file
-      usage: mx cog robots-txt analyze <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: Website URL (robots.txt auto-appended)
-      outputs:
-        - name: analysis
-          type: object
-          description: Parsed rules, user-agents, allowed/disallowed paths
-    
-    - name: check
-      description: Check if a path is allowed for a user-agent
-      usage: mx cog robots-txt check <url> --path <path> --agent <agent>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: Website URL
-        - name: path
-          type: string
-          required: true
-          description: Path to check
-        - name: agent
-          type: string
-          required: false
-          description: User-agent to check for
-          default: "*"
-      outputs:
-        - name: allowed
-          type: boolean
-          description: Whether path is allowed
-    
-    - name: compare
-      description: Compare robots.txt with llms.txt
-      usage: mx cog robots-txt compare <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: Website URL
-      outputs:
-        - name: comparison
-          type: object
-          description: Side-by-side comparison of exclusion vs inclusion
-    
-    - name: ai-stance
-      description: Analyze stance on AI crawlers
-      usage: mx cog robots-txt ai-stance <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: Website URL
-      outputs:
-        - name: stance
-          type: object
-          description: AI crawler policies (GPTBot, Claude, Bard, etc.)
+  category: mx-core
+  partOf: mx-core
+  refersTo: [llms-txt, sitemap]
+  tags: [robots-txt, crawlers, exclusion, seo, llms-txt]
 
-requires:
-  bins: []
-  cogs: [llms-txt]
+  execute:
+    runtime: runbook
+    command: mx cog robots-txt
+    actions:
+      - name: analyze
+        description: Analyze robots.txt file
+        usage: mx cog robots-txt analyze <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: Website URL (robots.txt auto-appended)
+        outputs:
+          - name: analysis
+            type: object
+            description: Parsed rules, user-agents, allowed/disallowed paths
 
-contentType: "action-doc"
-runbook: "mx exec robots-txt"
-convergence: true
-accessibility: false
-semantic: true
+      - name: check
+        description: Check if a path is allowed for a user-agent
+        usage: mx cog robots-txt check <url> --path <path> --agent <agent>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: Website URL
+          - name: path
+            type: string
+            required: true
+            description: Path to check
+          - name: agent
+            type: string
+            required: false
+            description: User-agent to check for
+            default: "*"
+        outputs:
+          - name: allowed
+            type: boolean
+            description: Whether path is allowed
+
+      - name: compare
+        description: Compare robots.txt with llms.txt
+        usage: mx cog robots-txt compare <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: Website URL
+        outputs:
+          - name: comparison
+            type: object
+            description: Side-by-side comparison of exclusion vs inclusion
+
+      - name: ai-stance
+        description: Analyze stance on AI crawlers
+        usage: mx cog robots-txt ai-stance <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: Website URL
+        outputs:
+          - name: stance
+            type: object
+            description: AI crawler policies (GPTBot, Claude, Bard, etc.)
+
+  requires:
+    bins: []
+    cogs: [llms-txt]
+
+  contentType: "action-doc"
+  runbook: "mx exec robots-txt"
+  convergence: true
+  accessibility: false
+  semantic: true
 ---
 
 # robots-txt

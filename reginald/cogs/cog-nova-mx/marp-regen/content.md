@@ -1,5 +1,4 @@
 ---
-name: marp-regen
 version: "1.0.0"
 description: "Regenerate PPTX presentations from Marp markdown files"
 
@@ -7,60 +6,63 @@ created: 2026-02-26
 modified: 2026-02-26
 
 author: Tom Cranstoun and Maxine
-maintainer: tom.cranstoun@gmail.com
-license: proprietary
-status: published
 
-category: mx-tools
-partOf: mx-os
-tags: [marp, presentation, pptx, slides, regenerate]
+mx:
+  name: marp-regen
+  maintainer: tom.cranstoun@gmail.com
+  license: proprietary
+  status: published
 
-audience: both
-readingLevel: technical
-purpose: "Convert Marp markdown to PPTX using marp-cli"
+  category: mx-tools
+  partOf: mx-os
+  tags: [marp, presentation, pptx, slides, regenerate]
 
-execute:
-  runtime: bash
-  command: |
-    @embedded:marp-regen-script
-  actions:
-    - name: generate
-      description: "Regenerate PPTX from a Marp markdown file"
-      usage: |
-        ## GENERATE — Marp to PPTX
+  audience: both
+  readingLevel: technical
+  purpose: "Convert Marp markdown to PPTX using marp-cli"
 
-        Converts a Marp markdown file (.md with `marp: true` frontmatter) to PPTX.
+  execute:
+    runtime: bash
+    command: |
+      @embedded:marp-regen-script
+    actions:
+      - name: generate
+        description: "Regenerate PPTX from a Marp markdown file"
+        usage: |
+          ## GENERATE — Marp to PPTX
 
-        ### Usage
+          Converts a Marp markdown file (.md with `marp: true` frontmatter) to PPTX.
 
-        ```bash
-        mx marp-regen <path-to-markdown>
-        ```
+          ### Usage
 
-        ### Example
+          ```bash
+          mx marp-regen <path-to-markdown>
+          ```
 
-        ```bash
-        mx marp-regen mx-outputs/md/presentations/london-cms-experts-2026-02-26.md
-        ```
+          ### Example
 
-        ### What it does
+          ```bash
+          mx marp-regen mx-outputs/md/presentations/london-cms-experts-2026-02-26.md
+          ```
 
-        1. Validates the file exists and has `marp: true` in frontmatter
-        2. Runs `npx @marp-team/marp-cli` with `--pptx --allow-local-files`
-        3. Outputs PPTX in the same directory as the source markdown
+          ### What it does
 
-      inputs:
-        - name: source
-          type: file
-          required: true
-          description: "Path to the Marp markdown file"
-      outputs:
-        - name: pptx
-          type: file
-          description: "Generated PPTX presentation"
+          1. Validates the file exists and has `marp: true` in frontmatter
+          2. Runs `npx @marp-team/marp-cli` with `--pptx --allow-local-files`
+          3. Outputs PPTX in the same directory as the source markdown
 
-contentType: action-doc
-runbook: "mx exec marp-regen"
+        inputs:
+          - name: source
+            type: file
+            required: true
+            description: "Path to the Marp markdown file"
+        outputs:
+          - name: pptx
+            type: file
+            description: "Generated PPTX presentation"
+
+  contentType: action-doc
+  runbook: "mx exec marp-regen"
 ---
 
 ```bash @embedded:marp-regen-script

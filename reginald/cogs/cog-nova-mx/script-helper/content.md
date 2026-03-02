@@ -1,5 +1,4 @@
 ---
-name: script-helper
 version: "1.0.0"
 description: Help AI agents create, amend, and inspect shell scripts with MX metadata — cut compute, not context.
 
@@ -7,89 +6,92 @@ created: 2026-02-10
 modified: 2026-02-10
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, mx-principles]
-buildsOn: [what-is-mx-os, what-is-a-cog]
-tags: [scripts, metadata, inspect, bash, shell, compute, sop-efficiency]
+mx:
+  name: script-helper
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: developers
-readingLevel: technical
-purpose: Enable AI agents to work with shell scripts efficiently by providing structured metadata, skeleton extraction, and script lifecycle management
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, mx-principles]
+  buildsOn: [what-is-mx-os, what-is-a-cog]
+  tags: [scripts, metadata, inspect, bash, shell, compute, sop-efficiency]
 
-contentType: "action-doc"
-runbook: "mx exec script-helper"
-execute:
-  runtime: runbook
-  command: mx cog script-helper
-  actions:
-    - name: inspect
-      description: Extract comments and structural skeleton from an existing script
-      usage: Run mx.inspect.sh against the target script. Read the output file instead of the full script.
-      inputs:
-        - name: script-path
-          type: string
-          required: true
-          description: Path to the shell script to inspect
-      outputs:
-        - name: inspection-file
-          type: string
-          description: Path to /tmp/<scriptname>.inspect.txt containing comments + skeleton
+  audience: developers
+  readingLevel: technical
+  purpose: Enable AI agents to work with shell scripts efficiently by providing structured metadata, skeleton extraction, and script lifecycle management
 
-    - name: create
-      description: Create a new shell script with full MX metadata frontmatter
-      usage: Generate a new script file with the standard metadata block, shebang, and initial structure based on the user's requirements
-      inputs:
-        - name: script-name
-          type: string
-          required: true
-          description: Name of the script to create (e.g. mx.example.sh)
-        - name: purpose
-          type: string
-          required: true
-          description: What the script should do (one sentence)
-        - name: output-path
-          type: string
-          required: false
-          description: Where to write the script (defaults to $MX_BIN_DIR — scripts/bin/)
-      outputs:
-        - name: script-path
-          type: string
-          description: Path to the created script
+  contentType: "action-doc"
+  runbook: "mx exec script-helper"
+  execute:
+    runtime: runbook
+    command: mx cog script-helper
+    actions:
+      - name: inspect
+        description: Extract comments and structural skeleton from an existing script
+        usage: Run mx.inspect.sh against the target script. Read the output file instead of the full script.
+        inputs:
+          - name: script-path
+            type: string
+            required: true
+            description: Path to the shell script to inspect
+        outputs:
+          - name: inspection-file
+            type: string
+            description: Path to /tmp/<scriptname>.inspect.txt containing comments + skeleton
 
-    - name: amend
-      description: Modify an existing script using its inspection output for context
-      usage: First run the inspect action. Read the inspection file to understand the script. Then make targeted changes without reading the full implementation unless necessary.
-      inputs:
-        - name: script-path
-          type: string
-          required: true
-          description: Path to the script to amend
-        - name: change-description
-          type: string
-          required: true
-          description: What change is needed
-      outputs:
-        - name: changes-made
-          type: string
-          description: Summary of changes applied
+      - name: create
+        description: Create a new shell script with full MX metadata frontmatter
+        usage: Generate a new script file with the standard metadata block, shebang, and initial structure based on the user's requirements
+        inputs:
+          - name: script-name
+            type: string
+            required: true
+            description: Name of the script to create (e.g. mx.example.sh)
+          - name: purpose
+            type: string
+            required: true
+            description: What the script should do (one sentence)
+          - name: output-path
+            type: string
+            required: false
+            description: Where to write the script (defaults to $MX_BIN_DIR — scripts/bin/)
+        outputs:
+          - name: script-path
+            type: string
+            description: Path to the created script
 
-    - name: add-metadata
-      description: Add MX metadata frontmatter to an existing script that lacks it
-      usage: Read the script (or its inspection output). Infer title, description, category, dependencies, and tags. Insert the metadata block after the shebang line.
-      inputs:
-        - name: script-path
-          type: string
-          required: true
-          description: Path to the script to add metadata to
-      outputs:
-        - name: metadata-added
-          type: object
-          description: The metadata fields that were added
+      - name: amend
+        description: Modify an existing script using its inspection output for context
+        usage: First run the inspect action. Read the inspection file to understand the script. Then make targeted changes without reading the full implementation unless necessary.
+        inputs:
+          - name: script-path
+            type: string
+            required: true
+            description: Path to the script to amend
+          - name: change-description
+            type: string
+            required: true
+            description: What change is needed
+        outputs:
+          - name: changes-made
+            type: string
+            description: Summary of changes applied
+
+      - name: add-metadata
+        description: Add MX metadata frontmatter to an existing script that lacks it
+        usage: Read the script (or its inspection output). Infer title, description, category, dependencies, and tags. Insert the metadata block after the shebang line.
+        inputs:
+          - name: script-path
+            type: string
+            required: true
+            description: Path to the script to add metadata to
+        outputs:
+          - name: metadata-added
+            type: object
+            description: The metadata fields that were added
 ---
 
 # Script Helper

@@ -1,5 +1,4 @@
 ---
-name: what-is-installme
 version: "1.0.0"
 description: "INSTALLME.md is a root-level cog convention that gives AI agents structured installation instructions — no hallucination, no guessing, no wasted compute."
 
@@ -7,22 +6,25 @@ created: 2026-02-10
 modified: 2026-02-10
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, mx-principles]
-buildsOn: [what-is-a-cog, what-is-mx-os, what-is-mx-environment]
-tags: [installme, install, convention, sop-agent, diagnostics, onboarding, hallucination, compute, two-stage-boot, mx-os]
+mx:
+  name: what-is-installme
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: both
-readingLevel: accessible
-purpose: Document the INSTALLME.md convention — a machine-readable installation document for any git repository
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, mx-principles]
+  buildsOn: [what-is-a-cog, what-is-mx-os, what-is-mx-environment]
+  tags: [installme, install, convention, sop-agent, diagnostics, onboarding, hallucination, compute, two-stage-boot, mx-os]
 
-contentType: "action-doc"
-runbook: "mx exec what-is-installme"
+  audience: both
+  readingLevel: accessible
+  purpose: Document the INSTALLME.md convention — a machine-readable installation document for any git repository
+
+  contentType: "action-doc"
+  runbook: "mx exec what-is-installme"
 ---
 
 # INSTALLME.md — The Convention

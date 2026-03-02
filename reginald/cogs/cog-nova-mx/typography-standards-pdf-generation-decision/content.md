@@ -1,25 +1,27 @@
 ---
-name: typography-standards-pdf-generation-decision
 version: "1.0"
 description: "ADR #5: Typography standards for PDF generation — widow/orphan prevention and intelligent page break control as universal pattern across all MX publications."
 created: 2026-02-18
 author: Tom Cranstoun and Maxine
-status: accepted
-category: architecture
-partOf: mx-maxine-lives
-tags: [adr, pdf-generation, typography, page-breaks, widow-orphan-prevention, needspace, latex, universal-standards]
-audience: [developers, technical]
 
-adr:
-  number: 5
-  title: "Typography Standards for PDF Generation"
+mx:
+  name: typography-standards-pdf-generation-decision
   status: accepted
-  date: 2026-02-18
-  context: "MX publications (Handbook, Codex, case studies) require professional typography that prevents awkward page breaks. Widows (single lines at top of page), orphans (single lines at bottom of page), and split context (tables/code blocks separated from headings) create poor reading experiences and reduce publication quality."
-  decision: "Establish universal typography standards using LaTeX penalty settings and intelligent spacing. Apply widow/orphan prevention (\\widowpenalty=10000, \\clubpenalty=10000) and flexible page bottoms (\\raggedbottom) to all book metadata.yaml files. Use needspace package for tables and code blocks requiring context preservation."
-  consequences: "Consistent professional typography across all MX publications. Eliminates single-line orphans and preserves context for tables/code. Universal standards reduce decision-making overhead and establish clear patterns. Requires needspace LaTeX package installation (via tlmgr). May create uneven page bottoms (acceptable trade-off for readability)."
+  category: architecture
+  partOf: mx-maxine-lives
+  tags: [adr, pdf-generation, typography, page-breaks, widow-orphan-prevention, needspace, latex, universal-standards]
+  audience: [developers, technical]
 
-buildsOn: [pdf-generator, png-workflow-pdf-generation-decision]
+  adr:
+    number: 5
+    title: "Typography Standards for PDF Generation"
+    status: accepted
+    date: 2026-02-18
+    context: "MX publications (Handbook, Codex, case studies) require professional typography that prevents awkward page breaks. Widows (single lines at top of page), orphans (single lines at bottom of page), and split context (tables/code blocks separated from headings) create poor reading experiences and reduce publication quality."
+    decision: "Establish universal typography standards using LaTeX penalty settings and intelligent spacing. Apply widow/orphan prevention (\\widowpenalty=10000, \\clubpenalty=10000) and flexible page bottoms (\\raggedbottom) to all book metadata.yaml files. Use needspace package for tables and code blocks requiring context preservation."
+    consequences: "Consistent professional typography across all MX publications. Eliminates single-line orphans and preserves context for tables/code. Universal standards reduce decision-making overhead and establish clear patterns. Requires needspace LaTeX package installation (via tlmgr). May create uneven page bottoms (acceptable trade-off for readability)."
+
+  buildsOn: [pdf-generator, png-workflow-pdf-generation-decision]
 ---
 
 # Typography Standards for PDF Generation

@@ -1,5 +1,4 @@
 ---
-name: mx-reminders
 version: "1.0.0"
 description: "Manages persistent reminders across sessions. Reads, writes, and prioritises action items in REMINDERS.md."
 
@@ -7,95 +6,98 @@ created: 2026-02-10
 modified: 2026-02-10
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-buildsOn: [what-is-a-cog, what-is-mx-os]
-tags: [reminders, tasks, persistence, session, productivity, mx-os]
+mx:
+  name: mx-reminders
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: both
-readingLevel: non-technical
-purpose: Keep action items visible across sessions so nothing falls through the cracks
+  category: mx-core
+  partOf: mx-os
+  buildsOn: [what-is-a-cog, what-is-mx-os]
+  tags: [reminders, tasks, persistence, session, productivity, mx-os]
 
-contentType: "action-doc"
-runbook: "mx exec mx-reminders"
-execute:
-  runtime: runbook
-  command: mx reminders
-  actions:
-    - name: list
-      description: Show all active (incomplete) reminders
-      usage: |
-        Read REMINDERS.md from the repository root. Parse the "Active" section.
-        Present each unchecked item (`- [ ]`) with its description and date added.
-        If there are no active reminders, say "No active reminders."
-        Do not show completed items unless explicitly asked.
-      inputs: []
-      outputs:
-        - name: reminders
-          type: array
-          description: Active reminder items with descriptions and dates
+  audience: both
+  readingLevel: non-technical
+  purpose: Keep action items visible across sessions so nothing falls through the cracks
 
-    - name: add
-      description: Add a new reminder to REMINDERS.md
-      usage: |
-        Open REMINDERS.md at the repository root.
-        Append a new item to the "Active" section in this format:
-          - [ ] **Short title** — Description of what needs doing. *(added: YYYY-MM-DD)*
-        Use today's date. Keep the title short (3-8 words). The description should be
-        specific enough that a future AI agent or human understands what to do without
-        further context.
-        Save the file. Do not modify any other items.
-      inputs:
-        - name: title
-          type: string
-          required: true
-          description: Short title for the reminder (3-8 words)
-        - name: description
-          type: string
-          required: true
-          description: What needs to be done, with enough context to act on later
-      outputs:
-        - name: reminder
-          type: object
-          description: The newly added reminder
+  contentType: "action-doc"
+  runbook: "mx exec mx-reminders"
+  execute:
+    runtime: runbook
+    command: mx reminders
+    actions:
+      - name: list
+        description: Show all active (incomplete) reminders
+        usage: |
+          Read REMINDERS.md from the repository root. Parse the "Active" section.
+          Present each unchecked item (`- [ ]`) with its description and date added.
+          If there are no active reminders, say "No active reminders."
+          Do not show completed items unless explicitly asked.
+        inputs: []
+        outputs:
+          - name: reminders
+            type: array
+            description: Active reminder items with descriptions and dates
 
-    - name: complete
-      description: Mark a reminder as done and move it to the Completed section
-      usage: |
-        Open REMINDERS.md at the repository root.
-        Find the matching reminder in the "Active" section.
-        Change `- [ ]` to `- [x]` and append *(completed: YYYY-MM-DD)*.
-        Move the item from the "Active" section to the top of the "Completed" section.
-        If "Completed" section says "*None yet.*", remove that line first.
-        Save the file.
-      inputs:
-        - name: reminder
-          type: string
-          required: true
-          description: The title or enough text to identify the reminder to complete
-      outputs:
-        - name: completed
-          type: object
-          description: The completed reminder with completion date
+      - name: add
+        description: Add a new reminder to REMINDERS.md
+        usage: |
+          Open REMINDERS.md at the repository root.
+          Append a new item to the "Active" section in this format:
+            - [ ] **Short title** — Description of what needs doing. *(added: YYYY-MM-DD)*
+          Use today's date. Keep the title short (3-8 words). The description should be
+          specific enough that a future AI agent or human understands what to do without
+          further context.
+          Save the file. Do not modify any other items.
+        inputs:
+          - name: title
+            type: string
+            required: true
+            description: Short title for the reminder (3-8 words)
+          - name: description
+            type: string
+            required: true
+            description: What needs to be done, with enough context to act on later
+        outputs:
+          - name: reminder
+            type: object
+            description: The newly added reminder
 
-    - name: prioritise
-      description: Reorder active reminders by priority
-      usage: |
-        Open REMINDERS.md at the repository root.
-        Read all items in the "Active" section.
-        Present them to the user and ask which order they should be in.
-        Rewrite the "Active" section with items in the new order.
-        The first item is highest priority. Do not change any item text — only reorder.
-        Save the file.
-      inputs: []
-      outputs:
-        - name: reminders
-          type: array
-          description: Reminders in new priority order
+      - name: complete
+        description: Mark a reminder as done and move it to the Completed section
+        usage: |
+          Open REMINDERS.md at the repository root.
+          Find the matching reminder in the "Active" section.
+          Change `- [ ]` to `- [x]` and append *(completed: YYYY-MM-DD)*.
+          Move the item from the "Active" section to the top of the "Completed" section.
+          If "Completed" section says "*None yet.*", remove that line first.
+          Save the file.
+        inputs:
+          - name: reminder
+            type: string
+            required: true
+            description: The title or enough text to identify the reminder to complete
+        outputs:
+          - name: completed
+            type: object
+            description: The completed reminder with completion date
+
+      - name: prioritise
+        description: Reorder active reminders by priority
+        usage: |
+          Open REMINDERS.md at the repository root.
+          Read all items in the "Active" section.
+          Present them to the user and ask which order they should be in.
+          Rewrite the "Active" section with items in the new order.
+          The first item is highest priority. Do not change any item text — only reorder.
+          Save the file.
+        inputs: []
+        outputs:
+          - name: reminders
+            type: array
+            description: Reminders in new priority order
 ---
 
 # MX Reminders

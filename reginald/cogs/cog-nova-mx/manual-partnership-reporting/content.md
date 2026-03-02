@@ -1,43 +1,45 @@
 ---
-name: manual-partnership-reporting
 title: Partnership Report Tone Guidelines
 description: Comprehensive framework for writing Cog-Nova-MX reports with partnership tone — strengths first, opportunities framed constructively, educational not critical
 version: "1.0"
 created: 2026-02-21
 modified: 2026-02-21
 author: Tom Cranstoun and Maxine
-category: manual
-status: active
-tags: [reporting, tone, partnership, mx-analysis, geo-analysis, writing-style]
-audience: [tech, business]
 
-partOf: mx-maxine-lives
+mx:
+  name: manual-partnership-reporting
+  category: manual
+  status: active
+  tags: [reporting, tone, partnership, mx-analysis, geo-analysis, writing-style]
+  audience: [tech, business]
 
-buildsOn:
-  - mx-messaging
+  partOf: mx-maxine-lives
 
-runtime: null
-purpose: Team guidelines for writing partnership-tone reports
-contentType: manual
-runbook: |
-definition:
-  standards:
-    - name: "MX Writing Principles"
-      version: "1.0"
-      authority: "Cog-Nova-MX"
-      compliance: "full"
-    - name: "MX Messaging Framework"
-      version: "1.0"
-      authority: "Cog-Nova-MX"
-      compliance: "full"
+  buildsOn:
+    - mx-messaging
 
-provenance:
-  source:
-    examples:
-      - geo_antworten_Boye & Co.pdf
-      - geo_analyse_4.pdf
-      - crm/strategy/2026-02-05-dotfusion-audit.md (v2.1)
-      - mx-crm/outreach/reports/2026-02-04/arrivefirst-report-v2-partnership.md
+  runtime: null
+  purpose: Team guidelines for writing partnership-tone reports
+  contentType: manual
+  runbook: |
+  definition:
+    standards:
+      - name: "MX Writing Principles"
+        version: "1.0"
+        authority: "Cog-Nova-MX"
+        compliance: "full"
+      - name: "MX Messaging Framework"
+        version: "1.0"
+        authority: "Cog-Nova-MX"
+        compliance: "full"
+
+  provenance:
+    source:
+      examples:
+        - geo_antworten_Boye & Co.pdf
+        - geo_analyse_4.pdf
+        - crm/strategy/2026-02-05-dotfusion-audit.md (v2.1)
+        - mx-crm/outreach/reports/2026-02-04/arrivefirst-report-v2-partnership.md
 ---
 
 # Partnership Report Tone Guidelines

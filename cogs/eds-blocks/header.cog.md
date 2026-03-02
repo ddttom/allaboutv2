@@ -3,110 +3,112 @@ description: "Responsive site header with navigation, hamburger menu, and brand 
 author: Tom Cranstoun
 created: 2026-02-22
 modified: 2026-03-02
-status: draft
-category: eds-block
-tags: [eds, block, header, navigation]
 version: "1.0"
-cogId: "cog-eds-block-header-20260222"
-cogType: "certificate-of-genuineness"
-license: "MIT"
 
-publisher:
-  name: "Cog-Nova-MX Ltd"
-  verified: false
-  signedBy: "unsigned"
-  contact: "tom.cranstoun@gmail.com"
-  website: "https://allabout.network"
+mx:
+  status: draft
+  category: eds-block
+  tags: [eds, block, header, navigation]
+  cogId: "cog-eds-block-header-20260222"
+  cogType: "certificate-of-genuineness"
+  license: "MIT"
 
-subject:
-  name: "Header Block"
-  category: "eds-block"
-  scope: "navigation"
-  description: "Responsive site header with navigation, hamburger menu, and brand identity"
+  publisher:
+    name: "Cog-Nova-MX Ltd"
+    verified: false
+    signedBy: "unsigned"
+    contact: "tom.cranstoun@gmail.com"
+    website: "https://allabout.network"
 
-publicationDate: "2026-02-22"
-expires: "2026-08-22"
-lastVerified: "2026-02-22"
-signature: "unsigned"
-mxCompliance: "level-2"
-registry: "allabout.network"
+  subject:
+    name: "Header Block"
+    category: "eds-block"
+    scope: "navigation"
+    description: "Responsive site header with navigation, hamburger menu, and brand identity"
 
-maintainer:
-  name: "Tom Cranstoun"
-  role: "MX Authority"
-  contact: "tom.cranstoun@gmail.com"
-  escalation: "tom.cranstoun@gmail.com"
+  publicationDate: "2026-02-22"
+  expires: "2026-08-22"
+  lastVerified: "2026-02-22"
+  signature: "unsigned"
+  mxCompliance: "level-2"
+  registry: "allabout.network"
 
-reviewCycle: "quarterly"
-updateTriggers:
-  - "EDS core update"
-  - "accessibility requirement change"
-  - "navigation structure change"
-  - "mobile breakpoint change"
+  maintainer:
+    name: "Tom Cranstoun"
+    role: "MX Authority"
+    contact: "tom.cranstoun@gmail.com"
+    escalation: "tom.cranstoun@gmail.com"
 
-accuracyCommitment: "Verified against current allaboutv2 header block implementation"
-correctionSla: "72 hours"
+  reviewCycle: "quarterly"
+  updateTriggers:
+    - "EDS core update"
+    - "accessibility requirement change"
+    - "navigation structure change"
+    - "mobile breakpoint change"
 
-usage:
-  sopInference: "permitted"
-  caching: "permitted for 24 hours"
-  redistribution: "with attribution"
-  commercialUse: "permitted"
-  aiTraining: "permitted with attribution"
+  accuracyCommitment: "Verified against current allaboutv2 header block implementation"
+  correctionSla: "72 hours"
 
-block:
-  name: "header"
-  version: "1.0"
-  category: "navigation"
+  usage:
+    sopInference: "permitted"
+    caching: "permitted for 24 hours"
+    redistribution: "with attribution"
+    commercialUse: "permitted"
+    aiTraining: "permitted with attribution"
 
-  contentModel:
-    description: |
-      Header content is authored as a fragment in /nav.
-      The block loads this fragment and transforms it into
-      a responsive navigation structure.
-    rows:
-      - name: "Brand/Logo"
-        purpose: "Site logo and home link"
-        required: true
-      - name: "Nav Sections"
-        purpose: "Primary navigation links"
-        required: true
-      - name: "Nav Tools"
-        purpose: "Secondary actions (search, language, CTA)"
-        required: false
+  block:
+    name: "header"
+    version: "1.0"
+    category: "navigation"
 
-  decoration:
-    approach: "decorate()"
-    transforms:
-      - "Loads nav fragment from /nav path"
-      - "Wraps content in semantic nav element with id='nav'"
-      - "Creates hamburger button for mobile"
-      - "Adds aria-expanded state management"
-      - "Binds keyboard navigation (Escape, Enter, Space)"
+    contentModel:
+      description: |
+        Header content is authored as a fragment in /nav.
+        The block loads this fragment and transforms it into
+        a responsive navigation structure.
+      rows:
+        - name: "Brand/Logo"
+          purpose: "Site logo and home link"
+          required: true
+        - name: "Nav Sections"
+          purpose: "Primary navigation links"
+          required: true
+        - name: "Nav Tools"
+          purpose: "Secondary actions (search, language, CTA)"
+          required: false
 
-  dependencies:
-    scripts:
-      - "../../scripts/aem.js"
-      - "../fragment/fragment.js"
-    styles:
-      - "./header.css"
-    blocks:
-      - "fragment"
+    decoration:
+      approach: "decorate()"
+      transforms:
+        - "Loads nav fragment from /nav path"
+        - "Wraps content in semantic nav element with id='nav'"
+        - "Creates hamburger button for mobile"
+        - "Adds aria-expanded state management"
+        - "Binds keyboard navigation (Escape, Enter, Space)"
 
-  accessibility:
-    ariaRoles:
-      - "navigation"
-      - "button (hamburger)"
-    keyboardSupport: "Escape closes menu, Enter/Space opens dropdowns, Tab navigates"
-    wcagLevel: "AA"
+    dependencies:
+      scripts:
+        - "../../scripts/aem.js"
+        - "../fragment/fragment.js"
+      styles:
+        - "./header.css"
+      blocks:
+        - "fragment"
 
-  responsive:
-    mobileBehavior: "Hamburger menu with slide-in drawer from right"
-    breakpoints: [900]
+    accessibility:
+      ariaRoles:
+        - "navigation"
+        - "button (hamburger)"
+      keyboardSupport: "Escape closes menu, Enter/Space opens dropdowns, Tab navigates"
+      wcagLevel: "AA"
 
-contentType: "eds-block"
-audience: ["tech", "machines"]
-runbook: |
+    responsive:
+      mobileBehavior: "Hamburger menu with slide-in drawer from right"
+      breakpoints: [900]
+
+  contentType: "eds-block"
+  audience: ["tech", "machines"]
+  runbook: |
 ---
 
 # Header Block

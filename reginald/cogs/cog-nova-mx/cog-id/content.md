@@ -1,5 +1,4 @@
 ---
-name: cog-id
 version: "1.1.0"
 description: "Generate, register, and decode cog IDs — obfuscated MD5 hashes that trace documents back to the cog that created them. The namespace-aware identity layer for MX OS."
 
@@ -7,204 +6,207 @@ created: 2026-02-14
 modified: 2026-02-14
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
 
-category: mx-core
-status: active
-partOf: mx-os
-buildsOn: [what-is-a-cog]
-tags: [cog-id, identity, hash, md5, obfuscation, namespace, x-mx-p-ref, registry, privacy]
+mx:
+  name: cog-id
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
 
-audience: [machines, tech]
-readingLevel: technical
-purpose: "Give any AI agent or developer a repeatable workflow for generating cog IDs, registering them in two-level registries (repo + personal), and decoding them. Includes Node.js reference implementation."
+  category: mx-core
+  status: active
+  partOf: mx-os
+  buildsOn: [what-is-a-cog]
+  tags: [cog-id, identity, hash, md5, obfuscation, namespace, x-mx-p-ref, registry, privacy]
 
-contentType: "action-doc"
-runbook: "mx exec cog-id"
-execute:
-  runtime: runbook
-  command: mx cog-id
-  actions:
-    - name: generate
-      description: Generate a cog ID from a hierarchical path
-      usage: |
-        Generate an MD5 hash from a hierarchical path.
+  audience: [machines, tech]
+  readingLevel: technical
+  purpose: "Give any AI agent or developer a repeatable workflow for generating cog IDs, registering them in two-level registries (repo + personal), and decoding them. Includes Node.js reference implementation."
 
-        Input format: company/department/cog-name
-        Example: MXT/engineering/audit
+  contentType: "action-doc"
+  runbook: "mx exec cog-id"
+  execute:
+    runtime: runbook
+    command: mx cog-id
+    actions:
+      - name: generate
+        description: Generate a cog ID from a hierarchical path
+        usage: |
+          Generate an MD5 hash from a hierarchical path.
 
-        Steps:
-        1. Accept the hierarchical path from the user
-        2. Validate the path has at least two segments (company/cog-name minimum)
-        3. Generate the MD5 hash:
-           - Use Node.js: require('crypto').createHash('md5').update(path).digest('hex')
-           - Or use bash: echo -n "path" | md5
-        4. Display the result:
-           - Path: MXT/engineering/audit
-           - Cog ID: 7f3a8b2c1d4e5f6090812345abcdef67
-        5. Auto-register to the repo registry (mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml)
-        6. Ask if the user also wants to register it in $MX_HOME (personal registry)
+          Input format: company/department/cog-name
+          Example: MXT/engineering/audit
 
-        RULE: The path is case-sensitive. MXT/Engineering/Audit ≠ MXT/engineering/audit.
-        RULE: The cog ID is immutable. Once generated, it never changes even if the cog evolves.
-      inputs:
-        - name: path
-          type: string
-          required: true
-          description: "Hierarchical path: company/department/cog-name"
-      outputs:
-        - name: cog-id
-          type: string
-          description: "32-character MD5 hex hash"
+          Steps:
+          1. Accept the hierarchical path from the user
+          2. Validate the path has at least two segments (company/cog-name minimum)
+          3. Generate the MD5 hash:
+             - Use Node.js: require('crypto').createHash('md5').update(path).digest('hex')
+             - Or use bash: echo -n "path" | md5
+          4. Display the result:
+             - Path: MXT/engineering/audit
+             - Cog ID: 7f3a8b2c1d4e5f6090812345abcdef67
+          5. Auto-register to the repo registry (mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml)
+          6. Ask if the user also wants to register it in $MX_HOME (personal registry)
 
-    - name: register
-      description: Register a cog ID in the repo and/or $MX_HOME decode registry
-      usage: |
-        Add a cog ID to one or both decode registries.
+          RULE: The path is case-sensitive. MXT/Engineering/Audit ≠ MXT/engineering/audit.
+          RULE: The cog ID is immutable. Once generated, it never changes even if the cog evolves.
+        inputs:
+          - name: path
+            type: string
+            required: true
+            description: "Hierarchical path: company/department/cog-name"
+        outputs:
+          - name: cog-id
+            type: string
+            description: "32-character MD5 hex hash"
 
-        Two-level registry system:
-        - **Repo registry** (default target): mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml
-          Shared with the team. Anyone with repo access can decode.
-        - **Personal registry** ($MX_HOME): $MX_HOME/registries/cog-id-registry.yaml
-          Personal/external cog IDs. Never committed to a public repo.
+      - name: register
+        description: Register a cog ID in the repo and/or $MX_HOME decode registry
+        usage: |
+          Add a cog ID to one or both decode registries.
 
-        Steps:
-        1. Determine target:
-           - Default: repo registry (auto-registered on generate)
-           - If user says "register to $MX_HOME" or "register personal": $MX_HOME registry
-           - If user says "register both": both registries
-        2. Read existing registry file (or create empty one)
-        3. Check for duplicate: if the cog-id already exists, warn and skip
-        4. Add the new entry:
-           - cog-id (the hash)
-           - path (the hierarchical path that was hashed)
-           - cog-name (just the last segment — the cog's name field)
-           - registered (ISO 8601 date)
-           - registered-by (author or "gestalt")
-        5. Write the updated registry
-        6. Confirm registration and which registry was updated
+          Two-level registry system:
+          - **Repo registry** (default target): mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml
+            Shared with the team. Anyone with repo access can decode.
+          - **Personal registry** ($MX_HOME): $MX_HOME/registries/cog-id-registry.yaml
+            Personal/external cog IDs. Never committed to a public repo.
 
-        Registry file format (YAML — same schema for both levels):
-        ```yaml
-        entries:
-          - cog-id: "7f3a8b2c1d4e5f6090812345abcdef67"
-            path: "MXT/engineering/audit"
-            cog-name: "mx-audit"
-            registered: "2026-02-14"
-            registered-by: "gestalt"
-        ```
+          Steps:
+          1. Determine target:
+             - Default: repo registry (auto-registered on generate)
+             - If user says "register to $MX_HOME" or "register personal": $MX_HOME registry
+             - If user says "register both": both registries
+          2. Read existing registry file (or create empty one)
+          3. Check for duplicate: if the cog-id already exists, warn and skip
+          4. Add the new entry:
+             - cog-id (the hash)
+             - path (the hierarchical path that was hashed)
+             - cog-name (just the last segment — the cog's name field)
+             - registered (ISO 8601 date)
+             - registered-by (author or "gestalt")
+          5. Write the updated registry
+          6. Confirm registration and which registry was updated
 
-        RULE: The repo registry is for company/team cog IDs. It lives in the Canon.
-        RULE: The $MX_HOME registry is for personal/external cog IDs. It never enters a public repo.
-        RULE: Same YAML schema for both — same code reads both.
-      inputs:
-        - name: cog-id
-          type: string
-          required: true
-          description: "The 32-character MD5 hash"
-        - name: path
-          type: string
-          required: true
-          description: "The hierarchical path that was hashed"
-        - name: cog-name
-          type: string
-          required: true
-          description: "The cog's name field (last segment of path)"
+          Registry file format (YAML — same schema for both levels):
+          ```yaml
+          entries:
+            - cog-id: "7f3a8b2c1d4e5f6090812345abcdef67"
+              path: "MXT/engineering/audit"
+              cog-name: "mx-audit"
+              registered: "2026-02-14"
+              registered-by: "gestalt"
+          ```
 
-    - name: decode
-      description: Decode a cog ID back to its source path using two-level registry lookup
-      usage: |
-        Look up a cog ID in the decode registries and return the source path.
+          RULE: The repo registry is for company/team cog IDs. It lives in the Canon.
+          RULE: The $MX_HOME registry is for personal/external cog IDs. It never enters a public repo.
+          RULE: Same YAML schema for both — same code reads both.
+        inputs:
+          - name: cog-id
+            type: string
+            required: true
+            description: "The 32-character MD5 hash"
+          - name: path
+            type: string
+            required: true
+            description: "The hierarchical path that was hashed"
+          - name: cog-name
+            type: string
+            required: true
+            description: "The cog's name field (last segment of path)"
 
-        Lookup chain (in order):
-        1. **$MX_HOME first** — personal registry takes priority (personal overrides)
-        2. **Repo registry second** — mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml
+      - name: decode
+        description: Decode a cog ID back to its source path using two-level registry lookup
+        usage: |
+          Look up a cog ID in the decode registries and return the source path.
 
-        Steps:
-        1. Read $MX_HOME/registries/cog-id-registry.yaml (if it exists)
-        2. Search entries for matching cog-id
-        3. If found: display path, cog-name, registration date, and source ("personal registry")
-        4. If not found in $MX_HOME: read mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml
-        5. Search entries for matching cog-id
-        6. If found: display path, cog-name, registration date, and source ("repo registry")
-        7. If not found in either: report "Unknown cog ID — not in any available registry"
+          Lookup chain (in order):
+          1. **$MX_HOME first** — personal registry takes priority (personal overrides)
+          2. **Repo registry second** — mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml
 
-        This is the only way to resolve an x-mx-p-ref value. The hash is one-way.
-        Without a registry, the value is meaningless. That's the point.
-      inputs:
-        - name: cog-id
-          type: string
-          required: true
-          description: "The 32-character MD5 hash to decode"
-      outputs:
-        - name: path
-          type: string
-          description: "The hierarchical path (if found)"
-        - name: cog-name
-          type: string
-          description: "The cog name (if found)"
+          Steps:
+          1. Read $MX_HOME/registries/cog-id-registry.yaml (if it exists)
+          2. Search entries for matching cog-id
+          3. If found: display path, cog-name, registration date, and source ("personal registry")
+          4. If not found in $MX_HOME: read mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml
+          5. Search entries for matching cog-id
+          6. If found: display path, cog-name, registration date, and source ("repo registry")
+          7. If not found in either: report "Unknown cog ID — not in any available registry"
 
-    - name: stamp
-      description: Add x-mx-p-ref to a document's frontmatter
-      usage: |
-        Stamp a document with the cog ID of the cog that created it.
+          This is the only way to resolve an x-mx-p-ref value. The hash is one-way.
+          Without a registry, the value is meaningless. That's the point.
+        inputs:
+          - name: cog-id
+            type: string
+            required: true
+            description: "The 32-character MD5 hash to decode"
+        outputs:
+          - name: path
+            type: string
+            description: "The hierarchical path (if found)"
+          - name: cog-name
+            type: string
+            description: "The cog name (if found)"
 
-        Steps:
-        1. Accept the target file path and the cog ID
-        2. Read the target file
-        3. If the file has YAML frontmatter:
-           - Add x-mx-p-ref: <cog-id> to the frontmatter
-           - If x-mx-p-ref already exists, warn and ask whether to overwrite
-        4. If the file is HTML:
-           - Add <meta name="x-mx-p-ref" content="<cog-id>"> in the <head>
-        5. Write the updated file
+      - name: stamp
+        description: Add x-mx-p-ref to a document's frontmatter
+        usage: |
+          Stamp a document with the cog ID of the cog that created it.
 
-        This action is called by other action-docs (like mx-audit) during their
-        generate-report step to stamp output documents with provenance.
+          Steps:
+          1. Accept the target file path and the cog ID
+          2. Read the target file
+          3. If the file has YAML frontmatter:
+             - Add x-mx-p-ref: <cog-id> to the frontmatter
+             - If x-mx-p-ref already exists, warn and ask whether to overwrite
+          4. If the file is HTML:
+             - Add <meta name="x-mx-p-ref" content="<cog-id>"> in the <head>
+          5. Write the updated file
 
-        RULE: x-mx-p-ref is the namespaced attribute. Never use mx-ref (unnamespaced).
-        RULE: Native metadata convention — YAML for .md, meta tags for .html.
-      inputs:
-        - name: file
-          type: string
-          required: true
-          description: "Path to the document to stamp"
-        - name: cog-id
-          type: string
-          required: true
-          description: "The cog ID to stamp"
+          This action is called by other action-docs (like mx-audit) during their
+          generate-report step to stamp output documents with provenance.
 
-    - name: list
-      description: List all registered cog IDs from both registries
-      usage: |
-        Display all entries from both decode registries.
+          RULE: x-mx-p-ref is the namespaced attribute. Never use mx-ref (unnamespaced).
+          RULE: Native metadata convention — YAML for .md, meta tags for .html.
+        inputs:
+          - name: file
+            type: string
+            required: true
+            description: "Path to the document to stamp"
+          - name: cog-id
+            type: string
+            required: true
+            description: "The cog ID to stamp"
 
-        Steps:
-        1. Read $MX_HOME/registries/cog-id-registry.yaml (if it exists)
-        2. Read mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml
-        3. Display as a table with source column:
-           | Cog ID (first 12 chars) | Path | Cog Name | Registered | Source |
-           Source = "personal" or "repo"
-        4. If the same cog-id appears in both, show both rows but mark the personal one as "(override)"
-        5. Show totals: N personal, M repo, K unique
+      - name: list
+        description: List all registered cog IDs from both registries
+        usage: |
+          Display all entries from both decode registries.
 
-    - name: bulk-generate
-      description: Generate cog IDs for all cogs in the registry that don't have one yet
-      usage: |
-        Scan the cog registry and generate IDs for any cog missing an x-mx-p-ref.
+          Steps:
+          1. Read $MX_HOME/registries/cog-id-registry.yaml (if it exists)
+          2. Read mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml
+          3. Display as a table with source column:
+             | Cog ID (first 12 chars) | Path | Cog Name | Registered | Source |
+             Source = "personal" or "repo"
+          4. If the same cog-id appears in both, show both rows but mark the personal one as "(override)"
+          5. Show totals: N personal, M repo, K unique
 
-        Steps:
-        1. Read all .cog.md files in mx-canon/MX-Cog-Registry/cogs/
-        2. For each cog:
-           a. Check if x-mx-p-ref exists in frontmatter
-           b. If missing:
-              - Construct path: MXT/{category}/{cog-name}
-                (category from the cog's category field, e.g. mx-core → core, mx-tool → tool)
-              - Generate MD5 hash
-              - Register in repo registry (mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml)
-              - Add x-mx-p-ref to the cog's frontmatter
-        3. Report: N cogs stamped, M already had IDs, K total
+      - name: bulk-generate
+        description: Generate cog IDs for all cogs in the registry that don't have one yet
+        usage: |
+          Scan the cog registry and generate IDs for any cog missing an x-mx-p-ref.
+
+          Steps:
+          1. Read all .cog.md files in mx-canon/MX-Cog-Registry/cogs/
+          2. For each cog:
+             a. Check if x-mx-p-ref exists in frontmatter
+             b. If missing:
+                - Construct path: MXT/{category}/{cog-name}
+                  (category from the cog's category field, e.g. mx-core → core, mx-tool → tool)
+                - Generate MD5 hash
+                - Register in repo registry (mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml)
+                - Add x-mx-p-ref to the cog's frontmatter
+          3. Report: N cogs stamped, M already had IDs, K total
 ---
 
 # Cog ID System

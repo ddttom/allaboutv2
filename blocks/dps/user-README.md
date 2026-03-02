@@ -5,7 +5,9 @@ author: Tom Cranstoun
 created: 2026-01-15
 modified: 2026-02-09
 version: "1.0"
-status: active
+
+mx:
+  status: active
 ---
 
 # Creating Slide Decks with the Dynamic Presentation System (DPS)

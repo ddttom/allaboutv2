@@ -1,40 +1,42 @@
 ---
 title: "The Principles That Changed How I Build for Everyone"
 author: "Tom Cranstoun"
-author-email: "tom@digitaldomaintechnologies.com"
 created: "2026-02-03"
-contentState: "published"
-content-filename: "principles-changed-how-i-build"
-blog-url: "https://allabout.network/blogs/mx/principles-changed-how-i-build.html"
-publication-date: "2026-02-03"
 description: "A practitioner's guide to Machine Experience principles that make digital products work better for humans, AI agents, and everyone in between."
-tags:
-  - machine-experience
-  - design-principles
-  - accessibility
-  - sop-agents
-  - metadata
-  - semantic-web
-  - universal-design
-  - web-development
 
-contentType: "blog-post"
-mxSpecVersion: "1.1"
-lastUpdated: "2026-02-04"
-runbook: |
-audience: ["humans", "machines"]
-contextProvides:
-  - "mx-principles-introduction"
-  - "design-for-both-philosophy"
-  - "metadata-driven-architecture"
-  - "universal-accessibility-patterns"
-co:
-  workflow: "published"
-  reviewRequired: false
+mx:
+  author-email: "tom@digitaldomaintechnologies.com"
+  contentState: "published"
+  content-filename: "principles-changed-how-i-build"
+  blog-url: "https://allabout.network/blogs/mx/principles-changed-how-i-build.html"
+  publication-date: "2026-02-03"
+  tags:
+    - machine-experience
+    - design-principles
+    - accessibility
+    - sop-agents
+    - metadata
+    - semantic-web
+    - universal-design
+    - web-development
 
-coOwnership:
-  - "Tom Cranstoun"
-  - "Claude Sonnet 4.5 (transformation from technical documentation)"
+  contentType: "blog-post"
+  mxSpecVersion: "1.1"
+  lastUpdated: "2026-02-04"
+  runbook: |
+  audience: ["humans", "machines"]
+  contextProvides:
+    - "mx-principles-introduction"
+    - "design-for-both-philosophy"
+    - "metadata-driven-architecture"
+    - "universal-accessibility-patterns"
+  co:
+    workflow: "published"
+    reviewRequired: false
+
+  coOwnership:
+    - "Tom Cranstoun"
+    - "Claude Sonnet 4.5 (transformation from technical documentation)"
 ---
 
 # The Principles That Changed How I make digital products work better for humans, AI agents, and everyone in between

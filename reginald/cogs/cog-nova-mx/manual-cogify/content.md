@@ -1,34 +1,36 @@
 ---
-name: manual-cogify
 title: Cogify Workflow Manual
 description: Complete guide to converting existing content into MX-enhanced format with metadata, accessibility, and WebMCP integration.
 author: Tom Cranstoun and Maxine
 created: 2026-02-20T00:00:00.000Z
 version: "1.5"
-status: active
-category: manual
-tags:
-  - manual
-  - cogify
-  - conversion
-  - mx-enhancement
-  - metadata
-  - webmcp
-  - accessibility
-  - workflow
-partOf: mx-maxine-lives
-refersTo:
-  - cogify-this
-  - enhanced-audit
-  - pixel-perfect-web-replication
-purpose: Document cogify - usage, workflow, and best practices
-audience: human
-stability: stable
-runbook: Read when working with cogify or understanding its functionality
-contextProvides:
-  - Complete guide to converting existing content into MX-enhanced format with metadata, accessibility, and WebMCP integration.
-  - Usage guide and workflow for cogify
-  - Troubleshooting and best practices
+
+mx:
+  name: manual-cogify
+  status: active
+  category: manual
+  tags:
+    - manual
+    - cogify
+    - conversion
+    - mx-enhancement
+    - metadata
+    - webmcp
+    - accessibility
+    - workflow
+  partOf: mx-maxine-lives
+  refersTo:
+    - cogify-this
+    - enhanced-audit
+    - pixel-perfect-web-replication
+  purpose: Document cogify - usage, workflow, and best practices
+  audience: human
+  stability: stable
+  runbook: Read when working with cogify or understanding its functionality
+  contextProvides:
+    - Complete guide to converting existing content into MX-enhanced format with metadata, accessibility, and WebMCP integration.
+    - Usage guide and workflow for cogify
+    - Troubleshooting and best practices
 ---
 
 # Cogify Workflow Manual

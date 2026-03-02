@@ -1,27 +1,29 @@
 ---
-name: manual-spell-checker
 title: MX Spell Checker — Manual
 description: MX-aware spell checking for markdown files. Dual-dialect, vocabulary-aware, only flags genuine typos.
 author: Tom Cranstoun and Maxine
 created: 2026-02-13T00:00:00.000Z
 version: "1.0"
-status: active
-category: manual
-tags:
-  - manual
-  - spell-checker
-  - markdown
-  - quality
-partOf: mx-maxine-lives
-purpose: Document spell checker - usage, workflow, and best practices
-audience: human
-stability: stable
-runbook: Read when working with spell checker or understanding its functionality
-contextProvides:
-  - MX-aware spell checking for markdown files. Dual-dialect, vocabulary-aware, only flags genuine typos.
-  - Usage guide and workflow for spell checker
-  - Troubleshooting and best practices
-refersTo: []
+
+mx:
+  name: manual-spell-checker
+  status: active
+  category: manual
+  tags:
+    - manual
+    - spell-checker
+    - markdown
+    - quality
+  partOf: mx-maxine-lives
+  purpose: Document spell checker - usage, workflow, and best practices
+  audience: human
+  stability: stable
+  runbook: Read when working with spell checker or understanding its functionality
+  contextProvides:
+    - MX-aware spell checking for markdown files. Dual-dialect, vocabulary-aware, only flags genuine typos.
+    - Usage guide and workflow for spell checker
+    - Troubleshooting and best practices
+  refersTo: []
 ---
 
 # MX Spell Checker — Manual

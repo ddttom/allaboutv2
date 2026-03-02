@@ -1,22 +1,24 @@
 ---
 title: "BDR: Rename promptingInstruction to runbook"
-name: bdr-001-runbook-rename
 description: "Business decision to rename promptingInstruction to runbook — operations language replaces AI jargon"
 version: "1.0"
 created: 2026-02-15
 author: Tom Cranstoun and Maxine
-status: accepted
-category: decision-record
-tags: [metadata, terminology, business-language, runbook]
-bdr:
-  number: 1
-  title: "Rename promptingInstruction to runbook"
+
+mx:
+  name: bdr-001-runbook-rename
   status: accepted
-  date: 2026-02-15
-  context: "The promptingInstruction field in YAML frontmatter uses AI jargon. Humans are nervous of AI terminology. Business audiences read 'prompting instruction' and think 'this is an AI thing, not for me.'"
-  decision: "Rename the field to runbook. Rewrite all values to read like operations runbooks, not AI prompts."
-  consequences: "204 files renamed across the hub. 13 files had jargon values rewritten. All future cogs use runbook. The cog spec must be updated to reflect the new field name."
-runbook: "This is a business decision record. It documents the rationale for renaming promptingInstruction to runbook across the entire MX ecosystem."
+  category: decision-record
+  tags: [metadata, terminology, business-language, runbook]
+  bdr:
+    number: 1
+    title: "Rename promptingInstruction to runbook"
+    status: accepted
+    date: 2026-02-15
+    context: "The promptingInstruction field in YAML frontmatter uses AI jargon. Humans are nervous of AI terminology. Business audiences read 'prompting instruction' and think 'this is an AI thing, not for me.'"
+    decision: "Rename the field to runbook. Rewrite all values to read like operations runbooks, not AI prompts."
+    consequences: "204 files renamed across the hub. 13 files had jargon values rewritten. All future cogs use runbook. The cog spec must be updated to reflect the new field name."
+  runbook: "This is a business decision record. It documents the rationale for renaming promptingInstruction to runbook across the entire MX ecosystem."
 ---
 
 # BDR 001: Rename promptingInstruction to runbook

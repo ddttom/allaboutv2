@@ -1,17 +1,19 @@
 ---
-name: getting-started
 title: "Getting Started with MX OS"
 description: "Complete onboarding guide for new Cog-Nova-MX team members — from fresh Mac to full immersion"
 author: Tom Cranstoun and Maxine
 created: 2026-02-24
 modified: 2026-02-24
 version: "1.1"
-status: active
-category: onboarding
-contentType: guide
-tags: [onboarding, team, setup, mx-os, getting-started]
-audience: ["humans"]
-purpose: "team-onboarding"
+
+mx:
+  name: getting-started
+  status: active
+  category: onboarding
+  contentType: guide
+  tags: [onboarding, team, setup, mx-os, getting-started]
+  audience: ["humans"]
+  purpose: "team-onboarding"
 ---
 
 # Getting Started with MX OS

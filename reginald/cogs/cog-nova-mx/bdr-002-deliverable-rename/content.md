@@ -1,22 +1,24 @@
 ---
 title: "BDR: Rename createOutputPrompt to deliverable"
-name: bdr-002-deliverable-rename
 description: "Business decision to rename createOutputPrompt to deliverable — business language replaces AI jargon"
 version: "1.0"
 created: 2026-02-15
 author: Tom Cranstoun and Maxine
-status: accepted
-category: decision-record
-tags: [metadata, terminology, business-language, deliverable]
-bdr:
-  number: 2
-  title: "Rename createOutputPrompt to deliverable"
+
+mx:
+  name: bdr-002-deliverable-rename
   status: accepted
-  date: 2026-02-15
-  context: "The createOutputPrompt field uses AI jargon ('prompt'). Humans are nervous of AI terminology. Companion rename to BDR-001 (promptingInstruction to runbook)."
-  decision: "Rename the field to deliverable. 'Deliverable' is a business term everyone understands — it's what gets produced."
-  consequences: "33 occurrences renamed across 11 files. All future cogs use deliverable. The cog spec must be updated to reflect the new field name."
-runbook: "This is a business decision record. It documents the rationale for renaming createOutputPrompt to deliverable across the MX ecosystem."
+  category: decision-record
+  tags: [metadata, terminology, business-language, deliverable]
+  bdr:
+    number: 2
+    title: "Rename createOutputPrompt to deliverable"
+    status: accepted
+    date: 2026-02-15
+    context: "The createOutputPrompt field uses AI jargon ('prompt'). Humans are nervous of AI terminology. Companion rename to BDR-001 (promptingInstruction to runbook)."
+    decision: "Rename the field to deliverable. 'Deliverable' is a business term everyone understands — it's what gets produced."
+    consequences: "33 occurrences renamed across 11 files. All future cogs use deliverable. The cog spec must be updated to reflect the new field name."
+  runbook: "This is a business decision record. It documents the rationale for renaming createOutputPrompt to deliverable across the MX ecosystem."
 ---
 
 # BDR 002: Rename createOutputPrompt to deliverable

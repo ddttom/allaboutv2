@@ -1,32 +1,34 @@
 ---
-name: block-naming-decision
 version: "1.0"
 description: "NDR #1: The word 'block' risks confusion with blockchain. Propose alternatives for advisory board review."
 created: 2026-02-13
 author: Tom Cranstoun and Maxine
-status: proposed
-category: naming
-partOf: mx-the-gathering
-tags: [ndr, naming, blocks, terminology, advisory-board]
-audience: [developers, business, investors]
 
-ndr:
-  number: 1
-  title: "Block Naming — Avoiding Blockchain Confusion"
+mx:
+  name: block-naming-decision
   status: proposed
-  date: 2026-02-13
-  old-name: "block"
-  new-name: "TBD — awaiting advisory board input"
-  rationale: "The word 'block' in 'block architecture', 'HTML block', 'prose block' etc. will be confused with blockchain by investors, business audiences, and the general public. The concepts are completely unrelated. We need a term that means 'discrete typed section within a cog' without triggering blockchain associations."
-  audience: "All — this term appears in specs, pitches, manuals, and the books"
+  category: naming
+  partOf: mx-the-gathering
+  tags: [ndr, naming, blocks, terminology, advisory-board]
+  audience: [developers, business, investors]
 
-affects:
-  - cog-unified-spec
-  - block-architecture-decision
-  - mx-messaging
-  - vision-statement
+  ndr:
+    number: 1
+    title: "Block Naming — Avoiding Blockchain Confusion"
+    status: proposed
+    date: 2026-02-13
+    old-name: "block"
+    new-name: "TBD — awaiting advisory board input"
+    rationale: "The word 'block' in 'block architecture', 'HTML block', 'prose block' etc. will be confused with blockchain by investors, business audiences, and the general public. The concepts are completely unrelated. We need a term that means 'discrete typed section within a cog' without triggering blockchain associations."
+    audience: "All — this term appears in specs, pitches, manuals, and the books"
 
-buildsOn: [block-architecture-decision, what-is-a-cog]
+  affects:
+    - cog-unified-spec
+    - block-architecture-decision
+    - mx-messaging
+    - vision-statement
+
+  buildsOn: [block-architecture-decision, what-is-a-cog]
 ---
 
 # Block Naming — Avoiding Blockchain Confusion

@@ -1,25 +1,27 @@
 ---
-name: mx-web-architecture-decision
 version: "1.0"
 description: "ADR #3: The MX web architecture — Maxine serves, Reginald orchestrates, cogs compose."
 created: 2026-02-13
 author: Tom Cranstoun and Maxine
-status: accepted
-category: architecture
-partOf: mx-maxine-lives
-tags: [adr, web-architecture, maxine-server, reginald, caching, webmcp, trust]
-audience: [developers, investors, business]
 
-adr:
-  number: 3
-  title: "MX Web Architecture — Dual-Audience Content Serving"
+mx:
+  name: mx-web-architecture-decision
   status: accepted
-  date: 2026-02-13
-  context: "MX needed a complete web architecture that serves both humans and machines from the same content, with trust, caching, and composition built in."
-  decision: "Maxine server strips cog metadata by default (clean content for humans), returns full cog on request (metadata for machines). Cogs compose from smaller cogs. Binaries are referenced by cogs, not wrapped. Three trust states: open, signed, encrypted. Reginald evolves from registry to full orchestration/CDN."
-  consequences: "Defines the Maxine server contract, the Reginald evolution path, the cog composition model, and the revenue model for signed COGs."
+  category: architecture
+  partOf: mx-maxine-lives
+  tags: [adr, web-architecture, maxine-server, reginald, caching, webmcp, trust]
+  audience: [developers, investors, business]
 
-buildsOn: [block-architecture-decision, what-is-mx-os, what-is-a-cog]
+  adr:
+    number: 3
+    title: "MX Web Architecture — Dual-Audience Content Serving"
+    status: accepted
+    date: 2026-02-13
+    context: "MX needed a complete web architecture that serves both humans and machines from the same content, with trust, caching, and composition built in."
+    decision: "Maxine server strips cog metadata by default (clean content for humans), returns full cog on request (metadata for machines). Cogs compose from smaller cogs. Binaries are referenced by cogs, not wrapped. Three trust states: open, signed, encrypted. Reginald evolves from registry to full orchestration/CDN."
+    consequences: "Defines the Maxine server contract, the Reginald evolution path, the cog composition model, and the revenue model for signed COGs."
+
+  buildsOn: [block-architecture-decision, what-is-mx-os, what-is-a-cog]
 ---
 
 # MX Web Architecture — Dual-Audience Content Serving

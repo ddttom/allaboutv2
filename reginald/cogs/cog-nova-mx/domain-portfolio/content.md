@@ -1,75 +1,77 @@
 ---
-name: domain-portfolio
 title: "Domain Portfolio Registry"
 description: "Catalogue of domains held under GoDaddy, grouped by brand and purpose, with live status, protection level, and intended use."
 version: "1.0.0"
 created: 2026-02-15
 modified: 2026-02-15
 author: Tom Cranstoun
-license: proprietary
-status: active
-category: business
-partOf: mx-maxine-lives
-tags: [domains, dns, brand, godaddy, infrastructure, launch-readiness]
-audience: both
-purpose: "Single reference for all owned domains. Supports DNS planning, brand protection, and Cog-Nova-MX launch readiness."
-refersTo:
-  - "Cog-Nova-MX Ltd company formation"
-  - "MX: The Handbook launch plan (2 April 2026)"
-  - "MX: The Gathering event planning"
-  - "CMS Summit Frankfurt (12 May 2026)"
 
-updateInstructions:
-  summary: "This cog can be refreshed by any AI agent or human with HTTP access to the listed domains and access to the GoDaddy account screenshot."
-  frequency: "Monthly, or before any launch milestone"
-  method: |
-    To update this cog:
-    1. For each domain in the inventory tables below, perform an HTTPS GET
-       to the root URL. If HTTPS fails, try HTTP.
-    2. Check the HTTP status code and final URL after redirects.
-    3. If the response is 115 bytes and contains a redirect to `/lander`,
-       the domain is parked (GoDaddy parking lander with AdSense).
-    4. If the `/lander` page is ~553 bytes and loads `parking-lander/static/js/main`,
-       classify as "Parked (lander)".
-    5. If the `/lander` page is ~169KB and contains "Forsale Lander",
-       classify as "Parked (for sale)".
-    6. If the response contains a full HTML page (>1KB) with a real `<title>`,
-       classify as "Active site" and note the title.
-      7. If the response is a GoDaddy Website Builder page with "Launching Soon",
-         classify as "Launching Soon page".
-      8. If the response is minimal (e.g. "It works!"), classify as
-         "Server placeholder".
-      9. If the connection fails entirely, classify as "Connection error",
-         "TLS error", or "DNS error" as appropriate.
-      10. Update the "Live Status", "Last Checked" date, and "Notes" columns.
-      11. Recalculate the Summary table counts.
-      12. Increment the cog version (patch for data refresh, minor for
-          structural changes, major for schema changes).
-    toolsRequired:
-      - "HTTP client (curl, fetch, or equivalent)"
-      - "DNS resolver (for NXDOMAIN checks)"
-    styleRules:
-      - "British English throughout"
-      - "Factual, professional language — no exaggerated adjectives"
-      - "Tables for structured data, prose for analysis"
-    source: "GoDaddy account (screenshot or live), plus HTTP checks against each domain"
-    contentSource: "Live HTTP responses from each domain"
+mx:
+  name: domain-portfolio
+  license: proprietary
+  status: active
+  category: business
+  partOf: mx-maxine-lives
+  tags: [domains, dns, brand, godaddy, infrastructure, launch-readiness]
+  audience: both
+  purpose: "Single reference for all owned domains. Supports DNS planning, brand protection, and Cog-Nova-MX launch readiness."
+  refersTo:
+    - "Cog-Nova-MX Ltd company formation"
+    - "MX: The Handbook launch plan (2 April 2026)"
+    - "MX: The Gathering event planning"
+    - "CMS Summit Frankfurt (12 May 2026)"
 
-  action:
-    type: "audit"
-    trigger: "manual or scheduled"
-    inputs:
-      - "List of domains from inventory tables"
-    outputs:
-      - "Updated Live Status per domain"
-      - "Updated Last Checked date"
-      - "Updated Summary counts"
-      - "New observations if status has changed since last check"
-    successCriteria:
-      - "Every domain in the inventory has been checked"
-      - "Every Live Status reflects the actual HTTP response"
-      - "Last Checked date matches the audit date"
-      - "Summary table counts match the individual domain statuses"
+  updateInstructions:
+    summary: "This cog can be refreshed by any AI agent or human with HTTP access to the listed domains and access to the GoDaddy account screenshot."
+    frequency: "Monthly, or before any launch milestone"
+    method: |
+      To update this cog:
+      1. For each domain in the inventory tables below, perform an HTTPS GET
+         to the root URL. If HTTPS fails, try HTTP.
+      2. Check the HTTP status code and final URL after redirects.
+      3. If the response is 115 bytes and contains a redirect to `/lander`,
+         the domain is parked (GoDaddy parking lander with AdSense).
+      4. If the `/lander` page is ~553 bytes and loads `parking-lander/static/js/main`,
+         classify as "Parked (lander)".
+      5. If the `/lander` page is ~169KB and contains "Forsale Lander",
+         classify as "Parked (for sale)".
+      6. If the response contains a full HTML page (>1KB) with a real `<title>`,
+         classify as "Active site" and note the title.
+        7. If the response is a GoDaddy Website Builder page with "Launching Soon",
+           classify as "Launching Soon page".
+        8. If the response is minimal (e.g. "It works!"), classify as
+           "Server placeholder".
+        9. If the connection fails entirely, classify as "Connection error",
+           "TLS error", or "DNS error" as appropriate.
+        10. Update the "Live Status", "Last Checked" date, and "Notes" columns.
+        11. Recalculate the Summary table counts.
+        12. Increment the cog version (patch for data refresh, minor for
+            structural changes, major for schema changes).
+      toolsRequired:
+        - "HTTP client (curl, fetch, or equivalent)"
+        - "DNS resolver (for NXDOMAIN checks)"
+      styleRules:
+        - "British English throughout"
+        - "Factual, professional language — no exaggerated adjectives"
+        - "Tables for structured data, prose for analysis"
+      source: "GoDaddy account (screenshot or live), plus HTTP checks against each domain"
+      contentSource: "Live HTTP responses from each domain"
+
+    action:
+      type: "audit"
+      trigger: "manual or scheduled"
+      inputs:
+        - "List of domains from inventory tables"
+      outputs:
+        - "Updated Live Status per domain"
+        - "Updated Last Checked date"
+        - "Updated Summary counts"
+        - "New observations if status has changed since last check"
+      successCriteria:
+        - "Every domain in the inventory has been checked"
+        - "Every Live Status reflects the actual HTTP response"
+        - "Last Checked date matches the audit date"
+        - "Summary table counts match the individual domain statuses"
 ---
 
 # Domain Portfolio Registry

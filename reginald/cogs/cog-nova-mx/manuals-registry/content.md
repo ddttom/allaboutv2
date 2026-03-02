@@ -1,134 +1,136 @@
 ---
-name: manuals-registry
 title: Manuals Registry
 description: Index of all MX system manuals. One brain, one registry. Every manual is a cog.
 author: Tom Cranstoun and Maxine
 created: 2026-02-13T00:00:00.000Z
 version: "1.0"
-status: active
-license: proprietary
-category: registry
-tags:
-  - registry
-  - manuals
-  - index
-  - brain
-partOf: mx-maxine-lives
-manuals:
-  - name: manual-mx-os
-    file: mx-os-manual.cog.md
-    covers: MX OS — cogs, SOULs, registry, runtime, companion web
-    status: active
-  - name: manual-mx-contacts
-    file: mx-contacts-manual.cog.md
-    covers: Contact management — adding, messaging, archiving, naming conventions
-    status: active
-  - name: manual-mx-reginald
-    file: mx-reginald-manual.cog.md
-    covers: MX Reginald engine — cog listing, execution, categories, building
-    status: active
-  - name: manual-maxine-lives
-    file: manual-maxine-lives.cog.md
-    covers: The brain — decisions, assumptions, doubts, risks, plans, routing
-    status: active
-  - name: manual-prompt-enhancer
-    file: manual-prompt-enhancer.cog.md
-    covers: Route-decorator hook — spell checking, route matching, concept injection
-    status: active
-  - name: manual-spell-checker
-    file: manual-spell-checker.cog.md
-    covers: MX spell checker — dual-dialect, vocabulary-aware markdown checking
-    status: active
-  - name: manual-mx-show
-    file: mx-show-manual.cog.md
-    covers: Window finder — pinned favourites, keyboard-driven, dual-display
-    status: active
-  - name: manual-cog-id
-    file: manual-cog-id.cog.md
-    covers: Cog ID system — generating, registering, decoding, stamping obfuscated cog identifiers
-    status: active
-  - name: manual-mx-pdf
-    file: manual-mx-pdf.cog.md
-    covers: PDF generation — WeasyPrint pipeline, chapter compilation, cover pages
-    status: active
-  - name: manual-build-tools
-    file: manual-build-tools.cog.md
-    covers: Build tools — sitemap, content organiser, ASCII-to-SVG, context URLs, cleanup, migration
-    status: active
-  - name: manual-git-hooks
-    file: manual-git-hooks.cog.md
-    covers: Git hooks — MX Watch validation, metadata generation, inheritance, attribute indexing
-    status: active
-  - name: manual-mx-nav-server
-    file: manual-mx-nav-server.cog.md
-    covers: Navigation dashboard — multi-repo web UI, search, recent files
-    status: active
-  - name: manual-parse-mxignore
-    file: manual-parse-mxignore.cog.md
-    covers: MX ignore parser — .mxignore/.gitignore pattern matching, CLI and module
-    status: active
-  - name: manual-team-onboarding
-    file: manual-team-onboarding.cog.md
-    covers: Team member onboarding — interactive wizard, access testing, setup automation
-    status: active
-  - name: manual-path-validator
-    file: manual-path-validator.cog.md
-    covers: Path validation — detecting old path patterns, preventing regression, CI integration
-    status: active
-  - name: manual-submodule-health
-    file: manual-submodule-health.cog.md
-    covers: Submodule health — initialization, cleanliness, branch status, remote sync
-    status: active
-  - name: manual-enhanced-audit
-    file: manual-enhanced-audit.cog.md
-    covers: Enhanced Audit System — DOM/CSS/asset capture, 24h caching, pixel-perfect web replication
-    status: active
-  - name: manual-cogify
-    file: manual-cogify.cog.md
-    covers: Cogification workflow — converting content to MX-enhanced format, templates, metadata, accessibility
-    status: active
-  - name: manual-multilingual-sitemap
-    file: manual-multilingual-sitemap.cog.md
-    covers: Multilingual sitemap generator — automatic hreflang annotations, Google SEO best practices
-    status: active
-  - name: manual-multilingual-template
-    file: manual-multilingual-template.cog.md
-    covers: Multilingual template generator — single HTML to language-specific versions with proper attributes
-    status: active
-  - name: manual-multilingual-validator
-    file: manual-multilingual-validator.cog.md
-    covers: Multilingual validator — SEO compliance, lang attributes, hreflang tags, anti-patterns
-    status: active
-  - name: manual-asset-sync
-    file: manual-asset-sync.cog.md
-    covers: Asset synchronizer — CSS/JS/images/fonts sync across language directories
-    status: active
-  - name: manual-parity-checker
-    file: manual-parity-checker.cog.md
-    covers: Content parity checker — translation gaps, structural differences, outdated versions
-    status: active
-  - name: manual-deployment-helper
-    file: manual-deployment-helper.cog.md
-    covers: Deployment helper — orchestrates validation/parity/sitemap, deployment checklist, Search Console setup
-    status: active
-execute:
-  runtime: runbook
-  actions:
-    - name: list
-      description: List all manuals with status and coverage summary
-    - name: find
-      description: Find the manual for a given topic or tool
-    - name: register
-      description: Add a new manual to the registry
-purpose: Document manuals registry - usage, workflow, and best practices
-audience: human
-stability: stable
-runbook: "mx exec manuals-registry"
-contextProvides:
-  - Index of all MX system manuals. One brain, one registry. Every manual is a cog.
-  - Usage guide and workflow for manuals registry
-  - Troubleshooting and best practices
-refersTo: []
+
+mx:
+  name: manuals-registry
+  status: active
+  license: proprietary
+  category: registry
+  tags:
+    - registry
+    - manuals
+    - index
+    - brain
+  partOf: mx-maxine-lives
+  manuals:
+    - name: manual-mx-os
+      file: mx-os-manual.cog.md
+      covers: MX OS — cogs, SOULs, registry, runtime, companion web
+      status: active
+    - name: manual-mx-contacts
+      file: mx-contacts-manual.cog.md
+      covers: Contact management — adding, messaging, archiving, naming conventions
+      status: active
+    - name: manual-mx-reginald
+      file: mx-reginald-manual.cog.md
+      covers: MX Reginald engine — cog listing, execution, categories, building
+      status: active
+    - name: manual-maxine-lives
+      file: manual-maxine-lives.cog.md
+      covers: The brain — decisions, assumptions, doubts, risks, plans, routing
+      status: active
+    - name: manual-prompt-enhancer
+      file: manual-prompt-enhancer.cog.md
+      covers: Route-decorator hook — spell checking, route matching, concept injection
+      status: active
+    - name: manual-spell-checker
+      file: manual-spell-checker.cog.md
+      covers: MX spell checker — dual-dialect, vocabulary-aware markdown checking
+      status: active
+    - name: manual-mx-show
+      file: mx-show-manual.cog.md
+      covers: Window finder — pinned favourites, keyboard-driven, dual-display
+      status: active
+    - name: manual-cog-id
+      file: manual-cog-id.cog.md
+      covers: Cog ID system — generating, registering, decoding, stamping obfuscated cog identifiers
+      status: active
+    - name: manual-mx-pdf
+      file: manual-mx-pdf.cog.md
+      covers: PDF generation — WeasyPrint pipeline, chapter compilation, cover pages
+      status: active
+    - name: manual-build-tools
+      file: manual-build-tools.cog.md
+      covers: Build tools — sitemap, content organiser, ASCII-to-SVG, context URLs, cleanup, migration
+      status: active
+    - name: manual-git-hooks
+      file: manual-git-hooks.cog.md
+      covers: Git hooks — MX Watch validation, metadata generation, inheritance, attribute indexing
+      status: active
+    - name: manual-mx-nav-server
+      file: manual-mx-nav-server.cog.md
+      covers: Navigation dashboard — multi-repo web UI, search, recent files
+      status: active
+    - name: manual-parse-mxignore
+      file: manual-parse-mxignore.cog.md
+      covers: MX ignore parser — .mxignore/.gitignore pattern matching, CLI and module
+      status: active
+    - name: manual-team-onboarding
+      file: manual-team-onboarding.cog.md
+      covers: Team member onboarding — interactive wizard, access testing, setup automation
+      status: active
+    - name: manual-path-validator
+      file: manual-path-validator.cog.md
+      covers: Path validation — detecting old path patterns, preventing regression, CI integration
+      status: active
+    - name: manual-submodule-health
+      file: manual-submodule-health.cog.md
+      covers: Submodule health — initialization, cleanliness, branch status, remote sync
+      status: active
+    - name: manual-enhanced-audit
+      file: manual-enhanced-audit.cog.md
+      covers: Enhanced Audit System — DOM/CSS/asset capture, 24h caching, pixel-perfect web replication
+      status: active
+    - name: manual-cogify
+      file: manual-cogify.cog.md
+      covers: Cogification workflow — converting content to MX-enhanced format, templates, metadata, accessibility
+      status: active
+    - name: manual-multilingual-sitemap
+      file: manual-multilingual-sitemap.cog.md
+      covers: Multilingual sitemap generator — automatic hreflang annotations, Google SEO best practices
+      status: active
+    - name: manual-multilingual-template
+      file: manual-multilingual-template.cog.md
+      covers: Multilingual template generator — single HTML to language-specific versions with proper attributes
+      status: active
+    - name: manual-multilingual-validator
+      file: manual-multilingual-validator.cog.md
+      covers: Multilingual validator — SEO compliance, lang attributes, hreflang tags, anti-patterns
+      status: active
+    - name: manual-asset-sync
+      file: manual-asset-sync.cog.md
+      covers: Asset synchronizer — CSS/JS/images/fonts sync across language directories
+      status: active
+    - name: manual-parity-checker
+      file: manual-parity-checker.cog.md
+      covers: Content parity checker — translation gaps, structural differences, outdated versions
+      status: active
+    - name: manual-deployment-helper
+      file: manual-deployment-helper.cog.md
+      covers: Deployment helper — orchestrates validation/parity/sitemap, deployment checklist, Search Console setup
+      status: active
+  execute:
+    runtime: runbook
+    actions:
+      - name: list
+        description: List all manuals with status and coverage summary
+      - name: find
+        description: Find the manual for a given topic or tool
+      - name: register
+        description: Add a new manual to the registry
+  purpose: Document manuals registry - usage, workflow, and best practices
+  audience: human
+  stability: stable
+  runbook: "mx exec manuals-registry"
+  contextProvides:
+    - Index of all MX system manuals. One brain, one registry. Every manual is a cog.
+    - Usage guide and workflow for manuals registry
+    - Troubleshooting and best practices
+  refersTo: []
 ---
 
 # Manuals Registry

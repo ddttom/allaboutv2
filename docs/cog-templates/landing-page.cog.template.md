@@ -1,61 +1,63 @@
 ---
-cog:
-  version: "1.0"
-  id: "cog-{publisher-id}-{subject-slug}-{YYYYMMDD}"
-  type: "certificate-of-genuineness"
-  status: "draft"  # draft | signed | registered | active
 
-  publisher:
-    name: "{Publisher Name}"
-    verified: false
-    signedBy: "unsigned"
-    contact: "{email@example.com}"
-    website: "{https://example.com}"
+mx:
+  cog:
+    version: "1.0"
+    id: "cog-{publisher-id}-{subject-slug}-{YYYYMMDD}"
+    type: "certificate-of-genuineness"
+    status: "draft"  # draft | signed | registered | active
 
-  subject:
-    name: "{Landing Page Title}"
-    category: "landing-page"
-    scope: "{page-scope}"  # e.g., product-intro, coming-soon, demo
-    description: "{One-sentence description of what this page communicates}"
+    publisher:
+      name: "{Publisher Name}"
+      verified: false
+      signedBy: "unsigned"
+      contact: "{email@example.com}"
+      website: "{https://example.com}"
 
-  publicationDate: "{YYYY-MM-DDTHH:MM:SSZ}"
-  expires: "{YYYY-MM-DDTHH:MM:SSZ}"  # Typically 6 months from issued
-  lastVerified: "{YYYY-MM-DDTHH:MM:SSZ}"
+    subject:
+      name: "{Landing Page Title}"
+      category: "landing-page"
+      scope: "{page-scope}"  # e.g., product-intro, coming-soon, demo
+      description: "{One-sentence description of what this page communicates}"
 
-  signature: "unsigned"
-  mxCompliance: "level-2"
-  registry: "allabout.network"
+    publicationDate: "{YYYY-MM-DDTHH:MM:SSZ}"
+    expires: "{YYYY-MM-DDTHH:MM:SSZ}"  # Typically 6 months from issued
+    lastVerified: "{YYYY-MM-DDTHH:MM:SSZ}"
 
-governance:
-  maintainer:
-    name: "{Maintainer Name}"
-    role: "{Role/Title}"
-    contact: "{email@example.com}"
-    escalation: "{escalation-email@example.com}"
+    signature: "unsigned"
+    mxCompliance: "level-2"
+    registry: "allabout.network"
 
-  reviewCycle: "quarterly"  # monthly | quarterly | annually
-  updateTriggers:
-    - "product/service changes"
-    - "pricing updates"
-    - "branding changes"
-    - "user-reported inaccuracy"
+  governance:
+    maintainer:
+      name: "{Maintainer Name}"
+      role: "{Role/Title}"
+      contact: "{email@example.com}"
+      escalation: "{escalation-email@example.com}"
 
-  accuracyCommitment: "{What this page promises to accurately represent}"
-  correctionSla: "72 hours"
+    reviewCycle: "quarterly"  # monthly | quarterly | annually
+    updateTriggers:
+      - "product/service changes"
+      - "pricing updates"
+      - "branding changes"
+      - "user-reported inaccuracy"
 
-  usage:
-    sopInference: "permitted"
-    caching: "permitted for 24 hours"
-    redistribution: "with attribution"
-    commercialUse: "permitted"
-    aiTraining: "permitted with attribution"
+    accuracyCommitment: "{What this page promises to accurately represent}"
+    correctionSla: "72 hours"
 
-  licence: "MIT"
-  licenceUrl: "https://opensource.org/licenses/MIT"
+    usage:
+      sopInference: "permitted"
+      caching: "permitted for 24 hours"
+      redistribution: "with attribution"
+      commercialUse: "permitted"
+      aiTraining: "permitted with attribution"
 
-contentType: "landing-page"
-audience: ["humans", "machines"]
-runbook: |
+    licence: "MIT"
+    licenceUrl: "https://opensource.org/licenses/MIT"
+
+  contentType: "landing-page"
+  audience: ["humans", "machines"]
+  runbook: |
 ---
 
 # {Landing Page Title}

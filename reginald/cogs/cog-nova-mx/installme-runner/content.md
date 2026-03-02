@@ -1,5 +1,4 @@
 ---
-name: installme-runner
 version: "1.0.0"
 description: "The action action-doc that reads and executes INSTALLME.md files — diagnose, install, verify, register. The tool that stops hallucination."
 
@@ -7,194 +6,197 @@ created: 2026-02-10
 modified: 2026-02-10
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, mx-principles]
-buildsOn: [what-is-a-cog, what-is-mx-os, what-is-mx-environment, what-is-installme]
-tags: [installme, runner, action, install, diagnostics, prerequisites, sop-agent, executor, mx-os]
+mx:
+  name: installme-runner
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: ai-agents
-readingLevel: technical
-purpose: Give any AI agent the operational tool to execute INSTALLME.md — read the metadata, run diagnostics, install, verify, register
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, mx-principles]
+  buildsOn: [what-is-a-cog, what-is-mx-os, what-is-mx-environment, what-is-installme]
+  tags: [installme, runner, action, install, diagnostics, prerequisites, sop-agent, executor, mx-os]
 
-contentType: "action-doc"
-runbook: "mx exec installme-runner"
-execute:
-  runtime: runbook
-  command: mx installme
-  actions:
-    - name: diagnose
-      description: Check all prerequisites listed in INSTALLME.md and report machine readiness
-      usage: |
-        1. Detect environment mode:
-           - If $MX_HOME is set, read ~/.mx/machine.yaml for OS, architecture, hostname
-           - If $MX_HOME is set, read ~/.mx/repos.yaml to check if this repo is already registered
-           - If $MX_HOME is not set, note standalone mode — all checks will run inline
+  audience: ai-agents
+  readingLevel: technical
+  purpose: Give any AI agent the operational tool to execute INSTALLME.md — read the metadata, run diagnostics, install, verify, register
 
-        2. Read INSTALLME.md in the current repository root
-           - Parse YAML frontmatter
-           - Extract prerequisites.required and prerequisites.optional
+  contentType: "action-doc"
+  runbook: "mx exec installme-runner"
+  execute:
+    runtime: runbook
+    command: mx installme
+    actions:
+      - name: diagnose
+        description: Check all prerequisites listed in INSTALLME.md and report machine readiness
+        usage: |
+          1. Detect environment mode:
+             - If $MX_HOME is set, read ~/.mx/machine.yaml for OS, architecture, hostname
+             - If $MX_HOME is set, read ~/.mx/repos.yaml to check if this repo is already registered
+             - If $MX_HOME is not set, note standalone mode — all checks will run inline
 
-        3. For each required prerequisite:
-           - Run the `check` command (e.g. "git --version")
-           - Parse the version from output
-           - Compare against `minimum` version
-           - Report: PASS (installed, meets minimum), FAIL (missing), WARN (below minimum)
+          2. Read INSTALLME.md in the current repository root
+             - Parse YAML frontmatter
+             - Extract prerequisites.required and prerequisites.optional
 
-        4. For each optional prerequisite:
-           - Run the `check` command
-           - Report: AVAILABLE or NOT INSTALLED (no failure — these are optional)
+          3. For each required prerequisite:
+             - Run the `check` command (e.g. "git --version")
+             - Parse the version from output
+             - Compare against `minimum` version
+             - Report: PASS (installed, meets minimum), FAIL (missing), WARN (below minimum)
 
-        5. Present summary:
-           - Machine: [hostname, OS, arch] (from $MX_HOME or detected inline)
-           - Required: [pass count] / [total] passed
-           - Optional: [available count] / [total] available
-           - Verdict: READY or NOT READY (with specific failures listed)
+          4. For each optional prerequisite:
+             - Run the `check` command
+             - Report: AVAILABLE or NOT INSTALLED (no failure — these are optional)
 
-        Do not proceed to install if any required prerequisite fails.
-      inputs:
-        - name: installme-path
-          type: string
-          required: false
-          description: "Path to INSTALLME.md (defaults to ./INSTALLME.md in current repo root)"
-      outputs:
-        - name: diagnostics
-          type: object
-          description: "Machine readiness report with per-prerequisite pass/fail"
+          5. Present summary:
+             - Machine: [hostname, OS, arch] (from $MX_HOME or detected inline)
+             - Required: [pass count] / [total] passed
+             - Optional: [available count] / [total] available
+             - Verdict: READY or NOT READY (with specific failures listed)
 
-    - name: install
-      description: Execute the install-steps from INSTALLME.md in order
-      usage: |
-        1. Run the diagnose action first. Do not proceed if verdict is NOT READY.
+          Do not proceed to install if any required prerequisite fails.
+        inputs:
+          - name: installme-path
+            type: string
+            required: false
+            description: "Path to INSTALLME.md (defaults to ./INSTALLME.md in current repo root)"
+        outputs:
+          - name: diagnostics
+            type: object
+            description: "Machine readiness report with per-prerequisite pass/fail"
 
-        2. Read install-steps from INSTALLME.md frontmatter
+      - name: install
+        description: Execute the install-steps from INSTALLME.md in order
+        usage: |
+          1. Run the diagnose action first. Do not proceed if verdict is NOT READY.
 
-        3. For each step (in order):
-           - Announce: "Step [n]: [name]"
-           - Run the `command`
-           - If command fails and `fallback` exists, run the fallback
-           - If both fail, stop and report the failure
-           - If command succeeds, report success and move to next step
+          2. Read install-steps from INSTALLME.md frontmatter
 
-        4. After all steps complete, automatically run the verify action
+          3. For each step (in order):
+             - Announce: "Step [n]: [name]"
+             - Run the `command`
+             - If command fails and `fallback` exists, run the fallback
+             - If both fail, stop and report the failure
+             - If command succeeds, report success and move to next step
 
-        Rules:
-        - Never skip steps
-        - Never reorder steps
-        - Never invent steps that are not in the frontmatter
-        - Never guess at commands — use exactly what INSTALLME.md specifies
-        - If a step has a `note`, read it for context but do not treat it as a command
-      inputs:
-        - name: repo-url
-          type: string
-          required: false
-          description: "Git clone URL (only needed if step 1 is a clone operation)"
-        - name: installme-path
-          type: string
-          required: false
-          description: "Path to INSTALLME.md (defaults to ./INSTALLME.md)"
-      outputs:
-        - name: install-report
-          type: object
-          description: "Step-by-step results with pass/fail per step"
+          4. After all steps complete, automatically run the verify action
 
-    - name: verify
-      description: Confirm the installation succeeded by running verification commands
-      usage: |
-        1. Read verify.commands from INSTALLME.md frontmatter
+          Rules:
+          - Never skip steps
+          - Never reorder steps
+          - Never invent steps that are not in the frontmatter
+          - Never guess at commands — use exactly what INSTALLME.md specifies
+          - If a step has a `note`, read it for context but do not treat it as a command
+        inputs:
+          - name: repo-url
+            type: string
+            required: false
+            description: "Git clone URL (only needed if step 1 is a clone operation)"
+          - name: installme-path
+            type: string
+            required: false
+            description: "Path to INSTALLME.md (defaults to ./INSTALLME.md)"
+        outputs:
+          - name: install-report
+            type: object
+            description: "Step-by-step results with pass/fail per step"
 
-        2. Run each command in order
-           - Capture output
+      - name: verify
+        description: Confirm the installation succeeded by running verification commands
+        usage: |
+          1. Read verify.commands from INSTALLME.md frontmatter
 
-        3. Check each success-criteria against the outputs
-           - Report PASS or FAIL for each criterion
+          2. Run each command in order
+             - Capture output
 
-        4. Present summary:
-           - Commands run: [count]
-           - Criteria checked: [count]
-           - Result: ALL PASS or FAILURES DETECTED (with specifics)
+          3. Check each success-criteria against the outputs
+             - Report PASS or FAIL for each criterion
 
-        5. If all pass and $MX_HOME is set, offer to run the register action
-      inputs:
-        - name: installme-path
-          type: string
-          required: false
-          description: "Path to INSTALLME.md (defaults to ./INSTALLME.md)"
-      outputs:
-        - name: verification
-          type: object
-          description: "Verification results with pass/fail per criterion"
+          4. Present summary:
+             - Commands run: [count]
+             - Criteria checked: [count]
+             - Result: ALL PASS or FAILURES DETECTED (with specifics)
 
-    - name: register
-      description: Register this repo in $MX_HOME/repos.yaml (MX environments only)
-      usage: |
-        1. Check that $MX_HOME is set. If not, report that registration requires MX OS and stop.
+          5. If all pass and $MX_HOME is set, offer to run the register action
+        inputs:
+          - name: installme-path
+            type: string
+            required: false
+            description: "Path to INSTALLME.md (defaults to ./INSTALLME.md)"
+        outputs:
+          - name: verification
+            type: object
+            description: "Verification results with pass/fail per criterion"
 
-        2. Read ~/.mx/repos.yaml
+      - name: register
+        description: Register this repo in $MX_HOME/repos.yaml (MX environments only)
+        usage: |
+          1. Check that $MX_HOME is set. If not, report that registration requires MX OS and stop.
 
-        3. Check if this repo path is already listed
-           - If yes, report "already registered" and stop
-           - If no, continue
+          2. Read ~/.mx/repos.yaml
 
-        4. Read INSTALLME.md frontmatter for repo metadata (name, description)
+          3. Check if this repo path is already listed
+             - If yes, report "already registered" and stop
+             - If no, continue
 
-        5. Add entry to repos.yaml:
-           - name: [from INSTALLME.md or directory name]
-           - path: [absolute path to repo]
-           - description: [from INSTALLME.md description field]
-           - role: [from INSTALLME.md or "development"]
-           - registered: [today's date]
+          4. Read INSTALLME.md frontmatter for repo metadata (name, description)
 
-        6. Write updated repos.yaml
+          5. Add entry to repos.yaml:
+             - name: [from INSTALLME.md or directory name]
+             - path: [absolute path to repo]
+             - description: [from INSTALLME.md description field]
+             - role: [from INSTALLME.md or "development"]
+             - registered: [today's date]
 
-        7. Report what was added
-      inputs:
-        - name: repo-path
-          type: string
-          required: false
-          description: "Absolute path to the repo (defaults to current working directory)"
-      outputs:
-        - name: registration
-          type: object
-          description: "The new or existing repos.yaml entry"
+          6. Write updated repos.yaml
 
-    - name: audit
-      description: Check whether a repository has a valid INSTALLME.md
-      usage: |
-        1. Check if INSTALLME.md exists in the repo root
-           - If missing, report: "No INSTALLME.md found. AI agents will hallucinate through README.md."
+          7. Report what was added
+        inputs:
+          - name: repo-path
+            type: string
+            required: false
+            description: "Absolute path to the repo (defaults to current working directory)"
+        outputs:
+          - name: registration
+            type: object
+            description: "The new or existing repos.yaml entry"
 
-        2. If present, parse YAML frontmatter and check for:
-           - prerequisites section (required and optional)
-           - install-steps section (at least one step)
-           - verify section (at least one command and one criterion)
-           - Each prerequisite has: name, check, why
-           - Each step has: step number, name, command
+      - name: audit
+        description: Check whether a repository has a valid INSTALLME.md
+        usage: |
+          1. Check if INSTALLME.md exists in the repo root
+             - If missing, report: "No INSTALLME.md found. AI agents will hallucinate through README.md."
 
-        3. Report:
-           - INSTALLME.md: present/missing
-           - Prerequisites: [count] required, [count] optional
-           - Install steps: [count]
-           - Verify commands: [count]
-           - Verify criteria: [count]
-           - Quality: COMPLETE / PARTIAL / MISSING
-           - Recommendations: list any missing or weak sections
+          2. If present, parse YAML frontmatter and check for:
+             - prerequisites section (required and optional)
+             - install-steps section (at least one step)
+             - verify section (at least one command and one criterion)
+             - Each prerequisite has: name, check, why
+             - Each step has: step number, name, command
 
-        4. If $MX_HOME context is available, cross-reference prerequisites against
-           machine.yaml to identify any that the machine already satisfies
-      inputs:
-        - name: repo-path
-          type: string
-          required: false
-          description: "Path to repo root to audit (defaults to current directory)"
-      outputs:
-        - name: audit-report
-          type: object
-          description: "INSTALLME.md quality and completeness report"
+          3. Report:
+             - INSTALLME.md: present/missing
+             - Prerequisites: [count] required, [count] optional
+             - Install steps: [count]
+             - Verify commands: [count]
+             - Verify criteria: [count]
+             - Quality: COMPLETE / PARTIAL / MISSING
+             - Recommendations: list any missing or weak sections
+
+          4. If $MX_HOME context is available, cross-reference prerequisites against
+             machine.yaml to identify any that the machine already satisfies
+        inputs:
+          - name: repo-path
+            type: string
+            required: false
+            description: "Path to repo root to audit (defaults to current directory)"
+        outputs:
+          - name: audit-report
+            type: object
+            description: "INSTALLME.md quality and completeness report"
 ---
 
 # The INSTALLME Runner

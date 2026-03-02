@@ -1,5 +1,4 @@
 ---
-name: cogs-for-agent-developers
 version: "1.0"
 description: How cogs complement AI agent frameworks. Agent skills extend one agent. Cogs make content readable by any agent. Different layers that work together.
 
@@ -7,22 +6,25 @@ created: 2026-02-09
 modified: 2026-02-09
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: learning
-partOf: mx-the-gathering
-refersTo: [cog-unified-spec]
-buildsOn: [what-is-a-cog, what-is-mx-os]
-tags: [agent-frameworks, skills, openClaw, langchain, crewai, integration, developer-tools, metadata]
+mx:
+  name: cogs-for-agent-developers
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: developers
-readingLevel: technical
-purpose: Explain how cogs work alongside AI agent frameworks — not replacing skills, but making the documents those skills read machine-readable
+  category: learning
+  partOf: mx-the-gathering
+  refersTo: [cog-unified-spec]
+  buildsOn: [what-is-a-cog, what-is-mx-os]
+  tags: [agent-frameworks, skills, openClaw, langchain, crewai, integration, developer-tools, metadata]
 
-contentType: "action-doc"
-runbook: "mx exec cogs-for-agent-developers"
+  audience: developers
+  readingLevel: technical
+  purpose: Explain how cogs work alongside AI agent frameworks — not replacing skills, but making the documents those skills read machine-readable
+
+  contentType: "action-doc"
+  runbook: "mx exec cogs-for-agent-developers"
 ---
 
 # Cogs for Agent Developers

@@ -1,56 +1,58 @@
 ---
-name: "cloudflare-routing-info"
 title: "MX Cloudflare Routing Plan"
 description: "Human- and machine-readable plan for routing MX domains via Cloudflare Workers, aligned with MX's trust-first, non-AI brand architecture."
 version: "1.0.0"
 created: "2026-02-15"
 modified: "2026-02-15"
 author: "Tom Cranstoun / Copilot"
-license: "Private — Cog-Nova-MX Ltd"
-status: "active"
-category: "infrastructure"
-partOf: ["MX Brand–Domain Master Architecture", "MX Business Operations", "MX Infrastructure"]
-purpose: |
-    Define a clear, centralised routing strategy for all MX-related domains using
-    Cloudflare (DNS + Workers). This cog expresses the redirect logic in a way
-    that any human or MX-aware agent can translate into Worker code, Terraform,
-    or manual configuration without ambiguity.
 
-tags: [cloudflare, routing, dns, workers, infrastructure]
-audience: ["business", "operations"]
-refersTo:
-    - "MX Brand–Domain Master Architecture Cog"
-    - "Domain Portfolio Registry Cog"
-    - "MX Branding & Naming Framework Cog"
+mx:
+  name: "cloudflare-routing-info"
+  license: "Private — Cog-Nova-MX Ltd"
+  status: "active"
+  category: "infrastructure"
+  partOf: ["MX Brand–Domain Master Architecture", "MX Business Operations", "MX Infrastructure"]
+  purpose: |
+      Define a clear, centralised routing strategy for all MX-related domains using
+      Cloudflare (DNS + Workers). This cog expresses the redirect logic in a way
+      that any human or MX-aware agent can translate into Worker code, Terraform,
+      or manual configuration without ambiguity.
 
-updateInstructions:
-  summary: "Update this routing plan whenever canonical domains or redirect targets change."
-  frequency: "Before each major launch or DNS change"
-  method: |
-    1. Retrieve the latest canonical domains and redirect rules from:
-       - MX Brand–Domain Master Architecture Cog
-       - Domain Portfolio Registry Cog
-    2. Confirm which domains:
-       - serve primary content
-       - are redirect-only
-       - are legacy or to be retired
-    3. Update the Routing Tables below to reflect:
-       - new domains
-       - changed canonical targets
-       - retired domains
-    4. Ensure that:
-       - every owned domain appears in at least one routing table row
-       - there is exactly one canonical target per brand
-    5. Increment the version number (patch for rule changes, minor for structural changes).
-  toolsRequired:
-    - "Cloudflare dashboard or API"
-    - "Domain Portfolio Registry Cog"
-    - "MX Brand–Domain Master Architecture Cog"
-styleRules:
-  - "British English"
-  - "Clear, declarative routing rules"
-  - "No AI-centric language"
-  - "Tables for mappings, prose for rationale"
+  tags: [cloudflare, routing, dns, workers, infrastructure]
+  audience: ["business", "operations"]
+  refersTo:
+      - "MX Brand–Domain Master Architecture Cog"
+      - "Domain Portfolio Registry Cog"
+      - "MX Branding & Naming Framework Cog"
+
+  updateInstructions:
+    summary: "Update this routing plan whenever canonical domains or redirect targets change."
+    frequency: "Before each major launch or DNS change"
+    method: |
+      1. Retrieve the latest canonical domains and redirect rules from:
+         - MX Brand–Domain Master Architecture Cog
+         - Domain Portfolio Registry Cog
+      2. Confirm which domains:
+         - serve primary content
+         - are redirect-only
+         - are legacy or to be retired
+      3. Update the Routing Tables below to reflect:
+         - new domains
+         - changed canonical targets
+         - retired domains
+      4. Ensure that:
+         - every owned domain appears in at least one routing table row
+         - there is exactly one canonical target per brand
+      5. Increment the version number (patch for rule changes, minor for structural changes).
+    toolsRequired:
+      - "Cloudflare dashboard or API"
+      - "Domain Portfolio Registry Cog"
+      - "MX Brand–Domain Master Architecture Cog"
+  styleRules:
+    - "British English"
+    - "Clear, declarative routing rules"
+    - "No AI-centric language"
+    - "Tables for mappings, prose for rationale"
 ---
 
 ## 1. Routing principles

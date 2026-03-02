@@ -1,21 +1,23 @@
 ---
-name: helen
-contentType: contact
 description: Business advisor, 30-year friend
 author: Tom Cranstoun
 created: 2026-02-09
-category: contact
-tags: [contact, advisor, stakeholder]
-relationship: advisor
-status: active
-context: Helen has known Tom for 30 years. Business advisor. Her partner Tony asks sharp investor-type questions through her. She has had the full briefing and asked detailed questions about pricing, training, Reginald, company structure, operations, VAT, and dates.
-messages:
-  - file: messages/message-helen-advisor.md
-    date: 2026-02-09
-    type: briefing-and-qa
-    status: sent
-    note: Combined briefing + Q&A sent. Covers pricing tiers, piracy concern, training model, Reginald clarification, company structure, operations, VAT, dates.
-next-action: Await feedback from Helen and Tony
+
+mx:
+  name: helen
+  contentType: contact
+  category: contact
+  tags: [contact, advisor, stakeholder]
+  relationship: advisor
+  status: active
+  context: Helen has known Tom for 30 years. Business advisor. Her partner Tony asks sharp investor-type questions through her. She has had the full briefing and asked detailed questions about pricing, training, Reginald, company structure, operations, VAT, and dates.
+  messages:
+    - file: messages/message-helen-advisor.md
+      date: 2026-02-09
+      type: briefing-and-qa
+      status: sent
+      note: Combined briefing + Q&A sent. Covers pricing tiers, piracy concern, training model, Reginald clarification, company structure, operations, VAT, dates.
+  next-action: Await feedback from Helen and Tony
 ---
 
 # Helen

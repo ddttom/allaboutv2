@@ -5,7 +5,9 @@ author: Tom Cranstoun
 created: 2024-12-01
 modified: 2026-02-09
 version: "1.0"
-status: active
+
+mx:
+  status: active
 ---
 
 # Section 19: EDS Block Library Integration for SaaS Enhancement

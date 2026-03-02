@@ -1,30 +1,32 @@
 ---
-name: manual-mx-show
 title: mx-show Manual
 description: Interactive window finder for macOS. Pinned favourites, two-phase loading, smart sizing, multi-window, usage tracking.
 author: Tom Cranstoun and Maxine
 created: 2026-02-13T00:00:00.000Z
 modified: 2026-02-15T00:00:00.000Z
 version: "3.0"
-status: active
-category: manual
-tags:
-  - manual
-  - mx-show
-  - windows
-  - display
-  - fzf
-  - maxine
-partOf: mx-maxine-lives
-purpose: Document mx show - usage, workflow, and best practices
-audience: human
-stability: stable
-runbook: Read when working with mx show or understanding its functionality
-contextProvides:
-  - Interactive window finder for macOS. Pinned favourites, two-phase loading, smart sizing, multi-window, usage tracking.
-  - Usage guide and workflow for mx show
-  - Troubleshooting and best practices
-refersTo: []
+
+mx:
+  name: manual-mx-show
+  status: active
+  category: manual
+  tags:
+    - manual
+    - mx-show
+    - windows
+    - display
+    - fzf
+    - maxine
+  partOf: mx-maxine-lives
+  purpose: Document mx show - usage, workflow, and best practices
+  audience: human
+  stability: stable
+  runbook: Read when working with mx show or understanding its functionality
+  contextProvides:
+    - Interactive window finder for macOS. Pinned favourites, two-phase loading, smart sizing, multi-window, usage tracking.
+    - Usage guide and workflow for mx show
+    - Troubleshooting and best practices
+  refersTo: []
 ---
 
 # mx-show — Window Finder

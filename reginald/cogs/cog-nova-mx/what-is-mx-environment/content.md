@@ -1,5 +1,4 @@
 ---
-name: what-is-mx-environment
 version: "1.0.0"
 description: MX OS lives on the machine, not in the repo. $MX_HOME is the machine-level context — the answer to the machine, the universe, and everything.
 
@@ -7,19 +6,22 @@ created: 2026-02-10
 modified: 2026-02-10
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, mx-principles]
-buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
-tags: [environment, mx-home, machine-context, boot, bare-metal, two-stage-boot, mx-os]
+mx:
+  name: what-is-mx-environment
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: both
-readingLevel: accessible
-purpose: Explain why MX OS needs machine-level context, how $MX_HOME works, and how two-stage boot gives AI agents the universe before the repo
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, mx-principles]
+  buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
+  tags: [environment, mx-home, machine-context, boot, bare-metal, two-stage-boot, mx-os]
+
+  audience: both
+  readingLevel: accessible
+  purpose: Explain why MX OS needs machine-level context, how $MX_HOME works, and how two-stage boot gives AI agents the universe before the repo
 ---
 
 # What Is the MX Environment?

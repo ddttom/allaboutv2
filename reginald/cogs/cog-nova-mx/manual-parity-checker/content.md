@@ -1,26 +1,28 @@
 ---
-name: manual-parity-checker
 title: "Content Parity Checker Manual"
 description: "Compares content across multilingual site language versions to identify translation gaps, structural differences, and outdated translations."
 author: Tom Cranstoun and Maxine
 created: 2026-02-21
 version: "1.0"
-status: active
-category: manual
-tags: [manual, multilingual, parity, quality-assurance, translation, content]
-partOf: mx-maxine-lives
-purpose: "Document the content parity checker - detecting translation gaps and content inconsistencies"
-audience: "human"
-stability: "stable"
-runbook: "Read when checking translation completeness, identifying content gaps, or ensuring multilingual parity"
-contextProvides:
-  - "Content parity checking methodology (text length, structural elements, modification times)"
-  - "Translation gap detection and threshold tuning"
-  - "Interpreting parity results and fixing inconsistencies"
-  - "Workflow integration for quality assurance"
-refersTo:
-  - "mx-canon/mx-the-gathering/reference-implementations/_tools/check-parity.js"
-  - "mx-canon/mx-the-gathering/reference-implementations/_tools/README.cog.md"
+
+mx:
+  name: manual-parity-checker
+  status: active
+  category: manual
+  tags: [manual, multilingual, parity, quality-assurance, translation, content]
+  partOf: mx-maxine-lives
+  purpose: "Document the content parity checker - detecting translation gaps and content inconsistencies"
+  audience: "human"
+  stability: "stable"
+  runbook: "Read when checking translation completeness, identifying content gaps, or ensuring multilingual parity"
+  contextProvides:
+    - "Content parity checking methodology (text length, structural elements, modification times)"
+    - "Translation gap detection and threshold tuning"
+    - "Interpreting parity results and fixing inconsistencies"
+    - "Workflow integration for quality assurance"
+  refersTo:
+    - "mx-canon/mx-the-gathering/reference-implementations/_tools/check-parity.js"
+    - "mx-canon/mx-the-gathering/reference-implementations/_tools/README.cog.md"
 ---
 
 # Content Parity Checker

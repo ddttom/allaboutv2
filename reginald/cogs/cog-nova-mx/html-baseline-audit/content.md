@@ -1,114 +1,116 @@
 ---
-name: html-baseline-audit
 title: HTML Baseline Audit & Regression Detection
 description: Action-doc for establishing HTML baselines and detecting regressions across all .cog.html files. Automates visual, structural, style, and metadata comparison.
 version: "1.0"
 created: 2026-02-21
 modified: 2026-02-21
 author: Tom Cranstoun and Maxine
-category: validation
-status: active
-tags: [html, audit, baseline, regression, testing, automation, validation, ci-cd]
-audience: [tech]
 
-partOf: mx-cog-registry
+mx:
+  name: html-baseline-audit
+  category: validation
+  status: active
+  tags: [html, audit, baseline, regression, testing, automation, validation, ci-cd]
+  audience: [tech]
 
-buildsOn: [manual-html-baseline-audit, manual-enhanced-audit]
+  partOf: mx-cog-registry
 
-runtime: nodejs
-purpose: Establish HTML baseline and detect regressions
-contentType: action-doc
-runbook: |
-action:
-  establish-baseline:
-    description: "Discover all .cog.html files and establish comprehensive baseline"
-    command: "npm run audit:html:baseline"
-    inputs: []
-    outputs:
-      - "mx-outputs/html/audit/baselines/YYYY-MM-DD-HH-MM-SS/index.json"
-      - "Per-file audit data in subdirectories"
-    exit-codes:
-      0: "All files successfully audited"
-      1: "Some files failed (check index.json)"
+  buildsOn: [manual-html-baseline-audit, manual-enhanced-audit]
 
-  detect-regressions:
-    description: "Compare current HTML state against latest baseline"
-    command: "npm run audit:html:compare"
-    inputs:
-      - "Latest baseline from mx-outputs/html/audit/baselines/"
-    outputs:
-      - "mx-outputs/md/audit/comparison-YYYY-MM-DD.json"
-      - "mx-outputs/md/audit/comparison-YYYY-MM-DD.md"
-    exit-codes:
-      0: "No regressions detected"
-      1: "Regressions detected (review required)"
-      2: "Error (no baseline or audit failed)"
+  runtime: nodejs
+  purpose: Establish HTML baseline and detect regressions
+  contentType: action-doc
+  runbook: |
+  action:
+    establish-baseline:
+      description: "Discover all .cog.html files and establish comprehensive baseline"
+      command: "npm run audit:html:baseline"
+      inputs: []
+      outputs:
+        - "mx-outputs/html/audit/baselines/YYYY-MM-DD-HH-MM-SS/index.json"
+        - "Per-file audit data in subdirectories"
+      exit-codes:
+        0: "All files successfully audited"
+        1: "Some files failed (check index.json)"
 
-  check-cogify:
-    description: "Verify cogify (enhanced audit) is installed"
-    command: "npm run cogify:check"
-    outputs:
-      - "JSON with cache validity status"
+    detect-regressions:
+      description: "Compare current HTML state against latest baseline"
+      command: "npm run audit:html:compare"
+      inputs:
+        - "Latest baseline from mx-outputs/html/audit/baselines/"
+      outputs:
+        - "mx-outputs/md/audit/comparison-YYYY-MM-DD.json"
+        - "mx-outputs/md/audit/comparison-YYYY-MM-DD.md"
+      exit-codes:
+        0: "No regressions detected"
+        1: "Regressions detected (review required)"
+        2: "Error (no baseline or audit failed)"
 
-  install-cogify:
-    description: "Install cogify and Playwright dependencies"
-    command: "npm run cogify:install"
-    outputs:
-      - "Playwright chromium browser installed"
+    check-cogify:
+      description: "Verify cogify (enhanced audit) is installed"
+      command: "npm run cogify:check"
+      outputs:
+        - "JSON with cache validity status"
 
-definition:
-  standards:
-    - name: "MX Cog Standard"
-      version: "2.1"
-      authority: "The Gathering"
-      compliance: "full"
-    - name: "Enhanced Audit System"
-      version: "2.0"
-      authority: "Cog-Nova-MX"
-      compliance: "full"
+    install-cogify:
+      description: "Install cogify and Playwright dependencies"
+      command: "npm run cogify:install"
+      outputs:
+        - "Playwright chromium browser installed"
 
-  comparison-thresholds:
-    visual:
-      minor: "1% pixels changed"
-      medium: "5% pixels changed"
-      major: "10% pixels changed"
-    structural:
-      element-count: "5% change"
-      depth: "2 levels change"
-    styles:
-      colors: "Any color added/removed"
-      fonts: "Any font added/removed"
-    metadata:
-      version: "Any version change"
-      compliance: "Any level change"
+  definition:
+    standards:
+      - name: "MX Cog Standard"
+        version: "2.1"
+        authority: "The Gathering"
+        compliance: "full"
+      - name: "Enhanced Audit System"
+        version: "2.0"
+        authority: "Cog-Nova-MX"
+        compliance: "full"
 
-policy:
-  merging: mixin
-  inheritance: soft
-  automation:
-    ci-cd: "recommended"
-    pre-commit: "recommended"
-    manual: "required for baseline establishment"
+    comparison-thresholds:
+      visual:
+        minor: "1% pixels changed"
+        medium: "5% pixels changed"
+        major: "10% pixels changed"
+      structural:
+        element-count: "5% change"
+        depth: "2 levels change"
+      styles:
+        colors: "Any color added/removed"
+        fonts: "Any font added/removed"
+      metadata:
+        version: "Any version change"
+        compliance: "Any level change"
 
-security:
-  execution: local
-  network: "Required (local HTTP server for file:// URLs)"
-  file-access: "read-write (baseline storage)"
+  policy:
+    merging: mixin
+    inheritance: soft
+    automation:
+      ci-cd: "recommended"
+      pre-commit: "recommended"
+      manual: "required for baseline establishment"
 
-provenance:
-  source:
-    scripts:
-      - "scripts/lib/html-audit-utils.js"
-      - "scripts/audit-html-baseline.js"
-      - "scripts/audit-html-compare.js"
-    npm-scripts:
-      - "audit:html:baseline"
-      - "audit:html:compare"
-  dependencies:
-    - "Enhanced Audit System (npm run cogify)"
-    - "glob (file discovery)"
-    - "http-server (local file serving)"
-    - "js-yaml (YAML parsing)"
+  security:
+    execution: local
+    network: "Required (local HTTP server for file:// URLs)"
+    file-access: "read-write (baseline storage)"
+
+  provenance:
+    source:
+      scripts:
+        - "scripts/lib/html-audit-utils.js"
+        - "scripts/audit-html-baseline.js"
+        - "scripts/audit-html-compare.js"
+      npm-scripts:
+        - "audit:html:baseline"
+        - "audit:html:compare"
+    dependencies:
+      - "Enhanced Audit System (npm run cogify)"
+      - "glob (file discovery)"
+      - "http-server (local file serving)"
+      - "js-yaml (YAML parsing)"
 ---
 
 # HTML Baseline Audit & Regression Detection

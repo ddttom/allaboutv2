@@ -1,20 +1,22 @@
 ---
-name: smart-glasses-platform-opportunity
 title: "Smart Glasses — The MX Platform Opportunity"
 description: "Strategic analysis of smart glasses as a mass-market MX platform. Millions of AI glasses shipped in 2025 with cameras and voice but no content understanding standard. MX fills the gap — glasses are just another reader of docs published by Reginald. Zero engineering. The companion web, on your face."
 author: "Tom Cranstoun and Maxine"
 created: 2026-02-14
 modified: 2026-02-14
 version: "1.0"
-status: active
-category: vision
-contentType: info-doc
-tags: [smart-glasses, meta, platform, wearables, companion-web, strategy, market-opportunity, competitive-analysis, google, apple, samsung]
-audience: ["business", "investors"]
-purpose: "strategic-opportunity"
-buildsOn: [mx-messaging, the-companion-web]
-confidential: true
-runbook: "This is a strategic opportunity document for the advisory board and investors. Dual-audience: business claim first, technical evidence underneath. Market data cites sources. Write like a blog — informative, not technical."
+
+mx:
+  name: smart-glasses-platform-opportunity
+  status: active
+  category: vision
+  contentType: info-doc
+  tags: [smart-glasses, meta, platform, wearables, companion-web, strategy, market-opportunity, competitive-analysis, google, apple, samsung]
+  audience: ["business", "investors"]
+  purpose: "strategic-opportunity"
+  buildsOn: [mx-messaging, the-companion-web]
+  confidential: true
+  runbook: "This is a strategic opportunity document for the advisory board and investors. Dual-audience: business claim first, technical evidence underneath. Market data cites sources. Write like a blog — informative, not technical."
 ---
 
 # Smart Glasses — The MX Platform Opportunity

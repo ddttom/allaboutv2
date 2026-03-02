@@ -1,238 +1,240 @@
 ---
-name: pixel-perfect-web-replication
 title: "Pixel-Perfect Web Replication Workflow"
 description: "Complete workflow for creating pixel-perfect MX-enhanced reference implementations from existing websites using comprehensive HTML/CSS audit, Playwright capture, and automated validation"
 version: "2.0.0"
 created: "2026-02-20"
 modified: "2026-02-20"
 author: "Cog-Nova-MX Ltd"
-category: mx-tools
-status: active
-tags: [playwright, visual-capture, html-css-audit, dom-tree, computed-css, cascade-resolution, reference-implementation, pixel-perfect, automation, cogification, bilingual, single-language-toggle, offline-capable, validation-baseline]
-audience: [tech, business]
 
-buildsOn: [cogify-this, what-is-a-cog]
+mx:
+  name: pixel-perfect-web-replication
+  category: mx-tools
+  status: active
+  tags: [playwright, visual-capture, html-css-audit, dom-tree, computed-css, cascade-resolution, reference-implementation, pixel-perfect, automation, cogification, bilingual, single-language-toggle, offline-capable, validation-baseline]
+  audience: [tech, business]
 
-partOf: mx-cog-registry
+  buildsOn: [cogify-this, what-is-a-cog]
 
-runtime: ai-agent
-runbook: |
-deliverable:
-  primary: "[business-name]-single-lang.cog.html"
-  format: "Single HTML file with embedded YAML, CSS, JavaScript, and Leaflet maps"
-  audit-artifacts:
-    - "audit/visual-audit-report.md - Human-readable design specifications"
-    - "audit/audit-data.json - Machine-readable structured data with DOM tree and computed CSS"
-    - "audit/cached-html/ - Complete rendered HTML files (24h TTL)"
-    - "audit/cached-css/ - All stylesheet files (24h TTL)"
-    - "audit/screenshots/ - Full-page screenshots for visual validation"
-    - "audit/css-patterns.json - Extracted reusable CSS patterns and custom properties"
-    - "audit/validation-baseline.json - Baseline for automated comparison"
-  validation:
-    - Structural validation against cached DOM tree
-    - CSS pattern match against extracted patterns
-    - Side-by-side visual comparison with original
-    - Comparison against cached screenshots
-    - W3C HTML validation
-    - WCAG 2.1 AA compliance
-    - Schema.org validation
-    - WebMCP specification compliance
-    - Mobile responsiveness test
-    - Language toggle test
-    - Navigation functionality test
-interview:
-  trigger: start
-  questions:
-    - id: target_url
-      question: "What is the URL of the website you want to replicate?"
-      type: url
-      required: true
-      example: "https://example-restaurant.com"
+  partOf: mx-cog-registry
 
-    - id: business_type
-      question: "What type of business is this?"
-      type: choice
-      options:
-        - restaurant
-        - hotel
-        - retail-shop
-        - professional-services
-        - healthcare
-        - real-estate
-        - gallery-museum
-        - event-venue
-        - other
-      required: true
+  runtime: ai-agent
+  runbook: |
+  deliverable:
+    primary: "[business-name]-single-lang.cog.html"
+    format: "Single HTML file with embedded YAML, CSS, JavaScript, and Leaflet maps"
+    audit-artifacts:
+      - "audit/visual-audit-report.md - Human-readable design specifications"
+      - "audit/audit-data.json - Machine-readable structured data with DOM tree and computed CSS"
+      - "audit/cached-html/ - Complete rendered HTML files (24h TTL)"
+      - "audit/cached-css/ - All stylesheet files (24h TTL)"
+      - "audit/screenshots/ - Full-page screenshots for visual validation"
+      - "audit/css-patterns.json - Extracted reusable CSS patterns and custom properties"
+      - "audit/validation-baseline.json - Baseline for automated comparison"
+    validation:
+      - Structural validation against cached DOM tree
+      - CSS pattern match against extracted patterns
+      - Side-by-side visual comparison with original
+      - Comparison against cached screenshots
+      - W3C HTML validation
+      - WCAG 2.1 AA compliance
+      - Schema.org validation
+      - WebMCP specification compliance
+      - Mobile responsiveness test
+      - Language toggle test
+      - Navigation functionality test
+  interview:
+    trigger: start
+    questions:
+      - id: target_url
+        question: "What is the URL of the website you want to replicate?"
+        type: url
+        required: true
+        example: "https://example-restaurant.com"
 
-    - id: languages
-      question: "What languages should the implementation support?"
-      type: multiple-choice
-      options:
-        - spanish-english
-        - french-english
-        - german-english
-        - italian-english
-        - custom (specify)
-      required: true
-      default: spanish-english
+      - id: business_type
+        question: "What type of business is this?"
+        type: choice
+        options:
+          - restaurant
+          - hotel
+          - retail-shop
+          - professional-services
+          - healthcare
+          - real-estate
+          - gallery-museum
+          - event-venue
+          - other
+        required: true
 
-    - id: has_location
-      question: "Does this business have a physical location that needs an interactive map?"
-      type: boolean
-      required: true
-      help: "If yes, we'll add a Leaflet/OpenStreetMap interactive map with contact info tooltips"
+      - id: languages
+        question: "What languages should the implementation support?"
+        type: multiple-choice
+        options:
+          - spanish-english
+          - french-english
+          - german-english
+          - italian-english
+          - custom (specify)
+        required: true
+        default: spanish-english
 
-    - id: schema_type
-      question: "What Schema.org type best describes this business?"
-      type: choice
-      options:
-        - Restaurant
-        - Hotel
-        - LocalBusiness
-        - Store
-        - ProfessionalService
-        - MedicalBusiness
-        - RealEstateAgent
-        - ArtGallery
-        - EventVenue
-        - Other (specify)
-      required: true
-      help: "This determines the structured data markup for search engines and AI agents"
+      - id: has_location
+        question: "Does this business have a physical location that needs an interactive map?"
+        type: boolean
+        required: true
+        help: "If yes, we'll add a Leaflet/OpenStreetMap interactive map with contact info tooltips"
 
-    - id: navigation_sections
-      question: "What are the main navigation sections from the original site?"
-      type: text
-      required: false
-      example: "Home, Menu, About, Contact"
-      help: "Leave blank to auto-detect during Playwright capture"
+      - id: schema_type
+        question: "What Schema.org type best describes this business?"
+        type: choice
+        options:
+          - Restaurant
+          - Hotel
+          - LocalBusiness
+          - Store
+          - ProfessionalService
+          - MedicalBusiness
+          - RealEstateAgent
+          - ArtGallery
+          - EventVenue
+          - Other (specify)
+        required: true
+        help: "This determines the structured data markup for search engines and AI agents"
 
-    - id: special_features
-      question: "Are there any special features we should preserve?"
-      type: multiple-choice
-      options:
-        - online-booking
-        - menu-with-prices
-        - photo-gallery
-        - testimonials-reviews
-        - social-media-links
-        - newsletter-signup
-        - none
-      required: false
+      - id: navigation_sections
+        question: "What are the main navigation sections from the original site?"
+        type: text
+        required: false
+        example: "Home, Menu, About, Contact"
+        help: "Leave blank to auto-detect during Playwright capture"
 
-action:
-  audit:
-    description: "Run comprehensive HTML/CSS audit on target URL"
-    command: "cd audit && node enhanced-audit.js --target=[url] --cache-assets --ttl=24h"
-    outputs:
-      - visual-audit-report.md
-      - audit-data.json
-      - cached-html/
-      - cached-css/
-      - screenshots/
-      - css-patterns.json
-      - validation-baseline.json
+      - id: special_features
+        question: "Are there any special features we should preserve?"
+        type: multiple-choice
+        options:
+          - online-booking
+          - menu-with-prices
+          - photo-gallery
+          - testimonials-reviews
+          - social-media-links
+          - newsletter-signup
+          - none
+        required: false
 
-  validate:
-    description: "Validate the generated reference implementation against cached baseline"
-    command: "node validate-against-baseline.js --baseline=audit/validation-baseline.json --target=[demo-path]"
+  action:
+    audit:
+      description: "Run comprehensive HTML/CSS audit on target URL"
+      command: "cd audit && node enhanced-audit.js --target=[url] --cache-assets --ttl=24h"
+      outputs:
+        - visual-audit-report.md
+        - audit-data.json
+        - cached-html/
+        - cached-css/
+        - screenshots/
+        - css-patterns.json
+        - validation-baseline.json
 
-  capture:
-    description: "Run Playwright visual capture on target URL (legacy, use 'audit' instead)"
-    command: "cd audit && node capture-site.js"
-    deprecated: true
-    replacement: "action:audit"
+    validate:
+      description: "Validate the generated reference implementation against cached baseline"
+      command: "node validate-against-baseline.js --baseline=audit/validation-baseline.json --target=[demo-path]"
 
-  preview:
-    description: "Open the demo and original side-by-side for comparison"
-    command: "open [original-url] && open [demo-path]"
+    capture:
+      description: "Run Playwright visual capture on target URL (legacy, use 'audit' instead)"
+      command: "cd audit && node capture-site.js"
+      deprecated: true
+      replacement: "action:audit"
 
-  extract-patterns:
-    description: "Extract reusable CSS patterns from cached stylesheets"
-    command: "node extract-css-patterns.js --source=audit/cached-css/ --output=audit/css-patterns.json"
+    preview:
+      description: "Open the demo and original side-by-side for comparison"
+      command: "open [original-url] && open [demo-path]"
 
-  check-cache:
-    description: "Check if cached audit data is still valid (24h TTL)"
-    command: "node check-cache-validity.js --cache-dir=audit/"
+    extract-patterns:
+      description: "Extract reusable CSS patterns from cached stylesheets"
+      command: "node extract-css-patterns.js --source=audit/cached-css/ --output=audit/css-patterns.json"
 
-  generate:
-    description: "Generate complete reference implementation from interview responses"
-    steps:
-      - Create audit/ directory structure
-      - Generate enhanced Playwright audit script for target URL
-      - Run comprehensive audit (HTML/CSS + visual capture)
-      - Cache all assets locally with 24h TTL
-      - Generate multi-format audit outputs
-      - Extract CSS pattern library
-      - Build validation baseline
-      - Select appropriate template based on business type
-      - Use cached DOM tree as structural reference
-      - Apply exact colors/fonts from audit report
-      - Apply extracted CSS patterns
-      - Build navigation matching original
-      - Add interactive map if location-based
-      - Generate comprehensive YAML frontmatter
-      - Add Schema.org markup for business type
-      - Define WebMCP tools
-      - Validate against baseline
-      - Create README with audit artifacts
-      - Include audit documentation
+    check-cache:
+      description: "Check if cached audit data is still valid (24h TTL)"
+      command: "node check-cache-validity.js --cache-dir=audit/"
 
-definition:
-  standards:
-    - name: Playwright
-      version: "1.9.4"
-      authority: Microsoft
-      purpose: "Automated browser testing and visual capture"
+    generate:
+      description: "Generate complete reference implementation from interview responses"
+      steps:
+        - Create audit/ directory structure
+        - Generate enhanced Playwright audit script for target URL
+        - Run comprehensive audit (HTML/CSS + visual capture)
+        - Cache all assets locally with 24h TTL
+        - Generate multi-format audit outputs
+        - Extract CSS pattern library
+        - Build validation baseline
+        - Select appropriate template based on business type
+        - Use cached DOM tree as structural reference
+        - Apply exact colors/fonts from audit report
+        - Apply extracted CSS patterns
+        - Build navigation matching original
+        - Add interactive map if location-based
+        - Generate comprehensive YAML frontmatter
+        - Add Schema.org markup for business type
+        - Define WebMCP tools
+        - Validate against baseline
+        - Create README with audit artifacts
+        - Include audit documentation
 
-    - name: Leaflet
-      version: "1.9.4"
-      authority: Vladimir Agafonkin
-      purpose: "Interactive maps with OpenStreetMap"
+  definition:
+    standards:
+      - name: Playwright
+        version: "1.9.4"
+        authority: Microsoft
+        purpose: "Automated browser testing and visual capture"
 
-    - name: WebMCP
-      version: "1.0-draft"
-      authority: W3C
-      purpose: "Web pages expose tools for AI agents"
+      - name: Leaflet
+        version: "1.9.4"
+        authority: Vladimir Agafonkin
+        purpose: "Interactive maps with OpenStreetMap"
 
-    - name: Schema.org
-      version: "26.0"
-      authority: Schema.org
-      purpose: "Structured data markup"
+      - name: WebMCP
+        version: "1.0-draft"
+        authority: W3C
+        purpose: "Web pages expose tools for AI agents"
 
-security:
-  data-handling: client-side-only
-  external-requests:
-    - playwright (npm package)
-    - leaflet (CDN)
-    - openstreetmap (map tiles)
-    - google-fonts (typography)
-  privacy: no-tracking
-  authentication: none-required
+      - name: Schema.org
+        version: "26.0"
+        authority: Schema.org
+        purpose: "Structured data markup"
 
-provenance:
-  origin: "Learned from Los Granainos reference implementation (2026-02-20)"
-  methodology: "Iterative development with user feedback and Playwright automation"
-  lessons-learned:
-    - "Capture visual specs FIRST before building (eliminates guesswork)"
-    - "Single-language toggle pattern cleaner than side-by-side for mobile"
-    - "Navigation must be included from start (not added later)"
-    - "Interactive maps enhance location-based businesses"
-    - "CSS language visibility must work at html element level"
-    - "Validation against screenshots prevents rework"
+  security:
+    data-handling: client-side-only
+    external-requests:
+      - playwright (npm package)
+      - leaflet (CDN)
+      - openstreetmap (map tiles)
+      - google-fonts (typography)
+    privacy: no-tracking
+    authentication: none-required
 
-certification:
-  ready-for-reginald: true
-  cog-version: "2.0"
-  mx-enhanced: true
-  webmcp-compliant: true
-  wcag-compliant: "2.1-AA"
+  provenance:
+    origin: "Learned from Los Granainos reference implementation (2026-02-20)"
+    methodology: "Iterative development with user feedback and Playwright automation"
+    lessons-learned:
+      - "Capture visual specs FIRST before building (eliminates guesswork)"
+      - "Single-language toggle pattern cleaner than side-by-side for mobile"
+      - "Navigation must be included from start (not added later)"
+      - "Interactive maps enhance location-based businesses"
+      - "CSS language visibility must work at html element level"
+      - "Validation against screenshots prevents rework"
 
-registry:
-  id: "cog-122"
-  registered: "2026-02-20"
-  namespace: "mx-canon/mx-cog-registry"
-  visibility: public
-  license: MIT
+  certification:
+    ready-for-reginald: true
+    cog-version: "2.0"
+    mx-enhanced: true
+    webmcp-compliant: true
+    wcag-compliant: "2.1-AA"
+
+  registry:
+    id: "cog-122"
+    registered: "2026-02-20"
+    namespace: "mx-canon/mx-cog-registry"
+    visibility: public
+    license: MIT
 ---
 
 # Pixel-Perfect Web Replication Workflow

@@ -1,30 +1,32 @@
 ---
-name: manual-mx-os
 title: MX OS — Manual
 description: The Machine Experience Operating System. A practical guide to cogs, SOULs, the registry, runtime, and the companion web.
 version: "1.0"
-status: active
-license: proprietary
 created: 2026-02-09T00:00:00.000Z
 modified: 2026-02-13T00:00:00.000Z
 author: Tom Cranstoun
-category: manual
-tags:
-  - manual
-  - mx-os
-  - operating-system
-  - cogs
-  - runtime
-partOf: mx-maxine-lives
-purpose: Document mx os - usage, workflow, and best practices
-audience: human
-stability: stable
-runbook: "mx exec manual-mx-os"
-contextProvides:
-  - The Machine Experience Operating System. A practical guide to cogs, SOULs, the registry, runtime, and the companion web.
-  - Usage guide and workflow for mx os
-  - Troubleshooting and best practices
-refersTo: []
+
+mx:
+  name: manual-mx-os
+  status: active
+  license: proprietary
+  category: manual
+  tags:
+    - manual
+    - mx-os
+    - operating-system
+    - cogs
+    - runtime
+  partOf: mx-maxine-lives
+  purpose: Document mx os - usage, workflow, and best practices
+  audience: human
+  stability: stable
+  runbook: "mx exec manual-mx-os"
+  contextProvides:
+    - The Machine Experience Operating System. A practical guide to cogs, SOULs, the registry, runtime, and the companion web.
+    - Usage guide and workflow for mx os
+    - Troubleshooting and best practices
+  refersTo: []
 ---
 
 # MX OS Manual

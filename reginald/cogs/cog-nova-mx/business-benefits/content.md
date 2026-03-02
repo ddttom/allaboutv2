@@ -1,19 +1,21 @@
 ---
-name: "business-benefits"
 title: "MX Business Benefits — Four Strategic Outcomes"
 created: "2026-02-17"
 version: "1.0"
 author: "Tom Cranstoun & Maxine (Claude Sonnet 4.5)"
 description: "Complete documentation of the four strategic business benefits that MX implementation delivers: first-mover computational trust, revenue recovery from AI-mediated commerce, strategic asset portability, and operational efficiency through deterministic outputs"
-tags: [business-case, roi, competitive-advantage, operational-efficiency, strategic-assets, computational-trust]
-category: "Business Strategy"
-purpose: "Internal reference document capturing the complete business case for MX implementation, synthesized from customer interviews, implementation experience, and Chapter 0 business case analysis"
-audience: [business, sales, consulting]
-status: "active"
-buildsOn:
-  - mx-messaging
-partOf: "MX OS"
-runbook: |
+
+mx:
+  name: "business-benefits"
+  tags: [business-case, roi, competitive-advantage, operational-efficiency, strategic-assets, computational-trust]
+  category: "Business Strategy"
+  purpose: "Internal reference document capturing the complete business case for MX implementation, synthesized from customer interviews, implementation experience, and Chapter 0 business case analysis"
+  audience: [business, sales, consulting]
+  status: "active"
+  buildsOn:
+    - mx-messaging
+  partOf: "MX OS"
+  runbook: |
 ---
 
 # MX Business Benefits — Four Strategic Outcomes

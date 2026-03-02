@@ -1,99 +1,101 @@
 ---
-name: "{block-name}"
 description: "{One-sentence description of what this block does}"
 author: "{Author Name}"
 created: "{YYYY-MM-DD}"
-status: "draft"  # draft | signed | registered | active
-category: "eds-block"
-tags: [eds, block, "{block-category}"]
 version: "1.0"
-cogId: "cog-eds-block-{block-name}-{YYYYMMDD}"
-cogType: "certificate-of-genuineness"
-license: "MIT"
 
-publisher:
-  name: "{Publisher Name}"
-  verified: false
-  signedBy: "unsigned"
-  contact: "{email@example.com}"
-  website: "{https://example.com}"
-
-subject:
-  name: "{Block Name} Block"
-  category: "eds-block"
-  scope: "{block-category}"  # e.g., navigation, content, media, layout, commerce
-  description: "{One-sentence description of what this block does}"
-
-publicationDate: "{YYYY-MM-DDTHH:MM:SSZ}"
-expires: "{YYYY-MM-DDTHH:MM:SSZ}"
-lastVerified: "{YYYY-MM-DDTHH:MM:SSZ}"
-signature: "unsigned"
-mxCompliance: "level-2"
-registry: "allabout.network"
-
-maintainer:
-  name: "{Maintainer Name}"
-  role: "{Role/Title}"
-  contact: "{email@example.com}"
-  escalation: "{escalation-email@example.com}"
-
-reviewCycle: "quarterly"
-updateTriggers:
-  - "EDS core update"
-  - "accessibility requirement change"
-  - "content model change"
-  - "bug report"
-
-accuracyCommitment: "Verified against current EDS block implementation"
-correctionSla: "72 hours"
-
-usage:
-  sopInference: "permitted"
-  caching: "permitted for 24 hours"
-  redistribution: "with attribution"
-  commercialUse: "permitted"
-  aiTraining: "permitted with attribution"
-
-block:
+mx:
   name: "{block-name}"
-  version: "1.0"
-  category: "{navigation|content|media|layout|commerce|utility}"
+  status: "draft"  # draft | signed | registered | active
+  category: "eds-block"
+  tags: [eds, block, "{block-category}"]
+  cogId: "cog-eds-block-{block-name}-{YYYYMMDD}"
+  cogType: "certificate-of-genuineness"
+  license: "MIT"
 
-  contentModel:
-    description: |
-      {Describe the expected content structure in the Word/Google Doc.
-      What rows/columns does the author create?}
-    rows:
-      - name: "{Row 1 name}"
-        purpose: "{What this row contains}"
-        required: true
-      - name: "{Row 2 name}"
-        purpose: "{What this row contains}"
-        required: false
+  publisher:
+    name: "{Publisher Name}"
+    verified: false
+    signedBy: "unsigned"
+    contact: "{email@example.com}"
+    website: "{https://example.com}"
 
-  decoration:
-    approach: "decorate()"  # decorate() | loadLazy() | loadEager()
-    transforms:
-      - "{DOM transformation 1}"
-      - "{DOM transformation 2}"
+  subject:
+    name: "{Block Name} Block"
+    category: "eds-block"
+    scope: "{block-category}"  # e.g., navigation, content, media, layout, commerce
+    description: "{One-sentence description of what this block does}"
 
-  dependencies:
-    scripts: []  # e.g., ["../../scripts/aem.js"]
-    styles: []   # e.g., ["./block-name.css"]
-    blocks: []   # Other blocks this depends on
+  publicationDate: "{YYYY-MM-DDTHH:MM:SSZ}"
+  expires: "{YYYY-MM-DDTHH:MM:SSZ}"
+  lastVerified: "{YYYY-MM-DDTHH:MM:SSZ}"
+  signature: "unsigned"
+  mxCompliance: "level-2"
+  registry: "allabout.network"
 
-  accessibility:
-    ariaRoles: []
-    keyboardSupport: "{Description of keyboard interactions}"
-    wcagLevel: "AA"
+  maintainer:
+    name: "{Maintainer Name}"
+    role: "{Role/Title}"
+    contact: "{email@example.com}"
+    escalation: "{escalation-email@example.com}"
 
-  responsive:
-    mobileBehavior: "{How block adapts below 900px}"
-    breakpoints: [900]
+  reviewCycle: "quarterly"
+  updateTriggers:
+    - "EDS core update"
+    - "accessibility requirement change"
+    - "content model change"
+    - "bug report"
 
-contentType: "eds-block"
-audience: ["developers", "machines"]
-runbook: |
+  accuracyCommitment: "Verified against current EDS block implementation"
+  correctionSla: "72 hours"
+
+  usage:
+    sopInference: "permitted"
+    caching: "permitted for 24 hours"
+    redistribution: "with attribution"
+    commercialUse: "permitted"
+    aiTraining: "permitted with attribution"
+
+  block:
+    name: "{block-name}"
+    version: "1.0"
+    category: "{navigation|content|media|layout|commerce|utility}"
+
+    contentModel:
+      description: |
+        {Describe the expected content structure in the Word/Google Doc.
+        What rows/columns does the author create?}
+      rows:
+        - name: "{Row 1 name}"
+          purpose: "{What this row contains}"
+          required: true
+        - name: "{Row 2 name}"
+          purpose: "{What this row contains}"
+          required: false
+
+    decoration:
+      approach: "decorate()"  # decorate() | loadLazy() | loadEager()
+      transforms:
+        - "{DOM transformation 1}"
+        - "{DOM transformation 2}"
+
+    dependencies:
+      scripts: []  # e.g., ["../../scripts/aem.js"]
+      styles: []   # e.g., ["./block-name.css"]
+      blocks: []   # Other blocks this depends on
+
+    accessibility:
+      ariaRoles: []
+      keyboardSupport: "{Description of keyboard interactions}"
+      wcagLevel: "AA"
+
+    responsive:
+      mobileBehavior: "{How block adapts below 900px}"
+      breakpoints: [900]
+
+  contentType: "eds-block"
+  audience: ["developers", "machines"]
+  runbook: |
 ---
 
 # {Block Name} Block

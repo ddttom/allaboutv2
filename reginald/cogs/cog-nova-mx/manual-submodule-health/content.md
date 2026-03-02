@@ -1,29 +1,31 @@
 ---
-name: manual-submodule-health
 title: Submodule Health Check Manual
 description: Multi-dimensional submodule validation checking initialization, uncommitted changes, branch status, and remote sync. Provides actionable fix commands.
 author: Tom Cranstoun and Maxine
 created: 2026-02-19T00:00:00.000Z
 version: "1.0"
-status: active
-category: manual
-tags:
-  - manual
-  - submodules
-  - validation
-  - git
-  - health
-  - automation
-partOf: mx-maxine-lives
-purpose: Document submodule health - usage, workflow, and best practices
-audience: human
-stability: stable
-runbook: Read when working with submodule health or understanding its functionality
-contextProvides:
-  - Multi-dimensional submodule validation checking initialization, uncommitted changes, branch status, and remote sync. Provides actionable fix commands.
-  - Usage guide and workflow for submodule health
-  - Troubleshooting and best practices
-refersTo: []
+
+mx:
+  name: manual-submodule-health
+  status: active
+  category: manual
+  tags:
+    - manual
+    - submodules
+    - validation
+    - git
+    - health
+    - automation
+  partOf: mx-maxine-lives
+  purpose: Document submodule health - usage, workflow, and best practices
+  audience: human
+  stability: stable
+  runbook: Read when working with submodule health or understanding its functionality
+  contextProvides:
+    - Multi-dimensional submodule validation checking initialization, uncommitted changes, branch status, and remote sync. Provides actionable fix commands.
+    - Usage guide and workflow for submodule health
+    - Troubleshooting and best practices
+  refersTo: []
 ---
 
 # Submodule Health Check

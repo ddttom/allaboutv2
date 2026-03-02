@@ -1,46 +1,48 @@
 ---
-name: "Apfelwein Wagner"
 description: "Traditional Frankfurt restaurant specialising in Hessian cuisine and handcrafted apple wine. Family-run since 1931."
 author: "MX Demo"
 created: 2026-02-12
 modified: 2026-02-12
 version: "1.0"
-status: active
-category: venue
-contentType: info-doc
-tags: [restaurant, dining, frankfurt, german-cuisine, hessian, apple-wine, vegetarian, wheelchair-accessible, step-free, accessible-toilet, outdoor-seating]
 
-location:
-  type: restaurant
-  cuisine: [hessian, german, traditional]
-  address: "Schweizer Strasse 71, 60594 Frankfurt am Main"
-  phone: "+49 69 612565"
-  hours: "Tue-Sun 11:00-23:00, Mon closed"
-  price: "€€"
-  capacity: 120
-  outdoor: true
+mx:
+  name: "Apfelwein Wagner"
+  status: active
+  category: venue
+  contentType: info-doc
+  tags: [restaurant, dining, frankfurt, german-cuisine, hessian, apple-wine, vegetarian, wheelchair-accessible, step-free, accessible-toilet, outdoor-seating]
 
-dietary:
-  vegetarian: true
-  vegan: limited
-  gluten-free: on-request
-  allergen-menu: true
-  halal: false
+  location:
+    type: restaurant
+    cuisine: [hessian, german, traditional]
+    address: "Schweizer Strasse 71, 60594 Frankfurt am Main"
+    phone: "+49 69 612565"
+    hours: "Tue-Sun 11:00-23:00, Mon closed"
+    price: "€€"
+    capacity: 120
+    outdoor: true
 
-accessibility:
-  wheelchair-access: true
-  step-free-entry: true
-  accessible-toilet: true
-  accessible-parking: "50m — Schweizer Platz garage"
-  hearing-loop: false
-  braille-menu: false
-  seating: "Wheelchair-accessible tables available, not just bar stools"
+  dietary:
+    vegetarian: true
+    vegan: limited
+    gluten-free: on-request
+    allergen-menu: true
+    halal: false
 
-specialities:
-  - Grüne Soße (Frankfurt green sauce — seven herbs, eggs, potatoes)
-  - Handkäs mit Musik (marinated sour milk cheese)
-  - Frankfurter Schnitzel
-  - Apfelwein (house apple wine, pressed on-site)
+  accessibility:
+    wheelchair-access: true
+    step-free-entry: true
+    accessible-toilet: true
+    accessible-parking: "50m — Schweizer Platz garage"
+    hearing-loop: false
+    braille-menu: false
+    seating: "Wheelchair-accessible tables available, not just bar stools"
+
+  specialities:
+    - Grüne Soße (Frankfurt green sauce — seven herbs, eggs, potatoes)
+    - Handkäs mit Musik (marinated sour milk cheese)
+    - Frankfurter Schnitzel
+    - Apfelwein (house apple wine, pressed on-site)
 ---
 
 # Apfelwein Wagner

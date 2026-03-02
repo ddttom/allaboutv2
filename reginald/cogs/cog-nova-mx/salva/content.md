@@ -1,22 +1,24 @@
 ---
-name: salva
-contentType: contact
 description: Adobe AEM Master, advisory board member, long-time friend
 author: Tom Cranstoun
 created: 2026-02-09
-category: contact
-tags: [contact, advisor, adobe, aem, advisory-board]
-relationship: advisor
-status: active
-organisation: Adobe
-role: Senior Multi-Solutions Consultant
-context: >
-  Salvador Morales Olaso. Adobe Experience Manager Master (x3). Tom mentored
-  him at EE (Jan 2014 - Apr 2015). Based in Malaga, Spain. Advisory board
-  member. Deep expertise in Content, Commerce, Personalization, GenAI,
-  Technology and Strategy. Universidad de Malaga. Great friend and great coder.
-messages: []
-next-action: Determine outreach timing and briefing content
+
+mx:
+  name: salva
+  contentType: contact
+  category: contact
+  tags: [contact, advisor, adobe, aem, advisory-board]
+  relationship: advisor
+  status: active
+  organisation: Adobe
+  role: Senior Multi-Solutions Consultant
+  context: >
+    Salvador Morales Olaso. Adobe Experience Manager Master (x3). Tom mentored
+    him at EE (Jan 2014 - Apr 2015). Based in Malaga, Spain. Advisory board
+    member. Deep expertise in Content, Commerce, Personalization, GenAI,
+    Technology and Strategy. Universidad de Malaga. Great friend and great coder.
+  messages: []
+  next-action: Determine outreach timing and briefing content
 ---
 
 # Salvador Morales Olaso (Salva)

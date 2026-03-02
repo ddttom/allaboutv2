@@ -1,24 +1,26 @@
 ---
-name: adr-attribute-namespace-policy
 title: "ADR: Attribute Namespace Policy — Public, Private, and Standard Fields [ARCHIVED]"
 description: "Architecture decision: three-tier namespace prefix policy for cog YAML attributes — standard (no prefix), MX-public (x-mx-), MX-private (x-mx-p-). Clarifies mx: namespace governance and context-specific naming. ARCHIVED 2026-02-17: Split into separate ADRs for The Gathering (standard) and Cog-Nova-MX (vendor extensions)."
 created: 2026-02-14
 modified: 2026-02-17
 author: Tom Cranstoun and Maxine
-status: archived
-decision-status: superseded
-superseded-by:
-  - mx-canon/mx-the-gathering/architecture-decisions/adr-02-namespace-policy.cog.md
-  - mx-canon/mx-maxine-lives/registers/ADR/vendor-extensions-policy.cog.md
-tags: [adr, namespace, attributes, fields, policy, cog-id, x-mx, privacy, obfuscation, governance, naming-conventions, archived]
-partOf: mx-maxine-lives
-category: mx-core
 
-context:
-  trigger: "Cog ID system design — documents created by cogs need an mx-ref attribute tracing back to the source cog. Tom identified that 'mx-ref' is not properly namespaced — it looks like a standard field when it's an MX OS implementation detail."
-  date: 2026-02-14
-  session: "Interview session on cog IDs, namespace policy, and public/private attribute levels"
-  archive-reason: "Repository handover to The Gathering required clean organizational separation. This ADR covered both The Gathering's standard namespaces AND Cog-Nova-MX' vendor extensions. Split into two separate ADRs on 2026-02-17 to clarify governance boundaries."
+mx:
+  name: adr-attribute-namespace-policy
+  status: archived
+  decision-status: superseded
+  superseded-by:
+    - mx-canon/mx-the-gathering/architecture-decisions/adr-02-namespace-policy.cog.md
+    - mx-canon/mx-maxine-lives/registers/ADR/vendor-extensions-policy.cog.md
+  tags: [adr, namespace, attributes, fields, policy, cog-id, x-mx, privacy, obfuscation, governance, naming-conventions, archived]
+  partOf: mx-maxine-lives
+  category: mx-core
+
+  context:
+    trigger: "Cog ID system design — documents created by cogs need an mx-ref attribute tracing back to the source cog. Tom identified that 'mx-ref' is not properly namespaced — it looks like a standard field when it's an MX OS implementation detail."
+    date: 2026-02-14
+    session: "Interview session on cog IDs, namespace policy, and public/private attribute levels"
+    archive-reason: "Repository handover to The Gathering required clean organizational separation. This ADR covered both The Gathering's standard namespaces AND Cog-Nova-MX' vendor extensions. Split into two separate ADRs on 2026-02-17 to clarify governance boundaries."
 ---
 
 # ADR: Attribute Namespace Policy [ARCHIVED]

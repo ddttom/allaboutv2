@@ -1,20 +1,22 @@
 ---
-name: mx-metadata-conventions
 title: "MX Metadata Conventions — Embrace and Extend"
 description: "How MX metadata works across every file type. The implementation rules for native metadata, block mapping, namespace extension, and Reginald serving."
 author: "Tom Cranstoun and Maxine"
 created: 2026-02-15
 modified: 2026-02-15
 version: "1.0"
-status: active
-category: deliverable
-contentType: info-doc
-tags: [metadata, conventions, html, javascript, css, file-types, embrace-extend, blocks, namespace]
-audience: [tech, business]
-purpose: "implementation-spec"
-buildsOn: [what-is-a-cog, field-dictionary]
-partOf: mx-maxine-lives
-runbook: "This document defines how MX metadata works in every file type. Read this before adding metadata to non-markdown files. The Gathering spec defines the principles; this document defines the rules."
+
+mx:
+  name: mx-metadata-conventions
+  status: active
+  category: deliverable
+  contentType: info-doc
+  tags: [metadata, conventions, html, javascript, css, file-types, embrace-extend, blocks, namespace]
+  audience: [tech, business]
+  purpose: "implementation-spec"
+  buildsOn: [what-is-a-cog, field-dictionary]
+  partOf: mx-maxine-lives
+  runbook: "This document defines how MX metadata works in every file type. Read this before adding metadata to non-markdown files. The Gathering spec defines the principles; this document defines the rules."
 ---
 
 # MX Metadata Conventions — Embrace and Extend

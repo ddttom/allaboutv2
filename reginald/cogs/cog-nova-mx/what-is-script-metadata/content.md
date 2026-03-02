@@ -1,5 +1,4 @@
 ---
-name: what-is-script-metadata
 version: "1.0.0"
 description: Script metadata brings shell scripts into MX OS — comment-block frontmatter that makes every script machine-readable without changing how it runs.
 
@@ -7,60 +6,63 @@ created: 2026-02-10
 modified: 2026-02-10
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, mx-principles]
-buildsOn: [what-is-a-cog, what-is-mx-os, who-is-maxine, script-helper]
-tags: [script-metadata, cut-compute, inspect, bash, shell, sop-efficiency, mx-os]
+mx:
+  name: what-is-script-metadata
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: developers
-readingLevel: accessible
-purpose: Explain why scripts need machine-readable metadata, how the system works, where we are today, and what comes next
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, mx-principles]
+  buildsOn: [what-is-a-cog, what-is-mx-os, who-is-maxine, script-helper]
+  tags: [script-metadata, cut-compute, inspect, bash, shell, sop-efficiency, mx-os]
 
-contentType: "action-doc"
-runbook: "mx exec what-is-script-metadata"
-execute:
-  runtime: runbook
-  command: mx cog script-metadata
-  actions:
-    - name: audit
-      description: Scan a directory for scripts and report which have MX metadata and which do not
-      usage: Check every .sh file in the target directory for a # --- metadata block. Report compliant vs non-compliant scripts with their current header lines.
-      inputs:
-        - name: directory
-          type: string
-          required: true
-          description: The directory to scan (e.g. $MX_BIN_DIR)
-      outputs:
-        - name: report
-          type: object
-          description: List of scripts with metadata status, missing fields, and recommendations
+  audience: developers
+  readingLevel: accessible
+  purpose: Explain why scripts need machine-readable metadata, how the system works, where we are today, and what comes next
 
-    - name: progress
-      description: Show current adoption stats across the mx.* script suite
-      usage: Count mx.\* scripts in $MX_BIN_DIR. Count how many have the # --- metadata block. Report the ratio and list the gaps.
-      inputs: []
-      outputs:
-        - name: stats
-          type: object
-          description: Total scripts, scripts with metadata, scripts without, percentage adopted
+  contentType: "action-doc"
+  runbook: "mx exec what-is-script-metadata"
+  execute:
+    runtime: runbook
+    command: mx cog script-metadata
+    actions:
+      - name: audit
+        description: Scan a directory for scripts and report which have MX metadata and which do not
+        usage: Check every .sh file in the target directory for a # --- metadata block. Report compliant vs non-compliant scripts with their current header lines.
+        inputs:
+          - name: directory
+            type: string
+            required: true
+            description: The directory to scan (e.g. $MX_BIN_DIR)
+        outputs:
+          - name: report
+            type: object
+            description: List of scripts with metadata status, missing fields, and recommendations
 
-    - name: retrofit
-      description: Add MX metadata to an existing script that lacks it
-      usage: Run mx.inspect.sh on the target script. Read the inspection output to understand purpose, dependencies, and structure. Infer metadata fields. Insert the # --- block after the shebang line. Do not modify any other part of the script.
-      inputs:
-        - name: script-path
-          type: string
-          required: true
-          description: Path to the script to retrofit
-      outputs:
-        - name: metadata-added
-          type: object
-          description: The metadata fields that were inferred and added
+      - name: progress
+        description: Show current adoption stats across the mx.* script suite
+        usage: Count mx.\* scripts in $MX_BIN_DIR. Count how many have the # --- metadata block. Report the ratio and list the gaps.
+        inputs: []
+        outputs:
+          - name: stats
+            type: object
+            description: Total scripts, scripts with metadata, scripts without, percentage adopted
+
+      - name: retrofit
+        description: Add MX metadata to an existing script that lacks it
+        usage: Run mx.inspect.sh on the target script. Read the inspection output to understand purpose, dependencies, and structure. Infer metadata fields. Insert the # --- block after the shebang line. Do not modify any other part of the script.
+        inputs:
+          - name: script-path
+            type: string
+            required: true
+            description: Path to the script to retrofit
+        outputs:
+          - name: metadata-added
+            type: object
+            description: The metadata fields that were inferred and added
 ---
 
 # What Is Script Metadata?

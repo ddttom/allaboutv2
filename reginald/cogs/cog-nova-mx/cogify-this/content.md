@@ -1,5 +1,4 @@
 ---
-name: cogify-this
 version: "1.5.0"
 description: Convert existing content into MX-enhanced format with comprehensive metadata, accessibility, and WebMCP integration
 
@@ -7,234 +6,237 @@ created: 2026-02-20
 modified: 2026-02-20
 
 author: Cog-Nova-MX Ltd
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: active
 
-category: mx-tools
-partOf: mx-cog-registry
-refersTo: [what-is-a-cog, mx-reference-implementations, bilingual-business-template]
-buildsOn: [what-is-a-cog]
-tags: [cogify, conversion, mx-enhancement, metadata, webmcp, accessibility, transformation]
+mx:
+  name: cogify-this
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: active
 
-audience: tech
-readingLevel: technical
-purpose: Transform existing content (HTML, markdown, documents) into MX-enhanced format with YAML frontmatter, WebMCP tools, Schema.org markup, and Reginald certification metadata
+  category: mx-tools
+  partOf: mx-cog-registry
+  refersTo: [what-is-a-cog, mx-reference-implementations, bilingual-business-template]
+  buildsOn: [what-is-a-cog]
+  tags: [cogify, conversion, mx-enhancement, metadata, webmcp, accessibility, transformation]
 
-runtime: runbook
+  audience: tech
+  readingLevel: technical
+  purpose: Transform existing content (HTML, markdown, documents) into MX-enhanced format with YAML frontmatter, WebMCP tools, Schema.org markup, and Reginald certification metadata
 
-runbook: |
-deliverable:
-  output-format: ".cog.html or .cog.md"
-  includes:
-    - Comprehensive YAML frontmatter
-    - Original content preserved
-    - Schema.org markup
-    - WebMCP tool definitions
-    - Accessibility enhancements
-    - Certification metadata
-  validation:
-    - YAML parse success
-    - HTML/markdown valid
-    - Schema.org valid
-    - WCAG 2.1 AA compliant
-    - WebMCP spec compliant
-action:
-  audit:
-    description: "Run enhanced HTML/CSS audit to capture all website data"
-    inputs:
-      - name: target
-        type: string
-        required: true
-        description: "URL to audit"
-      - name: output-dir
-        type: string
-        default: "./audit"
-        description: "Output directory for audit files"
-      - name: cache-assets
-        type: boolean
-        default: true
-        description: "Cache HTML/CSS locally (24h TTL)"
-    outputs:
-      - name: audit-directory
-        type: directory
-        description: "Directory containing all audit outputs"
-    command: "npm run cogify -- --target={target} --output-dir={output-dir}"
-    example: |
-      # Basic audit
-      npm run cogify -- --target=https://restaurant.com
+  runtime: runbook
 
-      # Custom output directory
-      npm run cogify -- --target=https://hotel.com --output-dir=./hotel-audit
+  runbook: |
+  deliverable:
+    output-format: ".cog.html or .cog.md"
+    includes:
+      - Comprehensive YAML frontmatter
+      - Original content preserved
+      - Schema.org markup
+      - WebMCP tool definitions
+      - Accessibility enhancements
+      - Certification metadata
+    validation:
+      - YAML parse success
+      - HTML/markdown valid
+      - Schema.org valid
+      - WCAG 2.1 AA compliant
+      - WebMCP spec compliant
+  action:
+    audit:
+      description: "Run enhanced HTML/CSS audit to capture all website data"
+      inputs:
+        - name: target
+          type: string
+          required: true
+          description: "URL to audit"
+        - name: output-dir
+          type: string
+          default: "./audit"
+          description: "Output directory for audit files"
+        - name: cache-assets
+          type: boolean
+          default: true
+          description: "Cache HTML/CSS locally (24h TTL)"
+      outputs:
+        - name: audit-directory
+          type: directory
+          description: "Directory containing all audit outputs"
+      command: "npm run cogify -- --target={target} --output-dir={output-dir}"
+      example: |
+        # Basic audit
+        npm run cogify -- --target=https://restaurant.com
 
-      # Check cache validity
-      npm run cogify:check
+        # Custom output directory
+        npm run cogify -- --target=https://hotel.com --output-dir=./hotel-audit
 
-  cogify:
-    description: "Convert a file or URL to MX-enhanced format"
-    inputs:
-      - name: source
-        type: string
-        required: true
-        description: "File path or URL to cogify"
-      - name: output-type
-        type: string
-        enum: [.cog.html, .cog.md, auto]
-        default: auto
-        description: "Output format (auto-detects from source)"
-      - name: languages
-        type: array
-        default: [en]
-        description: "Languages present in source"
-      - name: schema-type
-        type: string
-        description: "Schema.org type (Restaurant, Hotel, Product, etc.)"
-      - name: business-name
-        type: string
-        description: "Business/content name"
-      - name: add-webmcp
-        type: boolean
-        default: true
-        description: "Include WebMCP tool definitions"
-      - name: certify
-        type: boolean
-        default: true
-        description: "Add certification metadata"
-    outputs:
-      - name: cogified-file
-        type: file
-        description: "MX-enhanced version of source"
-    example: |
-      Input: existing-restaurant-site.html
-      Output: restaurant-name-mx-reference.cog.html
+        # Check cache validity
+        npm run cogify:check
 
-      The output includes:
-      - 180 lines of YAML frontmatter
-      - Original HTML content
-      - Schema.org Restaurant markup
-      - 4 WebMCP tools
-      - WCAG 2.1 AA compliance
-      - Reginald certification metadata
+    cogify:
+      description: "Convert a file or URL to MX-enhanced format"
+      inputs:
+        - name: source
+          type: string
+          required: true
+          description: "File path or URL to cogify"
+        - name: output-type
+          type: string
+          enum: [.cog.html, .cog.md, auto]
+          default: auto
+          description: "Output format (auto-detects from source)"
+        - name: languages
+          type: array
+          default: [en]
+          description: "Languages present in source"
+        - name: schema-type
+          type: string
+          description: "Schema.org type (Restaurant, Hotel, Product, etc.)"
+        - name: business-name
+          type: string
+          description: "Business/content name"
+        - name: add-webmcp
+          type: boolean
+          default: true
+          description: "Include WebMCP tool definitions"
+        - name: certify
+          type: boolean
+          default: true
+          description: "Add certification metadata"
+      outputs:
+        - name: cogified-file
+          type: file
+          description: "MX-enhanced version of source"
+      example: |
+        Input: existing-restaurant-site.html
+        Output: restaurant-name-mx-reference.cog.html
 
-  validate-cog:
-    description: "Validate an existing cog for compliance"
-    inputs:
-      - name: cog-path
-        type: string
-        required: true
-        description: "Path to .cog.* file"
-      - name: strict
-        type: boolean
-        default: false
-        description: "Strict mode (fail on warnings)"
-    outputs:
-      - name: validation-report
-        type: object
-        description: "Compliance report with pass/fail status"
-    example: |
-      Input: my-business.cog.html
-      Output: {
-        yaml: "valid",
-        html: "valid",
-        schema: "valid",
-        accessibility: "AA compliant",
-        webmcp: "compliant",
-        warnings: []
-      }
+        The output includes:
+        - 180 lines of YAML frontmatter
+        - Original HTML content
+        - Schema.org Restaurant markup
+        - 4 WebMCP tools
+        - WCAG 2.1 AA compliance
+        - Reginald certification metadata
 
-  extract-template:
-    description: "Extract reusable template from existing cog"
-    inputs:
-      - name: source-cog
-        type: string
-        required: true
-        description: "Path to reference cog"
-      - name: template-name
-        type: string
-        required: true
-        description: "Name for extracted template"
-    outputs:
-      - name: template-file
-        type: file
-        description: "Generalized template with placeholders"
-    example: |
-      Input: los-granainos-mx-reference.cog.html
-      Output: bilingual-business-template.cog.html
+    validate-cog:
+      description: "Validate an existing cog for compliance"
+      inputs:
+        - name: cog-path
+          type: string
+          required: true
+          description: "Path to .cog.* file"
+        - name: strict
+          type: boolean
+          default: false
+          description: "Strict mode (fail on warnings)"
+      outputs:
+        - name: validation-report
+          type: object
+          description: "Compliance report with pass/fail status"
+      example: |
+        Input: my-business.cog.html
+        Output: {
+          yaml: "valid",
+          html: "valid",
+          schema: "valid",
+          accessibility: "AA compliant",
+          webmcp: "compliant",
+          warnings: []
+        }
 
-      All business-specific content replaced with [placeholders]
+    extract-template:
+      description: "Extract reusable template from existing cog"
+      inputs:
+        - name: source-cog
+          type: string
+          required: true
+          description: "Path to reference cog"
+        - name: template-name
+          type: string
+          required: true
+          description: "Name for extracted template"
+      outputs:
+        - name: template-file
+          type: file
+          description: "Generalized template with placeholders"
+      example: |
+        Input: los-granainos-mx-reference.cog.html
+        Output: bilingual-business-template.cog.html
 
-definition:
-  input-formats:
-    - HTML (single or multi-page)
-    - Markdown (.md)
-    - PDF (text extraction)
-    - Plain text
-    - JSON (structured data)
+        All business-specific content replaced with [placeholders]
 
-  output-formats:
-    - .cog.html (HTML with embedded YAML)
-    - .cog.md (Markdown with YAML frontmatter)
-    - .cog.json (JSON with embedded metadata)
+  definition:
+    input-formats:
+      - HTML (single or multi-page)
+      - Markdown (.md)
+      - PDF (text extraction)
+      - Plain text
+      - JSON (structured data)
 
-  required-enhancements:
-    - YAML frontmatter (minimum 20 fields)
-    - Native metadata (HTML meta tags or markdown frontmatter)
-    - Accessibility (WCAG 2.1 AA)
-    - Optional but recommended: Schema.org, WebMCP, certification
+    output-formats:
+      - .cog.html (HTML with embedded YAML)
+      - .cog.md (Markdown with YAML frontmatter)
+      - .cog.json (JSON with embedded metadata)
 
-  templates-available:
-    - bilingual-business-template.cog.html (side-by-side layout, use with enhanced audit system)
-    - single-language-business-template.cog.html (toggle pattern, use with enhanced audit system)
-    - standard-doc-template.cog.md
-    - action-doc-template.cog.md
-    - info-doc-template.cog.md
-    - enhanced-audit-system/ (Complete HTML/CSS/DOM audit tool for pixel-perfect replication)
-    - Note: Enhanced audit system captures DOM structure, CSS cascade, and caches assets for offline development
+    required-enhancements:
+      - YAML frontmatter (minimum 20 fields)
+      - Native metadata (HTML meta tags or markdown frontmatter)
+      - Accessibility (WCAG 2.1 AA)
+      - Optional but recommended: Schema.org, WebMCP, certification
 
-policy:
-  transformation:
-    principle: "Preserve original, enhance metadata"
-    non-destructive: true
-    reversible: true
+    templates-available:
+      - bilingual-business-template.cog.html (side-by-side layout, use with enhanced audit system)
+      - single-language-business-template.cog.html (toggle pattern, use with enhanced audit system)
+      - standard-doc-template.cog.md
+      - action-doc-template.cog.md
+      - info-doc-template.cog.md
+      - enhanced-audit-system/ (Complete HTML/CSS/DOM audit tool for pixel-perfect replication)
+      - Note: Enhanced audit system captures DOM structure, CSS cascade, and caches assets for offline development
 
-  preservation:
-    content: "100% preserved"
-    structure: "Maintained with enhancements"
-    styling: "Preserved or improved"
-    functionality: "Enhanced with WebMCP"
+  policy:
+    transformation:
+      principle: "Preserve original, enhance metadata"
+      non-destructive: true
+      reversible: true
 
-  quality:
-    accessibility: "WCAG 2.1 AA minimum"
-    validation: "W3C compliant"
-    metadata: "Comprehensive"
-    documentation: "Self-describing"
+    preservation:
+      content: "100% preserved"
+      structure: "Maintained with enhancements"
+      styling: "Preserved or improved"
+      functionality: "Enhanced with WebMCP"
 
-provenance:
-  inspiration: "Los Granainos MX reference implementation"
-  methodology: "Pattern extraction and generalization"
-  validation: "Applied to multiple business types"
+    quality:
+      accessibility: "WCAG 2.1 AA minimum"
+      validation: "W3C compliant"
+      metadata: "Comprehensive"
+      documentation: "Self-describing"
 
-certification:
-  cog:
-    version: "1.0"
-    publicationDate: "2026-02-20T00:00:00Z"
-    issuer:
-      name: "Cog-Nova-MX Ltd"
-      id: "mx-tech-001"
-      authority: "reginald.mx"
-    governance:
-      license: MIT
-      attribution-required: false
-      modification-allowed: true
-      commercial-use: true
+  provenance:
+    inspiration: "Los Granainos MX reference implementation"
+    methodology: "Pattern extraction and generalization"
+    validation: "Applied to multiple business types"
 
-registry:
-  reginald:
-    category: mx-tools
-    subcategory: conversion
-    visibility: public
-    searchable: true
-    keywords: [cogify, conversion, mx-enhancement, transformation, metadata, webmcp, accessibility]
+  certification:
+    cog:
+      version: "1.0"
+      publicationDate: "2026-02-20T00:00:00Z"
+      issuer:
+        name: "Cog-Nova-MX Ltd"
+        id: "mx-tech-001"
+        authority: "reginald.mx"
+      governance:
+        license: MIT
+        attribution-required: false
+        modification-allowed: true
+        commercial-use: true
+
+  registry:
+    reginald:
+      category: mx-tools
+      subcategory: conversion
+      visibility: public
+      searchable: true
+      keywords: [cogify, conversion, mx-enhancement, transformation, metadata, webmcp, accessibility]
 ---
 
 # Cogify This

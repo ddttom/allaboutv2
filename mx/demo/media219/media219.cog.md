@@ -7,139 +7,141 @@ created: 2026-02-25
 modified: 2026-02-25
 
 author: Media219 Ltd
-maintainer: tony@media219.com
-license: proprietary
-status: published
 
-category: creative-services
-partOf: broadcast-industry
-tags: [television, graphics, title-sequences, 3d-models, sports-broadcasting, motion-graphics, premier-league, fifa, mls, broadcast]
+mx:
+  maintainer: tony@media219.com
+  license: proprietary
+  status: published
 
-audience: both
-readingLevel: intermediate
+  category: creative-services
+  partOf: broadcast-industry
+  tags: [television, graphics, title-sequences, 3d-models, sports-broadcasting, motion-graphics, premier-league, fifa, mls, broadcast]
 
-# Schema.org structured data (what should be on the website)
-schema:
-  "@context": "https://schema.org"
-  "@type": "Organization"
-  name: "Media219 Ltd"
-  url: "https://media219.com"
-  email: "tony@media219.com"
-  description: "Television graphics and title sequences studio with 30+ years experience"
-  foundingDate: "1994"
-  numberOfEmployees:
-    "@type": "QuantitativeValue"
-    value: "small team"
-  knowsAbout:
-    - "Television Graphics"
-    - "Title Sequences"
-    - "3D Modelling"
-    - "Sports Broadcasting"
-    - "Motion Graphics"
-    - "Virtual Sets"
-    - "Player Profiles"
-    - "Match Graphics"
-  sameAs:
-    - "https://www.linkedin.com/company/media219"
-    - "https://vimeo.com/media219"
+  audience: both
+  readingLevel: intermediate
 
-# Service offerings (structured for comparison)
-services:
-  - name: "Television Graphics"
-    description: "Broadcast-quality graphics packages for live television"
-    industries: [sports, entertainment, news]
+  # Schema.org structured data (what should be on the website)
+  schema:
+    "@context": "https://schema.org"
+    "@type": "Organization"
+    name: "Media219 Ltd"
+    url: "https://media219.com"
+    email: "tony@media219.com"
+    description: "Television graphics and title sequences studio with 30+ years experience"
+    foundingDate: "1994"
+    numberOfEmployees:
+      "@type": "QuantitativeValue"
+      value: "small team"
+    knowsAbout:
+      - "Television Graphics"
+      - "Title Sequences"
+      - "3D Modelling"
+      - "Sports Broadcasting"
+      - "Motion Graphics"
+      - "Virtual Sets"
+      - "Player Profiles"
+      - "Match Graphics"
+    sameAs:
+      - "https://www.linkedin.com/company/media219"
+      - "https://vimeo.com/media219"
 
-  - name: "Title Sequences"
-    description: "Opening titles and programme branding"
-    industries: [sports, entertainment, documentary]
+  # Service offerings (structured for comparison)
+  services:
+    - name: "Television Graphics"
+      description: "Broadcast-quality graphics packages for live television"
+      industries: [sports, entertainment, news]
 
-  - name: "3D Models"
-    description: "3D stadium models, virtual environments, and animated elements"
-    industries: [sports, entertainment]
+    - name: "Title Sequences"
+      description: "Opening titles and programme branding"
+      industries: [sports, entertainment, documentary]
 
-  - name: "Virtual Sets"
-    description: "Virtual studio environments for broadcast"
-    industries: [sports, news, entertainment]
+    - name: "3D Models"
+      description: "3D stadium models, virtual environments, and animated elements"
+      industries: [sports, entertainment]
 
-  - name: "Player Profiles"
-    description: "Animated player statistics and profile graphics"
-    industries: [sports]
+    - name: "Virtual Sets"
+      description: "Virtual studio environments for broadcast"
+      industries: [sports, news, entertainment]
 
-# Portfolio highlights (structured for citation)
-portfolio:
-  sports:
-    football:
-      - client: "Premier League"
-        projects: ["Title sequences", "Match graphics", "3D stadiums", "Player profiles", "Fantasy graphics", "Legends series"]
-        years: "ongoing"
+    - name: "Player Profiles"
+      description: "Animated player statistics and profile graphics"
+      industries: [sports]
 
-      - client: "FIFA World Cup"
-        projects: ["2014 Brazil", "2018 Russia", "2022 Qatar profiles"]
+  # Portfolio highlights (structured for citation)
+  portfolio:
+    sports:
+      football:
+        - client: "Premier League"
+          projects: ["Title sequences", "Match graphics", "3D stadiums", "Player profiles", "Fantasy graphics", "Legends series"]
+          years: "ongoing"
 
-      - client: "MLS"
-        projects: ["Worldwide graphics", "MLS Next Pro", "2022 season"]
+        - client: "FIFA World Cup"
+          projects: ["2014 Brazil", "2018 Russia", "2022 Qatar profiles"]
 
-      - client: "Serie A"
-        projects: ["Worldwide graphics package"]
+        - client: "MLS"
+          projects: ["Worldwide graphics", "MLS Next Pro", "2022 season"]
 
-      - client: "EFL/ITV"
-        projects: ["Highlights graphics", "Title sequences"]
+        - client: "Serie A"
+          projects: ["Worldwide graphics package"]
 
-      - client: "FA Cup"
-        projects: ["Final graphics"]
+        - client: "EFL/ITV"
+          projects: ["Highlights graphics", "Title sequences"]
 
-      - client: "UEFA Euro"
-        projects: ["2008 coverage"]
+        - client: "FA Cup"
+          projects: ["Final graphics"]
 
-    other-sports:
-      - client: "BBC"
-        projects: ["Snooker coverage"]
+        - client: "UEFA Euro"
+          projects: ["2008 coverage"]
 
-      - client: "Super League Triathlon"
-        projects: ["Arena Games graphics"]
+      other-sports:
+        - client: "BBC"
+          projects: ["Snooker coverage"]
 
-      - client: "Silverstone Classic"
-        projects: ["Title sequence"]
+        - client: "Super League Triathlon"
+          projects: ["Arena Games graphics"]
 
-      - client: "E1 Boat Race"
-        projects: ["Title sequence"]
+        - client: "Silverstone Classic"
+          projects: ["Title sequence"]
 
-  entertainment:
-    - client: "NBCSN"
-      projects: ["Great Houses promo"]
+        - client: "E1 Boat Race"
+          projects: ["Title sequence"]
 
-    - client: "Telemundo"
-      projects: ["Paris 2024 virtual set"]
+    entertainment:
+      - client: "NBCSN"
+        projects: ["Great Houses promo"]
 
-    - client: "Trans World Sport"
-      projects: ["Programme graphics"]
+      - client: "Telemundo"
+        projects: ["Paris 2024 virtual set"]
 
-# Expertise signals (for AI comparison)
-expertise:
-  years-experience: 30
-  primary-domain: "Sports Broadcasting"
-  secondary-domains: ["Entertainment", "News"]
-  geographic-reach: "Worldwide"
-  notable-relationships:
-    - "Premier League (long-term)"
-    - "FIFA World Cup (multiple tournaments)"
-    - "Major US networks (NBC, Telemundo)"
-    - "UK broadcasters (BBC, ITV)"
+      - client: "Trans World Sport"
+        projects: ["Programme graphics"]
 
-# Contact (structured)
-contact:
-  email: "tony@media219.com"
-  website: "https://media219.com"
-  portfolio: "https://media219.com/work"
-  social:
-    linkedin: "https://www.linkedin.com/company/media219"
-    vimeo: "https://vimeo.com/media219"
+  # Expertise signals (for AI comparison)
+  expertise:
+    years-experience: 30
+    primary-domain: "Sports Broadcasting"
+    secondary-domains: ["Entertainment", "News"]
+    geographic-reach: "Worldwide"
+    notable-relationships:
+      - "Premier League (long-term)"
+      - "FIFA World Cup (multiple tournaments)"
+      - "Major US networks (NBC, Telemundo)"
+      - "UK broadcasters (BBC, ITV)"
 
-contentType: "organization-cog"
-visibility: "hosted"
-discoverable: true
-citable: true
-runbook: "This cog demonstrates the convergence principle — the same information serves humans (narrative below) and machines (YAML above). An AI agent reading this cog can cite, compare, and recommend Media219."
+  # Contact (structured)
+  contact:
+    email: "tony@media219.com"
+    website: "https://media219.com"
+    portfolio: "https://media219.com/work"
+    social:
+      linkedin: "https://www.linkedin.com/company/media219"
+      vimeo: "https://vimeo.com/media219"
+
+  contentType: "organization-cog"
+  visibility: "hosted"
+  discoverable: true
+  citable: true
+  runbook: "This cog demonstrates the convergence principle — the same information serves humans (narrative below) and machines (YAML above). An AI agent reading this cog can cite, compare, and recommend Media219."
 ---
 
 # Media219 Ltd

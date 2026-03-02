@@ -1,5 +1,4 @@
 ---
-name: asking-for-help
 version: "1.0"
 description: No single agent can do everything. When you need something you do not have — diary access, email, location, a booking system — ask the agent that does. This cog describes how agents ask other agents for help.
 
@@ -7,59 +6,62 @@ created: 2026-02-09
 modified: 2026-02-09
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, cog-registry]
-buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs, the-personal-cog]
-tags: [delegation, agents, inter-agent, handoff, diary, email, capabilities, reach-out]
+mx:
+  name: asking-for-help
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: developers
-readingLevel: technical
-purpose: Document the pattern of agent-to-agent delegation — how an AI agent that needs a capability it does not have asks another agent or service that does
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, cog-registry]
+  buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs, the-personal-cog]
+  tags: [delegation, agents, inter-agent, handoff, diary, email, capabilities, reach-out]
 
-contentType: "action-doc"
-runbook: "mx exec asking-for-help"
-execute:
-  runtime: runbook
-  command: mx cog ask
-  actions:
-    - name: explain
-      description: Present the agent delegation concept
-      usage: Read this cog and explain how agents ask other agents for help — why, when, and how
-      outputs:
-        - name: explanation
-          type: string
-          description: Clear explanation of agent delegation
+  audience: developers
+  readingLevel: technical
+  purpose: Document the pattern of agent-to-agent delegation — how an AI agent that needs a capability it does not have asks another agent or service that does
 
-    - name: delegate
-      description: Describe how to hand off a specific task to another agent
-      usage: Given a task that the current agent cannot do (e.g. check diary, send email), describe who to ask and what to send
-      inputs:
-        - name: task
-          type: string
-          required: true
-          description: The task that needs delegating (e.g. "check diary for Thursday", "read latest email from Janus")
-      outputs:
-        - name: delegation-plan
-          type: object
-          description: Who to ask, what to send, what to expect back
+  contentType: "action-doc"
+  runbook: "mx exec asking-for-help"
+  execute:
+    runtime: runbook
+    command: mx cog ask
+    actions:
+      - name: explain
+        description: Present the agent delegation concept
+        usage: Read this cog and explain how agents ask other agents for help — why, when, and how
+        outputs:
+          - name: explanation
+            type: string
+            description: Clear explanation of agent delegation
 
-    - name: discover
-      description: Find which agent or service has the capability you need
-      usage: Given a capability requirement, describe which agents or services typically provide it
-      inputs:
-        - name: capability
-          type: string
-          required: true
-          description: The capability needed (e.g. "diary access", "email", "location", "booking")
-      outputs:
-        - name: options
-          type: array
-          description: List of agents or services that can provide this capability
+      - name: delegate
+        description: Describe how to hand off a specific task to another agent
+        usage: Given a task that the current agent cannot do (e.g. check diary, send email), describe who to ask and what to send
+        inputs:
+          - name: task
+            type: string
+            required: true
+            description: The task that needs delegating (e.g. "check diary for Thursday", "read latest email from Janus")
+        outputs:
+          - name: delegation-plan
+            type: object
+            description: Who to ask, what to send, what to expect back
+
+      - name: discover
+        description: Find which agent or service has the capability you need
+        usage: Given a capability requirement, describe which agents or services typically provide it
+        inputs:
+          - name: capability
+            type: string
+            required: true
+            description: The capability needed (e.g. "diary access", "email", "location", "booking")
+        outputs:
+          - name: options
+            type: array
+            description: List of agents or services that can provide this capability
 ---
 
 # Asking for Help

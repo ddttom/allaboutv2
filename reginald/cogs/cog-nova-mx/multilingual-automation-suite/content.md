@@ -1,14 +1,16 @@
 ---
-name: multilingual-automation-suite
 title: "MX Multilingual Automation Suite"
 description: "Complete toolkit for building, validating, and deploying multilingual websites with proper SEO, hreflang annotations, and Google best practices."
 author: Tom Cranstoun and Maxine
 created: 2026-02-21
 version: "1.0"
-status: active
-category: reference-implementation
-tags: [multilingual, automation, seo, workflow, internationalization, i18n, tools]
-partOf: mx-reference-implementations
+
+mx:
+  name: multilingual-automation-suite
+  status: active
+  category: reference-implementation
+  tags: [multilingual, automation, seo, workflow, internationalization, i18n, tools]
+  partOf: mx-reference-implementations
 ---
 
 # MX Multilingual Automation Suite

@@ -1,5 +1,4 @@
 ---
-name: metadata
 version: 0.1.0
 description: Extract and validate page metadata (Open Graph, Twitter Cards, meta tags)
 
@@ -7,84 +6,87 @@ created: 2026-02-06T12:31:00Z
 modified: 2026-02-06T12:31:00Z
 
 author: Maxine (MX - Machine eXperience Engine)
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: draft
 
-category: mx-core
-partOf: mx-core
-refersTo: [schema, semantic-html]
-tags: [metadata, opengraph, twitter-cards, seo, social]
+mx:
+  name: metadata
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: draft
 
-execute:
-  runtime: runbook
-  command: mx cog metadata
-  actions:
-    - name: extract
-      description: Extract all metadata from a page
-      usage: mx cog metadata extract <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL to extract metadata from
-      outputs:
-        - name: metadata
-          type: object
-          description: All extracted metadata organized by type
-    
-    - name: validate
-      description: Validate metadata completeness
-      usage: mx cog metadata validate <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL to validate
-      outputs:
-        - name: validation
-          type: object
-          description: Validation results with missing/invalid fields
-    
-    - name: preview
-      description: Preview how page appears in social shares
-      usage: mx cog metadata preview <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL to preview
-        - name: platform
-          type: string
-          required: false
-          description: Platform (twitter, facebook, linkedin, slack)
-      outputs:
-        - name: previews
-          type: object
-          description: Rendered preview data for each platform
-    
-    - name: suggest
-      description: Suggest metadata improvements
-      usage: mx cog metadata suggest <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL to analyze
-      outputs:
-        - name: suggestions
-          type: array
-          description: Recommended improvements
+  category: mx-core
+  partOf: mx-core
+  refersTo: [schema, semantic-html]
+  tags: [metadata, opengraph, twitter-cards, seo, social]
 
-requires:
-  bins: []
-  cogs: [schema]
+  execute:
+    runtime: runbook
+    command: mx cog metadata
+    actions:
+      - name: extract
+        description: Extract all metadata from a page
+        usage: mx cog metadata extract <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL to extract metadata from
+        outputs:
+          - name: metadata
+            type: object
+            description: All extracted metadata organized by type
 
-contentType: "action-doc"
-runbook: "mx exec metadata"
-convergence: true
-accessibility: true
-semantic: true
+      - name: validate
+        description: Validate metadata completeness
+        usage: mx cog metadata validate <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL to validate
+        outputs:
+          - name: validation
+            type: object
+            description: Validation results with missing/invalid fields
+
+      - name: preview
+        description: Preview how page appears in social shares
+        usage: mx cog metadata preview <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL to preview
+          - name: platform
+            type: string
+            required: false
+            description: Platform (twitter, facebook, linkedin, slack)
+        outputs:
+          - name: previews
+            type: object
+            description: Rendered preview data for each platform
+
+      - name: suggest
+        description: Suggest metadata improvements
+        usage: mx cog metadata suggest <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL to analyze
+        outputs:
+          - name: suggestions
+            type: array
+            description: Recommended improvements
+
+  requires:
+    bins: []
+    cogs: [schema]
+
+  contentType: "action-doc"
+  runbook: "mx exec metadata"
+  convergence: true
+  accessibility: true
+  semantic: true
 ---
 
 # metadata

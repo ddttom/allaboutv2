@@ -1,5 +1,4 @@
 ---
-name: link-checker
 version: 0.1.0
 description: Validate links — critical for llms.txt and documentation
 
@@ -7,90 +6,93 @@ created: 2026-02-06T12:31:00Z
 modified: 2026-02-06T12:31:00Z
 
 author: Maxine (MX - Machine eXperience Engine)
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: draft
 
-category: mx-core
-partOf: mx-core
-refersTo: [llms-txt, sitemap]
-tags: [links, validation, broken-links, llms-txt, documentation]
+mx:
+  name: link-checker
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: draft
 
-execute:
-  runtime: runbook
-  command: mx cog link-checker
-  actions:
-    - name: check
-      description: Check all links on a page or document
-      usage: mx cog link-checker check <url|file>
-      inputs:
-        - name: source
-          type: string
-          required: true
-          description: URL or file to check
-        - name: recursive
-          type: boolean
-          required: false
-          description: Check linked pages recursively
-          default: false
-        - name: depth
-          type: number
-          required: false
-          description: Recursion depth
-          default: 1
-      outputs:
-        - name: results
-          type: object
-          description: Link check results
-    
-    - name: llms-txt
-      description: Specifically validate llms.txt links
-      usage: mx cog link-checker llms-txt <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: Website URL (llms.txt auto-detected)
-      outputs:
-        - name: results
-          type: object
-          description: llms.txt link validation results
-    
-    - name: anchors
-      description: Check internal anchor links
-      usage: mx cog link-checker anchors <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL to check
-      outputs:
-        - name: anchors
-          type: object
-          description: Anchor link validation results
-    
-    - name: external
-      description: Check only external links
-      usage: mx cog link-checker external <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL to check
-      outputs:
-        - name: external
-          type: object
-          description: External link validation results
+  category: mx-core
+  partOf: mx-core
+  refersTo: [llms-txt, sitemap]
+  tags: [links, validation, broken-links, llms-txt, documentation]
 
-requires:
-  bins: []
-  cogs: []
+  execute:
+    runtime: runbook
+    command: mx cog link-checker
+    actions:
+      - name: check
+        description: Check all links on a page or document
+        usage: mx cog link-checker check <url|file>
+        inputs:
+          - name: source
+            type: string
+            required: true
+            description: URL or file to check
+          - name: recursive
+            type: boolean
+            required: false
+            description: Check linked pages recursively
+            default: false
+          - name: depth
+            type: number
+            required: false
+            description: Recursion depth
+            default: 1
+        outputs:
+          - name: results
+            type: object
+            description: Link check results
 
-contentType: "action-doc"
-runbook: "mx exec link-checker"
-convergence: true
-accessibility: true
-semantic: true
+      - name: llms-txt
+        description: Specifically validate llms.txt links
+        usage: mx cog link-checker llms-txt <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: Website URL (llms.txt auto-detected)
+        outputs:
+          - name: results
+            type: object
+            description: llms.txt link validation results
+
+      - name: anchors
+        description: Check internal anchor links
+        usage: mx cog link-checker anchors <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL to check
+        outputs:
+          - name: anchors
+            type: object
+            description: Anchor link validation results
+
+      - name: external
+        description: Check only external links
+        usage: mx cog link-checker external <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL to check
+        outputs:
+          - name: external
+            type: object
+            description: External link validation results
+
+  requires:
+    bins: []
+    cogs: []
+
+  contentType: "action-doc"
+  runbook: "mx exec link-checker"
+  convergence: true
+  accessibility: true
+  semantic: true
 ---
 
 # link-checker

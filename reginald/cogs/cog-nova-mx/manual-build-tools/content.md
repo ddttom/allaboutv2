@@ -1,30 +1,32 @@
 ---
-name: manual-build-tools
 title: Build Tools Manual
 description: Sitemap generation, content organisation, ASCII-to-SVG conversion, context URL injection, and VS Code cleanup.
 author: Tom Cranstoun and Maxine
 created: 2026-02-15T00:00:00.000Z
 version: "1.0"
-status: active
-category: manual
-tags:
-  - manual
-  - build
-  - tools
-  - sitemap
-  - svg
-  - cleanup
-  - publishing
-partOf: mx-maxine-lives
-purpose: Document build tools - usage, workflow, and best practices
-audience: human
-stability: stable
-runbook: Read when working with build tools or understanding its functionality
-contextProvides:
-  - Sitemap generation, content organisation, ASCII-to-SVG conversion, context URL injection, and VS Code cleanup.
-  - Usage guide and workflow for build tools
-  - Troubleshooting and best practices
-refersTo: []
+
+mx:
+  name: manual-build-tools
+  status: active
+  category: manual
+  tags:
+    - manual
+    - build
+    - tools
+    - sitemap
+    - svg
+    - cleanup
+    - publishing
+  partOf: mx-maxine-lives
+  purpose: Document build tools - usage, workflow, and best practices
+  audience: human
+  stability: stable
+  runbook: Read when working with build tools or understanding its functionality
+  contextProvides:
+    - Sitemap generation, content organisation, ASCII-to-SVG conversion, context URL injection, and VS Code cleanup.
+    - Usage guide and workflow for build tools
+    - Troubleshooting and best practices
+  refersTo: []
 ---
 
 # Build Tools

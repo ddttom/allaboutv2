@@ -1,5 +1,4 @@
 ---
-name: routing-pipeline
 version: "1.0.0"
 description: "Preprocess user prompts with spell correction, route matching, and context injection. Cut inference cost by telling Claude where to look before it starts searching."
 
@@ -7,108 +6,111 @@ created: 2026-02-13
 modified: 2026-02-13
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, mx-principles]
-buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
-tags: [routing, inference-reduction, preprocessing, hook, aspell, pipeline, sop]
+mx:
+  name: routing-pipeline
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: ai-agents
-readingLevel: technical
-purpose: Give any AI agent a repeatable workflow for preprocessing prompts with routing context — reducing inference cost and improving accuracy
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, mx-principles]
+  buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
+  tags: [routing, inference-reduction, preprocessing, hook, aspell, pipeline, sop]
 
-execute:
-  runtime: runbook
-  command: mx route
-  actions:
-    - name: preprocess
-      description: Run the full preprocessing pipeline on a user prompt
-      usage: |
-        This is the SOP for the route-decorator hook. The hook executes these steps
-        automatically on every complex prompt. AI agents can also follow this SOP manually.
+  audience: ai-agents
+  readingLevel: technical
+  purpose: Give any AI agent a repeatable workflow for preprocessing prompts with routing context — reducing inference cost and improving accuracy
 
-        **Step 1: Spell Correction (aspell)**
-        - Run `echo "$PROMPT" | aspell list` to identify misspelled words
-        - Do NOT auto-correct — provide the misspelled words as context hints
-        - If aspell is unavailable, skip this step (graceful degradation)
+  execute:
+    runtime: runbook
+    command: mx route
+    actions:
+      - name: preprocess
+        description: Run the full preprocessing pipeline on a user prompt
+        usage: |
+          This is the SOP for the route-decorator hook. The hook executes these steps
+          automatically on every complex prompt. AI agents can also follow this SOP manually.
 
-        **Step 2: Smart Trigger**
-        - Count words in the prompt
-        - If fewer than 10 words: exit (simple prompt, no routing needed)
-        - If 10+ words: continue to routing
+          **Step 1: Spell Correction (aspell)**
+          - Run `echo "$PROMPT" | aspell list` to identify misspelled words
+          - Do NOT auto-correct — provide the misspelled words as context hints
+          - If aspell is unavailable, skip this step (graceful degradation)
 
-        **Step 3: Route Matching**
-        - Read `mx-canon/mx-maxine-lives/routing-registry.json`
-        - For each route in the registry, check if the prompt contains matching keywords
-        - Collect all matching routes (intent, folder path, question, key fields)
-        - If no matches: exit (no relevant routing context)
+          **Step 2: Smart Trigger**
+          - Count words in the prompt
+          - If fewer than 10 words: exit (simple prompt, no routing needed)
+          - If 10+ words: continue to routing
 
-        **Step 4: Context Decoration**
-        - Build a context block listing matched routes
-        - Include: intent name, folder path, relevant question
-        - Include misspelled words if any were found
-        - Inject via `additionalContext` in hook output JSON
+          **Step 3: Route Matching**
+          - Read `mx-canon/mx-maxine-lives/routing-registry.json`
+          - For each route in the registry, check if the prompt contains matching keywords
+          - Collect all matching routes (intent, folder path, question, key fields)
+          - If no matches: exit (no relevant routing context)
 
-        **Step 5: Visibility**
-        - First time: show the routing context visibly (user learns the pattern)
-        - After first time: inject as hidden context (efficiency)
-        - Track state in `.claude/hooks/state/route-decoration-seen`
+          **Step 4: Context Decoration**
+          - Build a context block listing matched routes
+          - Include: intent name, folder path, relevant question
+          - Include misspelled words if any were found
+          - Inject via `additionalContext` in hook output JSON
 
-        **Step 6: Post-Response (Phase 2)**
-        - After Claude responds, evaluate: does this need a follow-up interview?
-        - Hook flags low-confidence routes. Claude confirms interview need.
-        - If interview needed: route again, then trigger `/interview-me`
+          **Step 5: Visibility**
+          - First time: show the routing context visibly (user learns the pattern)
+          - After first time: inject as hidden context (efficiency)
+          - Track state in `.claude/hooks/state/route-decoration-seen`
 
-      inputs:
-        - name: prompt
-          type: string
-          required: true
-          description: "The user's raw prompt text"
-        - name: routing-registry
-          type: file-path
-          required: true
-          description: "Path to routing-registry.json (auto-generated by route:sync)"
-      outputs:
-        - name: additional-context
-          type: string
-          description: "Routing context to inject into the conversation"
-        - name: misspelled-words
-          type: array
-          description: "Words flagged by aspell (context hints, not corrections)"
-        - name: matched-routes
-          type: array
-          description: "Routes matched from the registry"
+          **Step 6: Post-Response (Phase 2)**
+          - After Claude responds, evaluate: does this need a follow-up interview?
+          - Hook flags low-confidence routes. Claude confirms interview need.
+          - If interview needed: route again, then trigger `/interview-me`
 
-    - name: sync
-      description: Regenerate the routing registry from all ROUTING.cog.md files
-      usage: |
-        Run `npm run route:sync` or execute `node scripts/route-sync.js` directly.
+        inputs:
+          - name: prompt
+            type: string
+            required: true
+            description: "The user's raw prompt text"
+          - name: routing-registry
+            type: file-path
+            required: true
+            description: "Path to routing-registry.json (auto-generated by route:sync)"
+        outputs:
+          - name: additional-context
+            type: string
+            description: "Routing context to inject into the conversation"
+          - name: misspelled-words
+            type: array
+            description: "Words flagged by aspell (context hints, not corrections)"
+          - name: matched-routes
+            type: array
+            description: "Routes matched from the registry"
 
-        The script:
-        1. Scans mx-canon for all ROUTING.cog.md files
-        2. Parses YAML frontmatter from each
-        3. Extracts `routing.by-intent` entries
-        4. Generates keywords from each intent's question field
-        5. Writes `mx-canon/mx-maxine-lives/routing-registry.json`
+      - name: sync
+        description: Regenerate the routing registry from all ROUTING.cog.md files
+        usage: |
+          Run `npm run route:sync` or execute `node scripts/route-sync.js` directly.
 
-        The registry is auto-generated. Do not edit it manually.
+          The script:
+          1. Scans mx-canon for all ROUTING.cog.md files
+          2. Parses YAML frontmatter from each
+          3. Extracts `routing.by-intent` entries
+          4. Generates keywords from each intent's question field
+          5. Writes `mx-canon/mx-maxine-lives/routing-registry.json`
 
-    - name: status
-      description: Check routing pipeline health
-      usage: |
-        Verify that all components are in place:
-        1. aspell installed? `which aspell`
-        2. jq installed? `which jq`
-        3. Registry exists? `ls mx-canon/mx-maxine-lives/routing-registry.json`
-        4. Hook configured? Check `.claude/settings.local.json` for UserPromptSubmit
-        5. Hook executable? `ls -la .claude/hooks/route-decorator.sh`
+          The registry is auto-generated. Do not edit it manually.
 
-contentType: "action-doc"
-runbook: "mx exec routing-pipeline"
+      - name: status
+        description: Check routing pipeline health
+        usage: |
+          Verify that all components are in place:
+          1. aspell installed? `which aspell`
+          2. jq installed? `which jq`
+          3. Registry exists? `ls mx-canon/mx-maxine-lives/routing-registry.json`
+          4. Hook configured? Check `.claude/settings.local.json` for UserPromptSubmit
+          5. Hook executable? `ls -la .claude/hooks/route-decorator.sh`
+
+  contentType: "action-doc"
+  runbook: "mx exec routing-pipeline"
 ---
 
 # Routing Pipeline

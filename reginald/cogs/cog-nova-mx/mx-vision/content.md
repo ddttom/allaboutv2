@@ -1,63 +1,65 @@
 ---
-name: mx-vision
 description: "The complete vision for Machine Experience — why it exists, the problem it solves, the system it builds, and the future it creates. From inference to certainty. From guessing to knowing."
 author: Tom Cranstoun
 created: 2026-02-20
-status: draft
-category: vision
-tags: [mx, vision, machine-experience, foundational]
 version: "1.0"
-cogId: "cog-mx-vision-20260220"
-cogType: "certificate-of-genuineness"
-license: "MIT"
 
-publisher:
-  name: "Cog-Nova-MX Ltd"
-  verified: false
-  signedBy: "unsigned"
-  contact: "tom.cranstoun@gmail.com"
-  website: "https://allabout.network"
+mx:
+  name: mx-vision
+  status: draft
+  category: vision
+  tags: [mx, vision, machine-experience, foundational]
+  cogId: "cog-mx-vision-20260220"
+  cogType: "certificate-of-genuineness"
+  license: "MIT"
 
-subject:
-  name: "The MX Vision"
-  category: "vision"
-  scope: "foundational"
-  description: "The complete vision for Machine Experience — why it exists, the problem it solves, the system it builds, and the future it creates. From inference to certainty. From guessing to knowing."
+  publisher:
+    name: "Cog-Nova-MX Ltd"
+    verified: false
+    signedBy: "unsigned"
+    contact: "tom.cranstoun@gmail.com"
+    website: "https://allabout.network"
 
-publicationDate: "2026-02-20T00:00:00Z"
-expires: "2026-08-20T00:00:00Z"
-lastVerified: "2026-02-20T00:00:00Z"
-signature: "unsigned"
-mxCompliance: "level-2"
-registry: "allabout.network"
+  subject:
+    name: "The MX Vision"
+    category: "vision"
+    scope: "foundational"
+    description: "The complete vision for Machine Experience — why it exists, the problem it solves, the system it builds, and the future it creates. From inference to certainty. From guessing to knowing."
 
-ai:
-  contextProvides: "Complete MX vision narrative — origin, principles, architecture, ecosystem, business case, and roadmap"
-  contextRequired: "None — this is the starting point"
+  publicationDate: "2026-02-20T00:00:00Z"
+  expires: "2026-08-20T00:00:00Z"
+  lastVerified: "2026-02-20T00:00:00Z"
+  signature: "unsigned"
+  mxCompliance: "level-2"
+  registry: "allabout.network"
 
-maintainer:
-  name: "Tom Cranstoun"
-  role: "Founder, Cog-Nova-MX Ltd"
-  contact: "tom.cranstoun@gmail.com"
-  escalation: "tom.cranstoun@gmail.com"
+  ai:
+    contextProvides: "Complete MX vision narrative — origin, principles, architecture, ecosystem, business case, and roadmap"
+    contextRequired: "None — this is the starting point"
 
-reviewCycle: "monthly"
-updateTriggers:
-  - "major milestone achieved"
-  - "vision refinement from field experience"
-  - "new publication or presentation"
-  - "user-reported inaccuracy"
-  - "market development that validates or challenges the vision"
+  maintainer:
+    name: "Tom Cranstoun"
+    role: "Founder, Cog-Nova-MX Ltd"
+    contact: "tom.cranstoun@gmail.com"
+    escalation: "tom.cranstoun@gmail.com"
 
-accuracyCommitment: "reflects current strategic vision as of issue date"
-correctionSla: "72 hours from report to updated COG"
+  reviewCycle: "monthly"
+  updateTriggers:
+    - "major milestone achieved"
+    - "vision refinement from field experience"
+    - "new publication or presentation"
+    - "user-reported inaccuracy"
+    - "market development that validates or challenges the vision"
 
-usage:
-  sopInference: "permitted"
-  caching: "permitted for 24 hours"
-  redistribution: "with attribution to Cog-Nova-MX Ltd"
-  commercialUse: "permitted"
-  aiTraining: "permitted with attribution"
+  accuracyCommitment: "reflects current strategic vision as of issue date"
+  correctionSla: "72 hours from report to updated COG"
+
+  usage:
+    sopInference: "permitted"
+    caching: "permitted for 24 hours"
+    redistribution: "with attribution to Cog-Nova-MX Ltd"
+    commercialUse: "permitted"
+    aiTraining: "permitted with attribution"
 ---
 
 # The MX Vision

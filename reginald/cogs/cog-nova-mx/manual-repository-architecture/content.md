@@ -1,39 +1,41 @@
 ---
-name: manual-repository-architecture
 title: MX Repository Architecture — Complete System Reference
 description: Comprehensive guide to MX repository structure, Canon organization, product architecture, and operational concepts.
 author: Tom Cranstoun and Maxine
 created: 2026-02-21T00:00:00.000Z
 version: "1.0"
-status: active
-license: proprietary
-category: manual
-tags:
-  - manual
-  - architecture
-  - repository-structure
-  - canon
-  - mx-os
-  - brain
-  - reginald
-  - maxine
-  - system-reference
-partOf: mx-maxine-lives
-refersTo:
-  - manual-maxine-lives
-  - ROUTING
-purpose: Provide complete system reference for understanding MX repository architecture, structure, and concepts
-audience: human
-stability: stable
-runbook: "mx exec manual-repository-architecture"
-contextProvides:
-  - Complete MX repository structure and organization
-  - Canon folder structure and purpose
-  - Product definitions (Maxine, Reginald, MX OS)
-  - Brain folder (MX-Maxine-Lives) organization
-  - Boot chain and $MX_HOME concepts
-  - YAML metadata patterns and conventions
-  - Complete system mental model
+
+mx:
+  name: manual-repository-architecture
+  status: active
+  license: proprietary
+  category: manual
+  tags:
+    - manual
+    - architecture
+    - repository-structure
+    - canon
+    - mx-os
+    - brain
+    - reginald
+    - maxine
+    - system-reference
+  partOf: mx-maxine-lives
+  refersTo:
+    - manual-maxine-lives
+    - ROUTING
+  purpose: Provide complete system reference for understanding MX repository architecture, structure, and concepts
+  audience: human
+  stability: stable
+  runbook: "mx exec manual-repository-architecture"
+  contextProvides:
+    - Complete MX repository structure and organization
+    - Canon folder structure and purpose
+    - Product definitions (Maxine, Reginald, MX OS)
+    - Brain folder (MX-Maxine-Lives) organization
+    - Boot chain and $MX_HOME concepts
+    - YAML metadata patterns and conventions
+    - Complete system mental model
 ---
 
 # MX Repository Architecture — Complete System Reference

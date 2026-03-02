@@ -1,33 +1,35 @@
 ---
-name: manual-cog-id
 title: Cog ID System — Manual
 description: Step-by-step guide for generating, registering, decoding, and stamping cog IDs. The obfuscated identity layer for MX OS.
 version: "1.1"
-status: active
 created: 2026-02-14T00:00:00.000Z
 modified: 2026-02-14T00:00:00.000Z
 author: Tom Cranstoun and Maxine
-category: manual
-tags:
-  - manual
-  - cog-id
-  - identity
-  - hash
-  - obfuscation
-  - x-mx-p-ref
-  - namespace
-partOf: mx-maxine-lives
-audience:
-  - operators
-  - tech
-purpose: Document cog id - usage, workflow, and best practices
-stability: stable
-runbook: Read when working with cog id or understanding its functionality
-contextProvides:
-  - Step-by-step guide for generating, registering, decoding, and stamping cog IDs. The obfuscated identity layer for MX OS.
-  - Usage guide and workflow for cog id
-  - Troubleshooting and best practices
-refersTo: []
+
+mx:
+  name: manual-cog-id
+  status: active
+  category: manual
+  tags:
+    - manual
+    - cog-id
+    - identity
+    - hash
+    - obfuscation
+    - x-mx-p-ref
+    - namespace
+  partOf: mx-maxine-lives
+  audience:
+    - operators
+    - tech
+  purpose: Document cog id - usage, workflow, and best practices
+  stability: stable
+  runbook: Read when working with cog id or understanding its functionality
+  contextProvides:
+    - Step-by-step guide for generating, registering, decoding, and stamping cog IDs. The obfuscated identity layer for MX OS.
+    - Usage guide and workflow for cog id
+    - Troubleshooting and best practices
+  refersTo: []
 ---
 
 # Cog ID Manual

@@ -1,5 +1,4 @@
 ---
-name: building-action-docs
 version: "1.0"
 description: How to build operational action-docs — the development lifecycle from description to working tool. Describe, create, test, wire. The pattern that turns natural language into MX OS applications.
 
@@ -7,80 +6,83 @@ created: 2026-02-09
 modified: 2026-02-09
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, mx-contacts, mx-principles]
-buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
-tags: [development, lifecycle, operational, entry-points, scaffold, tutorial, worked-example, mx-contacts]
+mx:
+  name: building-action-docs
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: developers
-readingLevel: technical
-purpose: Document the complete lifecycle of building an operational action-doc — from a human describing what they need, through AI creating the action-doc, to wiring up entry points so anyone can invoke it from anywhere
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, mx-contacts, mx-principles]
+  buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
+  tags: [development, lifecycle, operational, entry-points, scaffold, tutorial, worked-example, mx-contacts]
 
-execute:
-  runtime: runbook
-  command: mx cog build
-  actions:
-    - name: explain
-      description: Present the operational action-doc development lifecycle
-      usage: Read this cog and explain the four-phase lifecycle (describe, create, test, wire) with the MX-Contacts worked example
-      outputs:
-        - name: explanation
-          type: string
-          description: Clear explanation of how to build operational action-docs
+  audience: developers
+  readingLevel: technical
+  purpose: Document the complete lifecycle of building an operational action-doc — from a human describing what they need, through AI creating the action-doc, to wiring up entry points so anyone can invoke it from anywhere
 
-    - name: scaffold
-      description: Create a new operational action-doc with entry point wiring
-      usage: >
-        Given a domain name (e.g. "finances", "content", "outreach"):
-        1. Create an action-doc file with YAML frontmatter matching the cog-unified-spec
-        2. Include an execute block with runtime: runbook
-        3. Add standard actions: list, report, priorities, next, dashboard
-        4. Add domain-specific actions based on the human's description
-        5. Create the entry point configuration for the host platform
-        6. Register the entry point in the boot sequence
-        7. Return the file paths created
-      inputs:
-        - name: domain
-          type: string
-          required: true
-          description: The domain this action-doc manages (e.g. "contacts", "finances", "content")
-        - name: description
-          type: string
-          required: true
-          description: Natural language description of what the action-doc should do
-      outputs:
-        - name: files-created
-          type: array
-          description: Paths to all files created (action-doc, entry point config, skill file)
+  execute:
+    runtime: runbook
+    command: mx cog build
+    actions:
+      - name: explain
+        description: Present the operational action-doc development lifecycle
+        usage: Read this cog and explain the four-phase lifecycle (describe, create, test, wire) with the MX-Contacts worked example
+        outputs:
+          - name: explanation
+            type: string
+            description: Clear explanation of how to build operational action-docs
 
-    - name: wire
-      description: Add entry point and boot registration for an existing action-doc
-      usage: >
-        Given a path to an existing action-doc:
-        1. Read the action-doc to understand its actions
-        2. Create the entry point configuration for the host platform
-        3. Register the entry point in the boot sequence
-        4. Return the wiring summary
-      inputs:
-        - name: cog-path
-          type: string
-          required: true
-          description: Path to the action-doc to wire up
-      outputs:
-        - name: wiring-report
-          type: string
-          description: Summary of entry point and boot registration created
+      - name: scaffold
+        description: Create a new operational action-doc with entry point wiring
+        usage: >
+          Given a domain name (e.g. "finances", "content", "outreach"):
+          1. Create an action-doc file with YAML frontmatter matching the cog-unified-spec
+          2. Include an execute block with runtime: runbook
+          3. Add standard actions: list, report, priorities, next, dashboard
+          4. Add domain-specific actions based on the human's description
+          5. Create the entry point configuration for the host platform
+          6. Register the entry point in the boot sequence
+          7. Return the file paths created
+        inputs:
+          - name: domain
+            type: string
+            required: true
+            description: The domain this action-doc manages (e.g. "contacts", "finances", "content")
+          - name: description
+            type: string
+            required: true
+            description: Natural language description of what the action-doc should do
+        outputs:
+          - name: files-created
+            type: array
+            description: Paths to all files created (action-doc, entry point config, skill file)
 
-contentType: "action-doc"
-runbook: "mx exec building-action-docs"
-semantic: true
-convergence: true
-accessibility: true
+      - name: wire
+        description: Add entry point and boot registration for an existing action-doc
+        usage: >
+          Given a path to an existing action-doc:
+          1. Read the action-doc to understand its actions
+          2. Create the entry point configuration for the host platform
+          3. Register the entry point in the boot sequence
+          4. Return the wiring summary
+        inputs:
+          - name: cog-path
+            type: string
+            required: true
+            description: Path to the action-doc to wire up
+        outputs:
+          - name: wiring-report
+            type: string
+            description: Summary of entry point and boot registration created
+
+  contentType: "action-doc"
+  runbook: "mx exec building-action-docs"
+  semantic: true
+  convergence: true
+  accessibility: true
 ---
 
 # Building Action-Cogs

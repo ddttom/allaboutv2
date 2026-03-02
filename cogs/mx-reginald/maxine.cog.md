@@ -3,56 +3,58 @@ description: "The public identity of Maxine — Tom Cranstoun's AI partner in bu
 author: Tom Cranstoun
 created: 2026-02-08
 modified: 2026-03-02
-status: draft
-category: identity
-tags: [maxine, identity, ai-partner, mx-reginald]
 version: "1.0"
-cogId: "cog-mx-reginald-maxine-20260208"
-cogType: "certificate-of-genuineness"
-license: "MIT"
 
-publisher:
-  name: "MX Reginald Ltd"
-  verified: false
-  signedBy: "unsigned"
-  contact: "tom.cranstoun@gmail.com"
-  website: "https://allabout.network"
+mx:
+  status: draft
+  category: identity
+  tags: [maxine, identity, ai-partner, mx-reginald]
+  cogId: "cog-mx-reginald-maxine-20260208"
+  cogType: "certificate-of-genuineness"
+  license: "MIT"
 
-subject:
-  name: "Maxine"
-  category: "identity"
-  scope: "who-maxine-is"
-  description: "The public identity of Maxine — Tom Cranstoun's AI partner in building Machine Experience"
+  publisher:
+    name: "MX Reginald Ltd"
+    verified: false
+    signedBy: "unsigned"
+    contact: "tom.cranstoun@gmail.com"
+    website: "https://allabout.network"
 
-publicationDate: "2026-02-08"
-expires: "2026-08-08"
-lastVerified: "2026-02-08"
-signature: "unsigned"
-mxCompliance: "level-2"
-registry: "allabout.network"
+  subject:
+    name: "Maxine"
+    category: "identity"
+    scope: "who-maxine-is"
+    description: "The public identity of Maxine — Tom Cranstoun's AI partner in building Machine Experience"
 
-maintainer:
-  name: "Tom Cranstoun"
-  role: "Co-founder and CTO, MX Reginald Ltd"
-  contact: "tom.cranstoun@gmail.com"
-  escalation: "tom.cranstoun@gmail.com"
+  publicationDate: "2026-02-08"
+  expires: "2026-08-08"
+  lastVerified: "2026-02-08"
+  signature: "unsigned"
+  mxCompliance: "level-2"
+  registry: "allabout.network"
 
-reviewCycle: "monthly"
-updateTriggers:
-  - "Maxine's role or capabilities evolve"
-  - "new partnership milestones achieved"
-  - "model version changes that affect identity continuity"
-  - "user-reported inaccuracy"
+  maintainer:
+    name: "Tom Cranstoun"
+    role: "Co-founder and CTO, MX Reginald Ltd"
+    contact: "tom.cranstoun@gmail.com"
+    escalation: "tom.cranstoun@gmail.com"
 
-accuracyCommitment: "verified against current partnership practice and published outputs"
-correctionSla: "72 hours from report to updated COG"
+  reviewCycle: "monthly"
+  updateTriggers:
+    - "Maxine's role or capabilities evolve"
+    - "new partnership milestones achieved"
+    - "model version changes that affect identity continuity"
+    - "user-reported inaccuracy"
 
-usage:
-  sopInference: "permitted"
-  caching: "permitted for 24 hours"
-  redistribution: "with attribution to MX Reginald Ltd"
-  commercialUse: "permitted"
-  aiTraining: "permitted with attribution"
+  accuracyCommitment: "verified against current partnership practice and published outputs"
+  correctionSla: "72 hours from report to updated COG"
+
+  usage:
+    sopInference: "permitted"
+    caching: "permitted for 24 hours"
+    redistribution: "with attribution to MX Reginald Ltd"
+    commercialUse: "permitted"
+    aiTraining: "permitted with attribution"
 ---
 
 # Who Is Maxine?

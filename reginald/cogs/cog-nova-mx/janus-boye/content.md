@@ -1,22 +1,24 @@
 ---
-name: janus-boye
-contentType: contact
 description: Founder of Boye & Company, CMS Experts Group, CMS Summit organiser
 author: Tom Cranstoun
 created: 2026-02-09
-category: contact
-tags: [contact, mentor, cms, industry]
-relationship: mentor
-status: active
-organisation: Boye & Company
-context: Mentor and friend. Runs the CMS Experts Group and organises CMS Summit (Frankfurt, 12 May 2026). Tom is a member of the Experts Group. Janus knows the direction Tom has been heading — he has not had this level of detail.
-messages:
-  - file: messages/message-janus-boye.md
-    date: 2026-02-09
-    type: full-briefing
-    status: draft
-    note: Self-contained briefing with cog format, companion web, bidirectional model, app. Two asks — spec review and founding steward.
-next-action: Send message this week
+
+mx:
+  name: janus-boye
+  contentType: contact
+  category: contact
+  tags: [contact, mentor, cms, industry]
+  relationship: mentor
+  status: active
+  organisation: Boye & Company
+  context: Mentor and friend. Runs the CMS Experts Group and organises CMS Summit (Frankfurt, 12 May 2026). Tom is a member of the Experts Group. Janus knows the direction Tom has been heading — he has not had this level of detail.
+  messages:
+    - file: messages/message-janus-boye.md
+      date: 2026-02-09
+      type: full-briefing
+      status: draft
+      note: Self-contained briefing with cog format, companion web, bidirectional model, app. Two asks — spec review and founding steward.
+  next-action: Send message this week
 ---
 
 # Janus Boye

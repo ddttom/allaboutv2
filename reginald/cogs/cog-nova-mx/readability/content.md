@@ -1,5 +1,4 @@
 ---
-name: readability
 version: 0.1.0
 description: Plain language and reading level analysis
 
@@ -7,89 +6,92 @@ created: 2026-02-06T12:31:00Z
 modified: 2026-02-06T12:31:00Z
 
 author: Maxine (MX - Machine eXperience Engine)
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: draft
 
-category: mx-core
-partOf: mx-core
-refersTo: [clarity, a11y]
-tags: [readability, plain-language, content, accessibility, clarity]
+mx:
+  name: readability
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: draft
 
-execute:
-  runtime: runbook
-  command: mx cog readability
-  actions:
-    - name: analyze
-      description: Analyze text readability
-      usage: mx cog readability analyze <url|file>
-      inputs:
-        - name: source
-          type: string
-          required: true
-          description: URL or file to analyze
-      outputs:
-        - name: analysis
-          type: object
-          description: Readability scores and metrics
-    
-    - name: score
-      description: Get readability score summary
-      usage: mx cog readability score <url|file>
-      inputs:
-        - name: source
-          type: string
-          required: true
-          description: URL or file to score
-      outputs:
-        - name: score
-          type: object
-          description: Overall readability score
-    
-    - name: simplify
-      description: Suggest simplifications for complex text
-      usage: mx cog readability simplify <url|file>
-      inputs:
-        - name: source
-          type: string
-          required: true
-          description: URL or file to simplify
-        - name: target
-          type: string
-          required: false
-          description: Target reading level (grade 6, grade 8, etc.)
-          default: "grade 8"
-      outputs:
-        - name: suggestions
-          type: array
-          description: Simplification suggestions
-    
-    - name: compare
-      description: Compare readability of two documents
-      usage: mx cog readability compare <source1> <source2>
-      inputs:
-        - name: source1
-          type: string
-          required: true
-          description: First document
-        - name: source2
-          type: string
-          required: true
-          description: Second document
-      outputs:
-        - name: comparison
-          type: object
-          description: Side-by-side readability comparison
+  category: mx-core
+  partOf: mx-core
+  refersTo: [clarity, a11y]
+  tags: [readability, plain-language, content, accessibility, clarity]
 
-requires:
-  bins: []
-  cogs: [clarity]
+  execute:
+    runtime: runbook
+    command: mx cog readability
+    actions:
+      - name: analyze
+        description: Analyze text readability
+        usage: mx cog readability analyze <url|file>
+        inputs:
+          - name: source
+            type: string
+            required: true
+            description: URL or file to analyze
+        outputs:
+          - name: analysis
+            type: object
+            description: Readability scores and metrics
 
-contentType: "action-doc"
-runbook: "mx exec readability"
-convergence: true
-accessibility: true
-semantic: true
+      - name: score
+        description: Get readability score summary
+        usage: mx cog readability score <url|file>
+        inputs:
+          - name: source
+            type: string
+            required: true
+            description: URL or file to score
+        outputs:
+          - name: score
+            type: object
+            description: Overall readability score
+
+      - name: simplify
+        description: Suggest simplifications for complex text
+        usage: mx cog readability simplify <url|file>
+        inputs:
+          - name: source
+            type: string
+            required: true
+            description: URL or file to simplify
+          - name: target
+            type: string
+            required: false
+            description: Target reading level (grade 6, grade 8, etc.)
+            default: "grade 8"
+        outputs:
+          - name: suggestions
+            type: array
+            description: Simplification suggestions
+
+      - name: compare
+        description: Compare readability of two documents
+        usage: mx cog readability compare <source1> <source2>
+        inputs:
+          - name: source1
+            type: string
+            required: true
+            description: First document
+          - name: source2
+            type: string
+            required: true
+            description: Second document
+        outputs:
+          - name: comparison
+            type: object
+            description: Side-by-side readability comparison
+
+  requires:
+    bins: []
+    cogs: [clarity]
+
+  contentType: "action-doc"
+  runbook: "mx exec readability"
+  convergence: true
+  accessibility: true
+  semantic: true
 ---
 
 # readability

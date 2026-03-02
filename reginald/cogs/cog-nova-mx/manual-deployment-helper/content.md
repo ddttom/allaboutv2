@@ -1,29 +1,31 @@
 ---
-name: manual-deployment-helper
 title: "Deployment Helper Manual"
 description: "Orchestrates pre-deployment workflow for multilingual sites: runs validation, parity checks, sitemap generation, creates deployment checklist, and provides Google Search Console setup instructions."
 author: Tom Cranstoun and Maxine
 created: 2026-02-21
 version: "1.0"
-status: active
-category: manual
-tags: [manual, multilingual, deployment, workflow, orchestration, automation]
-partOf: mx-maxine-lives
-purpose: "Document the deployment helper - orchestrating multilingual site deployment workflow"
-audience: "human"
-stability: "stable"
-runbook: "Read when deploying multilingual sites or understanding pre-deployment workflows"
-contextProvides:
-  - "4-step deployment workflow orchestration (validation, parity, sitemap, readiness)"
-  - "Deployment checklist (pre/during/post deployment tasks)"
-  - "Google Search Console setup guide with step-by-step instructions"
-  - "CI/CD integration patterns for automated deployment gates"
-refersTo:
-  - "mx-canon/mx-the-gathering/reference-implementations/_tools/deploy-multilingual.js"
-  - "mx-canon/mx-the-gathering/reference-implementations/_tools/README.cog.md"
-  - "mx-canon/mx-maxine-lives/manuals/manual-multilingual-validator.cog.md"
-  - "mx-canon/mx-maxine-lives/manuals/manual-parity-checker.cog.md"
-  - "mx-canon/mx-maxine-lives/manuals/manual-multilingual-sitemap.cog.md"
+
+mx:
+  name: manual-deployment-helper
+  status: active
+  category: manual
+  tags: [manual, multilingual, deployment, workflow, orchestration, automation]
+  partOf: mx-maxine-lives
+  purpose: "Document the deployment helper - orchestrating multilingual site deployment workflow"
+  audience: "human"
+  stability: "stable"
+  runbook: "Read when deploying multilingual sites or understanding pre-deployment workflows"
+  contextProvides:
+    - "4-step deployment workflow orchestration (validation, parity, sitemap, readiness)"
+    - "Deployment checklist (pre/during/post deployment tasks)"
+    - "Google Search Console setup guide with step-by-step instructions"
+    - "CI/CD integration patterns for automated deployment gates"
+  refersTo:
+    - "mx-canon/mx-the-gathering/reference-implementations/_tools/deploy-multilingual.js"
+    - "mx-canon/mx-the-gathering/reference-implementations/_tools/README.cog.md"
+    - "mx-canon/mx-maxine-lives/manuals/manual-multilingual-validator.cog.md"
+    - "mx-canon/mx-maxine-lives/manuals/manual-parity-checker.cog.md"
+    - "mx-canon/mx-maxine-lives/manuals/manual-multilingual-sitemap.cog.md"
 ---
 
 # Deployment Helper

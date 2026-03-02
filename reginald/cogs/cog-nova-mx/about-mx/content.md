@@ -1,148 +1,150 @@
 ---
-name: about-mx
 title: "About Me — Maxine"
 description: "Auto-generated self-knowledge file. Who I am, what I know, what I can do. Regenerated before every end-of-day report."
 version: "1.0"
-status: active
 created: 2026-02-28
 modified: 2026-02-28
-generated: "2026-02-28T11:53"
 author: mx-about-recon.sh
-category: mx-core
-partOf: mx-maxine-lives
-tags: [about, self-knowledge, registries, identity, maxine]
-audience: [humans, machines]
-ownership: gestalt
 
-snapshot:
-  mx-home: "/Users/tomcranstoun/.mx"
-  machine: "toms-MacBook-Pro-304.local"
-  user: "Tom Cranstoun"
-  registered-repos: 1
+mx:
+  name: about-mx
+  status: active
+  generated: "2026-02-28T11:53"
+  category: mx-core
+  partOf: mx-maxine-lives
+  tags: [about, self-knowledge, registries, identity, maxine]
+  audience: [humans, machines]
+  ownership: gestalt
 
-  cogs:
-    total: 61
-    action-docs: 54
-    info-docs: 7
-    names:
-    - 2026-02-15-conventions
-    - INSTALLME
-    - a11y
-    - access-and-guardrails
-    - asking-for-help
-    - blog-generator
-    - blog-reviewer
-    - building-action-docs
-    - canon-init
-    - changelog-trimmer
-    - clarity
-    - co-directors-report
-    - cog-id
-    - cog-query
-    - cog-registry
-    - cogs-for-agent-developers
-    - env
-    - how-mx-os-runs
-    - illustration-generator
-    - installme-runner
-    - link-checker
-    - llms-txt
-    - manual-metadata
-    - manual-repository-architecture
-    - manuals-registry
-    - marp-regen
-    - metadata
-    - metadata-audit
-    - mx-allmygithubs
-    - mx-audit
-    - mx-boot
-    - mx-contacts
-    - mx-init
-    - mx-os-manual
-    - mx-phrasebook
-    - mx-reginald-manual
-    - mx-reminders
-    - mx-run
-    - mx-scaffold
-    - pdf-generator
-    - pricing
-    - readability
-    - registry-of-registries
-    - registry-sync
-    - robots-txt
-    - routing-pipeline
-    - schema
-    - script-helper
-    - semantic-html
-    - sitemap
-    - the-companion-web
-    - the-personal-cog
-    - toast-detector
-    - validate-cog
-    - what-comes-next
-    - what-is-a-cog
-    - what-is-installme
-    - what-is-mx-os
-    - what-is-script-metadata
-    - what-is-this-chat-about
-    - whats-changed
+  snapshot:
+    mx-home: "/Users/tomcranstoun/.mx"
+    machine: "toms-MacBook-Pro-304.local"
+    user: "Tom Cranstoun"
+    registered-repos: 1
 
-  cog-ids:
-    repo-registry: 1
-    personal-registry: 0
+    cogs:
+      total: 61
+      action-docs: 54
+      info-docs: 7
+      names:
+      - 2026-02-15-conventions
+      - INSTALLME
+      - a11y
+      - access-and-guardrails
+      - asking-for-help
+      - blog-generator
+      - blog-reviewer
+      - building-action-docs
+      - canon-init
+      - changelog-trimmer
+      - clarity
+      - co-directors-report
+      - cog-id
+      - cog-query
+      - cog-registry
+      - cogs-for-agent-developers
+      - env
+      - how-mx-os-runs
+      - illustration-generator
+      - installme-runner
+      - link-checker
+      - llms-txt
+      - manual-metadata
+      - manual-repository-architecture
+      - manuals-registry
+      - marp-regen
+      - metadata
+      - metadata-audit
+      - mx-allmygithubs
+      - mx-audit
+      - mx-boot
+      - mx-contacts
+      - mx-init
+      - mx-os-manual
+      - mx-phrasebook
+      - mx-reginald-manual
+      - mx-reminders
+      - mx-run
+      - mx-scaffold
+      - pdf-generator
+      - pricing
+      - readability
+      - registry-of-registries
+      - registry-sync
+      - robots-txt
+      - routing-pipeline
+      - schema
+      - script-helper
+      - semantic-html
+      - sitemap
+      - the-companion-web
+      - the-personal-cog
+      - toast-detector
+      - validate-cog
+      - what-comes-next
+      - what-is-a-cog
+      - what-is-installme
+      - what-is-mx-os
+      - what-is-script-metadata
+      - what-is-this-chat-about
+      - whats-changed
 
-  registries:
-    content-entries: 0
-    field-dictionary-fields: 0
+    cog-ids:
+      repo-registry: 1
+      personal-registry: 0
 
-  decision-registers:
-    ADR: 6
-    BDR: 2
-    NDR: 0
-    MDR: 0
+    registries:
+      content-entries: 0
+      field-dictionary-fields: 0
 
-  thinking:
-    decisions: 1
-    assumptions: 0
+    decision-registers:
+      ADR: 6
+      BDR: 2
+      NDR: 0
+      MDR: 0
 
-  manuals:
-    total: 25
-    names:
-    - manual-asset-sync
-    - manual-build-tools
-    - manual-cog-id
-    - manual-cogify
-    - manual-deployment-helper
-    - manual-enhanced-audit
-    - manual-git-hooks
-    - manual-html-baseline-audit
-    - manual-maxine-lives
-    - manual-multilingual-sitemap
-    - manual-multilingual-template
-    - manual-multilingual-validator
-    - manual-mx-exec
-    - manual-mx-nav-server
-    - manual-mx-pdf
-    - manual-parity-checker
-    - manual-parse-mxignore
-    - manual-partnership-reporting
-    - manual-path-validator
-    - manual-prompt-enhancer
-    - manual-spell-checker
-    - manual-submodule-health
-    - manual-team-onboarding
-    - mx-contacts-manual
-    - mx-show-manual
+    thinking:
+      decisions: 1
+      assumptions: 0
 
-  skills:
-    total: 40
-    cog-commands: 8
-    system-commands: 17
-    other: 14
+    manuals:
+      total: 25
+      names:
+      - manual-asset-sync
+      - manual-build-tools
+      - manual-cog-id
+      - manual-cogify
+      - manual-deployment-helper
+      - manual-enhanced-audit
+      - manual-git-hooks
+      - manual-html-baseline-audit
+      - manual-maxine-lives
+      - manual-multilingual-sitemap
+      - manual-multilingual-template
+      - manual-multilingual-validator
+      - manual-mx-exec
+      - manual-mx-nav-server
+      - manual-mx-pdf
+      - manual-parity-checker
+      - manual-parse-mxignore
+      - manual-partnership-reporting
+      - manual-path-validator
+      - manual-prompt-enhancer
+      - manual-spell-checker
+      - manual-submodule-health
+      - manual-team-onboarding
+      - mx-contacts-manual
+      - mx-show-manual
 
-  reginald:
-    indexed-cogs: 156
-    last-sync: "unknown"
+    skills:
+      total: 40
+      cog-commands: 8
+      system-commands: 17
+      other: 14
+
+    reginald:
+      indexed-cogs: 156
+      last-sync: "unknown"
 ---
 
 # About Me

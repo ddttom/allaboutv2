@@ -1,21 +1,23 @@
 ---
-name: appendix-k-yaml-metadata
 title: "Appendix K — MX Page Pattern YAML Template"
 version: "1.1"
-status: active
 created: 2026-02-06
 modified: 2026-02-27
 author: Tom Cranstoun
-license: MIT
-category: template
-partOf: mx-the-gathering
-buildsOn: [field-dictionary]
 description: "The canonical YAML frontmatter template for Appendix K page patterns. Copy this template when creating a new MX page pattern document."
-tags: [template, appendix-k, mx-pattern, yaml, frontmatter, page-pattern]
-audience: [machines, humans]
 
-contentType: template
-runbook: "Copy the YAML template below into a new .cog.md file. Fill in every field. Validate against datalake/knowledge/reference/schemas/mx-page-pattern.json."
+mx:
+  name: appendix-k-yaml-metadata
+  status: active
+  license: MIT
+  category: template
+  partOf: mx-the-gathering
+  buildsOn: [field-dictionary]
+  tags: [template, appendix-k, mx-pattern, yaml, frontmatter, page-pattern]
+  audience: [machines, humans]
+
+  contentType: template
+  runbook: "Copy the YAML template below into a new .cog.md file. Fill in every field. Validate against datalake/knowledge/reference/schemas/mx-page-pattern.json."
 ---
 
 # Appendix K — MX Page Pattern YAML Template

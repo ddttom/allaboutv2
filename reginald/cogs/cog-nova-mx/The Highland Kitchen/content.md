@@ -1,33 +1,35 @@
 ---
-name: The Highland Kitchen
 description: Farm-to-table Scottish cuisine in Edinburgh
 created: 2026-02-01
-category: restaurant
-contentType: venue
-status: active
 version: "1.0"
 author: The Highland Kitchen
-tags: [restaurant, scottish, edinburgh, farm-to-table]
-location:
-  address: 42 Royal Mile, Edinburgh EH1
-  city: Edinburgh
-  country: Scotland
-hours: "Tue-Sun 12:00-22:00"
-cuisine: [Scottish, British, seasonal]
-dietary_options:
-  vegetarian: true
-  vegan: limited
-  gluten_free: true
-  dairy_free: true
-  halal: false
-  kosher: false
-accessibility:
-  wheelchair: true
-  hearing_loop: false
-  braille_menu: false
-  large_print_menu: true
-price_range: "££"
-booking: "https://highlandkitchen.example/book"
+
+mx:
+  name: The Highland Kitchen
+  category: restaurant
+  contentType: venue
+  status: active
+  tags: [restaurant, scottish, edinburgh, farm-to-table]
+  location:
+    address: 42 Royal Mile, Edinburgh EH1
+    city: Edinburgh
+    country: Scotland
+  hours: "Tue-Sun 12:00-22:00"
+  cuisine: [Scottish, British, seasonal]
+  dietary_options:
+    vegetarian: true
+    vegan: limited
+    gluten_free: true
+    dairy_free: true
+    halal: false
+    kosher: false
+  accessibility:
+    wheelchair: true
+    hearing_loop: false
+    braille_menu: false
+    large_print_menu: true
+  price_range: "££"
+  booking: "https://highlandkitchen.example/book"
 ---
 
 ## Welcome to The Highland Kitchen

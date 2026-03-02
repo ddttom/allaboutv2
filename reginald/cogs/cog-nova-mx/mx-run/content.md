@@ -1,5 +1,4 @@
 ---
-name: mx-run
 version: "1.0"
 description: Universal cog executor — looks up any cog by name, lists its actions, and dispatches execution by runtime
 
@@ -7,63 +6,66 @@ created: 2026-02-11
 modified: 2026-02-11
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: draft
 
-category: mx-core
-partOf: mx-os
-buildsOn: [what-is-a-cog, cog-query, cog-registry]
-refersTo: [what-is-mx-os, how-mx-os-runs]
-tags: [executor, runtime, dispatcher, cli, cog, mx-os]
+mx:
+  name: mx-run
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: draft
 
-contentType: "action-doc"
-runbook: "mx exec mx-run"
-execute:
-  runtime: node
-  command: node mx-reginald/scripts/mx-run.js
-  actions:
-    - name: list
-      description: List all executable action-docs in the registry
-      usage: node mx-reginald/scripts/mx-run.js
-      outputs:
-        - name: table
-          type: string
-          description: Formatted table of action-docs with name, runtime, action count, and description
+  category: mx-core
+  partOf: mx-os
+  buildsOn: [what-is-a-cog, cog-query, cog-registry]
+  refersTo: [what-is-mx-os, how-mx-os-runs]
+  tags: [executor, runtime, dispatcher, cli, cog, mx-os]
 
-    - name: show
-      description: Show a cog's details and list its available actions
-      usage: node mx-reginald/scripts/mx-run.js <cogname>
-      inputs:
-        - name: cogname
-          type: string
-          required: true
-          description: The name of the cog to inspect
-      outputs:
-        - name: info
-          type: string
-          description: Cog metadata and action list
+  contentType: "action-doc"
+  runbook: "mx exec mx-run"
+  execute:
+    runtime: node
+    command: node mx-reginald/scripts/mx-run.js
+    actions:
+      - name: list
+        description: List all executable action-docs in the registry
+        usage: node mx-reginald/scripts/mx-run.js
+        outputs:
+          - name: table
+            type: string
+            description: Formatted table of action-docs with name, runtime, action count, and description
 
-    - name: execute
-      description: Execute a specific action on a cog, dispatching by runtime
-      usage: node mx-reginald/scripts/mx-run.js <cogname> <action> [args...]
-      inputs:
-        - name: cogname
-          type: string
-          required: true
-          description: The name of the cog to execute
-        - name: action
-          type: string
-          required: true
-          description: The action to run
-      outputs:
-        - name: result
-          type: string
-          description: Output from the executed action
+      - name: show
+        description: Show a cog's details and list its available actions
+        usage: node mx-reginald/scripts/mx-run.js <cogname>
+        inputs:
+          - name: cogname
+            type: string
+            required: true
+            description: The name of the cog to inspect
+        outputs:
+          - name: info
+            type: string
+            description: Cog metadata and action list
 
-requires:
-  bins: [node]
-  packages: [js-yaml]
+      - name: execute
+        description: Execute a specific action on a cog, dispatching by runtime
+        usage: node mx-reginald/scripts/mx-run.js <cogname> <action> [args...]
+        inputs:
+          - name: cogname
+            type: string
+            required: true
+            description: The name of the cog to execute
+          - name: action
+            type: string
+            required: true
+            description: The action to run
+        outputs:
+          - name: result
+            type: string
+            description: Output from the executed action
+
+  requires:
+    bins: [node]
+    packages: [js-yaml]
 ---
 
 # MX Run

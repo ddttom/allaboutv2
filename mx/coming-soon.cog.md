@@ -4,29 +4,31 @@ author: "Tom Cranstoun"
 created: 2026-02-16
 modified: 2026-02-23
 version: "2.2"
-status: active
-category: marketing
-contentType: info-doc
-tags: [mx, landing-page, codex, handbook, coming-soon, machine-experience, books, companion-web, ai-agents, waitlist, email-signup]
-audience: ["humans", "machines"]
-buildsOn: [mx-messaging, mx-concepts]
-runbook: "This is the public landing page for Cog-Nova-MX on allabout.network. It introduces MX to first-time visitors — both human and machine. For humans: render the HTML at coming-soon.cog.html. For machines: read this cog for structured metadata about MX, the books, the product family, and contact information."
-waitlist:
-  url: "https://forms.gle/443wpx4th4ZzYPdA8"
-  method: "GET"
-  fields: ["email"]
-  target: "_blank"
-assets:
-  html: "coming-soon.html"
-  css: "coming-soon.css"
-features:
-  - "Email signup form with HTTPS submission"
-  - "Progressive disclosure author bio"
-  - "Schema.org JSON-LD (Organization, Person, Book, FAQ, BreadcrumbList)"
-  - "Full SEO meta tags (Open Graph, Twitter Cards)"
-  - "GEO meta tags (Glasgow, Scotland)"
-  - "WCAG 2.1 AA accessibility"
-  - "External stylesheet (MX compliant)"
+
+mx:
+  status: active
+  category: marketing
+  contentType: info-doc
+  tags: [mx, landing-page, codex, handbook, coming-soon, machine-experience, books, companion-web, ai-agents, waitlist, email-signup]
+  audience: ["humans", "machines"]
+  buildsOn: [mx-messaging, mx-concepts]
+  runbook: "This is the public landing page for Cog-Nova-MX on allabout.network. It introduces MX to first-time visitors — both human and machine. For humans: render the HTML at coming-soon.cog.html. For machines: read this cog for structured metadata about MX, the books, the product family, and contact information."
+  waitlist:
+    url: "https://forms.gle/443wpx4th4ZzYPdA8"
+    method: "GET"
+    fields: ["email"]
+    target: "_blank"
+  assets:
+    html: "coming-soon.html"
+    css: "coming-soon.css"
+  features:
+    - "Email signup form with HTTPS submission"
+    - "Progressive disclosure author bio"
+    - "Schema.org JSON-LD (Organization, Person, Book, FAQ, BreadcrumbList)"
+    - "Full SEO meta tags (Open Graph, Twitter Cards)"
+    - "GEO meta tags (Glasgow, Scotland)"
+    - "WCAG 2.1 AA accessibility"
+    - "External stylesheet (MX compliant)"
 ---
 
 # MX — Your Business, Readable by Every Machine on Earth

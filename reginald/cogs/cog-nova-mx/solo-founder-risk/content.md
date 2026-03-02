@@ -1,39 +1,41 @@
 ---
-name: solo-founder-risk
 version: "1.0"
 description: "Risk #1: Solo founder as single point of failure. Critical severity, medium likelihood, catastrophic impact."
 created: 2026-02-13
 modified: 2026-02-13
 author: Tom Cranstoun and Maxine
-license: proprietary
-status: open
-category: risk
-partOf: mx-maxine-lives
 
-risk:
-  number: 1
-  title: "Solo Founder — Single Point of Failure"
+mx:
+  name: solo-founder-risk
+  license: proprietary
   status: open
-  date: 2026-02-13
-  severity: critical
-  likelihood: medium
-  impact: catastrophic
-  owner: Tom Cranstoun
-  affects:
-    - all-initiatives
-    - all-milestones
-  mitigations:
-    - document-everything
-    - maxine-as-institutional-memory
-    - advisory-board
-    - scott-mcgregor-partnership
-    - the-gathering-independence
+  category: risk
+  partOf: mx-maxine-lives
 
-tags: [risk, founder, bus-factor, critical, mitigation]
-audience: [gestalt, investors, board]
+  risk:
+    number: 1
+    title: "Solo Founder — Single Point of Failure"
+    status: open
+    date: 2026-02-13
+    severity: critical
+    likelihood: medium
+    impact: catastrophic
+    owner: Tom Cranstoun
+    affects:
+      - all-initiatives
+      - all-milestones
+    mitigations:
+      - document-everything
+      - maxine-as-institutional-memory
+      - advisory-board
+      - scott-mcgregor-partnership
+      - the-gathering-independence
 
-contentType: "risk"
-runbook: "This is the most critical risk to Cog-Nova-MX. Tom Cranstoun is the sole founder, sole visionary, and sole technical authority. Read the full prose for mitigation strategies. This risk is honest and must be presented honestly to investors."
+  tags: [risk, founder, bus-factor, critical, mitigation]
+  audience: [gestalt, investors, board]
+
+  contentType: "risk"
+  runbook: "This is the most critical risk to Cog-Nova-MX. Tom Cranstoun is the sole founder, sole visionary, and sole technical authority. Read the full prose for mitigation strategies. This risk is honest and must be presented honestly to investors."
 ---
 
 # Risk 1: Solo Founder — Single Point of Failure

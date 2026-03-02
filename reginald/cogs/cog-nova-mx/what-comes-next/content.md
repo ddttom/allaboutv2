@@ -1,5 +1,4 @@
 ---
-name: what-comes-next
 version: "1.0"
 description: The current state of the MX ecosystem, priorities, action plan, and next steps. Any AI agent reading this knows exactly where we are and what to do next.
 
@@ -7,58 +6,61 @@ created: 2026-02-09
 modified: 2026-02-09
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, cog-registry]
-buildsOn: [what-is-a-cog, who-is-maxine, what-is-mx-os, cog-registry, cogs-for-agent-developers]
-tags: [planning, priorities, roadmap, session-context, action-plan, the-gathering, launch]
+mx:
+  name: what-comes-next
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: ai-agents
-readingLevel: technical
-purpose: Transfer full context to any AI agent so it can continue the work without re-explaining anything
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, cog-registry]
+  buildsOn: [what-is-a-cog, who-is-maxine, what-is-mx-os, cog-registry, cogs-for-agent-developers]
+  tags: [planning, priorities, roadmap, session-context, action-plan, the-gathering, launch]
 
-contentType: "action-doc"
-runbook: "mx exec what-comes-next"
-execute:
-  runtime: runbook
-  command: mx cog next
-  actions:
-    - name: brief
-      description: Present the current state, priorities, and recommended next action
-      usage: Read this cog and present a concise summary of where we are and what to do next
-      outputs:
-        - name: briefing
-          type: string
-          description: Current state summary and recommended next action
+  audience: ai-agents
+  readingLevel: technical
+  purpose: Transfer full context to any AI agent so it can continue the work without re-explaining anything
 
-    - name: status
-      description: Report what is done, what is in progress, and what is pending
-      usage: Read the action plan below and report status of each item
-      outputs:
-        - name: report
-          type: object
-          description: Status of all action items
+  contentType: "action-doc"
+  runbook: "mx exec what-comes-next"
+  execute:
+    runtime: runbook
+    command: mx cog next
+    actions:
+      - name: brief
+        description: Present the current state, priorities, and recommended next action
+        usage: Read this cog and present a concise summary of where we are and what to do next
+        outputs:
+          - name: briefing
+            type: string
+            description: Current state summary and recommended next action
 
-    - name: update
-      description: Update this cog after completing work — mark items done, add new items, adjust priorities
-      usage: After completing an action item, edit this cog to reflect the new state
-      inputs:
-        - name: completed
-          type: string
-          required: true
-          description: Which action item was completed
-        - name: notes
-          type: string
-          required: false
-          description: Any notes or discoveries from completing the work
-      outputs:
-        - name: updated-cog
-          type: string
-          description: Confirmation that the cog has been updated
+      - name: status
+        description: Report what is done, what is in progress, and what is pending
+        usage: Read the action plan below and report status of each item
+        outputs:
+          - name: report
+            type: object
+            description: Status of all action items
+
+      - name: update
+        description: Update this cog after completing work — mark items done, add new items, adjust priorities
+        usage: After completing an action item, edit this cog to reflect the new state
+        inputs:
+          - name: completed
+            type: string
+            required: true
+            description: Which action item was completed
+          - name: notes
+            type: string
+            required: false
+            description: Any notes or discoveries from completing the work
+        outputs:
+          - name: updated-cog
+            type: string
+            description: Confirmation that the cog has been updated
 ---
 
 # What Comes Next

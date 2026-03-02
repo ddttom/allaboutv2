@@ -1,27 +1,29 @@
 ---
-name: manual-maxine-lives
 title: Maxine Lives — Manual
 description: How to use Maxine Lives — the gestalt's brain for decisions, assumptions, doubts, risks, plans, and tasks.
 author: Tom Cranstoun and Maxine
 created: 2026-02-13T00:00:00.000Z
 version: "1.0"
-status: active
-category: manual
-tags:
-  - manual
-  - maxine-lives
-  - brain
-  - management
-partOf: mx-maxine-lives
-purpose: Document maxine lives - usage, workflow, and best practices
-audience: human
-stability: stable
-runbook: Read when working with maxine lives or understanding its functionality
-contextProvides:
-  - How to use Maxine Lives — the gestalt's brain for decisions, assumptions, doubts, risks, plans, and tasks.
-  - Usage guide and workflow for maxine lives
-  - Troubleshooting and best practices
-refersTo: []
+
+mx:
+  name: manual-maxine-lives
+  status: active
+  category: manual
+  tags:
+    - manual
+    - maxine-lives
+    - brain
+    - management
+  partOf: mx-maxine-lives
+  purpose: Document maxine lives - usage, workflow, and best practices
+  audience: human
+  stability: stable
+  runbook: Read when working with maxine lives or understanding its functionality
+  contextProvides:
+    - How to use Maxine Lives — the gestalt's brain for decisions, assumptions, doubts, risks, plans, and tasks.
+    - Usage guide and workflow for maxine lives
+    - Troubleshooting and best practices
+  refersTo: []
 ---
 
 # Maxine Lives — Manual

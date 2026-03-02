@@ -1,31 +1,33 @@
 ---
-name: spelling-neutrality-decision
 version: "1.0"
 description: "NDR #3: Prefer spelling-neutral field names. Where US/UK spelling differs, use an abbreviation or neutral synonym."
 created: 2026-02-16
 author: Tom Cranstoun and Maxine
-status: accepted
-category: naming
-partOf: mx-the-gathering
-tags: [ndr, naming, spelling, neutral, abbreviation, standards, org, license]
-audience: both
 
-ndr:
-  number: 3
-  title: "Spelling Neutrality — Abbreviate to Avoid Regional Variants"
+mx:
+  name: spelling-neutrality-decision
   status: accepted
-  date: 2026-02-16
-  rationale: "MX is a global standard. Field names should not force a US/UK spelling choice. Where a neutral abbreviation or synonym exists, use it. Where a single standard spelling is universal (license via SPDX), use that."
-  evidence: "Schema.org recommends neutral synonyms (WorkersUnion, not Labour/Labor Union). W3C Organization Ontology uses org: prefix. SPDX license identifier is universal. Every web standard uses -ize but OED also prefers -ize — the MX solution is to avoid the word entirely."
-  enforcement: "mx-audit.js reports violations. mx-rename-tracker.js tracks mappings."
+  category: naming
+  partOf: mx-the-gathering
+  tags: [ndr, naming, spelling, neutral, abbreviation, standards, org, license]
+  audience: both
 
-affects:
-  - field-dictionary
-  - cog-unified-spec
-  - mx-metadata-conventions
-  - mx-contacts
+  ndr:
+    number: 3
+    title: "Spelling Neutrality — Abbreviate to Avoid Regional Variants"
+    status: accepted
+    date: 2026-02-16
+    rationale: "MX is a global standard. Field names should not force a US/UK spelling choice. Where a neutral abbreviation or synonym exists, use it. Where a single standard spelling is universal (license via SPDX), use that."
+    evidence: "Schema.org recommends neutral synonyms (WorkersUnion, not Labour/Labor Union). W3C Organization Ontology uses org: prefix. SPDX license identifier is universal. Every web standard uses -ize but OED also prefers -ize — the MX solution is to avoid the word entirely."
+    enforcement: "mx-audit.js reports violations. mx-rename-tracker.js tracks mappings."
 
-buildsOn: [what-is-a-cog]
+  affects:
+    - field-dictionary
+    - cog-unified-spec
+    - mx-metadata-conventions
+    - mx-contacts
+
+  buildsOn: [what-is-a-cog]
 ---
 
 # NDR #3: Spelling Neutrality

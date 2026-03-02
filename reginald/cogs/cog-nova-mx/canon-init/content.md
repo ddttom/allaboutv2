@@ -1,5 +1,4 @@
 ---
-name: canon-init
 version: 1.0.0
 description: Generate a new Canon initiative folder with full lifecycle support
 
@@ -7,131 +6,134 @@ created: 2026-02-09T10:00:00Z
 modified: 2026-02-09T10:00:00Z
 
 author: Tom Cranstoun & Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: draft
 
-category: mx-canon
-partOf: mx-canon
-refersTo: [soul-template]
-tags: [canon, template, meta, initiative, governance]
+mx:
+  name: canon-init
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: draft
 
-execute:
-  runtime: runbook
-  command: mx canon init
-  actions:
-    - name: generate
-      description: Create a new Canon initiative folder from the template
-      usage: mx canon init generate <initiative-name>
-      inputs:
-        - name: initiative-name
-          type: string
-          required: true
-          description: Name of the initiative (will be prefixed with MX- if not already)
-        - name: description
-          type: string
-          required: true
-          description: One-line description of the initiative
-      outputs:
-        - name: folder
-          type: string
-          description: Path to the created initiative folder
+  category: mx-canon
+  partOf: mx-canon
+  refersTo: [soul-template]
+  tags: [canon, template, meta, initiative, governance]
 
-    - name: interview
-      description: Interview the user to fill in the SOUL.md for a new initiative
-      usage: mx canon init interview <initiative-path>
-      inputs:
-        - name: initiative-path
-          type: string
-          required: true
-          description: Path to the initiative folder containing the SOUL template
-      outputs:
-        - name: soul
-          type: object
-          description: Completed SOUL.md content based on interview answers
-      interview-questions:
-        - field: what-it-is
-          question: "What is this initiative? Describe it in one or two sentences as if explaining to someone who has never heard of it."
-          maps-to: "## What [Name] Is"
-        - field: voice
-          question: "How should this initiative sound? Pick three to five adjectives."
-          maps-to: "## Voice"
-          guidance: "Think about who reads these documents. Developers? Business people? Both? The voice should match the audience."
-        - field: core-narrative
-          question: "What problem does this initiative solve? Start with the pain, then the solution."
-          maps-to: "## Core Narrative"
-          guidance: "Lead with what is broken today. Then explain what this initiative does about it. Be specific — use a concrete example if you have one."
-        - field: constraints
-          question: "What must this initiative never do? What rules are non-negotiable?"
-          maps-to: "## Constraints"
-          guidance: "Constraints protect the initiative from drift. Think about independence, licensing, scope boundaries, naming rules."
-        - field: closing-line
-          question: "Give this initiative a closing line. One sentence, italicised, that captures its essence."
-          maps-to: "Closing line"
-          guidance: "Like The Gathering's 'The standard belongs to the community.' or Canon's 'Everything else is canon fodder.'"
+  execute:
+    runtime: runbook
+    command: mx canon init
+    actions:
+      - name: generate
+        description: Create a new Canon initiative folder from the template
+        usage: mx canon init generate <initiative-name>
+        inputs:
+          - name: initiative-name
+            type: string
+            required: true
+            description: Name of the initiative (will be prefixed with MX- if not already)
+          - name: description
+            type: string
+            required: true
+            description: One-line description of the initiative
+        outputs:
+          - name: folder
+            type: string
+            description: Path to the created initiative folder
 
-    - name: validate
-      description: Validate a Canon initiative folder against Canon rules
-      usage: mx canon init validate <initiative-path>
-      inputs:
-        - name: initiative-path
-          type: string
-          required: true
-          description: Path to the initiative folder to validate
-      outputs:
-        - name: validation
-          type: object
-          description: Validation results
-      checks:
-        - name: soul-exists
-          description: SOUL.md must exist at the initiative root
-          severity: error
-        - name: deliverables-readme
-          description: deliverables/README.md must exist
-          severity: error
-        - name: frontmatter-version
-          description: Every .md file must have version field in YAML frontmatter
-          severity: error
-        - name: no-version-in-filename
-          description: No filenames may contain version numbers (e.g. -v1, -v2)
-          severity: error
-        - name: soul-sections
-          description: SOUL.md must contain What It Is, Voice, Core Narrative, and Constraints sections
-          severity: warning
-        - name: deliverables-public
-          description: Files in deliverables/ must not contain confidential information
-          severity: warning
+      - name: interview
+        description: Interview the user to fill in the SOUL.md for a new initiative
+        usage: mx canon init interview <initiative-path>
+        inputs:
+          - name: initiative-path
+            type: string
+            required: true
+            description: Path to the initiative folder containing the SOUL template
+        outputs:
+          - name: soul
+            type: object
+            description: Completed SOUL.md content based on interview answers
+        interview-questions:
+          - field: what-it-is
+            question: "What is this initiative? Describe it in one or two sentences as if explaining to someone who has never heard of it."
+            maps-to: "## What [Name] Is"
+          - field: voice
+            question: "How should this initiative sound? Pick three to five adjectives."
+            maps-to: "## Voice"
+            guidance: "Think about who reads these documents. Developers? Business people? Both? The voice should match the audience."
+          - field: core-narrative
+            question: "What problem does this initiative solve? Start with the pain, then the solution."
+            maps-to: "## Core Narrative"
+            guidance: "Lead with what is broken today. Then explain what this initiative does about it. Be specific — use a concrete example if you have one."
+          - field: constraints
+            question: "What must this initiative never do? What rules are non-negotiable?"
+            maps-to: "## Constraints"
+            guidance: "Constraints protect the initiative from drift. Think about independence, licensing, scope boundaries, naming rules."
+          - field: closing-line
+            question: "Give this initiative a closing line. One sentence, italicised, that captures its essence."
+            maps-to: "Closing line"
+            guidance: "Like The Gathering's 'The standard belongs to the community.' or Canon's 'Everything else is canon fodder.'"
 
-    - name: register
-      description: Add the new initiative to the Canon README.md table
-      usage: mx canon init register <initiative-path>
-      inputs:
-        - name: initiative-path
-          type: string
-          required: true
-          description: Path to the initiative folder
-        - name: purpose
-          type: string
-          required: true
-          description: One-line purpose for the Canon README table
-        - name: status
-          type: string
-          required: true
-          description: Current status (e.g. Founding, Active, Draft)
-      outputs:
-        - name: registered
-          type: boolean
-          description: Whether registration succeeded
+      - name: validate
+        description: Validate a Canon initiative folder against Canon rules
+        usage: mx canon init validate <initiative-path>
+        inputs:
+          - name: initiative-path
+            type: string
+            required: true
+            description: Path to the initiative folder to validate
+        outputs:
+          - name: validation
+            type: object
+            description: Validation results
+        checks:
+          - name: soul-exists
+            description: SOUL.md must exist at the initiative root
+            severity: error
+          - name: deliverables-readme
+            description: deliverables/README.md must exist
+            severity: error
+          - name: frontmatter-version
+            description: Every .md file must have version field in YAML frontmatter
+            severity: error
+          - name: no-version-in-filename
+            description: No filenames may contain version numbers (e.g. -v1, -v2)
+            severity: error
+          - name: soul-sections
+            description: SOUL.md must contain What It Is, Voice, Core Narrative, and Constraints sections
+            severity: warning
+          - name: deliverables-public
+            description: Files in deliverables/ must not contain confidential information
+            severity: warning
 
-requires:
-  bins: []
-  cogs: []
+      - name: register
+        description: Add the new initiative to the Canon README.md table
+        usage: mx canon init register <initiative-path>
+        inputs:
+          - name: initiative-path
+            type: string
+            required: true
+            description: Path to the initiative folder
+          - name: purpose
+            type: string
+            required: true
+            description: One-line purpose for the Canon README table
+          - name: status
+            type: string
+            required: true
+            description: Current status (e.g. Founding, Active, Draft)
+        outputs:
+          - name: registered
+            type: boolean
+            description: Whether registration succeeded
 
-contentType: "action-doc"
-runbook: "mx exec canon-init"
-convergence: true
-accessibility: false
-semantic: true
+  requires:
+    bins: []
+    cogs: []
+
+  contentType: "action-doc"
+  runbook: "mx exec canon-init"
+  convergence: true
+  accessibility: false
+  semantic: true
 ---
 
 # canon-init

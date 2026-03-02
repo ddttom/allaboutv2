@@ -1,5 +1,4 @@
 ---
-name: allmygithubs
 title: "All My GitHub Repositories"
 version: "1.0"
 description: "Self-updating action cog that scans GitHub repos and generates a classified, sorted table."
@@ -8,101 +7,104 @@ created: 2026-02-24
 modified: 2026-02-24
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, installme]
-tags: [github, inventory, catalog, action-cog, self-updating]
+mx:
+  name: allmygithubs
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: ai-agents
-readingLevel: technical
-purpose: "Scan all GitHub repos (personal + orgs), classify by type, and generate a self-updating table."
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, installme]
+  tags: [github, inventory, catalog, action-cog, self-updating]
 
-contentType: "action-doc"
-runbook: "mx exec allmygithubs"
-# Block architecture
-blocks:
-  - definition:
-      standards:
-        - name: "The Gathering"
-          version: "2.1-draft"
-          scope: "cog metadata format, action execution"
-  - code:
-      id: scan-repos
-      language: bash
-      purpose: "Fetch GitHub repos via gh CLI, classify, and update table in this cog"
-      location: embedded
-      marker: "```bash @embedded:scan-repos"
-      description: |
-        Scans all GitHub repositories using gh API:
-        - Fetches personal repos + organization repos
-        - Classifies by name prefix → topics → 'Other'
-        - Categories: MX 🔷, Web, Tools, Archive, Other
-        - Sorts: MX first, then by category, then by last push
-        - Updates the table section in this cog file
+  audience: ai-agents
+  readingLevel: technical
+  purpose: "Scan all GitHub repos (personal + orgs), classify by type, and generate a self-updating table."
 
-prerequisites:
-  required:
-    - name: gh
-      check: "gh --version"
-      why: "GitHub CLI for API access"
-    - name: jq
-      check: "jq --version"
-      why: "JSON parsing"
-  auth:
-    - name: github-auth
-      check: "gh auth status"
-      why: "Authenticated to fetch private repos"
+  contentType: "action-doc"
+  runbook: "mx exec allmygithubs"
+  # Block architecture
+  blocks:
+    - definition:
+        standards:
+          - name: "The Gathering"
+            version: "2.1-draft"
+            scope: "cog metadata format, action execution"
+    - code:
+        id: scan-repos
+        language: bash
+        purpose: "Fetch GitHub repos via gh CLI, classify, and update table in this cog"
+        location: embedded
+        marker: "```bash @embedded:scan-repos"
+        description: |
+          Scans all GitHub repositories using gh API:
+          - Fetches personal repos + organization repos
+          - Classifies by name prefix → topics → 'Other'
+          - Categories: MX 🔷, Web, Tools, Archive, Other
+          - Sorts: MX first, then by category, then by last push
+          - Updates the table section in this cog file
 
-classification:
-  rules:
-    - pattern: "^[Mm][Xx]-"
-      type: "MX"
-      icon: "🔷"
-    - pattern: "^web-|^allabout|^site-"
-      type: "Web"
-      icon: ""
-    - pattern: "^tool-|^cli-|^util-|^script-"
-      type: "Tools"
-      icon: ""
-  archive-conditions:
-    - "GitHub archived flag is true"
-    - "Last push older than 12 months"
-  fallback: "Other"
+  prerequisites:
+    required:
+      - name: gh
+        check: "gh --version"
+        why: "GitHub CLI for API access"
+      - name: jq
+        check: "jq --version"
+        why: "JSON parsing"
+    auth:
+      - name: github-auth
+        check: "gh auth status"
+        why: "Authenticated to fetch private repos"
 
-sort-order:
-  - "MX"
-  - "Web"
-  - "Tools"
-  - "Other"
-  - "Archive"
-sub-sort: "pushed_at DESC"
+  classification:
+    rules:
+      - pattern: "^[Mm][Xx]-"
+        type: "MX"
+        icon: "🔷"
+      - pattern: "^web-|^allabout|^site-"
+        type: "Web"
+        icon: ""
+      - pattern: "^tool-|^cli-|^util-|^script-"
+        type: "Tools"
+        icon: ""
+    archive-conditions:
+      - "GitHub archived flag is true"
+      - "Last push older than 12 months"
+    fallback: "Other"
 
-output:
-  format: "markdown-table"
-  columns: ["Name", "Type", "Description", "Last Push", "Link"]
-  location: "self (replaces <!-- TABLE --> section)"
+  sort-order:
+    - "MX"
+    - "Web"
+    - "Tools"
+    - "Other"
+    - "Archive"
+  sub-sort: "pushed_at DESC"
 
-execute:
-  runtime: bash
-  command: mx cog allmygithubs
-  actions:
-    - name: scan
-      description: "Scan GitHub repos and update the table in this cog"
-      usage: "mx cog allmygithubs scan"
-      embedded-script: scan-repos
-      outputs:
-        - name: table
-          type: markdown
-          description: "Updated markdown table"
+  output:
+    format: "markdown-table"
+    columns: ["Name", "Type", "Description", "Last Push", "Link"]
+    location: "self (replaces <!-- TABLE --> section)"
 
-    - name: dry-run
-      description: "Show what would be generated without updating the cog"
-      usage: "mx cog allmygithubs scan --dry-run"
-      embedded-script: scan-repos
+  execute:
+    runtime: bash
+    command: mx cog allmygithubs
+    actions:
+      - name: scan
+        description: "Scan GitHub repos and update the table in this cog"
+        usage: "mx cog allmygithubs scan"
+        embedded-script: scan-repos
+        outputs:
+          - name: table
+            type: markdown
+            description: "Updated markdown table"
+
+      - name: dry-run
+        description: "Show what would be generated without updating the cog"
+        usage: "mx cog allmygithubs scan --dry-run"
+        embedded-script: scan-repos
 ---
 
 # mx-allmygithubs.cog.md

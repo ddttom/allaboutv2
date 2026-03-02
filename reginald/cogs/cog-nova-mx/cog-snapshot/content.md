@@ -1,17 +1,19 @@
 ---
-name: cog-snapshot
 version: "1.0"
 description: Auto-generated registry snapshot — all cogs by type, status, newness, and dependency graph
 created: 2026-02-23
 modified: 2026-02-23
 author: cog-tools
-status: active
-category: mx-core
-partOf: mx-os
-tags: [registry, snapshot, index, auto-generated]
-audience: [developers, ai-agents]
-readingLevel: technical
-purpose: Machine-readable snapshot of the entire cog registry, grouped by type, status, newness, and dependency graph
+
+mx:
+  name: cog-snapshot
+  status: active
+  category: mx-core
+  partOf: mx-os
+  tags: [registry, snapshot, index, auto-generated]
+  audience: [developers, ai-agents]
+  readingLevel: technical
+  purpose: Machine-readable snapshot of the entire cog registry, grouped by type, status, newness, and dependency graph
 ---
 
 # Cog Registry Snapshot

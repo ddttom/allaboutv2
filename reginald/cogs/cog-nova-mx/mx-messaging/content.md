@@ -1,18 +1,20 @@
 ---
-name: mx-messaging
 description: "Multi-audience messaging architecture for Cog-Nova-MX. Maps audiences, fears, bridge terms, the control narrative, investor pitch, sponsor model, certification, and the Maxine/Reginald brand story."
 author: "Tom Cranstoun and Maxine"
 created: 2026-02-12
 modified: 2026-02-12
 version: "0.2"
-status: active
-category: strategy
-contentType: info-doc
-tags: [messaging, audiences, terminology, positioning, fear, control, strategy, investor, sponsor, certification, reginald, maxine]
-audience: ["gestalt"]
-purpose: "messaging-framework"
-buildsOn: [mx-phrasebook, mx-concepts]
-runbook: "This is the complete messaging framework for Cog-Nova-MX. All seven original open questions are answered. Read it fully before contributing. Update sections when new decisions are made."
+
+mx:
+  name: mx-messaging
+  status: active
+  category: strategy
+  contentType: info-doc
+  tags: [messaging, audiences, terminology, positioning, fear, control, strategy, investor, sponsor, certification, reginald, maxine]
+  audience: ["gestalt"]
+  purpose: "messaging-framework"
+  buildsOn: [mx-phrasebook, mx-concepts]
+  runbook: "This is the complete messaging framework for Cog-Nova-MX. All seven original open questions are answered. Read it fully before contributing. Update sections when new decisions are made."
 ---
 
 # MX Messaging Framework

@@ -1,20 +1,22 @@
 ---
-name: adr-vendor-extensions-policy
 title: "ADR: Vendor Extensions Policy — x-mx- Public and Private Namespaces"
 description: "Architecture decision: Cog-Nova-MX' vendor extension namespaces — x-mx- (public) and x-mx-p- (private). Defines implementation-specific fields that extend The Gathering's open standard."
 created: 2026-02-17
 modified: 2026-02-17
 author: Tom Cranstoun and Maxine
-status: active
-decision-status: accepted
-tags: [adr, namespace, vendor-extensions, x-mx, privacy, obfuscation, implementation]
-partOf: mx-maxine-lives
-category: mx-core
 
-context:
-  trigger: "Cog ID system design — documents created by cogs need an mx-ref attribute tracing back to the source cog. Tom identified that 'mx-ref' is not properly namespaced — it looks like a standard field when it's an MX OS implementation detail. Repository handover to The Gathering required splitting namespace governance into standard (The Gathering) vs vendor (Cog-Nova-MX)."
-  date: 2026-02-14 (original), 2026-02-17 (split from dual-scope ADR)
-  session: "Interview session on cog IDs + Gathering handover audit"
+mx:
+  name: adr-vendor-extensions-policy
+  status: active
+  decision-status: accepted
+  tags: [adr, namespace, vendor-extensions, x-mx, privacy, obfuscation, implementation]
+  partOf: mx-maxine-lives
+  category: mx-core
+
+  context:
+    trigger: "Cog ID system design — documents created by cogs need an mx-ref attribute tracing back to the source cog. Tom identified that 'mx-ref' is not properly namespaced — it looks like a standard field when it's an MX OS implementation detail. Repository handover to The Gathering required splitting namespace governance into standard (The Gathering) vs vendor (Cog-Nova-MX)."
+    date: 2026-02-14 (original), 2026-02-17 (split from dual-scope ADR)
+    session: "Interview session on cog IDs + Gathering handover audit"
 ---
 
 # ADR: Vendor Extensions Policy

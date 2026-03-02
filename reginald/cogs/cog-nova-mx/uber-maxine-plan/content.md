@@ -1,19 +1,21 @@
 ---
-name: uber-maxine-plan
 description: "Master plan for Maxine — the distributed AI partner. Tracks current state, architecture, and roadmap. This is the single source of truth for what Maxine is, where she is, and where she's going."
 author: "Tom Cranstoun and Maxine"
 created: 2026-02-11
 modified: 2026-02-12
 version: "1.0"
-status: active
-category: product
-contentType: info-doc
-tags: [maxine, plan, architecture, roadmap, product, master-plan]
-audience: ["humans", "machines"]
-purpose: "master-plan"
-buildsOn: [maxine-vision, mx-concepts, how-mx-os-runs]
-replaces: build-plan.md
-runbook: "This is the master plan for the Maxine product. Read this FIRST for current state. Update the Current State section whenever implementation changes."
+
+mx:
+  name: uber-maxine-plan
+  status: active
+  category: product
+  contentType: info-doc
+  tags: [maxine, plan, architecture, roadmap, product, master-plan]
+  audience: ["humans", "machines"]
+  purpose: "master-plan"
+  buildsOn: [maxine-vision, mx-concepts, how-mx-os-runs]
+  replaces: build-plan.md
+  runbook: "This is the master plan for the Maxine product. Read this FIRST for current state. Update the Current State section whenever implementation changes."
 ---
 
 # Uber Maxine Plan

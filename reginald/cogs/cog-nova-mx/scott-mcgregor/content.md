@@ -1,23 +1,25 @@
 ---
-name: scott-mcgregor
-contentType: contact
 description: Business partner, LPC (printing, web development, web applications)
 author: Tom Cranstoun
 created: 2026-02-09
-category: contact
-tags: [contact, partner, shareholder, lpc]
-relationship: partner
-status: active
-organisation: LPC
-role: 25% A shares in Cog-Nova-MX Ltd
-context: Tom's cousin. LPC does printing, web development, and web applications. Natural first implementation partner — companion web metadata is three lines of HTML that LPC can add to every client site.
-messages:
-  - file: messages/message-scott-mcgregor.md
-    date: 2026-02-09
-    type: full-briefing
-    status: sent
-    note: Full briefing sent. What's built, revenue model, Reginald clarified, LPC opportunity, Handbook role and dates.
-next-action: Talk this week about Handbook quantities and implementation planning
+
+mx:
+  name: scott-mcgregor
+  contentType: contact
+  category: contact
+  tags: [contact, partner, shareholder, lpc]
+  relationship: partner
+  status: active
+  organisation: LPC
+  role: 25% A shares in Cog-Nova-MX Ltd
+  context: Tom's cousin. LPC does printing, web development, and web applications. Natural first implementation partner — companion web metadata is three lines of HTML that LPC can add to every client site.
+  messages:
+    - file: messages/message-scott-mcgregor.md
+      date: 2026-02-09
+      type: full-briefing
+      status: sent
+      note: Full briefing sent. What's built, revenue model, Reginald clarified, LPC opportunity, Handbook role and dates.
+  next-action: Talk this week about Handbook quantities and implementation planning
 ---
 
 # Scott McGregor

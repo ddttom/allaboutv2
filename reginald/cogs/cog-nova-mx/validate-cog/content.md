@@ -1,5 +1,4 @@
 ---
-name: validate-cog
 version: 0.1.0
 description: Validate cogs against the MX Cog Specification
 
@@ -7,67 +6,70 @@ created: 2026-02-06T13:11:00Z
 modified: 2026-02-06T13:11:00Z
 
 author: Maxine (MX - Machine eXperience Engine)
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: draft
 
-category: mx-core
-partOf: mx-core
-refersTo: [cog-spec]
-tags: [validation, cog, spec, meta]
+mx:
+  name: validate-cog
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: draft
 
-execute:
-  runtime: runbook
-  command: mx cog validate-cog
-  actions:
-    - name: check
-      description: Validate a cog file against the spec
-      usage: mx cog validate-cog check <path>
-      inputs:
-        - name: path
-          type: string
-          required: true
-          description: Path to cog .md file
-      outputs:
-        - name: report
-          type: object
-          description: Validation results with errors/warnings
-    
-    - name: all
-      description: Validate all cogs in a directory
-      usage: "mx cog validate-cog all <dir>"
-      inputs:
-        - name: dir
-          type: string
-          required: false
-          description: "Directory to scan (default: MX/cogs)"
-      outputs:
-        - name: report
-          type: object
-          description: Summary of all validations
-    
-    - name: fix
-      description: Auto-fix common issues
-      usage: mx cog validate-cog fix <path>
-      inputs:
-        - name: path
-          type: string
-          required: true
-          description: Path to cog .md file
-      outputs:
-        - name: changes
-          type: array
-          description: List of fixes applied
+  category: mx-core
+  partOf: mx-core
+  refersTo: [cog-spec]
+  tags: [validation, cog, spec, meta]
 
-requires:
-  bins: []
-  cogs: []
+  execute:
+    runtime: runbook
+    command: mx cog validate-cog
+    actions:
+      - name: check
+        description: Validate a cog file against the spec
+        usage: mx cog validate-cog check <path>
+        inputs:
+          - name: path
+            type: string
+            required: true
+            description: Path to cog .md file
+        outputs:
+          - name: report
+            type: object
+            description: Validation results with errors/warnings
 
-contentType: "action-doc"
-runbook: "mx exec validate-cog"
-convergence: true
-accessibility: true
-semantic: true
+      - name: all
+        description: Validate all cogs in a directory
+        usage: "mx cog validate-cog all <dir>"
+        inputs:
+          - name: dir
+            type: string
+            required: false
+            description: "Directory to scan (default: MX/cogs)"
+        outputs:
+          - name: report
+            type: object
+            description: Summary of all validations
+
+      - name: fix
+        description: Auto-fix common issues
+        usage: mx cog validate-cog fix <path>
+        inputs:
+          - name: path
+            type: string
+            required: true
+            description: Path to cog .md file
+        outputs:
+          - name: changes
+            type: array
+            description: List of fixes applied
+
+  requires:
+    bins: []
+    cogs: []
+
+  contentType: "action-doc"
+  runbook: "mx exec validate-cog"
+  convergence: true
+  accessibility: true
+  semantic: true
 ---
 
 # validate-cog

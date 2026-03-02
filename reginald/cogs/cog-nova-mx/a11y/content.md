@@ -1,5 +1,4 @@
 ---
-name: a11y
 version: 0.1.0
 description: Accessibility audit — what breaks for AI breaks for humans
 
@@ -7,76 +6,79 @@ created: 2026-02-06T12:31:00Z
 modified: 2026-02-06T12:31:00Z
 
 author: Maxine (MX - Machine eXperience Engine)
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: draft
 
-category: mx-core
-partOf: mx-core
-refersTo: [semantic-html, toast-detector, clarity]
-tags: [accessibility, wcag, aria, convergence, audit]
+mx:
+  name: a11y
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: draft
 
-execute:
-  runtime: runbook
-  command: mx cog a11y
-  actions:
-    - name: audit
-      description: Run full accessibility audit on a URL
-      usage: mx cog a11y audit <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL to audit
-        - name: level
-          type: string
-          required: false
-          description: WCAG level (A, AA, AAA)
-          default: AA
-      outputs:
-        - name: report
-          type: object
-          description: Audit results with violations, warnings, passes
-    
-    - name: check
-      description: Quick check for specific issues
-      usage: mx cog a11y check <url> --issue <type>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL to check
-        - name: issue
-          type: string
-          required: true
-          description: Issue type (images, forms, headings, contrast, aria)
-      outputs:
-        - name: issues
-          type: array
-          description: List of found issues
-    
-    - name: compare
-      description: Compare accessibility with machine-readability
-      usage: mx cog a11y compare <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL to analyze
-      outputs:
-        - name: convergence
-          type: object
-          description: Side-by-side comparison of a11y and MX issues
+  category: mx-core
+  partOf: mx-core
+  refersTo: [semantic-html, toast-detector, clarity]
+  tags: [accessibility, wcag, aria, convergence, audit]
 
-requires:
-  bins: []
-  cogs: [semantic-html]
+  execute:
+    runtime: runbook
+    command: mx cog a11y
+    actions:
+      - name: audit
+        description: Run full accessibility audit on a URL
+        usage: mx cog a11y audit <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL to audit
+          - name: level
+            type: string
+            required: false
+            description: WCAG level (A, AA, AAA)
+            default: AA
+        outputs:
+          - name: report
+            type: object
+            description: Audit results with violations, warnings, passes
 
-contentType: "action-doc"
-runbook: "mx exec a11y"
-convergence: true
-accessibility: true
-semantic: true
+      - name: check
+        description: Quick check for specific issues
+        usage: mx cog a11y check <url> --issue <type>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL to check
+          - name: issue
+            type: string
+            required: true
+            description: Issue type (images, forms, headings, contrast, aria)
+        outputs:
+          - name: issues
+            type: array
+            description: List of found issues
+
+      - name: compare
+        description: Compare accessibility with machine-readability
+        usage: mx cog a11y compare <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL to analyze
+        outputs:
+          - name: convergence
+            type: object
+            description: Side-by-side comparison of a11y and MX issues
+
+  requires:
+    bins: []
+    cogs: [semantic-html]
+
+  contentType: "action-doc"
+  runbook: "mx exec a11y"
+  convergence: true
+  accessibility: true
+  semantic: true
 ---
 
 # a11y

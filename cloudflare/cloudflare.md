@@ -5,7 +5,9 @@ author: Tom Cranstoun
 created: 2025-12-09
 modified: 2026-02-09
 version: "1.0"
-status: active
+
+mx:
+  status: active
 ---
 
 # allabout.network Cloudflare Configuration Reference

@@ -1,50 +1,52 @@
 ---
-name: "Rancilio Silvia Pro X"
 description: "Professional single-group espresso machine. Dual boiler, PID temperature control, commercial-grade components in a home-sized package."
 author: "MX Demo"
 created: 2026-02-12
 modified: 2026-02-12
 version: "1.0"
-status: active
-category: product
-contentType: info-doc
-tags: [product, coffee, espresso-machine, appliance, warranty, support, italian, professional]
 
-product:
-  brand: "Rancilio"
-  model: "Silvia Pro X"
-  category: "Espresso Machine"
-  price: "£1,350"
-  currency: GBP
-  origin: "Italy"
-  weight: "16kg"
-  dimensions: "34 x 23 x 39 cm"
+mx:
+  name: "Rancilio Silvia Pro X"
+  status: active
+  category: product
+  contentType: info-doc
+  tags: [product, coffee, espresso-machine, appliance, warranty, support, italian, professional]
 
-features:
-  - Dual boiler (brew + steam simultaneously)
-  - PID temperature control (±1°C stability)
-  - Commercial E61 group head
-  - 58mm portafilter (same as commercial machines)
-  - 300ml brew boiler, 1000ml steam boiler
-  - Stainless steel and powder-coated steel body
+  product:
+    brand: "Rancilio"
+    model: "Silvia Pro X"
+    category: "Espresso Machine"
+    price: "£1,350"
+    currency: GBP
+    origin: "Italy"
+    weight: "16kg"
+    dimensions: "34 x 23 x 39 cm"
 
-warranty:
-  duration: "2 years"
-  type: "Manufacturer warranty"
-  registration: "https://rancilio.example/register"
-  support-email: "support@rancilio.example"
-  support-phone: "+39 02 12345678"
+  features:
+    - Dual boiler (brew + steam simultaneously)
+    - PID temperature control (±1°C stability)
+    - Commercial E61 group head
+    - 58mm portafilter (same as commercial machines)
+    - 300ml brew boiler, 1000ml steam boiler
+    - Stainless steel and powder-coated steel body
 
-maintenance:
-  descale: "Every 2-3 months depending on water hardness"
-  backflush: "Weekly with blind basket and cleaning detergent"
-  group-gasket: "Replace every 12-18 months"
-  water-filter: "Replace every 6 months"
+  warranty:
+    duration: "2 years"
+    type: "Manufacturer warranty"
+    registration: "https://rancilio.example/register"
+    support-email: "support@rancilio.example"
+    support-phone: "+39 02 12345678"
 
-sustainability:
-  repairability: "High — all parts user-replaceable"
-  lifespan: "15-20 years with maintenance"
-  energy: "1300W heating element"
+  maintenance:
+    descale: "Every 2-3 months depending on water hardness"
+    backflush: "Weekly with blind basket and cleaning detergent"
+    group-gasket: "Replace every 12-18 months"
+    water-filter: "Replace every 6 months"
+
+  sustainability:
+    repairability: "High — all parts user-replaceable"
+    lifespan: "15-20 years with maintenance"
+    energy: "1300W heating element"
 ---
 
 # Rancilio Silvia Pro X

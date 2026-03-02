@@ -1,39 +1,41 @@
 ---
-name: routing-pipeline-adr
 version: "1.0"
 description: "ADR #2: Routing pipeline with prompt preprocessing, spell correction, and route-based context injection to cut inference cost."
 created: 2026-02-13
 modified: 2026-02-13
 author: Tom Cranstoun and Maxine
-license: proprietary
-status: accepted
-category: adr
-partOf: mx-maxine-lives
 
-adr:
-  number: 2
-  title: "Routing Pipeline — Prompt Preprocessing with Route-Based Context Injection"
+mx:
+  name: routing-pipeline-adr
+  license: proprietary
   status: accepted
-  date: 2026-02-13
-  context: "Every prompt to Claude carries inference cost. Complex or ambiguous prompts waste compute because Claude must search for context that already exists in structured form. The gestalt has ROUTING.cog.md files that map intents to folders. A hook can inject this routing context before Claude sees the prompt — cutting inference, improving accuracy."
-  decision: "Build a UserPromptSubmit hook that spell-corrects prompts locally (aspell), matches intents against a routing registry, and injects relevant routing context into the conversation. The cog defines the SOP. The hook executes it."
-  consequences:
-    - "Every complex prompt gets routing context — Claude knows where to look before searching"
-    - "aspell runs locally — no inference cost for spell correction"
-    - "Smart trigger means simple prompts pass through unmodified — no latency penalty"
-    - "Auto-generated routing registry scales as new ROUTING.cog.md files are added"
-    - "The instruction IS the program — the action-doc SOP and the hook are the same system"
+  category: adr
+  partOf: mx-maxine-lives
 
-affects:
-  - mx-os
-  - mx-maxine-lives
-  - all-initiatives
-buildsOn: [maxine-lives, maxine-lives-routing]
-tags: [adr, routing, hook, inference-reduction, aspell, preprocessing, pipeline]
-audience: [gestalt, developers]
+  adr:
+    number: 2
+    title: "Routing Pipeline — Prompt Preprocessing with Route-Based Context Injection"
+    status: accepted
+    date: 2026-02-13
+    context: "Every prompt to Claude carries inference cost. Complex or ambiguous prompts waste compute because Claude must search for context that already exists in structured form. The gestalt has ROUTING.cog.md files that map intents to folders. A hook can inject this routing context before Claude sees the prompt — cutting inference, improving accuracy."
+    decision: "Build a UserPromptSubmit hook that spell-corrects prompts locally (aspell), matches intents against a routing registry, and injects relevant routing context into the conversation. The cog defines the SOP. The hook executes it."
+    consequences:
+      - "Every complex prompt gets routing context — Claude knows where to look before searching"
+      - "aspell runs locally — no inference cost for spell correction"
+      - "Smart trigger means simple prompts pass through unmodified — no latency penalty"
+      - "Auto-generated routing registry scales as new ROUTING.cog.md files are added"
+      - "The instruction IS the program — the action-doc SOP and the hook are the same system"
 
-contentType: "adr"
-runbook: "This ADR documents the routing pipeline architecture. The pipeline preprocesses user prompts with spell correction, route matching, and context injection to reduce Claude's inference cost."
+  affects:
+    - mx-os
+    - mx-maxine-lives
+    - all-initiatives
+  buildsOn: [maxine-lives, maxine-lives-routing]
+  tags: [adr, routing, hook, inference-reduction, aspell, preprocessing, pipeline]
+  audience: [gestalt, developers]
+
+  contentType: "adr"
+  runbook: "This ADR documents the routing pipeline architecture. The pipeline preprocesses user prompts with spell correction, route matching, and context injection to reduce Claude's inference cost."
 ---
 
 # ADR 2: Routing Pipeline — Prompt Preprocessing with Route-Based Context Injection

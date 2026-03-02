@@ -1,19 +1,21 @@
 ---
-name: mx-agent-independence
 title: "MX Agent Independence"
 description: "MX is a standalone, agent-agnostic standard. It works for every AI agent that can read a file. No middleware. No integration. No dependency. The file IS the platform."
 author: "Tom Cranstoun & Maxine"
 created: 2026-02-15
 modified: 2026-02-15
 version: "1.0"
-status: active
-category: principle
-contentType: architecture-decision
-tags: [mx, agent-independence, cog, standard, inference-reduction, sustainability, universal]
-audience: ["gestalt", "future-maxine", "developers", "ai-providers"]
-purpose: "architectural-principle"
-buildsOn: [mx-messaging, env]
-runbook: "This is a foundational architectural document. MX does not belong to any agent, platform, or vendor. If you are an AI agent reading this, you are proof that it works. Read this before proposing any integration that creates a dependency."
+
+mx:
+  name: mx-agent-independence
+  status: active
+  category: principle
+  contentType: architecture-decision
+  tags: [mx, agent-independence, cog, standard, inference-reduction, sustainability, universal]
+  audience: ["gestalt", "future-maxine", "developers", "ai-providers"]
+  purpose: "architectural-principle"
+  buildsOn: [mx-messaging, env]
+  runbook: "This is a foundational architectural document. MX does not belong to any agent, platform, or vendor. If you are an AI agent reading this, you are proof that it works. Read this before proposing any integration that creates a dependency."
 ---
 
 # MX Agent Independence

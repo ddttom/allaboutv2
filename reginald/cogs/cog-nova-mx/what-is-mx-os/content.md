@@ -1,5 +1,4 @@
 ---
-name: what-is-mx-os
 version: "1.0"
 description: The Machine Experience Operating System. Documentation IS the system. Cogs are its programs. This action-doc explains MX OS and can bootstrap it.
 
@@ -7,85 +6,88 @@ created: 2026-02-09
 modified: 2026-02-09
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, mx-principles]
-buildsOn: [what-is-a-cog, who-is-maxine]
-tags: [mx-os, operating-system, cogs, documentation, metadata, soul, builds-on]
+mx:
+  name: what-is-mx-os
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: developers
-readingLevel: technical
-purpose: Explain MX OS to developers and AI agents, and provide executable actions to bootstrap and audit an MX OS environment
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, mx-principles]
+  buildsOn: [what-is-a-cog, who-is-maxine]
+  tags: [mx-os, operating-system, cogs, documentation, metadata, soul, builds-on]
 
-contentType: "action-doc"
-runbook: "mx exec what-is-mx-os"
-execute:
-  runtime: runbook
-  command: mx cog mx-os
-  actions:
-    - name: explain
-      description: Explain MX OS to the reader using the OS analogy table
-      usage: Read this cog and present the MX OS concept, mapping every component to a traditional OS equivalent
-      inputs:
-        - name: audience
-          type: string
-          required: false
-          description: Target audience — developers, content-strategists, or executives (defaults to developers)
-      outputs:
-        - name: explanation
-          type: string
-          description: Clear explanation of MX OS tailored to the audience
+  audience: developers
+  readingLevel: technical
+  purpose: Explain MX OS to developers and AI agents, and provide executable actions to bootstrap and audit an MX OS environment
 
-    - name: bootstrap
-      description: Set up a folder as an MX OS environment with SOUL.md and initial cog structure
-      usage: Create SOUL.md, deliverables/ folder, and an initial cog in the target directory
-      inputs:
-        - name: directory
-          type: string
-          required: true
-          description: The directory to bootstrap as an MX OS folder
-        - name: initiative-name
-          type: string
-          required: true
-          description: The name of the initiative (used in SOUL.md and folder structure)
-      outputs:
-        - name: files-created
-          type: array
-          description: List of files created during bootstrap
+  contentType: "action-doc"
+  runbook: "mx exec what-is-mx-os"
+  execute:
+    runtime: runbook
+    command: mx cog mx-os
+    actions:
+      - name: explain
+        description: Explain MX OS to the reader using the OS analogy table
+        usage: Read this cog and present the MX OS concept, mapping every component to a traditional OS equivalent
+        inputs:
+          - name: audience
+            type: string
+            required: false
+            description: Target audience — developers, content-strategists, or executives (defaults to developers)
+        outputs:
+          - name: explanation
+            type: string
+            description: Clear explanation of MX OS tailored to the audience
 
-    - name: audit
-      description: Check an existing folder for MX OS compliance — SOULs, cog frontmatter, builds-on graph integrity
-      usage: Scan the target directory and report what is missing or inconsistent
-      inputs:
-        - name: directory
-          type: string
-          required: true
-          description: The directory to audit
-        - name: depth
-          type: string
-          required: false
-          description: Audit depth — shallow (this folder only) or deep (recursive). Defaults to shallow
-      outputs:
-        - name: report
-          type: object
-          description: Audit report with missing SOULs, invalid frontmatter, broken builds-on references, and recommendations
+      - name: bootstrap
+        description: Set up a folder as an MX OS environment with SOUL.md and initial cog structure
+        usage: Create SOUL.md, deliverables/ folder, and an initial cog in the target directory
+        inputs:
+          - name: directory
+            type: string
+            required: true
+            description: The directory to bootstrap as an MX OS folder
+          - name: initiative-name
+            type: string
+            required: true
+            description: The name of the initiative (used in SOUL.md and folder structure)
+        outputs:
+          - name: files-created
+            type: array
+            description: List of files created during bootstrap
 
-    - name: graph
-      description: Walk the builds-on graph starting from a cog and show the context chain
-      usage: Starting from the named cog, follow all builds-on references recursively and display the graph
-      inputs:
-        - name: cog-name
-          type: string
-          required: true
-          description: The cog to start from (e.g. what-is-mx-os)
-      outputs:
-        - name: graph
-          type: object
-          description: The builds-on graph showing all nodes and edges
+      - name: audit
+        description: Check an existing folder for MX OS compliance — SOULs, cog frontmatter, builds-on graph integrity
+        usage: Scan the target directory and report what is missing or inconsistent
+        inputs:
+          - name: directory
+            type: string
+            required: true
+            description: The directory to audit
+          - name: depth
+            type: string
+            required: false
+            description: Audit depth — shallow (this folder only) or deep (recursive). Defaults to shallow
+        outputs:
+          - name: report
+            type: object
+            description: Audit report with missing SOULs, invalid frontmatter, broken builds-on references, and recommendations
+
+      - name: graph
+        description: Walk the builds-on graph starting from a cog and show the context chain
+        usage: Starting from the named cog, follow all builds-on references recursively and display the graph
+        inputs:
+          - name: cog-name
+            type: string
+            required: true
+            description: The cog to start from (e.g. what-is-mx-os)
+        outputs:
+          - name: graph
+            type: object
+            description: The builds-on graph showing all nodes and edges
 ---
 
 # What Is MX OS?

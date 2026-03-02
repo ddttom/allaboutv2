@@ -1,5 +1,4 @@
 ---
-name: mx-concepts
 version: "1.0.0"
 description: "A conceptual map of MX — every idea, how they connect, and where to go deeper. The newcomer's guide to Machine Experience."
 
@@ -7,19 +6,22 @@ created: 2026-02-11
 modified: 2026-02-11
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, mx-principles]
-buildsOn: [what-is-a-cog, what-is-mx-os]
-tags: [concepts, primer, onboarding, glossary, mental-model, newcomer, map]
+mx:
+  name: mx-concepts
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: both
-readingLevel: accessible
-purpose: Give any reader — human or AI — a complete conceptual map of MX in one document, organised by layers from simple to complex
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, mx-principles]
+  buildsOn: [what-is-a-cog, what-is-mx-os]
+  tags: [concepts, primer, onboarding, glossary, mental-model, newcomer, map]
+
+  audience: both
+  readingLevel: accessible
+  purpose: Give any reader — human or AI — a complete conceptual map of MX in one document, organised by layers from simple to complex
 ---
 
 # MX Concepts

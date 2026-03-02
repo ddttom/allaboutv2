@@ -5,7 +5,9 @@ author: Adobe
 created: 2026-01-15
 modified: 2026-02-09
 version: "1.0"
-status: active
+
+mx:
+  status: active
 ---
 
 # Contributing to Project Helix

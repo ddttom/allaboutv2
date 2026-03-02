@@ -1,5 +1,4 @@
 ---
-name: sitemap
 version: 0.1.0
 description: Analyze sitemaps and compare with llms.txt coverage
 
@@ -7,80 +6,83 @@ created: 2026-02-06T12:31:00Z
 modified: 2026-02-06T12:31:00Z
 
 author: Maxine (MX - Machine eXperience Engine)
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: draft
 
-category: mx-core
-partOf: mx-core
-refersTo: [llms-txt, robots-txt, link-checker]
-tags: [sitemap, xml, seo, llms-txt, coverage]
+mx:
+  name: sitemap
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: draft
 
-execute:
-  runtime: runbook
-  command: mx cog sitemap
-  actions:
-    - name: analyze
-      description: Analyze sitemap structure and content
-      usage: mx cog sitemap analyze <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: Sitemap URL or website URL
-      outputs:
-        - name: analysis
-          type: object
-          description: Sitemap statistics and structure
-    
-    - name: compare
-      description: Compare sitemap coverage with llms.txt
-      usage: mx cog sitemap compare <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: Website URL
-      outputs:
-        - name: comparison
-          type: object
-          description: Coverage comparison and gaps
-    
-    - name: validate
-      description: Validate sitemap XML format
-      usage: mx cog sitemap validate <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: Sitemap URL
-      outputs:
-        - name: validation
-          type: object
-          description: Validation results with errors/warnings
-    
-    - name: freshness
-      description: Check sitemap freshness and update frequency
-      usage: mx cog sitemap freshness <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: Sitemap URL
-      outputs:
-        - name: freshness
-          type: object
-          description: Last modified dates and update patterns
+  category: mx-core
+  partOf: mx-core
+  refersTo: [llms-txt, robots-txt, link-checker]
+  tags: [sitemap, xml, seo, llms-txt, coverage]
 
-requires:
-  bins: []
-  cogs: [llms-txt, robots-txt]
+  execute:
+    runtime: runbook
+    command: mx cog sitemap
+    actions:
+      - name: analyze
+        description: Analyze sitemap structure and content
+        usage: mx cog sitemap analyze <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: Sitemap URL or website URL
+        outputs:
+          - name: analysis
+            type: object
+            description: Sitemap statistics and structure
 
-contentType: "action-doc"
-runbook: "mx exec sitemap"
-convergence: true
-accessibility: false
-semantic: true
+      - name: compare
+        description: Compare sitemap coverage with llms.txt
+        usage: mx cog sitemap compare <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: Website URL
+        outputs:
+          - name: comparison
+            type: object
+            description: Coverage comparison and gaps
+
+      - name: validate
+        description: Validate sitemap XML format
+        usage: mx cog sitemap validate <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: Sitemap URL
+        outputs:
+          - name: validation
+            type: object
+            description: Validation results with errors/warnings
+
+      - name: freshness
+        description: Check sitemap freshness and update frequency
+        usage: mx cog sitemap freshness <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: Sitemap URL
+        outputs:
+          - name: freshness
+            type: object
+            description: Last modified dates and update patterns
+
+  requires:
+    bins: []
+    cogs: [llms-txt, robots-txt]
+
+  contentType: "action-doc"
+  runbook: "mx exec sitemap"
+  convergence: true
+  accessibility: false
+  semantic: true
 ---
 
 # sitemap

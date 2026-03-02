@@ -1,5 +1,4 @@
 ---
-name: mx-phrasebook
 version: "1.0.0"
 description: "The sayings that define MX OS culture. Every phrase earned its place by being built, not brainstormed."
 
@@ -7,47 +6,50 @@ created: 2026-02-10
 modified: 2026-02-11
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, mx-principles]
-buildsOn: [what-is-a-cog, what-is-mx-os]
-tags: [phrasebook, sayings, culture, voice, identity, mx-os, hitchhikers-guide, writing]
+mx:
+  name: mx-phrasebook
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: both
-readingLevel: accessible
-purpose: Single source of truth for MX sayings — use the right phrase in the right context
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, mx-principles]
+  buildsOn: [what-is-a-cog, what-is-mx-os]
+  tags: [phrasebook, sayings, culture, voice, identity, mx-os, hitchhikers-guide, writing]
 
-contentType: "action-doc"
-runbook: "mx exec mx-phrasebook"
-execute:
-  runtime: runbook
-  command: mx phrasebook
-  actions:
-    - name: list
-      description: List all MX sayings with context and usage
-      usage: Read the phrasebook below. Present each saying with its context, where it originated, and where it is used. This is the reference — do not paraphrase or invent new sayings.
-      inputs: []
-      outputs:
-        - name: phrasebook
-          type: array
-          description: All MX sayings with metadata
+  audience: both
+  readingLevel: accessible
+  purpose: Single source of truth for MX sayings — use the right phrase in the right context
 
-    - name: find
-      description: Find the right saying for a context
-      usage: Given a context (e.g. "agent is lost", "installation", "canon conflict"), return the most appropriate saying from the phrasebook. Only return sayings that exist in this cog — never invent new ones.
-      inputs:
-        - name: context
-          type: string
-          required: true
-          description: The situation or context to find a saying for
-      outputs:
-        - name: saying
-          type: object
-          description: The matching saying with full context
+  contentType: "action-doc"
+  runbook: "mx exec mx-phrasebook"
+  execute:
+    runtime: runbook
+    command: mx phrasebook
+    actions:
+      - name: list
+        description: List all MX sayings with context and usage
+        usage: Read the phrasebook below. Present each saying with its context, where it originated, and where it is used. This is the reference — do not paraphrase or invent new sayings.
+        inputs: []
+        outputs:
+          - name: phrasebook
+            type: array
+            description: All MX sayings with metadata
+
+      - name: find
+        description: Find the right saying for a context
+        usage: Given a context (e.g. "agent is lost", "installation", "canon conflict"), return the most appropriate saying from the phrasebook. Only return sayings that exist in this cog — never invent new ones.
+        inputs:
+          - name: context
+            type: string
+            required: true
+            description: The situation or context to find a saying for
+        outputs:
+          - name: saying
+            type: object
+            description: The matching saying with full context
 ---
 
 # The MX Phrasebook

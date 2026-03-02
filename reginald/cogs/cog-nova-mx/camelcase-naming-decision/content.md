@@ -1,31 +1,33 @@
 ---
-name: camelcase-naming-decision
 version: "1.0"
 description: "NDR #2: All YAML frontmatter field names must use camelCase. Aligns with Schema.org and Dublin Core vocabulary conventions."
 created: 2026-02-16
 author: Tom Cranstoun and Maxine
-status: accepted
-category: naming
-partOf: mx-the-gathering
-tags: [ndr, naming, camelCase, fields, metadata, schema-org, dublin-core, standards]
-audience: both
 
-ndr:
-  number: 2
-  title: "Field Naming Convention — camelCase Everywhere"
+mx:
+  name: camelcase-naming-decision
   status: accepted
-  date: 2026-02-16
-  rationale: "Web standards research confirms: vocabularies use camelCase (Schema.org, Dublin Core), markup uses hyphens (HTML data-*, CSS, HTTP headers). MX metadata is a vocabulary, not markup. camelCase aligns with the standards MX already references."
-  evidence: "HTML data-* attributes auto-convert to camelCase in the DOM API. Schema.org uses lowerCamelCase for all properties. Dublin Core changed from Title-Case to camelCase in 2000 to align with XML/RDF. YAML has no opinion — the convention comes from the consuming ecosystem."
-  enforcement: "mx-audit.js reports violations. mx-validator.js warns on new violations."
+  category: naming
+  partOf: mx-the-gathering
+  tags: [ndr, naming, camelCase, fields, metadata, schema-org, dublin-core, standards]
+  audience: both
 
-affects:
-  - field-dictionary
-  - cog-unified-spec
-  - mx-metadata-conventions
-  - mx-attributes-registry
+  ndr:
+    number: 2
+    title: "Field Naming Convention — camelCase Everywhere"
+    status: accepted
+    date: 2026-02-16
+    rationale: "Web standards research confirms: vocabularies use camelCase (Schema.org, Dublin Core), markup uses hyphens (HTML data-*, CSS, HTTP headers). MX metadata is a vocabulary, not markup. camelCase aligns with the standards MX already references."
+    evidence: "HTML data-* attributes auto-convert to camelCase in the DOM API. Schema.org uses lowerCamelCase for all properties. Dublin Core changed from Title-Case to camelCase in 2000 to align with XML/RDF. YAML has no opinion — the convention comes from the consuming ecosystem."
+    enforcement: "mx-audit.js reports violations. mx-validator.js warns on new violations."
 
-buildsOn: [what-is-a-cog]
+  affects:
+    - field-dictionary
+    - cog-unified-spec
+    - mx-metadata-conventions
+    - mx-attributes-registry
+
+  buildsOn: [what-is-a-cog]
 ---
 
 # NDR #2: camelCase Field Names

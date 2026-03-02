@@ -5,7 +5,9 @@ author: Tom Cranstoun
 created: 2024-12-01
 modified: 2026-02-09
 version: "2.0"
-status: active
+
+mx:
+  status: active
 ---
 
 # Product Requirements Document (PRD): Bright Sparks Management System

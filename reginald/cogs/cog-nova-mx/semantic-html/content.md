@@ -1,5 +1,4 @@
 ---
-name: semantic-html
 version: 0.1.0
 description: Validate HTML semantics — structure precedes presentation
 
@@ -7,80 +6,83 @@ created: 2026-02-06T12:31:00Z
 modified: 2026-02-06T12:31:00Z
 
 author: Maxine (MX - Machine eXperience Engine)
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: draft
 
-category: mx-core
-partOf: mx-core
-refersTo: [a11y, metadata, schema]
-tags: [html, semantic, structure, accessibility, validation]
+mx:
+  name: semantic-html
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: draft
 
-execute:
-  runtime: runbook
-  command: mx cog semantic-html
-  actions:
-    - name: validate
-      description: Validate semantic HTML structure
-      usage: mx cog semantic-html validate <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL to validate
-      outputs:
-        - name: report
-          type: object
-          description: Validation results with semantic score and issues
-    
-    - name: outline
-      description: Generate document outline from headings
-      usage: mx cog semantic-html outline <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL to analyze
-      outputs:
-        - name: outline
-          type: object
-          description: Hierarchical document outline
-    
-    - name: landmarks
-      description: Extract ARIA landmarks and HTML5 sections
-      usage: mx cog semantic-html landmarks <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL to analyze
-      outputs:
-        - name: landmarks
-          type: array
-          description: List of landmarks with roles and labels
-    
-    - name: suggest
-      description: Suggest semantic improvements
-      usage: mx cog semantic-html suggest <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL to analyze
-      outputs:
-        - name: suggestions
-          type: array
-          description: List of suggested improvements
+  category: mx-core
+  partOf: mx-core
+  refersTo: [a11y, metadata, schema]
+  tags: [html, semantic, structure, accessibility, validation]
 
-requires:
-  bins: []
-  cogs: []
+  execute:
+    runtime: runbook
+    command: mx cog semantic-html
+    actions:
+      - name: validate
+        description: Validate semantic HTML structure
+        usage: mx cog semantic-html validate <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL to validate
+        outputs:
+          - name: report
+            type: object
+            description: Validation results with semantic score and issues
 
-contentType: "action-doc"
-runbook: "mx exec semantic-html"
-convergence: true
-accessibility: true
-semantic: true
+      - name: outline
+        description: Generate document outline from headings
+        usage: mx cog semantic-html outline <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL to analyze
+        outputs:
+          - name: outline
+            type: object
+            description: Hierarchical document outline
+
+      - name: landmarks
+        description: Extract ARIA landmarks and HTML5 sections
+        usage: mx cog semantic-html landmarks <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL to analyze
+        outputs:
+          - name: landmarks
+            type: array
+            description: List of landmarks with roles and labels
+
+      - name: suggest
+        description: Suggest semantic improvements
+        usage: mx cog semantic-html suggest <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL to analyze
+        outputs:
+          - name: suggestions
+            type: array
+            description: List of suggested improvements
+
+  requires:
+    bins: []
+    cogs: []
+
+  contentType: "action-doc"
+  runbook: "mx exec semantic-html"
+  convergence: true
+  accessibility: true
+  semantic: true
 ---
 
 # semantic-html

@@ -1,5 +1,4 @@
 ---
-name: the-personal-cog
 version: "2.0"
 description: The personal cog — a collection of cogs that describe YOU. Accessibility needs, interests, dietary requirements, health conditions, skills. Lives on your phone. Your AI agent decides what to share, with whom, based on context. The other half of the companion web — the world describes itself to you, and you describe yourself to the world.
 
@@ -7,59 +6,62 @@ created: 2026-02-09
 modified: 2026-02-10
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, cog-registry]
-buildsOn: [what-is-a-cog, what-is-mx-os, access-and-guardrails, the-companion-web]
-tags: [personal-cog, accessibility, interests, privacy, agent-guardrail, personalisation, commerce, identity, collection]
+mx:
+  name: the-personal-cog
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: developers
-readingLevel: technical
-purpose: Document the personal cog — a collection of user-owned cogs that describe the person to the world, enabling accessibility, personalisation, and seamless commerce when combined with the companion web
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, cog-registry]
+  buildsOn: [what-is-a-cog, what-is-mx-os, access-and-guardrails, the-companion-web]
+  tags: [personal-cog, accessibility, interests, privacy, agent-guardrail, personalisation, commerce, identity, collection]
 
-contentType: "action-doc"
-runbook: "mx exec the-personal-cog"
-execute:
-  runtime: runbook
-  command: mx cog personal
-  actions:
-    - name: explain
-      description: Present the personal cog concept to any audience
-      usage: Read this cog and explain the collection model, the agent-as-guardrail privacy model, and how personal cogs interact with the companion web
-      outputs:
-        - name: explanation
-          type: string
-          description: Clear explanation of the personal cog
+  audience: developers
+  readingLevel: technical
+  purpose: Document the personal cog — a collection of user-owned cogs that describe the person to the world, enabling accessibility, personalisation, and seamless commerce when combined with the companion web
 
-    - name: match
-      description: Describe how a personal cog collection meets a companion web page
-      usage: Given a user's personal cogs and a companion-web-enabled page, explain what happens — what gets shared, what gets matched, what actions become possible
-      inputs:
-        - name: scenario
-          type: string
-          required: true
-          description: The scenario to walk through (e.g. restaurant, concert, medical, workplace)
-      outputs:
-        - name: walkthrough
-          type: string
-          description: Step-by-step walkthrough of how personal cogs and companion web cogs interact
+  contentType: "action-doc"
+  runbook: "mx exec the-personal-cog"
+  execute:
+    runtime: runbook
+    command: mx cog personal
+    actions:
+      - name: explain
+        description: Present the personal cog concept to any audience
+        usage: Read this cog and explain the collection model, the agent-as-guardrail privacy model, and how personal cogs interact with the companion web
+        outputs:
+          - name: explanation
+            type: string
+            description: Clear explanation of the personal cog
 
-    - name: share
-      description: Describe the contextual sharing model for a given situation
-      usage: Given a context (restaurant, hospital, venue), explain which personal cogs would be shared and why, using the agent-as-guardrail model
-      inputs:
-        - name: context
-          type: string
-          required: true
-          description: The situation or venue type
-      outputs:
-        - name: sharing-plan
-          type: object
-          description: Which personal cogs are shared, which are withheld, and why
+      - name: match
+        description: Describe how a personal cog collection meets a companion web page
+        usage: Given a user's personal cogs and a companion-web-enabled page, explain what happens — what gets shared, what gets matched, what actions become possible
+        inputs:
+          - name: scenario
+            type: string
+            required: true
+            description: The scenario to walk through (e.g. restaurant, concert, medical, workplace)
+        outputs:
+          - name: walkthrough
+            type: string
+            description: Step-by-step walkthrough of how personal cogs and companion web cogs interact
+
+      - name: share
+        description: Describe the contextual sharing model for a given situation
+        usage: Given a context (restaurant, hospital, venue), explain which personal cogs would be shared and why, using the agent-as-guardrail model
+        inputs:
+          - name: context
+            type: string
+            required: true
+            description: The situation or venue type
+        outputs:
+          - name: sharing-plan
+            type: object
+            description: Which personal cogs are shared, which are withheld, and why
 ---
 
 # The Personal Cog

@@ -1,80 +1,82 @@
 ---
-name: mx-brand
 title: "MX Branding & Naming Framework"
 description: "A structured, low‑risk, trust‑first analysis of brand names, taglines, voice, and domain alignment for Cog-Nova-MX Ltd ahead of the April 2026 launch."
 version: "1.1.0"
 created: "2026-02-15"
 modified: "2026-02-15"
 author: "Tom Cranstoun / Copilot"
-license: "Private — Cog-Nova-MX Ltd"
-status: "active"
-category: "strategy"
-partOf: "MX Brand Architecture"
-purpose: |
-    Provide a machine-readable and human-readable framework for evaluating MX brand names,
-    mapping them to owned domains, and guiding launch decisions in a climate where
-    'AI' terminology carries negative media associations. This cog ensures MX positions
-    itself as a standards, identity, and governance company — not an AI vendor.
-tags: [brand, naming, strategy, launch, identity]
-audience: ["business", "strategy"]
-refersTo:
-    - "Domain Portfolio Registry Cog"
-    - "MX: The Handbook (launch 2 April 2026)"
-    - "MX Business Concept (12 May 2026)"
-refersToExternal:
-  - url: "https://www.godaddy.com"
-    title: "GoDaddy Domain Management"
-updateInstructions:
-  summary: "Refresh name evaluations, domain mappings, and competitive analysis with a trust-first lens."
-  frequency: "Quarterly, or before major brand decisions"
-  method: |
-    To update this cog:
-    1. Retrieve the current domain inventory from the Domain Portfolio Registry Cog.
-    2. Check each candidate name against the owned domains to confirm availability and alignment.
-    3. Re-evaluate SEO strength using:
-       - Search engine results for name uniqueness
-       - Keyword competition around 'machine experience', 'identity', 'metadata', 'standards', and 'governance'
-    4. Refresh competitive analysis by reviewing naming conventions of:
-       - Identity/security companies
-       - Standards bodies
-       - Developer platforms
-       - AI labs (with caution: avoid fear-associated terminology)
-    5. Update tagline and brand voice recommendations to emphasise:
-       - Trust
-       - Clarity
-       - Governance
-       - Machine experience (not AI)
-    6. Revise the top three recommended names and next steps.
-    7. Increment the version number (patch for content updates, minor for structural changes).
-  toolsRequired:
-    - "Search engine access"
-    - "Domain Portfolio Registry Cog"
-    - "Basic SEO analysis tools"
-  styleRules:
-    - "British English"
-    - "Clear, concise prose"
-    - "Tables for structured comparisons"
-    - "No hype, no fear language, no AI sensationalism"
-    - "Sponsor-ready, enterprise-safe"
-  source: "MX internal strategy, domain portfolio, competitive landscape"
-  contentSource: "Owned domains, naming analysis, SEO checks"
-action:
-  type: "brand-analysis"
-  trigger: "manual"
-  inputs:
-    - "Candidate names"
-    - "Owned domains"
-    - "SEO and competitive data"
-  outputs:
-    - "Updated name evaluations"
-    - "Domain mapping tables"
-    - "Refined taglines and brand voice"
-    - "Top three recommended names"
-  successCriteria:
-    - "Every candidate name evaluated"
-    - "Domain mapping complete"
-    - "Brand voice and taglines aligned with MX positioning"
-    - "Clear recommendations for April 2026 launch"
+
+mx:
+  name: mx-brand
+  license: "Private — Cog-Nova-MX Ltd"
+  status: "active"
+  category: "strategy"
+  partOf: "MX Brand Architecture"
+  purpose: |
+      Provide a machine-readable and human-readable framework for evaluating MX brand names,
+      mapping them to owned domains, and guiding launch decisions in a climate where
+      'AI' terminology carries negative media associations. This cog ensures MX positions
+      itself as a standards, identity, and governance company — not an AI vendor.
+  tags: [brand, naming, strategy, launch, identity]
+  audience: ["business", "strategy"]
+  refersTo:
+      - "Domain Portfolio Registry Cog"
+      - "MX: The Handbook (launch 2 April 2026)"
+      - "MX Business Concept (12 May 2026)"
+  refersToExternal:
+    - url: "https://www.godaddy.com"
+      title: "GoDaddy Domain Management"
+  updateInstructions:
+    summary: "Refresh name evaluations, domain mappings, and competitive analysis with a trust-first lens."
+    frequency: "Quarterly, or before major brand decisions"
+    method: |
+      To update this cog:
+      1. Retrieve the current domain inventory from the Domain Portfolio Registry Cog.
+      2. Check each candidate name against the owned domains to confirm availability and alignment.
+      3. Re-evaluate SEO strength using:
+         - Search engine results for name uniqueness
+         - Keyword competition around 'machine experience', 'identity', 'metadata', 'standards', and 'governance'
+      4. Refresh competitive analysis by reviewing naming conventions of:
+         - Identity/security companies
+         - Standards bodies
+         - Developer platforms
+         - AI labs (with caution: avoid fear-associated terminology)
+      5. Update tagline and brand voice recommendations to emphasise:
+         - Trust
+         - Clarity
+         - Governance
+         - Machine experience (not AI)
+      6. Revise the top three recommended names and next steps.
+      7. Increment the version number (patch for content updates, minor for structural changes).
+    toolsRequired:
+      - "Search engine access"
+      - "Domain Portfolio Registry Cog"
+      - "Basic SEO analysis tools"
+    styleRules:
+      - "British English"
+      - "Clear, concise prose"
+      - "Tables for structured comparisons"
+      - "No hype, no fear language, no AI sensationalism"
+      - "Sponsor-ready, enterprise-safe"
+    source: "MX internal strategy, domain portfolio, competitive landscape"
+    contentSource: "Owned domains, naming analysis, SEO checks"
+  action:
+    type: "brand-analysis"
+    trigger: "manual"
+    inputs:
+      - "Candidate names"
+      - "Owned domains"
+      - "SEO and competitive data"
+    outputs:
+      - "Updated name evaluations"
+      - "Domain mapping tables"
+      - "Refined taglines and brand voice"
+      - "Top three recommended names"
+    successCriteria:
+      - "Every candidate name evaluated"
+      - "Domain mapping complete"
+      - "Brand voice and taglines aligned with MX positioning"
+      - "Clear recommendations for April 2026 launch"
 ---
 
 # MX Branding & Naming Framework (Rewritten for 2026 Market Conditions)

@@ -1,5 +1,4 @@
 ---
-name: cog-query
 version: "2.1"
 description: Unified COG registry management — scan, list, show, find, filter, count, validate, graph, sync, and snapshot the cog registry
 
@@ -7,84 +6,87 @@ created: 2026-02-09T22:00:00Z
 modified: 2026-02-23
 
 author: Maxine (MX - Machine eXperience Engine)
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: active
 
-category: mx-core
-partOf: mx-os
-buildsOn: [what-is-a-cog, cog-registry]
-refersTo: [what-is-mx-os]
-tags: [registry, query, index, scan, tools, validation, graph]
+mx:
+  name: cog-query
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: active
 
-contentType: "action-doc"
-runbook: "mx exec cog-query"
-execute:
-  runtime: node
-  command: node scripts/cog-tools.js
-  actions:
-    - name: list
-      description: List all cogs found across the repository (including submodules)
-      usage: node scripts/cog-tools.js list [--sort name|date|category|type] [--json] [--verbose]
+  category: mx-core
+  partOf: mx-os
+  buildsOn: [what-is-a-cog, cog-registry]
+  refersTo: [what-is-mx-os]
+  tags: [registry, query, index, scan, tools, validation, graph]
 
-    - name: show
-      description: Display full details of a specific COG
-      usage: node scripts/cog-tools.js show <name> [--json]
+  contentType: "action-doc"
+  runbook: "mx exec cog-query"
+  execute:
+    runtime: node
+    command: node scripts/cog-tools.js
+    actions:
+      - name: list
+        description: List all cogs found across the repository (including submodules)
+        usage: node scripts/cog-tools.js list [--sort name|date|category|type] [--json] [--verbose]
 
-    - name: find
-      description: Search cogs by name, tag, description, or category
-      usage: node scripts/cog-tools.js find <query> [--json]
+      - name: show
+        description: Display full details of a specific COG
+        usage: node scripts/cog-tools.js show <name> [--json]
 
-    - name: filter
-      description: Multi-criteria filtering with --status, --category, --type, --tag, --author, --missing, --has
-      usage: node scripts/cog-tools.js filter [--status x] [--category y] [--type z] [--json]
+      - name: find
+        description: Search cogs by name, tag, description, or category
+        usage: node scripts/cog-tools.js find <query> [--json]
 
-    - name: count
-      description: Count COGs matching filter criteria
-      usage: node scripts/cog-tools.js count [--status x] [--category y] [--type z] [--json]
+      - name: filter
+        description: Multi-criteria filtering with --status, --category, --type, --tag, --author, --missing, --has
+        usage: node scripts/cog-tools.js filter [--status x] [--category y] [--type z] [--json]
 
-    - name: recent
-      description: Show COGs modified in last N days
-      usage: node scripts/cog-tools.js recent [days] [--json]
+      - name: count
+        description: Count COGs matching filter criteria
+        usage: node scripts/cog-tools.js count [--status x] [--category y] [--type z] [--json]
 
-    - name: incomplete
-      description: List COGs missing recommended fields
-      usage: node scripts/cog-tools.js incomplete [--json]
+      - name: recent
+        description: Show COGs modified in last N days
+        usage: node scripts/cog-tools.js recent [days] [--json]
 
-    - name: summarise
-      description: Registry statistics — totals by type, category, status, runtime
-      usage: node scripts/cog-tools.js summarise [--json]
+      - name: incomplete
+        description: List COGs missing recommended fields
+        usage: node scripts/cog-tools.js incomplete [--json]
 
-    - name: discover
-      description: Find new, moved, or deleted COGs compared to registry
-      usage: node scripts/cog-tools.js discover [--json]
+      - name: summarise
+        description: Registry statistics — totals by type, category, status, runtime
+        usage: node scripts/cog-tools.js summarise [--json]
 
-    - name: validate
-      description: Schema validation + dependency checks
-      usage: node scripts/cog-tools.js validate [--json]
+      - name: discover
+        description: Find new, moved, or deleted COGs compared to registry
+        usage: node scripts/cog-tools.js discover [--json]
 
-    - name: graph
-      description: Query dependency relationships
-      usage: node scripts/cog-tools.js graph <subcommand> [target]
-      subcommands:
-        - depends-on <name> — What does this COG depend on?
-        - dependents-of <name> — What COGs depend on this one?
-        - circular — Find circular dependencies
-        - orphans — Find broken dependency references
-        - roots — COGs with no dependencies
-        - leaves — COGs nothing depends on
+      - name: validate
+        description: Schema validation + dependency checks
+        usage: node scripts/cog-tools.js validate [--json]
 
-    - name: sync
-      description: Update mx-reginald/index.json from scanned files
-      usage: node scripts/cog-tools.js sync [--json]
+      - name: graph
+        description: Query dependency relationships
+        usage: node scripts/cog-tools.js graph <subcommand> [target]
+        subcommands:
+          - depends-on <name> — What does this COG depend on?
+          - dependents-of <name> — What COGs depend on this one?
+          - circular — Find circular dependencies
+          - orphans — Find broken dependency references
+          - roots — COGs with no dependencies
+          - leaves — COGs nothing depends on
 
-    - name: snapshot
-      description: Generate cog-snapshot.cog.md + index.json
-      usage: node scripts/cog-tools.js snapshot [--json]
+      - name: sync
+        description: Update mx-reginald/index.json from scanned files
+        usage: node scripts/cog-tools.js sync [--json]
 
-requires:
-  bins: [node]
-  packages: []
+      - name: snapshot
+        description: Generate cog-snapshot.cog.md + index.json
+        usage: node scripts/cog-tools.js snapshot [--json]
+
+  requires:
+    bins: [node]
+    packages: []
 ---
 
 # COG Tools

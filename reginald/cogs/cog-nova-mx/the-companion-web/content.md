@@ -1,5 +1,4 @@
 ---
-name: the-companion-web
 version: "1.0"
 description: The companion web — how QR codes, landing pages, and embedded metadata turn the physical world into entry points that humans and AI agents read together. Every object with a QR code becomes self-describing. Extends to robotics — the interface between physical machines and the objects they encounter.
 
@@ -7,59 +6,62 @@ created: 2026-02-09
 modified: 2026-02-09
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, cog-registry]
-buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
-tags: [companion-web, qr-code, physical-digital, landing-page, metadata, embedded, discovery, ubiquity, pitch, robotics, global-os]
+mx:
+  name: the-companion-web
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: developers
-readingLevel: technical
-purpose: Document the companion web — the machine-readable layer that sits alongside the human web, bridging physical objects to MX OS through QR codes and embedded cog metadata
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, cog-registry]
+  buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
+  tags: [companion-web, qr-code, physical-digital, landing-page, metadata, embedded, discovery, ubiquity, pitch, robotics, global-os]
 
-contentType: "action-doc"
-runbook: "mx exec the-companion-web"
-execute:
-  runtime: runbook
-  command: mx cog companion-web
-  actions:
-    - name: explain
-      description: Present the companion web concept to any audience
-      usage: Read this cog and explain the layered model, the QR code pattern, and how humans and agents read the same content together
-      outputs:
-        - name: explanation
-          type: string
-          description: Clear explanation of the companion web
+  audience: developers
+  readingLevel: technical
+  purpose: Document the companion web — the machine-readable layer that sits alongside the human web, bridging physical objects to MX OS through QR codes and embedded cog metadata
 
-    - name: embed
-      description: Generate the HTML metadata snippet for a cog
-      usage: Read a cog's frontmatter and generate the minimal HTML head metadata that makes a landing page companion-web compatible
-      inputs:
-        - name: cog-name
-          type: string
-          required: true
-          description: Name of the cog to generate HTML metadata for
-      outputs:
-        - name: html-snippet
-          type: string
-          description: HTML meta tags and link element for embedding in a landing page
+  contentType: "action-doc"
+  runbook: "mx exec the-companion-web"
+  execute:
+    runtime: runbook
+    command: mx cog companion-web
+    actions:
+      - name: explain
+        description: Present the companion web concept to any audience
+        usage: Read this cog and explain the layered model, the QR code pattern, and how humans and agents read the same content together
+        outputs:
+          - name: explanation
+            type: string
+            description: Clear explanation of the companion web
 
-    - name: audit
-      description: Check a URL or HTML page for companion web compatibility
-      usage: Fetch or read the page, check for cog metadata in the HTML head, report whether an agent can read it
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL or file path of the page to audit
-      outputs:
-        - name: audit-report
-          type: object
-          description: Whether the page has cog metadata, what an agent can extract, and what is missing
+      - name: embed
+        description: Generate the HTML metadata snippet for a cog
+        usage: Read a cog's frontmatter and generate the minimal HTML head metadata that makes a landing page companion-web compatible
+        inputs:
+          - name: cog-name
+            type: string
+            required: true
+            description: Name of the cog to generate HTML metadata for
+        outputs:
+          - name: html-snippet
+            type: string
+            description: HTML meta tags and link element for embedding in a landing page
+
+      - name: audit
+        description: Check a URL or HTML page for companion web compatibility
+        usage: Fetch or read the page, check for cog metadata in the HTML head, report whether an agent can read it
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL or file path of the page to audit
+        outputs:
+          - name: audit-report
+            type: object
+            description: Whether the page has cog metadata, what an agent can extract, and what is missing
 ---
 
 # The Companion Web

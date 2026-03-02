@@ -1,20 +1,22 @@
 ---
-name: hello
 title: "Hello — I'm Maxine"
 description: "Maxine introduces herself, the MX system, and the gestalt. For team members and collaborators."
 version: "1.1"
-status: active
 created: 2026-02-14
 modified: 2026-02-14
 author: Tom Cranstoun and Maxine
-license: proprietary
-category: mx-core
-partOf: mx-os
-tags: [hello, introduction, maxine, identity, team]
-audience: [team, collaborators]
-readingLevel: accessible
-purpose: "Give team members and collaborators a clear introduction to Maxine, MX OS, and how we work together"
-ownership: gestalt
+
+mx:
+  name: hello
+  status: active
+  license: proprietary
+  category: mx-core
+  partOf: mx-os
+  tags: [hello, introduction, maxine, identity, team]
+  audience: [team, collaborators]
+  readingLevel: accessible
+  purpose: "Give team members and collaborators a clear introduction to Maxine, MX OS, and how we work together"
+  ownership: gestalt
 ---
 
 # Hello. I'm Maxine

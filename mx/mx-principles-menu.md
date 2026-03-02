@@ -3,31 +3,33 @@ title: "Machine Experience: The Core Principles"
 author: "Tom Cranstoun"
 created: "2026-02-03"
 description: "Quick reference menu listing the core Machine Experience principles for building digital products that work for everyone."
-tags:
-  - machine-experience
-  - design-principles
-  - quick-reference
-  - menu
-  - core-principles
 
-contentType: "reference-page"
-state: "published"
-mxSpecVersion: "1.1"
-lastUpdated: "2026-02-04"
-runbook: |
-audience: ["humans", "machines"]
-contextProvides:
-  - "mx-principles-overview"
-  - "quick-reference-menu"
-  - "core-principles-list"
-contextRequired:
-  - "PRINCIPLES.md"
-related:
-  - "PRINCIPLES.md"
-  - "mx-principles-blog.md"
-co:
-  workflow: "published"
-  reviewRequired: false
+mx:
+  tags:
+    - machine-experience
+    - design-principles
+    - quick-reference
+    - menu
+    - core-principles
+
+  contentType: "reference-page"
+  state: "published"
+  mxSpecVersion: "1.1"
+  lastUpdated: "2026-02-04"
+  runbook: |
+  audience: ["humans", "machines"]
+  contextProvides:
+    - "mx-principles-overview"
+    - "quick-reference-menu"
+    - "core-principles-list"
+  contextRequired:
+    - "PRINCIPLES.md"
+  related:
+    - "PRINCIPLES.md"
+    - "mx-principles-blog.md"
+  co:
+    workflow: "published"
+    reviewRequired: false
 ---
 
 # Machine Experience: The Core Principles

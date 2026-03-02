@@ -1,5 +1,4 @@
 ---
-name: installme
 title: "MX OS Installation"
 version: "2.1"
 description: "Self-contained action cog for installing MX OS. Contains both instructions and executable script."
@@ -8,199 +7,202 @@ created: 2026-02-10
 modified: 2026-02-24
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, mx-principles]
-buildsOn: [what-is-a-cog, what-is-mx-os, what-is-mx-environment, mx-boot]
-tags: [install, setup, onboarding, sop-agent, diagnostics, prerequisites, mx-os, action-cog]
+mx:
+  name: installme
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: ai-agents
-readingLevel: technical
-purpose: "Self-contained installation cog. Machines read YAML + execute embedded script. Humans read markdown."
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, mx-principles]
+  buildsOn: [what-is-a-cog, what-is-mx-os, what-is-mx-environment, mx-boot]
+  tags: [install, setup, onboarding, sop-agent, diagnostics, prerequisites, mx-os, action-cog]
 
-contentType: "action-doc"
-runbook: "mx exec installme"
-# Block architecture - describes what this cog contains
-blocks:
-  - definition:
-      standards:
-        - name: "The Gathering"
-          version: "2.1-draft"
-          scope: "cog metadata format, action execution"
-  - code:
-      id: setup-script
-      language: bash
-      purpose: "New Mac to operational MX OS"
-      location: embedded
-      marker: "```bash @embedded:setup-script"
-      description: |
-        Complete setup script that:
-        - Reads prerequisites from this cog's YAML
-        - Installs Xcode CLI, Homebrew, Node.js, Claude Code
-        - Creates ~/.mx/ with machine context and shell integration
-        - Runs npm install, initialises submodules
-        - Verifies all systems operational
+  audience: ai-agents
+  readingLevel: technical
+  purpose: "Self-contained installation cog. Machines read YAML + execute embedded script. Humans read markdown."
 
-mx-environment:
-  detection: "$MX_HOME"
-  benefit: "Machine context available before installation"
-  fallback: "Diagnose inline"
+  contentType: "action-doc"
+  runbook: "mx exec installme"
+  # Block architecture - describes what this cog contains
+  blocks:
+    - definition:
+        standards:
+          - name: "The Gathering"
+            version: "2.1-draft"
+            scope: "cog metadata format, action execution"
+    - code:
+        id: setup-script
+        language: bash
+        purpose: "New Mac to operational MX OS"
+        location: embedded
+        marker: "```bash @embedded:setup-script"
+        description: |
+          Complete setup script that:
+          - Reads prerequisites from this cog's YAML
+          - Installs Xcode CLI, Homebrew, Node.js, Claude Code
+          - Creates ~/.mx/ with machine context and shell integration
+          - Runs npm install, initialises submodules
+          - Verifies all systems operational
 
-# Prerequisites for existing systems (Node.js already installed)
-prerequisites:
-  required:
-    - name: git
-      check: "git --version"
-      minimum: "2.0"
-      why: "Repository uses git submodules"
-    - name: github-access
-      check: "git ls-remote https://github.com/tomcranstoun/MX-hub.git HEAD"
-      why: "Must be able to clone the repository (SSH or HTTPS)"
-    - name: node
-      check: "node --version"
-      minimum: "20.0"
-      why: "Build scripts, cog tools, and content generation"
-    - name: npm
-      check: "npm --version"
-      minimum: "9.0"
-      why: "Package management"
-  optional:
-    - name: pandoc
-      check: "pandoc --version"
-      minimum: "3.0"
-      why: "PDF generation (book builds only)"
-    - name: gh
-      check: "gh --version"
-      why: "GitHub CLI for PR workflows"
+  mx-environment:
+    detection: "$MX_HOME"
+    benefit: "Machine context available before installation"
+    fallback: "Diagnose inline"
 
-# Prerequisites for fresh Mac (nothing installed)
-new-mac-prerequisites:
-  required:
-    - name: xcode-cli
-      check: "xcode-select -p"
-      install: "xcode-select --install"
-      why: "Git and build tools"
-    - name: homebrew
-      check: "brew --version"
-      install: '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
-      why: "Package manager for macOS"
-    - name: node
-      check: "node --version"
-      install: "brew install node@22"
-      minimum: "22.0"
-      why: "MX OS runtime"
-    - name: claude-code
-      check: "claude --version"
-      install: "npm install -g @anthropic-ai/claude-code"
-      why: "AI partner interface"
-  optional:
-    - name: gh
-      check: "gh --version"
-      install: "brew install gh"
-      why: "GitHub CLI for PR workflows"
-    - name: pandoc
-      check: "pandoc --version"
-      install: "brew install pandoc"
-      why: "PDF generation"
+  # Prerequisites for existing systems (Node.js already installed)
+  prerequisites:
+    required:
+      - name: git
+        check: "git --version"
+        minimum: "2.0"
+        why: "Repository uses git submodules"
+      - name: github-access
+        check: "git ls-remote https://github.com/tomcranstoun/MX-hub.git HEAD"
+        why: "Must be able to clone the repository (SSH or HTTPS)"
+      - name: node
+        check: "node --version"
+        minimum: "20.0"
+        why: "Build scripts, cog tools, and content generation"
+      - name: npm
+        check: "npm --version"
+        minimum: "9.0"
+        why: "Package management"
+    optional:
+      - name: pandoc
+        check: "pandoc --version"
+        minimum: "3.0"
+        why: "PDF generation (book builds only)"
+      - name: gh
+        check: "gh --version"
+        why: "GitHub CLI for PR workflows"
 
-# Installation steps for existing systems
-install-steps:
-  - step: 1
-    name: "Clone with submodules"
-    command: "git clone --recurse-submodules <repo-url>"
-    fallback: "git clone <repo-url> && cd repo && git submodule update --init --recursive"
-  - step: 2
-    name: "Install dependencies"
-    command: "npm install"
-  - step: 3
-    name: "Verify"
-    command: "npm run cog:stats"
+  # Prerequisites for fresh Mac (nothing installed)
+  new-mac-prerequisites:
+    required:
+      - name: xcode-cli
+        check: "xcode-select -p"
+        install: "xcode-select --install"
+        why: "Git and build tools"
+      - name: homebrew
+        check: "brew --version"
+        install: '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+        why: "Package manager for macOS"
+      - name: node
+        check: "node --version"
+        install: "brew install node@22"
+        minimum: "22.0"
+        why: "MX OS runtime"
+      - name: claude-code
+        check: "claude --version"
+        install: "npm install -g @anthropic-ai/claude-code"
+        why: "AI partner interface"
+    optional:
+      - name: gh
+        check: "gh --version"
+        install: "brew install gh"
+        why: "GitHub CLI for PR workflows"
+      - name: pandoc
+        check: "pandoc --version"
+        install: "brew install pandoc"
+        why: "PDF generation"
 
-# New Mac steps (uses embedded script)
-new-mac-steps:
-  - step: 1
-    name: "Clone repository"
-    command: "git clone --recurse-submodules https://github.com/tomcranstoun/MX-hub.git"
-    bootstrap: "git triggers Xcode CLI tools prompt - accept and wait"
-    prerequisite: "GitHub access configured (SSH or HTTPS)"
-  - step: 2
-    name: "Run embedded setup"
-    command: "bash -c \"$(awk '/^```bash @embedded:setup-script$/,/^```$/' scripts/cogs/INSTALLME.cog.md | sed '1d;$d')\""
-    note: "Extracts and runs the embedded script from this cog"
-    flags: "--auto --github-user <user> --name <name> --email <email>"
-  - step: 3
-    name: "Restart terminal"
-    command: "exec $SHELL"
-  - step: 4
-    name: "Verify"
-    command: "npm run cog:stats"
+  # Installation steps for existing systems
+  install-steps:
+    - step: 1
+      name: "Clone with submodules"
+      command: "git clone --recurse-submodules <repo-url>"
+      fallback: "git clone <repo-url> && cd repo && git submodule update --init --recursive"
+    - step: 2
+      name: "Install dependencies"
+      command: "npm install"
+    - step: 3
+      name: "Verify"
+      command: "npm run cog:stats"
 
-verify:
-  commands:
-    - "npm run cog:stats"
-  success-criteria:
-    - "npm install completes without errors"
-    - "All submodules initialised"
-    - "$MX_HOME exists and contains machine.yaml, user.yaml"
+  # New Mac steps (uses embedded script)
+  new-mac-steps:
+    - step: 1
+      name: "Clone repository"
+      command: "git clone --recurse-submodules https://github.com/tomcranstoun/MX-hub.git"
+      bootstrap: "git triggers Xcode CLI tools prompt - accept and wait"
+      prerequisite: "GitHub access configured (SSH or HTTPS)"
+    - step: 2
+      name: "Run embedded setup"
+      command: "bash -c \"$(awk '/^```bash @embedded:setup-script$/,/^```$/' scripts/cogs/INSTALLME.cog.md | sed '1d;$d')\""
+      note: "Extracts and runs the embedded script from this cog"
+      flags: "--auto --github-user <user> --name <name> --email <email>"
+    - step: 3
+      name: "Restart terminal"
+      command: "exec $SHELL"
+    - step: 4
+      name: "Verify"
+      command: "npm run cog:stats"
 
-# Action execution block - makes this an action-doc
-execute:
-  runtime: bash
-  command: mx cog installme
-  actions:
-    - name: setup
-      description: "Run full MX OS setup (fresh Mac or existing system)"
-      usage: "mx cog installme setup [--dry-run] [--mx-home-only] [--auto] [--github-user X] [--name X] [--email X] [--role X]"
-      embedded-script: setup-script
-      inputs:
-        - name: dry-run
-          type: boolean
-          required: false
-          description: "Show what would happen without doing it"
-        - name: mx-home-only
-          type: boolean
-          required: false
-          description: "Skip prerequisites, just set up ~/.mx/"
-        - name: auto
-          type: boolean
-          required: false
-          description: "Non-interactive mode — use defaults and skip confirmations"
-        - name: github-user
-          type: string
-          required: false
-          description: "GitHub username (used with --auto)"
-        - name: name
-          type: string
-          required: false
-          description: "Full name (used with --auto)"
-        - name: email
-          type: string
-          required: false
-          description: "Email address (used with --auto)"
-        - name: role
-          type: string
-          required: false
-          description: "Role (used with --auto, default: developer)"
+  verify:
+    commands:
+      - "npm run cog:stats"
+    success-criteria:
+      - "npm install completes without errors"
+      - "All submodules initialised"
+      - "$MX_HOME exists and contains machine.yaml, user.yaml"
 
-    - name: diagnose
-      description: "Check all prerequisites and report machine readiness"
-      usage: "mx cog installme diagnose"
-      outputs:
-        - name: diagnostics
-          type: object
-          description: "Machine readiness report"
+  # Action execution block - makes this an action-doc
+  execute:
+    runtime: bash
+    command: mx cog installme
+    actions:
+      - name: setup
+        description: "Run full MX OS setup (fresh Mac or existing system)"
+        usage: "mx cog installme setup [--dry-run] [--mx-home-only] [--auto] [--github-user X] [--name X] [--email X] [--role X]"
+        embedded-script: setup-script
+        inputs:
+          - name: dry-run
+            type: boolean
+            required: false
+            description: "Show what would happen without doing it"
+          - name: mx-home-only
+            type: boolean
+            required: false
+            description: "Skip prerequisites, just set up ~/.mx/"
+          - name: auto
+            type: boolean
+            required: false
+            description: "Non-interactive mode — use defaults and skip confirmations"
+          - name: github-user
+            type: string
+            required: false
+            description: "GitHub username (used with --auto)"
+          - name: name
+            type: string
+            required: false
+            description: "Full name (used with --auto)"
+          - name: email
+            type: string
+            required: false
+            description: "Email address (used with --auto)"
+          - name: role
+            type: string
+            required: false
+            description: "Role (used with --auto, default: developer)"
 
-    - name: extract
-      description: "Extract the embedded setup script to a file"
-      usage: "mx cog installme extract [output-path]"
-      outputs:
-        - name: script-path
-          type: string
-          description: "Path to extracted script"
+      - name: diagnose
+        description: "Check all prerequisites and report machine readiness"
+        usage: "mx cog installme diagnose"
+        outputs:
+          - name: diagnostics
+            type: object
+            description: "Machine readiness report"
+
+      - name: extract
+        description: "Extract the embedded setup script to a file"
+        usage: "mx cog installme extract [output-path]"
+        outputs:
+          - name: script-path
+            type: string
+            description: "Path to extracted script"
 ---
 
 # INSTALLME.cog.md

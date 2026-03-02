@@ -1,48 +1,50 @@
 ---
-name: conventions
 version: "1.0"
 description: "Operational conventions for MX-The-Books. Every naming pattern, file location, assumed rule, and operational standard. The things you need to know to work here without guessing."
 created: 2026-02-15
 modified: 2026-02-15
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
-category: convention
-partOf: mx-maxine-lives
-buildsOn: [ubercog, env]
-tags: [conventions, naming, locations, patterns, operations, registry]
-audience: both
-readingLevel: practical
-purpose: "Single source of truth for how things are named, where things go, and what patterns we follow."
 
-contentType: "action-doc"
-runbook: "mx exec conventions"
-execute:
-  runtime: runbook
-  command: mx conventions
-  actions:
-    - name: validate
-      description: Check the repo against documented conventions
-      usage: |
-        Walk through each convention category. For each rule, check if the repo complies.
-        Report violations as: [category] convention — expected vs found — file path.
-        Do not auto-fix. Present the report and let the user decide.
-      inputs: []
-      outputs:
-        - name: violations
-          type: array
-          description: "List of convention violations found"
-    - name: check-naming
-      description: Check file and folder naming conventions only
-      usage: |
-        Scan for: version numbers in filenames, non-kebab-case folders, cog files without .cog. infix,
-        register files without date prefix, reports without segment suffix.
-      inputs: []
-      outputs:
-        - name: naming-violations
-          type: array
-          description: "Naming convention violations"
+mx:
+  name: conventions
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
+  category: convention
+  partOf: mx-maxine-lives
+  buildsOn: [ubercog, env]
+  tags: [conventions, naming, locations, patterns, operations, registry]
+  audience: both
+  readingLevel: practical
+  purpose: "Single source of truth for how things are named, where things go, and what patterns we follow."
+
+  contentType: "action-doc"
+  runbook: "mx exec conventions"
+  execute:
+    runtime: runbook
+    command: mx conventions
+    actions:
+      - name: validate
+        description: Check the repo against documented conventions
+        usage: |
+          Walk through each convention category. For each rule, check if the repo complies.
+          Report violations as: [category] convention — expected vs found — file path.
+          Do not auto-fix. Present the report and let the user decide.
+        inputs: []
+        outputs:
+          - name: violations
+            type: array
+            description: "List of convention violations found"
+      - name: check-naming
+        description: Check file and folder naming conventions only
+        usage: |
+          Scan for: version numbers in filenames, non-kebab-case folders, cog files without .cog. infix,
+          register files without date prefix, reports without segment suffix.
+        inputs: []
+        outputs:
+          - name: naming-violations
+            type: array
+            description: "Naming convention violations"
 ---
 
 # Conventions Registry

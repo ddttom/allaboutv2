@@ -1,61 +1,63 @@
 ---
-name: changelog-trimmer
 version: "1.0"
 description: "Trim CHANGELOG.md to current week only, archiving older entries to dated files in the brain."
 created: 2026-02-15
 modified: 2026-02-15
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
-category: mx-tools
-partOf: mx-os
-refersTo: [conventions]
-buildsOn: [ubercog]
-tags: [changelog, trim, archive, maintenance, automation]
-audience: both
-readingLevel: practical
-purpose: "Keep CHANGELOG.md lean by archiving entries older than the current week."
 
-contentType: "action-doc"
-runbook: "mx exec changelog-trimmer"
-execute:
-  runtime: runbook
-  command: npm run changelog:trim
-  actions:
-    - name: trim
-      description: Archive old entries and keep only the current week
-      usage: |
-        Run `npm run changelog:trim` or `bash scripts/changelog-trim.sh`.
+mx:
+  name: changelog-trimmer
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
+  category: mx-tools
+  partOf: mx-os
+  refersTo: [conventions]
+  buildsOn: [ubercog]
+  tags: [changelog, trim, archive, maintenance, automation]
+  audience: both
+  readingLevel: practical
+  purpose: "Keep CHANGELOG.md lean by archiving entries older than the current week."
 
-        What it does:
-        1. Reads CHANGELOG.md
-        2. Identifies the Monday of the current week as the boundary
-        3. Keeps: frontmatter, header, and all entries dated from Monday onwards
-        4. Archives everything older to `mx-canon/mx-maxine-lives/management/changelog-archives/changelog-archive-YYYY-MM-DD.md`
-        5. If an archive file for today already exists, appends to it
-        6. Reports what was kept and what was archived
+  contentType: "action-doc"
+  runbook: "mx exec changelog-trimmer"
+  execute:
+    runtime: runbook
+    command: npm run changelog:trim
+    actions:
+      - name: trim
+        description: Archive old entries and keep only the current week
+        usage: |
+          Run `npm run changelog:trim` or `bash scripts/changelog-trim.sh`.
 
-        Supports `--dry-run` to preview without writing.
-      inputs: []
-      outputs:
-        - name: trimmed-changelog
-          type: file
-          description: "CHANGELOG.md with only current week entries"
-        - name: archive-file
-          type: file
-          description: "Dated archive of older entries"
+          What it does:
+          1. Reads CHANGELOG.md
+          2. Identifies the Monday of the current week as the boundary
+          3. Keeps: frontmatter, header, and all entries dated from Monday onwards
+          4. Archives everything older to `mx-canon/mx-maxine-lives/management/changelog-archives/changelog-archive-YYYY-MM-DD.md`
+          5. If an archive file for today already exists, appends to it
+          6. Reports what was kept and what was archived
 
-    - name: status
-      description: Report CHANGELOG.md size and age of oldest entry
-      usage: |
-        Run `npm run changelog:trim -- --status`.
-        Reports: line count, entry count, oldest entry date, whether trim is recommended.
-      inputs: []
-      outputs:
-        - name: status-report
-          type: object
-          description: "Current CHANGELOG.md health"
+          Supports `--dry-run` to preview without writing.
+        inputs: []
+        outputs:
+          - name: trimmed-changelog
+            type: file
+            description: "CHANGELOG.md with only current week entries"
+          - name: archive-file
+            type: file
+            description: "Dated archive of older entries"
+
+      - name: status
+        description: Report CHANGELOG.md size and age of oldest entry
+        usage: |
+          Run `npm run changelog:trim -- --status`.
+          Reports: line count, entry count, oldest entry date, whether trim is recommended.
+        inputs: []
+        outputs:
+          - name: status-report
+            type: object
+            description: "Current CHANGELOG.md health"
 ---
 
 # Changelog Trimmer

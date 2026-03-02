@@ -1,28 +1,30 @@
 ---
-name: manual-mx-pdf
 title: mx-pdf Manual
 description: Generate professional PDFs from markdown using Pandoc and XeLaTeX.
 author: Tom Cranstoun and Maxine
 created: 2026-02-15T00:00:00.000Z
 version: "1.0"
-status: active
-category: manual
-tags:
-  - manual
-  - mx-pdf
-  - pdf
-  - pandoc
-  - publishing
-partOf: mx-maxine-lives
-purpose: Document mx pdf - usage, workflow, and best practices
-audience: human
-stability: stable
-runbook: Read when working with mx pdf or understanding its functionality
-contextProvides:
-  - Generate professional PDFs from markdown using Pandoc and XeLaTeX.
-  - Usage guide and workflow for mx pdf
-  - Troubleshooting and best practices
-refersTo: []
+
+mx:
+  name: manual-mx-pdf
+  status: active
+  category: manual
+  tags:
+    - manual
+    - mx-pdf
+    - pdf
+    - pandoc
+    - publishing
+  partOf: mx-maxine-lives
+  purpose: Document mx pdf - usage, workflow, and best practices
+  audience: human
+  stability: stable
+  runbook: Read when working with mx pdf or understanding its functionality
+  contextProvides:
+    - Generate professional PDFs from markdown using Pandoc and XeLaTeX.
+    - Usage guide and workflow for mx pdf
+    - Troubleshooting and best practices
+  refersTo: []
 ---
 
 # mx-pdf — PDF Generation

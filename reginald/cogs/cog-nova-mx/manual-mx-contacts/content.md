@@ -1,28 +1,30 @@
 ---
-name: manual-mx-contacts
 title: MX Contacts — Manual
 description: Step-by-step guide for managing contacts, messages, and archives in mx-crm.
 version: "1.0"
-status: active
 created: 2026-02-09T00:00:00.000Z
 modified: 2026-02-13T00:00:00.000Z
 author: Tom Cranstoun and Maxine
-category: manual
-tags:
-  - manual
-  - contacts
-  - messages
-  - archive
-partOf: mx-maxine-lives
-audience: operators
-purpose: Document mx contacts - usage, workflow, and best practices
-stability: stable
-runbook: Read when working with mx contacts or understanding its functionality
-contextProvides:
-  - Step-by-step guide for managing contacts, messages, and archives in mx-crm.
-  - Usage guide and workflow for mx contacts
-  - Troubleshooting and best practices
-refersTo: []
+
+mx:
+  name: manual-mx-contacts
+  status: active
+  category: manual
+  tags:
+    - manual
+    - contacts
+    - messages
+    - archive
+  partOf: mx-maxine-lives
+  audience: operators
+  purpose: Document mx contacts - usage, workflow, and best practices
+  stability: stable
+  runbook: Read when working with mx contacts or understanding its functionality
+  contextProvides:
+    - Step-by-step guide for managing contacts, messages, and archives in mx-crm.
+    - Usage guide and workflow for mx contacts
+    - Troubleshooting and best practices
+  refersTo: []
 ---
 
 # MX Contacts Manual

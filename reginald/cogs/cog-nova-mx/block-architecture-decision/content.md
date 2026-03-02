@@ -1,54 +1,56 @@
 ---
-name: block-architecture-decision
 version: "1.0"
 description: "ADR #1: Replace two cog types (info-doc/action-doc) with one document type containing open-ended blocks."
 created: 2026-02-12
 modified: 2026-02-13
 author: Tom Cranstoun and Maxine
-license: proprietary
-status: accepted
-category: architecture
-partOf: mx-the-gathering
-tags: [adr, block-architecture, specification, evolution, webmcp, privacy, registry]
-audience: [developers, investors, business]
-adr:
-  number: 1
-  title: "Block Architecture — One Doc with Blocks"
+
+mx:
+  name: block-architecture-decision
+  license: proprietary
   status: accepted
-  date: 2026-02-12
-  context: "The cog specification had two types: info-doc and action-doc. This was the wrong cut."
-  decision: "Replace two cog types with one document type containing open-ended blocks."
-  consequences: "Replaces cog-unified-spec v1.0. Affects books, pitches, and The Gathering's standard."
+  category: architecture
+  partOf: mx-the-gathering
+  tags: [adr, block-architecture, specification, evolution, webmcp, privacy, registry]
+  audience: [developers, investors, business]
+  adr:
+    number: 1
+    title: "Block Architecture — One Doc with Blocks"
+    status: accepted
+    date: 2026-02-12
+    context: "The cog specification had two types: info-doc and action-doc. This was the wrong cut."
+    decision: "Replace two cog types with one document type containing open-ended blocks."
+    consequences: "Replaces cog-unified-spec v1.0. Affects books, pitches, and The Gathering's standard."
 
-buildsOn: [what-is-a-cog, what-is-mx-os]
+  buildsOn: [what-is-a-cog, what-is-mx-os]
 
-blocks:
-  - prose:
-      description: "The architectural decision narrative — what changed, why, and what it means."
-  - definition:
-      standards:
-        - name: "The Gathering"
-          version: "2.0-draft"
-          scope: "cog metadata format, block types, reader behaviour"
-        - name: "WebMCP"
-          version: "W3C Draft 2026-02-12"
-          scope: "HTML blocks — callable tools for AI agents"
-          reference: "https://webmachinelearning.github.io/webmcp/"
-        - name: "Schema.org"
-          scope: "Structured data in definition blocks"
-        - name: "JSON-LD"
-          scope: "Linked data in HTML blocks"
-      validation:
-        - "All blocks must be ignorable by readers that don't understand them"
-        - "Native metadata format must be preserved (YAML for .md, meta tags for .html, EXIF for images)"
-        - "Backward compatibility: .cog.html must be valid HTML, .cog.js must be valid JS"
-  - provenance:
-      origin: "7-round interview session, 2026-02-12"
-      participants: ["Tom Cranstoun", "Maxine"]
-      source: "../deliverables/block-architecture-interview.md"
+  blocks:
+    - prose:
+        description: "The architectural decision narrative — what changed, why, and what it means."
+    - definition:
+        standards:
+          - name: "The Gathering"
+            version: "2.0-draft"
+            scope: "cog metadata format, block types, reader behaviour"
+          - name: "WebMCP"
+            version: "W3C Draft 2026-02-12"
+            scope: "HTML blocks — callable tools for AI agents"
+            reference: "https://webmachinelearning.github.io/webmcp/"
+          - name: "Schema.org"
+            scope: "Structured data in definition blocks"
+          - name: "JSON-LD"
+            scope: "Linked data in HTML blocks"
+        validation:
+          - "All blocks must be ignorable by readers that don't understand them"
+          - "Native metadata format must be preserved (YAML for .md, meta tags for .html, EXIF for images)"
+          - "Backward compatibility: .cog.html must be valid HTML, .cog.js must be valid JS"
+    - provenance:
+        origin: "7-round interview session, 2026-02-12"
+        participants: ["Tom Cranstoun", "Maxine"]
+        source: "../deliverables/block-architecture-interview.md"
 
-contentType: "adr"
-runbook: "This is ADR #1 for the Maxine Lives initiative. It records the decision to move from two cog types to one document type with blocks. Read this for architectural context. For the full interview transcript, see the deliverables folder."
+  contentType: "adr"
+  runbook: "This is ADR #1 for the Maxine Lives initiative. It records the decision to move from two cog types to one document type with blocks. Read this for architectural context. For the full interview transcript, see the deliverables folder."
 ---
 
 # ADR 1: Block Architecture — One Doc with Blocks

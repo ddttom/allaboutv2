@@ -1,30 +1,32 @@
 ---
-name: michael-andrews
-contentType: contact
 description: Content metadata expert, author of "No More Silos"
 author: Tom Cranstoun
 created: 2026-02-09
-category: contact
-tags: [contact, collaborator, metadata, content-strategy]
-relationship: collaborator
-status: active
-organisation: Independent consultant
-context: Wrote the definitive work on content metadata and structured content strategy. His "No More Silos" thinking is the intellectual predecessor to the companion web.
-messages:
-  - file: messages/message-michael-andrews.md
-    date: 2026-02-09
-    type: pre-call-briefing
-    status: sent
-    note: Pre-call briefing sent. Companion web, bidirectional model, app, green angle.
-  - date: 2026-02-09
-    type: reply
-    status: received
-    note: Michael read the briefing in VS Code. Compared cogs to Solid Project pods. Asked about controlled values in YAML frontmatter — kebab-case vs free text, and whether only agents or also non-AI programs evaluate header values. Wants a meeting on the calendar.
-  - date: 2026-02-09
-    type: reply
-    status: sent
-    note: Tom replied. Clarified cogs vs pods — modular/granular vs monolithic, agent-orchestrated vs user-hosted. Acknowledged YAML schema question — kebab-case for control directives, free text for content metadata — should separate more explicitly in schema.
-next-action: Schedule Zoom call — Michael is ready to meet
+
+mx:
+  name: michael-andrews
+  contentType: contact
+  category: contact
+  tags: [contact, collaborator, metadata, content-strategy]
+  relationship: collaborator
+  status: active
+  organisation: Independent consultant
+  context: Wrote the definitive work on content metadata and structured content strategy. His "No More Silos" thinking is the intellectual predecessor to the companion web.
+  messages:
+    - file: messages/message-michael-andrews.md
+      date: 2026-02-09
+      type: pre-call-briefing
+      status: sent
+      note: Pre-call briefing sent. Companion web, bidirectional model, app, green angle.
+    - date: 2026-02-09
+      type: reply
+      status: received
+      note: Michael read the briefing in VS Code. Compared cogs to Solid Project pods. Asked about controlled values in YAML frontmatter — kebab-case vs free text, and whether only agents or also non-AI programs evaluate header values. Wants a meeting on the calendar.
+    - date: 2026-02-09
+      type: reply
+      status: sent
+      note: Tom replied. Clarified cogs vs pods — modular/granular vs monolithic, agent-orchestrated vs user-hosted. Acknowledged YAML schema question — kebab-case for control directives, free text for content metadata — should separate more explicitly in schema.
+  next-action: Schedule Zoom call — Michael is ready to meet
 ---
 
 # Michael Andrews

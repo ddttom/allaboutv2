@@ -1,5 +1,4 @@
 ---
-name: what-is-a-cog
 version: "1.0"
 description: A cog that explains what cogs are. The format describing itself.
 
@@ -7,21 +6,24 @@ created: 2026-02-09
 modified: 2026-02-09
 
 author: Tom Cranstoun
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: learning
-partOf: mx-the-gathering
-refersTo: [cog-unified-spec, mx-principles]
-tags: [cog, introduction, metadata, standard, the-gathering]
+mx:
+  name: what-is-a-cog
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: content-strategists
-readingLevel: non-technical
-purpose: Explain the cog format to someone encountering it for the first time
+  category: learning
+  partOf: mx-the-gathering
+  refersTo: [cog-unified-spec, mx-principles]
+  tags: [cog, introduction, metadata, standard, the-gathering]
 
-contentType: "action-doc"
-runbook: "mx exec what-is-a-cog"
+  audience: content-strategists
+  readingLevel: non-technical
+  purpose: Explain the cog format to someone encountering it for the first time
+
+  contentType: "action-doc"
+  runbook: "mx exec what-is-a-cog"
 ---
 
 # What Is a Cog?

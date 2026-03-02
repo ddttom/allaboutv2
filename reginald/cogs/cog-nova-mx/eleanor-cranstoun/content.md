@@ -1,22 +1,24 @@
 ---
-name: eleanor-cranstoun
-contentType: contact
 description: Director of Cog-Nova-MX Ltd, Tom's wife
 author: Tom Cranstoun
 created: 2026-02-09
-category: contact
-tags: [contact, family, director, stakeholder]
-relationship: family
-status: active
-role: 5% B shares, director
-context: Eleanor has been living with this — late nights, dinner conversations about cogs and agents. She needs the full picture as both a director and Tom's wife. The message emphasises why it matters for people, not just business.
-messages:
-  - file: messages/message-eleanor-cranstoun.md
-    date: 2026-02-09
-    type: full-briefing
-    status: draft
-    note: Director briefing v2.0 — includes company structure, revenue model (pricing tiers), operational model, VAT, key dates.
-next-action: Share in person or email
+
+mx:
+  name: eleanor-cranstoun
+  contentType: contact
+  category: contact
+  tags: [contact, family, director, stakeholder]
+  relationship: family
+  status: active
+  role: 5% B shares, director
+  context: Eleanor has been living with this — late nights, dinner conversations about cogs and agents. She needs the full picture as both a director and Tom's wife. The message emphasises why it matters for people, not just business.
+  messages:
+    - file: messages/message-eleanor-cranstoun.md
+      date: 2026-02-09
+      type: full-briefing
+      status: draft
+      note: Director briefing v2.0 — includes company structure, revenue model (pricing tiers), operational model, VAT, key dates.
+  next-action: Share in person or email
 ---
 
 # Eleanor Cranstoun

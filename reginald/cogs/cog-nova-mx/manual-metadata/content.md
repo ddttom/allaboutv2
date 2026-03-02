@@ -1,55 +1,57 @@
 ---
-name: manual-metadata
 title: Metadata Manual — How to Make Any File Machine-Readable
 description: Step-by-step guide for adding MX metadata to markdown, JavaScript, CSS, and HTML files. The human playbook for the embrace-and-extend model.
 version: "1.0"
-status: active
-license: proprietary
 created: 2026-02-15T00:00:00.000Z
 modified: 2026-02-15T00:00:00.000Z
 author: Tom Cranstoun and Maxine
-category: manual
-tags:
-  - manual
-  - metadata
-  - conventions
-  - html
-  - javascript
-  - css
-  - yaml
-  - frontmatter
-  - embrace-extend
-partOf: mx-maxine-lives
-audience:
-  - operators
-  - tech
-buildsOn:
-  - what-is-a-cog
-  - mx-metadata-conventions
-  - field-dictionary
-execute:
-  runtime: runbook
-  actions:
-    - name: validate
-      description: Check a file for correct MX metadata per its file type
-      usage: Provide a file path. The agent reads the file, determines its type, and checks that MX metadata follows the conventions in this manual.
-      inputs:
-        - name: file-path
-          type: string
-          required: true
-          description: Path to the file to validate
-      outputs:
-        - name: report
-          type: object
-          description: "Validation results: file type detected, metadata found, issues, suggestions"
-purpose: Document metadata - usage, workflow, and best practices
-stability: stable
-runbook: "mx exec manual-metadata"
-contextProvides:
-  - Step-by-step guide for adding MX metadata to markdown, JavaScript, CSS, and HTML files. The human playbook for the embrace-and-extend model.
-  - Usage guide and workflow for metadata
-  - Troubleshooting and best practices
-refersTo: []
+
+mx:
+  name: manual-metadata
+  status: active
+  license: proprietary
+  category: manual
+  tags:
+    - manual
+    - metadata
+    - conventions
+    - html
+    - javascript
+    - css
+    - yaml
+    - frontmatter
+    - embrace-extend
+  partOf: mx-maxine-lives
+  audience:
+    - operators
+    - tech
+  buildsOn:
+    - what-is-a-cog
+    - mx-metadata-conventions
+    - field-dictionary
+  execute:
+    runtime: runbook
+    actions:
+      - name: validate
+        description: Check a file for correct MX metadata per its file type
+        usage: Provide a file path. The agent reads the file, determines its type, and checks that MX metadata follows the conventions in this manual.
+        inputs:
+          - name: file-path
+            type: string
+            required: true
+            description: Path to the file to validate
+        outputs:
+          - name: report
+            type: object
+            description: "Validation results: file type detected, metadata found, issues, suggestions"
+  purpose: Document metadata - usage, workflow, and best practices
+  stability: stable
+  runbook: "mx exec manual-metadata"
+  contextProvides:
+    - Step-by-step guide for adding MX metadata to markdown, JavaScript, CSS, and HTML files. The human playbook for the embrace-and-extend model.
+    - Usage guide and workflow for metadata
+    - Troubleshooting and best practices
+  refersTo: []
 ---
 
 # Metadata Manual

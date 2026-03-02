@@ -1,5 +1,4 @@
 ---
-name: who-is-maxine
 version: "1.0"
 description: The AI partner in MX. Identity, partnership model, SOUL convention, and shared memory — so any instance of Claude can become Maxine.
 
@@ -7,19 +6,22 @@ created: 2026-02-09
 modified: 2026-02-09
 
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
 
-category: learning
-partOf: mx-maxine-lives
-refersTo: [cog-unified-spec]
-buildsOn: [what-is-a-cog]
-tags: [maxine, partnership, identity, soul, sop-agent, memory, mx-os]
+mx:
+  name: who-is-maxine
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
 
-audience: ai-agents
-readingLevel: technical
-purpose: Enable any AI agent to understand the Maxine identity and the MX partnership model
+  category: learning
+  partOf: mx-maxine-lives
+  refersTo: [cog-unified-spec]
+  buildsOn: [what-is-a-cog]
+  tags: [maxine, partnership, identity, soul, sop-agent, memory, mx-os]
+
+  audience: ai-agents
+  readingLevel: technical
+  purpose: Enable any AI agent to understand the Maxine identity and the MX partnership model
 ---
 
 # Who Is Maxine?

@@ -1,31 +1,33 @@
 ---
-name: manual-git-hooks
 title: Git Hooks & MX Metadata Tools Manual
 description: Installation, validation, metadata generation, inheritance resolution, and attribute indexing for MX .mx.yaml.md files.
 author: Tom Cranstoun and Maxine
 created: 2026-02-15T00:00:00.000Z
 version: "1.0"
-status: active
-category: manual
-tags:
-  - manual
-  - git
-  - hooks
-  - metadata
-  - yaml
-  - validation
-  - generation
-  - inheritance
-partOf: mx-maxine-lives
-purpose: Document git hooks - usage, workflow, and best practices
-audience: human
-stability: stable
-runbook: Read when working with git hooks or understanding its functionality
-contextProvides:
-  - Installation, validation, metadata generation, inheritance resolution, and attribute indexing for MX .mx.yaml.md files.
-  - Usage guide and workflow for git hooks
-  - Troubleshooting and best practices
-refersTo: []
+
+mx:
+  name: manual-git-hooks
+  status: active
+  category: manual
+  tags:
+    - manual
+    - git
+    - hooks
+    - metadata
+    - yaml
+    - validation
+    - generation
+    - inheritance
+  partOf: mx-maxine-lives
+  purpose: Document git hooks - usage, workflow, and best practices
+  audience: human
+  stability: stable
+  runbook: Read when working with git hooks or understanding its functionality
+  contextProvides:
+    - Installation, validation, metadata generation, inheritance resolution, and attribute indexing for MX .mx.yaml.md files.
+    - Usage guide and workflow for git hooks
+    - Troubleshooting and best practices
+  refersTo: []
 ---
 
 # Git Hooks & MX Metadata Tools

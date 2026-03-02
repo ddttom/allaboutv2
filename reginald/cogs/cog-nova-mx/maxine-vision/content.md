@@ -1,18 +1,20 @@
 ---
-name: maxine-vision
 description: "The Joymaker prototype becomes Maxine — a distributed, persistent AI partner accessible from any device"
 author: "Tom Cranstoun and Maxine"
 created: 2026-02-11
 modified: 2026-02-11
 version: "1.0"
-status: active
-category: product
-contentType: info-doc
-tags: [maxine, joymaker, vision, architecture, product, distributed, pwa, voice]
-audience: ["humans", "machines"]
-purpose: "product-vision"
-buildsOn: [mx-concepts, how-mx-os-runs, uber-maxine-plan]
-runbook: "This cog defines the Maxine product vision — the evolution from Joymaker prototype to distributed AI partner"
+
+mx:
+  name: maxine-vision
+  status: active
+  category: product
+  contentType: info-doc
+  tags: [maxine, joymaker, vision, architecture, product, distributed, pwa, voice]
+  audience: ["humans", "machines"]
+  purpose: "product-vision"
+  buildsOn: [mx-concepts, how-mx-os-runs, uber-maxine-plan]
+  runbook: "This cog defines the Maxine product vision — the evolution from Joymaker prototype to distributed AI partner"
 ---
 
 # Maxine Product Vision

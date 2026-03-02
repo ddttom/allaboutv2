@@ -1,5 +1,4 @@
 ---
-name: toast-detector
 version: 0.1.0
 description: Find ephemeral UI patterns that AI and screen readers miss
 
@@ -7,77 +6,80 @@ created: 2026-02-06T12:31:00Z
 modified: 2026-02-06T12:31:00Z
 
 author: Maxine (MX - Machine eXperience Engine)
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: draft
 
-category: mx-core
-partOf: mx-core
-refersTo: [a11y, semantic-html]
-tags: [toast, notifications, ephemeral, accessibility, ux]
+mx:
+  name: toast-detector
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: draft
 
-execute:
-  runtime: runbook
-  command: mx cog toast-detector
-  actions:
-    - name: scan
-      description: Scan page for ephemeral UI patterns
-      usage: mx cog toast-detector scan <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL to scan
-        - name: interact
-          type: boolean
-          required: false
-          description: Interact with page to trigger toasts
-          default: false
-      outputs:
-        - name: findings
-          type: object
-          description: Detected ephemeral UI patterns
-    
-    - name: monitor
-      description: Monitor page for toast notifications over time
-      usage: mx cog toast-detector monitor <url> --duration <seconds>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL to monitor
-        - name: duration
-          type: number
-          required: false
-          description: Monitoring duration in seconds
-          default: 30
-      outputs:
-        - name: toasts
-          type: array
-          description: Captured toast notifications
-    
-    - name: audit
-      description: Audit toast accessibility
-      usage: mx cog toast-detector audit <url>
-      inputs:
-        - name: url
-          type: string
-          required: true
-          description: URL to audit
-      outputs:
-        - name: audit
-          type: object
-          description: Accessibility audit of notification patterns
+  category: mx-core
+  partOf: mx-core
+  refersTo: [a11y, semantic-html]
+  tags: [toast, notifications, ephemeral, accessibility, ux]
 
-requires:
-  bins: []
-  cogs: [a11y]
+  execute:
+    runtime: runbook
+    command: mx cog toast-detector
+    actions:
+      - name: scan
+        description: Scan page for ephemeral UI patterns
+        usage: mx cog toast-detector scan <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL to scan
+          - name: interact
+            type: boolean
+            required: false
+            description: Interact with page to trigger toasts
+            default: false
+        outputs:
+          - name: findings
+            type: object
+            description: Detected ephemeral UI patterns
 
-contentType: "action-doc"
-runbook: "mx exec toast-detector"
-convergence: true
-accessibility: true
-semantic: true
+      - name: monitor
+        description: Monitor page for toast notifications over time
+        usage: mx cog toast-detector monitor <url> --duration <seconds>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL to monitor
+          - name: duration
+            type: number
+            required: false
+            description: Monitoring duration in seconds
+            default: 30
+        outputs:
+          - name: toasts
+            type: array
+            description: Captured toast notifications
+
+      - name: audit
+        description: Audit toast accessibility
+        usage: mx cog toast-detector audit <url>
+        inputs:
+          - name: url
+            type: string
+            required: true
+            description: URL to audit
+        outputs:
+          - name: audit
+            type: object
+            description: Accessibility audit of notification patterns
+
+  requires:
+    bins: []
+    cogs: [a11y]
+
+  contentType: "action-doc"
+  runbook: "mx exec toast-detector"
+  convergence: true
+  accessibility: true
+  semantic: true
 ---
 
 # toast-detector

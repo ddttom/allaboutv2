@@ -1,20 +1,22 @@
 ---
-name: manual-mx-exec
 title: "MX-EXEC Manual"
 version: "1.0"
 description: "Manual page for mx-exec and mx commands — MX OS action cog executor"
 created: 2026-02-24
 modified: 2026-02-24
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
-category: mx-os
-partOf: mx-os
-tags: [manual, mx-exec, mx, action-cog, cli, shell]
-audience: developers
-readingLevel: technical
-purpose: "Comprehensive reference for the mx-exec command and shell integration"
+
+mx:
+  name: manual-mx-exec
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
+  category: mx-os
+  partOf: mx-os
+  tags: [manual, mx-exec, mx, action-cog, cli, shell]
+  audience: developers
+  readingLevel: technical
+  purpose: "Comprehensive reference for the mx-exec command and shell integration"
 ---
 
 # MX-EXEC(1) — MX OS Action Cog Executor
