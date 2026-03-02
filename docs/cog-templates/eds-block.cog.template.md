@@ -52,7 +52,7 @@ usage:
   caching: "permitted for 24 hours"
   redistribution: "with attribution"
   commercialUse: "permitted"
-  training: "permitted with attribution"
+  aiTraining: "permitted with attribution"
 
 block:
   name: "{block-name}"

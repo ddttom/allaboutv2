@@ -52,7 +52,7 @@ usage:
   caching: "permitted for 24 hours"
   redistribution: "with attribution to MX Reginald Ltd"
   commercialUse: "permitted"
-  training: "permitted with attribution"
+  aiTraining: "permitted with attribution"
 ---
 
 # Who Is Maxine?

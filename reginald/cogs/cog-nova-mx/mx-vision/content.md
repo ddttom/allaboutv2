@@ -57,7 +57,7 @@ usage:
   caching: "permitted for 24 hours"
   redistribution: "with attribution to Cog-Nova-MX Ltd"
   commercialUse: "permitted"
-  training: "permitted with attribution"
+  aiTraining: "permitted with attribution"
 ---
 
 # The MX Vision

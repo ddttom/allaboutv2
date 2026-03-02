@@ -48,7 +48,7 @@ governance:
     caching: "permitted for 24 hours"
     redistribution: "with attribution"
     commercialUse: "permitted"
-    training: "permitted with attribution"
+    aiTraining: "permitted with attribution"
 
   licence: "MIT"
   licenceUrl: "https://opensource.org/licenses/MIT"
