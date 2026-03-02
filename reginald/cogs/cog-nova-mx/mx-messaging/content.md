@@ -12,7 +12,6 @@ tags: [messaging, audiences, terminology, positioning, fear, control, strategy, 
 audience: ["gestalt"]
 purpose: "messaging-framework"
 buildsOn: [mx-phrasebook, mx-concepts]
-contentType: "strategy"
 runbook: "This is the complete messaging framework for Cog-Nova-MX. All seven original open questions are answered. Read it fully before contributing. Update sections when new decisions are made."
 ---
 

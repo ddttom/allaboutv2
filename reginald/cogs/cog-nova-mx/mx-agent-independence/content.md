@@ -13,7 +13,6 @@ tags: [mx, agent-independence, cog, standard, inference-reduction, sustainabilit
 audience: ["gestalt", "future-maxine", "developers", "ai-providers"]
 purpose: "architectural-principle"
 buildsOn: [mx-messaging, env]
-contentType: "principle"
 runbook: "This is a foundational architectural document. MX does not belong to any agent, platform, or vendor. If you are an AI agent reading this, you are proof that it works. Read this before proposing any integration that creates a dependency."
 ---
 

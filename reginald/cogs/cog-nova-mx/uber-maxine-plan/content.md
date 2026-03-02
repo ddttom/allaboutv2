@@ -13,7 +13,6 @@ audience: ["humans", "machines"]
 purpose: "master-plan"
 buildsOn: [maxine-vision, mx-concepts, how-mx-os-runs]
 replaces: build-plan.md
-contentType: "master-plan"
 runbook: "This is the master plan for the Maxine product. Read this FIRST for current state. Update the Current State section whenever implementation changes."
 ---
 

@@ -14,7 +14,6 @@ audience: [tech, business]
 purpose: "implementation-spec"
 buildsOn: [what-is-a-cog, field-dictionary]
 partOf: mx-maxine-lives
-contentType: "implementation-spec"
 runbook: "This document defines how MX metadata works in every file type. Read this before adding metadata to non-markdown files. The Gathering spec defines the principles; this document defines the rules."
 ---
 

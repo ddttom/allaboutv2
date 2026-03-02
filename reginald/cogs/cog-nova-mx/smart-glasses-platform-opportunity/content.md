@@ -14,7 +14,6 @@ audience: ["business", "investors"]
 purpose: "strategic-opportunity"
 buildsOn: [mx-messaging, the-companion-web]
 confidential: true
-contentType: "strategic-analysis"
 runbook: "This is a strategic opportunity document for the advisory board and investors. Dual-audience: business claim first, technical evidence underneath. Market data cites sources. Write like a blog — informative, not technical."
 ---
 

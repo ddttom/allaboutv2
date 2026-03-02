@@ -12,7 +12,6 @@ tags: [maxine, joymaker, vision, architecture, product, distributed, pwa, voice]
 audience: ["humans", "machines"]
 purpose: "product-vision"
 buildsOn: [mx-concepts, how-mx-os-runs, uber-maxine-plan]
-contentType: "product-vision"
 runbook: "This cog defines the Maxine product vision — the evolution from Joymaker prototype to distributed AI partner"
 ---
 

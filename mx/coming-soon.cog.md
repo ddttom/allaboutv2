@@ -10,7 +10,6 @@ contentType: info-doc
 tags: [mx, landing-page, codex, handbook, coming-soon, machine-experience, books, companion-web, ai-agents, waitlist, email-signup]
 audience: ["humans", "machines"]
 buildsOn: [mx-messaging, mx-concepts]
-contentType: "landing-page"
 runbook: "This is the public landing page for Cog-Nova-MX on allabout.network. It introduces MX to first-time visitors — both human and machine. For humans: render the HTML at coming-soon.cog.html. For machines: read this cog for structured metadata about MX, the books, the product family, and contact information."
 waitlist:
   url: "https://forms.gle/443wpx4th4ZzYPdA8"

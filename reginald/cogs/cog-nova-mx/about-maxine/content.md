@@ -14,7 +14,6 @@ audience: [tech, business]
 purpose: "architectural-overview"
 buildsOn: [maxine-vision, uber-maxine-plan]
 partOf: mx-maxine-lives
-contentType: "architectural-overview"
 runbook: "This document explains how Maxine's server-client architecture works. Read this to understand the relationship between the embedded server, the three client surfaces, and the communication protocols that connect them."
 ---
 
