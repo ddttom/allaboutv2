@@ -24,7 +24,7 @@ subject:
   scope: "system-overview"
   description: "What COGs are, how they work, and the ecosystem behind them"
 
-issued: "2026-02-08T00:00:00Z"
+publicationDate: "2026-02-08T00:00:00Z"
 expires: "2026-08-08T00:00:00Z"
 lastVerified: "2026-02-08T00:00:00Z"
 signature: "unsigned"

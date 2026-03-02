@@ -16,7 +16,6 @@ event:
   organiser: "Boye & Company"
   date: "2026-05-12"
   location: "Frankfurt am Main, Germany"
-  venue: "To be confirmed"
   attendees: 200
   format: "In-person, single-track"
 

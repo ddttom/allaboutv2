@@ -18,7 +18,7 @@ cog:
     scope: "{doc-scope}"  # e.g., specification, tutorial, reference, guide, api
     description: "{One-sentence description of what this document covers}"
 
-  issued: "{YYYY-MM-DDTHH:MM:SSZ}"
+  publicationDate: "{YYYY-MM-DDTHH:MM:SSZ}"
   expires: "{YYYY-MM-DDTHH:MM:SSZ}"
   lastVerified: "{YYYY-MM-DDTHH:MM:SSZ}"
 

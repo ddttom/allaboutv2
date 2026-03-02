@@ -1,5 +1,4 @@
 ---
-name: header-block
 description: "Responsive site header with navigation, hamburger menu, and brand identity"
 author: Tom Cranstoun
 created: 2026-02-22
@@ -24,7 +23,7 @@ subject:
   scope: "navigation"
   description: "Responsive site header with navigation, hamburger menu, and brand identity"
 
-issued: "2026-02-22T00:00:00Z"
+publicationDate: "2026-02-22T00:00:00Z"
 expires: "2026-08-22T00:00:00Z"
 lastVerified: "2026-02-22T00:00:00Z"
 signature: "unsigned"

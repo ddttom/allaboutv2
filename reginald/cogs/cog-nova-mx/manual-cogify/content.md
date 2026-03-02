@@ -227,7 +227,7 @@ refersTo: [bilingual-business-template] # Related cogs
 certification:                         # COG certification
   cog:
     version: "1.0"
-    issued: "2026-02-20T00:00:00Z"
+    publicationDate: "2026-02-20T00:00:00Z"
 registry:                              # Reginald registration
   reginald:
     category: restaurants
@@ -414,7 +414,7 @@ document.querySelector('.language-select')?.addEventListener('change', (e) => {
 certification:
   cog:
     version: "1.0"
-    issued: "2026-02-20T00:00:00Z"
+    publicationDate: "2026-02-20T00:00:00Z"
     issuer:
       name: "Cog-Nova-MX Ltd"
       id: "mx-tech-001"

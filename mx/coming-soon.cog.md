@@ -1,5 +1,4 @@
 ---
-name: "MX Coming Soon"
 description: "Landing page for Cog-Nova-MX — books, products, and the machine-readable web. Your business, readable by every machine on earth."
 author: "Tom Cranstoun"
 created: 2026-02-16

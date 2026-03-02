@@ -24,7 +24,7 @@ subject:
   scope: "foundational"
   description: "The complete vision for Machine Experience — why it exists, the problem it solves, the system it builds, and the future it creates. From inference to certainty. From guessing to knowing."
 
-issued: "2026-02-20T00:00:00Z"
+publicationDate: "2026-02-20T00:00:00Z"
 expires: "2026-08-20T00:00:00Z"
 lastVerified: "2026-02-20T00:00:00Z"
 signature: "unsigned"

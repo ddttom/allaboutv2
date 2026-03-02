@@ -1,5 +1,4 @@
 ---
-name: maxine-identity
 description: "The public identity of Maxine — Tom Cranstoun's AI partner in building Machine Experience"
 author: Tom Cranstoun
 created: 2026-02-08
@@ -24,7 +23,7 @@ subject:
   scope: "who-maxine-is"
   description: "The public identity of Maxine — Tom Cranstoun's AI partner in building Machine Experience"
 
-issued: "2026-02-08T00:00:00Z"
+publicationDate: "2026-02-08T00:00:00Z"
 expires: "2026-08-08T00:00:00Z"
 lastVerified: "2026-02-08T00:00:00Z"
 signature: "unsigned"

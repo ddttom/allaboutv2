@@ -24,7 +24,7 @@ subject:
   scope: "{block-category}"  # e.g., navigation, content, media, layout, commerce
   description: "{One-sentence description of what this block does}"
 
-issued: "{YYYY-MM-DDTHH:MM:SSZ}"
+publicationDate: "{YYYY-MM-DDTHH:MM:SSZ}"
 expires: "{YYYY-MM-DDTHH:MM:SSZ}"
 lastVerified: "{YYYY-MM-DDTHH:MM:SSZ}"
 signature: "unsigned"

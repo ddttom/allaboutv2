@@ -10,7 +10,7 @@ category: venue
 type: info-doc
 tags: [restaurant, dining, frankfurt, german-cuisine, hessian, apple-wine, vegetarian, wheelchair-accessible, step-free, accessible-toilet, outdoor-seating]
 
-venue:
+location:
   type: restaurant
   cuisine: [hessian, german, traditional]
   address: "Schweizer Strasse 71, 60594 Frankfurt am Main"

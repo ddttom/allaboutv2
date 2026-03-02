@@ -18,7 +18,7 @@ cog:
     scope: "{page-scope}"  # e.g., product-intro, coming-soon, demo
     description: "{One-sentence description of what this page communicates}"
 
-  issued: "{YYYY-MM-DDTHH:MM:SSZ}"
+  publicationDate: "{YYYY-MM-DDTHH:MM:SSZ}"
   expires: "{YYYY-MM-DDTHH:MM:SSZ}"  # Typically 6 months from issued
   lastVerified: "{YYYY-MM-DDTHH:MM:SSZ}"
 
