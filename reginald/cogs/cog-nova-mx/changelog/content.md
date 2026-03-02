@@ -29,9 +29,8 @@ blocks:
       previous-spec: "cog-unified-spec v1.0"
       next-milestone: "block-architecture-spec v2.0-draft"
 
-mx:
-  contentType: "changelog"
-  runbook: "This tracks changes to the block architecture specification. The human-readable version is CHANGELOG.md. This cog adds provenance and version blocks for machine consumption. Check CHANGELOG.md for the latest entries."
+contentType: "changelog"
+runbook: "This tracks changes to the block architecture specification. The human-readable version is CHANGELOG.md. This cog adds provenance and version blocks for machine consumption. Check CHANGELOG.md for the latest entries."
 ---
 
 # Changelog

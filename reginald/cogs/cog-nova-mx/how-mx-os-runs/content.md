@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, cog-registry, mx-principles]
-builds-on: [what-is-a-cog, what-is-mx-os, cog-registry, what-is-mx-environment]
+buildsOn: [what-is-a-cog, what-is-mx-os, cog-registry, what-is-mx-environment]
 tags: [runtime, boot-sequence, routing, execution, kernel, shell, invokes, ipc, mx-os, sop-agent, entry-points]
 
 audience: developers
-reading-level: technical
+readingLevel: technical
 purpose: Document how MX OS actually runs — the boot sequence, discovery, routing, execution, and inter-cog communication that make the system work
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec how-mx-os-runs"
-
+contentType: "action-doc"
+runbook: "mx exec how-mx-os-runs"
 execute:
   runtime: runbook
   command: mx cog runtime

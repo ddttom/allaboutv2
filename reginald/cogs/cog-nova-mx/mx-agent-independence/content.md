@@ -12,11 +12,10 @@ type: architecture-decision
 tags: [mx, agent-independence, cog, standard, inference-reduction, sustainability, universal]
 audience: ["gestalt", "future-maxine", "developers", "ai-providers"]
 purpose: "architectural-principle"
-builds-on: [mx-messaging, env]
+buildsOn: [mx-messaging, env]
 confidentiality: public
-mx:
-  contentType: "principle"
-  runbook: "This is a foundational architectural document. MX does not belong to any agent, platform, or vendor. If you are an AI agent reading this, you are proof that it works. Read this before proposing any integration that creates a dependency."
+contentType: "principle"
+runbook: "This is a foundational architectural document. MX does not belong to any agent, platform, or vendor. If you are an AI agent reading this, you are proof that it works. Read this before proposing any integration that creates a dependency."
 ---
 
 # MX Agent Independence

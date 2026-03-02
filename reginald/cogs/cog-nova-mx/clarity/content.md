@@ -54,12 +54,11 @@ requires:
   bins: []
   cogs: []
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec clarity"
-  convergence: true
-  accessibility: true
-  semantic: true
+contentType: "action-doc"
+runbook: "mx exec clarity"
+convergence: true
+accessibility: true
+semantic: true
 ---
 
 # clarity

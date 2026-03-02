@@ -12,11 +12,10 @@ type: info-doc
 tags: [smart-glasses, meta, platform, wearables, companion-web, strategy, market-opportunity, competitive-analysis, google, apple, samsung]
 audience: ["business", "investors"]
 purpose: "strategic-opportunity"
-builds-on: [mx-messaging, the-companion-web]
+buildsOn: [mx-messaging, the-companion-web]
 confidentiality: confidential
-mx:
-  contentType: "strategic-analysis"
-  runbook: "This is a strategic opportunity document for the advisory board and investors. Dual-audience: business claim first, technical evidence underneath. Market data cites sources. Write like a blog — informative, not technical."
+contentType: "strategic-analysis"
+runbook: "This is a strategic opportunity document for the advisory board and investors. Dual-audience: business claim first, technical evidence underneath. Market data cites sources. Write like a blog — informative, not technical."
 ---
 
 # Smart Glasses — The MX Platform Opportunity

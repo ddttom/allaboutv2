@@ -14,11 +14,11 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
+buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
 tags: [routing, inference-reduction, preprocessing, hook, aspell, pipeline, sop]
 
 audience: ai-agents
-reading-level: technical
+readingLevel: technical
 purpose: Give any AI agent a repeatable workflow for preprocessing prompts with routing context — reducing inference cost and improving accuracy
 
 execute:
@@ -107,9 +107,8 @@ execute:
         4. Hook configured? Check `.claude/settings.local.json` for UserPromptSubmit
         5. Hook executable? `ls -la .claude/hooks/route-decorator.sh`
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec routing-pipeline"
+contentType: "action-doc"
+runbook: "mx exec routing-pipeline"
 ---
 
 # Routing Pipeline

@@ -10,16 +10,14 @@ license: proprietary
 status: published
 category: convention
 partOf: mx-maxine-lives
-builds-on: [ubercog, env]
+buildsOn: [ubercog, env]
 tags: [conventions, naming, locations, patterns, operations, registry]
 audience: both
-reading-level: practical
+readingLevel: practical
 purpose: "Single source of truth for how things are named, where things go, and what patterns we follow."
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec conventions"
-
+contentType: "action-doc"
+runbook: "mx exec conventions"
 execute:
   runtime: runbook
   command: mx conventions

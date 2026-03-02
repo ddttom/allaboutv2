@@ -11,11 +11,10 @@ type: info-doc
 tags: [maxine, plan, architecture, roadmap, product, master-plan]
 audience: ["humans", "machines"]
 purpose: "master-plan"
-builds-on: [maxine-vision, mx-concepts, how-mx-os-runs]
+buildsOn: [maxine-vision, mx-concepts, how-mx-os-runs]
 replaces: build-plan.md
-mx:
-  contentType: "master-plan"
-  runbook: "This is the master plan for the Maxine product. Read this FIRST for current state. Update the Current State section whenever implementation changes."
+contentType: "master-plan"
+runbook: "This is the master plan for the Maxine product. Read this FIRST for current state. Update the Current State section whenever implementation changes."
 ---
 
 # Uber Maxine Plan

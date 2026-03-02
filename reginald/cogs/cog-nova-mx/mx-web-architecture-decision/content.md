@@ -19,7 +19,7 @@ adr:
   decision: "Maxine server strips cog metadata by default (clean content for humans), returns full cog on request (metadata for machines). Cogs compose from smaller cogs. Binaries are referenced by cogs, not wrapped. Three trust states: open, signed, encrypted. Reginald evolves from registry to full orchestration/CDN."
   consequences: "Defines the Maxine server contract, the Reginald evolution path, the cog composition model, and the revenue model for signed COGs."
 
-builds-on: [block-architecture-decision, what-is-mx-os, what-is-a-cog]
+buildsOn: [block-architecture-decision, what-is-mx-os, what-is-a-cog]
 ---
 
 # MX Web Architecture — Dual-Audience Content Serving

@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-mx-os]
+buildsOn: [what-is-mx-os]
 tags: [ubercog, gateway, briefing, routing, repo, mx-hub, onboarding]
 
 audience: both
-reading-level: accessible
+readingLevel: accessible
 purpose: Brief any AI agent on this repository — what it contains, how it is structured, and how to route to the right place
 
-mx:
-  contentType: "briefing-doc"
-  runbook: "mx exec ubercog"
-
+contentType: "briefing-doc"
+runbook: "mx exec ubercog"
 execute:
   runtime: runbook
   command: mx ubercog

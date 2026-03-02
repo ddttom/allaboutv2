@@ -9,7 +9,7 @@ license: proprietary
 status: active
 category: mx-core
 partOf: mx-maxine-lives
-builds-on: [maxine-lives]
+buildsOn: [maxine-lives]
 tags: [routing, sop, inference-reduction, agent-navigation, machine-readable]
 audience: [machines, agents]
 purpose: "Eliminate guessing. Map every query type to the exact folder and SOUL.md that answers it."
@@ -363,9 +363,8 @@ commands:
   registry-file: "routing-registry.json"
   sync-command: "npm run route:sync"
 
-mx:
-  contentType: "routing-table"
-  runbook: "This is the routing table for Maxine Lives. Parse the by-intent array to map any query to the correct folder. The lifecycle-flows show how content moves between folders. The not-here array redirects queries that belong elsewhere. The commands section lists all invocable skills, hooks, and npm scripts — the routing-registry.json file contains the live auto-generated index. Follow agent-procedure for correct navigation."
+contentType: "routing-table"
+runbook: "This is the routing table for Maxine Lives. Parse the by-intent array to map any query to the correct folder. The lifecycle-flows show how content moves between folders. The not-here array redirects queries that belong elsewhere. The commands section lists all invocable skills, hooks, and npm scripts — the routing-registry.json file contains the live auto-generated index. Follow agent-procedure for correct navigation."
 ---
 
 # Routing — Machine-Readable

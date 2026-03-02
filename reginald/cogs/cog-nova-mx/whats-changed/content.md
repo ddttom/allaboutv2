@@ -14,11 +14,11 @@ status: published
 category: mx-content
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, building-action-docs]
+buildsOn: [what-is-a-cog, building-action-docs]
 tags: [audit, content, files, metadata, git, dashboard, activity, changed, inventory]
 
 audience: ai-agents
-reading-level: technical
+readingLevel: technical
 purpose: Give any AI agent a repeatable workflow for auditing file changes — what changed, when, what type, what metadata is present or missing
 
 execute:

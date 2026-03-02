@@ -13,14 +13,12 @@ status: draft
 
 category: mx-core
 partOf: mx-os
-builds-on: [what-is-a-cog, cog-query, cog-registry]
+buildsOn: [what-is-a-cog, cog-query, cog-registry]
 refersTo: [what-is-mx-os, how-mx-os-runs]
 tags: [executor, runtime, dispatcher, cli, cog, mx-os]
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec mx-run"
-
+contentType: "action-doc"
+runbook: "mx exec mx-run"
 execute:
   runtime: node
   command: node mx-reginald/scripts/mx-run.js

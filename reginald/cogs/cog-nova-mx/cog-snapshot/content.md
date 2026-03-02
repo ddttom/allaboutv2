@@ -10,7 +10,7 @@ category: mx-core
 partOf: mx-os
 tags: [registry, snapshot, index, auto-generated]
 audience: [developers, ai-agents]
-reading-level: technical
+readingLevel: technical
 purpose: Machine-readable snapshot of the entire cog registry, grouped by type, status, newness, and dependency graph
 ---
 

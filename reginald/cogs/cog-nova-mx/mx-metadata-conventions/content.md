@@ -12,11 +12,10 @@ type: info-doc
 tags: [metadata, conventions, html, javascript, css, file-types, embrace-extend, blocks, namespace]
 audience: [tech, business]
 purpose: "implementation-spec"
-builds-on: [what-is-a-cog, field-dictionary]
+buildsOn: [what-is-a-cog, field-dictionary]
 partOf: mx-maxine-lives
-mx:
-  contentType: "implementation-spec"
-  runbook: "This document defines how MX metadata works in every file type. Read this before adding metadata to non-markdown files. The Gathering spec defines the principles; this document defines the rules."
+contentType: "implementation-spec"
+runbook: "This document defines how MX metadata works in every file type. Read this before adding metadata to non-markdown files. The Gathering spec defines the principles; this document defines the rules."
 ---
 
 # MX Metadata Conventions — Embrace and Extend

@@ -13,16 +13,14 @@ tags:
   - markdown
   - quality
 partOf: mx-maxine-lives
-mx:
-  purpose: Document spell checker - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when working with spell checker or understanding its functionality
-  ai:
-    contextProvides:
-      - MX-aware spell checking for markdown files. Dual-dialect, vocabulary-aware, only flags genuine typos.
-      - Usage guide and workflow for spell checker
-      - Troubleshooting and best practices
+purpose: Document spell checker - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when working with spell checker or understanding its functionality
+contextProvides:
+  - MX-aware spell checking for markdown files. Dual-dialect, vocabulary-aware, only flags genuine typos.
+  - Usage guide and workflow for spell checker
+  - Troubleshooting and best practices
 refersTo: []
 ---
 

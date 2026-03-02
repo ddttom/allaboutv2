@@ -10,15 +10,10 @@ category: "Business Strategy"
 purpose: "Internal reference document capturing the complete business case for MX implementation, synthesized from customer interviews, implementation experience, and Chapter 0 business case analysis"
 audience: [business, sales, consulting]
 status: "active"
-builds-on:
+buildsOn:
   - mx-messaging
 partOf: "MX OS"
-mx:
-  runbook: |
-    This cog documents the four strategic business outcomes that MX implementation delivers.
-    Use this as the authoritative reference for business case discussions, sales conversations,
-    and consulting engagements. Each benefit includes the business claim, technical evidence,
-    target audience concerns, and measurable outcomes.
+runbook: |
 ---
 
 # MX Business Benefits — Four Strategic Outcomes

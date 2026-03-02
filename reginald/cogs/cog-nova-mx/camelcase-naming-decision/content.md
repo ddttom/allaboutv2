@@ -25,7 +25,7 @@ affects:
   - mx-metadata-conventions
   - mx-attributes-registry
 
-builds-on: [what-is-a-cog]
+buildsOn: [what-is-a-cog]
 ---
 
 # NDR #2: camelCase Field Names

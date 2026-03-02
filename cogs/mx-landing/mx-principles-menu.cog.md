@@ -54,14 +54,9 @@ usage:
   commercialUse: "permitted"
   training: "permitted with attribution"
 
-mx:
-  contentType: "landing-page"
-  audience: ["humans", "machines"]
-  runbook: |
-    This is the MX Principles navigation hub.
-    For humans: render mx-principles-menu.html
-    For machines: parse the navigation structure below to understand
-    MX content organization and find specific principle documents.
+contentType: "landing-page"
+audience: ["humans", "machines"]
+runbook: |
 ---
 
 # MX Principles Menu

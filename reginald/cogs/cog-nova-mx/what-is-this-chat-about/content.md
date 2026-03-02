@@ -14,11 +14,11 @@ status: published
 category: mx-os
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, building-action-docs]
+buildsOn: [what-is-a-cog, building-action-docs]
 tags: [session, summary, chat, context, memory, audit, gestalt]
 
 audience: ai-agents
-reading-level: technical
+readingLevel: technical
 purpose: Give any AI agent a repeatable SOP for summarising a chat session — what was discussed, what was built, what changed, and what to do next
 
 execute:

@@ -127,12 +127,11 @@ requires:
   bins: []
   cogs: []
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec canon-init"
-  convergence: true
-  accessibility: false
-  semantic: true
+contentType: "action-doc"
+runbook: "mx exec canon-init"
+convergence: true
+accessibility: false
+semantic: true
 ---
 
 # canon-init

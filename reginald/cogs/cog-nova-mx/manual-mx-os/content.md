@@ -16,16 +16,14 @@ tags:
   - cogs
   - runtime
 partOf: mx-maxine-lives
-mx:
-  purpose: Document mx os - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: "mx exec manual-mx-os"
-  ai:
-    contextProvides:
-      - The Machine Experience Operating System. A practical guide to cogs, SOULs, the registry, runtime, and the companion web.
-      - Usage guide and workflow for mx os
-      - Troubleshooting and best practices
+purpose: Document mx os - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: "mx exec manual-mx-os"
+contextProvides:
+  - The Machine Experience Operating System. A practical guide to cogs, SOULs, the registry, runtime, and the companion web.
+  - Usage guide and workflow for mx os
+  - Troubleshooting and best practices
 refersTo: []
 ---
 
@@ -82,7 +80,7 @@ description: What this cog does
 category: mx-core
 status: draft
 license: proprietary
-builds-on: [what-is-a-cog]
+buildsOn: [what-is-a-cog]
 tags: [example, demo]
 
 execute:                        # ← This block makes it an action-doc

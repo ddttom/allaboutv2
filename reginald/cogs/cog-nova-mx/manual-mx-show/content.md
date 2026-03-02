@@ -16,16 +16,14 @@ tags:
   - fzf
   - maxine
 partOf: mx-maxine-lives
-mx:
-  purpose: Document mx show - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when working with mx show or understanding its functionality
-  ai:
-    contextProvides:
-      - Interactive window finder for macOS. Pinned favourites, two-phase loading, smart sizing, multi-window, usage tracking.
-      - Usage guide and workflow for mx show
-      - Troubleshooting and best practices
+purpose: Document mx show - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when working with mx show or understanding its functionality
+contextProvides:
+  - Interactive window finder for macOS. Pinned favourites, two-phase loading, smart sizing, multi-window, usage tracking.
+  - Usage guide and workflow for mx show
+  - Troubleshooting and best practices
 refersTo: []
 ---
 

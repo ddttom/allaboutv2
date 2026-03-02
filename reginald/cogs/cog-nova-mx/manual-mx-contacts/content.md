@@ -15,16 +15,14 @@ tags:
   - archive
 partOf: mx-maxine-lives
 audience: operators
-mx:
-  purpose: Document mx contacts - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when working with mx contacts or understanding its functionality
-  ai:
-    contextProvides:
-      - Step-by-step guide for managing contacts, messages, and archives in mx-crm.
-      - Usage guide and workflow for mx contacts
-      - Troubleshooting and best practices
+purpose: Document mx contacts - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when working with mx contacts or understanding its functionality
+contextProvides:
+  - Step-by-step guide for managing contacts, messages, and archives in mx-crm.
+  - Usage guide and workflow for mx contacts
+  - Troubleshooting and best practices
 refersTo: []
 ---
 
@@ -196,7 +194,7 @@ recipient:
 
 purpose: What this message is about in one sentence
 audience: who-will-read-this
-reading-level: expert | general
+readingLevel: expert | general
 
 tags:
   - topic-one

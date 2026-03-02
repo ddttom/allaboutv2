@@ -9,17 +9,15 @@ status: active
 category: manual
 tags: [manual, multilingual, validation, seo, quality-assurance, hreflang]
 partOf: mx-maxine-lives
-mx:
-  purpose: "Document the multilingual validator tool - SEO compliance checking and validation workflow"
-  audience: "human"
-  stability: "stable"
-  runbook: "Read when validating multilingual sites, checking SEO compliance, or troubleshooting hreflang issues"
-  ai:
-    contextProvides:
-      - "23+ multilingual SEO validation checks explained"
-      - "Lang attribute and hreflang tag compliance rules"
-      - "Anti-pattern detection (hash/query param language switching)"
-      - "CI/CD integration patterns for automated validation"
+purpose: "Document the multilingual validator tool - SEO compliance checking and validation workflow"
+audience: "human"
+stability: "stable"
+runbook: "Read when validating multilingual sites, checking SEO compliance, or troubleshooting hreflang issues"
+contextProvides:
+  - "23+ multilingual SEO validation checks explained"
+  - "Lang attribute and hreflang tag compliance rules"
+  - "Anti-pattern detection (hash/query param language switching)"
+  - "CI/CD integration patterns for automated validation"
 refersTo:
   - "mx-canon/mx-the-gathering/reference-implementations/_tools/validate-multilingual.js"
   - "mx-canon/mx-the-gathering/reference-implementations/_tools/README.cog.md"

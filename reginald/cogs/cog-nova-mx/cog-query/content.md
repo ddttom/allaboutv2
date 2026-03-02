@@ -13,14 +13,12 @@ status: active
 
 category: mx-core
 partOf: mx-os
-builds-on: [what-is-a-cog, cog-registry]
+buildsOn: [what-is-a-cog, cog-registry]
 refersTo: [what-is-mx-os]
 tags: [registry, query, index, scan, tools, validation, graph]
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec cog-query"
-
+contentType: "action-doc"
+runbook: "mx exec cog-query"
 execute:
   runtime: node
   command: node scripts/cog-tools.js

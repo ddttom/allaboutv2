@@ -13,7 +13,7 @@ category: mx-os
 partOf: mx-os
 tags: [manual, mx-exec, mx, action-cog, cli, shell]
 audience: developers
-reading-level: technical
+readingLevel: technical
 purpose: "Comprehensive reference for the mx-exec command and shell integration"
 ---
 

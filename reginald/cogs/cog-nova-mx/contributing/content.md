@@ -45,9 +45,8 @@ blocks:
         - proprietary-extensions
         - privacy-violating-features
 
-mx:
-  contentType: "contribution-policy"
-  runbook: "This defines how people contribute to the block architecture specification. The Gathering governs contributions to the open standard. Cog-Nova-MX governs its own products separately. Contributions must maintain backward compatibility and must never require personal data to leave the client."
+contentType: "contribution-policy"
+runbook: "This defines how people contribute to the block architecture specification. The Gathering governs contributions to the open standard. Cog-Nova-MX governs its own products separately. Contributions must maintain backward compatibility and must never require personal data to leave the client."
 ---
 
 # Contributing

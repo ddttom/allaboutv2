@@ -14,16 +14,15 @@ status: published
 category: learning
 partOf: mx-the-gathering
 refersTo: [cog-unified-spec]
-builds-on: [what-is-a-cog, what-is-mx-os]
+buildsOn: [what-is-a-cog, what-is-mx-os]
 tags: [agent-frameworks, skills, openClaw, langchain, crewai, integration, developer-tools, metadata]
 
 audience: developers
-reading-level: technical
+readingLevel: technical
 purpose: Explain how cogs work alongside AI agent frameworks — not replacing skills, but making the documents those skills read machine-readable
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec cogs-for-agent-developers"
+contentType: "action-doc"
+runbook: "mx exec cogs-for-agent-developers"
 ---
 
 # Cogs for Agent Developers
@@ -198,7 +197,7 @@ If the metadata does not match, skip the document. No wasted tokens reading irre
 Cogs reference other cogs through `builds-on`:
 
 ```yaml
-builds-on: [api-authentication, user-data-model]
+buildsOn: [api-authentication, user-data-model]
 ```
 
 This tells any agent: "read those first for context." Your agent can walk the graph and build a complete picture before answering — structured navigation instead of blind search.

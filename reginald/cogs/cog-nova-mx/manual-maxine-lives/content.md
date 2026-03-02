@@ -13,16 +13,14 @@ tags:
   - brain
   - management
 partOf: mx-maxine-lives
-mx:
-  purpose: Document maxine lives - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when working with maxine lives or understanding its functionality
-  ai:
-    contextProvides:
-      - How to use Maxine Lives — the gestalt's brain for decisions, assumptions, doubts, risks, plans, and tasks.
-      - Usage guide and workflow for maxine lives
-      - Troubleshooting and best practices
+purpose: Document maxine lives - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when working with maxine lives or understanding its functionality
+contextProvides:
+  - How to use Maxine Lives — the gestalt's brain for decisions, assumptions, doubts, risks, plans, and tasks.
+  - Usage guide and workflow for maxine lives
+  - Troubleshooting and best practices
 refersTo: []
 ---
 
@@ -145,7 +143,7 @@ created: 2026-02-13
 status: active
 category: adr          # matches folder type
 partOf: mx-maxine-lives
-builds-on: [related-cog-name]
+buildsOn: [related-cog-name]
 tags: [relevant, tags]
 ---
 ```

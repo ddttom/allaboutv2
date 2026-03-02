@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, cog-registry]
-builds-on: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
+buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
 tags: [companion-web, qr-code, physical-digital, landing-page, metadata, embedded, discovery, ubiquity, pitch, robotics, global-os]
 
 audience: developers
-reading-level: technical
+readingLevel: technical
 purpose: Document the companion web — the machine-readable layer that sits alongside the human web, bridging physical objects to MX OS through QR codes and embedded cog metadata
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec the-companion-web"
-
+contentType: "action-doc"
+runbook: "mx exec the-companion-web"
 execute:
   runtime: runbook
   command: mx cog companion-web

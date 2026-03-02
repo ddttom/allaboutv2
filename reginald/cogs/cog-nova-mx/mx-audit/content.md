@@ -14,11 +14,11 @@ status: published
 category: mx-sales
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, building-action-docs]
+buildsOn: [what-is-a-cog, building-action-docs]
 tags: [audit, web-audit, accessibility, wcag, performance, seo, ai-agents, llms-txt, sales-enablement, partnership, white-label, report-generation]
 
 audience: ai-agents
-reading-level: technical
+readingLevel: technical
 purpose: Give any AI agent a repeatable workflow for auditing a website and generating an executive report — from URL through automated analysis, manual verification, and template-based report generation
 
 execute:
@@ -485,11 +485,10 @@ execute:
         - Engagement options: price range
         - Full audit results: mx-audit/results/
 
-mx:
-  semantic: true
-  convergence: true
-  accessibility: true
-  runbook: "mx exec mx-audit"
+semantic: true
+convergence: true
+accessibility: true
+runbook: "mx exec mx-audit"
 ---
 
 # The MX Web Audit

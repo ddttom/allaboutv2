@@ -120,16 +120,14 @@ execute:
       description: Find the manual for a given topic or tool
     - name: register
       description: Add a new manual to the registry
-mx:
-  purpose: Document manuals registry - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: "mx exec manuals-registry"
-  ai:
-    contextProvides:
-      - Index of all MX system manuals. One brain, one registry. Every manual is a cog.
-      - Usage guide and workflow for manuals registry
-      - Troubleshooting and best practices
+purpose: Document manuals registry - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: "mx exec manuals-registry"
+contextProvides:
+  - Index of all MX system manuals. One brain, one registry. Every manual is a cog.
+  - Usage guide and workflow for manuals registry
+  - Troubleshooting and best practices
 refersTo: []
 ---
 

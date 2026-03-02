@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, what-is-mx-environment]
-builds-on: [what-is-a-cog, what-is-mx-os]
+buildsOn: [what-is-a-cog, what-is-mx-os]
 tags: [environment, config, settings, hostname, project, convention]
 
 audience: both
-reading-level: technical
+readingLevel: technical
 purpose: Centralise project-level configuration so that cogs and templates reference values from one place instead of hardcoding them across hundreds of files
 
-mx:
-  contentType: "config-doc"
-  runbook: "mx exec env"
-
+contentType: "config-doc"
+runbook: "mx exec env"
 # ─────────────────────────────────────────────
 # PROJECT ENVIRONMENT — the values live here
 # ─────────────────────────────────────────────

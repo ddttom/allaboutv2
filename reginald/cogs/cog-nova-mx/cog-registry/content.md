@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, what-is-mx-os]
+buildsOn: [what-is-a-cog, what-is-mx-os]
 tags: [registry, index, catalogue, cogs, discovery, builds-on-graph]
 
 audience: ai-agents
-reading-level: technical
+readingLevel: technical
 purpose: Enable any AI agent to discover, list, and validate all cogs in the MX ecosystem
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec cog-registry"
-
+contentType: "action-doc"
+runbook: "mx exec cog-registry"
 execute:
   runtime: runbook
   command: mx cog registry

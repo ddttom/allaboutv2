@@ -21,17 +21,15 @@ refersTo:
   - manual-enhanced-audit
   - cogify-this
   - step-commit
-mx:
-  purpose: Document HTML baseline & regression system - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when establishing HTML baselines, detecting regressions, or integrating audit workflow
-  ai:
-    contextProvides:
-      - HTML baseline establishment and regression detection workflow
-      - Automated comparison across visual, structural, style, and metadata layers
-      - Integration with development workflow and CI/CD
-      - Troubleshooting and best practices
+purpose: Document HTML baseline & regression system - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when establishing HTML baselines, detecting regressions, or integrating audit workflow
+contextProvides:
+  - HTML baseline establishment and regression detection workflow
+  - Automated comparison across visual, structural, style, and metadata layers
+  - Integration with development workflow and CI/CD
+  - Troubleshooting and best practices
 ---
 
 # HTML Baseline Audit & Regression System Manual

@@ -14,16 +14,14 @@ tags:
   - pandoc
   - publishing
 partOf: mx-maxine-lives
-mx:
-  purpose: Document mx pdf - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when working with mx pdf or understanding its functionality
-  ai:
-    contextProvides:
-      - Generate professional PDFs from markdown using Pandoc and XeLaTeX.
-      - Usage guide and workflow for mx pdf
-      - Troubleshooting and best practices
+purpose: Document mx pdf - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when working with mx pdf or understanding its functionality
+contextProvides:
+  - Generate professional PDFs from markdown using Pandoc and XeLaTeX.
+  - Usage guide and workflow for mx pdf
+  - Troubleshooting and best practices
 refersTo: []
 ---
 

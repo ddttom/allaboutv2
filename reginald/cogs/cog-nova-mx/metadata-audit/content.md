@@ -11,10 +11,10 @@ status: published
 category: mx-tools
 partOf: mx-os
 refersTo: [field-dictionary, cog-unified-spec, mx-metadata-conventions]
-builds-on: [what-is-a-cog]
+buildsOn: [what-is-a-cog]
 tags: [audit, metadata, standards, compliance, field-dictionary, namespace, deprecated-fields, frontmatter, yaml]
 audience: both
-reading-level: practical
+readingLevel: practical
 purpose: "Ecosystem-wide metadata health check. Scans every .md file, parses frontmatter, compares against the field dictionary, and generates a prioritised report."
 
 execute:
@@ -49,12 +49,11 @@ execute:
           type: string
           description: "Key metrics printed to terminal"
 
-mx:
-  semantic: true
-  convergence: true
-  accessibility: true
-  contentType: action-doc
-  runbook: "mx exec metadata-audit"
+semantic: true
+convergence: true
+accessibility: true
+contentType: action-doc
+runbook: "mx exec metadata-audit"
 ---
 
 # Metadata Audit

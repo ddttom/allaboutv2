@@ -53,13 +53,9 @@ governance:
   licence: "MIT"
   licenceUrl: "https://opensource.org/licenses/MIT"
 
-mx:
-  contentType: "landing-page"
-  audience: ["humans", "machines"]
-  runbook: |
-    This is a landing page for {subject}.
-    For humans: render the companion HTML file.
-    For machines: read this COG for structured metadata about {topic}.
+contentType: "landing-page"
+audience: ["humans", "machines"]
+runbook: |
 ---
 
 # {Landing Page Title}

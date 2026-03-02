@@ -12,7 +12,7 @@ category: mx-core
 partOf: mx-os
 tags: [hello, introduction, maxine, identity, team]
 audience: [team, collaborators]
-reading-level: accessible
+readingLevel: accessible
 purpose: "Give team members and collaborators a clear introduction to Maxine, MX OS, and how we work together"
 ownership: gestalt
 ---

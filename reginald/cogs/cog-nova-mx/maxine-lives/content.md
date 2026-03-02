@@ -9,7 +9,7 @@ license: proprietary
 status: active
 category: mx-core
 partOf: mx-os
-builds-on: [what-is-a-cog, what-is-mx-os]
+buildsOn: [what-is-a-cog, what-is-mx-os]
 tags: [gestalt, brain, decisions, memory, institutional-memory, meta-layer]
 audience: [gestalt, developers, investors]
 purpose: "Institutional memory for the Tom + Maxine gestalt. Every assumption, doubt, note, todo, plan, and decision — timestamped, linked, machine-readable."
@@ -124,9 +124,8 @@ deliverables:
     date: 2026-02-13
     description: "Machine-readable routing rules with intent mapping and lifecycle flows"
 
-mx:
-  contentType: "gestalt-brain"
-  runbook: "This is Maxine Lives — the gestalt's brain. It sits above Canon in authority. Read ROUTING.md first for navigation, then SOUL.md for voice and constraints. The README.md contains the human prose. Each subfolder has its own SOUL.md with specific voice and constraints. Files within folders are timestamped .cog.md records. Do not duplicate prose — reference it."
+contentType: "gestalt-brain"
+runbook: "This is Maxine Lives — the gestalt's brain. It sits above Canon in authority. Read ROUTING.md first for navigation, then SOUL.md for voice and constraints. The README.md contains the human prose. Each subfolder has its own SOUL.md with specific voice and constraints. Files within folders are timestamped .cog.md records. Do not duplicate prose — reference it."
 ---
 
 # Maxine Lives

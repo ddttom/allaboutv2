@@ -14,11 +14,11 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, what-is-mx-os, how-mx-os-runs, what-is-mx-environment]
+buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs, what-is-mx-environment]
 tags: [boot, bootstrap, install, preflight, init, session, zero-to-operational, entry-point, mx-os]
 
 audience: both
-reading-level: technical
+readingLevel: technical
 purpose: Bootstrap MX OS from any starting point — bare machine, fresh clone, or new session. The single boot cog that unifies preflight, installation, configuration, session init, and status reporting.
 
 execute:

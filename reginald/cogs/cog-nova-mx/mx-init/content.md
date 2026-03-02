@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, what-is-mx-os, what-is-mx-environment, what-is-installme]
+buildsOn: [what-is-a-cog, what-is-mx-os, what-is-mx-environment, what-is-installme]
 tags: [init, onboarding, setup, mx-os, soul, claude, installme, frontmatter, conventions, action]
 
 audience: ai-agents
-reading-level: technical
+readingLevel: technical
 purpose: Give any AI agent the procedure to initialize a repository with MX OS conventions — from bare repo to fully machine-readable workspace
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec mx-init"
-
+contentType: "action-doc"
+runbook: "mx exec mx-init"
 execute:
   runtime: runbook
   command: mx init

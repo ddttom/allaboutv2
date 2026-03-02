@@ -104,14 +104,9 @@ block:
     mobileBehavior: "Hamburger menu with slide-in drawer from right"
     breakpoints: [900]
 
-mx:
-  contentType: "eds-block"
-  audience: ["developers", "machines"]
-  runbook: |
-    This COG describes the header EDS block for allabout.network.
-    - For developers: Use to understand nav structure and decoration patterns.
-    - For AI agents: Parse block.content_model for authoring guidance.
-    - Block location: blocks/header/
+contentType: "eds-block"
+audience: ["developers", "machines"]
+runbook: |
 ---
 
 # Header Block

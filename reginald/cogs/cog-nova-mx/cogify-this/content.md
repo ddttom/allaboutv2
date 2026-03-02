@@ -14,203 +14,31 @@ status: active
 category: mx-tools
 partOf: mx-cog-registry
 refersTo: [what-is-a-cog, mx-reference-implementations, bilingual-business-template]
-builds-on: [what-is-a-cog]
+buildsOn: [what-is-a-cog]
 tags: [cogify, conversion, mx-enhancement, metadata, webmcp, accessibility, transformation]
 
 audience: tech
-reading-level: technical
+readingLevel: technical
 purpose: Transform existing content (HTML, markdown, documents) into MX-enhanced format with YAML frontmatter, WebMCP tools, Schema.org markup, and Reginald certification metadata
 
 runtime: runbook
 
-mx:
-  runbook: |
-    This action-doc guides AI agents through the cogification process:
-
-    **What is "Cogification"?**
-    Converting existing content into MX-enhanced format by:
-    1. Adding comprehensive YAML frontmatter with MX metadata
-    2. Wrapping content with appropriate cog structure
-    3. Adding Schema.org markup for machine readability
-    4. Implementing WebMCP tools for AI agent interaction
-    5. Ensuring WCAG 2.1 AA accessibility compliance
-    6. Preparing for Reginald registry certification
-
-    **When to Cogify:**
-    - Existing HTML pages → .cog.html with embedded metadata
-    - Markdown documents → .cog.md with enhanced frontmatter
-    - Static websites → Single-page MX-enhanced references
-    - Business content → Machine-readable certified docs
-    - Legacy content → Future-proof MX format
-
-    **Cogification Workflow:**
-
-    Step 1: Analyze Source
-    - Identify content type (HTML, markdown, PDF, etc.)
-    - Detect language(s) present
-    - Identify business/content domain
-    - Determine appropriate Schema.org type
-    - Note existing metadata and structure
-
-    Step 1.5: Run Enhanced HTML/CSS Audit (Highly Recommended)
-    - Use Enhanced Audit System to capture complete web structure
-    - Automates DOM extraction, CSS analysis, asset caching
-    - Generates multi-format outputs for offline development
-    - Provides validation baseline for automated testing
-    - See: ../../../mx-reference-implementations/_templates/audit-system/README.md
-
-    **Quick start (from repo root):**
-    ```bash
-    # One-time setup
-    npm run cogify:install
-
-    # Audit any website
-    npm run cogify -- --target=https://example.com
-
-    # Custom output directory
-    npm run cogify -- --target=https://restaurant.com --output-dir=./restaurant-audit
-    ```
-
-    **Alternative (direct method):**
-    ```bash
-    cd mx-canon/mx-the-gathering/reference-implementations/templates/audit-system
-    npm install && npx playwright install chromium
-    node enhanced-audit.js --target=https://example.com --cache-assets --verbose
-    ```
-
-    Outputs generated:
-    - `audit-data.json` - Complete DOM tree + computed CSS (165KB)
-    - `validation-baseline.json` - Structural metrics for testing
-    - `visual-audit-report.md` - Human-readable specifications
-    - `screenshots/homepage.png` - Full-page visual reference
-    - `cached-html/` - Rendered HTML for offline reference (24h TTL)
-    - `cached-css/` - All stylesheets cached locally (24h TTL)
-    - `cache-manifest.json` - Asset tracking with integrity hashes
-
-    Benefits:
-    - **Complete DOM structure** - Every element, attribute, and nesting level
-    - **CSS cascade mapping** - Which rules win for each property (specificity)
-    - **24-hour asset caching** - Work offline with cached HTML/CSS
-    - **Exact RGB colors** - Converted to hex automatically
-    - **Computed typography** - Font families, sizes, weights, custom properties
-    - **Validation baseline** - Automated before/after comparison
-    - **Pixel-perfect accuracy** - All data needed for exact replication
-
-    This is the recommended workflow for complex sites requiring structural accuracy.
-
-    Step 2: Select Template
-    - Use bilingual-business-template.cog.html for comparison/translation use cases
-    - Use single-language-business-template.cog.html for mobile-first content sites
-    - Use standard .cog.md frontmatter for documentation
-    - Create custom template for specialized use cases
-
-    Step 3: Generate YAML Frontmatter
-    Required fields:
-    - name: unique identifier (kebab-case)
-    - title: human-readable title
-    - description: one-sentence description
-    - version: semantic version (start with 1.0.0)
-    - created: ISO date
-    - modified: ISO date
-    - author: creator name
-    - category: classification
-    - status: active|draft|deprecated
-    - tags: array of keywords
-    - audience: tech|business|both|humans
-
-    MX-specific fields (under mx: in YAML):
-    - runtime: browser|node|runbook|shell
-    - runbook: usage instructions (for action-docs)
-    - deliverable: output specification (for generators)
-
-    Advanced fields:
-    - builds-on: dependency array
-    - partOf: parent collection
-    - refersTo: related cogs
-    - definition: standards compliance
-    - policy: merging and inheritance rules
-    - security: CSP and headers
-    - certification: COG certification metadata
-    - registry: Reginald registration data
-
-    Step 4: Add Schema.org Markup
-    - Choose appropriate type (Restaurant, Hotel, Product, etc.)
-    - Add JSON-LD script in <head>
-    - Include all required properties
-    - Add optional but recommended properties
-    - Validate at https://validator.schema.org/
-
-    Step 5: Implement WebMCP Tools
-    - Define tool names and descriptions
-    - Create inputSchema for each tool
-    - Implement execute() functions
-    - Declare in <meta name="mcp:tools">
-    - Test tool invocation
-
-    Step 6: Ensure Accessibility
-    - Add skip navigation link
-    - Use semantic HTML (header, main, nav, footer)
-    - Include ARIA labels where needed
-    - Ensure sufficient color contrast
-    - Add alt text for images
-    - Test with pa11y or WAVE
-
-    Step 7: Optimize for Bilingual (if applicable)
-    Choose pattern based on use case:
-
-    Side-by-side pattern:
-    - Side-by-side desktop layout
-    - Toggle for mobile
-    - Language-specific content blocks
-    - URL hash routing (#lang=es)
-    - Language toggle button
-    - Update html[lang] attribute
-
-    Single-language toggle pattern:
-    - Single-language view at a time
-    - Prominent toggle button (fixed position)
-    - Fade transitions (400ms)
-    - localStorage persistence
-    - Mobile-first (no layout shifts)
-    - Update html[lang] attribute
-
-    Step 8: Add Certification Metadata
-    - Include certification block in YAML
-    - Add provenance information
-    - Document transformation method
-    - Specify registry category
-    - Generate hash for integrity
-
-    Step 9: Validate
-    - W3C HTML validator
-    - WCAG 2.1 AA compliance
-    - Schema.org validation
-    - WebMCP specification
-    - Markdown lint (for .md cogs)
-    - YAML frontmatter parsing
-
-    Step 10: Register
-    - Add to cog registry
-    - Update Reginald index
-    - Generate certification signature
-    - Publish to CDN (if public)
-
-  deliverable:
-    output-format: ".cog.html or .cog.md"
-    includes:
-      - Comprehensive YAML frontmatter
-      - Original content preserved
-      - Schema.org markup
-      - WebMCP tool definitions
-      - Accessibility enhancements
-      - Certification metadata
-    validation:
-      - YAML parse success
-      - HTML/markdown valid
-      - Schema.org valid
-      - WCAG 2.1 AA compliant
-      - WebMCP spec compliant
-
+runbook: |
+deliverable:
+  output-format: ".cog.html or .cog.md"
+  includes:
+    - Comprehensive YAML frontmatter
+    - Original content preserved
+    - Schema.org markup
+    - WebMCP tool definitions
+    - Accessibility enhancements
+    - Certification metadata
+  validation:
+    - YAML parse success
+    - HTML/markdown valid
+    - Schema.org valid
+    - WCAG 2.1 AA compliant
+    - WebMCP spec compliant
 action:
   audit:
     description: "Run enhanced HTML/CSS audit to capture all website data"
@@ -649,7 +477,7 @@ mx:
     path: "output-filename"
     format: "output-format"
 
-builds-on: [dependency-cog-1, dependency-cog-2]
+buildsOn: [dependency-cog-1, dependency-cog-2]
 partOf: parent-collection
 refersTo: [related-cog-1, related-cog-2]
 ```

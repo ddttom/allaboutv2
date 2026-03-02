@@ -15,16 +15,14 @@ tags:
   - health
   - automation
 partOf: mx-maxine-lives
-mx:
-  purpose: Document submodule health - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when working with submodule health or understanding its functionality
-  ai:
-    contextProvides:
-      - Multi-dimensional submodule validation checking initialization, uncommitted changes, branch status, and remote sync. Provides actionable fix commands.
-      - Usage guide and workflow for submodule health
-      - Troubleshooting and best practices
+purpose: Document submodule health - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when working with submodule health or understanding its functionality
+contextProvides:
+  - Multi-dimensional submodule validation checking initialization, uncommitted changes, branch status, and remote sync. Provides actionable fix commands.
+  - Usage guide and workflow for submodule health
+  - Troubleshooting and best practices
 refersTo: []
 ---
 

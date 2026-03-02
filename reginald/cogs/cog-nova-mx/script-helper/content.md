@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-mx-os, what-is-a-cog]
+buildsOn: [what-is-mx-os, what-is-a-cog]
 tags: [scripts, metadata, inspect, bash, shell, compute, sop-efficiency]
 
 audience: developers
-reading-level: technical
+readingLevel: technical
 purpose: Enable AI agents to work with shell scripts efficiently by providing structured metadata, skeleton extraction, and script lifecycle management
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec script-helper"
-
+contentType: "action-doc"
+runbook: "mx exec script-helper"
 execute:
   runtime: runbook
   command: mx cog script-helper

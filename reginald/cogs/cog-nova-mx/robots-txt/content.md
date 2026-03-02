@@ -85,12 +85,11 @@ requires:
   bins: []
   cogs: [llms-txt]
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec robots-txt"
-  convergence: true
-  accessibility: false
-  semantic: true
+contentType: "action-doc"
+runbook: "mx exec robots-txt"
+convergence: true
+accessibility: false
+semantic: true
 ---
 
 # robots-txt

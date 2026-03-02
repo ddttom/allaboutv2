@@ -18,7 +18,7 @@ tags:
   - folder-structure
   - operations
 
-builds-on:
+buildsOn:
   - what-is-a-cog
   - what-is-mx-os
 
@@ -138,12 +138,11 @@ execute:
           type: string
           description: Combined one-screen overview of all contacts and actions
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec mx-contacts"
-  semantic: true
-  convergence: true
-  accessibility: true
+contentType: "action-doc"
+runbook: "mx exec mx-contacts"
+semantic: true
+convergence: true
+accessibility: true
 ---
 
 # MX Contacts Management

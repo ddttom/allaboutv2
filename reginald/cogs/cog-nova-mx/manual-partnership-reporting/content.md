@@ -13,24 +13,13 @@ audience: [tech, business]
 
 partOf: mx-maxine-lives
 
-builds-on:
+buildsOn:
   - mx-messaging
 
-mx:
-  runtime: null
-  purpose: Team guidelines for writing partnership-tone reports
-  contentType: manual
-  runbook: |
-    This manual defines the partnership report tone framework for ALL Cog-Nova-MX reports (MX Analysis, GEO Analysis, audit reports, assessment reports).
-
-    Read this manual when:
-    - Writing any client report
-    - Rewriting existing reports
-    - Updating report generation templates
-    - Training team members on report tone
-
-    The partnership tone framework transforms critical/technical reports into collaborative, educational documents that open doors rather than close them.
-
+runtime: null
+purpose: Team guidelines for writing partnership-tone reports
+contentType: manual
+runbook: |
 definition:
   standards:
     - name: "MX Writing Principles"

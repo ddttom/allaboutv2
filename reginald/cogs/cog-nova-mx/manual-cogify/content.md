@@ -21,16 +21,14 @@ refersTo:
   - cogify-this
   - enhanced-audit
   - pixel-perfect-web-replication
-mx:
-  purpose: Document cogify - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when working with cogify or understanding its functionality
-  ai:
-    contextProvides:
-      - Complete guide to converting existing content into MX-enhanced format with metadata, accessibility, and WebMCP integration.
-      - Usage guide and workflow for cogify
-      - Troubleshooting and best practices
+purpose: Document cogify - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when working with cogify or understanding its functionality
+contextProvides:
+  - Complete guide to converting existing content into MX-enhanced format with metadata, accessibility, and WebMCP integration.
+  - Usage guide and workflow for cogify
+  - Troubleshooting and best practices
 ---
 
 # Cogify Workflow Manual
@@ -223,7 +221,7 @@ mx:
 **Advanced fields:**
 
 ```yaml
-builds-on: [what-is-a-cog]             # Dependencies
+buildsOn: [what-is-a-cog]             # Dependencies
 partOf: mx-reference-implementations   # Parent collection
 refersTo: [bilingual-business-template] # Related cogs
 certification:                         # COG certification

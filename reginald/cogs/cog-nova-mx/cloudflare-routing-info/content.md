@@ -23,37 +23,34 @@ refersTo:
     - "Domain Portfolio Registry Cog"
     - "MX Branding & Naming Framework Cog"
 
-mx:
-  updateInstructions:
-    summary: "Update this routing plan whenever canonical domains or redirect targets change."
-    frequency: "Before each major launch or DNS change"
-    method: |
-      1. Retrieve the latest canonical domains and redirect rules from:
-         - MX Brand–Domain Master Architecture Cog
-         - Domain Portfolio Registry Cog
-      2. Confirm which domains:
-         - serve primary content
-         - are redirect-only
-         - are legacy or to be retired
-      3. Update the Routing Tables below to reflect:
-         - new domains
-         - changed canonical targets
-         - retired domains
-      4. Ensure that:
-         - every owned domain appears in at least one routing table row
-         - there is exactly one canonical target per brand
-      5. Increment the version number (patch for rule changes, minor for structural changes).
-    toolsRequired:
-      - "Cloudflare dashboard or API"
-      - "Domain Portfolio Registry Cog"
-      - "MX Brand–Domain Master Architecture Cog"
-
-  styleRules:
-    - "British English"
-    - "Clear, declarative routing rules"
-    - "No AI-centric language"
-    - "Tables for mappings, prose for rationale"
-
+updateInstructions:
+  summary: "Update this routing plan whenever canonical domains or redirect targets change."
+  frequency: "Before each major launch or DNS change"
+  method: |
+    1. Retrieve the latest canonical domains and redirect rules from:
+       - MX Brand–Domain Master Architecture Cog
+       - Domain Portfolio Registry Cog
+    2. Confirm which domains:
+       - serve primary content
+       - are redirect-only
+       - are legacy or to be retired
+    3. Update the Routing Tables below to reflect:
+       - new domains
+       - changed canonical targets
+       - retired domains
+    4. Ensure that:
+       - every owned domain appears in at least one routing table row
+       - there is exactly one canonical target per brand
+    5. Increment the version number (patch for rule changes, minor for structural changes).
+  toolsRequired:
+    - "Cloudflare dashboard or API"
+    - "Domain Portfolio Registry Cog"
+    - "MX Brand–Domain Master Architecture Cog"
+styleRules:
+  - "British English"
+  - "Clear, declarative routing rules"
+  - "No AI-centric language"
+  - "Tables for mappings, prose for rationale"
 ---
 
 ## 1. Routing principles

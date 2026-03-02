@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, cog-registry]
-builds-on: [what-is-a-cog, what-is-mx-os, access-and-guardrails, the-companion-web]
+buildsOn: [what-is-a-cog, what-is-mx-os, access-and-guardrails, the-companion-web]
 tags: [personal-cog, accessibility, interests, privacy, agent-guardrail, personalisation, commerce, identity, collection]
 
 audience: developers
-reading-level: technical
+readingLevel: technical
 purpose: Document the personal cog — a collection of user-owned cogs that describe the person to the world, enabling accessibility, personalisation, and seamless commerce when combined with the companion web
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec the-personal-cog"
-
+contentType: "action-doc"
+runbook: "mx exec the-personal-cog"
 execute:
   runtime: runbook
   command: mx cog personal

@@ -11,16 +11,14 @@ status: published
 category: mx-tools
 partOf: mx-os
 refersTo: [conventions]
-builds-on: [ubercog]
+buildsOn: [ubercog]
 tags: [changelog, trim, archive, maintenance, automation]
 audience: both
-reading-level: practical
+readingLevel: practical
 purpose: "Keep CHANGELOG.md lean by archiving entries older than the current week."
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec changelog-trimmer"
-
+contentType: "action-doc"
+runbook: "mx exec changelog-trimmer"
 execute:
   runtime: runbook
   command: npm run changelog:trim

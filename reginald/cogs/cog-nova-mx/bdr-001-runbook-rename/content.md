@@ -17,8 +17,7 @@ bdr:
   context: "The promptingInstruction field in YAML frontmatter uses AI jargon. Humans are nervous of AI terminology. Business audiences read 'prompting instruction' and think 'this is an AI thing, not for me.'"
   decision: "Rename the field to runbook. Rewrite all values to read like operations runbooks, not AI prompts."
   consequences: "204 files renamed across the hub. 13 files had jargon values rewritten. All future cogs use runbook. The cog spec must be updated to reflect the new field name."
-mx:
-  runbook: "This is a business decision record. It documents the rationale for renaming promptingInstruction to runbook across the entire MX ecosystem."
+runbook: "This is a business decision record. It documents the rationale for renaming promptingInstruction to runbook across the entire MX ecosystem."
 ---
 
 # BDR 001: Rename promptingInstruction to runbook

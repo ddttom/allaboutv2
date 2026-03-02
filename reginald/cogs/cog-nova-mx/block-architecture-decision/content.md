@@ -20,7 +20,7 @@ adr:
   decision: "Replace two cog types with one document type containing open-ended blocks."
   consequences: "Replaces cog-unified-spec v1.0. Affects books, pitches, and The Gathering's standard."
 
-builds-on: [what-is-a-cog, what-is-mx-os]
+buildsOn: [what-is-a-cog, what-is-mx-os]
 
 blocks:
   - prose:
@@ -47,9 +47,8 @@ blocks:
       participants: ["Tom Cranstoun", "Maxine"]
       source: "../deliverables/block-architecture-interview.md"
 
-mx:
-  contentType: "adr"
-  runbook: "This is ADR #1 for the Maxine Lives initiative. It records the decision to move from two cog types to one document type with blocks. Read this for architectural context. For the full interview transcript, see the deliverables folder."
+contentType: "adr"
+runbook: "This is ADR #1 for the Maxine Lives initiative. It records the decision to move from two cog types to one document type with blocks. Read this for architectural context. For the full interview transcript, see the deliverables folder."
 ---
 
 # ADR 1: Block Architecture — One Doc with Blocks

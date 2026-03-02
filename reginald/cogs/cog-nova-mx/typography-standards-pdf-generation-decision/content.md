@@ -19,7 +19,7 @@ adr:
   decision: "Establish universal typography standards using LaTeX penalty settings and intelligent spacing. Apply widow/orphan prevention (\\widowpenalty=10000, \\clubpenalty=10000) and flexible page bottoms (\\raggedbottom) to all book metadata.yaml files. Use needspace package for tables and code blocks requiring context preservation."
   consequences: "Consistent professional typography across all MX publications. Eliminates single-line orphans and preserves context for tables/code. Universal standards reduce decision-making overhead and establish clear patterns. Requires needspace LaTeX package installation (via tlmgr). May create uneven page bottoms (acceptable trade-off for readability)."
 
-builds-on: [pdf-generator, png-workflow-pdf-generation-decision]
+buildsOn: [pdf-generator, png-workflow-pdf-generation-decision]
 ---
 
 # Typography Standards for PDF Generation

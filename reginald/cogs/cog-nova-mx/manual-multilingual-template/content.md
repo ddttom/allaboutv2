@@ -9,17 +9,15 @@ status: active
 category: manual
 tags: [manual, multilingual, template, generation, hreflang, internationalization]
 partOf: mx-maxine-lives
-mx:
-  purpose: "Document the multilingual template generator - converting single HTML to multiple language versions"
-  audience: "human"
-  stability: "stable"
-  runbook: "Read when creating multilingual sites from templates or understanding language version generation"
-  ai:
-    contextProvides:
-      - "Template to multiple language versions workflow"
-      - "Lang attribute and hreflang tag generation process"
-      - "Root redirect with browser language detection"
-      - "Path-based routing implementation for multilingual sites"
+purpose: "Document the multilingual template generator - converting single HTML to multiple language versions"
+audience: "human"
+stability: "stable"
+runbook: "Read when creating multilingual sites from templates or understanding language version generation"
+contextProvides:
+  - "Template to multiple language versions workflow"
+  - "Lang attribute and hreflang tag generation process"
+  - "Root redirect with browser language detection"
+  - "Path-based routing implementation for multilingual sites"
 refersTo:
   - "mx-canon/mx-the-gathering/reference-implementations/_tools/generate-multilingual.js"
   - "mx-canon/mx-the-gathering/reference-implementations/_tools/README.cog.md"

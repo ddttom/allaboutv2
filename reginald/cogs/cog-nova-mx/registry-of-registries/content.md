@@ -14,11 +14,11 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, building-action-docs]
+buildsOn: [what-is-a-cog, building-action-docs]
 tags: [registry, meta-registry, catalog, index, inventory, governance, audit, self-maintaining]
 
 audience: ai-agents
-reading-level: technical
+readingLevel: technical
 purpose: Provide a single lookup point for every registry in MX OS — know what registries exist, where they live, what they index, and how to query them. Self-maintaining through a scan action that discovers new registries.
 
 execute:

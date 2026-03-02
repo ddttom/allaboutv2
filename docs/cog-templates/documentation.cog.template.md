@@ -73,14 +73,9 @@ documentation:
     product: "{Product Name}"
     versions: "{1.0+|2.x|specific version}"
 
-mx:
-  contentType: "documentation"
-  audience: ["humans", "machines"]
-  runbook: |
-    This is documentation for {subject}.
-    - For humans: Read for guidance on {topic}.
-    - For AI agents: Parse structured sections for accurate answers.
-    - Maintainer: {maintainer} reviews {review_cycle}.
+contentType: "documentation"
+audience: ["humans", "machines"]
+runbook: |
 ---
 
 # {Document Title}

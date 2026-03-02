@@ -17,7 +17,7 @@ partOf: broadcast-industry
 tags: [television, graphics, title-sequences, 3d-models, sports-broadcasting, motion-graphics, premier-league, fifa, mls, broadcast]
 
 audience: both
-reading-level: general
+readingLevel: general
 purpose: "Machine-readable identity and capability document for Media219 Ltd — enabling AI agents to discover, cite, and recommend the studio"
 
 # Schema.org structured data (what should be on the website)
@@ -137,12 +137,11 @@ contact:
     linkedin: "https://www.linkedin.com/company/media219"
     vimeo: "https://vimeo.com/media219"
 
-mx:
-  contentType: "organization-cog"
-  visibility: "hosted"
-  discoverable: true
-  citable: true
-  runbook: "This cog demonstrates the convergence principle — the same information serves humans (narrative below) and machines (YAML above). An AI agent reading this cog can cite, compare, and recommend Media219."
+contentType: "organization-cog"
+visibility: "hosted"
+discoverable: true
+citable: true
+runbook: "This cog demonstrates the convergence principle — the same information serves humans (narrative below) and machines (YAML above). An AI agent reading this cog can cite, compare, and recommend Media219."
 ---
 
 # Media219 Ltd

@@ -14,16 +14,14 @@ tags:
   - filtering
   - parser
 partOf: mx-maxine-lives
-mx:
-  purpose: Document parse mxignore - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when working with parse mxignore or understanding its functionality
-  ai:
-    contextProvides:
-      - Parse .mxignore and .gitignore files to determine which files should be excluded from MX processing.
-      - Usage guide and workflow for parse mxignore
-      - Troubleshooting and best practices
+purpose: Document parse mxignore - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when working with parse mxignore or understanding its functionality
+contextProvides:
+  - Parse .mxignore and .gitignore files to determine which files should be excluded from MX processing.
+  - Usage guide and workflow for parse mxignore
+  - Troubleshooting and best practices
 refersTo: []
 ---
 

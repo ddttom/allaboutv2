@@ -14,11 +14,11 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
+buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
 tags: [environment, mx-home, machine-context, boot, bare-metal, two-stage-boot, mx-os]
 
 audience: both
-reading-level: accessible
+readingLevel: accessible
 purpose: Explain why MX OS needs machine-level context, how $MX_HOME works, and how two-stage boot gives AI agents the universe before the repo
 ---
 

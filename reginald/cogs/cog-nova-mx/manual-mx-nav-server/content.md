@@ -15,16 +15,14 @@ tags:
   - repositories
   - explorer
 partOf: mx-maxine-lives
-mx:
-  purpose: Document mx nav server - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when working with mx nav server or understanding its functionality
-  ai:
-    contextProvides:
-      - Web-based multi-repo navigation dashboard with VS Code Explorer-style UI, search, and recent files.
-      - Usage guide and workflow for mx nav server
-      - Troubleshooting and best practices
+purpose: Document mx nav server - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when working with mx nav server or understanding its functionality
+contextProvides:
+  - Web-based multi-repo navigation dashboard with VS Code Explorer-style UI, search, and recent files.
+  - Usage guide and workflow for mx nav server
+  - Troubleshooting and best practices
 refersTo: []
 ---
 

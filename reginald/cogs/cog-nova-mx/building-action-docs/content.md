@@ -14,11 +14,11 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-contacts, mx-principles]
-builds-on: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
+buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
 tags: [development, lifecycle, operational, entry-points, scaffold, tutorial, worked-example, mx-contacts]
 
 audience: developers
-reading-level: technical
+readingLevel: technical
 purpose: Document the complete lifecycle of building an operational action-doc — from a human describing what they need, through AI creating the action-doc, to wiring up entry points so anyone can invoke it from anywhere
 
 execute:
@@ -76,12 +76,11 @@ execute:
           type: string
           description: Summary of entry point and boot registration created
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec building-action-docs"
-  semantic: true
-  convergence: true
-  accessibility: true
+contentType: "action-doc"
+runbook: "mx exec building-action-docs"
+semantic: true
+convergence: true
+accessibility: true
 ---
 
 # Building Action-Cogs

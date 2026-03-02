@@ -14,11 +14,11 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, what-is-mx-os]
+buildsOn: [what-is-a-cog, what-is-mx-os]
 tags: [concepts, primer, onboarding, glossary, mental-model, newcomer, map]
 
 audience: both
-reading-level: accessible
+readingLevel: accessible
 purpose: Give any reader — human or AI — a complete conceptual map of MX in one document, organised by layers from simple to complex
 ---
 

@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, what-is-mx-os]
+buildsOn: [what-is-a-cog, what-is-mx-os]
 tags: [phrasebook, sayings, culture, voice, identity, mx-os, hitchhikers-guide, writing]
 
 audience: both
-reading-level: accessible
+readingLevel: accessible
 purpose: Single source of truth for MX sayings — use the right phrase in the right context
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec mx-phrasebook"
-
+contentType: "action-doc"
+runbook: "mx exec mx-phrasebook"
 execute:
   runtime: runbook
   command: mx phrasebook

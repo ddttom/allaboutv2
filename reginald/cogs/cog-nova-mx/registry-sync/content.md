@@ -14,7 +14,7 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [what-is-a-cog, what-is-mx-os]
-builds-on: [what-is-a-cog]
+buildsOn: [what-is-a-cog]
 tags: [registry, automation, hooks, git, cog-management, reginald, sync]
 
 audience: both
@@ -431,11 +431,8 @@ execute:
           type: array
           description: "List of validation errors if any"
 
-mx:
-  contentType: action-doc
-  runbook: "mx exec registry-sync"
-
-
+contentType: action-doc
+runbook: "mx exec registry-sync"
 ---
 
 # Registry Sync

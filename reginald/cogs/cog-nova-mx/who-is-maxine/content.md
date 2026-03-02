@@ -18,7 +18,7 @@ buildsOn: [what-is-a-cog]
 tags: [maxine, partnership, identity, soul, sop-agent, memory, mx-os]
 
 audience: ai-agents
-reading-level: technical
+readingLevel: technical
 purpose: Enable any AI agent to understand the Maxine identity and the MX partnership model
 ---
 

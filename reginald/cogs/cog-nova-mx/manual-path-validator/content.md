@@ -15,16 +15,14 @@ tags:
   - automation
   - quality
 partOf: mx-maxine-lives
-mx:
-  purpose: Document path validator - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when working with path validator or understanding its functionality
-  ai:
-    contextProvides:
-      - Repository path reference scanner detecting old patterns after restructures. Prevents regression to outdated paths with non-blocking warnings.
-      - Usage guide and workflow for path validator
-      - Troubleshooting and best practices
+purpose: Document path validator - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when working with path validator or understanding its functionality
+contextProvides:
+  - Repository path reference scanner detecting old patterns after restructures. Prevents regression to outdated paths with non-blocking warnings.
+  - Usage guide and workflow for path validator
+  - Troubleshooting and best practices
 refersTo: []
 ---
 

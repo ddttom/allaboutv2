@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, cog-registry]
-builds-on: [what-is-a-cog, what-is-mx-os, how-mx-os-runs, the-personal-cog]
+buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs, the-personal-cog]
 tags: [delegation, agents, inter-agent, handoff, diary, email, capabilities, reach-out]
 
 audience: developers
-reading-level: technical
+readingLevel: technical
 purpose: Document the pattern of agent-to-agent delegation — how an AI agent that needs a capability it does not have asks another agent or service that does
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec asking-for-help"
-
+contentType: "action-doc"
+runbook: "mx exec asking-for-help"
 execute:
   runtime: runbook
   command: mx cog ask

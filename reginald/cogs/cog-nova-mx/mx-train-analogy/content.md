@@ -14,11 +14,11 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-phrasebook, mx-principles]
-builds-on: [what-is-mx-os, mx-phrasebook]
+buildsOn: [what-is-mx-os, mx-phrasebook]
 tags: [analogy, pitch, railway, train, metaphor, cog-railway, accessible, non-technical, investor]
 
 audience: both
-reading-level: accessible
+readingLevel: accessible
 purpose: Canonical reference for the railway analogy — use when pitching MX to non-technical audiences
 ---
 

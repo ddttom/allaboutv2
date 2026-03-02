@@ -17,7 +17,7 @@ refersTo: [pdf-generator, mx-handbook, visual-style]
 
 tags: [illustration, svg, visual-design, style-guide, metadata, code-blocks, syntax-highlighting]
 
-builds-on: [pdf-generator]
+buildsOn: [pdf-generator]
 
 runtime:
   type: interactive

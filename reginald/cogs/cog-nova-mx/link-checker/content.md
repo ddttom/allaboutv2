@@ -86,12 +86,11 @@ requires:
   bins: []
   cogs: []
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec link-checker"
-  convergence: true
-  accessibility: true
-  semantic: true
+contentType: "action-doc"
+runbook: "mx exec link-checker"
+convergence: true
+accessibility: true
+semantic: true
 ---
 
 # link-checker

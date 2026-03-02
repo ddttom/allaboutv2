@@ -19,7 +19,7 @@ adr:
   decision: "Convert all SVG illustrations to PNG at 2700px width before PDF generation. Use qlmanage (macOS WebKit rendering) for accurate CSS rendering. Treat PNG workflow as deliberate architecture, not limitation."
   consequences: "Clean separation between design (rich .cog.svg with metahub-content/CSS) and build (flattened PNG bitmap). Guaranteed consistent rendering across all PDF outputs. Eliminates LaTeX/SVG interaction edge cases. Print quality maintained at 2700px resolution. Future-proofs against xelatex parsing changes."
 
-builds-on: [pdf-generator, illustration-generator, block-architecture-decision]
+buildsOn: [pdf-generator, illustration-generator, block-architecture-decision]
 ---
 
 # PNG Conversion Workflow for PDF Generation

@@ -16,7 +16,7 @@ partOf: mx-os
 tags: [marp, presentation, pptx, slides, regenerate]
 
 audience: both
-reading-level: technical
+readingLevel: technical
 purpose: "Convert Marp markdown to PPTX using marp-cli"
 
 execute:
@@ -59,10 +59,8 @@ execute:
           type: file
           description: "Generated PPTX presentation"
 
-mx:
-  contentType: action-doc
-  runbook: "mx exec marp-regen"
-
+contentType: action-doc
+runbook: "mx exec marp-regen"
 ---
 
 ```bash @embedded:marp-regen-script

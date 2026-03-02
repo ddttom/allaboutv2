@@ -11,10 +11,9 @@ type: info-doc
 tags: [messaging, audiences, terminology, positioning, fear, control, strategy, investor, sponsor, certification, reginald, maxine]
 audience: ["gestalt"]
 purpose: "messaging-framework"
-builds-on: [mx-phrasebook, mx-concepts]
-mx:
-  contentType: "strategy"
-  runbook: "This is the complete messaging framework for Cog-Nova-MX. All seven original open questions are answered. Read it fully before contributing. Update sections when new decisions are made."
+buildsOn: [mx-phrasebook, mx-concepts]
+contentType: "strategy"
+runbook: "This is the complete messaging framework for Cog-Nova-MX. All seven original open questions are answered. Read it fully before contributing. Update sections when new decisions are made."
 ---
 
 # MX Messaging Framework

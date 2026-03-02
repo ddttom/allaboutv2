@@ -85,12 +85,11 @@ requires:
   bins: []
   cogs: [clarity]
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec readability"
-  convergence: true
-  accessibility: true
-  semantic: true
+contentType: "action-doc"
+runbook: "mx exec readability"
+convergence: true
+accessibility: true
+semantic: true
 ---
 
 # readability

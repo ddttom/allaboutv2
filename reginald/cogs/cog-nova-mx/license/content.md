@@ -32,9 +32,8 @@ blocks:
       year: 2026
       scope: "Block architecture specification and all Gathering standards"
 
-mx:
-  contentType: "license"
-  runbook: "This is the MIT license for The Gathering's block architecture specification. The specification is MIT. Cog-Nova-MX' commercial products (Maxine, Reginald) have separate licensing. Do not confuse the two."
+contentType: "license"
+runbook: "This is the MIT license for The Gathering's block architecture specification. The specification is MIT. Cog-Nova-MX' commercial products (Maxine, Reginald) have separate licensing. Do not confuse the two."
 ---
 
 # License

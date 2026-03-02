@@ -15,16 +15,14 @@ tags:
   - automation
   - submodules
 partOf: mx-maxine-lives
-mx:
-  purpose: Document team onboarding - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when working with team onboarding or understanding its functionality
-  ai:
-    contextProvides:
-      - Interactive onboarding wizard for non-technical team members joining MX-ingest. Automated setup, access testing, and guided workflow introduction.
-      - Usage guide and workflow for team onboarding
-      - Troubleshooting and best practices
+purpose: Document team onboarding - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when working with team onboarding or understanding its functionality
+contextProvides:
+  - Interactive onboarding wizard for non-technical team members joining MX-ingest. Automated setup, access testing, and guided workflow introduction.
+  - Usage guide and workflow for team onboarding
+  - Troubleshooting and best practices
 refersTo: []
 ---
 

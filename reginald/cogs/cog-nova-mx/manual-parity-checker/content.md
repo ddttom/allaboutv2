@@ -9,17 +9,15 @@ status: active
 category: manual
 tags: [manual, multilingual, parity, quality-assurance, translation, content]
 partOf: mx-maxine-lives
-mx:
-  purpose: "Document the content parity checker - detecting translation gaps and content inconsistencies"
-  audience: "human"
-  stability: "stable"
-  runbook: "Read when checking translation completeness, identifying content gaps, or ensuring multilingual parity"
-  ai:
-    contextProvides:
-      - "Content parity checking methodology (text length, structural elements, modification times)"
-      - "Translation gap detection and threshold tuning"
-      - "Interpreting parity results and fixing inconsistencies"
-      - "Workflow integration for quality assurance"
+purpose: "Document the content parity checker - detecting translation gaps and content inconsistencies"
+audience: "human"
+stability: "stable"
+runbook: "Read when checking translation completeness, identifying content gaps, or ensuring multilingual parity"
+contextProvides:
+  - "Content parity checking methodology (text length, structural elements, modification times)"
+  - "Translation gap detection and threshold tuning"
+  - "Interpreting parity results and fixing inconsistencies"
+  - "Workflow integration for quality assurance"
 refersTo:
   - "mx-canon/mx-the-gathering/reference-implementations/_tools/check-parity.js"
   - "mx-canon/mx-the-gathering/reference-implementations/_tools/README.cog.md"

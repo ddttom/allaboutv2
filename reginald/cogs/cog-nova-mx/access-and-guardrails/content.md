@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec]
-builds-on: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
+buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
 tags: [access-control, security, encryption, oauth, guardrail, permissions, trust, authentication]
 
 audience: developers
-reading-level: technical
+readingLevel: technical
 purpose: Document the access control layer of MX OS — how cogs are protected, how agents gain access, and the guardrail pattern
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec access-and-guardrails"
-
+contentType: "action-doc"
+runbook: "mx exec access-and-guardrails"
 execute:
   runtime: runbook
   command: mx cog access

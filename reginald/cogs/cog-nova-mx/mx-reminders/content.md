@@ -13,17 +13,15 @@ status: published
 
 category: mx-core
 partOf: mx-os
-builds-on: [what-is-a-cog, what-is-mx-os]
+buildsOn: [what-is-a-cog, what-is-mx-os]
 tags: [reminders, tasks, persistence, session, productivity, mx-os]
 
 audience: both
-reading-level: non-technical
+readingLevel: non-technical
 purpose: Keep action items visible across sessions so nothing falls through the cracks
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec mx-reminders"
-
+contentType: "action-doc"
+runbook: "mx exec mx-reminders"
 execute:
   runtime: runbook
   command: mx reminders

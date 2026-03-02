@@ -19,7 +19,7 @@ adr:
   decision: "Implement tool cascade for SVG-to-PNG conversion: rsvg-convert (primary) → ImageMagick (fallback) → qlmanage (last resort). Always preserve source aspect ratio. Document qlmanage square thumbnail limitation."
   consequences: "All book diagrams maintain 3:2 aspect ratio (2700×1800 PNG from 900×600 SVG). Images scale properly in LaTeX without clipping. Professional PDF layout with readable diagrams. Universal workflow across all MX publications."
 
-builds-on: [pdf-generator, png-workflow-pdf-generation-decision, illustration-generator]
+buildsOn: [pdf-generator, png-workflow-pdf-generation-decision, illustration-generator]
 ---
 
 # SVG-to-PNG Aspect Ratio Preservation with Tool Cascade

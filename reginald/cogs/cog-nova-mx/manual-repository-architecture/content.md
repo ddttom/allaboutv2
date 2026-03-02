@@ -22,20 +22,18 @@ partOf: mx-maxine-lives
 refersTo:
   - manual-maxine-lives
   - ROUTING
-mx:
-  purpose: Provide complete system reference for understanding MX repository architecture, structure, and concepts
-  audience: human
-  stability: stable
-  runbook: "mx exec manual-repository-architecture"
-  ai:
-    contextProvides:
-      - Complete MX repository structure and organization
-      - Canon folder structure and purpose
-      - Product definitions (Maxine, Reginald, MX OS)
-      - Brain folder (MX-Maxine-Lives) organization
-      - Boot chain and $MX_HOME concepts
-      - YAML metadata patterns and conventions
-      - Complete system mental model
+purpose: Provide complete system reference for understanding MX repository architecture, structure, and concepts
+audience: human
+stability: stable
+runbook: "mx exec manual-repository-architecture"
+contextProvides:
+  - Complete MX repository structure and organization
+  - Canon folder structure and purpose
+  - Product definitions (Maxine, Reginald, MX OS)
+  - Brain folder (MX-Maxine-Lives) organization
+  - Boot chain and $MX_HOME concepts
+  - YAML metadata patterns and conventions
+  - Complete system mental model
 ---
 
 # MX Repository Architecture — Complete System Reference

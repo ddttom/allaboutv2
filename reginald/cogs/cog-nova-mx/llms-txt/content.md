@@ -50,12 +50,11 @@ requires:
   bins: []
   cogs: []
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec llms-txt"
-  convergence: true
-  accessibility: true
-  semantic: true
+contentType: "action-doc"
+runbook: "mx exec llms-txt"
+convergence: true
+accessibility: true
+semantic: true
 ---
 
 # llms-txt

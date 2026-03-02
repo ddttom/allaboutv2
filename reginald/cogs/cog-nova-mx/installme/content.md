@@ -15,17 +15,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, what-is-mx-os, what-is-mx-environment, mx-boot]
+buildsOn: [what-is-a-cog, what-is-mx-os, what-is-mx-environment, mx-boot]
 tags: [install, setup, onboarding, sop-agent, diagnostics, prerequisites, mx-os, action-cog]
 
 audience: ai-agents
-reading-level: technical
+readingLevel: technical
 purpose: "Self-contained installation cog. Machines read YAML + execute embedded script. Humans read markdown."
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec installme"
-
+contentType: "action-doc"
+runbook: "mx exec installme"
 # Block architecture - describes what this cog contains
 blocks:
   - definition:

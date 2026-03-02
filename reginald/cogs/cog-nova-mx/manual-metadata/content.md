@@ -23,7 +23,7 @@ partOf: mx-maxine-lives
 audience:
   - operators
   - tech
-builds-on:
+buildsOn:
   - what-is-a-cog
   - mx-metadata-conventions
   - field-dictionary
@@ -42,16 +42,14 @@ execute:
         - name: report
           type: object
           description: "Validation results: file type detected, metadata found, issues, suggestions"
-mx:
-  purpose: Document metadata - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: "mx exec manual-metadata"
-  ai:
-    contextProvides:
-      - Step-by-step guide for adding MX metadata to markdown, JavaScript, CSS, and HTML files. The human playbook for the embrace-and-extend model.
-      - Usage guide and workflow for metadata
-      - Troubleshooting and best practices
+purpose: Document metadata - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: "mx exec manual-metadata"
+contextProvides:
+  - Step-by-step guide for adding MX metadata to markdown, JavaScript, CSS, and HTML files. The human playbook for the embrace-and-extend model.
+  - Usage guide and workflow for metadata
+  - Troubleshooting and best practices
 refersTo: []
 ---
 

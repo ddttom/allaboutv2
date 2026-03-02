@@ -9,17 +9,15 @@ status: active
 category: manual
 tags: [manual, multilingual, assets, sync, automation, workflow]
 partOf: mx-maxine-lives
-mx:
-  purpose: "Document the asset synchronizer tool - copying CSS/JS/images/fonts across language directories"
-  audience: "human"
-  stability: "stable"
-  runbook: "Read when synchronizing assets across multilingual site languages or managing static files"
-  ai:
-    contextProvides:
-      - "Asset synchronization workflow (language-to-language and external source modes)"
-      - "Supported asset types and file filtering"
-      - "Dry run safety features and workflow integration"
-      - "Best practices for multilingual asset management"
+purpose: "Document the asset synchronizer tool - copying CSS/JS/images/fonts across language directories"
+audience: "human"
+stability: "stable"
+runbook: "Read when synchronizing assets across multilingual site languages or managing static files"
+contextProvides:
+  - "Asset synchronization workflow (language-to-language and external source modes)"
+  - "Supported asset types and file filtering"
+  - "Dry run safety features and workflow integration"
+  - "Best practices for multilingual asset management"
 refersTo:
   - "mx-canon/mx-the-gathering/reference-implementations/_tools/sync-assets.js"
   - "mx-canon/mx-the-gathering/reference-implementations/_tools/README.cog.md"

@@ -14,9 +14,8 @@ description: "The canonical YAML frontmatter template for Appendix K page patter
 tags: [template, appendix-k, mx-pattern, yaml, frontmatter, page-pattern]
 audience: [machines, humans]
 
-mx:
-  contentType: template
-  runbook: "Copy the YAML template below into a new .cog.md file. Fill in every field. Validate against datalake/knowledge/reference/schemas/mx-page-pattern.json."
+contentType: template
+runbook: "Copy the YAML template below into a new .cog.md file. Fill in every field. Validate against datalake/knowledge/reference/schemas/mx-page-pattern.json."
 ---
 
 # Appendix K — MX Page Pattern YAML Template

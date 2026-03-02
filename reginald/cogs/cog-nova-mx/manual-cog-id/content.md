@@ -20,16 +20,14 @@ partOf: mx-maxine-lives
 audience:
   - operators
   - tech
-mx:
-  purpose: Document cog id - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when working with cog id or understanding its functionality
-  ai:
-    contextProvides:
-      - Step-by-step guide for generating, registering, decoding, and stamping cog IDs. The obfuscated identity layer for MX OS.
-      - Usage guide and workflow for cog id
-      - Troubleshooting and best practices
+purpose: Document cog id - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when working with cog id or understanding its functionality
+contextProvides:
+  - Step-by-step guide for generating, registering, decoding, and stamping cog IDs. The obfuscated identity layer for MX OS.
+  - Usage guide and workflow for cog id
+  - Troubleshooting and best practices
 refersTo: []
 ---
 

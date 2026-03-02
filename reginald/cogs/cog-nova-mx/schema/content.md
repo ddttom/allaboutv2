@@ -63,12 +63,11 @@ requires:
   bins: []
   cogs: []
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec schema"
-  convergence: true
-  accessibility: true
-  semantic: true
+contentType: "action-doc"
+runbook: "mx exec schema"
+convergence: true
+accessibility: true
+semantic: true
 ---
 
 # schema

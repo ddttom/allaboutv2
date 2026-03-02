@@ -76,12 +76,11 @@ requires:
   bins: []
   cogs: [llms-txt, robots-txt]
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec sitemap"
-  convergence: true
-  accessibility: false
-  semantic: true
+contentType: "action-doc"
+runbook: "mx exec sitemap"
+convergence: true
+accessibility: false
+semantic: true
 ---
 
 # sitemap

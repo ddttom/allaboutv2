@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-maxine-lives
 refersTo: [cog-unified-spec]
-builds-on: [what-is-a-cog, what-is-mx-os, mx-reminders]
+buildsOn: [what-is-a-cog, what-is-mx-os, mx-reminders]
 tags: [reporting, governance, co-directors, session, board, stakeholders, archive, sop]
 
 audience: stakeholders
-reading-level: non-technical
+readingLevel: non-technical
 purpose: Produce board-level session reports that make development progress visible to directors, advisory board, and investors without requiring them to read git logs
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec co-directors-report"
-
+contentType: "action-doc"
+runbook: "mx exec co-directors-report"
 execute:
   runtime: runbook
   command: mx co-directors report

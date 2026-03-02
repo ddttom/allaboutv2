@@ -32,9 +32,8 @@ risk:
 tags: [risk, founder, bus-factor, critical, mitigation]
 audience: [gestalt, investors, board]
 
-mx:
-  contentType: "risk"
-  runbook: "This is the most critical risk to Cog-Nova-MX. Tom Cranstoun is the sole founder, sole visionary, and sole technical authority. Read the full prose for mitigation strategies. This risk is honest and must be presented honestly to investors."
+contentType: "risk"
+runbook: "This is the most critical risk to Cog-Nova-MX. Tom Cranstoun is the sole founder, sole visionary, and sole technical authority. Read the full prose for mitigation strategies. This risk is honest and must be presented honestly to investors."
 ---
 
 # Risk 1: Solo Founder — Single Point of Failure

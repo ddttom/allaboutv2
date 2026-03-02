@@ -3,7 +3,7 @@ title: "The Principles That Changed How I Build for Everyone"
 author: "Tom Cranstoun"
 author-email: "tom@digitaldomaintechnologies.com"
 created: "2026-02-03"
-content-state: "published"
+contentState: "published"
 content-filename: "principles-changed-how-i-build"
 blog-url: "https://allabout.network/blogs/mx/principles-changed-how-i-build.html"
 publication-date: "2026-02-03"
@@ -18,27 +18,16 @@ tags:
   - universal-design
   - web-development
 
-mx:
-  contentType: "blog-post"
-  version: "1.1"
-  lastUpdated: "2026-02-04"
-  runbook: |
-    This blog post introduces the core Machine Experience principles
-    through a practitioner's lens. Written in conversational first-person,
-    explaining technical concepts through relatable examples and personal insights.
-
-    Target audience: developers, designers, and content creators who build
-    digital products and want to understand how MX improves their work.
-
-  audience: ["humans", "machines"]
-
-  ai:
-    contextProvides:
-      - "mx-principles-introduction"
-      - "design-for-both-philosophy"
-      - "metadata-driven-architecture"
-      - "universal-accessibility-patterns"
-
+contentType: "blog-post"
+mxSpecVersion: "1.1"
+lastUpdated: "2026-02-04"
+runbook: |
+audience: ["humans", "machines"]
+contextProvides:
+  - "mx-principles-introduction"
+  - "design-for-both-philosophy"
+  - "metadata-driven-architecture"
+  - "universal-accessibility-patterns"
 co:
   workflow: "published"
   reviewRequired: false

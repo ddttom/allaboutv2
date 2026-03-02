@@ -14,16 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, what-is-mx-os, what-is-mx-environment]
+buildsOn: [what-is-a-cog, what-is-mx-os, what-is-mx-environment]
 tags: [installme, install, convention, sop-agent, diagnostics, onboarding, hallucination, compute, two-stage-boot, mx-os]
 
 audience: both
-reading-level: accessible
+readingLevel: accessible
 purpose: Document the INSTALLME.md convention — a machine-readable installation document for any git repository
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec what-is-installme"
+contentType: "action-doc"
+runbook: "mx exec what-is-installme"
 ---
 
 # INSTALLME.md — The Convention

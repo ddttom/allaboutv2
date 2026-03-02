@@ -13,16 +13,14 @@ tags:
   - hooks
   - routing
 partOf: mx-maxine-lives
-mx:
-  purpose: Document prompt enhancer - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when working with prompt enhancer or understanding its functionality
-  ai:
-    contextProvides:
-      - The route-decorator hook. Zero-inference prompt preprocessing with spell checking, route matching, and concept injection.
-      - Usage guide and workflow for prompt enhancer
-      - Troubleshooting and best practices
+purpose: Document prompt enhancer - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when working with prompt enhancer or understanding its functionality
+contextProvides:
+  - The route-decorator hook. Zero-inference prompt preprocessing with spell checking, route matching, and concept injection.
+  - Usage guide and workflow for prompt enhancer
+  - Troubleshooting and best practices
 refersTo: []
 ---
 

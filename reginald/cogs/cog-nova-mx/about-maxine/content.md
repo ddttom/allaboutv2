@@ -12,11 +12,10 @@ type: info-doc
 tags: [maxine, architecture, server, client, electron, pwa, dashboard, websocket, api, ipc, distributed]
 audience: [tech, business]
 purpose: "architectural-overview"
-builds-on: [maxine-vision, uber-maxine-plan]
+buildsOn: [maxine-vision, uber-maxine-plan]
 partOf: mx-maxine-lives
-mx:
-  contentType: "architectural-overview"
-  runbook: "This document explains how Maxine's server-client architecture works. Read this to understand the relationship between the embedded server, the three client surfaces, and the communication protocols that connect them."
+contentType: "architectural-overview"
+runbook: "This document explains how Maxine's server-client architecture works. Read this to understand the relationship between the embedded server, the three client surfaces, and the communication protocols that connect them."
 ---
 
 # About Maxine — The Server-Client Architecture

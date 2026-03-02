@@ -26,7 +26,7 @@ affects:
   - mx-messaging
   - vision-statement
 
-builds-on: [block-architecture-decision, what-is-a-cog]
+buildsOn: [block-architecture-decision, what-is-a-cog]
 ---
 
 # Block Naming — Avoiding Blockchain Confusion

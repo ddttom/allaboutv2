@@ -20,16 +20,14 @@ partOf: mx-maxine-lives
 refersTo:
   - cogify-this
   - pixel-perfect-web-replication
-mx:
-  purpose: Document enhanced audit - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when working with enhanced audit or understanding its functionality
-  ai:
-    contextProvides:
-      - Complete HTML/CSS/DOM capture system for pixel-perfect web replication with 24-hour asset caching and multi-format outputs.
-      - Usage guide and workflow for enhanced audit
-      - Troubleshooting and best practices
+purpose: Document enhanced audit - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when working with enhanced audit or understanding its functionality
+contextProvides:
+  - Complete HTML/CSS/DOM capture system for pixel-perfect web replication with 24-hour asset caching and multi-format outputs.
+  - Usage guide and workflow for enhanced audit
+  - Troubleshooting and best practices
 ---
 
 # Enhanced Audit System Manual

@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, env]
-builds-on: [what-is-a-cog, what-is-mx-os, env]
+buildsOn: [what-is-a-cog, what-is-mx-os, env]
 tags: [blog, content, publishing, eds, html, allabout, writing, action]
 
 audience: both
-reading-level: technical
+readingLevel: technical
 purpose: Give any AI agent the procedure to create professional blog posts for allabout.network — covering both the EDS markdown format (Tom's ddt blog) and the MX HTML format (direct HTML in blogs/mx/)
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec blog-generator"
-
+contentType: "action-doc"
+runbook: "mx exec blog-generator"
 execute:
   runtime: runbook
   command: mx blog

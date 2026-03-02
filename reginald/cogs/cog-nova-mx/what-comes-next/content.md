@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, cog-registry]
-builds-on: [what-is-a-cog, who-is-maxine, what-is-mx-os, cog-registry, cogs-for-agent-developers]
+buildsOn: [what-is-a-cog, who-is-maxine, what-is-mx-os, cog-registry, cogs-for-agent-developers]
 tags: [planning, priorities, roadmap, session-context, action-plan, the-gathering, launch]
 
 audience: ai-agents
-reading-level: technical
+readingLevel: technical
 purpose: Transfer full context to any AI agent so it can continue the work without re-explaining anything
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec what-comes-next"
-
+contentType: "action-doc"
+runbook: "mx exec what-comes-next"
 execute:
   runtime: runbook
   command: mx cog next

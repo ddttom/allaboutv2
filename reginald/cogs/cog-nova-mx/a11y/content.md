@@ -72,12 +72,11 @@ requires:
   bins: []
   cogs: [semantic-html]
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec a11y"
-  convergence: true
-  accessibility: true
-  semantic: true
+contentType: "action-doc"
+runbook: "mx exec a11y"
+convergence: true
+accessibility: true
+semantic: true
 ---
 
 # a11y

@@ -13,17 +13,15 @@ license: proprietary
 category: mx-core
 status: active
 partOf: mx-os
-builds-on: [what-is-a-cog]
+buildsOn: [what-is-a-cog]
 tags: [cog-id, identity, hash, md5, obfuscation, namespace, x-mx-p-ref, registry, privacy]
 
 audience: [machines, tech]
-reading-level: technical
+readingLevel: technical
 purpose: "Give any AI agent or developer a repeatable workflow for generating cog IDs, registering them in two-level registries (repo + personal), and decoding them. Includes Node.js reference implementation."
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec cog-id"
-
+contentType: "action-doc"
+runbook: "mx exec cog-id"
 execute:
   runtime: runbook
   command: mx cog-id

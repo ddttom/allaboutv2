@@ -14,11 +14,9 @@ description: "The single source of truth for every YAML frontmatter field in the
 tags: [fields, metadata, yaml, frontmatter, dictionary, vocabulary]
 audience: [machines, humans]
 
-mx:
-  contentType: field-dictionary
-  runbook: "This is the canonical field dictionary. When validating, generating, or querying frontmatter fields, parse the fields array below. Each entry has a name, type, definition, status, and profile. The overlap-resolution section declares which field wins when two seem similar. The namespace-policy section defines three levels: standard (no prefix), MX-public (x-mx-), and MX-private (x-mx-p-). The prefix IS the policy."
-
-namespace-policy:
+contentType: field-dictionary
+runbook: "This is the canonical field dictionary. When validating, generating, or querying frontmatter fields, parse the fields array below. Each entry has a name, type, definition, status, and profile. The overlap-resolution section declares which field wins when two seem similar. The namespace-policy section defines three levels: standard (no prefix), MX-public (x-mx-), and MX-private (x-mx-p-). The prefix IS the policy."
+namespacePolicy:
   description: "Three-level attribute namespace. Standard fields belong to The Gathering open standard. Extensions are namespaced to prevent pollution."
   adr: "mx-canon/mx-maxine-lives/thinking/decisions/2026-02-14-attribute-namespace-policy.cog.md"
   levels:
@@ -45,7 +43,7 @@ namespace-policy:
 
   convention: "x- follows HTTP extension header convention. mx- identifies Cog-Nova-MX. p- identifies private/obfuscated. The prefix is the policy — no additional visibility markers needed."
 
-  naming-convention:
+  namingConvention:
     rule: "All field names use camelCase. Aligns with Schema.org and Dublin Core vocabulary conventions."
     ndr: "mx-canon/mx-maxine-lives/registers/NDR/2026-02-16-camelcase-naming.cog.md"
     date: 2026-02-16

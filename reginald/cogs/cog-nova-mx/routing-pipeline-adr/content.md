@@ -28,13 +28,12 @@ affects:
   - mx-os
   - mx-maxine-lives
   - all-initiatives
-builds-on: [maxine-lives, maxine-lives-routing]
+buildsOn: [maxine-lives, maxine-lives-routing]
 tags: [adr, routing, hook, inference-reduction, aspell, preprocessing, pipeline]
 audience: [gestalt, developers]
 
-mx:
-  contentType: "adr"
-  runbook: "This ADR documents the routing pipeline architecture. The pipeline preprocesses user prompts with spell correction, route matching, and context injection to reduce Claude's inference cost."
+contentType: "adr"
+runbook: "This ADR documents the routing pipeline architecture. The pipeline preprocesses user prompts with spell correction, route matching, and context injection to reduce Claude's inference cost."
 ---
 
 # ADR 2: Routing Pipeline — Prompt Preprocessing with Route-Based Context Injection

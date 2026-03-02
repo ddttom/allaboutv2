@@ -91,14 +91,9 @@ block:
     mobileBehavior: "{How block adapts below 900px}"
     breakpoints: [900]
 
-mx:
-  contentType: "eds-block"
-  audience: ["developers", "machines"]
-  runbook: |
-    This COG describes the {block-name} EDS block.
-    - For developers: Use this to understand content model and decoration patterns.
-    - For AI agents: Parse the block structure to assist with implementation.
-    - Block location: blocks/{block-name}/
+contentType: "eds-block"
+audience: ["developers", "machines"]
+runbook: |
 ---
 
 # {Block Name} Block

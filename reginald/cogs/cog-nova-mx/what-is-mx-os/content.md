@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, who-is-maxine]
+buildsOn: [what-is-a-cog, who-is-maxine]
 tags: [mx-os, operating-system, cogs, documentation, metadata, soul, builds-on]
 
 audience: developers
-reading-level: technical
+readingLevel: technical
 purpose: Explain MX OS to developers and AI agents, and provide executable actions to bootstrap and audit an MX OS environment
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec what-is-mx-os"
-
+contentType: "action-doc"
+runbook: "mx exec what-is-mx-os"
 execute:
   runtime: runbook
   command: mx cog mx-os

@@ -18,13 +18,11 @@ refersTo: [cog-unified-spec, installme]
 tags: [github, inventory, catalog, action-cog, self-updating]
 
 audience: ai-agents
-reading-level: technical
+readingLevel: technical
 purpose: "Scan all GitHub repos (personal + orgs), classify by type, and generate a self-updating table."
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec allmygithubs"
-
+contentType: "action-doc"
+runbook: "mx exec allmygithubs"
 # Block architecture
 blocks:
   - definition:

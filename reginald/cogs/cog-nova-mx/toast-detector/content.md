@@ -73,12 +73,11 @@ requires:
   bins: []
   cogs: [a11y]
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec toast-detector"
-  convergence: true
-  accessibility: true
-  semantic: true
+contentType: "action-doc"
+runbook: "mx exec toast-detector"
+convergence: true
+accessibility: true
+semantic: true
 ---
 
 # toast-detector

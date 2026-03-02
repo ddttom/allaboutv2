@@ -14,11 +14,11 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [what-is-a-cog, env]
-builds-on: [what-is-a-cog, what-is-mx-os]
+buildsOn: [what-is-a-cog, what-is-mx-os]
 tags: [pdf, generation, pandoc, xelatex, emoji-cleanup, unicode-cleanup, zero-width-space, task-lists, document-production, kindle, a4, diagrams, svg, png-conversion, illustrations, ascii-art, code-blocks, syntax-highlighting, page-breaks, typography, widow-orphan-prevention, aspect-ratio, rsvg-convert, imagemagick, tool-cascade]
 
 audience: both
-reading-level: technical
+readingLevel: technical
 purpose: "Generate clean, professional PDFs from markdown files with emoji-to-text replacement, provenance tracking, and multiple output formats."
 
 execute:

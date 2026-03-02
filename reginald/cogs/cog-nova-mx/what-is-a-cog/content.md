@@ -17,12 +17,11 @@ refersTo: [cog-unified-spec, mx-principles]
 tags: [cog, introduction, metadata, standard, the-gathering]
 
 audience: content-strategists
-reading-level: non-technical
+readingLevel: non-technical
 purpose: Explain the cog format to someone encountering it for the first time
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec what-is-a-cog"
+contentType: "action-doc"
+runbook: "mx exec what-is-a-cog"
 ---
 
 # What Is a Cog?

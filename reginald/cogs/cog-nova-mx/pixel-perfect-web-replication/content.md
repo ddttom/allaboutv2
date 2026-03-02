@@ -11,109 +11,35 @@ status: active
 tags: [playwright, visual-capture, html-css-audit, dom-tree, computed-css, cascade-resolution, reference-implementation, pixel-perfect, automation, cogification, bilingual, single-language-toggle, offline-capable, validation-baseline]
 audience: [tech, business]
 
-builds-on: [cogify-this, what-is-a-cog]
+buildsOn: [cogify-this, what-is-a-cog]
 
 partOf: mx-cog-registry
 
-mx:
-  runtime: ai-agent
-  runbook: |
-    This action-doc implements a complete pixel-perfect web replication workflow with comprehensive HTML/CSS audit capabilities:
-
-    PHASE 1: INTERVIEW & REQUIREMENTS GATHERING
-    - Ask user for target URL, languages, business type, and preferences
-    - Determine if site is location-based (needs map)
-    - Identify content structure and navigation
-    - Set expectations for deliverables
-
-    PHASE 2: COMPREHENSIVE HTML/CSS AUDIT (AUTOMATIC - RUNS FIRST)
-    - Create audit/ directory structure
-    - Generate enhanced Playwright audit script
-    - Run automated comprehensive audit:
-      * Complete rendered DOM tree (including dynamic content and shadow DOM)
-      * Computed CSS for all elements (inherited values + browser defaults)
-      * Original stylesheets and inline styles as authored
-      * CSS cascade resolution map (specificity, source tracking, override analysis)
-      * Full-page screenshots of all pages
-      * Extract exact RGB colors → hex conversions
-      * Capture computed typography (fonts, sizes, weights)
-      * Inventory all images with URLs and dimensions
-      * Map navigation structure
-      * Measure layout spacing and dimensions
-    - Cache all assets locally for offline use (24-hour TTL)
-    - Generate multi-format audit outputs:
-      * visual-audit-report.md (human-readable specifications)
-      * audit-data.json (machine-readable structured data)
-      * cached-html/ (rendered HTML files)
-      * cached-css/ (stylesheet files)
-      * screenshots/ (full-page screenshots)
-    - Detect cache/screenshot mismatches → warn user if site changed
-
-    PHASE 3: VISUAL CAPTURE & PATTERN EXTRACTION
-    - Extract CSS pattern library from cached data
-    - Identify reusable patterns and custom properties
-    - Build validation baseline from cached HTML/CSS
-    - Cross-reference visual specs with DOM structure
-
-    PHASE 4: BUILD FROM CAPTURED SPECS (NO GUESSING)
-    - Select appropriate template (single-language toggle recommended)
-    - Use cached DOM tree as structural reference during build
-    - Apply EXACT colors from audit report (not approximations)
-    - Apply EXACT fonts and sizes from audit report
-    - Extract and apply CSS patterns from pattern library
-    - Link to original images (cached locally for offline use)
-    - Build navigation matching original structure
-    - Implement all sections from original
-    - Add interactive Leaflet map if location-based
-    - Include WebMCP tools and Schema.org markup
-
-    PHASE 5: VALIDATION & DELIVERY
-    - Compare implementation against cached HTML/CSS baseline
-    - Automated validation: CSS pattern match, DOM structure match
-    - Visual validation: Open original and demo side-by-side
-    - Verify pixel-perfect visual match against screenshots
-    - Test responsive behavior (mobile/desktop)
-    - Test language toggle functionality
-    - Test navigation scrolling
-    - Generate comprehensive README with audit artifacts
-    - Include audit data in documentation for future reference
-
-    KEY PRINCIPLES:
-    - Audit first (HTML/CSS + visual) = comprehensive baseline
-    - Capture first, build second = pixel-perfect on first attempt
-    - Use cached structural data as reference during build
-    - Multiple validation layers: visual + structural + functional
-    - Offline-capable: all assets cached locally (24h TTL)
-    - Multi-format outputs: human-readable + machine-readable
-    - Validation baseline for automated comparison
-    - Single-language toggle pattern (one language visible at a time)
-    - Full navigation menu matching original
-    - Interactive maps for location-based businesses
-
-  deliverable:
-    primary: "[business-name]-single-lang.cog.html"
-    format: "Single HTML file with embedded YAML, CSS, JavaScript, and Leaflet maps"
-    audit-artifacts:
-      - "audit/visual-audit-report.md - Human-readable design specifications"
-      - "audit/audit-data.json - Machine-readable structured data with DOM tree and computed CSS"
-      - "audit/cached-html/ - Complete rendered HTML files (24h TTL)"
-      - "audit/cached-css/ - All stylesheet files (24h TTL)"
-      - "audit/screenshots/ - Full-page screenshots for visual validation"
-      - "audit/css-patterns.json - Extracted reusable CSS patterns and custom properties"
-      - "audit/validation-baseline.json - Baseline for automated comparison"
-    validation:
-      - Structural validation against cached DOM tree
-      - CSS pattern match against extracted patterns
-      - Side-by-side visual comparison with original
-      - Comparison against cached screenshots
-      - W3C HTML validation
-      - WCAG 2.1 AA compliance
-      - Schema.org validation
-      - WebMCP specification compliance
-      - Mobile responsiveness test
-      - Language toggle test
-      - Navigation functionality test
-
+runtime: ai-agent
+runbook: |
+deliverable:
+  primary: "[business-name]-single-lang.cog.html"
+  format: "Single HTML file with embedded YAML, CSS, JavaScript, and Leaflet maps"
+  audit-artifacts:
+    - "audit/visual-audit-report.md - Human-readable design specifications"
+    - "audit/audit-data.json - Machine-readable structured data with DOM tree and computed CSS"
+    - "audit/cached-html/ - Complete rendered HTML files (24h TTL)"
+    - "audit/cached-css/ - All stylesheet files (24h TTL)"
+    - "audit/screenshots/ - Full-page screenshots for visual validation"
+    - "audit/css-patterns.json - Extracted reusable CSS patterns and custom properties"
+    - "audit/validation-baseline.json - Baseline for automated comparison"
+  validation:
+    - Structural validation against cached DOM tree
+    - CSS pattern match against extracted patterns
+    - Side-by-side visual comparison with original
+    - Comparison against cached screenshots
+    - W3C HTML validation
+    - WCAG 2.1 AA compliance
+    - Schema.org validation
+    - WebMCP specification compliance
+    - Mobile responsiveness test
+    - Language toggle test
+    - Navigation functionality test
 interview:
   trigger: start
   questions:

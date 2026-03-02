@@ -13,49 +13,12 @@ audience: [tech]
 
 partOf: mx-cog-registry
 
-builds-on: [manual-html-baseline-audit, manual-enhanced-audit]
+buildsOn: [manual-html-baseline-audit, manual-enhanced-audit]
 
-mx:
-  runtime: nodejs
-  purpose: Establish HTML baseline and detect regressions
-  contentType: action-doc
-  runbook: |
-    HTML baseline audit workflow for AI agents:
-
-    **WHEN TO USE:**
-    - After creating or modifying .cog.html files
-    - Before committing HTML changes
-    - In CI/CD to detect regressions
-    - When establishing new HTML compliance baseline
-
-    **ESTABLISH BASELINE (First Time):**
-    1. Verify cogify is installed: npm run cogify:check
-       - If not installed: npm run cogify:install
-    2. Run baseline audit: npm run audit:html:baseline
-    3. Review baseline index: Read mx-outputs/html/audit/baselines/YYYY-MM-DD-HH-MM-SS/index.json
-    4. Commit baseline: git add mx-outputs/html/audit/baselines/ && git commit
-
-    **DETECT REGRESSIONS:**
-    1. Run comparison: npm run audit:html:compare
-    2. Check exit code:
-       - 0 = No regressions (success)
-       - 1 = Regressions detected (review required)
-       - 2 = Error (no baseline or audit failed)
-    3. If regressions detected:
-       - Read report: mx-outputs/md/audit/comparison-YYYY-MM-DD.md
-       - Analyze changes: visual, structural, style, metadata
-       - If changes are intentional: Re-establish baseline (step 2 from above)
-       - If changes are bugs: Fix HTML and re-test
-
-    **INTEGRATION WITH WORKFLOWS:**
-    - step-commit: Run comparison before creating commit
-    - CI/CD: Run comparison on every PR
-    - Daily builds: Compare against production baseline
-
-    **OUTPUT LOCATIONS:**
-    - Baseline: mx-outputs/html/audit/baselines/YYYY-MM-DD-HH-MM-SS/
-    - Reports: mx-outputs/md/audit/comparison-YYYY-MM-DD.md
-
+runtime: nodejs
+purpose: Establish HTML baseline and detect regressions
+contentType: action-doc
+runbook: |
 action:
   establish-baseline:
     description: "Discover all .cog.html files and establish comprehensive baseline"

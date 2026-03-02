@@ -17,16 +17,14 @@ tags:
   - generation
   - inheritance
 partOf: mx-maxine-lives
-mx:
-  purpose: Document git hooks - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when working with git hooks or understanding its functionality
-  ai:
-    contextProvides:
-      - Installation, validation, metadata generation, inheritance resolution, and attribute indexing for MX .mx.yaml.md files.
-      - Usage guide and workflow for git hooks
-      - Troubleshooting and best practices
+purpose: Document git hooks - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when working with git hooks or understanding its functionality
+contextProvides:
+  - Installation, validation, metadata generation, inheritance resolution, and attribute indexing for MX .mx.yaml.md files.
+  - Usage guide and workflow for git hooks
+  - Troubleshooting and best practices
 refersTo: []
 ---
 

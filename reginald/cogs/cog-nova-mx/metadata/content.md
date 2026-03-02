@@ -80,12 +80,11 @@ requires:
   bins: []
   cogs: [schema]
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec metadata"
-  convergence: true
-  accessibility: true
-  semantic: true
+contentType: "action-doc"
+runbook: "mx exec metadata"
+convergence: true
+accessibility: true
+semantic: true
 ---
 
 # metadata

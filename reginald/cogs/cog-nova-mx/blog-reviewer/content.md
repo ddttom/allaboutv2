@@ -14,17 +14,15 @@ status: published
 category: mx-content
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, building-action-docs]
+buildsOn: [what-is-a-cog, building-action-docs]
 tags: [blog, review, humanizer, dual-audience, interview, rewrite, content-quality, sales-enablement]
 
 audience: ai-agents
-reading-level: technical
+readingLevel: technical
 purpose: Give any AI agent a repeatable workflow for reviewing blog posts — from AI pattern detection through author interview to final rewrite
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec blog-reviewer"
-
+contentType: "action-doc"
+runbook: "mx exec blog-reviewer"
 execute:
   runtime: runbook
   command: mx blog review

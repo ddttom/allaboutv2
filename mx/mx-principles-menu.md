@@ -10,34 +10,21 @@ tags:
   - menu
   - core-principles
 
-mx:
-  contentType: "reference-page"
-  state: "published"
-  version: "1.1"
-  lastUpdated: "2026-02-04"
-
-  runbook: |
-    This is a simple menu-style reference page listing the core
-    Machine Experience principles. Designed for quick scanning and navigation.
-
-    Format: Menu-style with principle names and brief descriptions.
-    Purpose: Quick reference for practitioners.
-
-  audience: ["humans", "machines"]
-
-  ai:
-    contextProvides:
-      - "mx-principles-overview"
-      - "quick-reference-menu"
-      - "core-principles-list"
-
-    contextRequired:
-      - "PRINCIPLES.md"
-
-  related:
-    - "PRINCIPLES.md"
-    - "mx-principles-blog.md"
-
+contentType: "reference-page"
+state: "published"
+mxSpecVersion: "1.1"
+lastUpdated: "2026-02-04"
+runbook: |
+audience: ["humans", "machines"]
+contextProvides:
+  - "mx-principles-overview"
+  - "quick-reference-menu"
+  - "core-principles-list"
+contextRequired:
+  - "PRINCIPLES.md"
+related:
+  - "PRINCIPLES.md"
+  - "mx-principles-blog.md"
 co:
   workflow: "published"
   reviewRequired: false

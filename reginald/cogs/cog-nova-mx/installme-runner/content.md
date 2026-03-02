@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, what-is-mx-os, what-is-mx-environment, what-is-installme]
+buildsOn: [what-is-a-cog, what-is-mx-os, what-is-mx-environment, what-is-installme]
 tags: [installme, runner, action, install, diagnostics, prerequisites, sop-agent, executor, mx-os]
 
 audience: ai-agents
-reading-level: technical
+readingLevel: technical
 purpose: Give any AI agent the operational tool to execute INSTALLME.md — read the metadata, run diagnostics, install, verify, register
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec installme-runner"
-
+contentType: "action-doc"
+runbook: "mx exec installme-runner"
 execute:
   runtime: runbook
   command: mx installme

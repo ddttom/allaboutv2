@@ -14,17 +14,15 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [cog-unified-spec, mx-principles]
-builds-on: [what-is-a-cog, what-is-mx-os, who-is-maxine, script-helper]
+buildsOn: [what-is-a-cog, what-is-mx-os, who-is-maxine, script-helper]
 tags: [script-metadata, cut-compute, inspect, bash, shell, sop-efficiency, mx-os]
 
 audience: developers
-reading-level: accessible
+readingLevel: accessible
 purpose: Explain why scripts need machine-readable metadata, how the system works, where we are today, and what comes next
 
-mx:
-  contentType: "action-doc"
-  runbook: "mx exec what-is-script-metadata"
-
+contentType: "action-doc"
+runbook: "mx exec what-is-script-metadata"
 execute:
   runtime: runbook
   command: mx cog script-metadata

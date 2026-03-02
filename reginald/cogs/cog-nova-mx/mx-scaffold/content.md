@@ -14,11 +14,11 @@ status: published
 category: mx-core
 partOf: mx-os
 refersTo: [script-helper, cog-unified-spec]
-builds-on: [what-is-mx-os, script-helper]
+buildsOn: [what-is-mx-os, script-helper]
 tags: [scaffold, template, generator, create, mx-os, shell, bash]
 
 audience: developers
-reading-level: technical
+readingLevel: technical
 purpose: Enable AI agents and humans to create new mx.* scripts that conform to the MX-OS pattern — correct metadata frontmatter, colour module, help flag, header, and alias registration
 
 execute:

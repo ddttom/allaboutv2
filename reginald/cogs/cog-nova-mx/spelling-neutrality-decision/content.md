@@ -25,7 +25,7 @@ affects:
   - mx-metadata-conventions
   - mx-contacts
 
-builds-on: [what-is-a-cog]
+buildsOn: [what-is-a-cog]
 ---
 
 # NDR #3: Spelling Neutrality

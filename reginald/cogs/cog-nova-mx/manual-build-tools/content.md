@@ -16,16 +16,14 @@ tags:
   - cleanup
   - publishing
 partOf: mx-maxine-lives
-mx:
-  purpose: Document build tools - usage, workflow, and best practices
-  audience: human
-  stability: stable
-  runbook: Read when working with build tools or understanding its functionality
-  ai:
-    contextProvides:
-      - Sitemap generation, content organisation, ASCII-to-SVG conversion, context URL injection, and VS Code cleanup.
-      - Usage guide and workflow for build tools
-      - Troubleshooting and best practices
+purpose: Document build tools - usage, workflow, and best practices
+audience: human
+stability: stable
+runbook: Read when working with build tools or understanding its functionality
+contextProvides:
+  - Sitemap generation, content organisation, ASCII-to-SVG conversion, context URL injection, and VS Code cleanup.
+  - Usage guide and workflow for build tools
+  - Troubleshooting and best practices
 refersTo: []
 ---
 
