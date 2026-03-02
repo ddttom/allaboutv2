@@ -21,7 +21,6 @@ audience:
   - operators
   - tech
 purpose: Document cog id - usage, workflow, and best practices
-audience: human
 stability: stable
 runbook: Read when working with cog id or understanding its functionality
 contextProvides:

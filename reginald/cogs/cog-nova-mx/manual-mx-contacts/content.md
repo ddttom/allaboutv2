@@ -16,7 +16,6 @@ tags:
 partOf: mx-maxine-lives
 audience: operators
 purpose: Document mx contacts - usage, workflow, and best practices
-audience: human
 stability: stable
 runbook: Read when working with mx contacts or understanding its functionality
 contextProvides:

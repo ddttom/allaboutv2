@@ -43,7 +43,6 @@ execute:
           type: object
           description: "Validation results: file type detected, metadata found, issues, suggestions"
 purpose: Document metadata - usage, workflow, and best practices
-audience: human
 stability: stable
 runbook: "mx exec manual-metadata"
 contextProvides:
