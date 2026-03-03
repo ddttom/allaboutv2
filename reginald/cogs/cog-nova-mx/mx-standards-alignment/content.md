@@ -377,7 +377,7 @@ function parseCogFrontmatter(content) {
 
 | Document | Role |
 |----------|------|
-| [field-dictionary.cog.md](../registers/FDR/field-dictionary.cog.md) | Complete vocabulary of YAML fields |
+| [fields.cog.md](../../ssot/fields.cog.md) | Complete vocabulary of YAML fields |
 | [cog-unified-spec.md](../MX-The-Gathering/deliverables/cog-unified-spec.md) | Structural specification for cog files |
 | [namespace-policy ADR](../registers/NDR/2026-02-14-namespace-policy.cog.md) | Namespace architecture and vendor extensions |
 | [camelCase naming NDR](../registers/NDR/2026-02-16-camelcase-naming.cog.md) | YAML field naming convention |

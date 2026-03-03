@@ -67,7 +67,7 @@ mx:
         soul: registers/FDR/SOUL.md
         file-pattern: "{YYYY-MM-DD}-{title}.cog.md"
         key-fields: [name, type, definition, status, profile]
-        note: "Field Definition Register. The living dictionary of all MX frontmatter fields. Master file: field-dictionary.cog.md."
+        note: "Field Definition Register. The living dictionary of all MX frontmatter fields. Master file: mx-canon/ssot/fields.cog.md."
 
       - intent: "what-believed"
         question: "What does the gestalt assume is true?"

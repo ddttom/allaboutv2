@@ -130,7 +130,7 @@ The `x-mx-p-ref` decode registry exists at two levels:
 
 ## Related documents
 
-- Field dictionary: `mx-canon/mx-maxine-lives/registers/FDR/field-dictionary.cog.md`
+- Field dictionary: `mx-canon/ssot/fields.cog.md`
 - Cog ID system: `mx-canon/MX-Cog-Registry/cogs/cog-id.cog.md`
 - Repo registry: `mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml`
 - The Gathering's namespace policy: `https://github.com/the-gathering/mx-standard/blob/main/architecture-decisions/adr-02-namespace-policy.cog.md` (standard namespaces)

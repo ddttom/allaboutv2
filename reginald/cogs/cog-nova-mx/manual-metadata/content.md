@@ -394,7 +394,7 @@ Full details in cog unified spec Section 21.
 
 | Resource | Location | What it tells you |
 | --- | --- | --- |
-| Field Definition Register (FDR) | `mx-canon/mx-maxine-lives/registers/FDR/field-dictionary.cog.md` | Every field defined, with type, profile, and deprecation status |
+| Field Definition Register (FDR) | `mx-canon/ssot/fields.cog.md` | Every field defined, with type, profile, and deprecation status |
 | Convention Register (CVR) | `mx-canon/mx-maxine-lives/registers/CVR/` | Operational conventions — naming, formatting, git |
 | Cog Unified Spec | `mx-canon/mx-the-gathering/deliverables/cog-unified-spec.md` | The open standard (The Gathering) |
 | MX Implementation Spec | `MX-Cog-Registry/cogs/mx-maxine-lives/mx-metadata-conventions.cog.md` | Detailed rules per file type, block mapping, Reginald behaviour |

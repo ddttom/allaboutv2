@@ -187,7 +187,7 @@ Path construction for bulk: `MXT/{category-short}/{cog-name}` where `mx-core` be
 | Repo registry (company/team) | `mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml` |
 | Personal registry (machine) | `$MX_HOME/registries/cog-id-registry.yaml` |
 | Namespace policy ADR | `mx-canon/mx-maxine-lives/thinking/decisions/2026-02-14-attribute-namespace-policy.cog.md` |
-| Field dictionary entry | `mx-canon/mx-maxine-lives/registers/FDR/field-dictionary.cog.md` (field: `x-mx-p-ref`) |
+| Field dictionary entry | `mx-canon/ssot/fields.cog.md` (field: `x-mx-p-ref`) |
 | Skill entry point | `.claude/skills/mx-c-cog-id/skill.md` |
 | This manual | `mx-canon/mx-maxine-lives/manuals/manual-cog-id.cog.md` |
 

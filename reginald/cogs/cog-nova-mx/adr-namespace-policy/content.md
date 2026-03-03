@@ -103,7 +103,7 @@ The same MX field appears in different syntactic forms depending on context:
 1. **Standard fields have no prefix.** The Gathering defines them. All implementations use them.
 2. **The mx: namespace belongs to The Gathering.** It is part of the open standard. Implementations may add vendor-specific extensions using their own `x-{vendor}-` prefixes.
 3. **Context determines syntax.** YAML uses camelCase. HTML/CSS use kebab-case with `mx:` prefix. Same field, different representation.
-4. **The field dictionary is the authority.** Every standard field is registered in `field-dictionary.cog.md` with its definition, type, and profile.
+4. **The field dictionary is the authority.** Every standard field is registered in `fields.cog.md` with its definition, type, and profile.
 
 ## Alternatives considered
 
@@ -129,7 +129,7 @@ The same MX field appears in different syntactic forms depending on context:
 
 ## Related documents
 
-- Field dictionary: `specifications/field-dictionary.cog.md`
+- Field dictionary: `mx-canon/ssot/fields.cog.md`
 - Standards alignment: `specifications/mx-standards-alignment.cog.md`
 - Cog unified spec: `specifications/cog-unified-spec.md`
 - Vendor extensions policy: `https://github.com/cog-nova-mx/mx-hub/blob/main/mx-canon/mx-maxine-lives/registers/ADR/vendor-extensions-policy.cog.md` (Cog-Nova-MX implementation)

@@ -101,7 +101,7 @@ Reports are saved to `mx-outputs/md/reports/validation/` with timestamps.
 The **field dictionary** is the single authority:
 
 ```
-mx-canon/mx-maxine-lives/registers/FDR/field-dictionary.cog.md
+mx-canon/ssot/fields.cog.md
 ```
 
 It defines every canonical field, deprecated mappings, document profiles, and the namespace policy. The audit script parses this file programmatically — it does not hardcode field lists.

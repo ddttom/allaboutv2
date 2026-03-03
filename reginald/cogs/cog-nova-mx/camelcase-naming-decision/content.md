@@ -125,7 +125,7 @@ The audit reports. The validator prevents new violations. Existing violations ar
 
 ## Related
 
-- Field dictionary: `mx-canon/mx-maxine-lives/registers/FDR/field-dictionary.cog.md`
+- Field dictionary: `mx-canon/ssot/fields.cog.md`
 - Attributes registry: `mx-canon/MX-Registries/deliverables/mx-attributes-registry.md` (line 1108: "No Underscores")
 - LEARNINGS.md (line 325-405: previous snake_case cleanup)
 - ADR: Attribute Namespace Policy (2026-02-14)

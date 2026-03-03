@@ -183,7 +183,7 @@ The `x-mx-p-ref` decode registry exists at two levels:
 
 ## Related documents
 
-- Field dictionary: `mx-canon/mx-maxine-lives/registers/FDR/field-dictionary.cog.md`
+- Field dictionary: `mx-canon/ssot/fields.cog.md`
 - Cog unified spec: `mx-canon/mx-the-gathering/deliverables/cog-unified-spec.md`
 - Cog ID system: `mx-canon/MX-Cog-Registry/cogs/cog-id.cog.md`
 - Repo registry: `mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml`

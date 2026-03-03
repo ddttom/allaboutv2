@@ -119,7 +119,7 @@ If yes to #2 or #3, use the neutral form. If no neutral form exists, use the -iz
 ## Related
 
 - NDR #2: camelCase Field Names (2026-02-16)
-- Field dictionary: `mx-canon/mx-maxine-lives/registers/FDR/field-dictionary.cog.md`
+- Field dictionary: `mx-canon/ssot/fields.cog.md`
 - Schema.org terminology FAQ: neutral naming principle
 - W3C Organization Ontology: `org:` prefix precedent
 
