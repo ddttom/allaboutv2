@@ -20,6 +20,16 @@ function he(s, t) {
 * @license
 * Copyright 2019 Google LLC
 * SPDX-License-Identifier: BSD-3-Clause
+ * @file spectrum-card.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 const ct = globalThis; const mt = ct.ShadowRoot && (ct.ShadyCSS === void 0 || ct.ShadyCSS.nativeShadow) && 'adoptedStyleSheets' in Document.prototype && 'replace' in CSSStyleSheet.prototype; const At = Symbol(); const
   Bt = /* @__PURE__ */ new WeakMap();

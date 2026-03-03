@@ -1,3 +1,15 @@
+/**
+ * @file cards.js
+ * @description cards
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default function decorate(block) {

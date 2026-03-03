@@ -1,3 +1,15 @@
+/**
+ * @file quote.js
+ * @description quote
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 function hasWrapper(el) {
   return !!el.firstElementChild && window.getComputedStyle(el.firstElementChild).display === 'block';
 }

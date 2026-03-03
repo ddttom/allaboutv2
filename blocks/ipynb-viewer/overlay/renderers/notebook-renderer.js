@@ -2,6 +2,16 @@
 
 * Notebook Content Renderer
 * Renders paged notebook cells with pagination controls
+ * @file notebook-renderer.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 
 export function renderNotebookContent(contentArea, {

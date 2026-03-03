@@ -1,3 +1,15 @@
+/**
+ * @file jsonHandler.js
+ * @description Source module — json handler
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 /*eslint-disable max-len, no-restricted-syntax, no-shadow*/
 import {
   replaceTokens,

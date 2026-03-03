@@ -5,6 +5,16 @@
 * This block's purpose is to override the default icon styles in EDS.
 * The block doesn't modify DOM elements but relies on its CSS file
 * to override the default icon styling through CSS specificity.
+ * @file remove-icon-styles.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 
 export default function decorate(block) {

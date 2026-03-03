@@ -1,3 +1,14 @@
+# ---
+# title: "insert-variables"
+# description: "insert variables"
+# author: "Tom Cranstoun"
+# created: 2026-03-03
+# version: "1.0"
+# category: mx-tools
+# status: active
+# tags: [tool]
+# partOf: mx-os
+# ---
 # !/bin/bash
 
 # --- Get Environment Variables Correctly ---

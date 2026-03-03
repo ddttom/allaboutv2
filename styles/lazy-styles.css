@@ -1,1 +1,11 @@
-/*add global styles that can be loaded post LCP here*/
+/*add global styles that can be loaded post LCP here
+ * @file lazy-styles.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+*/

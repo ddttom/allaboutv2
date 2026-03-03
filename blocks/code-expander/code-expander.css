@@ -1,5 +1,15 @@
 :root {
-  /*Core colors*/
+  /*Core colors
+ * @file code-expander.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+*/
   --code-expander-button-bg: #4a90e2;
   --code-expander-button-text: #fff;
   --code-expander-button-border: #3a7bc8;

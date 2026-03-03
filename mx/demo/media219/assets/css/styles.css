@@ -2,6 +2,16 @@
    Demonstrating the convergence principle:
    - Clean, professional design for humans
    - Semantic structure for machines
+ * @file styles.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
 */
 
 /* === Reset & Base === */

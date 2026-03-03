@@ -11,6 +11,16 @@
  * - Language selector (dropdown for n-languages)
  * - WebMCP tool definitions
  * - Smooth scroll for anchor links
+ * @file script.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 
 (function() {

@@ -10,7 +10,17 @@
 *
 * Note: EDS processes the header row before the decorate function runs,
 * so extractedRows[0] contains Row 2 (button text) and extractedRows[1] contains Row 3 (content)
- no-unused-vars, import/no-unresolved, import/no-self-import */
+ no-unused-vars, import/no-unresolved, import/no-self-import
+ * @file overlay.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 
 // Configuration
 const CONFIG = {

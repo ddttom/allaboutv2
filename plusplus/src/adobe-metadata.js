@@ -1,3 +1,15 @@
+/**
+ * @file adobe-metadata.js
+ * @description Source module — adobe metadata
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 /*eslint-disable max-len, no-restricted-syntax, no-shadow */
 /* adobe specific meta data handling */
 /* NO CLIENT CODE IN HERE JUST SETUP FOR ADOBE*/

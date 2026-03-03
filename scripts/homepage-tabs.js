@@ -2,6 +2,16 @@
 
 * Homepage Category Tabs
 * Handles category filtering for blog posts on the homepage
+ * @file homepage-tabs.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 
 const HOMEPAGE_TABS_CONFIG = {

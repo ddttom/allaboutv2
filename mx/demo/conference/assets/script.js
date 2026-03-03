@@ -1,6 +1,16 @@
 /**
  * MX Summit Conference - Shared JavaScript
  * N-Language Architecture: Language-agnostic, shared across all versions
+ * @file script.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 
 (function() {

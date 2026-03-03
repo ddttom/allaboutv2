@@ -1,3 +1,15 @@
+/**
+ * @file blogroll.js
+ * @description Function to format the date
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 // Function to format the date
 function formatDate(timestamp) {
   const date = new Date(parseInt(timestamp, 10) * 1000);

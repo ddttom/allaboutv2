@@ -1,3 +1,15 @@
+/**
+ * @file markdown.js
+ * @description Function to trim all lines in the content and handle double backticks
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 const MARKDOWN_CONFIG = {
   CONTAINER_CLASS: 'markdown-content',
   ERROR_MESSAGE: 'Error processing markdown content.',

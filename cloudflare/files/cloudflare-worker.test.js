@@ -4,6 +4,16 @@
 *
 * These tests verify the utility functions used in the worker.
 * Run with: npm test (requires vitest or jest)
+ * @file cloudflare-worker.test.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags test
+ * @mx:partOf mx-os
+
  */
 
 /*eslint-disable max-classes-per-file, import/no-unresolved*/

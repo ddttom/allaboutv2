@@ -1,3 +1,15 @@
+/**
+ * @file hero.js
+ * @description hero
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 export default function decorate(block) {
   const firstPicture = block.querySelector('div:first-of-type picture');
   const secondPicture = block.querySelector('div:first-of-type > div:nth-of-type(2) picture');

@@ -1,3 +1,15 @@
+/**
+ * @file modal.js
+ * @description the createModal() and openModal() functions.
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 import { loadFragment } from '../fragment/fragment.js';
 import {
   buildBlock, decorateBlock, decorateIcons, loadBlock, loadCSS,

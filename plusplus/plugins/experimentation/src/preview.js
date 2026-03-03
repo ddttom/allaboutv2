@@ -330,6 +330,16 @@ function populatePerformanceMetrics(div, config, {
 
 * Create Badge if a Page is enlisted in a AEM Experiment
 * @return {Object} returns a badge or empty string
+ * @file preview.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 async function decorateExperimentPill(overlay, options, context) {
   const config = window?.hlx?.experiment;

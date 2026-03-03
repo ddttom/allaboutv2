@@ -1,4 +1,14 @@
-/*WCAG 2.1 AA Compliant Shared Styles for MX Blog Posts */
+/*WCAG 2.1 AA Compliant Shared Styles for MX Blog Posts
+ * @file common-mistakes.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 /* This stylesheet consolidates common styles across all MX blog posts */
 /* with support for dark mode, high contrast mode, and modern CSS architecture*/
 

@@ -1,3 +1,15 @@
+/**
+ * @file 3dcube.js
+ * @description 3dcube
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 export default async function decorate(block) {
   const cube = document.createElement('div');
   cube.className = 'cube';

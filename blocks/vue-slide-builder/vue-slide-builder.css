@@ -1,3 +1,15 @@
+/**
+ * @file vue-slide-builder.css
+ * @description vue slide builder
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 .vue-slide-builder {
     width: 100%;
     min-height: 400px;

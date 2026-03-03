@@ -1,5 +1,15 @@
 
-/*Document defaults - using DOCX page margins */
+/*Document defaults - using DOCX page margins
+ * @file TEST-TWO.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 body {
   font-family: "Cambria", sans-serif;
   font-size: [object Object];

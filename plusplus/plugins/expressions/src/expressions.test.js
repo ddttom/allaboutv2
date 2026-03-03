@@ -1,3 +1,15 @@
+/**
+ * @file expressions.test.js
+ * @description Source module — expressions test
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags test
+ * @mx:partOf mx-os
+ */
 import {
   createExpression,
   renderExpressions,

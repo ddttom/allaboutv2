@@ -5,7 +5,17 @@
   .slide-builder-item {
     height: 600px;
     object-fit: cover;
-    position: relative; /*For roundel positioning */
+    position: relative; /*For roundel positioning
+ * @file slide-builder.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
     margin-bottom: 25px; /* Add margin to the bottom of each slide*/
   }
   

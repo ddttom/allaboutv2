@@ -1,3 +1,15 @@
+/**
+ * @file debugPanel.js
+ * @description initializeDebugPanel('', '', '');
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 /*eslint-disable max-len, no-restricted-syntax, no-shadow */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-console*/

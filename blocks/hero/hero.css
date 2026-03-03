@@ -1,4 +1,14 @@
-/*Block specific CSS*/
+/*Block specific CSS
+ * @file hero.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+*/
 
 /*Hero container styles*/
 main .hero-container > div {

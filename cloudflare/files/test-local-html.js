@@ -6,6 +6,16 @@
 * string handling functions to validate HTML processing.
 *
 * Run with: node test-local-html.js
+ * @file test-local-html.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType test
+ * @mx:tags test
+ * @mx:partOf mx-os
+
  */
 
 import { readFileSync } from 'fs';

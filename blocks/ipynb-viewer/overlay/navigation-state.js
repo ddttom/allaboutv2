@@ -2,6 +2,16 @@
 
 * Navigation State Manager
 * Manages view switching, history, and state preservation
+ * @file navigation-state.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 
 export class NavigationState {

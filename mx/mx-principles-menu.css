@@ -3,6 +3,16 @@
 * Machine Experience: The Core Principles - Quick Reference Menu
 * MX-compliant reference page styles
 * Optimized for both human readers and machine readability
+ * @file mx-principles-menu.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 
 /*Reset and Base Styles*/

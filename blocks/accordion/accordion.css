@@ -2,7 +2,17 @@
   border: 1px solid var(--dark-color);
 }
 
-/*stylelint-disable-next-line no-descending-specificity*/
+/*stylelint-disable-next-line no-descending-specificity
+ * @file accordion.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+*/
 .accordion details + details {
   margin-top: 16px;
 }

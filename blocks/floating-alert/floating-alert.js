@@ -1,3 +1,15 @@
+/**
+ * @file floating-alert.js
+ * @description version 1.3 - Added heading processing with horizontal rule separator
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 // version 1.3 - Added heading processing with horizontal rule separator
 
 // Configuration for the floating alert block

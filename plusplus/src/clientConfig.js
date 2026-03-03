@@ -1,3 +1,15 @@
+/**
+ * @file clientConfig.js
+ * @description Place any Client-Centered Code/Configuration in here
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 /*eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable import/no-absolute-path */
 /* eslint-disable import/no-unresolved*/

@@ -22,6 +22,16 @@
 * identified by #id or .classname
 * @param {string} data.target subject of the checkpoint event,
 * for instance the href of a link, or a search term
+ * @file aem.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 function sampleRUM(checkpoint, data = {}) {
   const SESSION_STORAGE_KEY = 'aem-rum';

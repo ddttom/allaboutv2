@@ -1,3 +1,15 @@
+/**
+ * @file server.js
+ * @description this file is a debugging artefact and it should be treated as readonly
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 /*eslint-disable no-console*/
 import { createServer } from 'http';
 import { readFile, access } from 'fs/promises';

@@ -1,3 +1,15 @@
+/**
+ * @file shoelace.js
+ * @description shoelace
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 import { loadCSS, loadScript } from '../../scripts/aem.js';
 
 export default async function decorate(block) {

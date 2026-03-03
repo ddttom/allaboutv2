@@ -1,3 +1,15 @@
+/**
+ * @file slide-builder-main.js
+ * @description Client script — slide builder main
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 (() => {
   const e = {
     49: (e, n) => {

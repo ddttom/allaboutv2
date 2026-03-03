@@ -2,6 +2,16 @@
 
 * Unified Overlay Manager
 * Single overlay with content switching (no nesting!)
+ * @file unified-overlay.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 
 import { NavigationState } from './navigation-state.js';

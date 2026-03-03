@@ -7,7 +7,17 @@
   --blogroll-link-color: #06c;
   --blogroll-date-color: #666;
   --blogroll-text-color: #444;
-  --blogroll-panel-bg-color: #f0f4f8; /*Light blue-gray background */
+  --blogroll-panel-bg-color: #f0f4f8; /*Light blue-gray background
+ * @file blogroll.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
   --blogroll-panel-text-color: #333; /* Dark gray text for contrast*/
   --blogroll-icon-size: 40px;
   --blogroll-icon-bg-color: #007bff;

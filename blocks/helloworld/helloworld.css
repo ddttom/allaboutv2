@@ -1,3 +1,15 @@
+/**
+ * @file helloworld.css
+ * @description helloworld
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 .helloworld {
     background-color: #f0f0f0;
     padding: 20px;

@@ -2,6 +2,16 @@
 
 * Footer Manager - Creates unified footer bar for navigation
 * Shows page navigation for notebook view, tree navigation for markdown view
+ * @file footer.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 
 export function createFooter({ config, navigationState }) {

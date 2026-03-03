@@ -2,7 +2,17 @@
   width: 100%;
   overflow-x: auto;
 
-  /*Define pale blue color for first-line styling*/
+  /*Define pale blue color for first-line styling
+ * @file table.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+*/
   --table-first-line-bg: #e6f2ff;
 
   /*define background color for striped tables*/

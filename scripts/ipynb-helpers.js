@@ -18,6 +18,16 @@
 *
 * **NOTE**: Cell code executes in async context automatically (via AsyncFunction).
 * Just write your code naturally with `await` and `return` - no IIFE wrapper needed!
+ * @file ipynb-helpers.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 
 /**

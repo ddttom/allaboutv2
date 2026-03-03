@@ -6,6 +6,16 @@
 * Design system implementing WCAG 2.1 AA accessibility standards
 * Color palette derived from Dotfusion's brand identity
 * Demonstrates MX improvements: semantic structure, performance, accessibility
+ * @file styles.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 
 /*========================================

@@ -1,3 +1,15 @@
+/**
+ * @file dashboard.js
+ * @description Dashboard — dashboard
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 export default function decorate(block) {
   const dashboardContainer = block.querySelector('.dashboard-container') || block;
   const jsonUrl = '/query-index.json';

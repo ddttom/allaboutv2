@@ -1,3 +1,13 @@
 .raw {
-  /*Add any specific styling for the raw block if needed*/
+  /*Add any specific styling for the raw block if needed
+ * @file raw.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+*/
 }

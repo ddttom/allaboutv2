@@ -1,3 +1,15 @@
+/**
+ * @file reModelDom.js
+ * @description perform very fast changes. before the page is shown
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 /*eslint-disable max-len */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax*/

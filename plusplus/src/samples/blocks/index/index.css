@@ -22,7 +22,17 @@
 }
 
 .down {
-     /*stylelint-disable-next-line property-no-vendor-prefix*/
+     /*stylelint-disable-next-line property-no-vendor-prefix
+ * @file index.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+*/
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
 }

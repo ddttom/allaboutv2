@@ -1,3 +1,15 @@
+/**
+ * @file delayed.js
+ * @description Script — delayed
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 // eslint-disable-next-line import/no-cycle
 import { sampleRUM } from './aem.js';
 

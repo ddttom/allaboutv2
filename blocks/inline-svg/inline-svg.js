@@ -1,3 +1,15 @@
+/**
+ * @file inline-svg.js
+ * @description inline svg
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 export default function decorate(block) {
   // First, try to find any icon spans
   const iconSpan = block.querySelector('span[class^="icon icon-"]');

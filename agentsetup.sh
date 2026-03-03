@@ -1,3 +1,14 @@
+# ---
+# title: "agentsetup"
+# description: "agentsetup"
+# author: "Tom Cranstoun"
+# created: 2026-03-03
+# version: "1.0"
+# category: mx-tools
+# status: active
+# tags: [generator]
+# partOf: mx-os
+# ---
 # !/bin/bash
 
 # agentsetup.sh

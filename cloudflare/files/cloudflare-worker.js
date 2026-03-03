@@ -45,6 +45,15 @@ export const isRUMRequest = (url) => /\/\.(rum|optel)\/.*/.test(url.pathname);
 * Years 00-49 -> 2000-2049, Years 50-99 -> 1950-1999
 * @param {number} year - 2 or 4-digit year
 * @returns {number} 4-digit year
+ * @file cloudflare-worker.js
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 export const normalizeYear = (year) => {
   if (year >= 100) return year; // Already 4-digit

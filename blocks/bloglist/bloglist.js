@@ -1,3 +1,15 @@
+/**
+ * @file bloglist.js
+ * @description Helper functions first (before main decorate function)
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 // Helper functions first (before main decorate function)
 
 function getMonthName(monthIndex) {

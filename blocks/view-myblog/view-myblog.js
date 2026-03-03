@@ -8,6 +8,16 @@
 * * Filters out index pages (URLs ending with /, /index, /index.html, /index.htm)
 * * Hides empty category sections
 * * Shows category map only when there are multiple active categories
+ * @file view-myblog.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 
 /**

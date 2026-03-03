@@ -1,3 +1,15 @@
+/**
+ * @file vitest.config.js
+ * @description vitest config
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags test, configuration
+ * @mx:partOf mx-os
+ */
 /*eslint-disable import/no-unresolved*/
 import { defineConfig } from 'vitest/config';
 

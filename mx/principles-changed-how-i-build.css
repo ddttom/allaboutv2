@@ -3,6 +3,16 @@
 * The Principles That Changed How I Build for Everyone
 * MX-compliant blog post styles
 * Optimized for both human readers and machine readability
+ * @file principles-changed-how-i-build.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 
 /*Reset and Base Styles*/

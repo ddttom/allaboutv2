@@ -23,6 +23,16 @@ const DAM_CONFIG = {
 * Extracts the path from an image or link element
 * @param {HTMLElement} element - The element containing the image or link
 * @returns {string} The extracted path
+ * @file dam.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 function extractPath(element) {
   const img = element.querySelector(DAM_CONFIG.SELECTORS.IMAGE);

@@ -1,3 +1,15 @@
+/**
+ * @file index.js
+ * @description index
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 /*eslint-disable no-unused-vars */
 /* eslint-disable no-use-before-define*/
 export default function decorate(block) {

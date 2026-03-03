@@ -33,6 +33,16 @@ const AUDIENCES = {
      *Gets all the metadata elements that are in the given scope.
      * @param {String} scope The scope/prefix for the metadata
      *@returns an array of HTMLElement nodes that match the given scope
+ * @file scripts.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
      */
 export function getAllMetadata(scope) {
   return [...document.head.querySelectorAll(`meta[property^="${scope}:"],meta[name^="${scope}-"]`)]

@@ -1,3 +1,15 @@
+/**
+ * @file carousel.js
+ * @description carousel
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 /*eslint-disable import/no-unresolved*/
 import { fetchPlaceholders } from '../../scripts/aem.js';
 

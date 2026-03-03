@@ -14,6 +14,16 @@
 * IMPORTANT: This script does NOT generate latestPosts arrays in my-blog.json files.
 * The view-myblog block automatically generates latestPosts from the 3 most recent posts.
 * DO NOT manually add latestPosts to my-blog.json - it defeats auto-generation.
+ * @file sync-blog-content.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 
 /*eslint-disable no-await-in-loop*/

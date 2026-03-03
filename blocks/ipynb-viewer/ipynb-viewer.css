@@ -1,4 +1,14 @@
-/*IPynb Viewer Block Styles*/
+/*IPynb Viewer Block Styles
+ * @file ipynb-viewer.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+*/
 
 /*Reusable Content Styling - Color Variables*/
 :root {

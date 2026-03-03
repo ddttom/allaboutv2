@@ -24,7 +24,17 @@ box-sizing: border-box;
     flex-grow: 1;
 }
 
-/*Mobile responsive styles*/
+/*Mobile responsive styles
+ * @file bio.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+*/
 @media (width <= 768px) {
     .bio-wrapper .bio.block img {
         width: 60px;

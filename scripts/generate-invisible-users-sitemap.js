@@ -31,6 +31,16 @@ const APPENDIX_RULES = { priority: 0.8, changefreq: 'monthly' };
 * Get file metadata (priority and changefreq) based on filename
 * @param {string} filename - The name of the file
 * @returns {Object} Object with priority and changefreq
+ * @file generate-invisible-users-sitemap.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags generator, sitemap
+ * @mx:partOf mx-os
+
  */
 function getFileMetadata(filename) {
   // Check for exact match in RULES

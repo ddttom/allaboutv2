@@ -1,3 +1,15 @@
+/**
+ * @file footer.css
+ * @description footer
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 footer {
   padding: 2rem;
   background-color: var(--light-color);

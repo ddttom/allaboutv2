@@ -1,3 +1,15 @@
+/**
+ * @file tags.css
+ * @description tags
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 .tags {
     margin-bottom: var(--spacing-s);
 }

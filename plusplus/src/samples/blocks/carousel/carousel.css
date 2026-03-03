@@ -107,7 +107,17 @@
   z-index: 1;
 }
 
-/*stylelint-disable-next-line no-descending-specificity*/
+/*stylelint-disable-next-line no-descending-specificity
+ * @file carousel.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+*/
 .carousel .carousel-navigation-buttons button {
   border-radius: 8px;
   margin: 0;

@@ -1,3 +1,15 @@
+/**
+ * @file dynamic.js
+ * @description External dependencies from sibling repository
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 import { createOptimizedPicture } from '../../scripts/aem.js';
 // External dependencies from sibling repository
 /*eslint-disable import/no-unresolved */

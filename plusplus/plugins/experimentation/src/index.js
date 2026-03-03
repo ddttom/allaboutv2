@@ -36,6 +36,16 @@ export const DEFAULT_OPTIONS = {
 
 * Checks if the current engine is detected as being a bot.
 * @returns `true` if the current engine is detected as being, `false` otherwise
+ * @file index.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 function isBot() {
   return navigator.userAgent.match(/bot|crawl|spider/i);

@@ -1,3 +1,15 @@
+/**
+ * @file clientExpressions.js
+ * @description a sample expression, expands the text in the siteConfig, from the args
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 /*eslint-disable import/no-absolute-path */
 /* eslint-disable import/no-unresolved*/
 import { createExpression } from '/plusplus/plugins/expressions/src/expressions.js';

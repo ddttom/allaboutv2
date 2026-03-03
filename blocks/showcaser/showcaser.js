@@ -18,7 +18,17 @@ function decodeHtmlEntities(text) {
 * Detects the programming language of the given code snippet
 * @param {string} code - The code snippet to analyze
 * @returns {string} The detected language
- no-unused-vars, import/no-unresolved, import/no-self-import */
+ no-unused-vars, import/no-unresolved, import/no-self-import
+ * @file showcaser.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+ */
 function detectLanguage(code) {
   const decodedCode = decodeHtmlEntities(code);
 

@@ -5,7 +5,17 @@
 }
 
 .video[data-embed-is-loaded="false"]:not(.placeholder) {
-  /*reserve an approximate space to avoid extensive layout shifts*/
+  /*reserve an approximate space to avoid extensive layout shifts
+ * @file video.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+*/
   aspect-ratio: 16 / 9;
 }
 

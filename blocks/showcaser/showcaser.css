@@ -1,4 +1,14 @@
-/*Showcaser Block Styles*/
+/*Showcaser Block Styles
+ * @file showcaser.css
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType stylesheet
+ * @mx:tags tool
+ * @mx:partOf mx-os
+*/
 
 :root {
   /*Colors*/

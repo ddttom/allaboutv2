@@ -5,6 +5,16 @@ import { loadFragment } from '../fragment/fragment.js';
 
 * loads and decorates the footer
 * @param {Element} block The footer block element
+ * @file footer.js
+ * @version 1.0
+ * @author Tom Cranstoun
+ *
+ * @mx:category mx-tools
+ * @mx:status active
+ * @mx:contentType script
+ * @mx:tags tool
+ * @mx:partOf mx-os
+
  */
 export default async function decorate(block) {
   const footerMeta = getMetadata('footer');
