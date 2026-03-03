@@ -124,7 +124,7 @@ Both use identical n-language architecture patterns.
 
 - **Salva Demo**: `../salva/` - Restaurant n-language reference
 - **N-Language Template**: `hub-content/mx-reference-implementations/_templates/n-lang-business-template.cog.html`
-- **Cogify Documentation**: `hub-content/mx-canon/MX-Cog-Registry/cogs/cogify-this.cog.md`
+- **Cogify Documentation**: `hub-content/scripts/cogs/cogify-this.cog.md`
 - **REGINALD Proposal**: `packages/mx-collaboration/proposals/reginald-language-redirect.md`
 
 ---

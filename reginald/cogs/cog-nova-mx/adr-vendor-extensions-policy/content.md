@@ -113,7 +113,7 @@ The `x-mx-p-ref` decode registry exists at two levels:
 
 | Level | Location | Access | Purpose |
 |---|---|---|---|
-| **Repo** (default) | `mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml` | Anyone with repo access | Company/team cog IDs |
+| **Repo** (default) | `mx-reginald/registries/cog-id-registry.yaml` | Anyone with repo access | Company/team cog IDs |
 | **Personal** | `$MX_HOME/registries/cog-id-registry.yaml` | Machine-only | Personal or external cog IDs |
 
 **Lookup chain:** `$MX_HOME` first (personal overrides), then repo registry.
@@ -131,8 +131,8 @@ The `x-mx-p-ref` decode registry exists at two levels:
 ## Related documents
 
 - Field dictionary: `mx-canon/ssot/fields.cog.md`
-- Cog ID system: `mx-canon/MX-Cog-Registry/cogs/cog-id.cog.md`
-- Repo registry: `mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml`
+- Cog ID system: `scripts/cogs/cog-id.cog.md`
+- Repo registry: `mx-reginald/registries/cog-id-registry.yaml`
 - The Gathering's namespace policy: `https://github.com/the-gathering/mx-standard/blob/main/architecture-decisions/adr-02-namespace-policy.cog.md` (standard namespaces)
 - Original dual-scope ADR: `mx-canon/mx-maxine-lives/thinking/decisions/2026-02-14-attribute-namespace-policy.cog.md` (archived — split into standard + vendor ADRs)
 

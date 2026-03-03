@@ -338,7 +338,7 @@ Step 3: Generate YAML Frontmatter
 ...
 ```
 
-See: `mx-canon/MX-Cog-Registry/cogs/cogify-this.cog.md`
+See: `scripts/cogs/cogify-this.cog.md`
 
 ---
 
@@ -713,8 +713,8 @@ The HTML baseline comparison tool (`scripts/audit-html-compare.js`) automaticall
 ### Related Documentation
 
 - **Cogify-This Manual:** `manual-cogify.cog.md`
-- **Cogify-This Cog:** `MX-Cog-Registry/cogs/cogify-this.cog.md`
-- **Pixel-Perfect Replication:** `MX-Cog-Registry/cogs/pixel-perfect-web-replication.cog.md`
+- **Cogify-This Cog:** `scripts/cogs/cogify-this.cog.md`
+- **Pixel-Perfect Replication:** `scripts/cogs/pixel-perfect-web-replication.cog.md`
 - **Partnership Reporting:** `manual-partnership-reporting.cog.md` — Complete guidelines for client-facing reports
 
 ### npm Scripts

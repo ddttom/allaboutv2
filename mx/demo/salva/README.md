@@ -214,7 +214,7 @@ curl -H "Accept-Language: en-US,en;q=0.9" -L https://allabout.network/mx/demo/sa
 ## Related Documentation
 
 - **[REGINALD Language Redirect Proposal](../../../packages/mx-collaboration/proposals/reginald-language-redirect.md)** — Server-side language detection
-- **[Cogify Manual](../../../hub-content/mx-canon/MX-Cog-Registry/cogs/cogify-this.cog.md)** — N-language architecture documentation
+- **[Cogify Manual](../../../hub-content/scripts/cogs/cogify-this.cog.md)** — N-language architecture documentation
 - **[N-Lang Business Template](../../../hub-content/mx-reference-implementations/_templates/n-lang-business-template.cog.html)** — Template for n-language sites
 
 ---

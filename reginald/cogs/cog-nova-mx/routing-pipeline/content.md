@@ -134,7 +134,7 @@ A preprocessing pipeline that runs before Claude sees the prompt:
 
 | Component | Path | Purpose |
 |---|---|---|
-| This SOP | `mx-canon/MX-Cog-Registry/cogs/routing-pipeline.cog.md` | The instruction |
+| This SOP | `scripts/cogs/routing-pipeline.cog.md` | The instruction |
 | Hook | `.claude/hooks/route-decorator.sh` | The runtime |
 | Sync script | `scripts/route-sync.js` | Registry generator |
 | Registry | `mx-canon/mx-maxine-lives/routing-registry.json` | Auto-generated index |

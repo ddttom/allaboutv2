@@ -325,7 +325,7 @@ MX OS has a set of sayings that emerged from building. None were brainstormed. E
 - **"Design for both."** — the first principle
 - **"Cogs all the way down."** — the recursive self-description pattern
 
-Canonical source: `MX-Cog-Registry/cogs/mx-os/mx-phrasebook.cog.md`
+Canonical source: `scripts/cogs/mx-os/mx-phrasebook.cog.md`
 
 ### Principles
 
@@ -343,9 +343,9 @@ Canonical source: `PRINCIPLES.md` at repository root.
 | Understand the vision | `mx-canon/mx-os/product-brief.md` |
 | Read the cog specification | `mx-canon/mx-the-gathering/deliverables/cog-unified-spec.md` |
 | See what is in the registry | Run `npm run cog:list` |
-| Use the railway pitch | `MX-Cog-Registry/cogs/mx-os/mx-train-analogy.cog.md` |
-| Find the right saying | `MX-Cog-Registry/cogs/mx-os/mx-phrasebook.cog.md` |
-| Build a new action-doc | `mx-canon/MX-Cog-Registry/cogs/building-action-docs.cog.md` |
+| Use the railway pitch | `scripts/cogs/mx-os/mx-train-analogy.cog.md` |
+| Find the right saying | `scripts/cogs/mx-os/mx-phrasebook.cog.md` |
+| Build a new action-doc | `scripts/cogs/building-action-docs.cog.md` |
 | Understand project config | `env.cog.md` at repository root |
 
 ---

@@ -171,7 +171,7 @@ The relationship: The Gathering is POSIX. MX OS is Linux.
 
 ### Canon Registry
 
-Canonical home: `mx-canon/MX-Cog-Registry/cogs/`
+Canonical home: `scripts/cogs/`
 
 The cogs that define MX OS itself:
 
@@ -415,7 +415,7 @@ The `asking-for-help` action-doc implements this pattern. Cogs are the shared la
 
 | What | Where |
 | --- | --- |
-| Canon registry cogs | `mx-canon/MX-Cog-Registry/cogs/` |
+| Canon registry cogs | `scripts/cogs/` |
 | Reginald core action-docs | `mx-reginald/cogs/core/` |
 | Contact cogs | `mx-crm/contacts/` |
 | COG tools (unified) | `scripts/cog-tools.js` |

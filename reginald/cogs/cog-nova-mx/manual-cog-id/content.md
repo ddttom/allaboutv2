@@ -123,7 +123,7 @@ echo -n "MXT/engineering/audit" | md5
 
 Two registries, same format:
 
-- **Repo registry** (default) — `mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml`. Shared with the team.
+- **Repo registry** (default) — `mx-reginald/registries/cog-id-registry.yaml`. Shared with the team.
 - **Personal registry** — `$MX_HOME/registries/cog-id-registry.yaml`. Personal/external cog IDs.
 
 Generate auto-registers to the repo registry. To also register personally:
@@ -173,7 +173,7 @@ To stamp all cogs in the registry at once:
 /mx-c-cog-id bulk-generate
 ```
 
-This scans `mx-canon/MX-Cog-Registry/cogs/`, generates IDs for any cog missing `x-mx-p-ref`, registers them, and stamps the cog files.
+This scans `scripts/cogs/`, generates IDs for any cog missing `x-mx-p-ref`, registers them, and stamps the cog files.
 
 Path construction for bulk: `MXT/{category-short}/{cog-name}` where `mx-core` becomes `core`, `mx-tool` becomes `tool`, etc.
 
@@ -183,8 +183,8 @@ Path construction for bulk: `MXT/{category-short}/{cog-name}` where `mx-core` be
 
 | What | Where |
 |------|-------|
-| Action-doc (the program) | `mx-canon/MX-Cog-Registry/cogs/cog-id.cog.md` |
-| Repo registry (company/team) | `mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml` |
+| Action-doc (the program) | `scripts/cogs/cog-id.cog.md` |
+| Repo registry (company/team) | `mx-reginald/registries/cog-id-registry.yaml` |
 | Personal registry (machine) | `$MX_HOME/registries/cog-id-registry.yaml` |
 | Namespace policy ADR | `mx-canon/mx-maxine-lives/thinking/decisions/2026-02-14-attribute-namespace-policy.cog.md` |
 | Field dictionary entry | `mx-canon/ssot/fields.cog.md` (field: `x-mx-p-ref`) |

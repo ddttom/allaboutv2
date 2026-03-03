@@ -246,7 +246,7 @@ execute:
         2. **Repository context:**
            - Read `SOUL.md` at repo root — identity and partnership
            - Read cog registry (run `npm run cog:list` or read `mx-reginald/index.json`) — know the programs
-           - Read `mx-canon/MX-Cog-Registry/cogs/what-comes-next.cog.md` — know current priorities
+           - Read `scripts/cogs/what-comes-next.cog.md` — know current priorities
 
         3. **Internalise:** After reading, the agent knows:
            - Every cog by name (routing table)

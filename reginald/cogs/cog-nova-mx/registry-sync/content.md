@@ -45,10 +45,10 @@ mx:
 
           ### Step 1: Scan cog directory
 
-          Recursively scan `MX-Cog-Registry/cogs/` for all files:
+          Recursively scan `scripts/cogs/` for all files:
 
           ```bash
-          find mx-canon/MX-Cog-Registry/cogs -type f \
+          find scripts/cogs -type f \
             \( -name "*.cog.md" -o -name "*.cog.svg" -o -name "*.cog.js" -o -name "*.cog.*" \)
           ```
 
@@ -90,7 +90,7 @@ mx:
                 "version": "1.2.0",
                 "category": "mx-core",
                 "status": "published",
-                "path": "mx-canon/MX-Cog-Registry/cogs/pdf-generator.cog.md"
+                "path": "scripts/cogs/pdf-generator.cog.md"
               }
             ]
           }
@@ -153,7 +153,7 @@ mx:
           ### Step 1: Check if cogs are being committed
 
           ```bash
-          git diff --cached --name-only | grep -q "^mx-canon/MX-Cog-Registry/cogs/"
+          git diff --cached --name-only | grep -q "^scripts/cogs/"
           ```
 
           If no cog files are staged, exit early (no sync needed).
@@ -185,7 +185,7 @@ mx:
           # MX Registry Sync — Pre-commit Hook
 
           # Check if cogs are being committed
-          if git diff --cached --name-only | grep -q "^mx-canon/MX-Cog-Registry/cogs/"; then
+          if git diff --cached --name-only | grep -q "^scripts/cogs/"; then
             echo "🔄 Syncing registry..."
             npm run cog:sync || exit 1
             git add mx-reginald/
@@ -212,13 +212,13 @@ mx:
         usage: |
           ## HOOK-VSCODE — VS Code Save Integration
 
-          This action is invoked when a `.cog.*` file in `MX-Cog-Registry/cogs/` is saved.
+          This action is invoked when a `.cog.*` file in `scripts/cogs/` is saved.
 
           ### Step 1: Detect cog file save
 
           VS Code file watcher pattern:
           ```
-          mx-canon/MX-Cog-Registry/cogs/**/*.cog.*
+          scripts/cogs/**/*.cog.*
           ```
 
           ### Step 2: Run sync action
@@ -256,7 +256,7 @@ mx:
             "emeraldwalk.runonsave": {
               "commands": [
                 {
-                  "match": "mx-canon/MX-Cog-Registry/cogs/.*\\.cog\\..*$",
+                  "match": "scripts/cogs/.*\\.cog\\..*$",
                   "cmd": "npm run registry:sync-and-commit"
                 }
               ]
@@ -290,7 +290,7 @@ mx:
 
           Hook triggers when Write/Edit tool operates on files matching:
           ```
-          mx-canon/MX-Cog-Registry/cogs/**/*.cog.*
+          scripts/cogs/**/*.cog.*
           ```
 
           ### Step 2: Run sync action
@@ -327,7 +327,7 @@ mx:
           TOOL_NAME="$1"
           TOOL_FILE="$2"
 
-          if [[ "$TOOL_NAME" =~ ^(Write|Edit)$ ]] && [[ "$TOOL_FILE" =~ ^mx-canon/MX-Cog-Registry/cogs/.*\.cog\. ]]; then
+          if [[ "$TOOL_NAME" =~ ^(Write|Edit)$ ]] && [[ "$TOOL_FILE" =~ ^scripts/cogs/.*\.cog\. ]]; then
             npm run cog:sync
             git add mx-reginald/
             echo "✓ Registry synced and staged"
@@ -385,7 +385,7 @@ mx:
           📊 Registry Sync Report
 
           Mode: hub
-          Scan: mx-canon/MX-Cog-Registry/cogs/
+          Scan: scripts/cogs/
 
           Changes:
           ✓ Added: 1 cog

@@ -259,7 +259,7 @@ CLAUDE.md is pure routing logic. The configurations do the work.
 ├── Canon (mx-canon/)
 │   ├── MX-The-Gathering/              # The standard (independent)
 │   ├── MX-OS/                         # The operating system
-│   ├── MX-Cog-Registry/              # Core cog library
+│   ├── MX-Cog-Registry/              # Cog registry deliverables
 │   ├── MX-Maxine-Lives/              # The brain (see Section 6)
 │   ├── MX-Contacts/                  # Contact cogs
 │   ├── mx-reginald/                  # Registry product docs
@@ -322,7 +322,7 @@ mx-canon/
 ├── MX-The-Gathering/              # Standard (independent)
 │   └── reference-implementations/ # Templates and reference sites
 ├── MX-OS/                         # Operating system
-├── MX-Cog-Registry/               # Cog library
+├── MX-Cog-Registry/               # Cog registry deliverables
 ├── MX-Maxine-Lives/               # The brain (see Section 6)
 ├── MX-Contacts/                   # Contact cogs
 ├── mx-reginald/                   # Registry product
@@ -367,7 +367,7 @@ This is not bureaucracy. It is clarity. In a distributed system where cogs refer
 |-----------|---------|--------|
 | **MX-The-Gathering** | Independent standards body (like POSIX) | Active |
 | **MX-OS** | Operating system implementation (like Linux) | Active |
-| **MX-Cog-Registry** | Core cog library (what-is-a-cog, etc.) | Active |
+| **MX-Cog-Registry** | Cog registry deliverables (cogs now in scripts/cogs/) | Active |
 | **MX-Maxine-Lives** | The brain (decisions, thinking, management) | Active |
 | **MX-Contacts** | Contact cog library | Active |
 | **mx-reginald** | Registry product documentation | Active |
@@ -749,7 +749,7 @@ Most action-docs use `runtime: runbook` because the AI agent is the universal ex
 
 | Collection | Location | Type |
 |-----------|----------|------|
-| **Canon Registry** | `mx-canon/MX-Cog-Registry/cogs/` | Core system cogs |
+| **Canon Registry** | `scripts/cogs/` | Core system cogs |
 | **Reginald Core** | `mx-reginald/cogs/core/` (hub mode) | Tool action-docs |
 | **Contacts** | `mx-crm/contacts/` | Contact info-docs |
 | **Skills** | `.claude/skills/*/cog.md` | Entry point action-docs |
@@ -1038,7 +1038,7 @@ The complete list is at `PRINCIPLES.md` in the repository root.
 
 ### From MX Phrasebook
 
-Complete list in: `mx-canon/MX-Cog-Registry/cogs/mx-os/mx-phrasebook.cog.md`
+Complete list in: `scripts/cogs/mx-os/mx-phrasebook.cog.md`
 
 **Key sayings:**
 
@@ -1158,7 +1158,7 @@ npm run mode:status      # Check mode
 | **Brain root** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/mx-canon/mx-maxine-lives/` |
 | **Brain routing** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/mx-canon/mx-maxine-lives/ROUTING.md` |
 | **Manuals** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/mx-canon/mx-maxine-lives/manuals/` |
-| **Cog registry** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/mx-canon/MX-Cog-Registry/cogs/` |
+| **Cog registry** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/scripts/cogs/` |
 | **Cog spec** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/mx-canon/mx-the-gathering/specifications/cog-unified-spec.md` |
 | **Skills** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/.claude/skills/` |
 | **Mode configs** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/.claude/mode-configs/` |

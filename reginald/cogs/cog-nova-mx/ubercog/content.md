@@ -188,7 +188,7 @@ Route to `datalake/publications/mx-books/mx-codex/codex/` (Codex) or `mx-handboo
 
 ### "I need to create or edit a blog post"
 
-Route to `mx-canon/mx-maxine-lives/communications/blogs/`. Read `mx-canon/MX-Cog-Registry/cogs/mx-os/blog-generator.cog.md` for the full template and pipeline. Three stages: draft (md) → QA (html) → published (allaboutv2).
+Route to `mx-canon/mx-maxine-lives/communications/blogs/`. Read `scripts/cogs/mx-os/blog-generator.cog.md` for the full template and pipeline. Three stages: draft (md) → QA (html) → published (allaboutv2).
 
 ### "I need to work on the Maxine app"
 

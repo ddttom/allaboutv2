@@ -80,7 +80,7 @@ The MX ecosystem has been built. The foundation is in place:
 - **mx-canon** — Single source of truth with four initiatives:
   - **MX-The-Gathering** — Independent standards body. Founding charter, specification (v1.0-draft), landing page, announcement post, LinkedIn identity kit, outreach messages. Status: founding.
   - **MX-OS** — Machine Experience Operating System. Product brief, roadmap, bare-metal deployment. Status: active.
-  - **MX-Cog-Registry** — Centralised index of all cogs. Status: active.
+  - **Cog Registry** — Centralised index of all cogs (scripts/cogs/). Status: active.
   - **MX-App** — Reference cog-aware personal agent app. Product brief. Status: active.
 
 - **Eleven cogs** registered:
@@ -241,7 +241,7 @@ Each stage builds on the last. Script informs the HTML page. HTML page informs t
 
 ### Priority 5: Remove Cog Copies
 
-**What:** Remove duplicate cog files from Gathering deliverables and Reginald examples. One cog, one file, one canonical location: `mx-canon/MX-Cog-Registry/cogs/`.
+**What:** Remove duplicate cog files from Gathering deliverables and Reginald examples. One cog, one file, one canonical location: `scripts/cogs/`.
 **Decision:** Stop copying. All other locations link to canonical. No sync scripts, no symlinks, no duplication.
 **Why:** Eleven cogs times three copies is thirty-three files. Manual sync already broke. The answer is not better syncing — it is no copies.
 **Status:** Decided 9 Feb 2026 — implementation pending.

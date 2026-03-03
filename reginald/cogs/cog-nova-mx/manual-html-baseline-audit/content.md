@@ -685,7 +685,7 @@ HTML Baseline Audit System
 **Documentation:**
 
 - `mx-canon/mx-maxine-lives/manuals/manual-html-baseline-audit.cog.md` - This manual
-- `mx-canon/MX-Cog-Registry/cogs/html-baseline-audit.cog.md` - Action-doc
+- `scripts/cogs/html-baseline-audit.cog.md` - Action-doc
 
 ---
 

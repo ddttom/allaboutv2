@@ -247,7 +247,7 @@ mx:
       - term: cog
         aliases: [cog file, cog.md, mx doc, mx docs, intelligent document]
         path: mx-canon/mx-the-gathering/deliverables/cog-unified-spec.md
-        definition: "A .cog.md file. One cog type, many block types. 'Doc' for business, 'cog' for developers. Spec governed by The Gathering. Registry at MX-Cog-Registry/."
+        definition: "A .cog.md file. One cog type, many block types. 'Doc' for business, 'cog' for developers. Spec governed by The Gathering. Registry at scripts/cogs/."
         words: [cog, cogs]
 
       - term: info-doc
@@ -312,7 +312,7 @@ mx:
 
       - term: phrasebook
         aliases: [mx sayings, sayings]
-        path: MX-Cog-Registry/cogs/mx-os/mx-phrasebook.cog.md
+        path: scripts/cogs/mx-os/mx-phrasebook.cog.md
         definition: "The MX phrase book. All canonical sayings with context, origin, and usage rules."
         words: [phrasebook]
 

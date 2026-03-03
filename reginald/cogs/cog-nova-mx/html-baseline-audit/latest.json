@@ -22,7 +22,7 @@
   "compliance_level": 2,
   "created": "2026-02-21",
   "modified": "2026-02-21",
-  "source_path": "datalake/registries/cog-staging/html-baseline-audit.cog.md",
-  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/datalake/registries/cog-staging/html-baseline-audit.cog.md",
+  "source_path": "scripts/cogs/html-baseline-audit.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/html-baseline-audit.cog.md",
   "content_url": "/reginald/cogs/cog-nova-mx/html-baseline-audit/content.md"
 }

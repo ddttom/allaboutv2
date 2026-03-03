@@ -136,7 +136,7 @@ User prompt
 
 | Deliverable | Path | Type |
 |---|---|---|
-| Action-doc SOP | `mx-canon/MX-Cog-Registry/cogs/routing-pipeline.cog.md` | action-doc |
+| Action-doc SOP | `scripts/cogs/routing-pipeline.cog.md` | action-doc |
 | Hook script | `.claude/hooks/route-decorator.sh` | bash |
 | Sync script | `scripts/route-sync.js` | node.js |
 | Registry | `mx-canon/mx-maxine-lives/routing-registry.json` | auto-generated |

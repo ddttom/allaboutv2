@@ -45,7 +45,7 @@ mx:
           4. Display the result:
              - Path: MXT/engineering/audit
              - Cog ID: 7f3a8b2c1d4e5f6090812345abcdef67
-          5. Auto-register to the repo registry (mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml)
+          5. Auto-register to the repo registry (mx-reginald/registries/cog-id-registry.yaml)
           6. Ask if the user also wants to register it in $MX_HOME (personal registry)
 
           RULE: The path is case-sensitive. MXT/Engineering/Audit ≠ MXT/engineering/audit.
@@ -66,7 +66,7 @@ mx:
           Add a cog ID to one or both decode registries.
 
           Two-level registry system:
-          - **Repo registry** (default target): mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml
+          - **Repo registry** (default target): mx-reginald/registries/cog-id-registry.yaml
             Shared with the team. Anyone with repo access can decode.
           - **Personal registry** ($MX_HOME): $MX_HOME/registries/cog-id-registry.yaml
             Personal/external cog IDs. Never committed to a public repo.
@@ -121,13 +121,13 @@ mx:
 
           Lookup chain (in order):
           1. **$MX_HOME first** — personal registry takes priority (personal overrides)
-          2. **Repo registry second** — mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml
+          2. **Repo registry second** — mx-reginald/registries/cog-id-registry.yaml
 
           Steps:
           1. Read $MX_HOME/registries/cog-id-registry.yaml (if it exists)
           2. Search entries for matching cog-id
           3. If found: display path, cog-name, registration date, and source ("personal registry")
-          4. If not found in $MX_HOME: read mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml
+          4. If not found in $MX_HOME: read mx-reginald/registries/cog-id-registry.yaml
           5. Search entries for matching cog-id
           6. If found: display path, cog-name, registration date, and source ("repo registry")
           7. If not found in either: report "Unknown cog ID — not in any available registry"
@@ -184,7 +184,7 @@ mx:
 
           Steps:
           1. Read $MX_HOME/registries/cog-id-registry.yaml (if it exists)
-          2. Read mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml
+          2. Read mx-reginald/registries/cog-id-registry.yaml
           3. Display as a table with source column:
              | Cog ID (first 12 chars) | Path | Cog Name | Registered | Source |
              Source = "personal" or "repo"
@@ -197,14 +197,14 @@ mx:
           Scan the cog registry and generate IDs for any cog missing an x-mx-p-ref.
 
           Steps:
-          1. Read all .cog.md files in mx-canon/MX-Cog-Registry/cogs/
+          1. Read all .cog.md files in scripts/cogs/
           2. For each cog:
              a. Check if x-mx-p-ref exists in frontmatter
              b. If missing:
                 - Construct path: MXT/{category}/{cog-name}
                   (category from the cog's category field, e.g. mx-core → core, mx-tool → tool)
                 - Generate MD5 hash
-                - Register in repo registry (mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml)
+                - Register in repo registry (mx-reginald/registries/cog-id-registry.yaml)
                 - Add x-mx-p-ref to the cog's frontmatter
           3. Report: N cogs stamped, M already had IDs, K total
 ---
@@ -258,7 +258,7 @@ The input is a **hierarchical path**: company, then department, then cog name. S
 
 Two-level registry system:
 
-- **Repo registry** — `mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml`. Shared with the team. Anyone with repo access can decode. This is the default target when generating a cog ID.
+- **Repo registry** — `mx-reginald/registries/cog-id-registry.yaml`. Shared with the team. Anyone with repo access can decode. This is the default target when generating a cog ID.
 - **Personal registry** — `$MX_HOME/registries/cog-id-registry.yaml`. Personal or external cog IDs. This file never enters a public repository.
 
 Lookup chain: `$MX_HOME` first (personal overrides win), then repo registry.
@@ -332,7 +332,7 @@ const MX_HOME = process.env.MX_HOME || path.join(require('os').homedir(), '.mx')
 const PERSONAL_REGISTRY = path.join(MX_HOME, 'registries', 'cog-id-registry.yaml');
 
 // Repo registry path — relative to repo root
-const REPO_REGISTRY = path.join('mx-canon', 'MX-Cog-Registry', 'registries', 'cog-id-registry.yaml');
+const REPO_REGISTRY = path.join('mx-reginald', 'registries', 'cog-id-registry.yaml');
 
 function readRegistry(registryPath) {
   if (!fs.existsSync(registryPath)) {
@@ -407,7 +407,7 @@ MD5 is sufficient because the input space is small (company/department/cog-name 
 ## Rules
 
 1. **Immutable IDs.** A cog ID is generated once. It never changes, even if the cog evolves.
-2. **Two-level registry.** Repo registry (`mx-canon/MX-Cog-Registry/registries/`) for company cog IDs. `$MX_HOME` registry for personal/external cog IDs.
+2. **Two-level registry.** Repo registry (`mx-reginald/registries/`) for company cog IDs. `$MX_HOME` registry for personal/external cog IDs.
 3. **$MX_HOME wins.** Decode checks personal registry first. Personal overrides take priority.
 4. **Repo registry is the default target.** Generate auto-registers to the repo. Personal registration is opt-in.
 5. **x-mx-p-ref is the canonical field name.** Not `mx-ref`. Not `cog-id`. The namespace prefix is the policy.
@@ -438,7 +438,7 @@ Example:
 ✓ Cog ID registered successfully
 
 Registry updated:
-  /Users/tom/Documents/MX/MX-The-Books/repo/mx-canon/MX-Cog-Registry/registries/cog-id-registry.yaml
+  /Users/tom/Documents/MX/MX-The-Books/repo/mx-reginald/registries/cog-id-registry.yaml
 
 Entry added:
   cog-id: 7f3a8b2c1d4e5f6090812345abcdef67

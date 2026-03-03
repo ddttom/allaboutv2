@@ -1065,8 +1065,8 @@ window.mcp_tools = {
 
 ### Related Cogs
 
-- **Cogify-This:** `MX-Cog-Registry/cogs/cogify-this.cog.md` (v1.3.0)
-- **Pixel-Perfect Replication:** `MX-Cog-Registry/cogs/pixel-perfect-web-replication.cog.md`
+- **Cogify-This:** `scripts/cogs/cogify-this.cog.md` (v1.3.0)
+- **Pixel-Perfect Replication:** `scripts/cogs/pixel-perfect-web-replication.cog.md`
 - **Cog Unified Spec:** `MX-The-Gathering/deliverables/cog-unified-spec.md`
 
 ### Documentation
