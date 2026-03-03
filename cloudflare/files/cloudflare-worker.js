@@ -13,12 +13,12 @@
 * OF ANY KIND, either express or implied. See the License for the specific language
 * governing permissions and limitations under the License.
 *
-* @version 1.1.5
+* @version 1.2.0
  */
 
 // Worker version - hardcoded for compatibility
 // Update this when package.json version changes
-export const WORKER_VERSION = '1.1.5';
+export const WORKER_VERSION = '1.2.0';
 
 // Picture placeholder configuration
 export const PICTURE_PLACEHOLDER_CONFIG = {
@@ -115,7 +115,7 @@ export const formatISO8601Date = (dateString) => {
   // Try to parse dates with month names first
   // Patterns: "10 December 2024", "December 10, 2024", "10 Dec 25", "12/dec/25"
   // eslint-disable-next-line max-len
-  const monthNamePattern = /(\d{1,2})[\s/\-]+([a-zA-Z]+)[\s,/\-]+(\d{2,4})|([a-zA-Z]+)[\s/\-]+(\d{1,2})[\s,/\-]+(\d{2,4})/i;
+  const monthNamePattern = /(\d{1,2})[\s/-]+([a-zA-Z]+)[\s,/-]+(\d{2,4})|([a-zA-Z]+)[\s/-]+(\d{1,2})[\s,/-]+(\d{2,4})/i;
   const monthMatch = trimmed.match(monthNamePattern);
 
   if (monthMatch) {
@@ -389,6 +389,103 @@ export const injectSpeculationRules = (html) => {
   return html.replace('</head>', `${speculationScript}\n</head>`);
 };
 
+/**
+ * Parses an Accept-Language HTTP header into a sorted array of language preferences.
+ * Pure function - fully testable without Cloudflare Workers runtime.
+ * @param {string} header - Accept-Language header value (e.g., "es-MX,es;q=0.9,en;q=0.8")
+ * @returns {Array<{full: string, base: string, quality: number}>} Sorted by quality descending
+ */
+export const parseAcceptLanguage = (header) => {
+  if (!header || typeof header !== 'string') return [];
+
+  return header
+    .split(',')
+    .map((lang) => {
+      const parts = lang.trim().split(';q=');
+      const code = parts[0].trim().toLowerCase();
+      if (!code) return null;
+      return {
+        full: code,
+        base: code.split('-')[0],
+        quality: parts[1] ? parseFloat(parts[1]) : 1.0,
+      };
+    })
+    .filter((entry) => entry !== null && !Number.isNaN(entry.quality))
+    .sort((a, b) => b.quality - a.quality);
+};
+
+/**
+ * Detects the best matching language from an Accept-Language header.
+ * Cascading match: exact regional → base language → default.
+ * Pure function - fully testable without Cloudflare Workers runtime.
+ * @param {string} acceptLanguageHeader - Raw Accept-Language header value
+ * @param {string[]} availableLanguages - Array of supported language codes (e.g., ["es", "en"])
+ * @param {string} defaultLanguage - Fallback language code
+ * @returns {string} Best matching language code
+ */
+export const detectLanguage = (acceptLanguageHeader, availableLanguages, defaultLanguage) => {
+  const preferences = parseAcceptLanguage(acceptLanguageHeader);
+
+  for (const pref of preferences) {
+    // Try exact regional match first (es-mx)
+    if (availableLanguages.includes(pref.full)) {
+      return pref.full;
+    }
+    // Try base language match (es)
+    if (availableLanguages.includes(pref.base)) {
+      return pref.base;
+    }
+  }
+
+  return defaultLanguage;
+};
+
+/**
+ * Finds a registered language site matching the given pathname.
+ * Pure function - fully testable without Cloudflare Workers runtime.
+ * @param {string} pathname - Request pathname (e.g., "/mx/demo/salva/")
+ * @param {Array<{pathPrefix: string}>} sites - Registered site configurations
+ * @returns {{site: object, remainingPath: string}|null} Matched site and remaining path, or null
+ */
+export const findLanguageSite = (pathname, sites) => {
+  if (!sites || !Array.isArray(sites)) return null;
+
+  for (const site of sites) {
+    const prefix = site.pathPrefix;
+    if (pathname === prefix || pathname.startsWith(`${prefix}/`)) {
+      const remainingPath = pathname.slice(prefix.length) || '/';
+      return { site, remainingPath };
+    }
+  }
+
+  return null;
+};
+
+/**
+ * Checks whether a path (relative to site prefix) should trigger a language redirect.
+ * Pure function - fully testable without Cloudflare Workers runtime.
+ * @param {string} remainingPath - Path after the site prefix (e.g., "/", "/index.html", "/assets/style.css")
+ * @param {object} site - Site configuration with redirectPaths and excludePaths
+ * @returns {boolean} True if this path should be redirected
+ */
+export const shouldLanguageRedirect = (remainingPath, site) => {
+  // Check excluded paths first
+  if (site.excludePaths) {
+    for (const excluded of site.excludePaths) {
+      if (remainingPath.startsWith(excluded)) {
+        return false;
+      }
+    }
+  }
+
+  // Check if path is in the redirect list
+  if (site.redirectPaths) {
+    return site.redirectPaths.includes(remainingPath);
+  }
+
+  return false;
+};
+
 const handleRequest = async (request, env, _ctx) => {
   // Validate required environment variables
   if (!env.ORIGIN_HOSTNAME) {
@@ -429,6 +526,38 @@ const handleRequest = async (request, env, _ctx) => {
 
   if (url.pathname.startsWith('/drafts/')) {
     return new Response('Not Found', { status: 404 });
+  }
+
+  // --- Language redirect (before origin fetch) ---
+  // Fetch language config from origin with 1-hour edge cache
+  try {
+    const configUrl = new URL('/reginald/api/v1/language-config.json', url);
+    configUrl.hostname = env.ORIGIN_HOSTNAME;
+    const configResp = await fetch(configUrl, { cf: { cacheTtl: 3600 } });
+    if (configResp.ok) {
+      const langConfig = await configResp.json();
+      const match = findLanguageSite(url.pathname, langConfig.sites);
+      if (match) {
+        const { site, remainingPath } = match;
+        // Skip if already on a language path
+        const langPattern = new RegExp(`^/(${site.languages.join('|')})/`);
+        if (!langPattern.test(remainingPath) && shouldLanguageRedirect(remainingPath, site)) {
+          const acceptLang = request.headers.get('Accept-Language') || '';
+          const targetLang = detectLanguage(acceptLang, site.languages, site.default);
+          const redirectUrl = new URL(request.url);
+          redirectUrl.pathname = `${site.pathPrefix}/${targetLang}/`;
+          return new Response(null, {
+            status: 302,
+            headers: {
+              Location: redirectUrl.toString(),
+              'Cache-Control': 'no-cache',
+            },
+          });
+        }
+      }
+    }
+  } catch (_langErr) {
+    // Language redirect is non-critical — fall through to normal request handling
   }
 
   if (isRUMRequest(url)) {

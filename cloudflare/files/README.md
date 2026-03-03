@@ -24,7 +24,8 @@ This Worker extends Adobe's standard EDS Cloudflare Worker template to:
 4. Remove EDS error tags and non-social metadata after processing
 5. Replace "Picture Here" placeholders with author images
 6. Remove all HTML comments from HTML responses
-7. Maintain all standard Adobe EDS functionality
+7. **Language redirect** — Accept-Language detection with 302 redirect for n-language sites
+8. Maintain all standard Adobe EDS functionality
 
 ## Features
 
@@ -34,7 +35,7 @@ The worker includes a version header in all responses:
 
 - **Header name**: `cfw` (CloudflareWorker)
 - **Format**: Semantic versioning (MAJOR.MINOR.PATCH)
-- **Current version**: `1.1.5`
+- **Current version**: `1.2.0`
 - **Usage**: Track deployed worker version for debugging and monitoring
 
 **Version Management (Single Source of Truth):**
@@ -319,6 +320,57 @@ Injects Chrome's Speculation Rules API for near-instant page navigation via prer
 - Enhance user experience with instant page loads
 - Boost Core Web Vitals scores (LCP, FID)
 - Progressive enhancement (no impact on older browsers)
+
+### Language Redirect
+
+Server-side Accept-Language detection and 302 redirect for n-language sites. Replaces client-side JavaScript redirects, eliminating flash of wrong content and improving SEO.
+
+**How it works:**
+
+1. Worker fetches `/reginald/api/v1/language-config.json` (cached 1 hour at edge)
+2. Matches request path against registered site `pathPrefix` entries
+3. If path is redirectable (e.g., `/` or `/index.html`), reads `Accept-Language` header
+4. Cascading match: exact regional (`es-mx`) → base language (`es`) → default
+5. Returns 302 redirect to language-specific path
+
+**Configuration** (`/reginald/api/v1/language-config.json`):
+
+```json
+{
+  "version": "1.0",
+  "sites": [
+    {
+      "pathPrefix": "/mx/demo/salva",
+      "languages": ["es", "en"],
+      "default": "es",
+      "redirectPaths": ["/", "/index.html"],
+      "excludePaths": ["/assets/"]
+    }
+  ]
+}
+```
+
+**Adding a new site:** Add an entry to the `sites` array — no worker redeployment needed.
+
+**Skip conditions** (no redirect):
+
+- Already on a language path (`/es/`, `/en/`)
+- Excluded path (`/assets/`)
+- Path not in `redirectPaths`
+- Config fetch fails (falls through to normal request handling)
+
+**Pure functions** (all testable without Cloudflare runtime):
+
+- `parseAcceptLanguage(header)` — Parse header into sorted preferences
+- `detectLanguage(header, available, default)` — Cascading language match
+- `findLanguageSite(pathname, sites)` — Match path to registered site
+- `shouldLanguageRedirect(path, site)` — Check if path should redirect
+
+**Design principles:**
+
+- Stateless — no cookies or localStorage (GDPR compliant)
+- Non-critical — config fetch failure falls through silently
+- <10ms added latency target
 
 ## Getting Started
 

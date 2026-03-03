@@ -33,6 +33,10 @@ import worker, {
   removeHtmlComments,
   injectSpeculationRules,
   injectJsonLd,
+  parseAcceptLanguage,
+  detectLanguage,
+  findLanguageSite,
+  shouldLanguageRedirect,
   WORKER_VERSION,
   PICTURE_PLACEHOLDER_CONFIG,
 } from './cloudflare-worker.js';
@@ -905,9 +909,9 @@ describe('handleRequest Integration', () => {
 
     const response = await worker.fetch(request, env);
 
-    // Verify version header still present and shows 1.1.5
+    // Verify version header still present and shows current version
     expect(response.headers.get('cfw')).toBe(WORKER_VERSION);
-    expect(WORKER_VERSION).toBe('1.1.5');
+    expect(WORKER_VERSION).toBe('1.2.0');
   });
 
   test('includes speculation rules in HTML responses', async () => {
@@ -932,5 +936,188 @@ describe('handleRequest Integration', () => {
     expect(html).toContain('speculationrules');
     expect(html).toContain('"prerender"');
     expect(html).toContain('"prefetch"');
+  });
+});
+
+// ============================================================
+// Language Redirect Tests
+// ============================================================
+
+describe('parseAcceptLanguage', () => {
+  test('parses single language without quality', () => {
+    const result = parseAcceptLanguage('en');
+    expect(result).toEqual([{ full: 'en', base: 'en', quality: 1.0 }]);
+  });
+
+  test('parses multiple languages with quality values', () => {
+    const result = parseAcceptLanguage('es-MX,es;q=0.9,en-US;q=0.8,en;q=0.7');
+    expect(result).toHaveLength(4);
+    expect(result[0]).toEqual({ full: 'es-mx', base: 'es', quality: 1.0 });
+    expect(result[1]).toEqual({ full: 'es', base: 'es', quality: 0.9 });
+    expect(result[2]).toEqual({ full: 'en-us', base: 'en', quality: 0.8 });
+    expect(result[3]).toEqual({ full: 'en', base: 'en', quality: 0.7 });
+  });
+
+  test('sorts by quality descending', () => {
+    const result = parseAcceptLanguage('en;q=0.5,fr;q=0.9,de;q=0.7');
+    expect(result[0].full).toBe('fr');
+    expect(result[1].full).toBe('de');
+    expect(result[2].full).toBe('en');
+  });
+
+  test('normalises codes to lowercase', () => {
+    const result = parseAcceptLanguage('EN-GB,FR-FR;q=0.8');
+    expect(result[0].full).toBe('en-gb');
+    expect(result[1].full).toBe('fr-fr');
+  });
+
+  test('returns empty array for empty header', () => {
+    expect(parseAcceptLanguage('')).toEqual([]);
+    expect(parseAcceptLanguage(null)).toEqual([]);
+    expect(parseAcceptLanguage(undefined)).toEqual([]);
+  });
+
+  test('handles wildcard (*)', () => {
+    const result = parseAcceptLanguage('en,*;q=0.1');
+    expect(result).toHaveLength(2);
+    expect(result[1]).toEqual({ full: '*', base: '*', quality: 0.1 });
+  });
+
+  test('skips entries with invalid quality values', () => {
+    const result = parseAcceptLanguage('en;q=abc,fr;q=0.8');
+    expect(result).toHaveLength(1);
+    expect(result[0].full).toBe('fr');
+  });
+});
+
+describe('detectLanguage', () => {
+  const available = ['es', 'en'];
+
+  test('matches exact language', () => {
+    expect(detectLanguage('es', available, 'es')).toBe('es');
+    expect(detectLanguage('en', available, 'es')).toBe('en');
+  });
+
+  test('matches base language from regional variant', () => {
+    expect(detectLanguage('es-MX,en;q=0.8', available, 'en')).toBe('es');
+    expect(detectLanguage('en-GB,es;q=0.5', available, 'es')).toBe('en');
+  });
+
+  test('returns default when no match', () => {
+    expect(detectLanguage('ja,zh;q=0.9', available, 'es')).toBe('es');
+    expect(detectLanguage('', available, 'en')).toBe('en');
+  });
+
+  test('prefers higher quality match', () => {
+    expect(detectLanguage('fr;q=1.0,en;q=0.9,es;q=0.8', available, 'es')).toBe('en');
+  });
+
+  test('matches exact regional when available', () => {
+    const withRegional = ['es', 'es-mx', 'en'];
+    expect(detectLanguage('es-MX', withRegional, 'en')).toBe('es-mx');
+  });
+
+  test('cascades from regional to base', () => {
+    expect(detectLanguage('es-AR', available, 'en')).toBe('es');
+  });
+
+  test('handles real-world complex header', () => {
+    const header = 'en-GB,en-US;q=0.9,en;q=0.8,es;q=0.7,fr;q=0.6';
+    expect(detectLanguage(header, available, 'es')).toBe('en');
+  });
+});
+
+describe('findLanguageSite', () => {
+  const sites = [
+    {
+      pathPrefix: '/mx/demo/salva',
+      languages: ['es', 'en'],
+      default: 'es',
+      redirectPaths: ['/', '/index.html'],
+      excludePaths: ['/assets/'],
+    },
+    {
+      pathPrefix: '/mx/demo/other',
+      languages: ['de', 'en'],
+      default: 'de',
+      redirectPaths: ['/', '/index.html'],
+      excludePaths: ['/assets/'],
+    },
+  ];
+
+  test('matches site by exact pathPrefix', () => {
+    const result = findLanguageSite('/mx/demo/salva', sites);
+    expect(result).not.toBeNull();
+    expect(result.site.pathPrefix).toBe('/mx/demo/salva');
+    expect(result.remainingPath).toBe('/');
+  });
+
+  test('matches site with trailing slash', () => {
+    const result = findLanguageSite('/mx/demo/salva/', sites);
+    expect(result).not.toBeNull();
+    expect(result.remainingPath).toBe('/');
+  });
+
+  test('matches site with subpath', () => {
+    const result = findLanguageSite('/mx/demo/salva/index.html', sites);
+    expect(result).not.toBeNull();
+    expect(result.remainingPath).toBe('/index.html');
+  });
+
+  test('matches correct site from multiple', () => {
+    const result = findLanguageSite('/mx/demo/other/', sites);
+    expect(result.site.pathPrefix).toBe('/mx/demo/other');
+  });
+
+  test('returns null for unregistered path', () => {
+    expect(findLanguageSite('/blogs/mx/', sites)).toBeNull();
+    expect(findLanguageSite('/', sites)).toBeNull();
+  });
+
+  test('returns null for null or empty sites', () => {
+    expect(findLanguageSite('/mx/demo/salva/', null)).toBeNull();
+    expect(findLanguageSite('/mx/demo/salva/', [])).toBeNull();
+  });
+
+  test('does not partially match pathPrefix', () => {
+    expect(findLanguageSite('/mx/demo/salva-extra/', sites)).toBeNull();
+  });
+});
+
+describe('shouldLanguageRedirect', () => {
+  const site = {
+    pathPrefix: '/mx/demo/salva',
+    languages: ['es', 'en'],
+    default: 'es',
+    redirectPaths: ['/', '/index.html'],
+    excludePaths: ['/assets/'],
+  };
+
+  test('redirects root path', () => {
+    expect(shouldLanguageRedirect('/', site)).toBe(true);
+  });
+
+  test('redirects index.html', () => {
+    expect(shouldLanguageRedirect('/index.html', site)).toBe(true);
+  });
+
+  test('does not redirect excluded paths', () => {
+    expect(shouldLanguageRedirect('/assets/style.css', site)).toBe(false);
+    expect(shouldLanguageRedirect('/assets/', site)).toBe(false);
+  });
+
+  test('does not redirect non-registered paths', () => {
+    expect(shouldLanguageRedirect('/about.html', site)).toBe(false);
+    expect(shouldLanguageRedirect('/es/', site)).toBe(false);
+  });
+
+  test('handles site without excludePaths', () => {
+    const simple = { redirectPaths: ['/', '/index.html'] };
+    expect(shouldLanguageRedirect('/', simple)).toBe(true);
+  });
+
+  test('handles site without redirectPaths', () => {
+    const noRedirect = { excludePaths: ['/assets/'] };
+    expect(shouldLanguageRedirect('/', noRedirect)).toBe(false);
   });
 });

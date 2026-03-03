@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "sites": [
+    {
+      "pathPrefix": "/mx/demo/salva",
+      "languages": ["es", "en"],
+      "default": "es",
+      "redirectPaths": ["/", "/index.html"],
+      "excludePaths": ["/assets/"]
+    }
+  ]
+}
