@@ -82,7 +82,7 @@ Unset mode is an error state. The repository must be explicitly set to hub or st
 ├── .repo-mode                          # Mode indicator (hub/standalone/unset)
 ├── .gitmodules                         # Submodule definitions (hub mode)
 ├── CLAUDE.md                           # Bootloader — dispatches to mode config
-├── PRINCIPLES.md                       # 14 core principles
+├── principles.cog.md                       # 14 core principles
 ├── SOUL.md                            # Repository identity
 ├── REMINDERS.md                       # Gestalt-owned action items
 ├── package.json                       # npm scripts and dependencies
@@ -206,7 +206,7 @@ CLAUDE.md is pure routing logic. The configurations do the work.
 |------|---------|
 | `.repo-mode` | Mode indicator (hub/standalone/unset) |
 | `CLAUDE.md` | Bootloader — reads mode and dispatches to config |
-| `PRINCIPLES.md` | 14 core MX principles |
+| `principles.cog.md` | 14 core MX principles |
 | `SOUL.md` | Repository identity (partnership model) |
 | `REMINDERS.md` | Persistent action items (gestalt-owned) |
 | `package.json` | npm scripts and dependencies |
@@ -234,7 +234,7 @@ CLAUDE.md is pure routing logic. The configurations do the work.
 │   ├── .repo-mode                      # Mode indicator
 │   ├── .gitmodules                     # Submodule definitions (hub)
 │   ├── CLAUDE.md                       # Bootloader dispatcher
-│   ├── PRINCIPLES.md                   # 14 core principles
+│   ├── principles.cog.md                   # 14 core principles
 │   ├── SOUL.md                         # Repository identity
 │   ├── REMINDERS.md                    # Gestalt-owned action items
 │   ├── package.json                    # npm scripts, dependencies
@@ -994,9 +994,9 @@ tags:
 
 ## 11. Key Principles and Conventions
 
-### From PRINCIPLES.md
+### From principles.cog.md
 
-The complete list is at `PRINCIPLES.md` in the repository root.
+The complete list is at `principles.cog.md` in the repository root.
 
 **The principles:**
 
@@ -1026,7 +1026,7 @@ The complete list is at `PRINCIPLES.md` in the repository root.
 
 **Canon wins:** If Canon conflicts with anything elsewhere, Canon is correct. mx-canon is the single source of truth. Everything else is canon fodder.
 
-**Use existing standards:** Markdown, YAML, HTML meta tags, QR codes, git, OAuth, MIT licence. Never invent when you can adopt. This includes human conventions — PRINCIPLES.md lives at repo root because that is where humans expect principles.
+**Use existing standards:** Markdown, YAML, HTML meta tags, QR codes, git, OAuth, MIT licence. Never invent when you can adopt. This includes human conventions — principles.cog.md lives at repo root because that is where humans expect principles.
 
 **Write like a blog:** Prose in cogs should read like well-written blog posts. Informative, not technical. Editorial and authoritative. Storytelling and honest. The YAML is for machines. The markdown is for humans.
 
@@ -1125,7 +1125,7 @@ git submodule deinit -f --all  # Done by npm run mode:standalone
 
 1. Check `.repo-mode` — hub or standalone?
 2. Read repository `SOUL.md` — what is this repo?
-3. Check `PRINCIPLES.md` — what rules apply?
+3. Check `principles.cog.md` — what rules apply?
 4. Read `REMINDERS.md` — any active action items?
 
 **In any folder:**
@@ -1153,7 +1153,7 @@ npm run mode:status      # Check mode
 |---------------|---------------|
 | **Mode indicator** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/.repo-mode` |
 | **Bootloader** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/CLAUDE.md` |
-| **Principles** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/PRINCIPLES.md` |
+| **Principles** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/principles.cog.md` |
 | **Canon root** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/mx-canon/` |
 | **Brain root** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/mx-canon/mx-maxine-lives/` |
 | **Brain routing** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/mx-canon/mx-maxine-lives/ROUTING.md` |

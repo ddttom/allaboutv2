@@ -50,7 +50,7 @@ Manual targeted edits across 11 files (33 occurrences). Smaller scope than BDR-0
 |----------|-------|-------------|
 | Standards/registry | 2 (Canon + datalake mirror) | 8 |
 | Bootloader config | 1 (base.md) | 4 |
-| Reference docs | 2 (PRINCIPLES.md + mx-principles-for-repos.md) | 6 |
+| Reference docs | 2 (principles.cog.md + mx-principles-for-repos.md) | 6 |
 | Validator code | 1 (mx-validator.js) | 2 |
 | Blog posts | 5 (md + html versions) | 5 |
 | Book appendix | 1 (appendix-l) | 3 |

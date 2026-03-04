@@ -2,7 +2,7 @@
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>REGINALD - MX COG Registry</title>
   <meta name="description" content="Registry for Genuine Information, Notarised Authentication, and Legitimate Documentation. Machine-readable documentation for AI agents.">
   <meta name="author" content="Cog-Nova-MX Ltd">
@@ -14,11 +14,8 @@
   <meta property="og:url" content="https://allabout.network/reginald/">
 
   <!-- MX carrier metadata -->
-  <meta name="mx:category" content="mx-tools">
   <meta name="mx:status" content="active">
   <meta name="mx:contentType" content="document">
-  <meta name="mx:tags" content="tool">
-  <meta name="mx:partOf" content="mx-os">
 
   <!-- Schema.org -->
   <script type="application/ld+json">
@@ -292,10 +289,10 @@
     <div class="search-box">
       <input type="text" id="search" placeholder="Search COGs by name, description, or tags...">
       <div class="filters">
-        <select id="filter-category">
+        <select id="filter-category" aria-label="Filter by category" title="Filter by category">
           <option value="">All Categories</option>
         </select>
-        <select id="filter-type">
+        <select id="filter-type" aria-label="Filter by type" title="Filter by type">
           <option value="">All Types</option>
           <option value="action-doc">Action Docs</option>
           <option value="info-doc">Info Docs</option>

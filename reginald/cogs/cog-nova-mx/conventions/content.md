@@ -61,7 +61,7 @@ The operational rulebook. Read this before creating files, naming things, or put
 | Register entries | `{YYYY-MM-DD}-{title}.cog.md` | registers/ | registers/SOUL.md |
 | Session reports | `{YYYY-MM-DD}-{segment}-report.md` | mx-outputs/md/reports/directors/session/ | MEMORY.md |
 | Blog posts | Original filename preserved | communications/blogs/ | blogs/SOUL.md |
-| No version in filename | Use `version:` in frontmatter | Everywhere | PRINCIPLES.md #11 |
+| No version in filename | Use `version:` in frontmatter | Everywhere | principles.cog.md #11 |
 | Kebab-case | All filenames use hyphens | Everywhere | Implicit, universally observed |
 | Uber cogs | `UBER.cog.md` | $MX_HOME and repo root | $MX_HOME convention |
 
@@ -76,7 +76,7 @@ The operational rulebook. Read this before creating files, naming things, or put
 | Convention | Pattern | Scope | Source |
 |-----------|---------|-------|--------|
 | Kebab-case | Hyphens, no spaces, no underscores | Everywhere | Implicit, universally observed |
-| SOUL.md in every folder | Read before editing | Brain, Canon | PRINCIPLES.md #12 |
+| SOUL.md in every folder | Read before editing | Brain, Canon | principles.cog.md #12 |
 | mx-canon uppercase | Brand emphasis: `mx-canon/`, `MX-Maxine-Lives/` | Canon tree | Established convention |
 | Register subfolders | Three-letter codes: ADR, BDR, NDR, MDR, FDR, CVR | registers/ | registers/SOUL.md |
 | Client deliverables | `mx-outputs/datalake/clients/{client-name}/` | datalake | env.cog.md |
@@ -141,7 +141,7 @@ Where things live. These are not suggestions — if content goes elsewhere, it's
 | Deprecated @mx-ai-* | Use `@mx:*` instead | FDR deprecated fields |
 | One doc type | Info-doc (no action block) or action-doc (with action block). No other types. | ADR: block-architecture |
 | Builds-on | Reference by cog name, not file path | cog-unified-spec |
-| Canon wins | If Canon conflicts with anywhere else, Canon is correct | PRINCIPLES.md |
+| Canon wins | If Canon conflicts with anywhere else, Canon is correct | principles.cog.md |
 
 ### Status Values by Context
 
@@ -161,10 +161,10 @@ Where things live. These are not suggestions — if content goes elsewhere, it's
 | Convention | Rule | Source |
 |-----------|------|--------|
 | All .md files need frontmatter | YAML between `---` fences | base.md |
-| Version in frontmatter | `version: "1.0"` — never in filename | PRINCIPLES.md #11 |
+| Version in frontmatter | `version: "1.0"` — never in filename | principles.cog.md #11 |
 | British dates in prose | "15 February 2026" | base.md |
 | ISO dates in metadata | `2026-02-15` | base.md |
-| No hardcoded counts | Say "the registry" not "33 cogs" | PRINCIPLES.md, MEMORY.md |
+| No hardcoded counts | Say "the registry" not "33 cogs" | principles.cog.md, MEMORY.md |
 | Audience field | `both`, `humans`, `machines`, `tech`, `business` | mx-messaging.cog.md |
 | Ownership field | `gestalt` for shared artefacts | MEMORY.md |
 | mx: in non-YAML | `@mx:field` in JS/CSS, `<meta name="mx:field">` in HTML | mx-metadata-conventions |
@@ -192,13 +192,13 @@ Where things live. These are not suggestions — if content goes elsewhere, it's
 | Convention | Rule | Source |
 |-----------|------|--------|
 | British English | organise, colour, whilst (but code uses international: "Organization") | base.md |
-| Write like a blog | Informative, not technical. Editorial and authoritative. | PRINCIPLES.md #13 |
-| Dual audience | Business claim first, technical evidence underneath | PRINCIPLES.md #14 |
+| Write like a blog | Informative, not technical. Editorial and authoritative. | principles.cog.md #13 |
+| Dual audience | Business claim first, technical evidence underneath | principles.cog.md #14 |
 | No exaggeration | No "exciting", "amazing", "revolutionary" | blog-generator.cog.md |
 | Short dashes only | Not em-dashes | base.md |
 | No colons in chapter titles | Chapters use descriptive titles without colons | base.md |
 | Timeless manuscripts | No publication dates about the book itself | hub.md, TIMELESS-MANUSCRIPT-RULE.md |
-| Size-neutral language | Never hardcode counts in prose | base.md, PRINCIPLES.md |
+| Size-neutral language | Never hardcode counts in prose | base.md, principles.cog.md |
 
 ---
 

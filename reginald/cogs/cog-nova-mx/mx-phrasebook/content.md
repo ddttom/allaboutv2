@@ -72,7 +72,7 @@ This is the canonical phrasebook. If Maxine or any AI agent uses an MX saying, i
 
 **Use when:** Any agent is lost, disoriented, or starting fresh. The greeting for any session that begins at the machine level.
 
-**Where it lives:** PRINCIPLES.md, UBER.cog.md, how-mx-os-runs.cog.md, mx-os-environment.cog.md, what-is-mx-environment.cog.md
+**Where it lives:** principles.cog.md, UBER.cog.md, how-mx-os-runs.cog.md, mx-os-environment.cog.md, what-is-mx-environment.cog.md
 
 ---
 
@@ -120,7 +120,7 @@ This is the canonical phrasebook. If Maxine or any AI agent uses an MX saying, i
 
 **Use when:** Someone asks "how do I install MX OS?" The answer is: you do not. You write it.
 
-**Where it lives:** UBER.cog.md, what-is-mx-os.cog.md, PRINCIPLES.md
+**Where it lives:** UBER.cog.md, what-is-mx-os.cog.md, principles.cog.md
 
 ---
 
@@ -144,19 +144,19 @@ This is the canonical phrasebook. If Maxine or any AI agent uses an MX saying, i
 
 **Use when:** Resolving conflicts between Canon and other sources.
 
-**Where it lives:** PRINCIPLES.md, mx-canon SOUL.md
+**Where it lives:** principles.cog.md, mx-canon SOUL.md
 
 ---
 
 ### "Convention wins the location. Canon wins the content."
 
-**Context:** PRINCIPLES.md lives at the repo root (because that is where humans expect project principles) even though it is canonical content. The file is in the conventional place. The authority is Canon's.
+**Context:** principles.cog.md lives at the repo root (because that is where humans expect project principles) even though it is canonical content. The file is in the conventional place. The authority is Canon's.
 
 **Origin:** Resolving the tension between "Canon is the single source of truth" and "use existing standards for file placement."
 
-**Use when:** Explaining why canonical documents like PRINCIPLES.md, SOUL.md, and CLAUDE.md live at the repo root instead of inside mx-canon/.
+**Use when:** Explaining why canonical documents like principles.cog.md, SOUL.md, and CLAUDE.md live at the repo root instead of inside mx-canon/.
 
-**Where it lives:** PRINCIPLES.md, cog-registry Scattered Canon section
+**Where it lives:** principles.cog.md, cog-registry Scattered Canon section
 
 ---
 
@@ -224,11 +224,11 @@ This is the canonical phrasebook. If Maxine or any AI agent uses an MX saying, i
 
 **Context:** The turtles all the way down reference. Every level of the MX OS stack describes itself using the same cog pattern — machine, repo, folder, document, script. The thing that contains cogs is itself a cog.
 
-**Origin:** PRINCIPLES.md — the "Cogs All the Way Down" principle.
+**Origin:** principles.cog.md — the "Cogs All the Way Down" principle.
 
 **Use when:** Explaining the recursive self-description pattern. Why `$MX_HOME` is itself a cog environment.
 
-**Where it lives:** PRINCIPLES.md, what-is-a-cog.cog.md
+**Where it lives:** principles.cog.md, what-is-a-cog.cog.md
 
 ---
 
@@ -276,7 +276,7 @@ This is the canonical phrasebook. If Maxine or any AI agent uses an MX saying, i
 
 **Use when:** Any design decision. The test: does this help one audience while hurting the other?
 
-**Where it lives:** PRINCIPLES.md, UBER.cog.md, throughout
+**Where it lives:** principles.cog.md, UBER.cog.md, throughout
 
 ---
 
@@ -288,7 +288,7 @@ This is the canonical phrasebook. If Maxine or any AI agent uses an MX saying, i
 
 **Use when:** Encouraging adoption. The barrier is low. The benefit scales with metadata quality.
 
-**Where it lives:** PRINCIPLES.md, what-is-a-cog.cog.md
+**Where it lives:** principles.cog.md, what-is-a-cog.cog.md
 
 ---
 

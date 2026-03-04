@@ -84,7 +84,7 @@ The machine uber cog (`$MX_HOME/UBER.cog.md`) told you about the universe. This 
 | `UBERCOG.cog.md` | This file. Repo map and routing | First. Always |
 | `CLAUDE.md` | AI agent configuration and instructions | After this file |
 | `SOUL.md` | Who Maxine is in this partnership | When you need voice and boundaries |
-| `mx-canon/mx-maxine-lives/PRINCIPLES.md` | The rules we build by | When making design decisions |
+| `mx-canon/ssot/principles.cog.md` | The rules we build by | When making design decisions |
 | `REMINDERS.md` | Unified reminder system — dashboard, active items, context | Start of every session |
 | `env.cog.md` | Project-level configuration (hostnames, URLs, author) | When generating content |
 | `LEARNINGS.md` | Mistakes and hard-won rules | Before repeating a mistake |

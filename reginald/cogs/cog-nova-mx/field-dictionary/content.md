@@ -234,25 +234,13 @@ mx:
       winner: folderType
       reason: "folderType is canonical (camelCase). folder-type is legacy kebab-case."
 
-    - fields: [sop-content-policy, sopContentPolicy]
-      winner: sopContentPolicy
-      reason: "sopContentPolicy is canonical (camelCase). sop-content-policy is legacy kebab-case."
+    - fields: [mx:content-policy, mx:contentPolicy]
+      winner: mx:contentPolicy
+      reason: "mx:contentPolicy is canonical (camelCase). mx:content-policy is legacy kebab-case."
 
-    - fields: [sop-freshness, sopFreshness]
-      winner: sopFreshness
-      reason: "sopFreshness is canonical (camelCase). sop-freshness is legacy kebab-case."
-
-    - fields: [sop-structured-data, sopStructuredData]
-      winner: sopStructuredData
-      reason: "sopStructuredData is canonical (camelCase). sop-structured-data is legacy kebab-case."
-
-    - fields: [sop-preferred-access, sopPreferredAccess]
-      winner: sopPreferredAccess
-      reason: "sopPreferredAccess is canonical (camelCase). sop-preferred-access is legacy kebab-case."
-
-    - fields: [sop-attribution, sopAttribution]
-      winner: sopAttribution
-      reason: "sopAttribution is canonical (camelCase). sop-attribution is legacy kebab-case."
+    - fields: [mx:attribution, mx:attribution]
+      winner: mx:attribution
+      reason: "mx:attribution is canonical."
 
     - fields: [content-type, contentType]
       winner: contentType
@@ -437,7 +425,7 @@ mx:
 
     - name: blocks
       type: array
-      definition: "Declares block types present in the document. Values: prose, action, definition, essence, provenance, version, code, html, sop, security."
+      definition: "Declares block types present in the document. Values: prose, action, definition, essence, provenance, version, code, html, policy, security."
       status: canonical
       profile: cog
       required: optional
@@ -672,37 +660,19 @@ mx:
       status: canonical
       profile: folder
 
-    # === SOP FIELDS ===
+    # === MX CARRIER FIELDS ===
 
-    - name: sopContentPolicy
+    - name: mx:content-policy
       type: string
-      definition: "Content handling policy for agents."
+      definition: "Content handling policy for agents. Used in HTML meta tags."
       status: canonical
-      profile: sop
+      profile: mx-carrier
 
-    - name: sopFreshness
+    - name: mx:attribution
       type: string
-      definition: "Content freshness policy for agents."
+      definition: "Attribution requirement for agent-generated content. Used in HTML meta tags."
       status: canonical
-      profile: sop
-
-    - name: sopStructuredData
-      type: boolean
-      definition: "Whether agents should generate structured data."
-      status: canonical
-      profile: sop
-
-    - name: sopPreferredAccess
-      type: string
-      definition: "Preferred access method for agents."
-      status: canonical
-      profile: sop
-
-    - name: sopAttribution
-      type: string
-      definition: "Attribution statement for agent-generated content."
-      status: canonical
-      profile: sop
+      profile: mx-carrier
 
     # === NON-YAML MX IDENTITY FIELDS (mx:* namespace) ===
     # These fields are used in HTML meta tags, JSDoc @mx: tags, and CSS comments.
@@ -819,9 +789,9 @@ mx:
       description: "Fields used exclusively in ROUTING.cog.md. Not for general documents."
       fields: [words, keyFields]
 
-    - name: sop
-      description: "SOP policy fields for AI content handling."
-      fields: [sopContentPolicy, sopFreshness, sopStructuredData, sopPreferredAccess, sopAttribution]
+    - name: mx-carrier
+      description: "MX carrier tag fields for AI content handling in HTML meta tags."
+      fields: [mx:content-policy, mx:attribution]
 
     - name: script
       description: "Fields for executable scripts and cog.js files."
@@ -885,7 +855,7 @@ Not every document needs every field. A blog post needs different metadata from 
 | **Blog** | Published articles | `publicationDate`, `blogState` |
 | **Contact** | Person records | `relationship`, `role`, `company` |
 | **Folder** | `.mx.yaml.md` folder metadata | `folderType`, `stability`, `lifecycle` |
-| **SOP** | AI content handling policies | `sopContentPolicy`, `sopFreshness` |
+| **MX Carrier** | AI content handling policies | `mx:content-policy`, `mx:attribution` |
 
 A cog file inherits the core profile automatically — it needs both the core fields and the cog-specific fields. The profiles are additive, not exclusive.
 

@@ -5,52 +5,41 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Tom Cranstoun" />
-  <meta name="description" content="Practical guidance from MX-Bible book on designing AI agent-friendly websites" />
+  <meta name="description" content="Practical guidance from MX-Codex book on designing AI agent-friendly websites" />
   <title>Appendix F: Implementation Roadmap</title>
   
+
   <link rel="canonical" href="https://allabout.network/invisible-users/appendix-f.html">
-  <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
-  <meta name="ai-preferred-access" content="html">
-  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
-  <meta name="ai-freshness" content="monthly">
-  <meta name="ai-structured-data" content="json-ld">
-  <meta name="ai-attribution" content="required" text="Source: MX-Bible by Tom Cranstoun, https://allabout.network/invisible-users/">
-  <meta name="llms-txt" content="/llms.txt">
+  <!-- MX carrier tags -->
+  <meta name="mx:content-policy" content="extract-with-attribution">
+  <meta name="mx:attribution" content="required">
+  <link rel="llms-txt" href="/llms.txt">
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://allabout.network/invisible-users/appendix-f.html">
   <meta property="og:title" content="Appendix F: Implementation Roadmap">
-  <meta property="og:description" content="Practical guidance from MX-Bible book on designing AI agent-friendly websites">
+  <meta property="og:description" content="Practical guidance from MX-Codex book on designing AI agent-friendly websites">
   <meta property="og:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
-  <meta property="og:site_name" content="MX-Bible">
+  <meta property="og:site_name" content="MX-Codex">
   <meta property="og:locale" content="en_GB">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://allabout.network/invisible-users/appendix-f.html">
   <meta name="twitter:title" content="Appendix F: Implementation Roadmap">
-  <meta name="twitter:description" content="Implementation guide from MX-Bible book">
+  <meta name="twitter:description" content="Implementation guide from MX-Codex book">
   <meta name="twitter:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
   <meta name="twitter:creator" content="@tomcranstoun">
 
   <!-- Additional SEO -->
   <meta name="robots" content="index, follow">
-  <meta name="keywords" content="AI agents, web design, implementation guide, Appendix F, technical patterns, code examples">
-  <meta name="theme-color" content="#1e40af">
-
-  <!-- MX carrier metadata -->
-  <meta name="mx:category" content="mx-tools">
-  <meta name="mx:status" content="active">
-  <meta name="mx:contentType" content="document">
-  <meta name="mx:tags" content="tool">
-  <meta name="mx:partOf" content="mx-os">
   <!-- Schema.org structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "name": "Appendix F: Implementation Roadmap",
-    "description": "Practical guidance from MX-Bible book on designing AI agent-friendly websites",
+    "description": "Practical guidance from MX-Codex book on designing AI agent-friendly websites",
     "author": {
       "@type": "Person",
       "name": "Tom Cranstoun",
@@ -64,7 +53,7 @@
     "dateModified": "2026-01-10",
     "isPartOf": {
       "@type": "Book",
-      "name": "MX-Bible",
+      "name": "MX-Codex",
       "author": {
         "@type": "Person",
         "name": "Tom Cranstoun"
@@ -97,7 +86,7 @@
 <hr>
 <header id="title-block-header">
 <h1 class="title">Appendix F: Implementation Roadmap</h1>
-<p class="subtitle">MX-Bible</p>
+<p class="subtitle">MX-Codex</p>
 <p class="author">Tom Cranstoun</p>
 <p class="date">January 2026</p>
 </header>
@@ -145,8 +134,8 @@ id="toc-priority-by-business-type">Priority by Business Type</a></li>
 Roadmap</h1>
 <p>A practical guide to making your website work well for both AI agents
 and human users.</p>
-<p><strong>Based on:</strong> <em>MX-Bible: Designing the Web
-for AI Agents and Everyone Else</em></p>
+<p><strong>Based on:</strong> <em>MX: The Codex: Designing the Web for
+AI Agents and Everyone Else</em></p>
 <hr />
 <h2 id="priority-1-critical-quick-wins">Priority 1: Critical Quick
 Wins</h2>
@@ -480,9 +469,9 @@ assistant)</li>
 </ul>
 <p>This enables measuring protocol-specific conversion rates and
 ROI.</p>
-<p><strong>Implement identity delegation patterns:</strong></p>
+<p><strong>Implement EAL delegation patterns:</strong></p>
 <p>When agents make purchases on users’ behalf, preserve customer
-relationship data. See Chapter 6 for identity delegation patterns and
+relationship data. See Chapter 6 for EAL delegation patterns and
 security considerations.</p>
 <p><strong>Consider protocol convergence timelines:</strong></p>
 <p>Over-engineering for permanent dual-protocol support may prove
@@ -735,20 +724,17 @@ markup</strong> - Help agents understand site structure</label></li>
 functionality</strong> - Use SearchAction to advertise search
 capability</label></li>
 </ul>
-<h3 id="agent-metadata">Agent Metadata</h3>
+<h3 id="mx-carrier-tags">MX Carrier Tags</h3>
 <ul class="task-list">
-<li><label><input type="checkbox" /><strong>Add meta tags for API
+<li><label><input type="checkbox" /><strong>Advertise API
 endpoints</strong> -
-<code>&lt;meta name="ai-api-endpoint" content="/api/products/123"&gt;</code></label></li>
-<li><label><input type="checkbox" /><strong>Declare rate limits</strong>
--
-<code>&lt;meta name="ai-rate-limit" content="100/minute"&gt;</code></label></li>
+<code>&lt;link rel="api" href="/api/products/123"&gt;</code></label></li>
 <li><label><input type="checkbox" /><strong>State content
 policy</strong> -
-<code>&lt;meta name="ai-content-policy" content="summaries-allowed"&gt;</code></label></li>
-<li><label><input type="checkbox" /><strong>Provide structured data
-format info</strong> -
-<code>&lt;meta name="ai-structured-data" content="json-ld"&gt;</code></label></li>
+<code>&lt;meta name="mx:content-policy" content="summaries-allowed"&gt;</code></label></li>
+<li><label><input type="checkbox" /><strong>Declare attribution
+requirements</strong> -
+<code>&lt;meta name="mx:attribution" content="required"&gt;</code></label></li>
 </ul>
 <h3 id="http-semantics">HTTP Semantics</h3>
 <ul class="task-list">
@@ -1009,16 +995,17 @@ rename</label></li>
 </ul>
 <hr />
 <h2 id="advanced-implementation">Advanced Implementation</h2>
-<h3 id="identity-layer-for-e-commerce">Identity Layer (for
-E-commerce)</h3>
+<h3 id="entity-asset-layer-eal-for-e-commerce">Entity Asset Layer (EAL)
+for E-commerce</h3>
 <p>If you sell products and want to preserve customer relationships when
 agents shop:</p>
 <ul class="task-list">
-<li><label><input type="checkbox" /><strong>Implement delegation token
-acceptance</strong> - Accept tokens from identity
+<li><label><input type="checkbox" /><strong>Implement EAL delegation
+token acceptance</strong> - Accept tokens from EAL
 repositories</label></li>
-<li><label><input type="checkbox" /><strong>Query repository for
-customer identity</strong> - Request verified customer data</label></li>
+<li><label><input type="checkbox" /><strong>Query EAL repository for
+customer data</strong> - Request verified customer identity and asset
+data</label></li>
 <li><label><input type="checkbox" /><strong>Support two-tier
 sharing</strong> - Handle both “favourite supplier” and “general”
 levels</label></li>
@@ -1135,9 +1122,8 @@ conversion</strong> - Are agents succeeding?</label></li>
 positioning</strong> - Are competitors more agent-friendly?</label></li>
 <li><label><input type="checkbox" /><strong>Update llms.txt</strong> -
 Reflect any policy or access changes</label></li>
-<li><label><input type="checkbox" /><strong>Assess identity layer
-adoption</strong> - Should you integrate with identity
-repositories?</label></li>
+<li><label><input type="checkbox" /><strong>Assess EAL adoption</strong>
+- Should you integrate with EAL repositories?</label></li>
 </ul>
 <hr />
 <h2 id="success-metrics">Success Metrics</h2>

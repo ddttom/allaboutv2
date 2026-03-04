@@ -14,7 +14,7 @@ mx:
     - machine-experience
     - design-principles
     - accessibility
-    - sop-agents
+    - ai-agents
     - metadata
     - semantic-web
     - universal-design

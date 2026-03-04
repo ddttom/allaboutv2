@@ -5,52 +5,41 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Tom Cranstoun" />
-  <meta name="description" content="Practical guidance from MX-Bible book on designing AI agent-friendly websites" />
+  <meta name="description" content="Practical guidance from MX-Codex book on designing AI agent-friendly websites" />
   <title>Appendix C: Web Audit Suite User Guide</title>
   
+
   <link rel="canonical" href="https://allabout.network/invisible-users/appendix-c.html">
-  <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
-  <meta name="ai-preferred-access" content="html">
-  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
-  <meta name="ai-freshness" content="monthly">
-  <meta name="ai-structured-data" content="json-ld">
-  <meta name="ai-attribution" content="required" text="Source: MX-Bible by Tom Cranstoun, https://allabout.network/invisible-users/">
-  <meta name="llms-txt" content="/llms.txt">
+  <!-- MX carrier tags -->
+  <meta name="mx:content-policy" content="extract-with-attribution">
+  <meta name="mx:attribution" content="required">
+  <link rel="llms-txt" href="/llms.txt">
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://allabout.network/invisible-users/appendix-c.html">
   <meta property="og:title" content="Appendix C: Web Audit Suite User Guide">
-  <meta property="og:description" content="Practical guidance from MX-Bible book on designing AI agent-friendly websites">
+  <meta property="og:description" content="Practical guidance from MX-Codex book on designing AI agent-friendly websites">
   <meta property="og:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
-  <meta property="og:site_name" content="MX-Bible">
+  <meta property="og:site_name" content="MX-Codex">
   <meta property="og:locale" content="en_GB">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://allabout.network/invisible-users/appendix-c.html">
   <meta name="twitter:title" content="Appendix C: Web Audit Suite User Guide">
-  <meta name="twitter:description" content="Implementation guide from MX-Bible book">
+  <meta name="twitter:description" content="Implementation guide from MX-Codex book">
   <meta name="twitter:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
   <meta name="twitter:creator" content="@tomcranstoun">
 
   <!-- Additional SEO -->
   <meta name="robots" content="index, follow">
-  <meta name="keywords" content="AI agents, web design, implementation guide, Appendix C, technical patterns, code examples">
-  <meta name="theme-color" content="#1e40af">
-
-  <!-- MX carrier metadata -->
-  <meta name="mx:category" content="mx-tools">
-  <meta name="mx:status" content="active">
-  <meta name="mx:contentType" content="document">
-  <meta name="mx:tags" content="tool">
-  <meta name="mx:partOf" content="mx-os">
   <!-- Schema.org structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "name": "Appendix C: Web Audit Suite User Guide",
-    "description": "Practical guidance from MX-Bible book on designing AI agent-friendly websites",
+    "description": "Practical guidance from MX-Codex book on designing AI agent-friendly websites",
     "author": {
       "@type": "Person",
       "name": "Tom Cranstoun",
@@ -64,7 +53,7 @@
     "dateModified": "2026-01-10",
     "isPartOf": {
       "@type": "Book",
-      "name": "MX-Bible",
+      "name": "MX-Codex",
       "author": {
         "@type": "Person",
         "name": "Tom Cranstoun"
@@ -97,7 +86,7 @@
 <hr>
 <header id="title-block-header">
 <h1 class="title">Appendix C: Web Audit Suite User Guide</h1>
-<p class="subtitle">MX-Bible</p>
+<p class="subtitle">MX-Codex</p>
 <p class="author">Tom Cranstoun</p>
 <p class="date">January 2026</p>
 </header>
@@ -135,8 +124,8 @@ Suite User Guide</h1>
 using Web Audit Suite.</p>
 <h2 id="installation">Installation</h2>
 <div class="sourceCode" id="cb1" data-role="code-container"><pre
-class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ddttom/invisible-users.git</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> invisible-users/packages/web-audit-suite</span>
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> invisible-users/mx-audit</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code></pre></div>
 <h2 id="basic-usage">Basic Usage</h2>
 <h3 id="single-page-audit">Single Page Audit</h3>
@@ -157,6 +146,102 @@ class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--enable-history</span> <span class="dt">\</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--generate-dashboard</span> <span class="dt">\</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--generate-executive-summary</span></span></code></pre></div>
+<h3 id="performance-optimized-audits">Performance-Optimized Audits</h3>
+<p>The Web Audit Suite includes production-tested performance
+optimizations for large sites:</p>
+<div class="sourceCode" id="cb5" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom browser pool and concurrency for large sites</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com <span class="at">--browser-pool-size</span> 5 <span class="at">--url-concurrency</span> 5</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Expected performance: 100 URLs in ~10 minutes</span></span></code></pre></div>
+<p><strong>Performance Features:</strong></p>
+<ul>
+<li><strong>Browser pooling</strong>: 97% reduction in browser launch
+overhead</li>
+<li><strong>Concurrent processing</strong>: Multiple URLs analyzed
+simultaneously</li>
+<li><strong>Adaptive rate limiting</strong>: Server-friendly dynamic
+concurrency</li>
+<li><strong>Cache validation</strong>: Automatic staleness checking</li>
+</ul>
+<h3 id="pattern-extraction">Pattern Extraction</h3>
+<p>Learn from your high-scoring pages to replicate success:</p>
+<div class="sourceCode" id="cb6" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com <span class="at">--extract-patterns</span></span></code></pre></div>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Analyzes pages with ≥70 served/rendered score</li>
+<li>Extracts 6 pattern categories with real examples:
+<ul>
+<li>Structured Data (JSON-LD)</li>
+<li>Semantic HTML Structure</li>
+<li>Standard Form Field Naming</li>
+<li>Persistent Error Messages</li>
+<li>Explicit State Attributes</li>
+<li>llms.txt Implementation</li>
+</ul></li>
+<li>Provides priority (Critical/High) and effort (Low/Moderate)
+ratings</li>
+<li>Generates pattern_library.md with up to 5 examples per pattern</li>
+</ul>
+<p><strong>Use case:</strong> Identify what works on your best pages and
+apply it site-wide.</p>
+<h3 id="regression-detection">Regression Detection</h3>
+<p>Track changes over time with CI/CD-ready regression detection:</p>
+<div class="sourceCode" id="cb7" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com <span class="at">--enable-history</span></span></code></pre></div>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Compares current run with baseline (establishes if missing)</li>
+<li>Detects regressions in 5 categories:
+<ul>
+<li>Performance (Critical: &gt;30% increase, Warning: &gt;15%)</li>
+<li>Accessibility (Critical: any error increase)</li>
+<li>SEO (Critical: &gt;10% decrease, Warning: &gt;5%)</li>
+<li>LLM suitability (Served score critical, Rendered score warning)</li>
+<li>URL count (Warning: significant change)</li>
+</ul></li>
+<li>Generates regression_report.md with severity classifications</li>
+<li>Returns non-zero exit code for critical regressions (CI/CD
+integration)</li>
+</ul>
+<p><strong>Use case:</strong> Catch breaking changes before
+deployment.</p>
+<h3 id="ethical-scraping">Ethical Scraping</h3>
+<p>The tool respects robots.txt by default:</p>
+<div class="sourceCode" id="cb8" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normal audit (respects robots.txt)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Force scraping (bypass robots.txt - use with caution)</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com <span class="at">--force-scrape</span></span></code></pre></div>
+<p><strong>robots.txt Compliance:</strong></p>
+<ul>
+<li>Fetches robots.txt before any crawling begins</li>
+<li>Interactive prompts if URLs are blocked</li>
+<li>Runtime force-scrape toggle available</li>
+<li>100-point quality scoring for robots.txt files</li>
+</ul>
+<p><strong>What’s checked:</strong></p>
+<ul>
+<li>AI-specific user agents (GPTBot, ClaudeBot) - 30 pts</li>
+<li>Sitemap references - 20 pts</li>
+<li>Sensitive path protection (admin, cart, account) - 25 pts</li>
+<li>llms.txt references - 15 pts</li>
+<li>Helpful comments - 10 pts</li>
+<li>Completeness - 10 pts</li>
+</ul>
+<p><strong>Quality levels:</strong></p>
+<ul>
+<li><strong>Excellent (80+)</strong>: Professional-grade AI agent
+guidance</li>
+<li><strong>Good (60-79)</strong>: Solid foundation, minor improvements
+needed</li>
+<li><strong>Fair (40-59)</strong>: Basic compliance, significant
+gaps</li>
+<li><strong>Poor (&lt;40)</strong>: Critical issues, immediate action
+needed</li>
+</ul>
 <h2 id="understanding-your-reports">Understanding Your Reports</h2>
 <h3 id="core-reports-15-files">Core Reports (15 files)</h3>
 <h4 id="llm-general-suitability-llm_general_suitability.csv">1. LLM
@@ -208,27 +293,27 @@ styles</li>
 </thead>
 <tbody>
 <tr>
-<td>0-40</td>
-<td>Low</td>
-<td>Critical issues, agents fail frequently</td>
+<td>0-39</td>
+<td>Poor</td>
+<td>Major issues preventing AI agent compatibility</td>
 <td>Immediate action needed</td>
 </tr>
 <tr>
-<td>41-60</td>
-<td>Moderate-low</td>
-<td>Basic functionality, many problems</td>
+<td>40-59</td>
+<td>Fair</td>
+<td>Several essential issues to fix</td>
 <td>Systematic improvements required</td>
 </tr>
 <tr>
-<td>61-80</td>
-<td>Moderate-high</td>
-<td>Good implementation, minor gaps</td>
-<td>Refinement and optimisation</td>
+<td>60-79</td>
+<td>Good</td>
+<td>Minor improvements needed</td>
+<td>Refinement and optimization</td>
 </tr>
 <tr>
-<td>81-100</td>
-<td>High</td>
-<td>Excellent, professional-grade</td>
+<td>80-100</td>
+<td>Excellent</td>
+<td>Works well for all AI agents</td>
 <td>Maintain and monitor</td>
 </tr>
 </tbody>
@@ -263,17 +348,17 @@ Schema blocks with <code>["Article", "NewsArticle"]</code> or similar
 arrays</li>
 </ul>
 <p><strong>Common violations:</strong></p>
-<div class="sourceCode" id="cb5" data-role="code-container"><pre
-class="sourceCode json"><code class="sourceCode json" data-role="code-content"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Article&quot;</span><span class="ot">,</span> <span class="st">&quot;NewsArticle&quot;</span><span class="ot">]</span><span class="fu">,</span>  <span class="er">//</span> <span class="er">WRONG</span> <span class="er">-</span> <span class="er">creates</span> <span class="er">ambiguity</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;headline&quot;</span><span class="fu">:</span> <span class="st">&quot;Legal Analysis of New Legislation&quot;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb9" data-role="code-container"><pre
+class="sourceCode json"><code class="sourceCode json" data-role="code-content"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Article&quot;</span><span class="ot">,</span> <span class="st">&quot;NewsArticle&quot;</span><span class="ot">]</span><span class="fu">,</span>  <span class="er">//</span> <span class="er">WRONG</span> <span class="er">-</span> <span class="er">creates</span> <span class="er">ambiguity</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;headline&quot;</span><span class="fu">:</span> <span class="st">&quot;Legal Analysis of New Legislation&quot;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <p><strong>Correct implementation:</strong></p>
-<div class="sourceCode" id="cb6" data-role="code-container"><pre
-class="sourceCode json"><code class="sourceCode json" data-role="code-content"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;AnalysisNewsArticle&quot;</span><span class="fu">,</span>  <span class="er">//</span> <span class="er">RIGHT</span> <span class="er">-</span> <span class="er">single</span> <span class="er">specific</span> <span class="er">type</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;headline&quot;</span><span class="fu">:</span> <span class="st">&quot;Legal Analysis of New Legislation&quot;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb10" data-role="code-container"><pre
+class="sourceCode json"><code class="sourceCode json" data-role="code-content"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;AnalysisNewsArticle&quot;</span><span class="fu">,</span>  <span class="er">//</span> <span class="er">RIGHT</span> <span class="er">-</span> <span class="er">single</span> <span class="er">specific</span> <span class="er">type</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;headline&quot;</span><span class="fu">:</span> <span class="st">&quot;Legal Analysis of New Legislation&quot;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <p>Use specific types: <code>Legislation</code>,
 <code>LegalDocument</code>, <code>MedicalScholarlyArticle</code>,
 <code>AnalysisNewsArticle</code>, <code>TechArticle</code> rather than
@@ -317,6 +402,12 @@ controls (WCAG 2.2.2 compliant)</li>
 descriptions</li>
 <li><code>hasAnimationLibraries</code>: Presence of animation libraries
 (Typed.js, TypeIt, GSAP, AOS, Animate.css)</li>
+<li><code>visualDynamismDetected</code>: Visual content changes detected
+via screenshot comparison (typewriters, tickers, rotating text)</li>
+<li><code>visualDynamismUniqueStates</code>: Number of distinct visual
+states observed across 3 screenshots</li>
+<li><code>jsDependentPricing</code>: Price information only visible
+after JavaScript execution (invisible to CLI agents)</li>
 </ul>
 <p><strong>Scoring penalties:</strong></p>
 <ul>
@@ -331,17 +422,42 @@ carousel (medium severity, accessibility issue)</li>
 (accessibility and agent comprehension issue)</li>
 <li><strong>Animation libraries detected</strong>: -2 informational
 warning (risks content invisibility)</li>
+<li><strong>Visual dynamism detected</strong>: -5 points (screenshot
+comparison revealed changing content)</li>
+<li><strong>JavaScript-dependent pricing</strong>: -15 points (critical
+severity, blocks CLI agent purchase recommendations)</li>
 </ul>
+<p><strong>Visual Dynamism Detection:</strong></p>
+<p>The audit takes 3 screenshots at random 2-5 second intervals and
+compares their visual hash. If screenshots differ, visual content
+changes are occurring:</p>
+<ul>
+<li><strong>Typewriter animations</strong>: Text that types
+character-by-character (“AEM UPGRADE SPECIALISTS” → “AEM EXPERTS” →
+“SECURITY”)</li>
+<li><strong>Rotating headlines</strong>: Headlines that cycle through
+different messages</li>
+<li><strong>Ticker tapes</strong>: Scrolling text that moves
+continuously</li>
+<li><strong>Fade-in sequences</strong>: Content that appears or
+disappears over time</li>
+</ul>
+<p>This complements library detection by catching animations implemented
+with custom JavaScript or CSS that don’t use known libraries.</p>
 <p><strong>Common issues:</strong></p>
 <ol type="1">
 <li><strong>Product carousels hide content</strong>: Manual advance
 shows only first slide, auto-advance changes content mid-parse</li>
 <li><strong>Typewriter text invisible</strong>: Animated text reveals
-gradually, served HTML may be empty</li>
+gradually, served HTML may be empty (detected via screenshot
+comparison)</li>
 <li><strong>Background video without role</strong>: Agents cannot
 determine if video is decorative or informational</li>
 <li><strong>Autoplay without controls</strong>: Violates WCAG 2.2.2,
 causes agent page instability</li>
+<li><strong>Visual dynamism detected</strong>: Content changes over time
+(rotating text, tickers) causing agents to miss information depending on
+snapshot timing</li>
 </ol>
 <p><strong>Fixes:</strong></p>
 <ol type="1">
@@ -546,6 +662,97 @@ humans)</p>
 <li>Form associations clarify relationships</li>
 <li>Role attributes indicate purpose</li>
 </ul>
+<h4 id="image-optimization-report-image_optimization.csv">6. Image
+Optimization Report (<code>image_optimization.csv</code>)</h4>
+<p><strong>Purpose:</strong> Image metrics, alt text quality, and
+compression analysis</p>
+<p><strong>Key Fields:</strong></p>
+<ul>
+<li>Page URL</li>
+<li>Image URL</li>
+<li>File Size (KB)</li>
+<li>Dimensions</li>
+<li>Format</li>
+<li>Alt Text</li>
+<li>Alt Text Quality Score</li>
+<li>Is Responsive</li>
+<li>Lazy Loaded</li>
+<li>Compression Level</li>
+<li>Optimization Score</li>
+<li>Recommendations</li>
+</ul>
+<p><strong>Agent Benefits:</strong></p>
+<ul>
+<li>Alt text makes images interpretable for agents</li>
+<li>Responsive images indicate mobile-friendly content</li>
+<li>Optimization recommendations improve performance for all users</li>
+</ul>
+<h4 id="link-analysis-report-link_analysis.csv">7. Link Analysis Report
+(<code>link_analysis.csv</code>)</h4>
+<p><strong>Purpose:</strong> Internal/external link structure and
+navigation analysis</p>
+<p><strong>Key Fields:</strong></p>
+<ul>
+<li>Source URL</li>
+<li>Target URL</li>
+<li>Link Text</li>
+<li>Link Type (internal/external)</li>
+<li>Follow Type (follow/nofollow)</li>
+<li>HTTP Status</li>
+<li>Redirect Chain</li>
+<li>Content Type</li>
+<li>In Navigation</li>
+<li>Link Depth</li>
+<li>Link Quality Score</li>
+</ul>
+<p><strong>Agent Benefits:</strong></p>
+<ul>
+<li>Clear link structure aids navigation</li>
+<li>Descriptive link text improves context</li>
+<li>Navigation links help agents understand site structure</li>
+</ul>
+<h4 id="content-quality-report-content_quality.csv">8. Content Quality
+Report (<code>content_quality.csv</code>)</h4>
+<p><strong>Purpose:</strong> Content analysis including freshness,
+uniqueness, and media richness</p>
+<p><strong>Key Fields:</strong></p>
+<ul>
+<li>URL</li>
+<li>Word Count</li>
+<li>Content Freshness Score</li>
+<li>Content Uniqueness Score</li>
+<li>Grammar Score</li>
+<li>Media Richness Score</li>
+<li>Top Keywords</li>
+<li>Overall Content Score</li>
+</ul>
+<p><strong>Agent Benefits:</strong></p>
+<ul>
+<li>Fresh content indicates current information</li>
+<li>Unique content reduces confusion with duplicate pages</li>
+<li>Rich media provides additional context when properly marked up</li>
+</ul>
+<h4 id="security-report-security_report.csv">9. Security Report
+(<code>security_report.csv</code>)</h4>
+<p><strong>Purpose:</strong> Security headers analysis and HTTPS
+configuration</p>
+<p><strong>Key Fields:</strong></p>
+<ul>
+<li>URL</li>
+<li>HTTPS Status</li>
+<li>HSTS Header</li>
+<li>CSP Header</li>
+<li>X-Frame-Options</li>
+<li>X-Content-Type-Options</li>
+<li>Security Score</li>
+<li>Recommendations</li>
+</ul>
+<p><strong>Agent Benefits:</strong></p>
+<ul>
+<li>Secure sites build trust with agents</li>
+<li>Security headers indicate professional implementation</li>
+<li>HTTPS required for many agent interactions</li>
+</ul>
 <h3 id="enhanced-reports-optional">Enhanced Reports (Optional)</h3>
 <h4
 id="executive-summary-executive_summary.md-executive_summary.json">Executive
@@ -575,13 +782,172 @@ checks</p>
 </ul>
 <p><strong>Use for:</strong> Regular monitoring, team reviews, progress
 tracking</p>
+<h4 id="robots.txt-quality-report-robots_quality_report.md">16.
+robots.txt Quality Report (<code>robots_quality_report.md</code>)</h4>
+<p><strong>Purpose:</strong> Evaluate your robots.txt file for AI agent
+compatibility</p>
+<p><strong>Key Sections:</strong></p>
+<ul>
+<li><strong>Overall Score</strong> (0-100): Quality level
+(Excellent/Good/Fair/Poor)</li>
+<li><strong>Quality Criteria Breakdown</strong>: 6 scored
+categories</li>
+<li><strong>Issues Found</strong>: Specific problems detected</li>
+<li><strong>Recommendations</strong>: Actionable improvements</li>
+<li><strong>Example robots.txt</strong>: Suggested implementation</li>
+</ul>
+<p><strong>Interpreting Score:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Score</th>
+<th>Quality Level</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>80+</td>
+<td>Excellent</td>
+<td>Professional-grade AI agent guidance</td>
+</tr>
+<tr>
+<td>60-79</td>
+<td>Good</td>
+<td>Solid foundation, minor improvements</td>
+</tr>
+<tr>
+<td>40-59</td>
+<td>Fair</td>
+<td>Basic compliance, significant gaps</td>
+</tr>
+<tr>
+<td>&lt;40</td>
+<td>Poor</td>
+<td>Critical issues, immediate action needed</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Priority Fixes:</strong></p>
+<ol type="1">
+<li><strong>Missing AI-specific user agents</strong> (30 pts): Add
+GPTBot, ClaudeBot, etc.</li>
+<li><strong>No sitemap references</strong> (20 pts): Add Sitemap:
+directives</li>
+<li><strong>Unprotected sensitive paths</strong> (25 pts): Block /admin,
+/cart, /account</li>
+<li><strong>No llms.txt references</strong> (15 pts): Add comments
+referencing llms.txt</li>
+<li><strong>No helpful comments</strong> (10 pts): Explain rules for
+maintainability</li>
+</ol>
+<p><strong>Chapter References:</strong></p>
+<ul>
+<li>Chapter 5: The Content Creator’s Dilemma (robots.txt best
+practices)</li>
+<li>Chapter 10: Generative Engine Optimization (AI-specific
+directives)</li>
+<li>Appendix G: Resource Directory (robots.txt examples)</li>
+</ul>
+<h4 id="pattern-library-report-pattern_library.md">17. Pattern Library
+Report (<code>pattern_library.md</code>)</h4>
+<p><strong>Purpose:</strong> Learn from your high-scoring pages</p>
+<p><strong>Generated when:</strong> <code>--extract-patterns</code> flag
+used</p>
+<p><strong>Key Sections:</strong></p>
+<ul>
+<li><strong>Methodology</strong>: How patterns were extracted</li>
+<li><strong>6 Pattern Categories</strong>: Structured Data, Semantic
+HTML, Form Patterns, Error Handling, State Management, llms.txt</li>
+<li><strong>Real Examples</strong>: Up to 5 examples per pattern from
+your site</li>
+<li><strong>Implementation Guide</strong>: How to apply patterns
+site-wide</li>
+<li><strong>Validation Tools</strong>: Links to validators</li>
+</ul>
+<p><strong>Pattern Priority Ratings:</strong></p>
+<ul>
+<li><strong>Critical</strong> + <strong>Low effort</strong>: Implement
+immediately</li>
+<li><strong>High</strong> + <strong>Moderate effort</strong>: Plan for
+next sprint</li>
+<li><strong>Critical</strong> + <strong>Moderate effort</strong>:
+Prioritize over High/Low</li>
+</ul>
+<p><strong>Use Cases:</strong></p>
+<ol type="1">
+<li><strong>Replicate success</strong>: See what works on your best
+pages</li>
+<li><strong>Training material</strong>: Show developers real
+examples</li>
+<li><strong>Quality baseline</strong>: Establish consistency
+standards</li>
+<li><strong>Onboarding</strong>: Help new team members understand
+patterns</li>
+</ol>
+<p><strong>Chapter References:</strong></p>
+<ul>
+<li>Chapter 10: Generative Engine Optimization (pattern
+implementation)</li>
+<li>Chapter 11: Designing for Both (universal patterns)</li>
+<li>Appendix E: AI Patterns Quick Reference (pattern catalog)</li>
+</ul>
+<h4 id="regression-report-regression_report.md">18. Regression Report
+(<code>regression_report.md</code>)</h4>
+<p><strong>Purpose:</strong> Detect breaking changes before
+deployment</p>
+<p><strong>Generated when:</strong> <code>--enable-history</code> flag
+used</p>
+<p><strong>Key Sections:</strong></p>
+<ul>
+<li><strong>Executive Summary</strong>: Critical/warning/info
+counts</li>
+<li><strong>Critical Regressions</strong>: Issues requiring immediate
+attention</li>
+<li><strong>Warning Regressions</strong>: Issues to monitor</li>
+<li><strong>Informational Changes</strong>: Non-critical updates</li>
+<li><strong>Recommendations</strong>: Specific actions to take</li>
+</ul>
+<p><strong>Regression Severity:</strong></p>
+<p><strong>Critical</strong> (Exit code 1 - CI/CD fails):</p>
+<ul>
+<li>Performance: &gt;30% increase in load time/LCP/FCP/CLS</li>
+<li>Accessibility: Any error count increase</li>
+<li>SEO: &gt;10% score decrease</li>
+<li>LLM Suitability (Served): &gt;10% score decrease</li>
+</ul>
+<p><strong>Warning</strong> (Exit code 0 - CI/CD passes with
+warnings):</p>
+<ul>
+<li>Performance: &gt;15% increase</li>
+<li>SEO: &gt;5% score decrease</li>
+<li>LLM Suitability (Rendered): &gt;10% score decrease</li>
+<li>URL count: Significant change</li>
+</ul>
+<p><strong>Informational</strong>:</p>
+<ul>
+<li>Minor improvements or degradations</li>
+<li>Non-critical metric changes</li>
+</ul>
+<p><strong>CI/CD Integration:</strong></p>
+<div class="sourceCode" id="cb11" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In your CI/CD pipeline</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://staging.example.com <span class="at">--enable-history</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Returns exit code 1 if critical regressions found</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipeline fails, preventing deployment</span></span></code></pre></div>
+<p><strong>Chapter References:</strong></p>
+<ul>
+<li>Chapter 12: Technical Advice (testing and validation)</li>
+<li>Appendix B: Battle-Tested Lessons (regression prevention)</li>
+</ul>
 <h2 id="prioritizing-improvements">Prioritizing Improvements</h2>
 <h3 id="step-1-run-initial-audit">Step 1: Run Initial Audit</h3>
-<div class="sourceCode" id="cb7" data-role="code-container"><pre
-class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com/sitemap.xml <span class="at">-c</span> <span class="at">-1</span> <span class="dt">\</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--enable-history</span> <span class="dt">\</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--generate-dashboard</span> <span class="dt">\</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--generate-executive-summary</span></span></code></pre></div>
+<div class="sourceCode" id="cb12" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com/sitemap.xml <span class="at">-c</span> <span class="at">-1</span> <span class="dt">\</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--enable-history</span> <span class="dt">\</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--generate-dashboard</span> <span class="dt">\</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--generate-executive-summary</span></span></code></pre></div>
 <h3 id="step-2-review-executive-summary">Step 2: Review Executive
 Summary</h3>
 <p>Focus on:</p>
@@ -623,42 +989,42 @@ by Priority</h3>
 </ul>
 <h3 id="step-4-create-action-plan">Step 4: Create Action Plan</h3>
 <p>Based on your scores:</p>
-<div class="sourceCode" id="cb8" data-role="code-container"><pre
-class="sourceCode markdown"><code class="sourceCode markdown" data-role="code-content"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Action Plan: [Your Site]</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>**Audit Date:** <span class="co">[</span><span class="ot">Date</span><span class="co">]</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>**Overall Score:** <span class="co">[</span><span class="ot">Score</span><span class="co">]</span>/100</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>**Priority:** <span class="co">[</span><span class="ot">Critical/High/Medium/Low</span><span class="co">]</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">### Immediate Actions (This Week)</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="co">[</span><span class="ot">Issue from served HTML score</span><span class="co">]</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="co">[</span><span class="ot">Issue from robots.txt</span><span class="co">]</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="co">[</span><span class="ot">Issue from error persistence</span><span class="co">]</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">### Short Term (This Month)</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="co">[</span><span class="ot">Structured data additions</span><span class="co">]</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="co">[</span><span class="ot">State attribute improvements</span><span class="co">]</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="co">[</span><span class="ot">Form validation fixes</span><span class="co">]</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">### Medium Term (This Quarter)</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="co">[</span><span class="ot">robots.txt enhancement</span><span class="co">]</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="co">[</span><span class="ot">llms.txt creation/improvement</span><span class="co">]</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="co">[</span><span class="ot">Comprehensive structured data</span><span class="co">]</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="fu">### Long Term (This Year)</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="co">[</span><span class="ot">Advanced features</span><span class="co">]</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="co">[</span><span class="ot">API development</span><span class="co">]</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="co">[</span><span class="ot">Monitoring and analytics</span><span class="co">]</span></span></code></pre></div>
+<div class="sourceCode" id="cb13" data-role="code-container"><pre
+class="sourceCode markdown"><code class="sourceCode markdown" data-role="code-content"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Action Plan: [Your Site]</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>**Audit Date:** <span class="co">[</span><span class="ot">Date</span><span class="co">]</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>**Overall Score:** <span class="co">[</span><span class="ot">Score</span><span class="co">]</span>/100</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>**Priority:** <span class="co">[</span><span class="ot">Critical/High/Medium/Low</span><span class="co">]</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">### Immediate Actions (This Week)</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="co">[</span><span class="ot">Issue from served HTML score</span><span class="co">]</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="co">[</span><span class="ot">Issue from robots.txt</span><span class="co">]</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="co">[</span><span class="ot">Issue from error persistence</span><span class="co">]</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">### Short Term (This Month)</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="co">[</span><span class="ot">Structured data additions</span><span class="co">]</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="co">[</span><span class="ot">State attribute improvements</span><span class="co">]</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="co">[</span><span class="ot">Form validation fixes</span><span class="co">]</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="fu">### Medium Term (This Quarter)</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="co">[</span><span class="ot">robots.txt enhancement</span><span class="co">]</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="co">[</span><span class="ot">llms.txt creation/improvement</span><span class="co">]</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="co">[</span><span class="ot">Comprehensive structured data</span><span class="co">]</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="fu">### Long Term (This Year)</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="co">[</span><span class="ot">Advanced features</span><span class="co">]</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="co">[</span><span class="ot">API development</span><span class="co">]</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="co">[</span><span class="ot">Monitoring and analytics</span><span class="co">]</span></span></code></pre></div>
 <h2 id="tracking-progress">Tracking Progress</h2>
 <h3 id="run-monthly-audits">Run Monthly Audits</h3>
-<div class="sourceCode" id="cb9" data-role="code-container"><pre
-class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Monthly audit with history</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com/sitemap.xml <span class="at">-c</span> <span class="at">-1</span> <span class="dt">\</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--enable-history</span> <span class="dt">\</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--generate-dashboard</span></span></code></pre></div>
+<div class="sourceCode" id="cb14" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Monthly audit with history</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com/sitemap.xml <span class="at">-c</span> <span class="at">-1</span> <span class="dt">\</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--enable-history</span> <span class="dt">\</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--generate-dashboard</span></span></code></pre></div>
 <h3 id="view-dashboard">View Dashboard</h3>
-<div class="sourceCode" id="cb10" data-role="code-container"><pre
-class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">open</span> results/dashboard.html</span></code></pre></div>
+<div class="sourceCode" id="cb15" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">open</span> results/dashboard.html</span></code></pre></div>
 <p><strong>Dashboard shows:</strong></p>
 <ul>
 <li>Score trends over time</li>
@@ -797,73 +1163,317 @@ SaaS Application (High Score, Maintenance)</h3>
 <li>Stay current with standards</li>
 </ul>
 <h2 id="advanced-usage">Advanced Usage</h2>
+<h3 id="agency-partner-features">Agency &amp; Partner Features</h3>
+<p>The Web Audit Suite includes features specifically for agencies and
+partners managing multiple client sites.</p>
+<p><strong>Bulk Auditing:</strong></p>
+<div class="sourceCode" id="cb16" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Audit multiple domains from CSV file</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">--bulk</span> prospects.csv <span class="dt">\</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--agency-name</span> <span class="st">&quot;TechAudit Agency&quot;</span> <span class="dt">\</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--agency-logo</span> <span class="st">&quot;https://techaudit.com/logo.png&quot;</span> <span class="dt">\</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output</span> ./client-audits</span></code></pre></div>
+<p><strong>Features:</strong></p>
+<ul>
+<li><code>--bulk &lt;file&gt;</code>: Run audit on multiple domains from
+a CSV file
+<ul>
+<li>Input: CSV with <code>domain</code> column (e.g.,
+<code>domain\nexample.com\nclient2.com</code>)</li>
+<li>Output: <code>bulk_audit_summary.csv</code> master report</li>
+</ul></li>
+<li><code>--agency-name &lt;string&gt;</code>: Agency name for
+white-labeling reports
+<ul>
+<li>Replaces “Web Audit Suite” in Dashboard footer/title</li>
+</ul></li>
+<li><code>--agency-logo &lt;path&gt;</code>: Path or URL to agency logo
+<ul>
+<li>Adds logo to Dashboard header</li>
+</ul></li>
+</ul>
+<p><strong>Use Cases:</strong></p>
+<ul>
+<li>White-label reports for client delivery</li>
+<li>Prospect analysis for sales pipeline</li>
+<li>Portfolio-wide monitoring for existing clients</li>
+<li>Competitive analysis for market research</li>
+</ul>
+<h3 id="cache-management">Cache Management</h3>
+<p>The tool maintains a cache to improve performance on repeated
+audits.</p>
+<p><strong>Cache Location:</strong> <code>.cache</code> directory
+(automatically created)</p>
+<p><strong>Cache Format:</strong> JSON files</p>
+<p><strong>Cache Naming:</strong> MD5 hash of URLs</p>
+<p><strong>Cache Control Options:</strong></p>
+<div class="sourceCode" id="cb17" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use only cached data (skip fetching)</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">--cache-only</span> <span class="at">-o</span> reports-from-cache</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Disable caching entirely</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">--no-cache</span> <span class="at">-s</span> https://example.com</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Clear cache before starting</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">--force-delete-cache</span> <span class="at">-s</span> https://example.com</span></code></pre></div>
+<p><strong>Cache Staleness Checking:</strong></p>
+<p>The tool automatically validates cache freshness using HTTP HEAD
+requests:</p>
+<ul>
+<li>Checks Last-Modified header on cached pages</li>
+<li>Compares with cache creation time</li>
+<li>Invalidates cache if source is newer</li>
+<li>Falls back to cache if HEAD request fails</li>
+</ul>
+<p><strong>Best Practices:</strong></p>
+<ul>
+<li>Clear cache periodically for fresh data</li>
+<li>Use <code>--cache-only</code> for report regeneration without
+re-crawling</li>
+<li>Use <code>--force-delete-cache</code> when site structure changes
+significantly</li>
+</ul>
+<h3 id="network-error-handling">Network Error Handling</h3>
+<p>The tool includes robust network error handling with automatic retry
+mechanisms.</p>
+<p><strong>Network Error Types Detected:</strong></p>
+<ul>
+<li>DNS failures</li>
+<li>Connection timeouts</li>
+<li>Host unreachable errors</li>
+<li>Browser network errors</li>
+<li>SSL/TLS handshake failures</li>
+<li>Rate limiting errors</li>
+<li>Cloudflare challenges (automatic bypass attempt)</li>
+</ul>
+<p><strong>Retry Mechanism:</strong></p>
+<p>When a network error occurs:</p>
+<ol type="1">
+<li>The tool pauses and displays error details</li>
+<li>You’re prompted to retry after fixing the issue</li>
+<li>Automatic retry up to 3 times</li>
+<li>You can cancel the operation if needed</li>
+</ol>
+<p><strong>Example Network Error Flow:</strong></p>
+<pre class="text" data-role="code-block" data-language="text"><code>[ERROR] Network error: Could not connect to example.com
+Reason: ETIMEDOUT
+Would you like to retry? (yes/no): yes
+Retrying connection... (attempt 1/3)</code></pre>
+<p><strong>Handling Network Issues:</strong></p>
+<ul>
+<li>Check internet connection before starting</li>
+<li>Use retry mechanism when network errors occur</li>
+<li>Monitor network stability during long runs</li>
+<li>Consider rate limiting for large sites</li>
+</ul>
+<h3 id="language-variant-filtering">Language Variant Filtering</h3>
+<p>By default, the tool skips non-English language variants to avoid
+duplicate content analysis.</p>
+<p><strong>Default Behavior:</strong></p>
+<ul>
+<li><strong>Processed by default</strong>: <code>/en</code>,
+<code>/us</code></li>
+<li><strong>Skipped by default</strong>: <code>/fr</code>,
+<code>/es</code>, <code>/de</code>, etc.</li>
+</ul>
+<p><strong>Override:</strong></p>
+<div class="sourceCode" id="cb19" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include all language variants</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com <span class="at">--include-all-languages</span></span></code></pre></div>
+<p><strong>Filtering Applies To:</strong></p>
+<ul>
+<li>URL extraction from sitemaps</li>
+<li>Report generation</li>
+<li>Content analysis</li>
+</ul>
+<p><strong>Use Cases:</strong></p>
+<ul>
+<li><strong>Skip filtering</strong> (default): Faster audits, focus on
+primary content</li>
+<li><strong>Include all languages</strong>: Multilingual site audits,
+comprehensive analysis</li>
+</ul>
+<h3 id="performance-optimization-guide">Performance Optimization
+Guide</h3>
+<h4 id="understanding-performance-features">Understanding Performance
+Features</h4>
+<p>The Web Audit Suite includes production-tested optimizations that
+reduce analysis time by 3-5x:</p>
+<p><strong>Before optimization</strong>: 100 URLs in ~45 minutes
+<strong>After optimization</strong>: 100 URLs in ~10 minutes</p>
+<h4 id="browser-pooling">Browser Pooling</h4>
+<p><strong>What it does:</strong> Maintains 3 reusable Puppeteer browser
+instances</p>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>97% reduction in browser launch overhead</li>
+<li>Eliminates 2-5 second delay per URL</li>
+<li>Automatic restart after 50 pages to prevent memory leaks</li>
+</ul>
+<p><strong>Configuration:</strong></p>
+<div class="sourceCode" id="cb20" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Default (3 browsers)</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Larger pool for faster analysis</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com <span class="at">--browser-pool-size</span> 5</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Disable pooling</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com <span class="at">--browser-pool-size</span> 0</span></code></pre></div>
+<p><strong>When to adjust:</strong></p>
+<ul>
+<li><strong>Increase (5-7)</strong>: Large sites (1000+ URLs), powerful
+hardware</li>
+<li><strong>Decrease (1-2)</strong>: Limited memory, unstable sites,
+debugging</li>
+<li><strong>Disable (0)</strong>: Troubleshooting browser issues</li>
+</ul>
+<h4 id="concurrent-url-processing">Concurrent URL Processing</h4>
+<p><strong>What it does:</strong> Processes multiple URLs
+simultaneously</p>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>3-5x speedup for URL processing phase</li>
+<li>Efficient use of browser pool</li>
+<li>Integrates with adaptive rate limiting</li>
+</ul>
+<p><strong>Configuration:</strong></p>
+<div class="sourceCode" id="cb21" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Default (3 concurrent)</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Higher concurrency for large sites</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com <span class="at">--url-concurrency</span> 5</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sequential processing</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com <span class="at">--url-concurrency</span> 1</span></code></pre></div>
+<p><strong>When to adjust:</strong></p>
+<ul>
+<li><strong>Increase (5-10)</strong>: Fast servers, large sites,
+powerful hardware</li>
+<li><strong>Decrease (1-2)</strong>: Slow servers, rate limiting issues,
+debugging</li>
+</ul>
+<h4 id="adaptive-rate-limiting">Adaptive Rate Limiting</h4>
+<p><strong>What it does:</strong> Monitors server responses and adjusts
+concurrency</p>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>Server-friendly (avoids overwhelming servers)</li>
+<li>Automatic backoff on 429/503 responses</li>
+<li>Gradual recovery when server stabilizes</li>
+</ul>
+<p><strong>How it works:</strong></p>
+<ul>
+<li>Starts with configured concurrency (default: 3)</li>
+<li>Monitors for 429 (Too Many Requests) or 503 (Service
+Unavailable)</li>
+<li>Reduces concurrency on errors (exponential backoff)</li>
+<li>Gradually increases when server recovers</li>
+<li>No configuration needed - works automatically</li>
+</ul>
+<h4 id="cache-staleness-checking">Cache Staleness Checking</h4>
+<p><strong>What it does:</strong> Validates cache freshness with HTTP
+HEAD requests</p>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>Ensures data accuracy without re-analysis</li>
+<li>Automatic invalidation when source changes</li>
+<li>Minimal overhead (HEAD requests only)</li>
+</ul>
+<p><strong>How it works:</strong></p>
+<ul>
+<li>Checks Last-Modified header on cached pages</li>
+<li>Compares with cache creation time</li>
+<li>Invalidates cache if source is newer</li>
+<li>Falls back to cache if HEAD request fails</li>
+<li>No configuration needed - works automatically</li>
+</ul>
+<h4 id="recommended-configurations">Recommended Configurations</h4>
+<p><strong>Small sites (&lt;100 URLs):</strong></p>
+<div class="sourceCode" id="cb22" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Defaults work well</span></span></code></pre></div>
+<p><strong>Medium sites (100-500 URLs):</strong></p>
+<div class="sourceCode" id="cb23" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com <span class="at">--browser-pool-size</span> 5 <span class="at">--url-concurrency</span> 5</span></code></pre></div>
+<p><strong>Large sites (500-5000 URLs):</strong></p>
+<div class="sourceCode" id="cb24" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com <span class="at">--browser-pool-size</span> 7 <span class="at">--url-concurrency</span> 7</span></code></pre></div>
+<p><strong>Very large sites (5000+ URLs):</strong></p>
+<div class="sourceCode" id="cb25" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Process in batches</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com <span class="at">-c</span> 1000 <span class="at">--browser-pool-size</span> 7 <span class="at">--url-concurrency</span> 7</span></code></pre></div>
+<p><strong>Slow or rate-limited servers:</strong></p>
+<div class="sourceCode" id="cb26" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> start <span class="at">--</span> <span class="at">-s</span> https://example.com <span class="at">--browser-pool-size</span> 2 <span class="at">--url-concurrency</span> 2</span></code></pre></div>
 <h3 id="custom-configuration">Custom Configuration</h3>
 <p>Create <code>.web-audit-config.json</code>:</p>
-<div class="sourceCode" id="cb11" data-role="code-container"><pre
-class="sourceCode json"><code class="sourceCode json" data-role="code-content"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;concurrency&quot;</span><span class="fu">:</span> <span class="dv">10</span><span class="fu">,</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;timeout&quot;</span><span class="fu">:</span> <span class="dv">30000</span><span class="fu">,</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;userAgent&quot;</span><span class="fu">:</span> <span class="st">&quot;Web-Audit-Suite/2.0&quot;</span><span class="fu">,</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;viewport&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;width&quot;</span><span class="fu">:</span> <span class="dv">1920</span><span class="fu">,</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;height&quot;</span><span class="fu">:</span> <span class="dv">1080</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;thresholds&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;llm_suitability&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;low&quot;</span><span class="fu">:</span> <span class="dv">40</span><span class="fu">,</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;medium&quot;</span><span class="fu">:</span> <span class="dv">60</span><span class="fu">,</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;high&quot;</span><span class="fu">:</span> <span class="dv">80</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb27" data-role="code-container"><pre
+class="sourceCode json"><code class="sourceCode json" data-role="code-content"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;concurrency&quot;</span><span class="fu">:</span> <span class="dv">10</span><span class="fu">,</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;timeout&quot;</span><span class="fu">:</span> <span class="dv">30000</span><span class="fu">,</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;userAgent&quot;</span><span class="fu">:</span> <span class="st">&quot;Web-Audit-Suite/2.0&quot;</span><span class="fu">,</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;viewport&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;width&quot;</span><span class="fu">:</span> <span class="dv">1920</span><span class="fu">,</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;height&quot;</span><span class="fu">:</span> <span class="dv">1080</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;thresholds&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;llm_suitability&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;low&quot;</span><span class="fu">:</span> <span class="dv">40</span><span class="fu">,</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;medium&quot;</span><span class="fu">:</span> <span class="dv">60</span><span class="fu">,</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;high&quot;</span><span class="fu">:</span> <span class="dv">80</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <h3 id="cicd-integration">CI/CD Integration</h3>
 <p>Add to <code>.github/workflows/audit.yml</code>:</p>
-<div class="sourceCode" id="cb12" data-role="code-container"><pre
-class="sourceCode yaml"><code class="sourceCode yaml" data-role="code-content"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Web Audit</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">schedule</span><span class="kw">:</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">cron</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;0 0 * * 0&#39;</span><span class="co">  # Weekly on Sunday</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">workflow_dispatch</span><span class="kw">:</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">audit</span><span class="kw">:</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v3</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Setup Node</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-node@v3</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">node-version</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;18&#39;</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install Web Audit Suite</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>          git clone https://github.com/ddttom/invisible-users.git</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>          cd invisible-users/packages/web-audit-suite</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>          npm install</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Run Audit</span></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>          cd invisible-users/packages/web-audit-suite</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>          npm start -- -s https://example.com/sitemap.xml -c -1 \</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>            --enable-history \</span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>            --generate-dashboard</span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Check Thresholds</span></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>          # Fail if score drops below threshold</span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>          SCORE=$(jq &#39;.overall_score&#39; results/executive_summary.json)</span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>          if (( $(echo &quot;$SCORE &lt; 70&quot; | bc -l) )); then</span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>            echo &quot;Score $SCORE below threshold 70&quot;</span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>            exit 1</span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>          fi</span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Upload Results</span></span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/upload-artifact@v3</span></span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">name</span><span class="kw">:</span><span class="at"> audit-results</span></span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">path</span><span class="kw">:</span><span class="at"> invisible-users/packages/web-audit-suite/results/</span></span></code></pre></div>
+<div class="sourceCode" id="cb28" data-role="code-container"><pre
+class="sourceCode yaml"><code class="sourceCode yaml" data-role="code-content"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Web Audit</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">schedule</span><span class="kw">:</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">cron</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;0 0 * * 0&#39;</span><span class="co">  # Weekly on Sunday</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">workflow_dispatch</span><span class="kw">:</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">audit</span><span class="kw">:</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v3</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Setup Node</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-node@v3</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">node-version</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;20&#39;</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install Web Audit Suite</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>          git clone </span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>          cd invisible-users/mx-audit</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>          npm install</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Run Audit</span></span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>          cd invisible-users/mx-audit</span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>          npm start -- -s https://example.com/sitemap.xml -c -1 \</span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>            --enable-history \</span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>            --generate-dashboard</span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Check Thresholds</span></span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>          # Fail if score drops below threshold</span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>          SCORE=$(jq &#39;.overall_score&#39; results/executive_summary.json)</span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>          if (( $(echo &quot;$SCORE &lt; 70&quot; | bc -l) )); then</span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a>            echo &quot;Score $SCORE below threshold 70&quot;</span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a>            exit 1</span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a>          fi</span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Upload Results</span></span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/upload-artifact@v3</span></span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">name</span><span class="kw">:</span><span class="at"> audit-results</span></span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">path</span><span class="kw">:</span><span class="at"> invisible-users/mx-audit/results/</span></span></code></pre></div>
 <h2 id="interpreting-specific-issues">Interpreting Specific Issues</h2>
 <h3 id="served-html-score-significantly-lower-than-rendered">“Served
 HTML score significantly lower than rendered”</h3>
@@ -1017,14 +1627,137 @@ content</li>
 descriptions</li>
 <li>Reserve animated GIFs for purely decorative purposes</li>
 </ol>
+<h3 id="visual-content-changes-detected">“Visual content changes
+detected”</h3>
+<p><strong>Meaning:</strong> Screenshot comparison revealed page content
+changing over time (typewriter animations, rotating text, tickers)</p>
+<p><strong>Impact:</strong> Agents snapshot page at random moments,
+missing content that hasn’t appeared yet or has already cycled away.
+Timing-dependent failures.</p>
+<p><strong>Example:</strong> Arbory Digital homepage cycles “AEM UPGRADE
+SPECIALISTS” → “AEM EXPERTS” → “SECURITY” - agents only see one
+variant.</p>
+<p><strong>Fix:</strong></p>
+<ol type="1">
+<li>Ensure ALL text variations exist in served HTML before JavaScript
+enhancement</li>
+<li>Add data-content-variations=“AEM UPGRADE SPECIALISTS|AEM
+EXPERTS|SECURITY” attribute</li>
+<li>Add data-content-complete=“true” after animation cycle
+completes</li>
+<li>Provide static <code>&lt;noscript&gt;</code> alternative showing all
+content</li>
+<li>Mark animated containers with data-animation-type=“typewriter” or
+data-animation-type=“ticker”</li>
+<li>Consider showing all variations in a list format for agents:
+<code>&lt;ul data-agent-visible="true"&gt;&lt;li&gt;AEM UPGRADE SPECIALISTS&lt;/li&gt;&lt;li&gt;AEM EXPERTS&lt;/li&gt;&lt;li&gt;SECURITY&lt;/li&gt;&lt;/ul&gt;</code></li>
+</ol>
+<p><strong>Detection method:</strong> The audit takes 3 screenshots at
+random intervals (2-5 seconds apart) and compares visual hashes.
+Different hashes indicate visual content changes. This catches custom
+animations that don’t use known libraries.</p>
+<h3 id="javascript-dependent-pricing">JavaScript-Dependent Pricing</h3>
+<p><strong>Metric:</strong> <code>jsDependentPricing</code></p>
+<p><strong>Meaning:</strong> Price information only appears after
+JavaScript execution, making it invisible to CLI agents (ChatGPT
+Shopping, Perplexity Shopping) and server-based agents that cannot
+execute JavaScript.</p>
+<p><strong>Why this matters:</strong> E-commerce agents need pricing
+information to make purchase recommendations. If prices only appear
+client-side via JavaScript, CLI agents see product descriptions but no
+prices, blocking purchase decisions entirely.</p>
+<p><strong>Common causes:</strong></p>
+<ol type="1">
+<li><strong>React/Vue dynamic pricing</strong> - Price fetched from API
+and rendered client-side</li>
+<li><strong>JavaScript-based currency conversion</strong> - Shows
+“Loading price…” in served HTML</li>
+<li><strong>Lazy-loaded pricing</strong> - Price div exists but content
+added via JavaScript</li>
+<li><strong>Dynamic discount calculations</strong> - Final price
+computed in browser</li>
+<li><strong>Regional pricing detection</strong> - JavaScript determines
+user location and shows appropriate price</li>
+</ol>
+<p><strong>Real-world example:</strong> Product page shows
+<code>&lt;div class="price"&gt;&lt;/div&gt;</code> in served HTML, but
+actual price <code>$99.99</code> only appears after JavaScript fetches
+it from pricing API. ChatGPT Shopping cannot recommend this product
+because it sees no price.</p>
+<p><strong>Penalty:</strong> -15 points (critical severity - blocks
+purchase recommendations)</p>
+<p><strong>How to fix:</strong></p>
+<ol type="1">
+<li><strong>Server-side rendering:</strong> Render initial price in HTML
+using server-side templating (PHP, Django, Rails, Next.js SSR)</li>
+<li><strong>Schema.org structured data:</strong> Add JSON-LD with
+Product schema including price property</li>
+<li><strong>Meta tags:</strong> Include
+<code>&lt;meta itemprop="price" content="99.99"&gt;</code> for
+fallback</li>
+<li><strong>Data attributes:</strong> Add
+<code>data-price="99.99"</code> and <code>data-currency="USD"</code> to
+price elements</li>
+<li><strong>Noscript fallback:</strong> Provide
+<code>&lt;noscript&gt;&lt;span class="price"&gt;$99.99&lt;/span&gt;&lt;/noscript&gt;</code>
+alternative</li>
+</ol>
+<p><strong>Complete example:</strong></p>
+<div class="sourceCode" id="cb29" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Served HTML (visible to all agents) --&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;product&quot;</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Product&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">h1</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>Premium Laptop<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">&lt;!-- Price visible in served HTML --&gt;</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;price&quot;</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="ot">       itemprop</span><span class="op">=</span><span class="st">&quot;offers&quot;</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="ot">       itemscope</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="ot">       itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Offer&quot;</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="ot">       data-price</span><span class="op">=</span><span class="st">&quot;999.99&quot;</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="ot">       data-currency</span><span class="op">=</span><span class="st">&quot;USD&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;price&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;999.99&quot;</span><span class="dt">&gt;</span>$999.99<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;priceCurrency&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;USD&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">&lt;!-- JSON-LD for structured data --&gt;</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;application/ld+json&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;@context&quot;</span><span class="op">:</span> <span class="st">&quot;https://schema.org&quot;</span><span class="op">,</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Product&quot;</span><span class="op">,</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;Premium Laptop&quot;</span><span class="op">,</span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;offers&quot;</span><span class="op">:</span> {</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;@type&quot;</span><span class="op">:</span> <span class="st">&quot;Offer&quot;</span><span class="op">,</span></span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;price&quot;</span><span class="op">:</span> <span class="st">&quot;999.99&quot;</span><span class="op">,</span></span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;priceCurrency&quot;</span><span class="op">:</span> <span class="st">&quot;USD&quot;</span></span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>  <span class="co">&lt;!-- JavaScript can enhance with regional pricing, discounts --&gt;</span></span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Progressive enhancement only - base price already visible</span></span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">enhancePricing</span>()<span class="op">;</span></span>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
+<p><strong>Detection pattern:</strong> Audit compares served HTML
+(before JavaScript) against rendered HTML (after JavaScript) using these
+price patterns:</p>
+<ul>
+<li>Currency symbols: <code>$</code>, <code>£</code>, <code>€</code>,
+<code>¥</code></li>
+<li>Price formats: <code>$99.99</code>, <code>99.99 USD</code>,
+<code>£99</code></li>
+<li>Schema.org: <code>itemprop="price"</code></li>
+<li>Data attributes: <code>data-price=</code></li>
+<li>Class names: <code>class="price"</code></li>
+<li>JSON-LD: <code>"price": "99.99"</code></li>
+</ul>
+<p>If any pattern matches rendered HTML but NOT served HTML, pricing is
+JavaScript-dependent.</p>
 <h2 id="getting-help">Getting Help</h2>
 <ul>
-<li><strong>Documentation:</strong> <a
-href="https://github.com/ddttom/invisible-users/blob/main/web-audit-suite/README.md"
-class="uri">https://github.com/ddttom/invisible-users/blob/main/web-audit-suite/README.md</a></li>
-<li><strong>Issues:</strong> <a
-href="https://github.com/ddttom/invisible-users/issues"
-class="uri">https://github.com/ddttom/invisible-users/issues</a></li>
+<li><strong>Documentation:</strong> &lt;&gt;</li>
+<li><strong>Issues:</strong> &lt;&gt;</li>
 <li><strong>Examples:</strong> See <code>web-audit-suite/examples</code>
 directory in repository</li>
 </ul>

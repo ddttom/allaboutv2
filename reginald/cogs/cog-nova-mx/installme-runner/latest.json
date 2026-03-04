@@ -15,7 +15,7 @@
     "install",
     "diagnostics",
     "prerequisites",
-    "sop-agent",
+    "ai-agent",
     "executor",
     "mx-os"
   ],

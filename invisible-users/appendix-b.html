@@ -5,52 +5,41 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Tom Cranstoun" />
-  <meta name="description" content="Practical guidance from The Invisible Users book on designing AI agent-friendly websites" />
+  <meta name="description" content="Practical guidance from MX-Codex book on designing AI agent-friendly websites" />
   <title>Appendix B: Battle-Tested Lessons</title>
   
+
   <link rel="canonical" href="https://allabout.network/invisible-users/appendix-b.html">
-  <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
-  <meta name="ai-preferred-access" content="html">
-  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
-  <meta name="ai-freshness" content="monthly">
-  <meta name="ai-structured-data" content="json-ld">
-  <meta name="ai-attribution" content="required" text="Source: The Invisible Users by Tom Cranstoun, https://allabout.network/invisible-users/">
-  <meta name="llms-txt" content="/llms.txt">
+  <!-- MX carrier tags -->
+  <meta name="mx:content-policy" content="extract-with-attribution">
+  <meta name="mx:attribution" content="required">
+  <link rel="llms-txt" href="/llms.txt">
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://allabout.network/invisible-users/appendix-b.html">
   <meta property="og:title" content="Appendix B: Battle-Tested Lessons">
-  <meta property="og:description" content="Practical guidance from The Invisible Users book on designing AI agent-friendly websites">
+  <meta property="og:description" content="Practical guidance from MX-Codex book on designing AI agent-friendly websites">
   <meta property="og:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
-  <meta property="og:site_name" content="The Invisible Users">
+  <meta property="og:site_name" content="MX-Codex">
   <meta property="og:locale" content="en_GB">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://allabout.network/invisible-users/appendix-b.html">
   <meta name="twitter:title" content="Appendix B: Battle-Tested Lessons">
-  <meta name="twitter:description" content="Implementation guide from The Invisible Users book">
+  <meta name="twitter:description" content="Implementation guide from MX-Codex book">
   <meta name="twitter:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
   <meta name="twitter:creator" content="@tomcranstoun">
 
   <!-- Additional SEO -->
   <meta name="robots" content="index, follow">
-  <meta name="keywords" content="AI agents, web design, implementation guide, Appendix B, technical patterns, code examples">
-  <meta name="theme-color" content="#1e40af">
-
-  <!-- MX carrier metadata -->
-  <meta name="mx:category" content="mx-tools">
-  <meta name="mx:status" content="active">
-  <meta name="mx:contentType" content="document">
-  <meta name="mx:tags" content="tool">
-  <meta name="mx:partOf" content="mx-os">
   <!-- Schema.org structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "name": "Appendix B: Battle-Tested Lessons",
-    "description": "Practical guidance from The Invisible Users book on designing AI agent-friendly websites",
+    "description": "Practical guidance from MX-Codex book on designing AI agent-friendly websites",
     "author": {
       "@type": "Person",
       "name": "Tom Cranstoun",
@@ -64,7 +53,7 @@
     "dateModified": "2026-01-10",
     "isPartOf": {
       "@type": "Book",
-      "name": "The Invisible Users",
+      "name": "MX-Codex",
       "author": {
         "@type": "Person",
         "name": "Tom Cranstoun"
@@ -97,7 +86,7 @@
 <hr>
 <header id="title-block-header">
 <h1 class="title">Appendix B: Battle-Tested Lessons</h1>
-<p class="subtitle">The Invisible Users</p>
+<p class="subtitle">MX-Codex</p>
 <p class="author">Tom Cranstoun</p>
 <p class="date">January 2026</p>
 </header>
@@ -131,26 +120,37 @@ IDs</a></li>
 <li><a href="#loading-states-without-expected-duration"
 id="toc-loading-states-without-expected-duration">8. Loading States
 Without Expected Duration</a></li>
+<li><a href="#inline-styles-bloat-html-for-agents"
+id="toc-inline-styles-bloat-html-for-agents">9. Inline Styles Bloat HTML
+for Agents</a></li>
+<li><a href="#pre-converting-pages-to-markdown-stripped-metadata"
+id="toc-pre-converting-pages-to-markdown-stripped-metadata">10.
+Pre-Converting Pages to Markdown Stripped Metadata</a></li>
 <li><a href="#robots.txt-missing-sitemap-declaration"
-id="toc-robots.txt-missing-sitemap-declaration">9. robots.txt Missing
+id="toc-robots.txt-missing-sitemap-declaration">11. robots.txt Missing
 Sitemap Declaration</a></li>
 <li><a href="#schema.org-types-wrong-for-content"
-id="toc-schema.org-types-wrong-for-content">10. Schema.org Types Wrong
+id="toc-schema.org-types-wrong-for-content">12. Schema.org Types Wrong
 for Content</a></li>
 <li><a href="#testing-only-in-chrome"
-id="toc-testing-only-in-chrome">11. Testing Only in Chrome</a></li>
+id="toc-testing-only-in-chrome">13. Testing Only in Chrome</a></li>
 <li><a href="#incomplete-pricing-disclosure-persisted"
-id="toc-incomplete-pricing-disclosure-persisted">12. Incomplete Pricing
+id="toc-incomplete-pricing-disclosure-persisted">14. Incomplete Pricing
 Disclosure Persisted</a></li>
 <li><a href="#api-and-web-ui-out-of-sync"
-id="toc-api-and-web-ui-out-of-sync">13. API and Web UI Out of
+id="toc-api-and-web-ui-out-of-sync">15. API and Web UI Out of
 Sync</a></li>
 <li><a href="#forgetting-mobile-viewport"
-id="toc-forgetting-mobile-viewport">14. Forgetting Mobile
+id="toc-forgetting-mobile-viewport">16. Forgetting Mobile
 Viewport</a></li>
 <li><a href="#authentication-required-for-public-data"
-id="toc-authentication-required-for-public-data">15. Authentication
+id="toc-authentication-required-for-public-data">17. Authentication
 Required for Public Data</a></li>
+<li><a href="#performance-optimization-lessons"
+id="toc-performance-optimization-lessons">18. Performance Optimization
+Lessons</a></li>
+<li><a href="#ethical-scraping-lessons"
+id="toc-ethical-scraping-lessons">19. Ethical Scraping Lessons</a></li>
 <li><a href="#key-takeaways" id="toc-key-takeaways">Key
 Takeaways</a></li>
 </ul></li>
@@ -417,7 +417,100 @@ class="sourceCode html"><code class="sourceCode html" data-role="code-content"><
 <p>Agents can now make informed timeout decisions.</p>
 <p><strong>Lesson:</strong> Loading states should indicate expected
 duration. “Loading…” is insufficient - specify how long.</p>
-<h2 id="robots.txt-missing-sitemap-declaration">9. robots.txt Missing
+<h2 id="inline-styles-bloat-html-for-agents">9. Inline Styles Bloat HTML
+for Agents</h2>
+<p><strong>The Problem:</strong> Used inline styles for convenience
+during development but never refactored to external CSS. Agents that
+parse HTML but don’t execute CSS were downloading and processing
+hundreds of lines of unused styling code with every page request.</p>
+<p><strong>First attempt:</strong></p>
+<div class="sourceCode" id="cb18" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> style</span><span class="op">=</span><span class="st">&quot;padding: 2rem; background: #f3f4f6; border-radius: 8px;&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">h2</span><span class="ot"> style</span><span class="op">=</span><span class="st">&quot;font-size: 1.5rem; color: #1e40af; margin-bottom: 1rem;&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    Product Details</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">button</span><span class="ot"> style</span><span class="op">=</span><span class="st">&quot;padding: 1rem 2rem; background: #3b82f6; color: white; border: none;&quot;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="ot">          onclick</span><span class="op">=</span><span class="st">&quot;addToCart()&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    Add to Cart</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">button</span><span class="dt">&gt;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>This HTML file was 45KB, with 22KB being inline styles that CLI
+agents and server-based agents never use. They still parse it, slowing
+down extraction.</p>
+<p><strong>Solution:</strong> Move all styling to external CSS file:</p>
+<div class="sourceCode" id="cb19" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;styles.css&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;cart.js&quot;</span><span class="ot"> defer</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;product-card&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>Product Details<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">button</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;btn-primary&quot;</span><span class="ot"> data-action</span><span class="op">=</span><span class="st">&quot;add-to-cart&quot;</span><span class="dt">&gt;</span>Add to Cart<span class="dt">&lt;/</span><span class="kw">button</span><span class="dt">&gt;</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>HTML file reduced to 23KB. Browsers cache the CSS file. Agents parse
+clean HTML without style noise.</p>
+<p><strong>Lesson:</strong> Separate presentation from content. Inline
+styles waste bandwidth for agents that don’t render them and make HTML
+harder to parse. External CSS benefits everyone - agents get faster
+parsing, browsers get caching, developers get maintainability.</p>
+<h2 id="pre-converting-pages-to-markdown-stripped-metadata">10.
+Pre-Converting Pages to Markdown Stripped Metadata</h2>
+<p><strong>The Problem:</strong> Built a “chatbot-friendly” site by
+converting all pages to markdown. In 2023, this seemed smart - simpler
+format, easier parsing, clean text. By 2025, agents struggled to cite us
+accurately. Prices were often wrong, publication dates got hallucinated,
+author attribution disappeared.</p>
+<p><strong>Investigation revealed the problem:</strong></p>
+<p>Our conversion pipeline stripped everything that agents needed for
+accurate discovery and citation:</p>
+<ul>
+<li>JSON-LD structured data (product details, pricing, reviews)</li>
+<li>HTML meta tags (publication dates, author information, canonical
+URLs)</li>
+<li>Schema.org markup (explicit content type signals)</li>
+<li>Semantic attributes (data-price, data-currency, data-formats)</li>
+</ul>
+<p>We had optimised for the 2023 paradigm (chatbots that just answered
+questions) whilst the market moved to 2026 reality (agents that
+discover, evaluate, compare, and cite sources with accuracy).</p>
+<p><strong>What we saw:</strong></p>
+<p>Agents reading our markdown would cite “approximately £30” when price
+was exactly £24.99. They’d say “published recently” when we had explicit
+dates. They’d mention the product but not link to our site because they
+had no canonical URL.</p>
+<p>Competitors with rich HTML and structured data got cited accurately.
+We got vague references or got skipped entirely.</p>
+<p><strong>Solution:</strong> Serve rich HTML with full metadata
+layers:</p>
+<div class="sourceCode" id="cb20" data-role="code-container"><pre
+class="sourceCode html"><code class="sourceCode html" data-role="code-content"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">article</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Book&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">h1</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;name&quot;</span><span class="dt">&gt;</span>MX: The Codex<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;offers&quot;</span><span class="ot"> itemscope itemtype</span><span class="op">=</span><span class="st">&quot;https://schema.org/Offer&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;price&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;24.99&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;priceCurrency&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;GBP&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;availability&quot;</span><span class="ot"> content</span><span class="op">=</span><span class="st">&quot;https://schema.org/InStock&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">span</span><span class="dt">&gt;</span>£24.99<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">time</span><span class="ot"> itemprop</span><span class="op">=</span><span class="st">&quot;datePublished&quot;</span><span class="ot"> datetime</span><span class="op">=</span><span class="st">&quot;2026-03-31&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    Published: 31 March 2026</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">time</span><span class="dt">&gt;</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">article</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>Citation accuracy improved dramatically. Agents now reference exact
+prices, correct dates, proper author attribution. If a platform needs
+markdown, they can extract it from our rich HTML - we don’t pre-strip
+the signals they need.</p>
+<p><strong>Lesson:</strong> Don’t optimise for yesterday’s paradigm.
+Agents in 2026 need structured metadata for accurate citation, not
+stripped markdown that loses context. Provide rich source material and
+let platforms convert to simpler formats if needed. You can’t add
+structure back to stripped markdown, but you can always extract markdown
+from rich HTML.</p>
+<h2 id="robots.txt-missing-sitemap-declaration">11. robots.txt Missing
 Sitemap Declaration</h2>
 <p><strong>The Problem:</strong> Created robots.txt but forgot sitemap
 declaration. Agents couldn’t discover content efficiently.</p>
@@ -435,55 +528,55 @@ Sitemap: https://example.com/sitemap.xml</code></pre>
 slowly.</p>
 <p><strong>Lesson:</strong> robots.txt should always declare sitemap.
 Dramatically improves discoverability.</p>
-<h2 id="schema.org-types-wrong-for-content">10. Schema.org Types Wrong
+<h2 id="schema.org-types-wrong-for-content">12. Schema.org Types Wrong
 for Content</h2>
 <p><strong>The Problem:</strong> Used <code>Article</code> type for
 product pages. Agents expected article content, got confused by
 pricing.</p>
 <p><strong>Wrong:</strong></p>
-<div class="sourceCode" id="cb20" data-role="code-container"><pre
-class="sourceCode json"><code class="sourceCode json" data-role="code-content"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;Article&quot;</span><span class="fu">,</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Wireless Headphones&quot;</span><span class="fu">,</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;price&quot;</span><span class="fu">:</span> <span class="st">&quot;149.99&quot;</span>  <span class="er">//</span> <span class="er">Articles</span> <span class="er">don&#39;t</span> <span class="er">have</span> <span class="er">prices!</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb23" data-role="code-container"><pre
+class="sourceCode json"><code class="sourceCode json" data-role="code-content"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;Article&quot;</span><span class="fu">,</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Wireless Headphones&quot;</span><span class="fu">,</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;price&quot;</span><span class="fu">:</span> <span class="st">&quot;149.99&quot;</span>  <span class="er">//</span> <span class="er">Articles</span> <span class="er">don&#39;t</span> <span class="er">have</span> <span class="er">prices!</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <p><strong>Right:</strong></p>
-<div class="sourceCode" id="cb21" data-role="code-container"><pre
-class="sourceCode json"><code class="sourceCode json" data-role="code-content"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;Product&quot;</span><span class="fu">,</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Wireless Headphones&quot;</span><span class="fu">,</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;offers&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;Offer&quot;</span><span class="fu">,</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;price&quot;</span><span class="fu">:</span> <span class="st">&quot;149.99&quot;</span><span class="fu">,</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;priceCurrency&quot;</span><span class="fu">:</span> <span class="st">&quot;GBP&quot;</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb24" data-role="code-container"><pre
+class="sourceCode json"><code class="sourceCode json" data-role="code-content"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;Product&quot;</span><span class="fu">,</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Wireless Headphones&quot;</span><span class="fu">,</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;offers&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;@type&quot;</span><span class="fu">:</span> <span class="st">&quot;Offer&quot;</span><span class="fu">,</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;price&quot;</span><span class="fu">:</span> <span class="st">&quot;149.99&quot;</span><span class="fu">,</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;priceCurrency&quot;</span><span class="fu">:</span> <span class="st">&quot;GBP&quot;</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <p><strong>Lesson:</strong> Use correct Schema.org types: Product for
 products, Article for articles, LocalBusiness for businesses. Type
 mismatch confuses agents.</p>
-<h2 id="testing-only-in-chrome">11. Testing Only in Chrome</h2>
+<h2 id="testing-only-in-chrome">13. Testing Only in Chrome</h2>
 <p><strong>The Problem:</strong> Tested agent compatibility only in
 Chrome DevTools with JavaScript disabled.</p>
 <p><strong>What we missed:</strong> Server-rendered HTML had
 Chrome-specific CSS that broke in other contexts:</p>
-<div class="sourceCode" id="cb22" data-role="code-container"><pre
-class="sourceCode css"><code class="sourceCode css" data-role="code-content"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.price</span> {</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">-webkit-box</span><span class="op">;</span> <span class="co">/* Chrome-specific */</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb25" data-role="code-container"><pre
+class="sourceCode css"><code class="sourceCode css" data-role="code-content"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.price</span> {</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">-webkit-box</span><span class="op">;</span> <span class="co">/* Chrome-specific */</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Agents parsing without browser context saw broken layout
 references.</p>
 <p><strong>Solution:</strong> Test with actual curl/wget:</p>
-<div class="sourceCode" id="cb23" data-role="code-container"><pre
-class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test served HTML as agents see it</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://example.com/product/123 <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-i</span> <span class="st">&quot;price&quot;</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify structured data</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> https://example.com/product/123 <span class="kw">|</span> <span class="dt">\</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grep</span> <span class="at">-o</span> <span class="st">&#39;&lt;script type=&quot;application/ld+json&quot;&gt;.*&lt;/script&gt;&#39;</span> <span class="kw">|</span> <span class="dt">\</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">jq</span> .</span></code></pre></div>
+<div class="sourceCode" id="cb26" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test served HTML as agents see it</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://example.com/product/123 <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-i</span> <span class="st">&quot;price&quot;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify structured data</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> https://example.com/product/123 <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grep</span> <span class="at">-o</span> <span class="st">&#39;&lt;script type=&quot;application/ld+json&quot;&gt;.*&lt;/script&gt;&#39;</span> <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">jq</span> .</span></code></pre></div>
 <p><strong>Lesson:</strong> Test served HTML with actual HTTP clients
 (curl/wget), not just browser DevTools.</p>
-<h2 id="incomplete-pricing-disclosure-persisted">12. Incomplete Pricing
+<h2 id="incomplete-pricing-disclosure-persisted">14. Incomplete Pricing
 Disclosure Persisted</h2>
 <p><strong>The Problem:</strong> Changed “From £99” to “£149.99” on
 product pages, but forgot checkout summary, confirmation emails, and API
@@ -497,16 +590,16 @@ responses.</p>
 </ul>
 <p><strong>Solution:</strong> Search entire codebase for pricing
 patterns:</p>
-<div class="sourceCode" id="cb24" data-role="code-container"><pre
-class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find all price references</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-r</span> <span class="st">&quot;From £&quot;</span> .</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-r</span> <span class="st">&quot;Starting at&quot;</span> .</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-r</span> <span class="st">&quot;base_price&quot;</span> .</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Update systematically</span></span></code></pre></div>
+<div class="sourceCode" id="cb27" data-role="code-container"><pre
+class="sourceCode bash"><code class="sourceCode bash" data-role="code-content"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find all price references</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-r</span> <span class="st">&quot;From £&quot;</span> .</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-r</span> <span class="st">&quot;Starting at&quot;</span> .</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-r</span> <span class="st">&quot;base_price&quot;</span> .</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Update systematically</span></span></code></pre></div>
 <p><strong>Lesson:</strong> Pattern changes must be applied everywhere.
 Use grep to find all instances, update systematically.</p>
-<h2 id="api-and-web-ui-out-of-sync">13. API and Web UI Out of Sync</h2>
+<h2 id="api-and-web-ui-out-of-sync">15. API and Web UI Out of Sync</h2>
 <p><strong>The Problem:</strong> Fixed web UI for agents, but API still
 returned paginated results and incomplete data.</p>
 <p><strong>Web UI:</strong></p>
@@ -524,83 +617,151 @@ returned paginated results and incomplete data.</p>
 <p>Agents using API got inferior experience to agents scraping web
 UI.</p>
 <p><strong>Solution:</strong> API should be first-class interface:</p>
-<div class="sourceCode" id="cb25" data-role="code-container"><pre
-class="sourceCode javascript"><code class="sourceCode javascript" data-role="code-content"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;/api/products&#39;</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">json</span>({</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">products</span><span class="op">:</span> db<span class="op">.</span><span class="fu">getAllProducts</span>()<span class="op">.</span><span class="fu">map</span>(p <span class="kw">=&gt;</span> ({</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">id</span><span class="op">:</span> p<span class="op">.</span><span class="at">id</span><span class="op">,</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">name</span><span class="op">:</span> p<span class="op">.</span><span class="at">name</span><span class="op">,</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">price</span><span class="op">:</span> {</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">amount</span><span class="op">:</span> p<span class="op">.</span><span class="at">price</span><span class="op">,</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">currency</span><span class="op">:</span> <span class="st">&#39;GBP&#39;</span><span class="op">,</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">includes_vat</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">formatted</span><span class="op">:</span> <span class="vs">`£</span><span class="sc">${</span>p<span class="op">.</span><span class="at">price</span><span class="sc">}</span><span class="vs">`</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">availability</span><span class="op">:</span> {</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">in_stock</span><span class="op">:</span> p<span class="op">.</span><span class="at">stock</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">,</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">quantity</span><span class="op">:</span> p<span class="op">.</span><span class="at">stock</span></span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    }))<span class="op">,</span></span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">meta</span><span class="op">:</span> {</span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>      <span class="dt">total</span><span class="op">:</span> db<span class="op">.</span><span class="fu">countProducts</span>()<span class="op">,</span></span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>      <span class="dt">schema</span><span class="op">:</span> <span class="st">&#39;https://schema.org/Product&#39;</span></span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb28" data-role="code-container"><pre
+class="sourceCode javascript"><code class="sourceCode javascript" data-role="code-content"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;/api/products&#39;</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">json</span>({</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">products</span><span class="op">:</span> db<span class="op">.</span><span class="fu">getAllProducts</span>()<span class="op">.</span><span class="fu">map</span>(p <span class="kw">=&gt;</span> ({</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">id</span><span class="op">:</span> p<span class="op">.</span><span class="at">id</span><span class="op">,</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">name</span><span class="op">:</span> p<span class="op">.</span><span class="at">name</span><span class="op">,</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">price</span><span class="op">:</span> {</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">amount</span><span class="op">:</span> p<span class="op">.</span><span class="at">price</span><span class="op">,</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">currency</span><span class="op">:</span> <span class="st">&#39;GBP&#39;</span><span class="op">,</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">includes_vat</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">formatted</span><span class="op">:</span> <span class="vs">`£</span><span class="sc">${</span>p<span class="op">.</span><span class="at">price</span><span class="sc">}</span><span class="vs">`</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">availability</span><span class="op">:</span> {</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">in_stock</span><span class="op">:</span> p<span class="op">.</span><span class="at">stock</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">quantity</span><span class="op">:</span> p<span class="op">.</span><span class="at">stock</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    }))<span class="op">,</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">meta</span><span class="op">:</span> {</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>      <span class="dt">total</span><span class="op">:</span> db<span class="op">.</span><span class="fu">countProducts</span>()<span class="op">,</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>      <span class="dt">schema</span><span class="op">:</span> <span class="st">&#39;https://schema.org/Product&#39;</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
 <p><strong>Lesson:</strong> API must match or exceed web UI quality.
 Don’t fix UI and leave API broken.</p>
-<h2 id="forgetting-mobile-viewport">14. Forgetting Mobile Viewport</h2>
+<h2 id="forgetting-mobile-viewport">16. Forgetting Mobile Viewport</h2>
 <p><strong>The Problem:</strong> Fixed desktop patterns but mobile site
 still paginated, hid content, showed incomplete prices.</p>
 <p><strong>Root cause:</strong> Separate mobile codebase or responsive
 breakpoints that reverted to problematic patterns.</p>
 <p><strong>Solution:</strong> Test agent patterns at mobile
 breakpoints:</p>
-<div class="sourceCode" id="cb26" data-role="code-container"><pre
-class="sourceCode javascript"><code class="sourceCode javascript" data-role="code-content"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Test with mobile viewport</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> { test } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;@playwright/test&#39;</span>)<span class="op">;</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="st">&#39;mobile pricing complete&#39;</span><span class="op">,</span> <span class="kw">async</span> ({ page }) <span class="kw">=&gt;</span> {</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">await</span> page<span class="op">.</span><span class="fu">setViewportSize</span>({ <span class="dt">width</span><span class="op">:</span> <span class="dv">375</span><span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">667</span> })<span class="op">;</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">await</span> page<span class="op">.</span><span class="fu">goto</span>(<span class="st">&#39;/product/123&#39;</span>)<span class="op">;</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> price <span class="op">=</span> <span class="cf">await</span> page<span class="op">.</span><span class="fu">textContent</span>(<span class="st">&#39;.price&#39;</span>)<span class="op">;</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect</span>(price)<span class="op">.</span><span class="fu">toContain</span>(<span class="st">&#39;£149.99&#39;</span>)<span class="op">;</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect</span>(price)<span class="op">.</span><span class="at">not</span><span class="op">.</span><span class="fu">toContain</span>(<span class="st">&#39;From&#39;</span>)<span class="op">;</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb29" data-role="code-container"><pre
+class="sourceCode javascript"><code class="sourceCode javascript" data-role="code-content"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Test with mobile viewport</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> { test } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;@playwright/test&#39;</span>)<span class="op">;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="st">&#39;mobile pricing complete&#39;</span><span class="op">,</span> <span class="kw">async</span> ({ page }) <span class="kw">=&gt;</span> {</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">await</span> page<span class="op">.</span><span class="fu">setViewportSize</span>({ <span class="dt">width</span><span class="op">:</span> <span class="dv">375</span><span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">667</span> })<span class="op">;</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">await</span> page<span class="op">.</span><span class="fu">goto</span>(<span class="st">&#39;/product/123&#39;</span>)<span class="op">;</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> price <span class="op">=</span> <span class="cf">await</span> page<span class="op">.</span><span class="fu">textContent</span>(<span class="st">&#39;.price&#39;</span>)<span class="op">;</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect</span>(price)<span class="op">.</span><span class="fu">toContain</span>(<span class="st">&#39;£149.99&#39;</span>)<span class="op">;</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect</span>(price)<span class="op">.</span><span class="at">not</span><span class="op">.</span><span class="fu">toContain</span>(<span class="st">&#39;From&#39;</span>)<span class="op">;</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
 <p><strong>Lesson:</strong> Agent-friendly patterns must work on mobile
 too. Test all breakpoints.</p>
-<h2 id="authentication-required-for-public-data">15. Authentication
+<h2 id="authentication-required-for-public-data">17. Authentication
 Required for Public Data</h2>
 <p><strong>The Problem:</strong> Added authentication to API endpoints,
 breaking agent access to public product data.</p>
 <p><strong>Before (working):</strong></p>
-<div class="sourceCode" id="cb27" data-role="code-container"><pre
-class="sourceCode javascript"><code class="sourceCode javascript" data-role="code-content"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;/api/products/:id&#39;</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">json</span>(<span class="fu">getProduct</span>(req<span class="op">.</span><span class="at">params</span><span class="op">.</span><span class="at">id</span>))<span class="op">;</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb30" data-role="code-container"><pre
+class="sourceCode javascript"><code class="sourceCode javascript" data-role="code-content"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;/api/products/:id&#39;</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">json</span>(<span class="fu">getProduct</span>(req<span class="op">.</span><span class="at">params</span><span class="op">.</span><span class="at">id</span>))<span class="op">;</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
 <p><strong>After (broke agents):</strong></p>
-<div class="sourceCode" id="cb28" data-role="code-container"><pre
-class="sourceCode javascript"><code class="sourceCode javascript" data-role="code-content"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;/api/products/:id&#39;</span><span class="op">,</span> requireAuth<span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">json</span>(<span class="fu">getProduct</span>(req<span class="op">.</span><span class="at">params</span><span class="op">.</span><span class="at">id</span>))<span class="op">;</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb31" data-role="code-container"><pre
+class="sourceCode javascript"><code class="sourceCode javascript" data-role="code-content"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;/api/products/:id&#39;</span><span class="op">,</span> requireAuth<span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">json</span>(<span class="fu">getProduct</span>(req<span class="op">.</span><span class="at">params</span><span class="op">.</span><span class="at">id</span>))<span class="op">;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
 <p>Public product data now requires authentication. Agents can’t browse
 products.</p>
 <p><strong>Solution:</strong> Separate public and private data:</p>
-<div class="sourceCode" id="cb29" data-role="code-container"><pre
-class="sourceCode javascript"><code class="sourceCode javascript" data-role="code-content"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Public product data - no auth required</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;/api/public/products/:id&#39;</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">json</span>(<span class="fu">getProduct</span>(req<span class="op">.</span><span class="at">params</span><span class="op">.</span><span class="at">id</span>))<span class="op">;</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co">// Private customer-specific data - auth required</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;/api/customer/products/:id&#39;</span><span class="op">,</span> requireAuth<span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> product <span class="op">=</span> <span class="fu">getProduct</span>(req<span class="op">.</span><span class="at">params</span><span class="op">.</span><span class="at">id</span>)<span class="op">;</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> customerData <span class="op">=</span> <span class="fu">getCustomerProductData</span>(req<span class="op">.</span><span class="at">user</span><span class="op">.</span><span class="at">id</span><span class="op">,</span> product<span class="op">.</span><span class="at">id</span>)<span class="op">;</span></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">json</span>({ <span class="op">...</span>product<span class="op">,</span> customerData })<span class="op">;</span></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb32" data-role="code-container"><pre
+class="sourceCode javascript"><code class="sourceCode javascript" data-role="code-content"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Public product data - no auth required</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;/api/public/products/:id&#39;</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">json</span>(<span class="fu">getProduct</span>(req<span class="op">.</span><span class="at">params</span><span class="op">.</span><span class="at">id</span>))<span class="op">;</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co">// Private customer-specific data - auth required</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;/api/customer/products/:id&#39;</span><span class="op">,</span> requireAuth<span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> product <span class="op">=</span> <span class="fu">getProduct</span>(req<span class="op">.</span><span class="at">params</span><span class="op">.</span><span class="at">id</span>)<span class="op">;</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> customerData <span class="op">=</span> <span class="fu">getCustomerProductData</span>(req<span class="op">.</span><span class="at">user</span><span class="op">.</span><span class="at">id</span><span class="op">,</span> product<span class="op">.</span><span class="at">id</span>)<span class="op">;</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">json</span>({ <span class="op">...</span>product<span class="op">,</span> customerData })<span class="op">;</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
 <p><strong>Lesson:</strong> Public data should remain public. Don’t add
 authentication to publicly-browsable content.</p>
+<h2 id="performance-optimization-lessons">18. Performance Optimization
+Lessons</h2>
+<h3 id="browser-pooling">Browser Pooling</h3>
+<p><strong>Context:</strong> Early versions launched a new Puppeteer
+browser for every URL, adding 2-5 seconds per page.</p>
+<p><strong>Problem:</strong> 100-URL sites took 45+ minutes to analyze,
+making the tool impractical for large sites.</p>
+<p><strong>Solution:</strong> Maintain a pool of 3 reusable browsers,
+restart after 50 pages to prevent memory leaks.</p>
+<p><strong>Impact:</strong> 97% reduction in browser launches, 3-5x
+overall speedup.</p>
+<p><strong>Key insight:</strong> Resource pooling eliminates repetitive
+initialization overhead. The tradeoff is memory usage, but automatic
+restarts prevent leaks.</p>
+<h3 id="adaptive-rate-limiting">Adaptive Rate Limiting</h3>
+<p><strong>Context:</strong> Fixed-rate limiting either overwhelmed
+servers (too fast) or wasted time (too slow).</p>
+<p><strong>Problem:</strong> No single rate works for all servers. Some
+handle 10 concurrent requests, others struggle with 2.</p>
+<p><strong>Solution:</strong> Monitor 429/503 responses, dynamically
+adjust concurrency with exponential backoff and gradual recovery.</p>
+<p><strong>Impact:</strong> Server-friendly analysis without manual rate
+tuning.</p>
+<p><strong>Key insight:</strong> Reactive systems adapt to actual
+conditions better than fixed configuration. Let the server tell you when
+to slow down.</p>
+<h3 id="cache-staleness-detection">Cache Staleness Detection</h3>
+<p><strong>Context:</strong> Cached data could become outdated if source
+pages changed between analysis runs.</p>
+<p><strong>Problem:</strong> Stale cache served incorrect data,
+undermining report accuracy.</p>
+<p><strong>Solution:</strong> HTTP HEAD requests check Last-Modified
+headers, automatic invalidation when source is newer.</p>
+<p><strong>Impact:</strong> Data freshness guaranteed without full
+re-analysis.</p>
+<p><strong>Key insight:</strong> Validation metadata (Last-Modified,
+ETags) enables lightweight freshness checks. Conservative error handling
+(assume fresh on failure) prevents false positives.</p>
+<h2 id="ethical-scraping-lessons">19. Ethical Scraping Lessons</h2>
+<h3 id="robots.txt-compliance">robots.txt Compliance</h3>
+<p><strong>Context:</strong> The Web Audit Suite needed to respect
+website policies whilst providing useful analysis.</p>
+<p><strong>Problem:</strong> Some sites block automated tools via
+robots.txt, creating tension between functionality and ethics.</p>
+<p><strong>Solution:</strong> Phase 0 fetches robots.txt before
+crawling, with interactive prompts for blocked URLs and runtime
+force-scrape toggle.</p>
+<p><strong>Impact:</strong> Ethical scraping by default, with user
+control for legitimate use cases.</p>
+<p><strong>Key insight:</strong> Tools must respect website policies
+whilst enabling legitimate analysis. Interactive prompts give users
+agency without sacrificing ethics.</p>
+<p><strong>Book reference:</strong> Chapter 5 discusses content creator
+concerns about automated access.</p>
+<h3 id="robots.txt-quality-analysis">robots.txt Quality Analysis</h3>
+<p><strong>Context:</strong> Many robots.txt files provide minimal
+guidance for AI agents.</p>
+<p><strong>Problem:</strong> Website owners want to control agent access
+but don’t know what to include in robots.txt.</p>
+<p><strong>Solution:</strong> 100-point scoring system evaluates 6
+criteria (AI-specific user agents, sitemap references, sensitive path
+protection, llms.txt references, comments, completeness).</p>
+<p><strong>Impact:</strong> Actionable feedback helps sites improve
+agent guidance.</p>
+<p><strong>Key insight:</strong> Educational tools that explain “why”
+drive adoption better than binary pass/fail judgments.</p>
+<p><strong>Book reference:</strong> Chapter 10 covers robots.txt best
+practices for AI agents.</p>
 <h2 id="key-takeaways">Key Takeaways</h2>
 <ol type="1">
 <li><strong>Progressive enhancement requires discipline:</strong>

@@ -17,7 +17,7 @@ mx:
   partOf: mx-os
   refersTo: [cog-unified-spec, mx-principles]
   buildsOn: [what-is-a-cog, what-is-mx-os, what-is-mx-environment]
-  tags: [installme, install, convention, sop-agent, diagnostics, onboarding, hallucination, compute, two-stage-boot, mx-os]
+  tags: [installme, install, convention, ai-agent, diagnostics, onboarding, hallucination, compute, two-stage-boot, mx-os]
 
   audience: both
   readingLevel: accessible

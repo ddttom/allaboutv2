@@ -5,52 +5,41 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Tom Cranstoun" />
-  <meta name="description" content="Practical guidance from The Invisible Users book on designing AI agent-friendly websites" />
+  <meta name="description" content="Practical guidance from MX-Codex book on designing AI agent-friendly websites" />
   <title>Appendix G: Resource Directory</title>
   
+
   <link rel="canonical" href="https://allabout.network/invisible-users/appendix-g.html">
-  <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
-  <meta name="ai-preferred-access" content="html">
-  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
-  <meta name="ai-freshness" content="monthly">
-  <meta name="ai-structured-data" content="json-ld">
-  <meta name="ai-attribution" content="required" text="Source: The Invisible Users by Tom Cranstoun, https://allabout.network/invisible-users/">
-  <meta name="llms-txt" content="/llms.txt">
+  <!-- MX carrier tags -->
+  <meta name="mx:content-policy" content="extract-with-attribution">
+  <meta name="mx:attribution" content="required">
+  <link rel="llms-txt" href="/llms.txt">
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://allabout.network/invisible-users/appendix-g.html">
   <meta property="og:title" content="Appendix G: Resource Directory">
-  <meta property="og:description" content="Practical guidance from The Invisible Users book on designing AI agent-friendly websites">
+  <meta property="og:description" content="Practical guidance from MX-Codex book on designing AI agent-friendly websites">
   <meta property="og:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
-  <meta property="og:site_name" content="The Invisible Users">
+  <meta property="og:site_name" content="MX-Codex">
   <meta property="og:locale" content="en_GB">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://allabout.network/invisible-users/appendix-g.html">
   <meta name="twitter:title" content="Appendix G: Resource Directory">
-  <meta name="twitter:description" content="Implementation guide from The Invisible Users book">
+  <meta name="twitter:description" content="Implementation guide from MX-Codex book">
   <meta name="twitter:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
   <meta name="twitter:creator" content="@tomcranstoun">
 
   <!-- Additional SEO -->
   <meta name="robots" content="index, follow">
-  <meta name="keywords" content="AI agents, web design, implementation guide, Appendix G, technical patterns, code examples">
-  <meta name="theme-color" content="#1e40af">
-
-  <!-- MX carrier metadata -->
-  <meta name="mx:category" content="mx-tools">
-  <meta name="mx:status" content="active">
-  <meta name="mx:contentType" content="document">
-  <meta name="mx:tags" content="tool">
-  <meta name="mx:partOf" content="mx-os">
   <!-- Schema.org structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "name": "Appendix G: Resource Directory",
-    "description": "Practical guidance from The Invisible Users book on designing AI agent-friendly websites",
+    "description": "Practical guidance from MX-Codex book on designing AI agent-friendly websites",
     "author": {
       "@type": "Person",
       "name": "Tom Cranstoun",
@@ -64,7 +53,7 @@
     "dateModified": "2026-01-10",
     "isPartOf": {
       "@type": "Book",
-      "name": "The Invisible Users",
+      "name": "MX-Codex",
       "author": {
         "@type": "Person",
         "name": "Tom Cranstoun"
@@ -97,7 +86,7 @@
 <hr>
 <header id="title-block-header">
 <h1 class="title">Appendix G: Resource Directory</h1>
-<p class="subtitle">The Invisible Users</p>
+<p class="subtitle">MX-Codex</p>
 <p class="author">Tom Cranstoun</p>
 <p class="date">January 2026</p>
 </header>
@@ -150,8 +139,8 @@ id="toc-quick-reference-by-chapter">Quick Reference by Chapter</a></li>
 <main role="main" data-content-type="appendix">
 <h1 id="appendix-g-resource-directory">Appendix G: Resource
 Directory</h1>
-<p>Curated resources referenced in <em>The Invisible Users: Designing
-the Web for AI Agents and Everyone Else</em></p>
+<p>Curated resources referenced in <em>MX: The Codex: Designing the Web
+for AI Agents and Everyone Else</em></p>
 <hr />
 <h2 id="standards-and-specifications">Standards and Specifications</h2>
 <h3 id="schema.org">Schema.org</h3>
@@ -413,6 +402,55 @@ class="uri">https://github.com/puppeteer/puppeteer</a></li>
 class="uri">https://pptr.dev</a></li>
 <li>Node.js library for Chrome/Chromium automation</li>
 </ul>
+<h3 id="web-audit-suite-performance-tools">Web Audit Suite Performance
+Tools</h3>
+<h3 id="browser-pooling">Browser Pooling</h3>
+<ul>
+<li>Implementation: <code>mx-audit/src/utils/browserPool.js</code></li>
+<li>Pool of reusable Puppeteer browsers</li>
+<li>97% reduction in browser launches</li>
+<li>Configure via <code>--browser-pool-size</code> option</li>
+</ul>
+<h3 id="adaptive-rate-limiting">Adaptive Rate Limiting</h3>
+<ul>
+<li>Implementation: <code>mx-audit/src/utils/rateLimiter.js</code></li>
+<li>Dynamic concurrency adjustment</li>
+<li>Monitors 429/503 responses</li>
+<li>Exponential backoff with recovery</li>
+</ul>
+<h3 id="cache-staleness-checking">Cache Staleness Checking</h3>
+<ul>
+<li>Implementation: <code>mx-audit/src/utils/caching.js</code></li>
+<li>HTTP HEAD request validation</li>
+<li>Automatic invalidation</li>
+<li>Conservative error handling</li>
+</ul>
+<h3 id="robots.txt-tools">robots.txt Tools</h3>
+<h3 id="robots.txt-compliance">robots.txt Compliance</h3>
+<ul>
+<li>Implementation:
+<code>mx-audit/src/utils/robotsCompliance.js</code></li>
+<li>Pattern matching with wildcards</li>
+<li>Interactive prompts for blocked URLs</li>
+<li>Runtime force-scrape toggle</li>
+</ul>
+<h3 id="robots.txt-quality-analysis">robots.txt Quality Analysis</h3>
+<ul>
+<li>Implementation:
+<code>mx-audit/src/utils/robotsTxtParser.js</code></li>
+<li>100-point scoring system</li>
+<li>6 quality criteria evaluation</li>
+<li>Actionable recommendations</li>
+<li>Based on Chapter 10 guidance</li>
+</ul>
+<h3 id="robots.txt-fetching">robots.txt Fetching</h3>
+<ul>
+<li>Implementation:
+<code>mx-audit/src/utils/robotsFetcher.js</code></li>
+<li>HTTP fetch with Puppeteer fallback</li>
+<li>Cloudflare protection handling</li>
+<li>Browser pool integration</li>
+</ul>
 <h3 id="agent-specific-testing">Agent-Specific Testing</h3>
 <h3 id="agent-protocol">Agent Protocol</h3>
 <ul>
@@ -532,8 +570,8 @@ class="uri">https://developers.google.com/search</a></li>
 href="https://developers.google.com/search/docs/fundamentals/seo-starter-guide"
 class="uri">https://developers.google.com/search/docs/fundamentals/seo-starter-guide</a></li>
 <li>Structured Data Guidelines: <a
-href="https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data"
-class="uri">https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data</a></li>
+href="https://developers.google.com/search/docs/appearance/structured-hub-content/intro-structured-data"
+class="uri">https://developers.google.com/search/docs/appearance/structured-hub-content/intro-structured-data</a></li>
 </ul>
 <h3 id="can-i-use">Can I Use</h3>
 <ul>
@@ -634,7 +672,7 @@ class="uri">https://datatracker.ietf.org/doc/html/rfc8725</a></li>
 <li>OWASP JWT Guide: <a
 href="https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html"
 class="uri">https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html</a></li>
-<li>Critical for Identity Layer implementations</li>
+<li>Critical for Entity Asset Layer (EAL) implementations</li>
 </ul>
 <h2 id="books-and-further-reading">Books and Further Reading</h2>
 <h3 id="web-development-and-design">Web Development and Design</h3>
@@ -828,7 +866,7 @@ Mind)</h3>
 <li>Website: <a href="https://webaim.org"
 class="uri">https://webaim.org</a></li>
 </ul>
-<h3 id="the-a11y-project">The A11Y Project</h3>
+<h3 id="a11y-project">A11Y Project</h3>
 <ul>
 <li>Website: <a href="https://www.a11yproject.com"
 class="uri">https://www.a11yproject.com</a></li>
@@ -853,10 +891,12 @@ class="uri">https://creativecommons.org</a></li>
 Book</h2>
 <p>See also:</p>
 <ul>
-<li><a href="implementation-checklist.md">Implementation Checklist</a> -
-Step-by-step guide (<strong>Repository file</strong>)</li>
-<li><a href="Glossary.md">Glossary</a> - Terms and definitions (includes
-OAuth2, JWT, DPoP, PKCE) (<strong>Repository file</strong>)</li>
+<li><a href="implementation-checklist.md">Implementation Checklist</a>
+(“Implementation Checklist” at &lt;&gt;) - Step-by-step guide
+(<strong>Repository file</strong>)</li>
+<li><a href="Glossary.md">Glossary</a> (“Glossary” at &lt;&gt;) - Terms
+and definitions (includes OAuth2, JWT, DPoP, PKCE) (<strong>Repository
+file</strong>)</li>
 <li><a href="agent-friendly-starter-kit/">Agent-Friendly Starter Kit</a>
 - Good vs Bad implementation examples (<strong>Repository
 directory</strong>)</li>

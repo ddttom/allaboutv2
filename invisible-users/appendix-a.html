@@ -5,52 +5,41 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Tom Cranstoun" />
-  <meta name="description" content="Practical guidance from The Invisible Users book on designing AI agent-friendly websites" />
+  <meta name="description" content="Practical guidance from MX-Codex book on designing AI agent-friendly websites" />
   <title>Appendix A: Implementation Cookbook</title>
   
+
   <link rel="canonical" href="https://allabout.network/invisible-users/appendix-a.html">
-  <!-- AI-specific meta tags (proposed pattern from Chapter 10) -->
-  <meta name="ai-preferred-access" content="html">
-  <meta name="ai-content-policy" content="summaries-allowed, full-extraction-allowed">
-  <meta name="ai-freshness" content="monthly">
-  <meta name="ai-structured-data" content="json-ld">
-  <meta name="ai-attribution" content="required" text="Source: The Invisible Users by Tom Cranstoun, https://allabout.network/invisible-users/">
-  <meta name="llms-txt" content="/llms.txt">
+  <!-- MX carrier tags -->
+  <meta name="mx:content-policy" content="extract-with-attribution">
+  <meta name="mx:attribution" content="required">
+  <link rel="llms-txt" href="/llms.txt">
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://allabout.network/invisible-users/appendix-a.html">
   <meta property="og:title" content="Appendix A: Implementation Cookbook">
-  <meta property="og:description" content="Practical guidance from The Invisible Users book on designing AI agent-friendly websites">
+  <meta property="og:description" content="Practical guidance from MX-Codex book on designing AI agent-friendly websites">
   <meta property="og:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
-  <meta property="og:site_name" content="The Invisible Users">
+  <meta property="og:site_name" content="MX-Codex">
   <meta property="og:locale" content="en_GB">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://allabout.network/invisible-users/appendix-a.html">
   <meta name="twitter:title" content="Appendix A: Implementation Cookbook">
-  <meta name="twitter:description" content="Implementation guide from The Invisible Users book">
+  <meta name="twitter:description" content="Implementation guide from MX-Codex book">
   <meta name="twitter:image" content="https://allabout.network/images/invisible-users-appendix-og.jpg">
   <meta name="twitter:creator" content="@tomcranstoun">
 
   <!-- Additional SEO -->
   <meta name="robots" content="index, follow">
-  <meta name="keywords" content="AI agents, web design, implementation guide, Appendix A, technical patterns, code examples">
-  <meta name="theme-color" content="#1e40af">
-
-  <!-- MX carrier metadata -->
-  <meta name="mx:category" content="mx-tools">
-  <meta name="mx:status" content="active">
-  <meta name="mx:contentType" content="document">
-  <meta name="mx:tags" content="tool">
-  <meta name="mx:partOf" content="mx-os">
   <!-- Schema.org structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "name": "Appendix A: Implementation Cookbook",
-    "description": "Practical guidance from The Invisible Users book on designing AI agent-friendly websites",
+    "description": "Practical guidance from MX-Codex book on designing AI agent-friendly websites",
     "author": {
       "@type": "Person",
       "name": "Tom Cranstoun",
@@ -64,7 +53,7 @@
     "dateModified": "2026-01-10",
     "isPartOf": {
       "@type": "Book",
-      "name": "The Invisible Users",
+      "name": "MX-Codex",
       "author": {
         "@type": "Person",
         "name": "Tom Cranstoun"
@@ -97,7 +86,7 @@
 <hr>
 <header id="title-block-header">
 <h1 class="title">Appendix A: Implementation Cookbook</h1>
-<p class="subtitle">The Invisible Users</p>
+<p class="subtitle">MX-Codex</p>
 <p class="author">Tom Cranstoun</p>
 <p class="date">January 2026</p>
 </header>
@@ -672,7 +661,6 @@ Authentication: OAuth2 or API key
 
 - Shop: [example.com](https://example.com)
 - Help: [help@example.com](mailto:help@example.com)</code></pre>
-
 <h2 id="recipe-9-disabled-button-with-clear-reason">Recipe 9: Disabled
 Button with Clear Reason</h2>
 <p><strong>Problem:</strong> Disabled buttons don’t explain why</p>
@@ -1100,8 +1088,9 @@ class="uri">https://cards-dev.twitter.com/validator</a></li>
 class="uri">https://validator.schema.org/</a></li>
 </ul>
 <p><strong>Reference:</strong> See <a
-href="web/META-TAG-ENHANCEMENTS.md">web/META-TAG-ENHANCEMENTS.md</a> for
-per-page customization guidance.</p>
+href="web/META-TAG-ENHANCEMENTS.md">web/META-TAG-ENHANCEMENTS.md</a>
+(“Meta Tag Enhancements” at &lt;&gt;) for per-page customization
+guidance.</p>
 <hr />
 <h2 id="recipe-13-html-validation-and-common-pitfalls">Recipe 13: HTML
 Validation and Common Pitfalls</h2>
@@ -1192,6 +1181,11 @@ divs where appropriate</label></li>
 <code>&lt;main&gt;</code> landmark</label></li>
 <li><label><input type="checkbox" />Self-contained content wrapped in
 <code>&lt;article&gt;</code></label></li>
+<li><label><input type="checkbox" />CSS in external stylesheet files
+(not inline <code>style=""</code> attributes)</label></li>
+<li><label><input type="checkbox" />JavaScript in external script files
+(not inline <code>onclick=""</code> or <code>&lt;script&gt;</code>
+blocks)</label></li>
 <li><label><input type="checkbox" />Schema.org JSON-LD validates without
 errors</label></li>
 <li><label><input type="checkbox" />Passes W3C HTML

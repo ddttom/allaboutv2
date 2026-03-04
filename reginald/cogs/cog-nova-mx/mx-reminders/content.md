@@ -152,7 +152,7 @@ Reorder the Active list. The first item is the most important. Ask the human whi
 
 ## Convention
 
-REMINDERS.md follows the same pattern as SOUL.md, PRINCIPLES.md, and INSTALLME.md — a root-level file with YAML frontmatter that AI agents read as part of their context. It is an info-doc managed by this action-doc.
+REMINDERS.md follows the same pattern as SOUL.md, principles.cog.md, and INSTALLME.md — a root-level file with YAML frontmatter that AI agents read as part of their context. It is an info-doc managed by this action-doc.
 
 The format is deliberately simple. A checklist. Nothing more.
 

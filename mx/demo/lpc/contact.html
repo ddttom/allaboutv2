@@ -23,7 +23,7 @@ fidelity-target: production-ready
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
   <!-- MX Workflow Tracking Metadata -->
   <meta name="publication-status" content="published">
@@ -36,15 +36,11 @@ fidelity-target: production-ready
 
   <!-- Standard SEO Metadata -->
   <meta name="description" content="Contact LPC Design + Print in Largs, Scotland. Phone: 01475 675203 • Email: info@lpcprint.co.uk • Address: 120 Main Street, Largs, KA30 8JN">
-  <meta name="keywords" content="contact LPC, Largs printer contact, printing quote, design quote">
   <meta name="author" content="Cog-Nova-MX Ltd">
 
   <!-- MX carrier metadata -->
-  <meta name="mx:category" content="mx-tools">
   <meta name="mx:status" content="active">
   <meta name="mx:contentType" content="demo">
-  <meta name="mx:tags" content="tool">
-  <meta name="mx:partOf" content="mx-os">
   <title>Contact Us | LPC Design + Print</title>
 
   <!-- Canonical URL -->
@@ -142,7 +138,7 @@ fidelity-target: production-ready
           <p class="section__subtitle">Get in touch for quotes, questions, or to discuss your project</p>
         </div>
 
-        <div class="grid grid--2" style="max-width: 1000px; margin: 0 auto;">
+        <div class="grid grid--2 container-form">
 
           <!-- Contact Information -->
           <div>
@@ -177,14 +173,14 @@ fidelity-target: production-ready
               <p>We're located on Main Street in Largs, tucked down a side street at the top end. Nearby car parks make it easy to stop by with your materials or to collect finished work.</p>
 
               <p class="mt-md"><strong>Directions:</strong></p>
-              <ul style="margin-left: 1.5rem; line-height: 1.8;">
+              <ul class="list-indented">
                 <li>From Glasgow: A78 coastal road (approximately 45 minutes)</li>
                 <li>Local parking: Multiple car parks within walking distance</li>
                 <li>By train: Largs station is a short walk from our shop</li>
               </ul>
 
-              <p class="mt-md" style="color: var(--text-light); font-size: 0.875rem;">
-                <strong>First time visiting?</strong> Call us at <span style="white-space: nowrap;">01475 675203</span> and we'll guide you in.
+              <p class="mt-md text-muted text-sm">
+                <strong>First time visiting?</strong> Call us at <span class="nowrap">01475 675203</span> and we'll guide you in.
               </p>
             </article>
           </div>
@@ -198,9 +194,9 @@ fidelity-target: production-ready
               <form action="#" method="post" aria-labelledby="form-title">
                 <h3 id="form-title" class="sr-only">Contact form</h3>
 
-                <div style="margin-bottom: 1rem;">
-                  <label for="name" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">
-                    Your Name <span style="color: var(--accent);" aria-label="required">*</span>
+                <div class="form-group">
+                  <label for="name">
+                    Your Name <span class="required-mark" aria-label="required">*</span>
                   </label>
                   <input
                     type="text"
@@ -208,13 +204,12 @@ fidelity-target: production-ready
                     name="name"
                     required
                     aria-required="true"
-                    style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--border-radius); font-family: inherit; font-size: 1rem;"
                   />
                 </div>
 
-                <div style="margin-bottom: 1rem;">
-                  <label for="email" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">
-                    Email Address <span style="color: var(--accent);" aria-label="required">*</span>
+                <div class="form-group">
+                  <label for="email">
+                    Email Address <span class="required-mark" aria-label="required">*</span>
                   </label>
                   <input
                     type="email"
@@ -222,30 +217,27 @@ fidelity-target: production-ready
                     name="email"
                     required
                     aria-required="true"
-                    style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--border-radius); font-family: inherit; font-size: 1rem;"
                   />
                 </div>
 
-                <div style="margin-bottom: 1rem;">
-                  <label for="phone" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">
+                <div class="form-group">
+                  <label for="phone">
                     Phone Number
                   </label>
                   <input
                     type="tel"
                     id="phone"
                     name="phone"
-                    style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--border-radius); font-family: inherit; font-size: 1rem;"
                   />
                 </div>
 
-                <div style="margin-bottom: 1rem;">
-                  <label for="service" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">
+                <div class="form-group">
+                  <label for="service">
                     Service Interested In
                   </label>
                   <select
                     id="service"
                     name="service"
-                    style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--border-radius); font-family: inherit; font-size: 1rem;"
                   >
                     <option value="">-- Select a Service --</option>
                     <option value="design-branding">Design & Branding</option>
@@ -259,9 +251,9 @@ fidelity-target: production-ready
                   </select>
                 </div>
 
-                <div style="margin-bottom: 1.5rem;">
-                  <label for="message" style="display: block; font-weight: 600; margin-bottom: 0.5rem;">
-                    Your Message <span style="color: var(--accent);" aria-label="required">*</span>
+                <div class="form-group form-group--last">
+                  <label for="message">
+                    Your Message <span class="required-mark" aria-label="required">*</span>
                   </label>
                   <textarea
                     id="message"
@@ -269,30 +261,28 @@ fidelity-target: production-ready
                     rows="6"
                     required
                     aria-required="true"
-                    style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--border-radius); font-family: inherit; font-size: 1rem; resize: vertical;"
                   ></textarea>
-                  <p style="font-size: 0.875rem; color: var(--text-light); margin-top: 0.5rem;">
+                  <p class="help-text">
                     Tell us about your project, timeline, and any specific requirements.
                   </p>
                 </div>
 
                 <button
                   type="submit"
-                  class="hero__cta"
-                  style="width: 100%; cursor: pointer; border: none;"
+                  class="hero__cta hero__cta--full"
                 >
                   Send Message
                 </button>
 
-                <p style="font-size: 0.875rem; color: var(--text-light); margin-top: 1rem; text-align: center;">
-                  <span style="color: var(--accent);">*</span> Required fields
+                <p class="form-note">
+                  <span class="required-mark">*</span> Required fields
                 </p>
               </form>
             </article>
 
-            <div class="card mt-lg" style="background-color: var(--background-alt); border: none;">
+            <div class="card mt-lg card--plain">
               <h3 class="card__title text-primary">What Happens Next?</h3>
-              <ol style="margin-left: 1.5rem; line-height: 2;">
+              <ol class="list-spaced">
                 <li>We'll review your message (usually within 24 hours)</li>
                 <!-- MX:CASUAL-TONE - Keep informal, first names only -->
                 <li>Scott or Stuart will contact you to discuss your needs</li>
@@ -306,12 +296,12 @@ fidelity-target: production-ready
         </div>
 
         <!-- Map Section -->
-        <div class="section--alt mt-xl" style="padding: 2rem; border-radius: var(--border-radius); text-center;">
+        <div class="section--alt mt-xl section--padded">
           <h2 class="text-primary mb-md">Find Us in Largs</h2>
           <p class="mb-lg">120 Main Street, Largs, Ayrshire, KA30 8JN</p>
 
-          <div style="background-color: var(--background); padding: 2rem; border-radius: var(--border-radius); border: 1px solid var(--border);">
-            <p style="color: var(--text-light);">
+          <div class="map-placeholder">
+            <p class="text-muted">
               [Map placeholder - In production, embed Google Maps or OpenStreetMap here]<br>
               <strong>Coordinates:</strong> 55.7948°N, 4.8668°W
             </p>
@@ -375,8 +365,8 @@ fidelity-target: production-ready
       </div>
 
       <div class="footer__copyright">
-        <p>&copy; 1969–2026 LPC Design + Print. All rights reserved. | Website built by <a href="https://mxtechnologies.com" style="color: var(--secondary);">Cog-Nova-MX Ltd</a></p>
-        <p style="margin-top: 0.5rem; opacity: 0.7;">This is a demonstration website showcasing MX methodology: Schema.org structured data, WCAG 2.1 AA accessibility, and verbatim content preservation.</p>
+        <p>&copy; 1969–2026 LPC Design + Print. All rights reserved. | Website built by <a href="https://mxtechnologies.com" class="footer__credit">Cog-Nova-MX Ltd</a></p>
+        <p class="footer__note">This is a demonstration website showcasing MX methodology: Schema.org structured data, WCAG 2.1 AA accessibility, and verbatim content preservation.</p>
       </div>
     </div>
   </footer>

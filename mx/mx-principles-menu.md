@@ -23,9 +23,9 @@ mx:
     - "quick-reference-menu"
     - "core-principles-list"
   contextRequired:
-    - "PRINCIPLES.md"
+    - "principles.cog.md"
   related:
-    - "PRINCIPLES.md"
+    - "principles.cog.md"
     - "mx-principles-blog.md"
   co:
     workflow: "published"

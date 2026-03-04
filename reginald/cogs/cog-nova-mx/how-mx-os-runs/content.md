@@ -17,7 +17,7 @@ mx:
   partOf: mx-os
   refersTo: [cog-unified-spec, cog-registry, mx-principles]
   buildsOn: [what-is-a-cog, what-is-mx-os, cog-registry, what-is-mx-environment]
-  tags: [runtime, boot-sequence, routing, execution, kernel, shell, invokes, ipc, mx-os, sop-agent, entry-points]
+  tags: [runtime, boot-sequence, routing, execution, kernel, shell, invokes, ipc, mx-os, ai-agent, entry-points]
 
   audience: developers
   readingLevel: technical

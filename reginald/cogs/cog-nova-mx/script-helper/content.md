@@ -17,7 +17,7 @@ mx:
   partOf: mx-os
   refersTo: [cog-unified-spec, mx-principles]
   buildsOn: [what-is-mx-os, what-is-a-cog]
-  tags: [scripts, metadata, inspect, bash, shell, compute, sop-efficiency]
+  tags: [scripts, metadata, inspect, bash, shell, compute, efficiency]
 
   audience: developers
   readingLevel: technical

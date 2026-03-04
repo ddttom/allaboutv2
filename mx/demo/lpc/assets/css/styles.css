@@ -594,6 +594,205 @@ footer .container {
 }
 
 /*========================================
+   FORM COMPONENTS
+   ========================================*/
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group--last {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius);
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.required-mark {
+  color: var(--accent);
+}
+
+.help-text {
+  font-size: 0.875rem;
+  color: var(--text-light);
+  margin-top: 0.5rem;
+}
+
+.form-note {
+  font-size: 0.875rem;
+  color: var(--text-light);
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/*========================================
+   CTA GROUPS & BUTTON VARIANTS
+   ========================================*/
+
+.cta-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero__cta--secondary {
+  background-color: var(--secondary);
+  color: var(--primary);
+}
+
+.hero__cta--secondary:hover {
+  color: var(--primary);
+}
+
+.hero__cta--full {
+  width: 100%;
+  cursor: pointer;
+  border: none;
+}
+
+/*========================================
+   CARD VARIANTS
+   ========================================*/
+
+.card--plain {
+  background-color: var(--background-alt);
+  border: none;
+}
+
+.card--highlight {
+  border: 2px solid var(--secondary);
+}
+
+.card--hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #0d2315 100%);
+  color: var(--background);
+  text-align: center;
+  padding: 2rem;
+}
+
+.card--hero h2 {
+  color: var(--secondary);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.card--hero p {
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+.card--link {
+  text-decoration: none;
+}
+
+/*========================================
+   LAYOUT CONTAINERS
+   ========================================*/
+
+.container-narrow {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-mid {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-form {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*========================================
+   SECTION VARIANTS
+   ========================================*/
+
+.section--padded {
+  padding: 2rem;
+  border-radius: var(--border-radius);
+}
+
+.related-services {
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.map-placeholder {
+  background-color: var(--background);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border);
+}
+
+/*========================================
+   FOOTER ADDITIONS
+   ========================================*/
+
+.footer__note {
+  margin-top: 0.5rem;
+  opacity: 0.7;
+}
+
+.footer__credit {
+  color: var(--secondary);
+}
+
+/*========================================
+   LIST STYLES
+   ========================================*/
+
+.list-spaced {
+  margin-left: 1.5rem;
+  line-height: 2;
+}
+
+.list-spaced--mt {
+  margin-left: 1.5rem;
+  line-height: 2;
+  margin-top: 1rem;
+}
+
+.list-indented {
+  margin-left: 1.5rem;
+  line-height: 1.8;
+}
+
+.list-indented--my {
+  margin: 1rem 0 1rem 1.5rem;
+  line-height: 1.8;
+}
+
+/*========================================
    UTILITY CLASSES
    ========================================*/
 
@@ -613,6 +812,28 @@ footer .container {
   color: var(--accent);
 }
 
+.text-md {
+  font-size: var(--font-size-md);
+}
+
+.text-sm {
+  font-size: var(--font-size-xs);
+}
+
+.text-lead {
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+.text-muted {
+  color: var(--text-light);
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.mb-xs { margin-bottom: var(--spacing-xs); }
 .mb-sm { margin-bottom: var(--spacing-sm); }
 .mb-md { margin-bottom: var(--spacing-md); }
 .mb-lg { margin-bottom: var(--spacing-lg); }
@@ -622,6 +843,8 @@ footer .container {
 .mt-md { margin-top: var(--spacing-md); }
 .mt-lg { margin-top: var(--spacing-lg); }
 .mt-xl { margin-top: var(--spacing-xl); }
+
+.pl-md { padding-left: 1.5rem; }
 
 /*Visually hidden but accessible to screen readers*/
 .sr-only {

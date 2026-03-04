@@ -192,12 +192,9 @@ mx:
             <meta name="twitter:description" content="{description}">
             <meta name="twitter:image" content="https://allabout.network/blogs/mx/{slug}-social.svg">
 
-            <!-- 6. AI Meta Tags -->
-            <meta name="sop-preferred-access" content="html">
-            <meta name="sop-content-policy" content="extract-with-attribution">
-            <meta name="sop-freshness" content="monthly">
-            <meta name="sop-structured-data" content="schema.org-jsonld">
-            <meta name="sop-attribution" content="required" text="Source: {title} by {author}, https://allabout.network/blogs/mx/{slug}.html">
+            <!-- 6. MX Carrier Tags -->
+            <meta name="mx:content-policy" content="extract-with-attribution">
+            <meta name="mx:attribution" content="required">
             <meta name="llms-txt" content="/llms.txt">
 
             <title>{title} | {author}</title>

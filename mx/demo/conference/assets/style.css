@@ -334,6 +334,10 @@ nav a:hover {
   color: var(--primary);
 }
 
+.btn-full {
+  width: 100%;
+}
+
 /* === SECTIONS === */
 section {
   padding: var(--section-padding);

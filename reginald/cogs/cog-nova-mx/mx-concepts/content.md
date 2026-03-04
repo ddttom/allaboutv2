@@ -331,7 +331,7 @@ Canonical source: `scripts/cogs/mx-os/mx-phrasebook.cog.md`
 
 The operational rules of MX OS. Use existing standards. Write like a blog. Canon wins content. Convention wins location. Never hardcode counts in prose. Never put version numbers in filenames. Any document can be a cog.
 
-Canonical source: `PRINCIPLES.md` at repository root.
+Canonical source: `principles.cog.md` at repository root.
 
 ---
 

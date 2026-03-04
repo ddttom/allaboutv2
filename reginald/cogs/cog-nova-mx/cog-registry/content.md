@@ -627,11 +627,11 @@ The twentieth cog. Manages persistent reminders across sessions. Reads, writes, 
 
 Not all canonical content lives inside `mx-canon/`. Some documents live at the repository root because human convention says that is where they belong. This is the "Use Existing Standards" principle in action — convention wins the location, Canon wins the content.
 
-The registry tracks these scattered documents so AI agents can discover them. When a cog's `refersTo` field includes `mx-principles`, the agent resolves this to `PRINCIPLES.md` at repo root.
+The registry tracks these scattered documents so AI agents can discover them. When a cog's `refersTo` field includes `mx-principles`, the agent resolves this to `principles.cog.md` at repo root.
 
 | Reference name | File | Location | Why |
 | --- | --- | --- | --- |
-| `mx-principles` | `PRINCIPLES.md` | repo root | Human convention — principles live at root alongside README.md, LICENSE, CONTRIBUTING.md |
+| `mx-principles` | `principles.cog.md` | repo root | Human convention — principles live at root alongside README.md, LICENSE, CONTRIBUTING.md |
 | *(SOUL)* | `SOUL.md` | repo root | MX convention — identity document for the repository |
 | *(bootloader)* | `CLAUDE.md` | repo root | AI convention — bootloader for AI agents entering the repo |
 | *(learnings)* | `LEARNINGS.md` | repo root | Human convention — project lessons at root |

@@ -18,7 +18,7 @@
     "invokes",
     "ipc",
     "mx-os",
-    "sop-agent",
+    "ai-agent",
     "entry-points"
   ],
   "type": "action-doc",

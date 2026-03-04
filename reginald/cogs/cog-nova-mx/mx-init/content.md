@@ -306,7 +306,7 @@ MX repos use kebab-case for all filenames:
 - `! Urgent.md` (incorrect)
 - `urgent-action-items.md` (correct)
 
-Convention files that live at repo root use UPPERCASE: SOUL.md, CLAUDE.md, README.md, CHANGELOG.md, CONTRIBUTING.md, INSTALLME.md, PRINCIPLES.md, LEARNINGS.md.
+Convention files that live at repo root use UPPERCASE: SOUL.md, CLAUDE.md, README.md, CHANGELOG.md, CONTRIBUTING.md, INSTALLME.md, principles.cog.md, LEARNINGS.md.
 
 ---
 

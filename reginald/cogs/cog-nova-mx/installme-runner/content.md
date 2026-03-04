@@ -17,7 +17,7 @@ mx:
   partOf: mx-os
   refersTo: [cog-unified-spec, mx-principles]
   buildsOn: [what-is-a-cog, what-is-mx-os, what-is-mx-environment, what-is-installme]
-  tags: [installme, runner, action, install, diagnostics, prerequisites, sop-agent, executor, mx-os]
+  tags: [installme, runner, action, install, diagnostics, prerequisites, ai-agent, executor, mx-os]
 
   audience: ai-agents
   readingLevel: technical

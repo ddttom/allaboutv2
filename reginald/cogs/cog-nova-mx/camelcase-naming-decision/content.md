@@ -94,7 +94,7 @@ Web markup uses hyphens — but MX fields are consumed by code (AI agents, parse
 | `content-filename` | `contentFilename` | ~19 |
 | `session-start` | `sessionStart` | ~16 |
 | `session-end` | `sessionEnd` | ~16 |
-| `sop-content-policy` | `sopContentPolicy` | ~12 |
+| `mx:content-policy` | `mx:contentPolicy` | ~12 |
 | `publication-date` | `publicationDate` | ~11 |
 
 ### snake_case renames needed

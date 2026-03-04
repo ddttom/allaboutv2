@@ -17,7 +17,7 @@ mx:
   partOf: mx-maxine-lives
   refersTo: [cog-unified-spec]
   buildsOn: [what-is-a-cog]
-  tags: [maxine, partnership, identity, soul, sop-agent, memory, mx-os]
+  tags: [maxine, partnership, identity, soul, ai-agent, memory, mx-os]
 
   audience: ai-agents
   readingLevel: technical

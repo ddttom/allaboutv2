@@ -1489,7 +1489,7 @@
         "partnership",
         "identity",
         "soul",
-        "sop-agent",
+        "ai-agent",
         "memory",
         "mx-os"
       ],
@@ -1758,7 +1758,7 @@
         "install",
         "setup",
         "onboarding",
-        "sop-agent",
+        "ai-agent",
         "diagnostics",
         "prerequisites",
         "mx-os",
@@ -2068,7 +2068,7 @@
         "invokes",
         "ipc",
         "mx-os",
-        "sop-agent",
+        "ai-agent",
         "entry-points"
       ],
       "type": "action-doc",
@@ -2107,7 +2107,7 @@
         "install",
         "diagnostics",
         "prerequisites",
-        "sop-agent",
+        "ai-agent",
         "executor",
         "mx-os"
       ],
@@ -2629,7 +2629,7 @@
         "bash",
         "shell",
         "compute",
-        "sop-efficiency"
+        "efficiency"
       ],
       "type": "action-doc",
       "compliance_level": 2,
@@ -2792,7 +2792,7 @@
         "installme",
         "install",
         "convention",
-        "sop-agent",
+        "ai-agent",
         "diagnostics",
         "onboarding",
         "hallucination",
@@ -2835,7 +2835,7 @@
         "inspect",
         "bash",
         "shell",
-        "sop-efficiency",
+        "efficiency",
         "mx-os"
       ],
       "type": "action-doc",

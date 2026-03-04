@@ -567,7 +567,7 @@ The pressure is here.
 |---|---|
 | REGINALD Registry | [allabout.network](https://allabout.network) |
 | COG System specification | [cog-system.cog.md](https://allabout.network/cogs/mx-reginald/cog-system.cog.md) |
-| MX Principles | [PRINCIPLES.md](https://github.com/MX-Experience) |
+| MX Principles | [principles.cog.md](https://github.com/MX-Experience) |
 | Tom's CMS Critic articles | [cmscritic.com](https://cmscritic.com/author/tomcranstoun) |
 | "Websites That Work Perfectly" | [allabout.network](https://allabout.network/blogs/mx/mx-manifesto.html) |
 | The Gathering (open standard) | [MX-Experience GitHub](https://github.com/MX-Experience) |
