@@ -182,7 +182,7 @@ execute:
         - Text must be readable at print size
         - Complete YAML frontmatter required
 
-        **DEPRECATED:** This step is no longer used. Code blocks remain as searchable text in the source markdown. Pandoc's `--highlight-style=pygments` provides colored syntax highlighting directly in the PDF without requiring image conversion. The `--listings` flag conflicts with `--highlight-style` and must be removed from pandoc commands to enable colored output.
+        **DEPRECATED:** This step is no longer used. Code blocks remain as searchable text in the source markdown. Pandoc's `--syntax-highlighting=pygments` provides colored syntax highlighting directly in the PDF without requiring image conversion.
 
         **Why deprecated:** Preserving searchability in PDFs is more valuable than perfect color matching. Users can search for code examples, copy-paste code, and maintain source markdown integrity. Pandoc's pygments highlighting provides professional coloring while keeping code as text.
 
@@ -427,12 +427,11 @@ execute:
         ```bash
         pandoc "$SOURCE_FILES" -o "$OUTPUT_PDF" \
           -f markdown-task_lists \
-          --pdf-engine=xelatex --listings --toc --toc-depth=2 \
-          --highlight-style=tango \
+          --pdf-engine=xelatex --syntax-highlighting=idiomatic --toc --toc-depth=2 \
           -V geometry:margin=1in -V fontsize=11pt \
           -V documentclass=book -V papersize=a4 -V linkcolor=blue \
           -V header-includes='\usepackage{graphicx}\setkeys{Gin}{width=\textwidth,height=\textheight,keepaspectratio}' \
-          -V header-includes='\usepackage{fancyhdr}\usepackage{listings}...' \
+          -V header-includes='\usepackage{fancyhdr}' \
           --metadata title="$TITLE" --metadata author="$AUTHOR" \
           --metadata date="$DATE"
         ```
@@ -441,8 +440,7 @@ execute:
         ```bash
         pandoc "$SOURCE_FILES" -o "$OUTPUT_PDF" \
           -f markdown-task_lists \
-          --pdf-engine=xelatex --listings --toc --toc-depth=2 \
-          --highlight-style=tango \
+          --pdf-engine=xelatex --syntax-highlighting=idiomatic --toc --toc-depth=2 \
           -V geometry:paperwidth=6in -V geometry:paperheight=9in \
           -V geometry:inner=0.625in -V geometry:outer=0.5in \
           -V geometry:top=0.625in -V geometry:bottom=0.625in \
@@ -462,10 +460,9 @@ execute:
         Disabling the extension keeps `- [ ]` as literal text, which renders cleanly.
 
         Both formats include:
-        - `--listings` for professional code block rendering
+        - `--syntax-highlighting=idiomatic` for professional code block rendering
         - `--toc --toc-depth=2` for table of contents
         - `-V documentclass=book` for book-quality layout
-        - `--highlight-style=tango` for uniform syntax-highlighted code blocks
         - Auto-scaled images (`graphicx` with `keepaspectratio`) to prevent clipping
         - Fancy headers with "Review Copy not for publication/distribution" footer
 
@@ -473,7 +470,7 @@ execute:
         automatically scale to fit within text width/height while maintaining aspect ratio.
         This prevents wide images (e.g., 2700px timelines) from being clipped at page margins.
 
-        **Code highlighting:** The `--highlight-style=tango` provides consistent syntax
+        **Code highlighting:** The `--syntax-highlighting=idiomatic` provides consistent syntax
         highlighting across all code blocks (bash, python, javascript, etc.) using
         pandoc's built-in colorization engine.
 
@@ -1045,7 +1042,7 @@ This cog enforces a git-first workflow:
 1. Read this cog's `execute.actions.generate` block for the full procedure
 2. Pick the right engine based on ASCII diagram detection (Step 2)
 3. **Improve ASCII diagram rendering** — wrap diagrams in `\begin{samepage}...\end{samepage}` to prevent page breaks (Step 3)
-4. **DEPRECATED: Code block SVG conversion** — Step 4 is no longer used; pandoc's `--highlight-style=pygments` handles syntax highlighting
+4. **DEPRECATED: Code block SVG conversion** — Step 4 is no longer used; pandoc's `--syntax-highlighting` handles syntax highlighting
 5. Auto-generate illustrations if markdown references images — converts SVG to PNG (Step 5)
 6. **Fix emojis directly in source files** — use replacement table with context-appropriate equivalents (Step 6)
 7. **Clean invisible Unicode** — remove U+200B, U+200C, U+200D, U+FEFF characters (Step 6.5)
@@ -1053,7 +1050,7 @@ This cog enforces a git-first workflow:
 9. Never create -print.md or intermediate files — source is canonical
 10. Choose output format — default to A4 unless user specifies Kindle (Step 7)
 11. Extract metadata from YAML frontmatter (Step 8)
-12. Include image auto-scaling and code syntax highlighting in pandoc commands (`--highlight-style=pygments`)
+12. Include image auto-scaling and code syntax highlighting in pandoc commands (`--syntax-highlighting=pygments`)
 13. **Report full absolute paths for all outputs** — enables traceability (MX principle, Step 9)
 14. Report transformation counts: ASCII diagrams improved, emojis fixed, illustrations generated
 15. Warn but proceed if `mx.generate` is missing from the source frontmatter
