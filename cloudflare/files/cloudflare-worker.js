@@ -613,6 +613,19 @@ const handleRequest = async (request, env, _ctx) => {
     },
   });
 
+  // 404 fallback: redirect extensionless paths to index.html
+  if (resp.status === 404 && !extension) {
+    const fallbackUrl = new URL(request.url);
+    fallbackUrl.pathname = url.pathname.replace(/\/+$/, '') + '/index.html';
+    return new Response(null, {
+      status: 302,
+      headers: {
+        Location: fallbackUrl.toString(),
+        'Cache-Control': 'no-cache',
+      },
+    });
+  }
+
   // Only process HTML responses for content transformations
   const contentType = resp.headers.get('content-type');
   if (contentType && contentType.includes('text/html')) {
