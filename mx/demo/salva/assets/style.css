@@ -1051,12 +1051,9 @@ footer {
     padding: 0.5rem 0;
   }
 
-  /* Language selector in main nav on desktop */
+  /* Hide dropdown on desktop — toggle button handles language switching */
   .nav-language {
-    margin-top: 0;
-    margin-left: 2rem;
-    padding-top: 0;
-    border-top: none;
+    display: none;
   }
 
   .language-select {
