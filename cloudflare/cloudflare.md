@@ -3,8 +3,8 @@ title: "Cloudflare Configuration Reference"
 description: "Complete Cloudflare CDN configuration and Adobe EDS integration for allabout.network"
 author: Tom Cranstoun
 created: 2025-12-09
-modified: 2026-02-09
-version: "1.0"
+modified: 2026-03-06
+version: "1.3"
 
 mx:
   status: active
@@ -17,7 +17,7 @@ mx:
 This document serves as a knowledge base for AI assistants helping with allabout.network.
 It contains the complete current Cloudflare CDN configuration, Adobe Edge Delivery Services integration, and operational details.
 
-**Last Updated:** 9 December 2025  
+**Last Updated:** 6 March 2026
 **Configuration Status:** Active and operational
 
 ---
@@ -28,7 +28,7 @@ It contains the complete current Cloudflare CDN configuration, Adobe Edge Delive
 **Registrar:** GoDaddy  
 **DNS Management:** Cloudflare  
 **Primary Purpose:** Personal/professional website powered by Adobe Edge Delivery Services  
-**Owner:** Tom Cranstoun (Principal Consultant, Digital Domain Technologies Ltd)
+**Owner:** Tom Cranstoun (Cog-Nova-MX Ltd)
 
 ---
 
@@ -49,7 +49,7 @@ It contains the complete current Cloudflare CDN configuration, Adobe Edge Delive
 └──────┬──────────────────────────┘
        │
        │ Cloudflare Worker
-       │ (aem-worker)
+       │ (cool-cell-c75e)
        │ - Host header rewrite
        │ - Push invalidation handler
        │
@@ -72,7 +72,7 @@ It contains the complete current Cloudflare CDN configuration, Adobe Edge Delive
 ```mermaid
 graph TD
     A[Visitor] -->|HTTPS:443| B[Cloudflare Global Network]
-    B -->|Edge locations worldwide| C[Cloudflare Worker: aem-worker]
+    B -->|Edge locations worldwide| C[Cloudflare Worker: cool-cell-c75e]
     C -->|Host header rewrite| D[Adobe Fastly CDN]
     D -->|Backend infrastructure| E[Adobe Edge Delivery Services]
     E -->|Origin| F[main--allaboutv2--ddttom.aem.live]
@@ -154,7 +154,7 @@ Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates 
 
 ### Worker Details
 
-**Worker Name:** aem-worker
+**Worker Name:** cool-cell-c75e
 **Type:** Cloudflare Worker (JavaScript)
 **Code Source:** Adobe official repository
 **GitHub URL:** https://github.com/adobe/aem-cloudflare-prod-worker
@@ -172,10 +172,11 @@ Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates 
 - JSON-LD structured data generation from page metadata
 - Metadata cleanup (removes EDS error tags)
 - Trigger mechanism via authoring error workaround
+- 404 fallback: extensionless paths redirect to `index.html` via 302
 
 **Version Management:**
 
-- Current version: `1.0.0` (semantic versioning)
+- Current version: `1.2.0` (semantic versioning)
 - Check deployed version: `curl -I https://allabout.network | grep cfw`
 - **MUST increment** version for ALL changes to worker code
 - Version validated by automated tests (45 tests passing)
@@ -225,7 +226,7 @@ Adobe Edge Delivery Services uses Fastly's SSL certificates. These certificates 
 - Adobe CDN validator: https://www.aem.live/tools/cdn-validator
 - Manual testing via curl (see Troubleshooting section)
 - Monitor worker metrics in Cloudflare Dashboard
-- View real-time logs: Dashboard → Workers & Pages → aem-worker → Logs
+- View real-time logs: Dashboard → Workers & Pages → cool-cell-c75e → Logs
 
 **Test Strategy:**
 The worker uses a two-file approach: one production file (`cloudflare-worker.js`) and one test file (`cloudflare-worker.test.js`). The test suite combines unit tests for helper functions with integration tests for the complete request flow, using lightweight mocks instead of complex E2E infrastructure. This ensures reliable testing without the overhead of local dev servers or port management. An intelligent test automation system monitors changes and keeps tests synchronized with worker code.
@@ -568,7 +569,7 @@ x-served-by: cache-lga21965 [Fastly cache identifier]
 - CPU time
 - Success rate
 
-**Access:** Workers & Pages → aem-worker → Metrics
+**Access:** Workers & Pages → cool-cell-c75e → Metrics
 
 **Current status:**
 
@@ -771,14 +772,31 @@ chmod +x cloudflare-health-check.sh
 - Bug fixes
 - New features
 
-**How to update:**
+**How to update (Wrangler CLI):**
 
-1. Get latest code: https://raw.githubusercontent.com/adobe/aem-cloudflare-prod-worker/main/src/index.mjs
-2. Workers & Pages → aem-worker → Quick Edit
-3. Select all code, delete
-4. Paste new code
-5. Deploy
-6. Test site still works
+```bash
+cd allaboutv2/cloudflare/files
+npx wrangler deploy
+```
+
+**Wrangler configuration:** `cloudflare/files/wrangler.toml` defines the worker name, routes, and environment variables.
+
+**First-time setup:** Run `npx wrangler login` to authenticate.
+
+**Verify deployment:**
+
+```bash
+curl -sI https://allabout.network | grep cfw
+# Should show: cfw: <version>
+```
+
+**Legacy method (dashboard copy-paste):**
+
+1. Workers & Pages → cool-cell-c75e → Quick Edit
+2. Select all code, delete
+3. Paste new code
+4. Deploy
+5. Test site still works
 
 ### Rotating API Token
 
@@ -947,7 +965,7 @@ chmod +x cloudflare-health-check.sh
 
 **Domain Owner:** Tom Cranstoun  
 **Email:** tom.cranstoun@gmail.com  
-**Company:** Digital Domain Technologies Ltd
+**Company:** Cog-Nova-MX Ltd
 
 ### Official Documentation
 
@@ -1127,8 +1145,9 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 
 ### Worker Configuration
 
-- [ ] Worker name: aem-worker
-- [ ] Code: Latest from Adobe GitHub
+- [ ] Worker name: `cool-cell-c75e` (production name)
+- [ ] Code: Custom worker with MX modifications
+- [ ] Wrangler config: `cloudflare/files/wrangler.toml`
 - [ ] Environment variable: ORIGIN_HOSTNAME = main--allaboutv2--ddttom.aem.live
 - [ ] Environment variable: PUSH_INVALIDATION = enabled
 - [ ] Route: allabout.network/*
@@ -1164,9 +1183,9 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 
 **Owner:** Tom Cranstoun
 **Created:** 9 December 2025
-**Last Updated:** 12 December 2025
+**Last Updated:** 6 March 2026
 **Review Schedule:** Quarterly or after significant changes
-**Version:** 1.2
+**Version:** 1.3
 
 **Update this document when:**
 
@@ -1181,6 +1200,36 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 ---
 
 ## Change Log
+
+### 2026-03-06 - Worker Name, Wrangler Deployment, 404 Fallback (Version 1.3)
+
+**Corrected worker name and added CLI deployment support**
+
+**Worker name correction:**
+
+- Production worker name is `cool-cell-c75e` (not `aem-worker` as previously documented)
+- All references updated throughout document
+- Routes are assigned to `cool-cell-c75e` in Cloudflare
+
+**Wrangler CLI deployment:**
+
+- Added `wrangler.toml` configuration file (`cloudflare/files/wrangler.toml`)
+- Deployment via `cd cloudflare/files && npx wrangler deploy`
+- First-time authentication via `npx wrangler login`
+- Dashboard copy-paste method retained as legacy fallback
+- Deployment verified: `curl -sI https://allabout.network | grep cfw` returns `cfw: 1.2.0`
+
+**404 fallback feature:**
+
+- When origin returns 404 for extensionless paths (e.g., `/mx/demo/salva/es`), worker issues 302 redirect to `path/index.html`
+- Uses 302 (temporary) not 301 — routing convenience, not permanent resource move
+- Supports directory-style URLs for multilingual demos and clean URL patterns
+
+**Other updates:**
+
+- Company name updated to Cog-Nova-MX Ltd
+- Worker version updated to 1.2.0
+- Document dates refreshed
 
 ### 2025-12-12 - Added Intelligent Test Automation System (Version 1.2)
 
@@ -1263,7 +1312,7 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 ### 2025-12-09 - Initial Documentation (Version 1.0)
 
 - Documented complete Cloudflare configuration
-- Added worker setup details (aem-worker with ORIGIN_HOSTNAME and PUSH_INVALIDATION)
+- Added worker setup details (cool-cell-c75e with ORIGIN_HOSTNAME and PUSH_INVALIDATION)
 - Included push invalidation configuration with API token setup
 - Documented DNS configuration (CNAME records for apex and www)
 - Added SSL/TLS configuration (Full mode)
@@ -1278,4 +1327,4 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 
 ## End of Document
 
-This reference document provides complete details of the current allabout.network Cloudflare configuration for use by AI assistants helping Tom Cranstoun manage the site. All configuration details are current as of 9 December 2025.
+This reference document provides complete details of the current allabout.network Cloudflare configuration for use by AI assistants helping Tom Cranstoun manage the site. All configuration details are current as of 6 March 2026.
