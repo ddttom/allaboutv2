@@ -32,7 +32,7 @@ import {
 
 // Get current directory for ES modules
 const __filename = fileURLToPath(import.meta.url);
-const__dirname = dirname(__filename);
+const __dirname = dirname(__filename);
 
 // ANSI color codes
 const GREEN = '\x1b[32m';
