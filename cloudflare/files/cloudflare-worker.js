@@ -598,6 +598,9 @@ const handleRequest = async (request, env, _ctx) => {
   const req = new Request(url, request);
   req.headers.set('x-forwarded-host', req.headers.get('host'));
   req.headers.set('x-byo-cdn-type', 'cloudflare');
+  // Request uncompressed from origin — the worker modifies HTML as text,
+  // so compressed responses cause double-encoding issues with cacheEverything
+  req.headers.set('Accept-Encoding', 'identity');
   if (env.PUSH_INVALIDATION !== 'disabled') {
     req.headers.set('x-push-invalidation', 'enabled');
   }
@@ -650,10 +653,15 @@ const handleRequest = async (request, env, _ctx) => {
     htmlText = removeHtmlComments(htmlText);
 
     // Create new response with processed HTML
+    // Must strip content-encoding and content-length: resp.text() auto-decompresses
+    // but the original headers still claim compressed encoding and size
+    const processedHeaders = new Headers(resp.headers);
+    processedHeaders.delete('content-encoding');
+    processedHeaders.delete('content-length');
     resp = new Response(htmlText, {
       status: resp.status,
       statusText: resp.statusText,
-      headers: resp.headers,
+      headers: processedHeaders,
     });
   }
 

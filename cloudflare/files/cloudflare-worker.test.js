@@ -940,6 +940,216 @@ describe('handleRequest Integration', () => {
 });
 
 // ============================================================
+// Content-Encoding Safety Tests
+// ============================================================
+// These tests verify the fix for the double-encoding bug where
+// the origin returns Brotli-compressed HTML, the worker decompresses
+// and modifies it, but the original content-encoding/content-length
+// headers were preserved — causing clients to receive garbled content.
+
+describe('Content-Encoding Safety', () => {
+  let mockFetch;
+
+  beforeEach(() => {
+    MockHTMLRewriter.activeHandlers = [];
+    global.HTMLRewriter = MockHTMLRewriter;
+
+    // Mock Response that tracks headers properly
+    global.Response = class MockResponse {
+      constructor(body, init) {
+        this.body = body;
+        this.status = init?.status || 200;
+        this.statusText = init?.statusText || 'OK';
+        this.bodyUsed = false;
+
+        // Support both Map and Headers-like objects
+        if (init?.headers instanceof Map) {
+          this.headers = new Map(init.headers);
+        } else if (init?.headers && typeof init.headers.get === 'function') {
+          this.headers = new Map(init.headers);
+        } else if (init?.headers) {
+          this.headers = new Map(Object.entries(init.headers));
+        } else {
+          this.headers = new Map();
+        }
+      }
+
+      async text() {
+        if (this.bodyUsed) throw new Error('Body already used');
+        this.bodyUsed = true;
+        return typeof this.body === 'string' ? this.body : '';
+      }
+    };
+
+    // Also mock Headers so the worker can use `new Headers()`
+    global.Headers = class MockHeaders extends Map {
+      constructor(init) {
+        super();
+        if (init instanceof Map) {
+          for (const [k, v] of init) this.set(k, v);
+        } else if (init && typeof init === 'object') {
+          for (const [k, v] of Object.entries(init)) this.set(k, v);
+        }
+      }
+    };
+
+    mockFetch = vi.fn();
+    global.fetch = mockFetch;
+  });
+
+  afterEach(() => {
+    delete global.HTMLRewriter;
+    delete global.Response;
+    delete global.Headers;
+    delete global.fetch;
+  });
+
+  test('strips content-encoding header from HTML responses', async () => {
+    // Simulate origin returning compressed HTML (as cacheEverything cache does)
+    const originHtml = '<html><head><title>Test</title></head><body>Hello</body></html>';
+    mockFetch.mockResolvedValue(new global.Response(originHtml, {
+      headers: {
+        'content-type': 'text/html; charset=utf-8',
+        'content-encoding': 'br',
+        'content-length': '1234',
+      },
+    }));
+
+    const request = {
+      url: 'https://allabout.network/page.html',
+      method: 'GET',
+      headers: new Map(),
+    };
+    const env = { ORIGIN_HOSTNAME: 'main--test--owner.aem.live' };
+
+    const response = await worker.fetch(request, env);
+
+    expect(response.headers.get('content-encoding')).toBeUndefined();
+    expect(response.headers.get('content-length')).toBeUndefined();
+  });
+
+  test('strips content-encoding for gzip responses too', async () => {
+    const originHtml = '<html><head><title>Test</title></head><body>Hello</body></html>';
+    mockFetch.mockResolvedValue(new global.Response(originHtml, {
+      headers: {
+        'content-type': 'text/html',
+        'content-encoding': 'gzip',
+        'content-length': '2048',
+      },
+    }));
+
+    const request = {
+      url: 'https://allabout.network/article.html',
+      method: 'GET',
+      headers: new Map(),
+    };
+    const env = { ORIGIN_HOSTNAME: 'main--test--owner.aem.live' };
+
+    const response = await worker.fetch(request, env);
+
+    expect(response.headers.get('content-encoding')).toBeUndefined();
+    expect(response.headers.get('content-length')).toBeUndefined();
+  });
+
+  test('preserves content-type header after stripping encoding', async () => {
+    const originHtml = '<html><head><title>Test</title></head><body>Hello</body></html>';
+    mockFetch.mockResolvedValue(new global.Response(originHtml, {
+      headers: {
+        'content-type': 'text/html; charset=utf-8',
+        'content-encoding': 'br',
+        'content-length': '500',
+      },
+    }));
+
+    const request = {
+      url: 'https://allabout.network/page.html',
+      method: 'GET',
+      headers: new Map(),
+    };
+    const env = { ORIGIN_HOSTNAME: 'main--test--owner.aem.live' };
+
+    const response = await worker.fetch(request, env);
+
+    expect(response.headers.get('content-type')).toContain('text/html');
+  });
+
+  test('does not strip encoding from non-HTML responses', async () => {
+    mockFetch.mockResolvedValue(new global.Response('body { color: red; }', {
+      headers: {
+        'content-type': 'text/css',
+        'content-encoding': 'gzip',
+        'content-length': '42',
+      },
+    }));
+
+    const request = {
+      url: 'https://allabout.network/styles/styles.css',
+      method: 'GET',
+      headers: new Map(),
+    };
+    const env = { ORIGIN_HOSTNAME: 'main--test--owner.aem.live' };
+
+    const response = await worker.fetch(request, env);
+
+    // Non-HTML responses pass through unchanged — encoding headers preserved
+    expect(response.headers.get('content-encoding')).toBe('gzip');
+  });
+
+  test('sets Accept-Encoding: identity on origin requests', async () => {
+    const originHtml = '<html><head><title>Test</title></head><body>Hello</body></html>';
+    mockFetch.mockResolvedValue(new global.Response(originHtml, {
+      headers: { 'content-type': 'text/html' },
+    }));
+
+    const request = {
+      url: 'https://allabout.network/page.html',
+      method: 'GET',
+      headers: new Map(),
+    };
+    const env = { ORIGIN_HOSTNAME: 'main--test--owner.aem.live' };
+
+    await worker.fetch(request, env);
+
+    // Verify the outgoing request to the origin asks for uncompressed content
+    const fetchCall = mockFetch.mock.calls[0];
+    const outgoingRequest = fetchCall[0];
+
+    // The request should have Accept-Encoding: identity
+    if (outgoingRequest.headers && typeof outgoingRequest.headers.get === 'function') {
+      expect(outgoingRequest.headers.get('Accept-Encoding')).toBe('identity');
+    } else if (outgoingRequest.headers instanceof Map) {
+      expect(outgoingRequest.headers.get('Accept-Encoding')).toBe('identity');
+    }
+  });
+
+  test('HTML body is readable text after processing', async () => {
+    const originHtml = '<html><head><title>Test</title></head><body><p>Content here</p></body></html>';
+    mockFetch.mockResolvedValue(new global.Response(originHtml, {
+      headers: {
+        'content-type': 'text/html; charset=utf-8',
+        'content-encoding': 'br',
+        'content-length': '200',
+      },
+    }));
+
+    const request = {
+      url: 'https://allabout.network/page.html',
+      method: 'GET',
+      headers: new Map(),
+    };
+    const env = { ORIGIN_HOSTNAME: 'main--test--owner.aem.live' };
+
+    const response = await worker.fetch(request, env);
+    const html = await response.text();
+
+    // The response body should be readable HTML, not binary
+    expect(html).toContain('<html>');
+    expect(html).toContain('<p>Content here</p>');
+    expect(html).toContain('speculationrules');
+  });
+});
+
+// ============================================================
 // Language Redirect Tests
 // ============================================================
 
