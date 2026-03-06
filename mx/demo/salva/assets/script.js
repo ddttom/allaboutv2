@@ -32,11 +32,12 @@
 
   /**
    * Detect current language from URL path
-   * Supports any language code: /es/, /en/, /fr/, /de/, /es-mx/, etc.
+   * Matches the last two-letter directory segment before the filename,
+   * avoiding false matches on path segments like /mx/ in /mx/demo/salva/es/
    * @returns {string} Language code (e.g., 'es', 'en', 'fr')
    */
   function getCurrentLanguage() {
-    const match = window.location.pathname.match(/\/([a-z]{2}(?:-[a-z]{2})?)\//i);
+    const match = window.location.pathname.match(/\/([a-z]{2}(?:-[a-z]{2})?)\/[^/]*$/i);
     return match ? match[1].toLowerCase() : 'es'; // Default to Spanish
   }
 
@@ -59,11 +60,11 @@
     const currentLang = getCurrentLanguage();
     const currentPath = window.location.pathname;
 
-    // Replace language segment in path
+    // Replace the language directory (last 2-letter segment before filename)
     // Handles both simple (es) and regional (es-mx) codes
     const newPath = currentPath.replace(
-      new RegExp(`/${currentLang}/`, 'i'),
-      `/${targetLang}/`
+      new RegExp(`/${currentLang}/([^/]*)$`, 'i'),
+      `/${targetLang}/$1`
     );
 
     if (newPath !== currentPath) {
