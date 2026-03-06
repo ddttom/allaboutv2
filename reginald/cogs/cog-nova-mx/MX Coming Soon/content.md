@@ -27,7 +27,7 @@ mx:
     - "Progressive disclosure author bio"
     - "Schema.org JSON-LD (Organization, Person, Book, FAQ, BreadcrumbList)"
     - "Full SEO meta tags (Open Graph, Twitter Cards)"
-    - "GEO meta tags (Glasgow, Scotland)"
+    - "GEO meta tags (Scotland)"
     - "WCAG 2.1 AA accessibility"
     - "External stylesheet (MX compliant)"
 ---

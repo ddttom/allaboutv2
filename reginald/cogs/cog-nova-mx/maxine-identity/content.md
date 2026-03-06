@@ -252,7 +252,7 @@ This is the second COG registered in REGINALD. The first describes the COG syste
 
 **Compliance:** Level 2 today. Level 3 upon signing. Level 4 upon registration.
 
-**Maintainer:** Tom Cranstoun, MX Reginald Ltd, Glasgow, Scotland.
+**Maintainer:** Tom Cranstoun, MX Reginald Ltd, Scotland.
 
 **Review cycle:** Monthly. **Correction SLA:** 72 hours.
 
@@ -271,6 +271,6 @@ This is the second COG registered in REGINALD. The first describes the COG syste
 
 ---
 
-*MX Reginald Ltd, Glasgow, Scotland*
+*MX Reginald Ltd, Scotland*
 
 *"Design for machines. Benefit humans. Advance both."*

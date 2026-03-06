@@ -219,7 +219,7 @@ Three companies work together:
 
 **Cog-Nova-MX Ltd** is the commercial steward of Machine Experience. Founded and owned by Tom Cranstoun — 52 years in technology, BBC, Adobe Expert, Fortune 500 clients. Cog-Nova-MX operates consulting, the MX certification framework, and the MaXinE AI engine. Tom originated the MX discipline, built on Steve Krug's "Don't Make Me Think" principle applied to AI agents: if a machine has to think, it hallucinates.
 
-**MX Reginald Ltd** operates the REGINALD registry and the Signing Engine. Based in Glasgow, Scotland. Co-founded by Tom Cranstoun and Scott McGregor, who runs independent technology pilots from Glasgow. This is the company publishing this COG — the company that runs the library where verified documentation lives.
+**MX Reginald Ltd** operates the REGINALD registry and the Signing Engine. Co-founded by Tom Cranstoun and Scott McGregor, who runs independent technology pilots. This is the company publishing this COG — the company that runs the library where verified documentation lives.
 
 **Digital Domain Technologies Ltd** is the technology consultancy that delivers MX implementations to clients — the hands-on team that makes websites, APIs, and documentation machine-readable.
 
@@ -282,12 +282,12 @@ This is the first COG registered in REGINALD. It describes the system it belongs
 
 **Compliance:** Level 2 today. Level 3 upon signing. Level 4 upon registration. The path is defined. The milestones are dated.
 
-**Maintainer:** Tom Cranstoun, MX Reginald Ltd, Glasgow, Scotland.
+**Maintainer:** Tom Cranstoun, MX Reginald Ltd, Scotland.
 
 **Review cycle:** Monthly. **Correction SLA:** 72 hours.
 
 ---
 
-*MX Reginald Ltd, Glasgow, Scotland*
+*MX Reginald Ltd, Scotland*
 
 *"Design for machines. Benefit humans. Advance both."*

@@ -1,25 +1,31 @@
 ---
-description: "Multi-audience messaging architecture for Cog-Nova-MX. Maps audiences, fears, bridge terms, the control narrative, investor pitch, sponsor model, certification, and the Maxine/Reginald brand story."
+description: "Complete messaging framework for Cog-Nova-MX. Audiences, fears, bridge terms, control narrative, investor pitch, sponsor model, brand story, and launch sequencing."
 author: "Tom Cranstoun and Maxine"
 created: 2026-02-12
-modified: 2026-02-12
-version: "0.2"
+modified: 2026-03-06
+version: "2.0"
 
 mx:
   name: mx-messaging
   status: active
   category: strategy
   contentType: info-doc
-  tags: [messaging, audiences, terminology, positioning, fear, control, strategy, investor, sponsor, certification, reginald, maxine]
+  tags: [messaging, audiences, terminology, positioning, fear, control, strategy, investor, sponsor, certification, reginald, maxine, launch, sequence, team-guide]
   audience: ["gestalt"]
   purpose: "messaging-framework"
   buildsOn: [mx-phrasebook, mx-concepts]
-  runbook: "This is the complete messaging framework for Cog-Nova-MX. All seven original open questions are answered. Read it fully before contributing. Update sections when new decisions are made."
+  runbook: "This is the complete messaging framework for Cog-Nova-MX. Read it fully before contributing. Update sections when new decisions are made. Canonical source: mx-canon/ssot/mx-messaging-framework.md"
 ---
 
 # MX Messaging Framework
 
-**Status:** Active. All seven open questions answered. Interview rounds 1 and 2 complete (2026-02-12).
+**For the team. Read this before writing, posting, or presenting anything about MX.**
+
+## Where It Began
+
+In February 2024, at [CMS Kickoff in St. Pete Beach, Florida](https://cmscritic.com/a-cms-consultants-takeaways-from-cms-kickoff-2024), Tom wrote what became the founding observation of MX: AI's real purpose isn't generating content — it's *consuming* it. And the web isn't built for that. Websites prioritise visual presentation over semantic structure. HTML lacks clear meaning for machines to interpret. The article called it "the AI tipping point" and proposed that content management systems needed to evolve — not to create content for AI, but to make existing content readable by AI.
+
+That observation became the Machine Experience. Everything in this framework flows from it.
 
 > **"Your business, readable by every machine on earth."**
 
@@ -33,8 +39,8 @@ That's the one sentence. It works for all seven audiences. No AI. No jargon. Jus
 
 | Name | What it is | Notes |
 |------|-----------|-------|
-| **Cog-Nova-MX Ltd** | The company | Glasgow-based. Scottish DNA. |
-| **MX Maxine** | The AI partner | "Say it with a Scottish accent." Maxine → Maxshine → Machine. |
+| **Cog-Nova-MX Ltd** | The company |  |
+| **MX Maxine** | The AI partner | "Say it with a Sean Connery accent." Maxine → Maxshine → Machine. |
 | **MX Docs** | The format/standard | Business-friendly name for the `.cog.md` spec. What The Gathering governs, made accessible. |
 | **MX OS** | The operating system | Ties Maxine and Reginald together. The system. |
 | **MX Reginald** | The global registry | The directory of machine-readable business docs. The moat. |
@@ -48,11 +54,11 @@ Say "Maxine" with a Scottish accent — Sean Connery style — and you get "Maxs
 
 The product name IS the concept. Maxine. Machine. The Machine Experience. All one thing, hiding in plain sight in the name.
 
-**Frankfurt:** Say it on stage. Don't explain it. Let it land. Someone in the audience will go "wait... Maxine... Machine Experience... oh." That's the moment.
+The delivery matters. Don't explain the connection — let it land. The audience hears "Maxine... Machine Experience..." and the penny drops on its own. That's the moment.
 
 ---
 
-## Maxine & Reginald — A Glasgow Love Story
+## Maxine & Reginald — A Love Story
 
 Two products. One story. People remember stories about people, not platforms.
 
@@ -62,7 +68,7 @@ Two products. One story. People remember stories about people, not platforms.
 
 Together, they're MX OS. She reads. He publishes. She personalises. He certifies.
 
-Both Scottish. Both built in Glasgow. Serving the world.
+Two products. Serving the world.
 
 **Brand pairing, not product merge.** Two products, always mentioned together. A power couple.
 
@@ -131,9 +137,9 @@ People aren't afraid of AI. They're afraid of AI they can't control.
 
 MX gives them control. You write the docs. Machines follow them. No black box.
 
-| Fear | Control answer |
-|------|---------------|
-| AI hallucinates | "AI can't hallucinate what you've already written down." + "MX Docs give machines the truth. Without them, machines guess." |
+| They Fear | You Say |
+|-----------|---------|
+| AI hallucinates | "Machines can't make things up when you've already written it down." + "MX Docs give machines the truth. Without them, machines guess." |
 | AI replaces jobs | "You decide what machines do. The instructions are yours." |
 | AI invades privacy | "Your data stays on your device, in your docs. You choose what to share." |
 | AI is hype that will crash | "Docs are markdown files. They don't crash, don't deprecate, don't need a subscription." |
@@ -210,6 +216,8 @@ Five streams, layered:
 | 2 | **Hospitality & travel** | Demo-ready. Dietary, accessibility, personalisation — tangible value immediately. |
 | 3 | **E-commerce** | Biggest TAM. Product catalogues that AI agents need to read. |
 
+E-commerce is the largest addressable market because every online shop maintains a product catalogue — prices, specifications, availability, delivery terms — that AI agents already attempt to read on behalf of consumers. Today those agents scrape and guess. With machine-readable docs, every shopping agent on earth can understand a catalogue without inference, enabling accurate price comparison, product recommendations, and purchase completion. This is the MX five-stage journey at commercial scale: discovery, citation, search and compare, price understanding, and purchase confidence — all served by structured metadata rather than screen-scraping.
+
 ### Defensibility
 
 **The moat is the registry.** Network effects — more docs listed, more agents look there, more businesses want to be listed. MX Reginald becomes the global directory of machine-readable business identity.
@@ -269,74 +277,20 @@ Certification is the right to publish encrypted, signed docs on Reginald. It is 
 
 ---
 
-## Essay Series (allabout.network)
+## Key Decisions
 
-Three essays, published before 12 May 2026. Each builds on the last.
-
-| # | Title concept | Audience | What it does |
-|---|--------------|----------|-------------|
-| 1 | **Institutional Introspection** | Business leaders (CxOs) | AI forces organisations to explain themselves. Earns authority. Short paragraphs. Specific bullet triads. |
-| 2 | **The MX Answer** | Mixed | Organisations that write their own docs don't get surprised by what AI does with them. The punchline essay 1 was missing. |
-| 3 | **The Frankfurt Demo in Writing** | Technical + business | What it looks like in practice. The companion web, live. |
-
-**Suggested closer for essay 1:** "Organisations that write their own docs — in a format machines can read — don't get surprised by what AI does with them. They wrote the script. AI follows it."
-
-**Publication:** allabout.network primary. Cross-post to LinkedIn and Boye blog.
+| Question | Answer |
+|----------|--------|
+| How do we position for vendors? | **MX saves them.** "The CMS that serves MX Docs survives. The one that doesn't gets bypassed." |
+| Machine Experience vs AI? | **Lead with Machine Experience.** The Maxshine moment bridges it. "Machine Experience" triggers curiosity, not fear. |
+| How do we answer the hallucination fear? | **Two-punch combo.** (a) "AI can't hallucinate what you've already written down." (b) "MX Docs give machines the truth. Without them, machines guess." |
+| Revenue model? | **Registry freemium.** CMS vendors as channel. £12.50/year. 200 platforms serve 10M businesses. Five revenue streams. |
+| Sponsor angle? | **CMS vendors.** "Powered by [Vendor]" in every MX Doc. Free certification for sponsors. |
+| The one sentence? | **"Your business, readable by every machine on earth."** |
+| Pre-launch content? | **Three essays.** Introspection → MX answer → Frankfurt demo. Published on allabout.network before 12 May. |
 
 ---
 
-## Key Dates
+*This is a living document. Update when decisions change.*
 
-| Date | Milestone | Notes |
-|------|-----------|-------|
-| **20 Feb 2026** | Demo Reginald | Live registry, real docs, searchable. Serves ALL audiences: advisory board, investors, grant prep, London CMS Experts. |
-| **26 Feb 2026** | London CMS Experts | Boye & Company. First public audience. |
-| **2 Apr 2026** | MX: The Handbook | Published. |
-| **12 May 2026** | Frankfurt CMS Summit | Full demo: Maxine + Reginald + multiple devices + phone + voice. |
-| **1 Jul 2026** | Book 2 | MX: The Codex. |
-
----
-
-## Scottish Government Grant
-
-Scott McGregor is handling the application. Key points for the pitch:
-
-- Scottish Government grants are typically pound-for-pound matching (but not always).
-- Building a global AI brand in Glasgow is a feather in Glasgow's cap. It puts Edinburgh's nose out.
-- Maxshine is Scottish. Reginald is Scottish. The company is Glasgow-based.
-- Cloud-hosted infrastructure, but company, team, and IP are all Glasgow.
-- Two fundable claims: reduces AI inference costs (measurable), reduces hallucination risk (measurable).
-
----
-
-## Open Questions (Resolved)
-
-All seven original questions have been answered.
-
-| # | Question | Answer |
-|---|----------|--------|
-| 1 | Vendor survival | **MX saves them.** "The CMS that serves MX Docs survives. The one that doesn't gets bypassed." |
-| 2 | Machine Experience vs AI | **Lead with Machine Experience.** The Maxshine moment bridges it. "Machine Experience" triggers curiosity, not fear. |
-| 3 | Hallucination answer | **Two-punch combo.** (a) "AI can't hallucinate what you've already written down." (b) "MX Docs give machines the truth. Without them, machines guess." |
-| 4 | Investor pitch | **Registry freemium.** CMS vendors as channel. £12.50/year. 200 platforms serve 10M businesses. Five revenue streams. |
-| 5 | Sponsor angle | **CMS vendors.** "Powered by [Vendor]" in every MX Doc. Free certification for sponsors. |
-| 6 | One sentence | **"Your business, readable by every machine on earth."** |
-| 7 | Essay series | **Three parts.** Introspection → MX answer → Frankfurt demo. allabout.network. Before 12 May. |
-
----
-
-## What This Document Becomes
-
-When complete, this messaging framework should produce:
-
-- [x] **Elevator pitch** — "Your business, readable by every machine on earth."
-- [x] **Frankfurt talk structure** — opening provocation through to close
-- [x] **Vendor survival pitch** — "The CMS that serves MX Docs survives."
-- [x] **Bridge term glossary** — see Bridge Terms section above
-- [ ] **One-pager per audience** — tailored pitch for each of the seven
-- [ ] **FAQ for fearful audiences** — objection/answer pairs
-- [ ] **Printed bridge term card** — physical reference for anyone writing about MX
-
----
-
-*This framework is alive. The gestalt remembers what individual sessions forget. Update when decisions change.*
+*Canonical source: mx-canon/ssot/mx-messaging-framework.md*

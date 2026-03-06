@@ -443,7 +443,7 @@ The companies that verify their information for machines will be found, recommen
 
 **Cog-Nova-MX Ltd** — The commercial steward of Machine Experience. Tom Cranstoun, founder. Consulting, certification framework, and the MaXinE AI engine.
 
-**MX Reginald Ltd** — Operates the REGINALD registry and the Signing Engine. Glasgow, Scotland. Co-founded by Tom Cranstoun and Scott McGregor. The company that runs the library where verified documentation lives.
+**MX Reginald Ltd** — Operates the REGINALD registry and the Signing Engine. Co-founded by Tom Cranstoun and Scott McGregor. The company that runs the library where verified documentation lives.
 
 **Digital Domain Technologies Ltd** — The technology consultancy that delivers MX implementations to clients. The hands-on team that makes websites, APIs, and documentation machine-readable.
 

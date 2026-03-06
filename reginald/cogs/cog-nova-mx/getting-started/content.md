@@ -391,7 +391,7 @@ For team members wanting deeper understanding of the architecture.
 
 ### MX Reginald Ltd
 
-- **Company**: Operates REGINALD registry + Signing Engine (Glasgow)
+- **Company**: Operates REGINALD registry + Signing Engine
 - **Co-founders**: Tom Cranstoun + Scott McGregor
 - **Parent**: MX Holdings (Tom 70%, Scott 25%, Staff 5%)
 - **Grant target**: £250k-£1.1M from Scottish Government
