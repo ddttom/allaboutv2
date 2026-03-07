@@ -141,7 +141,7 @@ The brain has its own routing system. Read `mx-canon/mx-maxine-lives/ROUTING.md`
 | `mx-crm/` | CRM — contacts, prospects, client deliverables, outreach templates [SUBMODULE, PRIVATE]. Single source of truth for all contact and relationship data. |
 | `prompts/` | AI prompt templates and system instructions |
 | `tests/` | Test infrastructure for book generation (PDF/LaTeX testing, illustration validation) |
-| `datalake/pipeline/ingest/` | Business content & proposals. Content lifecycle staging workflow. |
+| `datalake/pipeline/drafts/` | Draft content organised by topic — ideas, use-cases, specifications. |
 | `mx-outputs/` | Build artefacts [SUBMODULE, PRIVATE]. Type-first structure: `pdf/` (books, manuals), `md/` (reports, audit), `html/` (blogs, baselines), `json/`, `pptx/`. Auto-indexed README. |
 | `mx-collaboration/` | Structured document pipeline [SUBMODULE]. Incoming proposals, accepted, published. |
 

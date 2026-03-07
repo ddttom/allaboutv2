@@ -50,9 +50,9 @@ node scripts/validate-paths.cjs # Direct execution
 
 | Old Pattern | Correct Pattern | Description |
 |-------------|----------------|-------------|
-| `ingest/` | `datalake/pipeline/ingest/` | Old flat ingest folder |
+| `ingest/` | `datalake/pipeline/drafts/` | Old flat ingest folder |
 | `outputs/` | `mx-outputs/` | Old flat outputs folder |
-| `content-lifecycle/` | `datalake/pipeline/content-lifecycle/` | Old lifecycle staging |
+| `content-lifecycle/` | `datalake/pipeline/drafts/` | Old lifecycle staging |
 
 ---
 
@@ -77,9 +77,9 @@ Groups issues by file for clarity:
 
 ```
 allaboutv2/README.md
-  Line 42: Old ingest/ path should be datalake/pipeline/ingest/
+  Line 42: Old ingest/ path should be datalake/pipeline/drafts/
     Found:    See ingest/README.md for details
-    Use:      datalake/pipeline/ingest/
+    Use:      datalake/pipeline/drafts/
 
   Line 58: Old outputs/ path should be mx-outputs/
     Found:    Build outputs appear in outputs/codex/
@@ -239,7 +239,7 @@ Uses regex with negative lookahead:
 {
   pattern: /\bingest\//g,
   skipIf: /packages\/mx-ingest\//,  // Don't flag if already correct
-  correct: 'datalake/pipeline/ingest/'
+  correct: 'datalake/pipeline/drafts/'
 }
 ```
 

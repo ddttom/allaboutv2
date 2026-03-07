@@ -96,8 +96,8 @@ Where things live. These are not suggestions — if content goes elsewhere, it's
 | Blog drafts (md) | `mx-canon/mx-maxine-lives/communications/blogs/md/` | Markdown source |
 | Blog templates | `mx-canon/mx-maxine-lives/communications/blogs/md/templates/` | EDS and MX templates |
 | Ingest (originals) | `ingest/` | Original versions of imported content |
-| Raw ideas | `content-lifecycle/1-raw-ideas/` | Conceptual thinking |
-| Work in progress | `content-lifecycle/2-drafts/` | Active drafts |
+| Draft ideas | `datalake/pipeline/drafts/ideas/` | Raw ideas, contrasts, wip |
+| Use cases | `datalake/pipeline/drafts/use-cases/` | Audience-specific use cases |
 
 ### Generated Output
 
