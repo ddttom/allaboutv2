@@ -234,7 +234,7 @@ Each stage builds on the last. Script informs the HTML page. HTML page informs t
 
 ### Priority 4: Update Appendix M
 
-**What:** Add cog system references to `datalake/publications/mx-books/mx-appendices/appendix-m-building-mx-os.md`.
+**What:** Add cog system references to `datalake/manuscripts/mx-books/mx-appendices/appendix-m-building-mx-os.md`.
 **Why:** The intellectual lineage from Appendix M (the collaborative process) to the cog system (the output of that process) is not documented. Appendix M was written 2026-02-03, before cogs were formalised.
 **Scope:** Add a section connecting the Investigate-Interview-Iterate-Document pattern to what it produced: cogs, MX OS, The Gathering.
 **Status:** Do now — decided 9 Feb 2026.

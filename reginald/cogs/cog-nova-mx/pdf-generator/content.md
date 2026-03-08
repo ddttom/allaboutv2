@@ -479,7 +479,7 @@ execute:
         use `--resource-path` with multiple directories:
 
         ```bash
-        --resource-path=.:datalake/publications/mx-books/shared:datalake/publications/mx-books/mx-handbook/chapters:datalake
+        --resource-path=.:datalake/manuscripts/mx-books/shared:datalake/manuscripts/mx-books/mx-handbook/chapters:datalake
         ```
 
         This allows pandoc to resolve images from:
@@ -905,7 +905,7 @@ execute:
 
         The PDF generation commands include:
         ```bash
-        --resource-path=datalake/publications/mx-books/mx-codex/codex:datalake/assets/images/bitmap/book-illustrations
+        --resource-path=datalake/manuscripts/mx-books/mx-codex/codex:datalake/assets/images/bitmap/book-illustrations
         ```
 
         This tells Pandoc to search both the chapter directory AND the bitmap illustrations

@@ -488,7 +488,7 @@ These four benefits are not separate initiatives. One MX implementation delivers
 
 **Published Content:**
 
-- `datalake/publications/mx-books/shared/chapter-00-what-are-ai-agents.md` — Chapter 0, lines 43-61 (Eight Reasons MX Pays for Itself), lines 1311-1325 (Implementation Support section with four benefits)
+- `datalake/manuscripts/mx-books/shared/chapter-00-what-are-ai-agents.md` — Chapter 0, lines 43-61 (Eight Reasons MX Pays for Itself), lines 1311-1325 (Implementation Support section with four benefits)
 
 ---
 

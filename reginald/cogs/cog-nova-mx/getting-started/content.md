@@ -265,7 +265,7 @@ The authoritative MX content lives in `mx-canon/`:
 
 | Topic | Document |
 |-------|----------|
-| MX Philosophy | `datalake/publications/mx-books/mx-codex/` (Chapter 0 is the anchor) |
+| MX Philosophy | `datalake/manuscripts/mx-books/mx-codex/` (Chapter 0 is the anchor) |
 | Cog Format | `mx-canon/mx-the-gathering/` (open standard specs) |
 | Maxine App | `mx-maxine-app/README.md` and `uber-maxine-plan.cog.md` |
 | Decision Boundaries | `mx-canon/mx-maxine-lives/MAXINE-DECISIONS.md` |

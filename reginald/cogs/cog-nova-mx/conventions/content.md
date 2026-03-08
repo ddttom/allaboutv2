@@ -91,8 +91,8 @@ Where things live. These are not suggestions — if content goes elsewhere, it's
 
 | Content | Location | Notes |
 |---------|----------|-------|
-| Codex manuscripts | `datalake/publications/mx-books/mx-codex/codex/` | Chapter files: `chapter-*.md` |
-| Handbook chapters | `datalake/publications/mx-books/mx-handbook/chapters/` | Chapter files: `chapter-*.md` |
+| Codex manuscripts | `datalake/manuscripts/mx-books/mx-codex/codex/` | Chapter files: `chapter-*.md` |
+| Handbook chapters | `datalake/manuscripts/mx-books/mx-handbook/chapters/` | Chapter files: `chapter-*.md` |
 | Blog drafts (md) | `mx-canon/mx-maxine-lives/communications/blogs/md/` | Markdown source |
 | Blog templates | `mx-canon/mx-maxine-lives/communications/blogs/md/templates/` | EDS and MX templates |
 | Ingest (originals) | `ingest/` | Original versions of imported content |

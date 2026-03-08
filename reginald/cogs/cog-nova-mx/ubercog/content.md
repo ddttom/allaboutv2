@@ -136,7 +136,7 @@ The brain has its own routing system. Read `mx-canon/mx-maxine-lives/ROUTING.md`
 
 | Location | What |
 |----------|------|
-| `datalake/publications/mx-books/` | Book manuscripts (Codex, Handbook, Appendices, Code Examples) |
+| `datalake/manuscripts/mx-books/` | Book manuscripts (Codex, Handbook, Appendices, Code Examples) |
 | `datalake/` | Central knowledge index, schemas, guides, image assets, configs |
 | `mx-crm/` | CRM — contacts, prospects, client deliverables, outreach templates [SUBMODULE, PRIVATE]. Single source of truth for all contact and relationship data. |
 | `prompts/` | AI prompt templates and system instructions |
@@ -184,7 +184,7 @@ MX-Hub contains critical business and operational documents that guide strategy,
 
 ### "I need to write or edit a book chapter"
 
-Route to `datalake/publications/mx-books/mx-codex/codex/` (Codex) or `mx-handbook/chapters/` (Handbook). Shared chapters (Ch00, Glossary) are in `datalake/publications/mx-books/shared/`. British English, first person, real examples only.
+Route to `datalake/manuscripts/mx-books/mx-codex/codex/` (Codex) or `mx-handbook/chapters/` (Handbook). Shared chapters (Ch00, Glossary) are in `datalake/manuscripts/mx-books/shared/`. British English, first person, real examples only.
 
 ### "I need to create or edit a blog post"
 
