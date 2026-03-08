@@ -176,7 +176,7 @@ MX is the process of honouring all existing and future standards. RDF, JSON-LD, 
 ## Consequences
 
 - **Replaces** cog-unified-spec v1.0
-- **Affects** The Handbook (2 Apr) and The Codex (1 Jul)
+- **Affects** The Handbook (2 Apr) and The Corpus (1 Jul)
 - **Affects** investor pitch and Frankfurt demo
 - **Affects** The Gathering's standard
 - **Requires** new specification, evolution document, messaging updates, first `.cog.html` example

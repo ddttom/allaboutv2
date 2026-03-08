@@ -35,7 +35,7 @@ mx:
       - "Key dates and further reading"
     links_to:
       - "MX Holdings (three companies)"
-      - "MX Books (Handbook April 2026, Codex July 2026)"
+      - "MX Books (Handbook April 2026, Corpus July 2026)"
       - "MX Reginald Ltd (operating company)"
       - "COG specification (full technical reference)"
       - "Grant application (investor pitch)"

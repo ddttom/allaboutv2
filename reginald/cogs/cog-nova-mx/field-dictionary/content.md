@@ -851,7 +851,7 @@ Not every document needs every field. A blog post needs different metadata from 
 |---------|---------------|-----------------|
 | **Core** | Every MX document | `title`, `description`, `author`, `created`, `modified` |
 | **Cog** | `.cog.md` files in the registry | `name`, `category`, `partOf` |
-| **Book** | Codex and Handbook chapters | `book`, `chapter`, `wordcount`, `copyright` |
+| **Book** | Corpus and Handbook chapters | `book`, `chapter`, `wordcount`, `copyright` |
 | **Blog** | Published articles | `publicationDate`, `blogState` |
 | **Contact** | Person records | `relationship`, `role`, `company` |
 | **Folder** | `.mx.yaml.md` folder metadata | `folderType`, `stability`, `lifecycle` |

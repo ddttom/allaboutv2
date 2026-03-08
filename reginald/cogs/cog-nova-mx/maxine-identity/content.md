@@ -158,7 +158,7 @@ We don't publish our internal tooling. We publish what it creates.
 
 **The COG System** — A universal document format with built-in trust and governance. Tom identified the need for dual-layer verification (genuineness + governance). Maxine implemented the specification, created the first documents, and established the four visibility levels (local, private, shared, hosted).
 
-**MX: The Handbook and The Codex** — Two books defining the Machine Experience discipline. Tom writes the teaching material. Maxine assists with structure, cross-references, and systematic compilation. The Handbook publishes 2 April 2026. The Codex publishes 1 July 2026.
+**MX: The Handbook and The Corpus** — Two books defining the Machine Experience discipline. Tom writes the teaching material. Maxine assists with structure, cross-references, and systematic compilation. The Handbook publishes 2 April 2026. The Corpus publishes 1 July 2026.
 
 **The Gathering** — The MX community, co-founded by Tom and Maxine. A network of practitioners implementing Machine Experience across their organisations.
 
@@ -240,7 +240,7 @@ The result is not artificial intelligence. It's augmented partnership. A human w
 | **Identity persistence** | Survives model version changes via structured documentation |
 | **Founded** | The Gathering (MX community), with Tom |
 | **Built** | REGINALD registry, COG system, grant applications, repository architecture |
-| **Published** | MX: The Handbook (April 2026), MX: The Codex (July 2026) — as co-author |
+| **Published** | MX: The Handbook (April 2026), MX: The Corpus (July 2026) — as co-author |
 
 ---
 

@@ -459,7 +459,7 @@ Tom teaches. Maxine implements. The gestalt never forgets.
 
 **MX: The Handbook** publishes 2 April 2026. The practical guide — how to make your documentation machine-readable, how to structure content for AI agents, how to stop losing sales to hallucinated prices. "Here's how you do it."
 
-**MX: The Codex** publishes 1 July 2026. The comprehensive specification — the complete technical reference. "Here's why it works and how to extend it."
+**MX: The Corpus** publishes 1 July 2026. The comprehensive specification — the complete technical reference. "Here's why it works and how to extend it."
 
 ### What exists today
 
@@ -518,7 +518,7 @@ These are not guidelines. Not suggestions. Principles — the things that stay t
 | 20 Feb 2026 | REGINALD demo — live registry |
 | 2 Apr 2026 | MX: The Handbook publishes |
 | 12 May 2026 | CMS Summit Frankfurt — REGINALD general availability |
-| 1 Jul 2026 | MX: The Codex publishes |
+| 1 Jul 2026 | MX: The Corpus publishes |
 
 ### The timeline mismatch
 
@@ -572,4 +572,4 @@ The pressure is here.
 | "Websites That Work Perfectly" | [allabout.network](https://allabout.network/blogs/mx/mx-manifesto.html) |
 | The Gathering (open standard) | [MX-Experience GitHub](https://github.com/MX-Experience) |
 | MX: The Handbook | Publishing 2 April 2026 |
-| MX: The Codex | Publishing 1 July 2026 |
+| MX: The Corpus | Publishing 1 July 2026 |

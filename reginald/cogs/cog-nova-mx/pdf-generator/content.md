@@ -612,7 +612,7 @@ execute:
         - **Large content:** Use `longtable` or `samepage` environment instead
 
         **Scope:**
-        These settings are **universal** — apply to all book metadata.yaml files (Handbook, Codex, case studies). They establish consistent typography standards across all MX publications.
+        These settings are **universal** — apply to all book metadata.yaml files (Handbook, Corpus, case studies). They establish consistent typography standards across all MX publications.
 
         **Trade-offs:**
         - **Pro:** Professional typography, no awkward widows/orphans, context preserved
@@ -782,7 +782,7 @@ execute:
         audience: business
 
         usedIn:
-          - book: mx-codex
+          - book: mx-corpus
             chapters: [chapter-00]
             context: "Illustrates competitive positioning section"
 
@@ -905,7 +905,7 @@ execute:
 
         The PDF generation commands include:
         ```bash
-        --resource-path=datalake/manuscripts/mx-books/mx-codex/codex:datalake/assets/images/bitmap/book-illustrations
+        --resource-path=datalake/manuscripts/mx-books/mx-corpus/corpus:datalake/assets/images/bitmap/book-illustrations
         ```
 
         This tells Pandoc to search both the chapter directory AND the bitmap illustrations
@@ -915,14 +915,14 @@ execute:
 
         For full book with diagrams:
         ```bash
-        npm run pdf:codex-all
+        npm run pdf:corpus-all
         ```
 
         This runs:
         1. `npm run illustrations:generate` (SVG → PNG conversion)
-        2. `npm run pdf:codex-html` (HTML preview)
-        3. `npm run pdf:codex-kindle` (Kindle 6×9 PDF)
-        4. `npm run pdf:codex-generate` (A4 PDF with XeLaTeX)
+        2. `npm run pdf:corpus-html` (HTML preview)
+        3. `npm run pdf:corpus-kindle` (Kindle 6×9 PDF)
+        4. `npm run pdf:corpus-generate` (A4 PDF with XeLaTeX)
         5. `npm run pdf:appendix` (Appendix HTML generation)
 
         For single chapter testing:
@@ -1068,7 +1068,7 @@ This cog enforces a git-first workflow:
 
 - `scripts/mx-pdf.sh` — the bash engine this cog wraps
 - `scripts/generate-document-pdf.js` — the Node engine for diagram-heavy documents
-- `datalake/assets/configs/books/codex/metadata.yaml` — full book configuration (covers, fancy headers)
+- `datalake/assets/configs/books/corpus/metadata.yaml` — full book configuration (covers, fancy headers)
 - `.claude/skills/mx-c-pdf-generator/skill.md` — the Claude Code skill entry point
 
 ---

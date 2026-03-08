@@ -265,7 +265,7 @@ The authoritative MX content lives in `mx-canon/`:
 
 | Topic | Document |
 |-------|----------|
-| MX Philosophy | `datalake/manuscripts/mx-books/mx-codex/` (Chapter 0 is the anchor) |
+| MX Philosophy | `datalake/manuscripts/mx-books/mx-corpus/` (Chapter 0 is the anchor) |
 | Cog Format | `mx-canon/mx-the-gathering/` (open standard specs) |
 | Maxine App | `mx-maxine-app/README.md` and `uber-maxine-plan.cog.md` |
 | Decision Boundaries | `mx-canon/mx-maxine-lives/MAXINE-DECISIONS.md` |
@@ -344,7 +344,7 @@ For team members wanting deeper understanding of the architecture.
 ### Book: Chapter 0 — What Are AI Agents?
 
 - **Wordcount**: ~10,183
-- **Book**: Shared (between MX Codex and Handbook)
+- **Book**: Shared (between MX Corpus and Handbook)
 - **Chapter**: 0 (anchor chapter)
 - **Status**: Written, in the manuscript
 - **Key examples**: Danube cruise pricing error (£2,030→£203,000), Ally McBeal vs legal citations
@@ -395,7 +395,7 @@ For team members wanting deeper understanding of the architecture.
 - **Co-founders**: Tom Cranstoun + Scott McGregor
 - **Parent**: MX Holdings (Tom 70%, Scott 25%, Staff 5%)
 - **Grant target**: £250k-£1.1M from Scottish Government
-- **Key dates**: Handbook 2 Apr, CMS Summit Frankfurt 12 May, Codex 1 Jul 2026
+- **Key dates**: Handbook 2 Apr, CMS Summit Frankfurt 12 May, Corpus 1 Jul 2026
 
 ---
 

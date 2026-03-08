@@ -181,7 +181,7 @@ From the skeleton alone, an AI agent knows: this script wraps eza, it has seven 
 
 - **No automated audit.** The `audit` and `progress` actions in this action-doc describe what should happen, but no automated tooling exists yet.
 - **No cross-language support.** `mx.inspect.sh` works for bash scripts. Python, Ruby, and other `#`-comment languages use the same comment style but the skeleton extraction patterns are bash-specific. Extension is needed.
-- **No documentation in The Codex.** The concept exists in Canon (specifications, cogs) but not yet in the practitioner-facing book.
+- **No documentation in The Corpus.** The concept exists in Canon (specifications, cogs) but not yet in the practitioner-facing book.
 
 The foundation is solid. All scripts are self-describing and under version control.
 
@@ -207,7 +207,7 @@ These are the things that need to happen next, in rough priority order:
 
 1. **Build the audit action.** A bash script or node tool that scans `$MX_BIN_DIR` and reports: how many scripts, how many have metadata, which fields are missing. Wire it into this action-doc.
 2. **Cross-language inspection.** Extend mx.inspect.sh to handle Python scripts (function def signatures, class declarations, decorators) and other `#`-comment languages.
-3. **Document in The Codex.** Write the practitioner-facing explanation: what script metadata is, how to add it, how to use mx.inspect.sh, the three-tier read strategy.
+3. **Document in The Corpus.** Write the practitioner-facing explanation: what script metadata is, how to add it, how to use mx.inspect.sh, the three-tier read strategy.
 4. **Measure the savings.** Measure actual token reduction across a week of real Maxine sessions with all scripts carrying metadata. Prove the economics.
 
 ---

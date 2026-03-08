@@ -115,7 +115,7 @@ execute:
         audience: both | tech | business | humans
 
         usedIn:
-          - book: mx-handbook | mx-codex
+          - book: mx-handbook | mx-corpus
             chapters: [chapter-02, chapter-03]
             context: "Illustrates [specific concept] to [show/explain what]"
 
@@ -445,7 +445,7 @@ execute:
         audience: tech | both
 
         usedIn:
-          - book: mx-handbook | mx-codex
+          - book: mx-handbook | mx-corpus
             chapters: [chapter-XX]
             context: "Demonstrates [specific technique/pattern]"
 
