@@ -1,5 +1,5 @@
 ---
-version: "1.12.0"
+version: "1.12.1"
 description: "Generate professional PDFs from markdown — table formatting, diagram rendering, illustrations, auto-scaled images. A4 and Kindle formats via pandoc."
 created: 2026-02-15
 modified: 2026-03-09
@@ -36,6 +36,10 @@ mx:
       copies, -print.md intermediates, or appended docs — git handles recovery.
       Fix emojis directly in source markdown files, never create intermediate copies.
       No file duplication. No -copy.md, -backup.md, or -print.md files. Ever.
+      Footnote URLs: All footnote definitions with URLs must use trailing backslash line
+      breaks so each URL renders on its own line in PDF output. Without `\`, pandoc
+      collapses indented continuation lines into one paragraph. See writing-style.md
+      Section 11 for the full convention and examples.
       Multi-file compilation: When compiling books or multi-chapter documents, list chapter
       files EXPLICITLY rather than using glob patterns (chapter-*.md). Glob patterns can
       match processing artifacts (-print.md, -copy.md) causing duplicate content in output.
@@ -53,6 +57,11 @@ mx:
           Run `./scripts/generate-footnotes.sh` to ensure all footnote HTML pages and
           QR code SVGs are up to date before PDF compilation. This ensures the QR code
           SVGs referenced in chapters point to current footnote pages.
+
+          **Footnote URL formatting:** Verify that all footnote definitions in the
+          source markdown use trailing backslash `\` line breaks between the description
+          and each URL. Without this, pandoc collapses multi-URL footnotes into a single
+          line in the PDF. See writing-style.md Section 11.
           ### Step 1: Identify the source file(s)
           1. If the user provides an explicit path, use it
           2. If the user says "the md" or "the markdown", check IDE context and conversation history

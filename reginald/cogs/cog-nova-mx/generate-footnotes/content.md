@@ -3,7 +3,7 @@ version: 0.1.0
 description: Generate HTML footnote pages and QR codes from markdown chapter footnotes
 
 created: 2026-03-08
-modified: 2026-03-08
+modified: 2026-03-09
 
 author: Maxine (MX - Machine eXperience Engine)
 
@@ -66,3 +66,9 @@ Scans all markdown files in `datalake/manuscripts/mx-books/` for Pandoc-style fo
 - (additional files as more chapters gain footnotes)
 
 The script is idempotent — safe to re-run whenever footnotes change.
+
+## PDF footnote formatting
+
+This cog generates HTML footnote pages where URL line breaks are handled by CSS. However, the source markdown footnotes also appear in PDF output via pandoc. Pandoc collapses indented continuation lines into a single paragraph, so footnote definitions must use trailing backslash `\` line breaks between the description and each URL. Without this, multi-URL footnotes run together on one line in the PDF.
+
+See `mx-canon/ssot/writing-guides/writing-style.md` Section 11 for the full convention and examples.

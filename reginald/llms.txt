@@ -39,4 +39,4 @@ All JSON endpoints return structured data with:
 - COG Format: https://allabout.network/reginald/docs/cog-format
 - REGINALD API: https://allabout.network/reginald/docs/api
 
-Generated: 2026-03-09T08:58:50.106Z
+Generated: 2026-03-09T09:21:01.677Z
