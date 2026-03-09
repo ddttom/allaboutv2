@@ -8,7 +8,6 @@ modified: 2026-02-10
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: what-is-mx-environment
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -16,12 +15,11 @@ mx:
   category: mx-core
   partOf: mx-os
   refersTo: [cog-unified-spec, mx-principles]
-  buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
+  buildsOn: [what-is-a-cog, what-is-mx-os]
   tags: [environment, mx-home, machine-context, boot, bare-metal, two-stage-boot, mx-os]
 
   audience: both
-  readingLevel: accessible
-  purpose: Explain why MX OS needs machine-level context, how $MX_HOME works, and how two-stage boot gives AI agents the universe before the repo
+  readingLevel: beginner
 ---
 
 # What Is the MX Environment?

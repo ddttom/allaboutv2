@@ -8,7 +8,6 @@ modified: 2026-02-10
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: cog-registry
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, what-is-mx-os]
   tags: [registry, index, catalogue, cogs, discovery, builds-on-graph]
 
-  audience: ai-agents
-  readingLevel: technical
-  purpose: Enable any AI agent to discover, list, and validate all cogs in the MX ecosystem
+  audience: agents
+  readingLevel: advanced
 
   contentType: "action-doc"
   runbook: "mx exec cog-registry"
@@ -644,7 +642,7 @@ These are not exceptions to "one cog, one home." Most are project-level document
 
 ## How to Register a Cog
 
-1. Create your `.cog.md` file following the [cog-unified-spec](../../MX-The-Gathering/deliverables/cog-unified-spec.md)
+1. Create your `.cog.md` file following the [cog-unified-spec](../../MX-The-Gathering/specifications/cog-unified-spec.cog.md)
 2. Place it in `cogs/` (or provide a path for the register action)
 3. The registry action-doc will read the frontmatter, validate it, and add an entry to the table above
 4. Update the builds-on graph if the new cog has builds-on references

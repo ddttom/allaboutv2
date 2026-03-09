@@ -7,19 +7,12 @@ modified: "2026-02-15"
 author: "Tom Cranstoun / Copilot"
 
 mx:
-  name: "cloudflare-routing-action"
   license: "Private — Cog-Nova-MX Ltd"
   status: "active"
   category: "infrastructure"
   partOf: ["MX Brand–Domain Master Architecture", "MX Business Operations", "MX Infrastructure", "MX Governance Framework"]
-  purpose: |
-      Provide a unified, authoritative routing plan for all MX domains. This cog
-      defines canonical domains, redirect rules, Worker behaviour, and operational
-      sequencing. It ensures MX presents a consistent, trust-first identity while
-      retaining defensive ownership of .ai domains without using them publicly.
-
   tags: [cloudflare, routing, dns, workers, infrastructure]
-  audience: ["business", "operations"]
+  audience: ["business", "business"]
   refersTo:
       - "MX Brand–Domain Master Architecture Cog"
       - "Domain Portfolio Registry Cog"

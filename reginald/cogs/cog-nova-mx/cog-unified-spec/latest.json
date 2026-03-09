@@ -1,0 +1,23 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "cog-unified-spec",
+  "version": "1.0-draft",
+  "description": "This is a reference copy. The canonical specification is governed by The Gathering and lives in mx-canon.",
+  "author": "Tom Cranstoun",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "draft",
+  "category": "specification",
+  "tags": [
+    "cog",
+    "specification",
+    "reference-copy"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-08",
+  "modified": "2026-03-02",
+  "source_path": "mx-canon/ssot/specifications/cog/cog-unified-spec.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/ssot/specifications/cog/cog-unified-spec.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/cog-unified-spec/content.md"
+}

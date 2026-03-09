@@ -8,7 +8,6 @@ modified: 2026-02-09
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: what-comes-next
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, who-is-maxine, what-is-mx-os, cog-registry, cogs-for-agent-developers]
   tags: [planning, priorities, roadmap, session-context, action-plan, the-gathering, launch]
 
-  audience: ai-agents
-  readingLevel: technical
-  purpose: Transfer full context to any AI agent so it can continue the work without re-explaining anything
+  audience: agents
+  readingLevel: advanced
 
   contentType: "action-doc"
   runbook: "mx exec what-comes-next"
@@ -80,7 +78,7 @@ The MX ecosystem has been built. The foundation is in place:
 - **mx-canon** — Single source of truth with four initiatives:
   - **MX-The-Gathering** — Independent standards body. Founding charter, specification (v1.0-draft), landing page, announcement post, LinkedIn identity kit, outreach messages. Status: founding.
   - **MX-OS** — Machine Experience Operating System. Product brief, roadmap, bare-metal deployment. Status: active.
-  - **Cog Registry** — Centralised index of all cogs (scripts/cogs/). Status: active.
+  - **Cog Registry** (scripts/cogs/) — Centralised index of all cogs. Status: active.
   - **MX-App** — Reference cog-aware personal agent app. Product brief. Status: active.
 
 - **Eleven cogs** registered:

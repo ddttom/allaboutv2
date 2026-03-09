@@ -8,7 +8,6 @@ modified: 2026-02-09
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: cogs-for-agent-developers
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, what-is-mx-os]
   tags: [agent-frameworks, skills, openClaw, langchain, crewai, integration, developer-tools, metadata]
 
-  audience: developers
-  readingLevel: technical
-  purpose: Explain how cogs work alongside AI agent frameworks — not replacing skills, but making the documents those skills read machine-readable
+  audience: tech
+  readingLevel: advanced
 
   contentType: "action-doc"
   runbook: "mx exec cogs-for-agent-developers"
@@ -94,7 +92,7 @@ Your agent reads a cog. The YAML frontmatter tells it immediately:
 
 ```yaml
 ---
-name: european-river-cruise-pricing
+title: "European River Cruise Pricing"
 version: "2.3"
 description: Current pricing for all European river cruise packages
 author: Travel Operations Team
@@ -172,7 +170,7 @@ Take any document your agent already reads. Add YAML frontmatter:
 
 ```yaml
 ---
-name: my-api-reference
+title: "My API Reference"
 version: "1.0"
 description: REST API endpoints for the user service
 author: Your Team

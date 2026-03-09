@@ -2,13 +2,12 @@
 version: 1.0.0
 description: Generate a new Canon initiative folder with full lifecycle support
 
-created: 2026-02-09T10:00:00Z
-modified: 2026-02-09T10:00:00Z
+created: 2026-02-09
+modified: 2026-02-09
 
 author: Tom Cranstoun & Maxine
 
 mx:
-  name: canon-init
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: draft

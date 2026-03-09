@@ -8,7 +8,6 @@ modified: 2026-02-11
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: mx-train-analogy
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -20,8 +19,7 @@ mx:
   tags: [analogy, pitch, railway, train, metaphor, cog-railway, accessible, non-technical, investor]
 
   audience: both
-  readingLevel: accessible
-  purpose: Canonical reference for the railway analogy — use when pitching MX to non-technical audiences
+  readingLevel: beginner
 ---
 
 # The Railway Analogy

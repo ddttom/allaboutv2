@@ -2,7 +2,7 @@
   "name": "reginald-registry",
   "version": "1.0.0",
   "description": "REGINALD - Registry for Genuine Information, Notarised Authentication, and Legitimate Documentation",
-  "generated": "2026-02-28T13:11:09.088Z",
+  "generated": "2026-03-09T08:58:50.066Z",
   "publisher": {
     "name": "Cog-Nova-MX Ltd",
     "namespace": "cog-nova-mx",
@@ -26,40 +26,46 @@
       "category": "product",
       "type": "info-doc"
     },
-    "cog-nova-mx/changelog": {
+    "cog-nova-mx/CHANGELOG": {
       "latest": "1.0",
       "compliance": 2,
       "category": "governance",
       "type": "info-doc"
     },
-    "cog-nova-mx/contributing": {
+    "cog-nova-mx/CONTRIBUTING": {
       "latest": "2.0-draft",
       "compliance": 2,
       "category": "governance",
       "type": "info-doc"
     },
-    "cog-nova-mx/hello": {
+    "cog-nova-mx/HELLO": {
       "latest": "1.1",
       "compliance": 2,
       "category": "mx-core",
       "type": "info-doc"
     },
-    "cog-nova-mx/license": {
+    "cog-nova-mx/LICENSE": {
       "latest": "1.0",
       "compliance": 2,
       "category": "governance",
       "type": "info-doc"
     },
-    "cog-nova-mx/maxine-lives": {
-      "latest": "conventional",
+    "cog-nova-mx/README": {
+      "latest": "1.0",
+      "compliance": 2,
+      "category": "reference-implementation",
+      "type": "info-doc"
+    },
+    "cog-nova-mx/ROUTING": {
+      "latest": "2.0-draft",
       "compliance": 2,
       "category": "mx-core",
       "type": "info-doc"
     },
-    "cog-nova-mx/maxine-lives-routing": {
-      "latest": "2.0-draft",
+    "cog-nova-mx/about.mx": {
+      "latest": "1.0",
       "compliance": 2,
-      "category": "mx-core",
+      "category": "about",
       "type": "info-doc"
     },
     "cog-nova-mx/about-maxine": {
@@ -80,7 +86,7 @@
       "category": "business",
       "type": "info-doc"
     },
-    "cog-nova-mx/mx-brand": {
+    "cog-nova-mx/MX-brand": {
       "latest": "1.1.0",
       "compliance": 2,
       "category": "strategy",
@@ -99,7 +105,7 @@
       "type": "info-doc"
     },
     "cog-nova-mx/glasgow-training-course": {
-      "latest": "1.0.0",
+      "latest": "1.0",
       "compliance": 2,
       "category": "planning",
       "type": "info-doc"
@@ -110,19 +116,13 @@
       "category": "principle",
       "type": "info-doc"
     },
-    "cog-nova-mx/mx-messaging": {
-      "latest": "0.2",
-      "compliance": 2,
-      "category": "strategy",
-      "type": "info-doc"
-    },
     "cog-nova-mx/mx-vision": {
       "latest": "1.0",
       "compliance": 2,
       "category": "vision",
       "type": "info-doc"
     },
-    "cog-nova-mx/solo-founder-risk": {
+    "cog-nova-mx/2026-02-13-solo-founder": {
       "latest": "1.0",
       "compliance": 2,
       "category": "risk",
@@ -266,13 +266,13 @@
       "category": "manual",
       "type": "info-doc"
     },
-    "cog-nova-mx/manual-mx-contacts": {
+    "cog-nova-mx/mx-contacts-manual": {
       "latest": "1.0",
       "compliance": 2,
       "category": "manual",
       "type": "info-doc"
     },
-    "cog-nova-mx/manual-mx-show": {
+    "cog-nova-mx/mx-show-manual": {
       "latest": "3.0",
       "compliance": 2,
       "category": "manual",
@@ -284,56 +284,62 @@
       "category": "deliverable",
       "type": "info-doc"
     },
-    "cog-nova-mx/mx-web-architecture-decision": {
+    "cog-nova-mx/2026-02-13-mx-web-architecture": {
       "latest": "1.0",
       "compliance": 2,
       "category": "architecture",
       "type": "info-doc"
     },
-    "cog-nova-mx/routing-pipeline-adr": {
+    "cog-nova-mx/2026-02-13-routing-pipeline": {
       "latest": "1.0",
       "compliance": 2,
       "category": "adr",
       "type": "info-doc"
     },
-    "cog-nova-mx/png-workflow-pdf-generation-decision": {
+    "cog-nova-mx/2026-02-18-png-workflow-for-pdf-generation": {
       "latest": "1.0",
       "compliance": 2,
       "category": "architecture",
       "type": "info-doc"
     },
-    "cog-nova-mx/svg-aspect-ratio-preservation-decision": {
+    "cog-nova-mx/2026-02-18-svg-aspect-ratio-preservation": {
       "latest": "1.0",
       "compliance": 2,
       "category": "architecture",
       "type": "info-doc"
     },
-    "cog-nova-mx/typography-standards-pdf-generation-decision": {
+    "cog-nova-mx/2026-02-18-typography-standards-for-pdf-generation": {
       "latest": "1.0",
       "compliance": 2,
       "category": "architecture",
       "type": "info-doc"
     },
-    "cog-nova-mx/adr-vendor-extensions-policy": {
-      "latest": "1.0.0",
+    "cog-nova-mx/vendor-extensions-policy": {
+      "latest": "1.0",
       "compliance": 2,
       "category": "mx-core",
       "type": "info-doc"
     },
-    "cog-nova-mx/bdr-002-deliverable-rename": {
+    "cog-nova-mx/2026-02-15-deliverable-rename": {
       "latest": "1.0",
       "compliance": 2,
       "category": "decision-record",
       "type": "info-doc"
     },
-    "cog-nova-mx/bdr-001-runbook-rename": {
+    "cog-nova-mx/2026-02-15-runbook-rename": {
       "latest": "1.0",
       "compliance": 2,
       "category": "decision-record",
       "type": "info-doc"
     },
-    "cog-nova-mx/adr-attribute-namespace-policy": {
-      "latest": "1.0.0",
+    "cog-nova-mx/2026-03-01-hub-as-mount-table": {
+      "latest": "1.0",
+      "compliance": 2,
+      "category": "decision-record",
+      "type": "info-doc"
+    },
+    "cog-nova-mx/2026-02-14-attribute-namespace-policy": {
+      "latest": "1.0",
       "compliance": 2,
       "category": "mx-core",
       "type": "info-doc"
@@ -362,40 +368,70 @@
       "category": "template",
       "type": "info-doc"
     },
-    "cog-nova-mx/block-architecture-decision": {
+    "cog-nova-mx/adr-01-block-architecture": {
       "latest": "W3C Draft 2026-02-12",
       "compliance": 2,
       "category": "architecture",
       "type": "info-doc"
     },
-    "cog-nova-mx/adr-namespace-policy": {
-      "latest": "1.0.0",
+    "cog-nova-mx/adr-02-namespace-policy": {
+      "latest": "1.0",
       "compliance": 2,
       "category": "standard",
       "type": "info-doc"
     },
-    "cog-nova-mx/block-naming-decision": {
+    "cog-nova-mx/namespace-extensions": {
       "latest": "1.0",
-      "compliance": 2,
-      "category": "naming",
-      "type": "info-doc"
-    },
-    "cog-nova-mx/camelcase-naming-decision": {
-      "latest": "1.0",
-      "compliance": 2,
-      "category": "naming",
-      "type": "info-doc"
-    },
-    "cog-nova-mx/spelling-neutrality-decision": {
-      "latest": "1.0",
-      "compliance": 2,
-      "category": "naming",
-      "type": "info-doc"
-    },
-    "cog-nova-mx/field-dictionary": {
-      "latest": "1.5",
       "compliance": 2,
       "category": "standard",
+      "type": "info-doc"
+    },
+    "cog-nova-mx/ndr-01-block-naming": {
+      "latest": "1.0",
+      "compliance": 2,
+      "category": "naming",
+      "type": "info-doc"
+    },
+    "cog-nova-mx/ndr-02-camelcase-naming": {
+      "latest": "1.0",
+      "compliance": 2,
+      "category": "naming",
+      "type": "info-doc"
+    },
+    "cog-nova-mx/ndr-03-spelling-neutrality": {
+      "latest": "1.0",
+      "compliance": 2,
+      "category": "naming",
+      "type": "info-doc"
+    },
+    "cog-nova-mx/effective-doc-example": {
+      "latest": "1.0",
+      "compliance": 2,
+      "category": "mx-core",
+      "type": "info-doc"
+    },
+    "cog-nova-mx/example-with-includes": {
+      "latest": "1.0",
+      "compliance": 2,
+      "category": "mx-core",
+      "type": "action-doc"
+    },
+    "cog-nova-mx/shared-validation-policy": {
+      "latest": "1.0",
+      "compliance": 2,
+      "category": "mx-core",
+      "type": "info-doc"
+    },
+    "cog-nova-mx/block-architecture-evolution": {
+      "latest": "1.0",
+      "compliance": 2,
+      "category": "mx-core",
+      "type": "info-doc"
+    },
+    "cog-nova-mx/cog-unified-spec": {
+      "latest": "1.0-draft",
+      "compliance": 2,
+      "category": "specification",
       "type": "info-doc"
     },
     "cog-nova-mx/mx-standards-alignment": {
@@ -410,13 +446,31 @@
       "category": "vision",
       "type": "info-doc"
     },
+    "cog-nova-mx/fields": {
+      "latest": "4.1",
+      "compliance": 2,
+      "category": "standard",
+      "type": "info-doc"
+    },
+    "cog-nova-mx/mx-html-writing-guide": {
+      "latest": "1.1",
+      "compliance": 2,
+      "category": "mx-core",
+      "type": "info-doc"
+    },
+    "cog-nova-mx/principles": {
+      "latest": "3.0",
+      "compliance": 2,
+      "category": "mx-core",
+      "type": "info-doc"
+    },
     "cog-nova-mx/cog-system": {
       "latest": "1.0",
       "compliance": 2,
       "category": "specification",
       "type": "info-doc"
     },
-    "cog-nova-mx/maxine-identity": {
+    "cog-nova-mx/maxine": {
       "latest": "1.0",
       "compliance": 2,
       "category": "identity",
@@ -428,19 +482,19 @@
       "category": "mx-core",
       "type": "info-doc"
     },
-    "cog-nova-mx/manual-mx-reginald": {
+    "cog-nova-mx/mx-reginald-manual": {
       "latest": "1.3",
       "compliance": 2,
       "category": "manual",
       "type": "info-doc"
     },
-    "cog-nova-mx/ubercog": {
+    "cog-nova-mx/UBERCOG": {
       "latest": "1.5.0",
       "compliance": 2,
       "category": "mx-core",
       "type": "action-doc"
     },
-    "cog-nova-mx/header-block": {
+    "cog-nova-mx/header": {
       "latest": "1.0",
       "compliance": 2,
       "category": "eds-block",
@@ -452,7 +506,7 @@
       "category": "landing-page",
       "type": "info-doc"
     },
-    "cog-nova-mx/MX Coming Soon": {
+    "cog-nova-mx/coming-soon": {
       "latest": "2.2",
       "compliance": 2,
       "category": "marketing",
@@ -464,36 +518,6 @@
       "category": "creative-services",
       "type": "info-doc"
     },
-    "cog-nova-mx/cogify-this": {
-      "latest": "1.0",
-      "compliance": 2,
-      "category": "mx-tools",
-      "type": "info-doc"
-    },
-    "cog-nova-mx/html-baseline-audit": {
-      "latest": "Any version change",
-      "compliance": 2,
-      "category": "validation",
-      "type": "info-doc"
-    },
-    "cog-nova-mx/pixel-perfect-web-replication": {
-      "latest": "26.0",
-      "compliance": 2,
-      "category": "mx-tools",
-      "type": "info-doc"
-    },
-    "cog-nova-mx/what-is-mx-environment": {
-      "latest": "1.0.0",
-      "compliance": 2,
-      "category": "mx-core",
-      "type": "info-doc"
-    },
-    "cog-nova-mx/who-is-maxine": {
-      "latest": "1.0",
-      "compliance": 2,
-      "category": "learning",
-      "type": "info-doc"
-    },
     "cog-nova-mx/getting-started": {
       "latest": "1.1",
       "compliance": 2,
@@ -501,78 +525,72 @@
       "type": "info-doc"
     },
     "cog-nova-mx/janus-boye": {
-      "latest": "1.0.0",
+      "latest": "1.0",
       "compliance": 2,
       "category": "contact",
       "type": "info-doc"
     },
     "cog-nova-mx/eleanor-cranstoun": {
-      "latest": "1.0.0",
+      "latest": "1.0",
       "compliance": 2,
       "category": "contact",
       "type": "info-doc"
     },
     "cog-nova-mx/michael-andrews": {
-      "latest": "1.0.0",
+      "latest": "1.0",
       "compliance": 2,
       "category": "contact",
       "type": "info-doc"
     },
     "cog-nova-mx/openclaw-developer": {
-      "latest": "1.0.0",
+      "latest": "1.0",
       "compliance": 2,
       "category": "contact",
       "type": "info-doc"
     },
     "cog-nova-mx/scott-mcgregor": {
-      "latest": "1.0.0",
+      "latest": "1.0",
       "compliance": 2,
       "category": "contact",
       "type": "info-doc"
     },
-    "cog-nova-mx/helen": {
-      "latest": "1.0.0",
+    "cog-nova-mx/helen-advisor": {
+      "latest": "1.0",
       "compliance": 2,
       "category": "contact",
       "type": "info-doc"
     },
     "cog-nova-mx/salva": {
-      "latest": "1.0.0",
+      "latest": "1.0",
       "compliance": 2,
       "category": "contact",
       "type": "info-doc"
     },
-    "cog-nova-mx/The Highland Kitchen": {
-      "latest": "1.0",
-      "compliance": 2,
-      "category": "restaurant",
-      "type": "info-doc"
-    },
-    "cog-nova-mx/CMS Summit 2026": {
-      "latest": "1.0",
-      "compliance": 2,
-      "category": "event",
-      "type": "info-doc"
-    },
-    "cog-nova-mx/Rancilio Silvia Pro X": {
-      "latest": "1.0",
-      "compliance": 2,
-      "category": "product",
-      "type": "info-doc"
-    },
-    "cog-nova-mx/Apfelwein Wagner": {
+    "cog-nova-mx/restaurant": {
       "latest": "1.0",
       "compliance": 2,
       "category": "venue",
       "type": "info-doc"
     },
-    "cog-nova-mx/conventions": {
+    "cog-nova-mx/conference": {
+      "latest": "1.0",
+      "compliance": 2,
+      "category": "event",
+      "type": "info-doc"
+    },
+    "cog-nova-mx/product": {
+      "latest": "1.0",
+      "compliance": 2,
+      "category": "product",
+      "type": "info-doc"
+    },
+    "cog-nova-mx/2026-02-15-conventions": {
       "latest": "1.0",
       "compliance": 2,
       "category": "convention",
       "type": "action-doc"
     },
-    "cog-nova-mx/installme": {
+    "cog-nova-mx/INSTALLME": {
       "latest": "2.1-draft",
       "compliance": 2,
       "category": "mx-core",
@@ -644,6 +662,12 @@
       "category": "mx-core",
       "type": "action-doc"
     },
+    "cog-nova-mx/cog-publication-workflow": {
+      "latest": "1.0",
+      "compliance": 2,
+      "category": "mx-tools",
+      "type": "action-doc"
+    },
     "cog-nova-mx/cog-query": {
       "latest": "2.1",
       "compliance": 2,
@@ -655,6 +679,12 @@
       "compliance": 2,
       "category": "mx-core",
       "type": "action-doc"
+    },
+    "cog-nova-mx/cogify-this": {
+      "latest": "1.0",
+      "compliance": 2,
+      "category": "mx-tools",
+      "type": "info-doc"
     },
     "cog-nova-mx/cogs-for-agent-developers": {
       "latest": "1.0",
@@ -668,11 +698,29 @@
       "category": "mx-core",
       "type": "action-doc"
     },
+    "cog-nova-mx/gen-free-book": {
+      "latest": "1.0.0",
+      "compliance": 2,
+      "category": "mx-core",
+      "type": "action-doc"
+    },
+    "cog-nova-mx/generate-footnotes": {
+      "latest": "0.1.0",
+      "compliance": 2,
+      "category": "mx-tools",
+      "type": "action-doc"
+    },
     "cog-nova-mx/how-mx-os-runs": {
       "latest": "1.0",
       "compliance": 2,
       "category": "mx-core",
       "type": "action-doc"
+    },
+    "cog-nova-mx/html-baseline-audit": {
+      "latest": "Any version change",
+      "compliance": 2,
+      "category": "validation",
+      "type": "info-doc"
     },
     "cog-nova-mx/illustration-generator": {
       "latest": "1.0.0",
@@ -734,7 +782,7 @@
       "category": "mx-core",
       "type": "action-doc"
     },
-    "cog-nova-mx/allmygithubs": {
+    "cog-nova-mx/mx-allmygithubs": {
       "latest": "2.1-draft",
       "compliance": 2,
       "category": "mx-core",
@@ -764,7 +812,7 @@
       "category": "mx-core",
       "type": "action-doc"
     },
-    "cog-nova-mx/manual-mx-os": {
+    "cog-nova-mx/mx-os-manual": {
       "latest": "1.0",
       "compliance": 2,
       "category": "manual",
@@ -800,6 +848,12 @@
       "category": "mx-core",
       "type": "action-doc"
     },
+    "cog-nova-mx/pixel-perfect-web-replication": {
+      "latest": "26.0",
+      "compliance": 2,
+      "category": "mx-tools",
+      "type": "info-doc"
+    },
     "cog-nova-mx/pricing": {
       "latest": "0.1.0",
       "compliance": 2,
@@ -808,6 +862,12 @@
     },
     "cog-nova-mx/readability": {
       "latest": "0.1.0",
+      "compliance": 2,
+      "category": "mx-core",
+      "type": "action-doc"
+    },
+    "cog-nova-mx/reginald-mirror": {
+      "latest": "1.0.0",
       "compliance": 2,
       "category": "mx-core",
       "type": "action-doc"
@@ -902,6 +962,12 @@
       "category": "mx-core",
       "type": "info-doc"
     },
+    "cog-nova-mx/what-is-mx-environment": {
+      "latest": "1.0.0",
+      "compliance": 2,
+      "category": "mx-core",
+      "type": "info-doc"
+    },
     "cog-nova-mx/what-is-mx-os": {
       "latest": "1.0",
       "compliance": 2,
@@ -926,10 +992,10 @@
       "category": "mx-content",
       "type": "action-doc"
     },
-    "cog-nova-mx/multilingual-automation-suite": {
+    "cog-nova-mx/who-is-maxine": {
       "latest": "1.0",
       "compliance": 2,
-      "category": "reference-implementation",
+      "category": "learning",
       "type": "info-doc"
     }
   }

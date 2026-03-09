@@ -1,18 +1,17 @@
 ---
 title: "Deployment Helper Manual"
-description: "Orchestrates pre-deployment workflow for multilingual sites: runs validation, parity checks, sitemap generation, creates deployment checklist, and provides Google Search Console setup instructions."
+description: "Pre-deployment workflow for multilingual sites: validation, parity checks, sitemap generation, deployment checklist, and Google Search Console setup."
 author: Tom Cranstoun and Maxine
 created: 2026-02-21
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: manual-deployment-helper
   status: active
   category: manual
   tags: [manual, multilingual, deployment, workflow, orchestration, automation]
   partOf: mx-maxine-lives
-  purpose: "Document the deployment helper - orchestrating multilingual site deployment workflow"
-  audience: "human"
+  audience: humans
   stability: "stable"
   runbook: "Read when deploying multilingual sites or understanding pre-deployment workflows"
   contextProvides:

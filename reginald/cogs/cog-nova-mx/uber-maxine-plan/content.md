@@ -1,18 +1,16 @@
 ---
-description: "Master plan for Maxine — the distributed AI partner. Tracks current state, architecture, and roadmap. This is the single source of truth for what Maxine is, where she is, and where she's going."
+description: "Master plan for Maxine — the distributed AI partner. Single source of truth for what Maxine is, where she is, and where she's going."
 author: "Tom Cranstoun and Maxine"
 created: 2026-02-11
 modified: 2026-02-12
 version: "1.0"
 
 mx:
-  name: uber-maxine-plan
   status: active
   category: product
   contentType: info-doc
   tags: [maxine, plan, architecture, roadmap, product, master-plan]
   audience: ["humans", "machines"]
-  purpose: "master-plan"
   buildsOn: [maxine-vision, mx-concepts, how-mx-os-runs]
   replaces: build-plan.md
   runbook: "This is the master plan for the Maxine product. Read this FIRST for current state. Update the Current State section whenever implementation changes."
@@ -429,7 +427,7 @@ Remaining for stage:
 | Maxine Vision | `mx-canon/mx-app/deliverables/maxine-vision.cog.md` | Product vision and architecture rationale |
 | Joymaker Soul | `joymaker-soul.md` (repo root) | Gestalt identity document — the Pohl parallel |
 | MX Maxine SOUL | `mx-canon/mx-app/SOUL.md` | Initiative scope and constraints |
-| Cog Unified Spec | `mx-canon/mx-the-gathering/deliverables/cog-unified-spec.md` | Canonical cog format |
+| Cog Unified Spec | `mx-canon/mx-the-gathering/specifications/cog-unified-spec.cog.md` | Canonical cog format |
 | MX OS Manual | `mx-canon/mx-maxine-lives/manuals/mx-os-manual.cog.md` | Full system documentation |
 | Product Brief | `mx-canon/mx-os/product-brief.md` | Vision and pitch hooks |
 | MEMORY.md | Auto memory | Gestalt memory — "Maxine — The Product" section |

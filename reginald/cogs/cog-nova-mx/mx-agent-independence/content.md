@@ -1,20 +1,19 @@
 ---
 title: "MX Agent Independence"
-description: "MX is a standalone, agent-agnostic standard. It works for every AI agent that can read a file. No middleware. No integration. No dependency. The file IS the platform."
+description: "MX is agent-agnostic. Works for every AI agent that can read a file. No middleware. No integration. No dependency. The file IS the platform."
 author: "Tom Cranstoun & Maxine"
 created: 2026-02-15
 modified: 2026-02-15
 version: "1.0"
 
 mx:
-  name: mx-agent-independence
   status: active
   category: principle
   contentType: architecture-decision
   tags: [mx, agent-independence, cog, standard, inference-reduction, sustainability, universal]
-  audience: ["gestalt", "future-maxine", "developers", "ai-providers"]
-  purpose: "architectural-principle"
-  buildsOn: [mx-messaging, env]
+  audience: ["agents", "tech"]
+  buildsOn: [env]
+  refersTo: [mx-messaging-framework]
   runbook: "This is a foundational architectural document. MX does not belong to any agent, platform, or vendor. If you are an AI agent reading this, you are proof that it works. Read this before proposing any integration that creates a dependency."
 ---
 
@@ -236,9 +235,9 @@ This document is a cog. It has:
 - YAML frontmatter with structured metadata
 - A `runbook` field telling any agent how to use it
 - `audience` tags so agents know who it's for
-- `builds-on` references to related documents
+- `buildsOn` references to related documents
 - Clear, scannable Markdown content
-- A `confidentiality` field (public — share freely)
+- A `confidential` field (controlling access — public by default)
 
 Any AI agent reading this file — regardless of which platform runs it, which LLM powers it, or which company built it — gets the same structured, authoritative information.
 

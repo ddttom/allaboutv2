@@ -2,12 +2,11 @@
 title: Cog ID System — Manual
 description: Step-by-step guide for generating, registering, decoding, and stamping cog IDs. The obfuscated identity layer for MX OS.
 version: "1.1"
-created: 2026-02-14T00:00:00.000Z
-modified: 2026-02-14T00:00:00.000Z
+created: 2026-02-14
+modified: 2026-02-14
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: manual-cog-id
   status: active
   category: manual
   tags:
@@ -20,9 +19,8 @@ mx:
     - namespace
   partOf: mx-maxine-lives
   audience:
-    - operators
     - tech
-  purpose: Document cog id - usage, workflow, and best practices
+    - tech
   stability: stable
   runbook: Read when working with cog id or understanding its functionality
   contextProvides:

@@ -17,8 +17,8 @@
   ],
   "type": "action-doc",
   "compliance_level": 2,
-  "created": "2026-02-06T12:31:00Z",
-  "modified": "2026-02-06T12:31:00Z",
+  "created": "2026-02-06",
+  "modified": "2026-02-06",
   "source_path": "scripts/cogs/link-checker.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/link-checker.cog.md",
   "content_url": "/reginald/cogs/cog-nova-mx/link-checker/content.md"

@@ -1,19 +1,18 @@
 ---
 title: "MX Business Benefits — Four Strategic Outcomes"
 created: "2026-02-17"
+modified: 2026-03-02
 version: "1.0"
 author: "Tom Cranstoun & Maxine (Claude Sonnet 4.5)"
-description: "Complete documentation of the four strategic business benefits that MX implementation delivers: first-mover computational trust, revenue recovery from AI-mediated commerce, strategic asset portability, and operational efficiency through deterministic outputs"
+description: "The four strategic MX benefits: computational trust, commerce revenue recovery, asset portability, and operational efficiency via deterministic outputs."
 
 mx:
-  name: "business-benefits"
   tags: [business-case, roi, competitive-advantage, operational-efficiency, strategic-assets, computational-trust]
   category: "Business Strategy"
-  purpose: "Internal reference document capturing the complete business case for MX implementation, synthesized from customer interviews, implementation experience, and Chapter 0 business case analysis"
-  audience: [business, sales, consulting]
+  audience: [business, tech]
   status: "active"
-  buildsOn:
-    - mx-messaging
+  refersTo:
+    - mx-messaging-framework
   partOf: "MX OS"
   runbook: |
 ---
@@ -132,7 +131,7 @@ When your site lacks MX structure, agents cannot complete the desired action (pu
 From Chapter 0 (lines 29, 47, 677):
 
 > "AI referrals to retail sites surged by 700%. Travel referrals rose by 500%. Conversion rates from AI-referred visitors now lead human traffic by 30%, and those visitors spend 50% longer on sites. Agent-mediated commerce moved from experimental to revenue driver in a single quarter."
-
+>
 > "When your site does not give agents the structure they need to complete the journey - purchase, compare, recommend - that activity goes to competitors who do. You see nothing in your analytics. The traffic simply never arrives."
 
 ### Real-World Example
@@ -213,7 +212,7 @@ AI Agents (extract and trust Entity Assets)
 From Chapter 0 (lines 61, 65-69, 801-845):
 
 > "Your reviews are locked in Amazon. Your product knowledge is locked in your CMS. Your customer data is locked in your commerce platform. These are strategic assets trapped in platforms you do not own. MX makes these assets portable and sovereign, readable by any agent regardless of platform."
-
+>
 > "The Entity Asset Layer (EAL) provides the architectural solution: sovereign, portable asset ownership. Platforms become view layers that render your assets for specific channels - web, mobile, voice, agent - rather than the source of truth. You own the assets; platforms temporarily host the rendering."
 
 ### Real-World Example
@@ -479,11 +478,11 @@ These four benefits are not separate initiatives. One MX implementation delivers
 **Business Strategy:**
 
 - `mx-canon/mx-os/product-brief.md` — Product vision and market positioning
-- `mx-messaging.cog.md` — Complete messaging framework (doc/cog terminology, revenue model, certification vs COG)
+- `mx-messaging-framework.md` — Complete messaging framework (doc/cog terminology, revenue model, certification vs COG)
 
 **Technical Implementation:**
 
-- `mx-canon/mx-the-gathering/deliverables/cog-unified-spec.md` — Cog specification (v2.0-draft)
+- `mx-canon/mx-the-gathering/specifications/cog-unified-spec.cog.md` — Cog specification (v2.0-draft)
 - `mx-canon/mx-maxine-lives/manuals/mx-os-manual.cog.md` — Full system documentation
 
 **Published Content:**

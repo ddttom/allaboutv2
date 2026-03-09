@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "the-companion-web",
   "version": "1.0",
-  "description": "The companion web — how QR codes, landing pages, and embedded metadata turn the physical world into entry points that humans and AI agents read together. Every object with a QR code becomes self-describing. Extends to robotics — the interface between physical machines and the objects they encounter.",
+  "description": "QR codes and metadata turn physical objects into entry points for humans and AI agents. Every object becomes self-describing. Extends to robotics.",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "mx.machine.experience@gmail.com",
   "license": "proprietary",

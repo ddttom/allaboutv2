@@ -8,7 +8,6 @@ modified: 2026-02-10
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: installme-runner
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, what-is-mx-os, what-is-mx-environment, what-is-installme]
   tags: [installme, runner, action, install, diagnostics, prerequisites, ai-agent, executor, mx-os]
 
-  audience: ai-agents
-  readingLevel: technical
-  purpose: Give any AI agent the operational tool to execute INSTALLME.md — read the metadata, run diagnostics, install, verify, register
+  audience: agents
+  readingLevel: advanced
 
   contentType: "action-doc"
   runbook: "mx exec installme-runner"

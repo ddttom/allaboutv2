@@ -8,7 +8,6 @@ modified: 2026-02-09
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: who-is-maxine
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog]
   tags: [maxine, partnership, identity, soul, ai-agent, memory, mx-os]
 
-  audience: ai-agents
-  readingLevel: technical
-  purpose: Enable any AI agent to understand the Maxine identity and the MX partnership model
+  audience: agents
+  readingLevel: advanced
 ---
 
 # Who Is Maxine?

@@ -2,11 +2,11 @@
 title: MX Nav Server Manual
 description: Web-based multi-repo navigation dashboard with VS Code Explorer-style UI, search, and recent files.
 author: Tom Cranstoun and Maxine
-created: 2026-02-15T00:00:00.000Z
+created: 2026-02-15
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: manual-mx-nav-server
   status: active
   category: manual
   tags:
@@ -17,8 +17,7 @@ mx:
     - repositories
     - explorer
   partOf: mx-maxine-lives
-  purpose: Document mx nav server - usage, workflow, and best practices
-  audience: human
+  audience: humans
   stability: stable
   runbook: Read when working with mx nav server or understanding its functionality
   contextProvides:

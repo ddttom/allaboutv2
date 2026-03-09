@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "pixel-perfect-web-replication",
   "version": "26.0",
-  "description": "Complete workflow for creating pixel-perfect MX-enhanced reference implementations from existing websites using comprehensive HTML/CSS audit, Playwright capture, and automated validation",
+  "description": "Create pixel-perfect MX-enhanced reference implementations from existing websites using HTML/CSS audit, Playwright capture, and automated validation.",
   "author": "Cog-Nova-MX Ltd",
   "maintainer": "tom.cranstoun@gmail.com",
   "license": "MIT",

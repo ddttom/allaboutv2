@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "pdf-generator",
   "version": "1.0.0",
-  "description": "Generate professional PDFs from markdown — professional table formatting with alternating row colors, improved ASCII diagram rendering with samepage protection, emoji cleanup, invisible Unicode removal (zero-width spaces), automatic illustration generation with aspect ratio preservation, auto-scaled images, A4 and Kindle formats. Uses pandoc's pygments syntax highlighting for searchable, colored code blocks. Includes widow/orphan prevention, intelligent page break control, and task list extension handling.",
+  "description": "Generate professional PDFs from markdown — table formatting, diagram rendering, illustrations, auto-scaled images. A4 and Kindle formats via pandoc.",
   "author": "Maxine (AI-generated)",
   "maintainer": "tom.cranstoun@gmail.com",
   "license": "MIT",

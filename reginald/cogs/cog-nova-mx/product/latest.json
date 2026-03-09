@@ -1,0 +1,28 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "product",
+  "version": "1.0",
+  "description": "Professional single-group espresso machine. Dual boiler, PID temperature control, commercial-grade components in a home-sized package.",
+  "author": "MX Demo",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "product",
+  "tags": [
+    "product",
+    "coffee",
+    "espresso-machine",
+    "appliance",
+    "warranty",
+    "support",
+    "italian",
+    "professional"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-12",
+  "modified": "2026-02-12",
+  "source_path": "mx-maxine-app/demo-cogs/product.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-maxine-app/demo-cogs/product.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/product/content.md"
+}

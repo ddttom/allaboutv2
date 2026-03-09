@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "generated": "2026-02-28T13:11:09.089Z",
-  "total_cogs": 155,
+  "generated": "2026-03-09T08:58:50.069Z",
+  "total_cogs": 168,
   "publishers": 1,
   "namespaces": [
     "cog-nova-mx"
@@ -9,11 +9,11 @@
   "by_category": {
     "product": 3,
     "governance": 3,
-    "mx-core": 54,
+    "mx-core": 62,
     "about": 1,
     "deliverable": 2,
     "business": 1,
-    "strategy": 2,
+    "strategy": 1,
     "infrastructure": 2,
     "planning": 1,
     "principle": 1,
@@ -23,20 +23,17 @@
     "mx-os": 2,
     "architecture": 5,
     "adr": 1,
-    "decision-record": 2,
+    "decision-record": 3,
     "Business Strategy": 1,
     "template": 1,
-    "standard": 3,
+    "standard": 4,
     "naming": 3,
-    "specification": 1,
+    "specification": 3,
     "identity": 1,
     "eds-block": 1,
     "landing-page": 1,
     "marketing": 1,
     "creative-services": 2,
-    "mx-tools": 5,
-    "validation": 1,
-    "learning": 3,
     "onboarding": 1,
     "contact": 7,
     "restaurant": 1,
@@ -45,6 +42,9 @@
     "convention": 1,
     "mx-content": 2,
     "mx-canon": 1,
+    "mx-tools": 7,
+    "learning": 3,
+    "validation": 1,
     "content-creation": 1,
     "registry": 1,
     "mx-sales": 1,
@@ -52,8 +52,8 @@
     "reference-implementation": 1
   },
   "by_type": {
-    "action-doc": 56,
-    "info-doc": 99
+    "action-doc": 61,
+    "info-doc": 107
   },
   "top_tags": [
     {
@@ -62,30 +62,34 @@
     },
     {
       "tag": "metadata",
-      "count": 19
+      "count": 22
     },
     {
       "tag": "mx-os",
-      "count": 17
+      "count": 19
     },
     {
       "tag": "validation",
-      "count": 12
-    },
-    {
-      "tag": "maxine",
-      "count": 11
+      "count": 14
     },
     {
       "tag": "automation",
-      "count": 11
-    },
-    {
-      "tag": "identity",
-      "count": 10
+      "count": 12
     },
     {
       "tag": "accessibility",
+      "count": 11
+    },
+    {
+      "tag": "registry",
+      "count": 11
+    },
+    {
+      "tag": "maxine",
+      "count": 10
+    },
+    {
+      "tag": "identity",
       "count": 10
     },
     {
@@ -97,11 +101,19 @@
       "count": 9
     },
     {
-      "tag": "registry",
-      "count": 9
+      "tag": "routing",
+      "count": 8
     },
     {
-      "tag": "routing",
+      "tag": "cog",
+      "count": 8
+    },
+    {
+      "tag": "namespace",
+      "count": 8
+    },
+    {
+      "tag": "html",
       "count": 8
     },
     {
@@ -117,24 +129,12 @@
       "count": 7
     },
     {
-      "tag": "namespace",
-      "count": 7
-    },
-    {
       "tag": "onboarding",
       "count": 7
     },
     {
       "tag": "contact",
       "count": 7
-    },
-    {
-      "tag": "html",
-      "count": 6
-    },
-    {
-      "tag": "naming",
-      "count": 5
     }
   ]
 }

@@ -6,7 +6,6 @@ modified: 2026-02-09
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: mx-contacts
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published

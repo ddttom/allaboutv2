@@ -1,7 +1,7 @@
 {
   "namespace": "cog-nova-mx",
   "name": "janus-boye",
-  "version": "1.0.0",
+  "version": "1.0",
   "description": "Founder of Boye & Company, CMS Experts Group, CMS Summit organiser",
   "author": "Tom Cranstoun",
   "maintainer": "tom.cranstoun@gmail.com",
@@ -17,7 +17,7 @@
   "type": "info-doc",
   "compliance_level": 2,
   "created": "2026-02-09",
-  "modified": "2026-02-28",
+  "modified": "2026-03-02",
   "source_path": "mx-crm/boye-co/contact/janus-boye.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-crm/boye-co/contact/janus-boye.cog.md",
   "content_url": "/reginald/cogs/cog-nova-mx/janus-boye/content.md"

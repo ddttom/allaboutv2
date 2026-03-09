@@ -1,0 +1,26 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "effective-doc-example",
+  "version": "1.0",
+  "description": "Reference implementation showing how an effective doc is resolved from a source cog, uber doc SOPs, and included policies.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "active",
+  "category": "mx-core",
+  "tags": [
+    "effective-doc",
+    "resolution",
+    "inheritance",
+    "sop",
+    "reference-implementation",
+    "example"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-03-04",
+  "modified": "2026-03-04",
+  "source_path": "mx-canon/mx-the-gathering/reference-implementations/effective-doc-example.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-the-gathering/reference-implementations/effective-doc-example.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/effective-doc-example/content.md"
+}

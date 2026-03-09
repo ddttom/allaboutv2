@@ -8,7 +8,6 @@ modified: 2026-02-10
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: what-is-installme
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -20,8 +19,7 @@ mx:
   tags: [installme, install, convention, ai-agent, diagnostics, onboarding, hallucination, compute, two-stage-boot, mx-os]
 
   audience: both
-  readingLevel: accessible
-  purpose: Document the INSTALLME.md convention — a machine-readable installation document for any git repository
+  readingLevel: beginner
 
   contentType: "action-doc"
   runbook: "mx exec what-is-installme"
@@ -86,7 +84,7 @@ An INSTALLME.md file has this structure:
 
 ```yaml
 ---
-name: installme
+title: "INSTALLME"
 version: "1.0"
 description: "What this repo is and how to install it"
 

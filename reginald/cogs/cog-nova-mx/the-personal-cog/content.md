@@ -1,6 +1,6 @@
 ---
 version: "2.0"
-description: The personal cog — a collection of cogs that describe YOU. Accessibility needs, interests, dietary requirements, health conditions, skills. Lives on your phone. Your AI agent decides what to share, with whom, based on context. The other half of the companion web — the world describes itself to you, and you describe yourself to the world.
+description: Cogs describing YOU — accessibility needs, interests, health, skills. Lives on your phone. Your agent decides what to share, with whom, in context.
 
 created: 2026-02-09
 modified: 2026-02-10
@@ -8,7 +8,6 @@ modified: 2026-02-10
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: the-personal-cog
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, what-is-mx-os, access-and-guardrails, the-companion-web]
   tags: [personal-cog, accessibility, interests, privacy, agent-guardrail, personalisation, commerce, identity, collection]
 
-  audience: developers
-  readingLevel: technical
-  purpose: Document the personal cog — a collection of user-owned cogs that describe the person to the world, enabling accessibility, personalisation, and seamless commerce when combined with the companion web
+  audience: tech
+  readingLevel: advanced
 
   contentType: "action-doc"
   runbook: "mx exec the-personal-cog"

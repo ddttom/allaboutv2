@@ -3,16 +3,15 @@ title: "Multilingual Sitemap Generator Manual"
 description: "Automatically generates sitemap.xml for multilingual sites with proper hreflang annotations following sitemaps.org protocol and Google best practices."
 author: Tom Cranstoun and Maxine
 created: 2026-02-21
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: manual-multilingual-sitemap
   status: active
   category: manual
   tags: [manual, multilingual, sitemap, seo, hreflang, google, internationalization]
   partOf: mx-maxine-lives
-  purpose: "Document the multilingual sitemap generator tool - usage, workflow, and SEO best practices"
-  audience: "human"
+  audience: humans
   stability: "stable"
   runbook: "Read when working with multilingual sites, generating sitemaps, or implementing hreflang SEO"
   contextProvides:

@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "mx-standards-alignment",
   "version": "1.0",
-  "description": "How MX metadata conventions align with established web standards — Schema.org, Dublin Core, Open Graph. Explains governance, naming conventions, and context-specific rules.",
+  "description": "How MX metadata aligns with Schema.org, Dublin Core, and Open Graph. Covers governance, naming conventions, and context-specific rules.",
   "author": "The Gathering",
   "maintainer": "tom.cranstoun@gmail.com",
   "license": "proprietary",

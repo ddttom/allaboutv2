@@ -8,7 +8,6 @@ modified: 2026-02-11
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: mx-run
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: draft

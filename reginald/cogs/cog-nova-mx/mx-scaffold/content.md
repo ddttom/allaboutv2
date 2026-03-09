@@ -1,118 +1,110 @@
 ---
-name: mx-scaffold
 version: "1.0"
 description: Create new MX-OS shell scripts with correct structure, metadata, and alias registration. The canonical pattern for extending mx-os.
-
 created: 2026-02-25
-modified: 2026-02-25
-
+modified: 2026-03-03
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
-
-category: mx-core
-partOf: mx-os
-refersTo: [script-helper, cog-unified-spec]
-buildsOn: [what-is-mx-os, script-helper]
-tags: [scaffold, template, generator, create, mx-os, shell, bash]
-
-audience: developers
-readingLevel: technical
-purpose: Enable AI agents and humans to create new mx.* scripts that conform to the MX-OS pattern — correct metadata frontmatter, colour module, help flag, header, and alias registration
-
-execute:
-  runtime: runbook
-  command: mx exec mx-scaffold
-  actions:
-    - name: create
-      description: Create a new mx.* script from the canonical template
-      usage: >
-        To create a new mx.* script:
-        1. Ask the human for: script name (e.g. "myutil"), one-line description, category (mx-core/mx-dev/mx-network/mx-ai/mx-utils), tags, dependencies
-        2. Read the canonical template: mx-canon/mx-os/deliverables/mx-script-template.sh
-        3. Substitute all {{PLACEHOLDER}} markers with the provided values:
-           - {{TITLE}} → "mx.<name> — <description>" (e.g. "mx.myutil — Short description")
-           - {{TODAY}} → current date in YYYY-MM-DD format
-           - {{DESCRIPTION}} → one-line description
-           - {{CATEGORY}} → chosen category
-           - {{TAGS}} → comma-separated tags
-           - {{DEPS}} → comma-separated dependencies (empty if none)
-           - {{SCRIPT_NAME}} → "mx.<name>" (e.g. "mx.myutil")
-           - {{SHORT_DESC}} → description text after the dash in title
-           - {{UPPER_NAME}} → capitalised short name (e.g. "Myutil")
-        4. Write the result to: $MX_BIN_DIR/mx.<name>.sh (default: scripts/bin/)
-        5. Make it executable: chmod +x
-        6. Add alias to ~/.zsh/config/aliases.zsh:
-           alias mx.<name>="$MX_BIN_DIR/mx.<name>.sh"
-        7. Report the full absolute path of every file created or modified
-      inputs:
-        - name: name
-          type: string
-          required: true
-          description: Short script name without mx. prefix (e.g. "myutil" → creates mx.myutil.sh)
-        - name: description
-          type: string
-          required: true
-          description: One-line description of what the script does
-        - name: category
-          type: string
-          required: false
-          description: "mx-core | mx-dev | mx-network | mx-ai | mx-utils (default: mx-utils)"
-        - name: tags
-          type: string
-          required: false
-          description: Comma-separated tags relevant to the script's function
-        - name: dependencies
-          type: string
-          required: false
-          description: Comma-separated tool dependencies (e.g. "fzf, bat, jq")
-      outputs:
-        - name: script-path
-          type: string
-          description: Full absolute path to the created script
-        - name: alias-added
-          type: string
-          description: The alias line added to aliases.zsh
-
-    - name: list
-      description: List all existing mx.* scripts with their metadata
-      usage: >
-        List all mx.* scripts in the bin directory:
-        1. Find all files matching scripts/bin/mx.*.sh
-        2. For each file, extract from the # --- frontmatter block:
-           - title (# title: "...")
-           - description (# description: "...")
-           - category (# category: ...)
-           - version (# version: "...")
-           - status (# status: ...)
-        3. Present as a formatted table with columns: name, category, description
-        4. Group by category
-        5. Include total count
-      outputs:
-        - name: script-table
-          type: string
-          description: Formatted table of all mx.* scripts with metadata
-
-    - name: explain
-      description: Explain the MX-OS script pattern and conventions
-      usage: >
-        Provide a clear explanation of:
-        1. What mx.* scripts are — the active layer of MX-OS, personal shell toolkit
-        2. The naming convention: mx.<name>.sh, alias mx.<name>
-        3. The metadata frontmatter pattern (# --- block with YAML)
-        4. Required fields: title, version, created, modified, author, description, category, status, partOf
-        5. The colour module: source mx.colours.sh for BOLD, BLUE, GREEN etc.
-        6. The help pattern: case "${1:-}" in help|--help|-h)
-        7. The header pattern: decorative box with script name
-        8. Where scripts live: scripts/bin/ (under version control in MX-hub)
-        9. Where aliases live: ~/.zsh/config/aliases.zsh using $MX_BIN_DIR
-        10. Reference the template: mx-canon/mx-os/deliverables/mx-script-template.sh
 
 mx:
-  contentType: "action-doc"
-  runbook: "mx exec mx-scaffold"
-  semantic: true
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
+  category: mx-core
+  partOf: mx-os
+  refersTo: [script-helper, cog-unified-spec]
+  buildsOn: [what-is-mx-os, script-helper]
+  tags: [scaffold, template, generator, create, mx-os, shell, bash]
+  audience: tech
+  readingLevel: advanced
+  execute:
+    runtime: runbook
+    command: mx exec mx-scaffold
+    actions:
+      - name: create
+        description: Create a new mx.* script from the canonical template
+        usage: >
+          To create a new mx.* script:
+          1. Ask the human for: script name (e.g. "myutil"), one-line description, category (mx-core/mx-dev/mx-network/mx-ai/mx-utils), tags, dependencies
+          2. Read the canonical template: mx-canon/mx-os/deliverables/mx-script-template.sh
+          3. Substitute all {{PLACEHOLDER}} markers with the provided values:
+             - {{TITLE}} → "mx.<name> — <description>" (e.g. "mx.myutil — Short description")
+             - {{TODAY}} → current date in YYYY-MM-DD format
+             - {{DESCRIPTION}} → one-line description
+             - {{CATEGORY}} → chosen category
+             - {{TAGS}} → comma-separated tags
+             - {{DEPS}} → comma-separated dependencies (empty if none)
+             - {{SCRIPT_NAME}} → "mx.<name>" (e.g. "mx.myutil")
+             - {{SHORT_DESC}} → description text after the dash in title
+             - {{UPPER_NAME}} → capitalised short name (e.g. "Myutil")
+          4. Write the result to: $MX_BIN_DIR/mx.<name>.sh (default: scripts/bin/)
+          5. Make it executable: chmod +x
+          6. Add alias to ~/.zsh/config/aliases.zsh:
+             alias mx.<name>="$MX_BIN_DIR/mx.<name>.sh"
+          7. Report the full absolute path of every file created or modified
+        inputs:
+          - name: name
+            type: string
+            required: true
+            description: Short script name without mx. prefix (e.g. "myutil" → creates mx.myutil.sh)
+          - name: description
+            type: string
+            required: true
+            description: One-line description of what the script does
+          - name: category
+            type: string
+            required: false
+            description: "mx-core | mx-dev | mx-network | mx-ai | mx-utils (default: mx-utils)"
+          - name: tags
+            type: string
+            required: false
+            description: Comma-separated tags relevant to the script's function
+          - name: dependencies
+            type: string
+            required: false
+            description: Comma-separated tool dependencies (e.g. "fzf, bat, jq")
+        outputs:
+          - name: script-path
+            type: string
+            description: Full absolute path to the created script
+          - name: alias-added
+            type: string
+            description: The alias line added to aliases.zsh
+      - name: list
+        description: List all existing mx.* scripts with their metadata
+        usage: >
+          List all mx.* scripts in the bin directory:
+          1. Find all files matching scripts/bin/mx.*.sh
+          2. For each file, extract from the # --- frontmatter block:
+             - title (# title: "...")
+             - description (# description: "...")
+             - category (# category: ...)
+             - version (# version: "...")
+             - status (# status: ...)
+          3. Present as a formatted table with columns: name, category, description
+          4. Group by category
+          5. Include total count
+        outputs:
+          - name: script-table
+            type: string
+            description: Formatted table of all mx.* scripts with metadata
+      - name: explain
+        description: Explain the MX-OS script pattern and conventions
+        usage: >
+          Provide a clear explanation of:
+          1. What mx.* scripts are — the active layer of MX-OS, personal shell toolkit
+          2. The naming convention: mx.<name>.sh, alias mx.<name>
+          3. The metadata frontmatter pattern (# --- block with YAML)
+          4. Required fields: title, version, created, modified, author, description, category, status, partOf
+          5. The colour module: source mx.colours.sh for BOLD, BLUE, GREEN etc.
+          6. The help pattern: case "${1:-}" in help|--help|-h)
+          7. The header pattern: decorative box with script name
+          8. Where scripts live: scripts/bin/ (under version control in MX-hub)
+          9. Where aliases live: ~/.zsh/config/aliases.zsh using $MX_BIN_DIR
+          10. Reference the template: mx-canon/mx-os/deliverables/mx-script-template.sh
+  mx:
+    contentType: "action-doc"
+    runbook: "mx exec mx-scaffold"
+    semantic: true
 ---
 
 # MX Scaffold

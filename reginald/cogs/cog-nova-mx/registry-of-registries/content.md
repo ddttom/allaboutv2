@@ -1,217 +1,176 @@
 ---
-name: registry-of-registries
 version: "1.0.0"
-description: "The meta-registry — knows where every registry is, what it indexes, and how to query it. Can scan the repo to discover registries it doesn't know about yet."
-
+description: "The meta-registry — knows where every registry is, what it indexes, and how to query it."
 created: 2026-02-11
-modified: 2026-02-11
-
+modified: 2026-03-03
 author: Tom Cranstoun and Maxine
-maintainer: mx.machine.experience@gmail.com
-license: proprietary
-status: published
-
-category: mx-core
-partOf: mx-os
-refersTo: [cog-unified-spec, mx-principles]
-buildsOn: [what-is-a-cog, building-action-docs]
-tags: [registry, meta-registry, catalog, index, inventory, governance, audit, self-maintaining]
-
-audience: ai-agents
-readingLevel: technical
-purpose: Provide a single lookup point for every registry in MX OS — know what registries exist, where they live, what they index, and how to query them. Self-maintaining through a scan action that discovers new registries.
-
-execute:
-  runtime: runbook
-  command: mx registries
-  actions:
-    - name: list
-      description: List all known registries with their location, purpose, and query method
-      usage: |
-        1. Read the registry catalog below (the `## Registry Catalog` section of this cog)
-        2. Present all registries as a table:
-
-           | # | Registry | Indexes | Location | Format | Query Method | Status |
-           |---|----------|---------|----------|--------|-------------|--------|
-
-        3. For each registry, show:
-           - Name
-           - What it indexes (cogs, content, contacts, etc.)
-           - File path(s) from repo root
-           - Format (JSON, markdown, action-doc, folder structure)
-           - How to query it (npm script, action-doc action, manual)
-           - Status (active, deprecated)
-
-        4. Show total count at bottom: "N registries tracked (X active, Y deprecated)"
-      outputs:
-        - name: registry-list
-          type: array
-          description: "All known registries with metadata"
-
-    - name: lookup
-      description: Find which registry manages a given type of thing
-      usage: |
-        1. Accept a query from the user — what are they looking for?
-           Examples: "cogs", "contacts", "blog posts", "skills", "file pairs", "metadata attributes"
-
-        2. Search the registry catalog for registries that index that type of thing
-           - Match against the "indexes" field
-           - Also match against tags and description
-
-        3. Return the matching registry(ies) with:
-           - Registry name
-           - Location
-           - How to query it
-           - Example query command
-
-        4. If no match found, suggest running the `scan` action to discover new registries
-      inputs:
-        - name: query
-          type: string
-          required: true
-          description: "What type of thing are you looking for? e.g. 'cogs', 'contacts', 'blog posts'"
-      outputs:
-        - name: matching-registries
-          type: array
-          description: "Registries that index the queried type"
-
-    - name: scan
-      description: Scan the repo to discover registries not yet tracked in the catalog
-      usage: |
-        1. Search the repo for potential registries using these patterns:
-
-           a. FILES named like registries:
-              - **/index.json (excluding node_modules, .git)
-              - **/registry*.{json,md,yaml}
-              - **/catalog*.{json,md,yaml}
-              - **/inventory*.{json,md,yaml}
-              - **/*-index.{json,md}
-              - **/*-snapshot*.{json,md}
-
-           b. DIRECTORIES that function as registries:
-              - Folders containing multiple .cog.md files (cog collections)
-              - Folders containing multiple profile files
-              - Folders with an index file and sibling data files
-
-           c. FILES with registry-like frontmatter:
-              - YAML frontmatter containing "registry", "catalog", or "index" in title or description
-              - Action-docs with actions like "list", "search", "query"
-
-           d. NPM SCRIPTS:
-              - Read package.json for scripts containing "registry", "list", "sync", "query"
-
-        2. For each candidate found:
-           - Extract: path, format, what it appears to index
-           - Check if it's already in the registry catalog
-           - If new: flag as "DISCOVERED — not yet tracked"
-
-        3. Present results:
-
-           **Known registries:** (already tracked)
-           [list with checkmarks]
-
-           **Discovered registries:** (new, not yet tracked)
-           [list with details]
-
-           **Recommended action:** Add discovered registries to the catalog
-
-        4. If discovered registries are found, offer to update the catalog:
-           - "I found N new registries. Should I add them to the registry-of-registries catalog?"
-           - If yes: update the Registry Catalog section of this cog file
-      outputs:
-        - name: scan-results
-          type: object
-          description: "Known and discovered registries with recommendations"
-
-    - name: update
-      description: Add a new registry to the catalog or update an existing one
-      usage: |
-        1. Accept registry details from the user or from a scan result:
-           - name (required)
-           - indexes (what does it catalog?)
-           - location (file path from repo root)
-           - format (JSON, markdown, action-doc, etc.)
-           - query-method (npm script, cog action, manual)
-           - status (active, deprecated)
-           - npm-scripts (if any)
-
-        2. Read this cog file (registry-of-registries.cog.md)
-
-        3. Find the `## Registry Catalog` section
-
-        4. Add the new registry entry following the existing format:
-           ```
-           ### [Registry Name]
-           - **Indexes:** [what it catalogs]
-           - **Location:** `[file path]`
-           - **Format:** [JSON/markdown/action-doc/folder]
-           - **Query method:** [how to query]
-           - **npm scripts:** [if any]
-           - **Status:** [active/deprecated]
-           ```
-
-        5. Update the `modified` date in this cog's YAML frontmatter to today
-
-        6. Report: "Added [name] to the registry of registries. Total: N registries tracked."
-
-        This is how the cog maintains itself. The scan action discovers. The update action records.
-      inputs:
-        - name: registry-name
-          type: string
-          required: true
-          description: "Name of the registry to add or update"
-        - name: registry-details
-          type: object
-          required: true
-          description: "Registry metadata: indexes, location, format, query-method, status"
-      outputs:
-        - name: update-result
-          type: string
-          description: "Confirmation of update with new total count"
-
-    - name: dashboard
-      description: One-screen overview of all registries with health status
-      usage: |
-        1. Read the registry catalog
-
-        2. For each active registry, check health:
-           - Does the file/directory still exist at the recorded location?
-           - If JSON: is it valid JSON?
-           - If markdown with frontmatter: does it have valid YAML?
-           - If npm scripts: do the scripts exist in package.json?
-
-        3. Present dashboard:
-
-           ## Registry Dashboard
-
-           **Total:** N registries (X active, Y deprecated)
-
-           | Registry | Indexes | Health | Last Updated | Items |
-           |----------|---------|--------|-------------|-------|
-           | Cog Registry | cogs | ✓ healthy | 2026-02-11 | 52 |
-           | Content Registry | demos, blogs | ✓ healthy | 2026-02-06 | 4 |
-           | MX Contacts | people | ✓ healthy | 2026-02-10 | 6 |
-           | ...
-
-           **Health key:**
-           - ✓ healthy — file exists, valid format
-           - ⚠ warning — file exists but has issues
-           - ✗ missing — file not found at recorded location
-
-        4. If any registries have health issues, list specific problems
-
-        5. Suggest: "Run /mx-c-registries scan to discover any untracked registries"
-      outputs:
-        - name: dashboard
-          type: object
-          description: "Overview of all registries with health status"
 
 mx:
-  contentType: "action-doc"
-  runbook: "mx exec registry-of-registries"
-  semantic: true
-  convergence: true
-  accessibility: true
+  maintainer: mx.machine.experience@gmail.com
+  license: proprietary
+  status: published
+  category: mx-core
+  partOf: mx-os
+  refersTo: [cog-unified-spec, mx-principles]
+  buildsOn: [what-is-a-cog, building-action-docs]
+  tags: [registry, meta-registry, catalog, index, inventory, governance, audit, self-maintaining]
+  audience: agents
+  readingLevel: advanced
+  execute:
+    runtime: runbook
+    command: mx registries
+    actions:
+      - name: list
+        description: List all known registries with their location, purpose, and query method
+        usage: |
+          1. Read the registry catalog below (the `## Registry Catalog` section of this cog)
+          2. Present all registries as a table:
+             | # | Registry | Indexes | Location | Format | Query Method | Status |
+             |---|----------|---------|----------|--------|-------------|--------|
+          3. For each registry, show:
+             - Name
+             - What it indexes (cogs, content, contacts, etc.)
+             - File path(s) from repo root
+             - Format (JSON, markdown, action-doc, folder structure)
+             - How to query it (npm script, action-doc action, manual)
+             - Status (active, deprecated)
+          4. Show total count at bottom: "N registries tracked (X active, Y deprecated)"
+        outputs:
+          - name: registry-list
+            type: array
+            description: "All known registries with metadata"
+      - name: lookup
+        description: Find which registry manages a given type of thing
+        usage: |
+          1. Accept a query from the user — what are they looking for?
+             Examples: "cogs", "contacts", "blog posts", "skills", "file pairs", "metadata attributes"
+          2. Search the registry catalog for registries that index that type of thing
+             - Match against the "indexes" field
+             - Also match against tags and description
+          3. Return the matching registry(ies) with:
+             - Registry name
+             - Location
+             - How to query it
+             - Example query command
+          4. If no match found, suggest running the `scan` action to discover new registries
+        inputs:
+          - name: query
+            type: string
+            required: true
+            description: "What type of thing are you looking for? e.g. 'cogs', 'contacts', 'blog posts'"
+        outputs:
+          - name: matching-registries
+            type: array
+            description: "Registries that index the queried type"
+      - name: scan
+        description: Scan the repo to discover registries not yet tracked in the catalog
+        usage: |
+          1. Search the repo for potential registries using these patterns:
+             a. FILES named like registries:
+                - **/index.json (excluding node_modules, .git)
+                - **/registry*.{json,md,yaml}
+                - **/catalog*.{json,md,yaml}
+                - **/inventory*.{json,md,yaml}
+                - **/*-index.{json,md}
+                - **/*-snapshot*.{json,md}
+             b. DIRECTORIES that function as registries:
+                - Folders containing multiple .cog.md files (cog collections)
+                - Folders containing multiple profile files
+                - Folders with an index file and sibling data files
+             c. FILES with registry-like frontmatter:
+                - YAML frontmatter containing "registry", "catalog", or "index" in title or description
+                - Action-docs with actions like "list", "search", "query"
+             d. NPM SCRIPTS:
+                - Read package.json for scripts containing "registry", "list", "sync", "query"
+          2. For each candidate found:
+             - Extract: path, format, what it appears to index
+             - Check if it's already in the registry catalog
+             - If new: flag as "DISCOVERED — not yet tracked"
+          3. Present results:
+             **Known registries:** (already tracked)
+             [list with checkmarks]
+             **Discovered registries:** (new, not yet tracked)
+             [list with details]
+             **Recommended action:** Add discovered registries to the catalog
+          4. If discovered registries are found, offer to update the catalog:
+             - "I found N new registries. Should I add them to the registry-of-registries catalog?"
+             - If yes: update the Registry Catalog section of this cog file
+        outputs:
+          - name: scan-results
+            type: object
+            description: "Known and discovered registries with recommendations"
+      - name: update
+        description: Add a new registry to the catalog or update an existing one
+        usage: |
+          1. Accept registry details from the user or from a scan result:
+             - name (required)
+             - indexes (what does it catalog?)
+             - location (file path from repo root)
+             - format (JSON, markdown, action-doc, etc.)
+             - query-method (npm script, cog action, manual)
+             - status (active, deprecated)
+             - npm-scripts (if any)
+          2. Read this cog file (registry-of-registries.cog.md)
+          3. Find the `## Registry Catalog` section
+          4. Add the new registry entry following the existing format:
+             ```
+             ### [Registry Name]
+             - **Indexes:** [what it catalogs]
+             - **Location:** `[file path]`
+             - **Format:** [JSON/markdown/action-doc/folder]
+             - **Query method:** [how to query]
+             - **npm scripts:** [if any]
+             - **Status:** [active/deprecated]
+             ```
+          5. Update the `modified` date in this cog's YAML frontmatter to today
+          6. Report: "Added [name] to the registry of registries. Total: N registries tracked."
+          This is how the cog maintains itself. The scan action discovers. The update action records.
+        inputs:
+          - name: registry-name
+            type: string
+            required: true
+            description: "Name of the registry to add or update"
+          - name: registry-details
+            type: object
+            required: true
+            description: "Registry metadata: indexes, location, format, query-method, status"
+        outputs:
+          - name: update-result
+            type: string
+            description: "Confirmation of update with new total count"
+      - name: dashboard
+        description: One-screen overview of all registries with health status
+        usage: |
+          1. Read the registry catalog
+          2. For each active registry, check health:
+             - Does the file/directory still exist at the recorded location?
+             - If JSON: is it valid JSON?
+             - If markdown with frontmatter: does it have valid YAML?
+             - If npm scripts: do the scripts exist in package.json?
+          3. Present dashboard:
+             ## Registry Dashboard
+             **Total:** N registries (X active, Y deprecated)
+             | Registry | Indexes | Health | Last Updated | Items |
+             |----------|---------|--------|-------------|-------|
+             | Cog Registry | cogs | ✓ healthy | 2026-02-11 | 52 |
+             | Content Registry | demos, blogs | ✓ healthy | 2026-02-06 | 4 |
+             | MX Contacts | people | ✓ healthy | 2026-02-10 | 6 |
+             | ...
+             **Health key:**
+             - ✓ healthy — file exists, valid format
+             - ⚠ warning — file exists but has issues
+             - ✗ missing — file not found at recorded location
+          4. If any registries have health issues, list specific problems
+          5. Suggest: "Run /mx-c-registries scan to discover any untracked registries"
+        outputs:
+          - name: dashboard
+            type: object
+            description: "Overview of all registries with health status"
+    contentType: "action-doc"
+    runbook: "mx exec registry-of-registries"
+    semantic: true
+    convergence: true
+    accessibility: true
 ---
 
 # The Registry of Registries

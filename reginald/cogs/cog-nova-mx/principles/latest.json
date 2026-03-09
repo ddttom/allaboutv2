@@ -1,0 +1,27 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "principles",
+  "version": "3.0",
+  "description": "The principles that govern how MX builds things — for humans and machines alike",
+  "author": "Tom Cranstoun",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "active",
+  "category": "mx-core",
+  "tags": [
+    "principles",
+    "design",
+    "writing",
+    "metadata",
+    "accessibility",
+    "mx-os",
+    "standards-hierarchy"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-04",
+  "modified": "2026-03-04",
+  "source_path": "mx-canon/ssot/principles.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/ssot/principles.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/principles/content.md"
+}

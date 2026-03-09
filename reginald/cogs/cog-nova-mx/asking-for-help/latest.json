@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "asking-for-help",
   "version": "1.0",
-  "description": "No single agent can do everything. When you need something you do not have — diary access, email, location, a booking system — ask the agent that does. This cog describes how agents ask other agents for help.",
+  "description": "When you need something you don't have — diary, email, location, bookings — ask the agent that does. How agents request capabilities from other agents.",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "mx.machine.experience@gmail.com",
   "license": "proprietary",

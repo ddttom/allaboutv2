@@ -8,7 +8,6 @@ modified: 2026-02-09
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: access-and-guardrails
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
   tags: [access-control, security, encryption, oauth, guardrail, permissions, trust, authentication]
 
-  audience: developers
-  readingLevel: technical
-  purpose: Document the access control layer of MX OS — how cogs are protected, how agents gain access, and the guardrail pattern
+  audience: tech
+  readingLevel: advanced
 
   contentType: "action-doc"
   runbook: "mx exec access-and-guardrails"
@@ -205,7 +203,7 @@ This is a critical design principle: **even when a cog's content is locked, its 
 
 ```yaml
 ---
-name: quarterly-revenue-forecast
+title: "Quarterly Revenue Forecast"
 version: "3.1"
 description: Revenue projections for Q2 2026 by region and product line
 category: finance
@@ -242,7 +240,7 @@ A guardrail is an action-doc with actions that check access. It is the bouncer o
 
 ```yaml
 ---
-name: team-auth
+title: "Team Auth"
 version: "1.0"
 description: Verifies team membership before granting access to protected cogs
 category: mx-core

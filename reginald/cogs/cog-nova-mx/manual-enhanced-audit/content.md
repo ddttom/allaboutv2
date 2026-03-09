@@ -2,11 +2,11 @@
 title: Enhanced Audit System Manual
 description: Complete HTML/CSS/DOM capture system for pixel-perfect web replication with 24-hour asset caching and multi-format outputs.
 author: Tom Cranstoun and Maxine
-created: 2026-02-20T00:00:00.000Z
+created: 2026-02-20
+modified: 2026-03-02
 version: "2.0"
 
 mx:
-  name: manual-enhanced-audit
   status: active
   category: manual
   tags:
@@ -22,8 +22,7 @@ mx:
   refersTo:
     - cogify-this
     - pixel-perfect-web-replication
-  purpose: Document enhanced audit - usage, workflow, and best practices
-  audience: human
+  audience: humans
   stability: stable
   runbook: Read when working with enhanced audit or understanding its functionality
   contextProvides:

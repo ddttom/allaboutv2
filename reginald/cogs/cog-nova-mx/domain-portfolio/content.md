@@ -7,14 +7,12 @@ modified: 2026-02-15
 author: Tom Cranstoun
 
 mx:
-  name: domain-portfolio
   license: proprietary
   status: active
   category: business
   partOf: mx-maxine-lives
   tags: [domains, dns, brand, godaddy, infrastructure, launch-readiness]
   audience: both
-  purpose: "Single reference for all owned domains. Supports DNS planning, brand protection, and Cog-Nova-MX launch readiness."
   refersTo:
     - "Cog-Nova-MX Ltd company formation"
     - "MX: The Handbook launch plan (2 April 2026)"

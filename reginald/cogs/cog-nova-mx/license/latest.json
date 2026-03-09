@@ -1,6 +1,6 @@
 {
   "namespace": "cog-nova-mx",
-  "name": "license",
+  "name": "LICENSE",
   "version": "1.0",
   "description": "MIT license for Maxine Lives specification work. Implementation licenses may differ.",
   "author": "Tom Cranstoun",
@@ -20,5 +20,5 @@
   "modified": "2026-02-12",
   "source_path": "mx-canon/mx-maxine-lives/LICENSE.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/LICENSE.cog.md",
-  "content_url": "/reginald/cogs/cog-nova-mx/license/content.md"
+  "content_url": "/reginald/cogs/cog-nova-mx/LICENSE/content.md"
 }

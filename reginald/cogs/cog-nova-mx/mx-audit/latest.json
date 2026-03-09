@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "mx-audit",
   "version": "1.2.0",
-  "description": "Run a comprehensive web audit — crawl pages, analyse accessibility, performance, SEO, and AI agent suitability, then generate a partnership-ready executive report. The complete pipeline from URL to deliverable.",
+  "description": "Comprehensive web audit — crawl pages, analyse accessibility, performance, SEO, and AI agent suitability, then generate a partnership-ready executive report.",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "mx.machine.experience@gmail.com",
   "license": "proprietary",

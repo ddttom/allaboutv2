@@ -2,13 +2,12 @@
 version: 0.1.0
 description: Validate pricing data to catch range errors and formatting issues
 
-created: 2026-02-06T12:19:00Z
-modified: 2026-02-06T12:19:00Z
+created: 2026-02-06
+modified: 2026-02-06
 
 author: Maxine (MX - Machine eXperience Engine)
 
 mx:
-  name: pricing
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: draft

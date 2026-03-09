@@ -2,11 +2,11 @@
 title: Path Validation Manual
 description: Repository path reference scanner detecting old patterns after restructures. Prevents regression to outdated paths with non-blocking warnings.
 author: Tom Cranstoun and Maxine
-created: 2026-02-19T00:00:00.000Z
+created: 2026-02-19
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: manual-path-validator
   status: active
   category: manual
   tags:
@@ -17,8 +17,7 @@ mx:
     - automation
     - quality
   partOf: mx-maxine-lives
-  purpose: Document path validator - usage, workflow, and best practices
-  audience: human
+  audience: humans
   stability: stable
   runbook: Read when working with path validator or understanding its functionality
   contextProvides:

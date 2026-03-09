@@ -2,11 +2,11 @@
 title: Team Member Onboarding Manual
 description: Interactive onboarding wizard for non-technical team members joining MX-ingest. Automated setup, access testing, and guided workflow introduction.
 author: Tom Cranstoun and Maxine
-created: 2026-02-19T00:00:00.000Z
+created: 2026-02-19
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: manual-team-onboarding
   status: active
   category: manual
   tags:
@@ -17,8 +17,7 @@ mx:
     - automation
     - submodules
   partOf: mx-maxine-lives
-  purpose: Document team onboarding - usage, workflow, and best practices
-  audience: human
+  audience: humans
   stability: stable
   runbook: Read when working with team onboarding or understanding its functionality
   contextProvides:

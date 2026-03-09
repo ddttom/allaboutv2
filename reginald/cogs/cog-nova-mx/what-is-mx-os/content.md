@@ -8,7 +8,6 @@ modified: 2026-02-09
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: what-is-mx-os
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, who-is-maxine]
   tags: [mx-os, operating-system, cogs, documentation, metadata, soul, builds-on]
 
-  audience: developers
-  readingLevel: technical
-  purpose: Explain MX OS to developers and AI agents, and provide executable actions to bootstrap and audit an MX OS environment
+  audience: tech
+  readingLevel: advanced
 
   contentType: "action-doc"
   runbook: "mx exec what-is-mx-os"

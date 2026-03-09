@@ -1,0 +1,26 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "mx-show-manual",
+  "version": "3.0",
+  "description": "Interactive window finder for macOS. Pinned favourites, two-phase loading, smart sizing, multi-window, usage tracking.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "manual",
+  "tags": [
+    "manual",
+    "mx-show",
+    "windows",
+    "display",
+    "fzf",
+    "maxine"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-13",
+  "modified": "2026-02-15",
+  "source_path": "mx-canon/mx-maxine-lives/manuals/mx-show-manual.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/manuals/mx-show-manual.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/mx-show-manual/content.md"
+}

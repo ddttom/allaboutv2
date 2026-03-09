@@ -1,6 +1,6 @@
 ---
 version: "2.2"
-description: Generates time-segmented session reports for co-directors and stakeholders. Each day has up to three segments (morning, afternoon, evening). Interviews Tom, reads all available data sources, produces a report covering the current segment, and updates REMINDERS.md with next steps.
+description: Time-segmented session reports for co-directors. Three daily segments (morning, afternoon, evening). Interviews Tom, reads data, and updates REMINDERS.md.
 
 created: 2026-02-10
 modified: 2026-02-14
@@ -8,7 +8,6 @@ modified: 2026-02-14
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: co-directors-report
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, what-is-mx-os, mx-reminders]
   tags: [reporting, governance, co-directors, session, board, stakeholders, archive, sop]
 
-  audience: stakeholders
-  readingLevel: non-technical
-  purpose: Produce board-level session reports that make development progress visible to directors, advisory board, and investors without requiring them to read git logs
+  audience: business
+  readingLevel: beginner
 
   contentType: "action-doc"
   runbook: "mx exec co-directors-report"

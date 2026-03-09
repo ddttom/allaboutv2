@@ -2,9 +2,10 @@
 description: Business partner, LPC (printing, web development, web applications)
 author: Tom Cranstoun
 created: 2026-02-09
+modified: 2026-03-02
+version: "1.0"
 
 mx:
-  name: scott-mcgregor
   contentType: contact
   category: contact
   tags: [contact, partner, shareholder, lpc]

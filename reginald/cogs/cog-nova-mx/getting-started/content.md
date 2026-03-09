@@ -7,13 +7,11 @@ modified: 2026-02-24
 version: "1.1"
 
 mx:
-  name: getting-started
   status: active
   category: onboarding
   contentType: guide
   tags: [onboarding, team, setup, mx-os, getting-started]
   audience: ["humans"]
-  purpose: "team-onboarding"
 ---
 
 # Getting Started with MX OS

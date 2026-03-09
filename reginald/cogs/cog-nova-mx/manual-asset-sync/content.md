@@ -3,16 +3,15 @@ title: "Asset Synchronizer Manual"
 description: "Synchronizes CSS, JavaScript, images, fonts, and other static assets across multilingual site language directories."
 author: Tom Cranstoun and Maxine
 created: 2026-02-21
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: manual-asset-sync
   status: active
   category: manual
   tags: [manual, multilingual, assets, sync, automation, workflow]
   partOf: mx-maxine-lives
-  purpose: "Document the asset synchronizer tool - copying CSS/JS/images/fonts across language directories"
-  audience: "human"
+  audience: humans
   stability: "stable"
   runbook: "Read when synchronizing assets across multilingual site languages or managing static files"
   contextProvides:

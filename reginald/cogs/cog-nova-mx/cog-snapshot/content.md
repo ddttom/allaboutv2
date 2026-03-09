@@ -6,14 +6,12 @@ modified: 2026-02-23
 author: cog-tools
 
 mx:
-  name: cog-snapshot
   status: active
   category: mx-core
   partOf: mx-os
   tags: [registry, snapshot, index, auto-generated]
-  audience: [developers, ai-agents]
-  readingLevel: technical
-  purpose: Machine-readable snapshot of the entire cog registry, grouped by type, status, newness, and dependency graph
+  audience: [tech, agents]
+  readingLevel: advanced
 ---
 
 # Cog Registry Snapshot

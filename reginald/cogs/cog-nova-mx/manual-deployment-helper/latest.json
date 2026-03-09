@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "manual-deployment-helper",
   "version": "1.0",
-  "description": "Orchestrates pre-deployment workflow for multilingual sites: runs validation, parity checks, sitemap generation, creates deployment checklist, and provides Google Search Console setup instructions.",
+  "description": "Pre-deployment workflow for multilingual sites: validation, parity checks, sitemap generation, deployment checklist, and Google Search Console setup.",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "tom.cranstoun@gmail.com",
   "license": "MIT",
@@ -19,7 +19,7 @@
   "type": "info-doc",
   "compliance_level": 2,
   "created": "2026-02-21",
-  "modified": "2026-02-28",
+  "modified": "2026-03-02",
   "source_path": "mx-canon/mx-maxine-lives/manuals/manual-deployment-helper.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/manuals/manual-deployment-helper.cog.md",
   "content_url": "/reginald/cogs/cog-nova-mx/manual-deployment-helper/content.md"

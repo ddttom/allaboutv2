@@ -1,0 +1,27 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "namespace-extensions",
+  "version": "1.0",
+  "description": "MX namespace policy: standard fields (no prefix), mx: namespace (The Gathering), vendor extensions (x-mx-, x-mx-p-). The prefix is the policy.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "standard",
+  "tags": [
+    "namespace",
+    "extensions",
+    "vendor",
+    "x-mx",
+    "metadata",
+    "policy",
+    "standard"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-03-01",
+  "modified": "2026-03-01",
+  "source_path": "mx-canon/mx-the-gathering/namespace-extensions.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-the-gathering/namespace-extensions.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/namespace-extensions/content.md"
+}

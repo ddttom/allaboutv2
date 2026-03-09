@@ -1,7 +1,7 @@
 {
   "namespace": "cog-nova-mx",
   "name": "glasgow-training-course",
-  "version": "1.0.0",
+  "version": "1.0",
   "description": "2-day MX team training — AI foundations and business strategy",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "tom.cranstoun@gmail.com",

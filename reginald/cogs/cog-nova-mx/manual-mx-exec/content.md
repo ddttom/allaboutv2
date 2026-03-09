@@ -7,16 +7,14 @@ modified: 2026-02-24
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: manual-mx-exec
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
   category: mx-os
   partOf: mx-os
   tags: [manual, mx-exec, mx, action-cog, cli, shell]
-  audience: developers
-  readingLevel: technical
-  purpose: "Comprehensive reference for the mx-exec command and shell integration"
+  audience: tech
+  readingLevel: advanced
 ---
 
 # MX-EXEC(1) — MX OS Action Cog Executor
@@ -277,7 +275,7 @@ This provides:
 ## SEE ALSO
 
 - [INSTALLME.cog.md](../../INSTALLME.cog.md) — Example action cog
-- [cog-unified-spec.md](../../mx-canon/mx-the-gathering/deliverables/cog-unified-spec.md) — COG specification
+- [cog-unified-spec.cog.md](../../mx-canon/mx-the-gathering/specifications/cog-unified-spec.cog.md) — COG specification
 - [scripts/bin/README.md](README.md) — Quick reference
 
 ## AUTHORS

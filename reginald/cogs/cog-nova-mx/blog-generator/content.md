@@ -8,7 +8,6 @@ modified: 2026-02-11
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: blog-generator
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -20,8 +19,7 @@ mx:
   tags: [blog, content, publishing, eds, html, allabout, writing, action]
 
   audience: both
-  readingLevel: technical
-  purpose: Give any AI agent the procedure to create professional blog posts for allabout.network — covering both the EDS markdown format (Tom's ddt blog) and the MX HTML format (direct HTML in blogs/mx/)
+  readingLevel: advanced
 
   contentType: "action-doc"
   runbook: "mx exec blog-generator"

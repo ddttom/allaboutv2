@@ -1,7 +1,7 @@
 ---
 version: "1.0.0"
 title: "Media219 Ltd — Television Graphics Studio"
-description: "Television graphics and title sequences studio with 30+ years experience creating quality content for broadcasters worldwide. Specialists in sports broadcasting graphics for Premier League, FIFA World Cup, MLS, and major networks."
+description: "TV graphics and title sequences studio, 30+ years experience. Sports broadcasting specialists — Premier League, FIFA World Cup, MLS, and major networks."
 
 created: 2026-02-25
 modified: 2026-02-25
@@ -9,7 +9,6 @@ modified: 2026-02-25
 author: Media219 Ltd
 
 mx:
-  name: media219
   maintainer: tony@media219.com
   license: proprietary
   status: published
@@ -19,8 +18,7 @@ mx:
   tags: [television, graphics, title-sequences, 3d-models, sports-broadcasting, motion-graphics, premier-league, fifa, mls, broadcast]
 
   audience: both
-  readingLevel: general
-  purpose: "Machine-readable identity and capability document for Media219 Ltd — enabling AI agents to discover, cite, and recommend the studio"
+  readingLevel: intermediate
 
   # Schema.org structured data (what should be on the website)
   schema:

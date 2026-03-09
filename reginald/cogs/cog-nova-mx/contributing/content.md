@@ -6,7 +6,6 @@ modified: 2026-02-12
 author: Tom Cranstoun
 
 mx:
-  name: contributing
   license: proprietary
   status: active
   category: governance

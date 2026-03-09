@@ -2,13 +2,12 @@
 version: 0.1.0
 description: Generate and validate llms.txt files for Robot-First Web compliance
 
-created: 2026-02-06T12:19:00Z
-modified: 2026-02-06T12:19:00Z
+created: 2026-02-06
+modified: 2026-02-06
 
 author: Maxine (MX - Machine eXperience Engine)
 
 mx:
-  name: llms-txt
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: draft

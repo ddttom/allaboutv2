@@ -8,7 +8,6 @@ modified: 2026-02-10
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: script-helper
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-mx-os, what-is-a-cog]
   tags: [scripts, metadata, inspect, bash, shell, compute, efficiency]
 
-  audience: developers
-  readingLevel: technical
-  purpose: Enable AI agents to work with shell scripts efficiently by providing structured metadata, skeleton extraction, and script lifecycle management
+  audience: tech
+  readingLevel: advanced
 
   contentType: "action-doc"
   runbook: "mx exec script-helper"

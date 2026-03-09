@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "the-personal-cog",
   "version": "2.0",
-  "description": "The personal cog — a collection of cogs that describe YOU. Accessibility needs, interests, dietary requirements, health conditions, skills. Lives on your phone. Your AI agent decides what to share, with whom, based on context. The other half of the companion web — the world describes itself to you, and you describe yourself to the world.",
+  "description": "Cogs describing YOU — accessibility needs, interests, health, skills. Lives on your phone. Your agent decides what to share, with whom, in context.",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "mx.machine.experience@gmail.com",
   "license": "proprietary",

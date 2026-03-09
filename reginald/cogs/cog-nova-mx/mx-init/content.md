@@ -8,7 +8,6 @@ modified: 2026-02-10
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: mx-init
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, what-is-mx-os, what-is-mx-environment, what-is-installme]
   tags: [init, onboarding, setup, mx-os, soul, claude, installme, frontmatter, conventions, action]
 
-  audience: ai-agents
-  readingLevel: technical
-  purpose: Give any AI agent the procedure to initialize a repository with MX OS conventions — from bare repo to fully machine-readable workspace
+  audience: agents
+  readingLevel: advanced
 
   contentType: "action-doc"
   runbook: "mx exec mx-init"

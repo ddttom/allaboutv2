@@ -1,0 +1,27 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "adr-01-block-architecture",
+  "version": "W3C Draft 2026-02-12",
+  "description": "ADR #1: Replace two cog types (info-doc/action-doc) with one document type containing open-ended blocks.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "accepted",
+  "category": "architecture",
+  "tags": [
+    "adr",
+    "block-architecture",
+    "specification",
+    "evolution",
+    "webmcp",
+    "privacy",
+    "registry"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-12",
+  "modified": "2026-02-13",
+  "source_path": "mx-canon/mx-the-gathering/architecture-decisions/adr-01-block-architecture.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-the-gathering/architecture-decisions/adr-01-block-architecture.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/adr-01-block-architecture/content.md"
+}

@@ -2,9 +2,10 @@
 description: Adobe AEM Master, advisory board member, long-time friend
 author: Tom Cranstoun
 created: 2026-02-09
+modified: 2026-03-02
+version: "1.0"
 
 mx:
-  name: salva
   contentType: contact
   category: contact
   tags: [contact, advisor, adobe, aem, advisory-board]

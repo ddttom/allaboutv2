@@ -1,12 +1,11 @@
 ---
 version: "1.0"
-description: "Audit all YAML frontmatter across the entire hub — compare every field against the canonical field dictionary, detect deprecated fields, namespace errors, missing required fields, and mx: object sprawl."
+description: "Audit all YAML frontmatter — compare against the field dictionary, detect deprecated fields, namespace errors, missing required fields, and mx: object sprawl."
 created: 2026-02-16
 modified: 2026-02-16
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: metadata-audit
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -16,8 +15,7 @@ mx:
   buildsOn: [what-is-a-cog]
   tags: [audit, metadata, standards, compliance, field-dictionary, namespace, deprecated-fields, frontmatter, yaml]
   audience: both
-  readingLevel: practical
-  purpose: "Ecosystem-wide metadata health check. Scans every .md file, parses frontmatter, compares against the field dictionary, and generates a prioritised report."
+  readingLevel: intermediate
 
   execute:
     runtime: runbook

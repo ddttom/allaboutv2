@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "cog-id",
   "version": "1.1.0",
-  "description": "Generate, register, and decode cog IDs — obfuscated MD5 hashes that trace documents back to the cog that created them. The namespace-aware identity layer for MX OS.",
+  "description": "Generate, register, and decode cog IDs — MD5 hashes tracing documents to their originating cog. The namespace-aware identity layer for MX OS.",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "mx.machine.experience@gmail.com",
   "license": "proprietary",

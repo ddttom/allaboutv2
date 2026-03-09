@@ -1,6 +1,6 @@
 ---
 version: "1.2.0"
-description: "Run a comprehensive web audit — crawl pages, analyse accessibility, performance, SEO, and AI agent suitability, then generate a partnership-ready executive report. The complete pipeline from URL to deliverable."
+description: "Comprehensive web audit — crawl pages, analyse accessibility, performance, SEO, and AI agent suitability, then generate a partnership-ready executive report."
 
 created: 2026-02-14
 modified: 2026-02-14
@@ -8,7 +8,6 @@ modified: 2026-02-14
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: mx-audit
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, building-action-docs]
   tags: [audit, web-audit, accessibility, wcag, performance, seo, ai-agents, llms-txt, sales-enablement, partnership, white-label, report-generation]
 
-  audience: ai-agents
-  readingLevel: technical
-  purpose: Give any AI agent a repeatable workflow for auditing a website and generating an executive report — from URL through automated analysis, manual verification, and template-based report generation
+  audience: agents
+  readingLevel: advanced
 
   execute:
     runtime: runbook

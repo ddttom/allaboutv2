@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "illustration-generator",
   "version": "1.0.0",
-  "description": "Create professional SVG illustrations and syntax-highlighted code blocks with proper metadata for MX publications following established visual style and quality standards.",
+  "description": "Create SVG illustrations and syntax-highlighted code blocks with metadata for MX publications, following established visual style and quality standards.",
   "author": "Maxine (AI-generated)",
   "maintainer": "tom.cranstoun@gmail.com",
   "license": "MIT",

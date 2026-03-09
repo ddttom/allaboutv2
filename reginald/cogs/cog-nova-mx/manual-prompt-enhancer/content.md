@@ -2,11 +2,11 @@
 title: Prompt Enhancer — Manual
 description: The route-decorator hook. Zero-inference prompt preprocessing with spell checking, route matching, and concept injection.
 author: Tom Cranstoun and Maxine
-created: 2026-02-13T00:00:00.000Z
+created: 2026-02-13
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: manual-prompt-enhancer
   status: active
   category: manual
   tags:
@@ -15,8 +15,7 @@ mx:
     - hooks
     - routing
   partOf: mx-maxine-lives
-  purpose: Document prompt enhancer - usage, workflow, and best practices
-  audience: human
+  audience: humans
   stability: stable
   runbook: Read when working with prompt enhancer or understanding its functionality
   contextProvides:

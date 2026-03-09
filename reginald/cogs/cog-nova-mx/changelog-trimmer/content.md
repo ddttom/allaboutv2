@@ -6,18 +6,16 @@ modified: 2026-02-15
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: changelog-trimmer
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
   category: mx-tools
   partOf: mx-os
   refersTo: [conventions]
-  buildsOn: [ubercog]
+  buildsOn: [UBERCOG]
   tags: [changelog, trim, archive, maintenance, automation]
   audience: both
-  readingLevel: practical
-  purpose: "Keep CHANGELOG.md lean by archiving entries older than the current week."
+  readingLevel: intermediate
 
   contentType: "action-doc"
   runbook: "mx exec changelog-trimmer"

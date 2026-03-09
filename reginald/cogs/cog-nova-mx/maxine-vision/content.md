@@ -6,14 +6,12 @@ modified: 2026-02-11
 version: "1.0"
 
 mx:
-  name: maxine-vision
   status: active
   category: product
   contentType: info-doc
   tags: [maxine, joymaker, vision, architecture, product, distributed, pwa, voice]
   audience: ["humans", "machines"]
-  purpose: "product-vision"
-  buildsOn: [mx-concepts, how-mx-os-runs, uber-maxine-plan]
+  buildsOn: [mx-concepts, how-mx-os-runs]
   runbook: "This cog defines the Maxine product vision — the evolution from Joymaker prototype to distributed AI partner"
 ---
 

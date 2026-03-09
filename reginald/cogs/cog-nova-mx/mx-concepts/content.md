@@ -8,7 +8,6 @@ modified: 2026-02-11
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: mx-concepts
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -20,8 +19,7 @@ mx:
   tags: [concepts, primer, onboarding, glossary, mental-model, newcomer, map]
 
   audience: both
-  readingLevel: accessible
-  purpose: Give any reader — human or AI — a complete conceptual map of MX in one document, organised by layers from simple to complex
+  readingLevel: beginner
 ---
 
 # MX Concepts
@@ -196,7 +194,7 @@ The relationship to MX OS is precise: The Gathering is POSIX. MX OS is Linux. Th
 
 ### Cog Unified Spec
 
-The canonical specification for cog metadata, governed by The Gathering. Defines every field, every type, every convention. Lives at `mx-canon/mx-the-gathering/deliverables/cog-unified-spec.md`.
+The canonical specification for cog metadata, governed by The Gathering. Defines every field, every type, every convention. Lives at `mx-canon/mx-the-gathering/specifications/cog-unified-spec.cog.md`.
 
 ---
 
@@ -341,7 +339,7 @@ Canonical source: `principles.cog.md` at repository root.
 | --- | --- |
 | Operate MX OS | `mx-canon/mx-maxine-lives/manuals/mx-os-manual.cog.md` |
 | Understand the vision | `mx-canon/mx-os/product-brief.md` |
-| Read the cog specification | `mx-canon/mx-the-gathering/deliverables/cog-unified-spec.md` |
+| Read the cog specification | `mx-canon/mx-the-gathering/specifications/cog-unified-spec.cog.md` |
 | See what is in the registry | Run `npm run cog:list` |
 | Use the railway pitch | `scripts/cogs/mx-os/mx-train-analogy.cog.md` |
 | Find the right saying | `scripts/cogs/mx-os/mx-phrasebook.cog.md` |

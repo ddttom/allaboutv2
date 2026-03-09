@@ -1,6 +1,6 @@
 ---
 version: "1.0"
-description: The companion web — how QR codes, landing pages, and embedded metadata turn the physical world into entry points that humans and AI agents read together. Every object with a QR code becomes self-describing. Extends to robotics — the interface between physical machines and the objects they encounter.
+description: QR codes and metadata turn physical objects into entry points for humans and AI agents. Every object becomes self-describing. Extends to robotics.
 
 created: 2026-02-09
 modified: 2026-02-09
@@ -8,7 +8,6 @@ modified: 2026-02-09
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: the-companion-web
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
   tags: [companion-web, qr-code, physical-digital, landing-page, metadata, embedded, discovery, ubiquity, pitch, robotics, global-os]
 
-  audience: developers
-  readingLevel: technical
-  purpose: Document the companion web — the machine-readable layer that sits alongside the human web, bridging physical objects to MX OS through QR codes and embedded cog metadata
+  audience: tech
+  readingLevel: advanced
 
   contentType: "action-doc"
   runbook: "mx exec the-companion-web"

@@ -2,13 +2,12 @@
 version: 0.1.0
 description: Test documentation clarity - if AI struggles, humans probably do too
 
-created: 2026-02-06T12:19:00Z
-modified: 2026-02-06T12:19:00Z
+created: 2026-02-06
+modified: 2026-02-06
 
 author: Maxine (MX - Machine eXperience Engine)
 
 mx:
-  name: clarity
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: draft

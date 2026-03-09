@@ -7,7 +7,6 @@ modified: 2026-02-21
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: manual-partnership-reporting
   category: manual
   status: active
   tags: [reporting, tone, partnership, mx-analysis, geo-analysis, writing-style]
@@ -15,11 +14,9 @@ mx:
 
   partOf: mx-maxine-lives
 
-  buildsOn:
-    - mx-messaging
+  refersTo:
+    - mx-messaging-framework
 
-  runtime: null
-  purpose: Team guidelines for writing partnership-tone reports
   contentType: manual
   runbook: |
   definition:

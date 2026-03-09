@@ -7,12 +7,11 @@ author: Tom Cranstoun
 description: "The canonical YAML frontmatter template for Appendix K page patterns. Copy this template when creating a new MX page pattern document."
 
 mx:
-  name: appendix-k-yaml-metadata
   status: active
   license: MIT
   category: template
   partOf: mx-the-gathering
-  buildsOn: [field-dictionary]
+  buildsOn: [fields]
   tags: [template, appendix-k, mx-pattern, yaml, frontmatter, page-pattern]
   audience: [machines, humans]
 

@@ -1,6 +1,6 @@
 {
   "namespace": "cog-nova-mx",
-  "name": "ubercog",
+  "name": "UBERCOG",
   "version": "1.5.0",
   "description": "The repo-level briefing. What this repository is, what lives where, how to route. Any agent reading this can navigate the MX-Hub.",
   "author": "Tom Cranstoun and Maxine",
@@ -20,8 +20,8 @@
   "type": "action-doc",
   "compliance_level": 2,
   "created": "2026-02-14",
-  "modified": "2026-02-26",
+  "modified": "2026-03-08",
   "source_path": "UBERCOG.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/UBERCOG.cog.md",
-  "content_url": "/reginald/cogs/cog-nova-mx/ubercog/content.md"
+  "content_url": "/reginald/cogs/cog-nova-mx/UBERCOG/content.md"
 }

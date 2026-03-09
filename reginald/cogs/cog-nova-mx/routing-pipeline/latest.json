@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "routing-pipeline",
   "version": "1.0.0",
-  "description": "Preprocess user prompts with spell correction, route matching, and context injection. Cut inference cost by telling Claude where to look before it starts searching.",
+  "description": "Preprocess prompts with spell correction, route matching, and context injection. Reduce inference cost by directing Claude before it starts searching.",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "mx.machine.experience@gmail.com",
   "license": "proprietary",

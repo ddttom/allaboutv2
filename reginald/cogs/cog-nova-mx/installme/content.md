@@ -9,7 +9,6 @@ modified: 2026-02-24
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: installme
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -20,9 +19,8 @@ mx:
   buildsOn: [what-is-a-cog, what-is-mx-os, what-is-mx-environment, mx-boot]
   tags: [install, setup, onboarding, ai-agent, diagnostics, prerequisites, mx-os, action-cog]
 
-  audience: ai-agents
-  readingLevel: technical
-  purpose: "Self-contained installation cog. Machines read YAML + execute embedded script. Humans read markdown."
+  audience: agents
+  readingLevel: advanced
 
   contentType: "action-doc"
   runbook: "mx exec installme"

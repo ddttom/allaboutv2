@@ -2,13 +2,12 @@
 version: 0.1.0
 description: Find ephemeral UI patterns that AI and screen readers miss
 
-created: 2026-02-06T12:31:00Z
-modified: 2026-02-06T12:31:00Z
+created: 2026-02-06
+modified: 2026-02-06
 
 author: Maxine (MX - Machine eXperience Engine)
 
 mx:
-  name: toast-detector
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: draft

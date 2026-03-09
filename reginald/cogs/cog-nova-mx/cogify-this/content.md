@@ -8,7 +8,6 @@ modified: 2026-02-20
 author: Cog-Nova-MX Ltd
 
 mx:
-  name: cogify-this
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: active
@@ -20,10 +19,8 @@ mx:
   tags: [cogify, conversion, mx-enhancement, metadata, webmcp, accessibility, transformation]
 
   audience: tech
-  readingLevel: technical
-  purpose: Transform existing content (HTML, markdown, documents) into MX-enhanced format with YAML frontmatter, WebMCP tools, Schema.org markup, and Reginald certification metadata
+  readingLevel: advanced
 
-  runtime: runbook
 
   runbook: |
   deliverable:
@@ -454,7 +451,6 @@ Single-language toggle when:
 
 ```yaml
 ---
-name: unique-identifier
 title: "Human-readable Title"
 description: "One-sentence description"
 version: "1.0.0"
@@ -1042,7 +1038,7 @@ hreflang:
 
 ## Further Reading
 
-- [Cog Unified Spec](../MX-The-Gathering/specifications/cog-unified-spec.md) - Full cog specification
+- [Cog Unified Spec](../MX-The-Gathering/specifications/cog-unified-spec.cog.md) - Full cog specification
 - [Los Granainos Reference](../mx-reference-implementations/los-granainos/) - Complete example
 - [WebMCP Specification](https://webmachinelearning.github.io/webmcp/) - W3C draft standard
 - [Schema.org Types](https://schema.org/docs/schemas.html) - All available types

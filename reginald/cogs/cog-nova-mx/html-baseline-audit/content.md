@@ -7,7 +7,6 @@ modified: 2026-02-21
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: html-baseline-audit
   category: validation
   status: active
   tags: [html, audit, baseline, regression, testing, automation, validation, ci-cd]
@@ -17,8 +16,7 @@ mx:
 
   buildsOn: [manual-html-baseline-audit, manual-enhanced-audit]
 
-  runtime: nodejs
-  purpose: Establish HTML baseline and detect regressions
+  runtime: node
   contentType: action-doc
   runbook: |
   action:

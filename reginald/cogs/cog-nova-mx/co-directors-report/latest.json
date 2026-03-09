@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "co-directors-report",
   "version": "1.0",
-  "description": "Generates time-segmented session reports for co-directors and stakeholders. Each day has up to three segments (morning, afternoon, evening). Interviews Tom, reads all available data sources, produces a report covering the current segment, and updates REMINDERS.md with next steps.",
+  "description": "Time-segmented session reports for co-directors. Three daily segments (morning, afternoon, evening). Interviews Tom, reads data, and updates REMINDERS.md.",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "mx.machine.experience@gmail.com",
   "license": "proprietary",

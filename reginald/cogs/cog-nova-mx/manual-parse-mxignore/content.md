@@ -2,11 +2,11 @@
 title: MX Ignore Parser Manual
 description: Parse .mxignore and .gitignore files to determine which files should be excluded from MX processing.
 author: Tom Cranstoun and Maxine
-created: 2026-02-15T00:00:00.000Z
+created: 2026-02-15
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: manual-parse-mxignore
   status: active
   category: manual
   tags:
@@ -16,8 +16,7 @@ mx:
     - filtering
     - parser
   partOf: mx-maxine-lives
-  purpose: Document parse mxignore - usage, workflow, and best practices
-  audience: human
+  audience: humans
   stability: stable
   runbook: Read when working with parse mxignore or understanding its functionality
   contextProvides:

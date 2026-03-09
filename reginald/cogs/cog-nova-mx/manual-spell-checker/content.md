@@ -2,11 +2,11 @@
 title: MX Spell Checker — Manual
 description: MX-aware spell checking for markdown files. Dual-dialect, vocabulary-aware, only flags genuine typos.
 author: Tom Cranstoun and Maxine
-created: 2026-02-13T00:00:00.000Z
+created: 2026-02-13
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: manual-spell-checker
   status: active
   category: manual
   tags:
@@ -15,8 +15,7 @@ mx:
     - markdown
     - quality
   partOf: mx-maxine-lives
-  purpose: Document spell checker - usage, workflow, and best practices
-  audience: human
+  audience: humans
   stability: stable
   runbook: Read when working with spell checker or understanding its functionality
   contextProvides:

@@ -1,6 +1,6 @@
 ---
 version: "1.0.0"
-description: "Review any blog post — scan for AI writing patterns, check dual-audience balance, interview the author, gather specifics, rewrite. Accepts markdown, HTML, or plain text."
+description: "Review blog posts — scan for AI writing patterns, check dual-audience balance, interview the author, rewrite. Accepts markdown, HTML, or plain text."
 
 created: 2026-02-11
 modified: 2026-02-11
@@ -8,7 +8,6 @@ modified: 2026-02-11
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: blog-reviewer
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, building-action-docs]
   tags: [blog, review, humanizer, dual-audience, interview, rewrite, content-quality, sales-enablement]
 
-  audience: ai-agents
-  readingLevel: technical
-  purpose: Give any AI agent a repeatable workflow for reviewing blog posts — from AI pattern detection through author interview to final rewrite
+  audience: agents
+  readingLevel: advanced
 
   contentType: "action-doc"
   runbook: "mx exec blog-reviewer"

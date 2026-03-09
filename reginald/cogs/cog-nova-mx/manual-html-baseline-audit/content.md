@@ -1,12 +1,12 @@
 ---
 title: HTML Baseline Audit & Regression System Manual
-description: Comprehensive guide to establishing HTML baselines and detecting regressions across all .cog.html files using automated visual, structural, style, and metadata comparison.
+description: Guide to establishing HTML baselines and detecting regressions across .cog.html files using automated visual, structural, style, and metadata comparison.
 author: Tom Cranstoun and Maxine
 created: 2026-02-21
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: manual-html-baseline-audit
   status: active
   category: manual
   tags:
@@ -23,8 +23,7 @@ mx:
     - manual-enhanced-audit
     - cogify-this
     - step-commit
-  purpose: Document HTML baseline & regression system - usage, workflow, and best practices
-  audience: human
+  audience: humans
   stability: stable
   runbook: Read when establishing HTML baselines, detecting regressions, or integrating audit workflow
   contextProvides:

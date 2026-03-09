@@ -4,15 +4,14 @@ version: "1.0"
 created: 2026-02-17
 modified: 2026-02-17
 author: The Gathering
-description: "How MX metadata conventions align with established web standards — Schema.org, Dublin Core, Open Graph. Explains governance, naming conventions, and context-specific rules."
+description: "How MX metadata aligns with Schema.org, Dublin Core, and Open Graph. Covers governance, naming conventions, and context-specific rules."
 
 mx:
-  name: mx-standards-alignment
   status: active
   license: proprietary
   category: standard
   partOf: mx-the-gathering
-  buildsOn: [cog-unified-spec, field-dictionary]
+  buildsOn: [fields]
   tags: [standards, alignment, schema-org, dublin-core, open-graph, governance, naming-conventions]
   audience: [humans, machines]
 
@@ -299,7 +298,7 @@ MX is a global standard. Spelling conventions vary by region. MX avoids this ent
 name: mx-standards-alignment
 version: "1.0"
 created: 2026-02-17
-buildsOn: [cog-unified-spec, field-dictionary]
+buildsOn: [cog-unified-spec, fields]
 partOf: mx-maxine-lives
 mx:
   contentType: standards-alignment
@@ -378,7 +377,7 @@ function parseCogFrontmatter(content) {
 | Document | Role |
 |----------|------|
 | [fields.cog.md](../../ssot/fields.cog.md) | Complete vocabulary of YAML fields |
-| [cog-unified-spec.md](../MX-The-Gathering/deliverables/cog-unified-spec.md) | Structural specification for cog files |
+| [cog-unified-spec.cog.md](../MX-The-Gathering/specifications/cog-unified-spec.cog.md) | Structural specification for cog files |
 | [namespace-policy ADR](../registers/NDR/2026-02-14-namespace-policy.cog.md) | Namespace architecture and vendor extensions |
 | [camelCase naming NDR](../registers/NDR/2026-02-16-camelcase-naming.cog.md) | YAML field naming convention |
 

@@ -1,11 +1,11 @@
 ---
-description: "The complete vision for Machine Experience — why it exists, the problem it solves, the system it builds, and the future it creates. From inference to certainty. From guessing to knowing."
+description: "The Machine Experience vision — why it exists, the problem it solves, the system it builds. From inference to certainty. From guessing to knowing."
 author: Tom Cranstoun
 created: 2026-02-20
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: mx-vision
   status: draft
   category: vision
   tags: [mx, vision, machine-experience, foundational]
@@ -24,11 +24,11 @@ mx:
     name: "The MX Vision"
     category: "vision"
     scope: "foundational"
-    description: "The complete vision for Machine Experience — why it exists, the problem it solves, the system it builds, and the future it creates. From inference to certainty. From guessing to knowing."
+    description: "The Machine Experience vision — why it exists, the problem it solves, the system it builds. From inference to certainty. From guessing to knowing."
 
-  publicationDate: "2026-02-20T00:00:00Z"
-  expires: "2026-08-20T00:00:00Z"
-  lastVerified: "2026-02-20T00:00:00Z"
+  publicationDate: "2026-02-20"
+  expires: "2026-08-20"
+  lastVerified: "2026-02-20"
   signature: "unsigned"
   mxCompliance: "level-2"
   registry: "allabout.network"
@@ -272,7 +272,7 @@ A cog without the Certificate is unverified — you don't know if it's genuine. 
 The insight that makes cogs revolutionary:
 
 > "The skill is thin. The doc is the program. I am the runtime."
-
+>
 > "Documentation IS the system. Metadata IS the interface. AI IS the runtime."
 
 When an AI agent encounters a cog, it doesn't need to guess. It reads the YAML frontmatter, confirms the publisher is verified, checks the governance contract is current, and uses the content with confidence. Correct answer, first time. No web scraping. No inference from ambiguous prose. No hallucination.

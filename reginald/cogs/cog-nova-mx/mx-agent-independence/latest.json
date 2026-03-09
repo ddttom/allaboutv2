@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "mx-agent-independence",
   "version": "1.0",
-  "description": "MX is a standalone, agent-agnostic standard. It works for every AI agent that can read a file. No middleware. No integration. No dependency. The file IS the platform.",
+  "description": "MX is agent-agnostic. Works for every AI agent that can read a file. No middleware. No integration. No dependency. The file IS the platform.",
   "author": "Tom Cranstoun & Maxine",
   "maintainer": "tom.cranstoun@gmail.com",
   "license": "MIT",

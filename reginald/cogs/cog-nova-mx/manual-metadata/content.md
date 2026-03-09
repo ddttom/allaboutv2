@@ -2,12 +2,11 @@
 title: Metadata Manual — How to Make Any File Machine-Readable
 description: Step-by-step guide for adding MX metadata to markdown, JavaScript, CSS, and HTML files. The human playbook for the embrace-and-extend model.
 version: "1.0"
-created: 2026-02-15T00:00:00.000Z
-modified: 2026-02-15T00:00:00.000Z
+created: 2026-02-15
+modified: 2026-02-15
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: manual-metadata
   status: active
   license: proprietary
   category: manual
@@ -23,12 +22,12 @@ mx:
     - embrace-extend
   partOf: mx-maxine-lives
   audience:
-    - operators
+    - tech
     - tech
   buildsOn:
     - what-is-a-cog
     - mx-metadata-conventions
-    - field-dictionary
+    - fields
   execute:
     runtime: runbook
     actions:
@@ -44,7 +43,6 @@ mx:
           - name: report
             type: object
             description: "Validation results: file type detected, metadata found, issues, suggestions"
-  purpose: Document metadata - usage, workflow, and best practices
   stability: stable
   runbook: "mx exec manual-metadata"
   contextProvides:
@@ -106,7 +104,7 @@ Validates pricing data.
 
 ```markdown
 ---
-name: pricing-validator
+title: "Pricing Validator"
 version: "1.0.0"
 description: "Validate pricing data to catch range errors"
 created: 2026-02-15
@@ -394,9 +392,9 @@ Full details in cog unified spec Section 21.
 
 | Resource | Location | What it tells you |
 | --- | --- | --- |
-| Field Definition Register (FDR) | `mx-canon/ssot/fields.cog.md` | Every field defined, with type, profile, and deprecation status |
+| Field Dictionary (SSOT) | `mx-canon/ssot/fields.cog.md` | Every field defined, with type, profile, and deprecation status |
 | Convention Register (CVR) | `mx-canon/mx-maxine-lives/registers/CVR/` | Operational conventions — naming, formatting, git |
-| Cog Unified Spec | `mx-canon/mx-the-gathering/deliverables/cog-unified-spec.md` | The open standard (The Gathering) |
+| Cog Unified Spec | `mx-canon/mx-the-gathering/specifications/cog-unified-spec.cog.md` | The open standard (The Gathering) |
 | MX Implementation Spec | `scripts/cogs/mx-maxine-lives/mx-metadata-conventions.cog.md` | Detailed rules per file type, block mapping, Reginald behaviour |
 
 ---

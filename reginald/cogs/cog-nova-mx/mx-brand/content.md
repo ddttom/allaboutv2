@@ -7,18 +7,12 @@ modified: "2026-02-15"
 author: "Tom Cranstoun / Copilot"
 
 mx:
-  name: mx-brand
   license: "Private — Cog-Nova-MX Ltd"
   status: "active"
   category: "strategy"
   partOf: "MX Brand Architecture"
-  purpose: |
-      Provide a machine-readable and human-readable framework for evaluating MX brand names,
-      mapping them to owned domains, and guiding launch decisions in a climate where
-      'AI' terminology carries negative media associations. This cog ensures MX positions
-      itself as a standards, identity, and governance company — not an AI vendor.
   tags: [brand, naming, strategy, launch, identity]
-  audience: ["business", "strategy"]
+  audience: ["business", "business"]
   refersTo:
       - "Domain Portfolio Registry Cog"
       - "MX: The Handbook (launch 2 April 2026)"

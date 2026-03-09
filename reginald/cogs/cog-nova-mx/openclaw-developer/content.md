@@ -2,9 +2,10 @@
 description: OpenClaw framework developer — agent skills and cog integration
 author: Tom Cranstoun
 created: 2026-02-09
+modified: 2026-03-02
+version: "1.0"
 
 mx:
-  name: openclaw-developer
   contentType: contact
   category: contact
   tags: [contact, prospect, developer, agent-framework]

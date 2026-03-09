@@ -2,10 +2,10 @@
 description: "Navigation page linking to core MX principles and concepts"
 author: Tom Cranstoun
 created: 2026-02-22
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: mx-principles-menu
   status: draft
   category: landing-page
   tags: [mx, principles, navigation, landing]
@@ -26,9 +26,9 @@ mx:
     scope: "navigation-hub"
     description: "Navigation page linking to core MX principles and concepts"
 
-  publicationDate: "2026-02-22T00:00:00Z"
-  expires: "2026-08-22T00:00:00Z"
-  lastVerified: "2026-02-22T00:00:00Z"
+  publicationDate: "2026-02-22"
+  expires: "2026-08-22"
+  lastVerified: "2026-02-22"
   signature: "unsigned"
   mxCompliance: "level-2"
   registry: "allabout.network"

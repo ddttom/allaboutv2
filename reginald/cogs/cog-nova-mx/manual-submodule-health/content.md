@@ -2,11 +2,11 @@
 title: Submodule Health Check Manual
 description: Multi-dimensional submodule validation checking initialization, uncommitted changes, branch status, and remote sync. Provides actionable fix commands.
 author: Tom Cranstoun and Maxine
-created: 2026-02-19T00:00:00.000Z
+created: 2026-02-19
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: manual-submodule-health
   status: active
   category: manual
   tags:
@@ -17,8 +17,7 @@ mx:
     - health
     - automation
   partOf: mx-maxine-lives
-  purpose: Document submodule health - usage, workflow, and best practices
-  audience: human
+  audience: humans
   stability: stable
   runbook: Read when working with submodule health or understanding its functionality
   contextProvides:

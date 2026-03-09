@@ -8,7 +8,6 @@ modified: 2026-02-11
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: mx-phrasebook
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -20,8 +19,7 @@ mx:
   tags: [phrasebook, sayings, culture, voice, identity, mx-os, hitchhikers-guide, writing]
 
   audience: both
-  readingLevel: accessible
-  purpose: Single source of truth for MX sayings — use the right phrase in the right context
+  readingLevel: beginner
 
   contentType: "action-doc"
   runbook: "mx exec mx-phrasebook"

@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "uber-maxine-plan",
   "version": "1.0",
-  "description": "Master plan for Maxine — the distributed AI partner. Tracks current state, architecture, and roadmap. This is the single source of truth for what Maxine is, where she is, and where she's going.",
+  "description": "Master plan for Maxine — the distributed AI partner. Single source of truth for what Maxine is, where she is, and where she's going.",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "tom.cranstoun@gmail.com",
   "license": "MIT",

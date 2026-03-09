@@ -2,13 +2,12 @@
 version: 0.1.0
 description: Validate cogs against the MX Cog Specification
 
-created: 2026-02-06T13:11:00Z
-modified: 2026-02-06T13:11:00Z
+created: 2026-02-06
+modified: 2026-02-06
 
 author: Maxine (MX - Machine eXperience Engine)
 
 mx:
-  name: validate-cog
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: draft

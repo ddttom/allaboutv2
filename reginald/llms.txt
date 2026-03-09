@@ -27,7 +27,7 @@ All JSON endpoints return structured data with:
 ## Current Registry
 - Publisher: Cog-Nova-MX Ltd
 - Namespace: cog-nova-mx
-- Total COGs: 155
+- Total COGs: 168
 - Compliance: Level 2 (Structured, no signing)
 
 ## Contact
@@ -39,4 +39,4 @@ All JSON endpoints return structured data with:
 - COG Format: https://allabout.network/reginald/docs/cog-format
 - REGINALD API: https://allabout.network/reginald/docs/api
 
-Generated: 2026-02-28T13:11:09.136Z
+Generated: 2026-03-09T08:58:50.106Z

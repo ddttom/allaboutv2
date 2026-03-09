@@ -7,13 +7,11 @@ modified: 2026-02-13
 version: "1.0"
 
 mx:
-  name: about-maxine
   status: published
   category: deliverable
   contentType: info-doc
   tags: [maxine, architecture, server, client, electron, pwa, dashboard, websocket, api, ipc, distributed]
   audience: [tech, business]
-  purpose: "architectural-overview"
   buildsOn: [maxine-vision, uber-maxine-plan]
   partOf: mx-maxine-lives
   runbook: "This document explains how Maxine's server-client architecture works. Read this to understand the relationship between the embedded server, the three client surfaces, and the communication protocols that connect them."

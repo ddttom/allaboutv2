@@ -1,6 +1,6 @@
 ---
 version: "1.0"
-description: The MX OS runtime model. How an AI agent boots, discovers cogs, routes tasks, executes action-docs, and chains actions through invokes. The operating system explained from the inside.
+description: The MX OS runtime model. How an agent boots, discovers cogs, routes tasks, executes action-docs, and chains actions. The OS explained from the inside.
 
 created: 2026-02-09
 modified: 2026-02-10
@@ -8,7 +8,6 @@ modified: 2026-02-10
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: how-mx-os-runs
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, what-is-mx-os, cog-registry, what-is-mx-environment]
   tags: [runtime, boot-sequence, routing, execution, kernel, shell, invokes, ipc, mx-os, ai-agent, entry-points]
 
-  audience: developers
-  readingLevel: technical
-  purpose: Document how MX OS actually runs — the boot sequence, discovery, routing, execution, and inter-cog communication that make the system work
+  audience: tech
+  readingLevel: advanced
 
   contentType: "action-doc"
   runbook: "mx exec how-mx-os-runs"

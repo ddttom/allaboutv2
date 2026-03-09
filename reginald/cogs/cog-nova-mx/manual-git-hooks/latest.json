@@ -20,8 +20,8 @@
   ],
   "type": "info-doc",
   "compliance_level": 2,
-  "created": "2026-02-15T00:00:00.000Z",
-  "modified": "2026-02-28",
+  "created": "2026-02-15",
+  "modified": "2026-03-02",
   "source_path": "mx-canon/mx-maxine-lives/manuals/manual-git-hooks.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/manuals/manual-git-hooks.cog.md",
   "content_url": "/reginald/cogs/cog-nova-mx/manual-git-hooks/content.md"

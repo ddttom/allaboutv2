@@ -1,13 +1,12 @@
 ---
 title: "Pixel-Perfect Web Replication Workflow"
-description: "Complete workflow for creating pixel-perfect MX-enhanced reference implementations from existing websites using comprehensive HTML/CSS audit, Playwright capture, and automated validation"
+description: "Create pixel-perfect MX-enhanced reference implementations from existing websites using HTML/CSS audit, Playwright capture, and automated validation."
 version: "2.0.0"
 created: "2026-02-20"
 modified: "2026-02-20"
 author: "Cog-Nova-MX Ltd"
 
 mx:
-  name: pixel-perfect-web-replication
   category: mx-tools
   status: active
   tags: [playwright, visual-capture, html-css-audit, dom-tree, computed-css, cascade-resolution, reference-implementation, pixel-perfect, automation, cogification, bilingual, single-language-toggle, offline-capable, validation-baseline]
@@ -17,7 +16,6 @@ mx:
 
   partOf: mx-cog-registry
 
-  runtime: ai-agent
   runbook: |
   deliverable:
     primary: "[business-name]-single-lang.cog.html"

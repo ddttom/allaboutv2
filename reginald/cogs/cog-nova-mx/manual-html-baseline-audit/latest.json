@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "manual-html-baseline-audit",
   "version": "1.0",
-  "description": "Comprehensive guide to establishing HTML baselines and detecting regressions across all .cog.html files using automated visual, structural, style, and metadata comparison.",
+  "description": "Guide to establishing HTML baselines and detecting regressions across .cog.html files using automated visual, structural, style, and metadata comparison.",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "tom.cranstoun@gmail.com",
   "license": "MIT",
@@ -21,7 +21,7 @@
   "type": "info-doc",
   "compliance_level": 2,
   "created": "2026-02-21",
-  "modified": "2026-02-28",
+  "modified": "2026-03-02",
   "source_path": "mx-canon/mx-maxine-lives/manuals/manual-html-baseline-audit.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/manuals/manual-html-baseline-audit.cog.md",
   "content_url": "/reginald/cogs/cog-nova-mx/manual-html-baseline-audit/content.md"

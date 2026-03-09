@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "smart-glasses-platform-opportunity",
   "version": "1.0",
-  "description": "Strategic analysis of smart glasses as a mass-market MX platform. Millions of AI glasses shipped in 2025 with cameras and voice but no content understanding standard. MX fills the gap — glasses are just another reader of docs published by Reginald. Zero engineering. The companion web, on your face.",
+  "description": "Smart glasses as a mass-market MX platform. Cameras and voice but no content standard. MX fills the gap — Reginald docs on your face. Zero engineering.",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "tom.cranstoun@gmail.com",
   "license": "MIT",

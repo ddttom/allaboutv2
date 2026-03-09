@@ -2,13 +2,12 @@
 version: 0.1.0
 description: Analyze sitemaps and compare with llms.txt coverage
 
-created: 2026-02-06T12:31:00Z
-modified: 2026-02-06T12:31:00Z
+created: 2026-02-06
+modified: 2026-02-06
 
 author: Maxine (MX - Machine eXperience Engine)
 
 mx:
-  name: sitemap
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: draft

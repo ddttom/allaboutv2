@@ -8,7 +8,6 @@ modified: 2026-02-10
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: what-is-script-metadata
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, what-is-mx-os, who-is-maxine, script-helper]
   tags: [script-metadata, cut-compute, inspect, bash, shell, efficiency, mx-os]
 
-  audience: developers
-  readingLevel: accessible
-  purpose: Explain why scripts need machine-readable metadata, how the system works, where we are today, and what comes next
+  audience: tech
+  readingLevel: beginner
 
   contentType: "action-doc"
   runbook: "mx exec what-is-script-metadata"

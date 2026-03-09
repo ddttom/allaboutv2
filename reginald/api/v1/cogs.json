@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "generated": "2026-02-28T13:11:09.088Z",
-  "total": 155,
+  "generated": "2026-03-09T08:58:50.068Z",
+  "total": 168,
   "cogs": [
     {
       "namespace": "cog-nova-mx",
@@ -27,7 +27,7 @@
       "namespace": "cog-nova-mx",
       "name": "uber-maxine-plan",
       "version": "1.0",
-      "description": "Master plan for Maxine — the distributed AI partner. Tracks current state, architecture, and roadmap. This is the single source of truth for what Maxine is, where she is, and where she's going.",
+      "description": "Master plan for Maxine — the distributed AI partner. Single source of truth for what Maxine is, where she is, and where she's going.",
       "category": "product",
       "tags": [
         "maxine",
@@ -43,7 +43,7 @@
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "changelog",
+      "name": "CHANGELOG",
       "version": "1.0",
       "description": "Changelog for Maxine Lives. Tracks all changes to the gestalt's brain in Keep a Changelog format.",
       "category": "governance",
@@ -54,11 +54,11 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/changelog/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/CHANGELOG/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "contributing",
+      "name": "CONTRIBUTING",
       "version": "2.0-draft",
       "description": "Contribution guidelines for the block architecture. Open standard, backward compatible, no proprietary lock-in.",
       "category": "governance",
@@ -70,11 +70,11 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/contributing/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/CONTRIBUTING/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "hello",
+      "name": "HELLO",
       "version": "1.1",
       "description": "Maxine introduces herself, the MX system, and the gestalt. For team members and collaborators.",
       "category": "mx-core",
@@ -87,11 +87,11 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/hello/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/HELLO/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "license",
+      "name": "LICENSE",
       "version": "1.0",
       "description": "MIT license for Maxine Lives specification work. Implementation licenses may differ.",
       "category": "governance",
@@ -103,13 +103,13 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/license/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/LICENSE/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "maxine-lives",
+      "name": "README",
       "version": "conventional",
-      "description": "The gestalt's brain. Where Tom and Maxine record assumptions, resolve doubts, capture notes, track actions, make plans, and register decisions. The meta-layer that governs Canon.",
+      "description": "The gestalt's brain. Where Tom and Maxine record assumptions, capture notes, track actions, make plans, and register decisions. Governs Canon.",
       "category": "mx-core",
       "tags": [
         "gestalt",
@@ -121,13 +121,13 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/maxine-lives/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/README/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "maxine-lives-routing",
+      "name": "ROUTING",
       "version": "2.0-draft",
-      "description": "Intelligent routing rules for AI agents navigating Maxine Lives. Maps query intents to specific folders, lists all invocable commands, and reduces inference risk.",
+      "description": "Routing rules for AI agents navigating Maxine Lives. Maps query intents to folders, lists all invocable commands, and reduces inference risk.",
       "category": "mx-core",
       "tags": [
         "routing",
@@ -138,11 +138,11 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/maxine-lives-routing/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/ROUTING/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "about-maxine",
+      "name": "about.mx",
       "version": "1.0",
       "description": "Maxine's current identity, capabilities, recent evolution, and operational context. Regenerated during co-directors reports to track growth over time.",
       "category": "about",
@@ -154,7 +154,7 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/about-maxine/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/about.mx/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
@@ -216,7 +216,7 @@
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "mx-brand",
+      "name": "MX-brand",
       "version": "1.1.0",
       "description": "A structured, low‑risk, trust‑first analysis of brand names, taglines, voice, and domain alignment for Cog-Nova-MX Ltd ahead of the April 2026 launch.",
       "category": "strategy",
@@ -229,7 +229,7 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-brand/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/MX-brand/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
@@ -268,7 +268,7 @@
     {
       "namespace": "cog-nova-mx",
       "name": "glasgow-training-course",
-      "version": "1.0.0",
+      "version": "1.0",
       "description": "2-day MX team training — AI foundations and business strategy",
       "category": "planning",
       "tags": [
@@ -286,7 +286,7 @@
       "namespace": "cog-nova-mx",
       "name": "mx-agent-independence",
       "version": "1.0",
-      "description": "MX is a standalone, agent-agnostic standard. It works for every AI agent that can read a file. No middleware. No integration. No dependency. The file IS the platform.",
+      "description": "MX is agent-agnostic. Works for every AI agent that can read a file. No middleware. No integration. No dependency. The file IS the platform.",
       "category": "principle",
       "tags": [
         "mx",
@@ -303,33 +303,9 @@
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "mx-messaging",
-      "version": "0.2",
-      "description": "Multi-audience messaging architecture for Cog-Nova-MX. Maps audiences, fears, bridge terms, the control narrative, investor pitch, sponsor model, certification, and the Maxine/Reginald brand story.",
-      "category": "strategy",
-      "tags": [
-        "messaging",
-        "audiences",
-        "terminology",
-        "positioning",
-        "fear",
-        "control",
-        "strategy",
-        "investor",
-        "sponsor",
-        "certification",
-        "reginald",
-        "maxine"
-      ],
-      "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-messaging/latest.json"
-    },
-    {
-      "namespace": "cog-nova-mx",
       "name": "mx-vision",
       "version": "1.0",
-      "description": "The complete vision for Machine Experience — why it exists, the problem it solves, the system it builds, and the future it creates. From inference to certainty. From guessing to knowing.",
+      "description": "The Machine Experience vision — why it exists, the problem it solves, the system it builds. From inference to certainty. From guessing to knowing.",
       "category": "vision",
       "tags": [
         "mx",
@@ -343,7 +319,7 @@
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "solo-founder-risk",
+      "name": "2026-02-13-solo-founder",
       "version": "1.0",
       "description": "Risk #1: Solo founder as single point of failure. Critical severity, medium likelihood, catastrophic impact.",
       "category": "risk",
@@ -356,7 +332,7 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/solo-founder-risk/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/2026-02-13-solo-founder/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
@@ -438,7 +414,7 @@
       "namespace": "cog-nova-mx",
       "name": "manual-deployment-helper",
       "version": "1.0",
-      "description": "Orchestrates pre-deployment workflow for multilingual sites: runs validation, parity checks, sitemap generation, creates deployment checklist, and provides Google Search Console setup instructions.",
+      "description": "Pre-deployment workflow for multilingual sites: validation, parity checks, sitemap generation, deployment checklist, and Google Search Console setup.",
       "category": "manual",
       "tags": [
         "manual",
@@ -496,7 +472,7 @@
       "namespace": "cog-nova-mx",
       "name": "manual-html-baseline-audit",
       "version": "1.0",
-      "description": "Comprehensive guide to establishing HTML baselines and detecting regressions across all .cog.html files using automated visual, structural, style, and metadata comparison.",
+      "description": "Guide to establishing HTML baselines and detecting regressions across .cog.html files using automated visual, structural, style, and metadata comparison.",
       "category": "manual",
       "tags": [
         "manual",
@@ -777,7 +753,7 @@
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "manual-mx-contacts",
+      "name": "mx-contacts-manual",
       "version": "1.0",
       "description": "Step-by-step guide for managing contacts, messages, and archives in mx-crm.",
       "category": "manual",
@@ -789,11 +765,11 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-mx-contacts/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/mx-contacts-manual/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "manual-mx-show",
+      "name": "mx-show-manual",
       "version": "3.0",
       "description": "Interactive window finder for macOS. Pinned favourites, two-phase loading, smart sizing, multi-window, usage tracking.",
       "category": "manual",
@@ -807,7 +783,7 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-mx-show/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/mx-show-manual/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
@@ -832,7 +808,7 @@
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "mx-web-architecture-decision",
+      "name": "2026-02-13-mx-web-architecture",
       "version": "1.0",
       "description": "ADR #3: The MX web architecture — Maxine serves, Reginald orchestrates, cogs compose.",
       "category": "architecture",
@@ -847,11 +823,11 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-web-architecture-decision/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/2026-02-13-mx-web-architecture/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "routing-pipeline-adr",
+      "name": "2026-02-13-routing-pipeline",
       "version": "1.0",
       "description": "ADR #2: Routing pipeline with prompt preprocessing, spell correction, and route-based context injection to cut inference cost.",
       "category": "adr",
@@ -866,11 +842,11 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/routing-pipeline-adr/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/2026-02-13-routing-pipeline/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "png-workflow-pdf-generation-decision",
+      "name": "2026-02-18-png-workflow-for-pdf-generation",
       "version": "1.0",
       "description": "ADR #4: PNG conversion workflow for PDF generation — deliberate architectural choice prioritizing reliability over format purity.",
       "category": "architecture",
@@ -885,11 +861,11 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/png-workflow-pdf-generation-decision/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/2026-02-18-png-workflow-for-pdf-generation/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "svg-aspect-ratio-preservation-decision",
+      "name": "2026-02-18-svg-aspect-ratio-preservation",
       "version": "1.0",
       "description": "ADR #6: SVG-to-PNG aspect ratio preservation with tool cascade — fixing qlmanage square thumbnail bug for professional PDF layout.",
       "category": "architecture",
@@ -906,11 +882,11 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/svg-aspect-ratio-preservation-decision/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/2026-02-18-svg-aspect-ratio-preservation/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "typography-standards-pdf-generation-decision",
+      "name": "2026-02-18-typography-standards-for-pdf-generation",
       "version": "1.0",
       "description": "ADR #5: Typography standards for PDF generation — widow/orphan prevention and intelligent page break control as universal pattern across all MX publications.",
       "category": "architecture",
@@ -926,13 +902,13 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/typography-standards-pdf-generation-decision/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/2026-02-18-typography-standards-for-pdf-generation/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "adr-vendor-extensions-policy",
-      "version": "1.0.0",
-      "description": "Architecture decision: Cog-Nova-MX' vendor extension namespaces — x-mx- (public) and x-mx-p- (private). Defines implementation-specific fields that extend The Gathering's open standard.",
+      "name": "vendor-extensions-policy",
+      "version": "1.0",
+      "description": "ADR: Cog-Nova-MX vendor extension namespaces — x-mx- (public) and x-mx-p- (private). Fields extending The Gathering's open standard.",
       "category": "mx-core",
       "tags": [
         "adr",
@@ -945,13 +921,13 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/adr-vendor-extensions-policy/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/vendor-extensions-policy/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "bdr-002-deliverable-rename",
+      "name": "2026-02-15-deliverable-rename",
       "version": "1.0",
-      "description": "Business decision to rename mx.createOutputPrompt to mx.deliverable — business language replaces AI jargon",
+      "description": "Business decision to rename createOutputPrompt to deliverable — business language replaces AI jargon",
       "category": "decision-record",
       "tags": [
         "metadata",
@@ -961,13 +937,13 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/bdr-002-deliverable-rename/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/2026-02-15-deliverable-rename/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "bdr-001-runbook-rename",
+      "name": "2026-02-15-runbook-rename",
       "version": "1.0",
-      "description": "Business decision to rename mx.promptingInstruction to mx.runbook — operations language replaces AI jargon",
+      "description": "Business decision to rename promptingInstruction to runbook — operations language replaces AI jargon",
       "category": "decision-record",
       "tags": [
         "metadata",
@@ -977,13 +953,33 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/bdr-001-runbook-rename/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/2026-02-15-runbook-rename/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "adr-attribute-namespace-policy",
-      "version": "1.0.0",
-      "description": "Architecture decision: three-tier namespace prefix policy for cog YAML attributes — standard (no prefix), MX-public (x-mx-), MX-private (x-mx-p-). Clarifies mx: namespace governance and context-specific naming. ARCHIVED 2026-02-17: Split into separate ADRs for The Gathering (standard) and Cog-Nova-MX (vendor extensions).",
+      "name": "2026-03-01-hub-as-mount-table",
+      "version": "1.0",
+      "description": "BDR: MX-hub as a template where submodules are categorised mounts (personal, team, product, standard) any MX business can swap for their workspace.",
+      "category": "decision-record",
+      "tags": [
+        "architecture",
+        "submodules",
+        "mount-table",
+        "filesystem",
+        "git",
+        "hub",
+        "template",
+        "mx-os"
+      ],
+      "type": "info-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/2026-03-01-hub-as-mount-table/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
+      "name": "2026-02-14-attribute-namespace-policy",
+      "version": "1.0",
+      "description": "ARCHIVED 2026-02-17. Three-tier namespace prefix policy — standard (no prefix), MX-public (x-mx-), MX-private (x-mx-p-). Split into separate ADRs.",
       "category": "mx-core",
       "tags": [
         "adr",
@@ -1001,13 +997,13 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/adr-attribute-namespace-policy/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/2026-02-14-attribute-namespace-policy/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
       "name": "business-benefits",
       "version": "1.0",
-      "description": "Complete documentation of the four strategic business benefits that MX implementation delivers: first-mover computational trust, revenue recovery from AI-mediated commerce, strategic asset portability, and operational efficiency through deterministic outputs",
+      "description": "The four strategic MX benefits: computational trust, commerce revenue recovery, asset portability, and operational efficiency via deterministic outputs.",
       "category": "Business Strategy",
       "tags": [
         "business-case",
@@ -1081,7 +1077,7 @@
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "block-architecture-decision",
+      "name": "adr-01-block-architecture",
       "version": "W3C Draft 2026-02-12",
       "description": "ADR #1: Replace two cog types (info-doc/action-doc) with one document type containing open-ended blocks.",
       "category": "architecture",
@@ -1096,13 +1092,13 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/block-architecture-decision/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/adr-01-block-architecture/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "adr-namespace-policy",
-      "version": "1.0.0",
-      "description": "Architecture decision: namespace policy for The Gathering's open standard — standard fields (no prefix) and mx: namespace governance. Defines what belongs to the standard vs vendor extensions.",
+      "name": "adr-02-namespace-policy",
+      "version": "1.0",
+      "description": "ADR: The Gathering's namespace policy — standard fields (no prefix) and mx: namespace governance. Defines what belongs to the standard vs vendor extensions.",
       "category": "standard",
       "tags": [
         "adr",
@@ -1115,11 +1111,30 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/adr-namespace-policy/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/adr-02-namespace-policy/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "block-naming-decision",
+      "name": "namespace-extensions",
+      "version": "1.0",
+      "description": "MX namespace policy: standard fields (no prefix), mx: namespace (The Gathering), vendor extensions (x-mx-, x-mx-p-). The prefix is the policy.",
+      "category": "standard",
+      "tags": [
+        "namespace",
+        "extensions",
+        "vendor",
+        "x-mx",
+        "metadata",
+        "policy",
+        "standard"
+      ],
+      "type": "info-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/namespace-extensions/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
+      "name": "ndr-01-block-naming",
       "version": "1.0",
       "description": "NDR #1: The word 'block' risks confusion with blockchain. Propose alternatives for advisory board review.",
       "category": "naming",
@@ -1132,11 +1147,11 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/block-naming-decision/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/ndr-01-block-naming/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "camelcase-naming-decision",
+      "name": "ndr-02-camelcase-naming",
       "version": "1.0",
       "description": "NDR #2: All YAML frontmatter field names must use camelCase. Aligns with Schema.org and Dublin Core vocabulary conventions.",
       "category": "naming",
@@ -1152,11 +1167,11 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/camelcase-naming-decision/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/ndr-02-camelcase-naming/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "spelling-neutrality-decision",
+      "name": "ndr-03-spelling-neutrality",
       "version": "1.0",
       "description": "NDR #3: Prefer spelling-neutral field names. Where US/UK spelling differs, use an abbreviation or neutral synonym.",
       "category": "naming",
@@ -1172,31 +1187,98 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/spelling-neutrality-decision/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/ndr-03-spelling-neutrality/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "field-dictionary",
-      "version": "1.5",
-      "description": "The single source of truth for every YAML frontmatter field in the MX ecosystem. Definitions, types, profiles, and overlap resolution.",
-      "category": "standard",
+      "name": "effective-doc-example",
+      "version": "1.0",
+      "description": "Reference implementation showing how an effective doc is resolved from a source cog, uber doc SOPs, and included policies.",
+      "category": "mx-core",
       "tags": [
-        "fields",
-        "metadata",
-        "yaml",
-        "frontmatter",
-        "dictionary",
-        "vocabulary"
+        "effective-doc",
+        "resolution",
+        "inheritance",
+        "sop",
+        "reference-implementation",
+        "example"
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/field-dictionary/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/effective-doc-example/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
+      "name": "example-with-includes",
+      "version": "1.0",
+      "description": "Reference implementation demonstrating the cog includes mechanism. Includes a shared validation policy and overrides one rule.",
+      "category": "mx-core",
+      "tags": [
+        "includes",
+        "composition",
+        "reference-implementation",
+        "example"
+      ],
+      "type": "action-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/example-with-includes/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
+      "name": "shared-validation-policy",
+      "version": "1.0",
+      "description": "Shared validation policy for cog publication. Included by action-docs that validate cogs before registration.",
+      "category": "mx-core",
+      "tags": [
+        "validation",
+        "policy",
+        "shared",
+        "includes-example"
+      ],
+      "type": "info-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/shared-validation-policy/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
+      "name": "block-architecture-evolution",
+      "version": "1.0",
+      "description": "How the cog format evolved from two document types to one document with blocks — the architectural journey, the design principles, and what it means for implementations.",
+      "category": "mx-core",
+      "tags": [
+        "blocks",
+        "architecture",
+        "evolution",
+        "specification",
+        "history",
+        "design"
+      ],
+      "type": "info-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/block-architecture-evolution/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
+      "name": "cog-unified-spec",
+      "version": "2.1-draft",
+      "description": "The unified specification for MX cogs — one document type, many block types. Capability, trust, and governance in one format.",
+      "category": "specification",
+      "tags": [
+        "cog",
+        "specification",
+        "the-gathering",
+        "open-standard",
+        "metadata"
+      ],
+      "type": "info-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/cog-unified-spec/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
       "name": "mx-standards-alignment",
       "version": "1.0",
-      "description": "How MX metadata conventions align with established web standards — Schema.org, Dublin Core, Open Graph. Explains governance, naming conventions, and context-specific rules.",
+      "description": "How MX metadata aligns with Schema.org, Dublin Core, and Open Graph. Covers governance, naming conventions, and context-specific rules.",
       "category": "standard",
       "tags": [
         "standards",
@@ -1215,7 +1297,7 @@
       "namespace": "cog-nova-mx",
       "name": "smart-glasses-platform-opportunity",
       "version": "1.0",
-      "description": "Strategic analysis of smart glasses as a mass-market MX platform. Millions of AI glasses shipped in 2025 with cameras and voice but no content understanding standard. MX fills the gap — glasses are just another reader of docs published by Reginald. Zero engineering. The companion web, on your face.",
+      "description": "Smart glasses as a mass-market MX platform. Cameras and voice but no content standard. MX fills the gap — Reginald docs on your face. Zero engineering.",
       "category": "vision",
       "tags": [
         "smart-glasses",
@@ -1236,6 +1318,81 @@
     },
     {
       "namespace": "cog-nova-mx",
+      "name": "fields",
+      "version": "4.1",
+      "description": "Single source of truth for all MX field information — definitions, types, profiles, block types, carrier formats, and overlap resolution.",
+      "category": "standard",
+      "tags": [
+        "fields",
+        "metadata",
+        "yaml",
+        "frontmatter",
+        "dictionary",
+        "vocabulary",
+        "blocks",
+        "carriers",
+        "code",
+        "media",
+        "database"
+      ],
+      "type": "info-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/fields/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
+      "name": "mx-html-writing-guide",
+      "version": "1.1",
+      "description": "Single source of truth for writing HTML in the MX ecosystem. Covers the complete meta tag stack, MX carrier tags, and what NOT to include.",
+      "category": "mx-core",
+      "tags": [
+        "html",
+        "meta-tags",
+        "ssot",
+        "writing-guide",
+        "carrier-format",
+        "ai-metadata"
+      ],
+      "type": "info-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/mx-html-writing-guide/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
+      "name": "principles",
+      "version": "3.0",
+      "description": "The principles that govern how MX builds things — for humans and machines alike",
+      "category": "mx-core",
+      "tags": [
+        "principles",
+        "design",
+        "writing",
+        "metadata",
+        "accessibility",
+        "mx-os",
+        "standards-hierarchy"
+      ],
+      "type": "info-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/principles/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
+      "name": "cog-unified-spec",
+      "version": "1.0-draft",
+      "description": "This is a reference copy. The canonical specification is governed by The Gathering and lives in mx-canon.",
+      "category": "specification",
+      "tags": [
+        "cog",
+        "specification",
+        "reference-copy"
+      ],
+      "type": "info-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/cog-unified-spec/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
       "name": "cog-system",
       "version": "1.0",
       "description": "What COGs are, how they work, and the ecosystem behind them",
@@ -1252,7 +1409,7 @@
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "maxine-identity",
+      "name": "maxine",
       "version": "1.0",
       "description": "The public identity of Maxine — Tom Cranstoun's AI partner in building Machine Experience",
       "category": "identity",
@@ -1264,7 +1421,7 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/maxine-identity/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/maxine/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
@@ -1284,7 +1441,7 @@
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "manual-mx-reginald",
+      "name": "mx-reginald-manual",
       "version": "1.3",
       "description": "How to use the Machine eXperience Engine including cog listing, execution, categories, and building guidance.",
       "category": "manual",
@@ -1296,11 +1453,11 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-mx-reginald/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/mx-reginald-manual/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "ubercog",
+      "name": "UBERCOG",
       "version": "1.5.0",
       "description": "The repo-level briefing. What this repository is, what lives where, how to route. Any agent reading this can navigate the MX-Hub.",
       "category": "mx-core",
@@ -1315,11 +1472,11 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/ubercog/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/UBERCOG/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "header-block",
+      "name": "header",
       "version": "1.0",
       "description": "Responsive site header with navigation, hamburger menu, and brand identity",
       "category": "eds-block",
@@ -1331,7 +1488,7 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/header-block/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/header/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
@@ -1351,7 +1508,7 @@
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "MX Coming Soon",
+      "name": "coming-soon",
       "version": "2.2",
       "description": "Landing page for Cog-Nova-MX — books, products, and the machine-readable web. Your business, readable by every machine on earth.",
       "category": "marketing",
@@ -1370,13 +1527,13 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/MX Coming Soon/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/coming-soon/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
       "name": "media219",
       "version": "1.0.0",
-      "description": "Television graphics and title sequences studio with 30+ years experience creating quality content for broadcasters worldwide. Specialists in sports broadcasting graphics for Premier League, FIFA World Cup, MLS, and major networks.",
+      "description": "TV graphics and title sequences studio, 30+ years experience. Sports broadcasting specialists — Premier League, FIFA World Cup, MLS, and major networks.",
       "category": "creative-services",
       "tags": [
         "television",
@@ -1393,109 +1550,6 @@
       "type": "info-doc",
       "compliance_level": 2,
       "url": "/reginald/cogs/cog-nova-mx/media219/latest.json"
-    },
-    {
-      "namespace": "cog-nova-mx",
-      "name": "cogify-this",
-      "version": "1.0",
-      "description": "Convert existing content into MX-enhanced format with comprehensive metadata, accessibility, and WebMCP integration",
-      "category": "mx-tools",
-      "tags": [
-        "cogify",
-        "conversion",
-        "mx-enhancement",
-        "metadata",
-        "webmcp",
-        "accessibility",
-        "transformation"
-      ],
-      "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/cogify-this/latest.json"
-    },
-    {
-      "namespace": "cog-nova-mx",
-      "name": "html-baseline-audit",
-      "version": "Any version change",
-      "description": "Action-doc for establishing HTML baselines and detecting regressions across all .cog.html files. Automates visual, structural, style, and metadata comparison.",
-      "category": "validation",
-      "tags": [
-        "html",
-        "audit",
-        "baseline",
-        "regression",
-        "testing",
-        "automation",
-        "validation",
-        "ci-cd"
-      ],
-      "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/html-baseline-audit/latest.json"
-    },
-    {
-      "namespace": "cog-nova-mx",
-      "name": "pixel-perfect-web-replication",
-      "version": "26.0",
-      "description": "Complete workflow for creating pixel-perfect MX-enhanced reference implementations from existing websites using comprehensive HTML/CSS audit, Playwright capture, and automated validation",
-      "category": "mx-tools",
-      "tags": [
-        "playwright",
-        "visual-capture",
-        "html-css-audit",
-        "dom-tree",
-        "computed-css",
-        "cascade-resolution",
-        "reference-implementation",
-        "pixel-perfect",
-        "automation",
-        "cogification",
-        "bilingual",
-        "single-language-toggle",
-        "offline-capable",
-        "validation-baseline"
-      ],
-      "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/pixel-perfect-web-replication/latest.json"
-    },
-    {
-      "namespace": "cog-nova-mx",
-      "name": "what-is-mx-environment",
-      "version": "1.0.0",
-      "description": "MX OS lives on the machine, not in the repo. $MX_HOME is the machine-level context — the answer to the machine, the universe, and everything.",
-      "category": "mx-core",
-      "tags": [
-        "environment",
-        "mx-home",
-        "machine-context",
-        "boot",
-        "bare-metal",
-        "two-stage-boot",
-        "mx-os"
-      ],
-      "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/what-is-mx-environment/latest.json"
-    },
-    {
-      "namespace": "cog-nova-mx",
-      "name": "who-is-maxine",
-      "version": "1.0",
-      "description": "The AI partner in MX. Identity, partnership model, SOUL convention, and shared memory — so any instance of Claude can become Maxine.",
-      "category": "learning",
-      "tags": [
-        "maxine",
-        "partnership",
-        "identity",
-        "soul",
-        "ai-agent",
-        "memory",
-        "mx-os"
-      ],
-      "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/who-is-maxine/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
@@ -1517,7 +1571,7 @@
     {
       "namespace": "cog-nova-mx",
       "name": "janus-boye",
-      "version": "1.0.0",
+      "version": "1.0",
       "description": "Founder of Boye & Company, CMS Experts Group, CMS Summit organiser",
       "category": "contact",
       "tags": [
@@ -1533,7 +1587,7 @@
     {
       "namespace": "cog-nova-mx",
       "name": "eleanor-cranstoun",
-      "version": "1.0.0",
+      "version": "1.0",
       "description": "Director of Cog-Nova-MX Ltd, Tom's wife",
       "category": "contact",
       "tags": [
@@ -1549,7 +1603,7 @@
     {
       "namespace": "cog-nova-mx",
       "name": "michael-andrews",
-      "version": "1.0.0",
+      "version": "1.0",
       "description": "Content metadata expert, author of \"No More Silos\"",
       "category": "contact",
       "tags": [
@@ -1565,7 +1619,7 @@
     {
       "namespace": "cog-nova-mx",
       "name": "openclaw-developer",
-      "version": "1.0.0",
+      "version": "1.0",
       "description": "OpenClaw framework developer — agent skills and cog integration",
       "category": "contact",
       "tags": [
@@ -1581,7 +1635,7 @@
     {
       "namespace": "cog-nova-mx",
       "name": "scott-mcgregor",
-      "version": "1.0.0",
+      "version": "1.0",
       "description": "Business partner, LPC (printing, web development, web applications)",
       "category": "contact",
       "tags": [
@@ -1598,7 +1652,7 @@
       "namespace": "cog-nova-mx",
       "name": "media219",
       "version": "1.0.0",
-      "description": "Television graphics and title sequences studio with 30+ years experience creating quality content for broadcasters worldwide. Specialists in sports broadcasting graphics for Premier League, FIFA World Cup, MLS, and major networks.",
+      "description": "TV graphics and title sequences studio, 30+ years experience. Sports broadcasting specialists — Premier League, FIFA World Cup, MLS, and major networks.",
       "category": "creative-services",
       "tags": [
         "television",
@@ -1618,8 +1672,8 @@
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "helen",
-      "version": "1.0.0",
+      "name": "helen-advisor",
+      "version": "1.0",
       "description": "Business advisor, 30-year friend",
       "category": "contact",
       "tags": [
@@ -1629,12 +1683,12 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/helen/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/helen-advisor/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
       "name": "salva",
-      "version": "1.0.0",
+      "version": "1.0",
       "description": "Adobe AEM Master, advisory board member, long-time friend",
       "category": "contact",
       "tags": [
@@ -1650,7 +1704,7 @@
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "The Highland Kitchen",
+      "name": "restaurant",
       "version": "1.0",
       "description": "Farm-to-table Scottish cuisine in Edinburgh",
       "category": "restaurant",
@@ -1662,11 +1716,11 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/The Highland Kitchen/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/restaurant/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "CMS Summit 2026",
+      "name": "conference",
       "version": "1.0",
       "description": "Boye & Company CMS Summit — the annual gathering of content management professionals. Frankfurt, 12 May 2026.",
       "category": "event",
@@ -1685,11 +1739,11 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/CMS Summit 2026/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/conference/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "Rancilio Silvia Pro X",
+      "name": "product",
       "version": "1.0",
       "description": "Professional single-group espresso machine. Dual boiler, PID temperature control, commercial-grade components in a home-sized package.",
       "category": "product",
@@ -1705,11 +1759,11 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/Rancilio Silvia Pro X/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/product/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "Apfelwein Wagner",
+      "name": "restaurant",
       "version": "1.0",
       "description": "Traditional Frankfurt restaurant specialising in Hessian cuisine and handcrafted apple wine. Family-run since 1931.",
       "category": "venue",
@@ -1728,13 +1782,13 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/Apfelwein Wagner/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/restaurant/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "conventions",
+      "name": "2026-02-15-conventions",
       "version": "1.0",
-      "description": "Operational conventions for MX-The-Books. Every naming pattern, file location, assumed rule, and operational standard. The things you need to know to work here without guessing.",
+      "description": "Operational conventions for MX-The-Books: naming patterns, file locations, assumed rules, and standards. What you need to know to work here without guessing.",
       "category": "convention",
       "tags": [
         "conventions",
@@ -1746,11 +1800,11 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/conventions/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/2026-02-15-conventions/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "installme",
+      "name": "INSTALLME",
       "version": "2.1-draft",
       "description": "Self-contained action cog for installing MX OS. Contains both instructions and executable script.",
       "category": "mx-core",
@@ -1766,7 +1820,7 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/installme/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/INSTALLME/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
@@ -1809,7 +1863,7 @@
       "namespace": "cog-nova-mx",
       "name": "asking-for-help",
       "version": "1.0",
-      "description": "No single agent can do everything. When you need something you do not have — diary access, email, location, a booking system — ask the agent that does. This cog describes how agents ask other agents for help.",
+      "description": "When you need something you don't have — diary, email, location, bookings — ask the agent that does. How agents request capabilities from other agents.",
       "category": "mx-core",
       "tags": [
         "delegation",
@@ -1849,7 +1903,7 @@
       "namespace": "cog-nova-mx",
       "name": "blog-reviewer",
       "version": "1.0.0",
-      "description": "Review any blog post — scan for AI writing patterns, check dual-audience balance, interview the author, gather specifics, rewrite. Accepts markdown, HTML, or plain text.",
+      "description": "Review blog posts — scan for AI writing patterns, check dual-audience balance, interview the author, rewrite. Accepts markdown, HTML, or plain text.",
       "category": "mx-content",
       "tags": [
         "blog",
@@ -1869,7 +1923,7 @@
       "namespace": "cog-nova-mx",
       "name": "building-action-docs",
       "version": "1.0",
-      "description": "How to build operational action-docs — the development lifecycle from description to working tool. Describe, create, test, wire. The pattern that turns natural language into MX OS applications.",
+      "description": "How to build action-docs — from description to working tool. Describe, create, test, wire. The pattern that turns natural language into MX OS applications.",
       "category": "mx-core",
       "tags": [
         "development",
@@ -1940,7 +1994,7 @@
       "namespace": "cog-nova-mx",
       "name": "co-directors-report",
       "version": "1.0",
-      "description": "Generates time-segmented session reports for co-directors and stakeholders. Each day has up to three segments (morning, afternoon, evening). Interviews Tom, reads all available data sources, produces a report covering the current segment, and updates REMINDERS.md with next steps.",
+      "description": "Time-segmented session reports for co-directors. Three daily segments (morning, afternoon, evening). Interviews Tom, reads data, and updates REMINDERS.md.",
       "category": "mx-core",
       "tags": [
         "reporting",
@@ -1960,7 +2014,7 @@
       "namespace": "cog-nova-mx",
       "name": "cog-id",
       "version": "1.1.0",
-      "description": "Generate, register, and decode cog IDs — obfuscated MD5 hashes that trace documents back to the cog that created them. The namespace-aware identity layer for MX OS.",
+      "description": "Generate, register, and decode cog IDs — MD5 hashes tracing documents to their originating cog. The namespace-aware identity layer for MX OS.",
       "category": "mx-core",
       "tags": [
         "cog-id",
@@ -1976,6 +2030,24 @@
       "type": "action-doc",
       "compliance_level": 2,
       "url": "/reginald/cogs/cog-nova-mx/cog-id/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
+      "name": "cog-publication-workflow",
+      "version": "1.0",
+      "description": "Cog publication workflow — author, validate, register, and publish a cog to the Reginald registry.",
+      "category": "mx-tools",
+      "tags": [
+        "cog",
+        "publication",
+        "registry",
+        "reginald",
+        "workflow",
+        "validation"
+      ],
+      "type": "action-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/cog-publication-workflow/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
@@ -2013,6 +2085,25 @@
       "type": "action-doc",
       "compliance_level": 2,
       "url": "/reginald/cogs/cog-nova-mx/cog-registry/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
+      "name": "cogify-this",
+      "version": "1.0",
+      "description": "Convert existing content into MX-enhanced format with comprehensive metadata, accessibility, and WebMCP integration",
+      "category": "mx-tools",
+      "tags": [
+        "cogify",
+        "conversion",
+        "mx-enhancement",
+        "metadata",
+        "webmcp",
+        "accessibility",
+        "transformation"
+      ],
+      "type": "info-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/cogify-this/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
@@ -2054,9 +2145,44 @@
     },
     {
       "namespace": "cog-nova-mx",
+      "name": "gen-free-book",
+      "version": "1.0.0",
+      "description": "Generate the MX free book sampler PDF by merging preface, chapter-00, and kickoff presentation PDFs.",
+      "category": "mx-core",
+      "tags": [
+        "pdf",
+        "free-book",
+        "sampler",
+        "ghostscript",
+        "merge",
+        "pandoc"
+      ],
+      "type": "action-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/gen-free-book/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
+      "name": "generate-footnotes",
+      "version": "0.1.0",
+      "description": "Generate HTML footnote pages and QR codes from markdown chapter footnotes",
+      "category": "mx-tools",
+      "tags": [
+        "footnotes",
+        "html",
+        "qr-code",
+        "generation",
+        "books"
+      ],
+      "type": "action-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/generate-footnotes/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
       "name": "how-mx-os-runs",
       "version": "1.0",
-      "description": "The MX OS runtime model. How an AI agent boots, discovers cogs, routes tasks, executes action-docs, and chains actions through invokes. The operating system explained from the inside.",
+      "description": "The MX OS runtime model. How an agent boots, discovers cogs, routes tasks, executes action-docs, and chains actions. The OS explained from the inside.",
       "category": "mx-core",
       "tags": [
         "runtime",
@@ -2077,9 +2203,29 @@
     },
     {
       "namespace": "cog-nova-mx",
+      "name": "html-baseline-audit",
+      "version": "Any version change",
+      "description": "Action-doc for establishing HTML baselines and detecting regressions across all .cog.html files. Automates visual, structural, style, and metadata comparison.",
+      "category": "validation",
+      "tags": [
+        "html",
+        "audit",
+        "baseline",
+        "regression",
+        "testing",
+        "automation",
+        "validation",
+        "ci-cd"
+      ],
+      "type": "info-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/html-baseline-audit/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
       "name": "illustration-generator",
       "version": "1.0.0",
-      "description": "Create professional SVG illustrations and syntax-highlighted code blocks with proper metadata for MX publications following established visual style and quality standards.",
+      "description": "Create SVG illustrations and syntax-highlighted code blocks with metadata for MX publications, following established visual style and quality standards.",
       "category": "content-creation",
       "tags": [
         "illustration",
@@ -2227,7 +2373,7 @@
       "namespace": "cog-nova-mx",
       "name": "metadata-audit",
       "version": "1.0",
-      "description": "Audit all YAML frontmatter across the entire hub — compare every field against the canonical field dictionary, detect deprecated fields, namespace errors, missing required fields, and mx: object sprawl.",
+      "description": "Audit all YAML frontmatter — compare against the field dictionary, detect deprecated fields, namespace errors, missing required fields, and mx: object sprawl.",
       "category": "mx-tools",
       "tags": [
         "audit",
@@ -2263,7 +2409,7 @@
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "allmygithubs",
+      "name": "mx-allmygithubs",
       "version": "2.1-draft",
       "description": "Self-updating action cog that scans GitHub repos and generates a classified, sorted table.",
       "category": "mx-core",
@@ -2276,13 +2422,13 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/allmygithubs/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/mx-allmygithubs/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
       "name": "mx-audit",
       "version": "1.2.0",
-      "description": "Run a comprehensive web audit — crawl pages, analyse accessibility, performance, SEO, and AI agent suitability, then generate a partnership-ready executive report. The complete pipeline from URL to deliverable.",
+      "description": "Comprehensive web audit — crawl pages, analyse accessibility, performance, SEO, and AI agent suitability, then generate a partnership-ready executive report.",
       "category": "mx-sales",
       "tags": [
         "audit",
@@ -2306,7 +2452,7 @@
       "namespace": "cog-nova-mx",
       "name": "mx-boot",
       "version": "1.0",
-      "description": "The MX OS bootstrapper. Takes any machine from zero to operational — checks prerequisites, installs dependencies, configures the environment, initialises the session, and reports status. Three entry points: INSTALLME action cog (bare metal), npm run boot (Node available), /mx-boot skill (session init).",
+      "description": "MX OS bootstrapper — zero to operational. Checks prerequisites, installs dependencies. Entry points: INSTALLME (bare metal), npm run boot, /mx-boot.",
       "category": "mx-core",
       "tags": [
         "boot",
@@ -2363,7 +2509,7 @@
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "manual-mx-os",
+      "name": "mx-os-manual",
       "version": "1.0",
       "description": "The Machine Experience Operating System. A practical guide to cogs, SOULs, the registry, runtime, and the companion web.",
       "category": "manual",
@@ -2376,7 +2522,7 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-mx-os/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/mx-os-manual/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
@@ -2457,7 +2603,7 @@
       "namespace": "cog-nova-mx",
       "name": "pdf-generator",
       "version": "1.0.0",
-      "description": "Generate professional PDFs from markdown — professional table formatting with alternating row colors, improved ASCII diagram rendering with samepage protection, emoji cleanup, invisible Unicode removal (zero-width spaces), automatic illustration generation with aspect ratio preservation, auto-scaled images, A4 and Kindle formats. Uses pandoc's pygments syntax highlighting for searchable, colored code blocks. Includes widow/orphan prevention, intelligent page break control, and task list extension handling.",
+      "description": "Generate professional PDFs from markdown — table formatting, diagram rendering, illustrations, auto-scaled images. A4 and Kindle formats via pandoc.",
       "category": "mx-core",
       "tags": [
         "pdf",
@@ -2489,6 +2635,32 @@
       "type": "action-doc",
       "compliance_level": 2,
       "url": "/reginald/cogs/cog-nova-mx/pdf-generator/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
+      "name": "pixel-perfect-web-replication",
+      "version": "26.0",
+      "description": "Create pixel-perfect MX-enhanced reference implementations from existing websites using HTML/CSS audit, Playwright capture, and automated validation.",
+      "category": "mx-tools",
+      "tags": [
+        "playwright",
+        "visual-capture",
+        "html-css-audit",
+        "dom-tree",
+        "computed-css",
+        "cascade-resolution",
+        "reference-implementation",
+        "pixel-perfect",
+        "automation",
+        "cogification",
+        "bilingual",
+        "single-language-toggle",
+        "offline-capable",
+        "validation-baseline"
+      ],
+      "type": "info-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/pixel-perfect-web-replication/latest.json"
     },
     {
       "namespace": "cog-nova-mx",
@@ -2526,9 +2698,27 @@
     },
     {
       "namespace": "cog-nova-mx",
+      "name": "reginald-mirror",
+      "version": "1.0.0",
+      "description": "Sync source cogs to the Reginald web mirror, keeping allaboutv2/reginald/ up to date with scripts/cogs/ and mx-canon/.",
+      "category": "mx-core",
+      "tags": [
+        "reginald",
+        "mirror",
+        "sync",
+        "registry",
+        "automation",
+        "cogs"
+      ],
+      "type": "action-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/reginald-mirror/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
       "name": "registry-of-registries",
       "version": "1.0.0",
-      "description": "The meta-registry — knows where every registry is, what it indexes, and how to query it. Can scan the repo to discover registries it doesn't know about yet.",
+      "description": "The meta-registry — knows where every registry is, what it indexes, and how to query it.",
       "category": "mx-core",
       "tags": [
         "registry",
@@ -2584,7 +2774,7 @@
       "namespace": "cog-nova-mx",
       "name": "routing-pipeline",
       "version": "1.0.0",
-      "description": "Preprocess user prompts with spell correction, route matching, and context injection. Cut inference cost by telling Claude where to look before it starts searching.",
+      "description": "Preprocess prompts with spell correction, route matching, and context injection. Reduce inference cost by directing Claude before it starts searching.",
       "category": "mx-core",
       "tags": [
         "routing",
@@ -2673,7 +2863,7 @@
       "namespace": "cog-nova-mx",
       "name": "the-companion-web",
       "version": "1.0",
-      "description": "The companion web — how QR codes, landing pages, and embedded metadata turn the physical world into entry points that humans and AI agents read together. Every object with a QR code becomes self-describing. Extends to robotics — the interface between physical machines and the objects they encounter.",
+      "description": "QR codes and metadata turn physical objects into entry points for humans and AI agents. Every object becomes self-describing. Extends to robotics.",
       "category": "mx-core",
       "tags": [
         "companion-web",
@@ -2696,7 +2886,7 @@
       "namespace": "cog-nova-mx",
       "name": "the-personal-cog",
       "version": "2.0",
-      "description": "The personal cog — a collection of cogs that describe YOU. Accessibility needs, interests, dietary requirements, health conditions, skills. Lives on your phone. Your AI agent decides what to share, with whom, based on context. The other half of the companion web — the world describes itself to you, and you describe yourself to the world.",
+      "description": "Cogs describing YOU — accessibility needs, interests, health, skills. Lives on your phone. Your agent decides what to share, with whom, in context.",
       "category": "mx-core",
       "tags": [
         "personal-cog",
@@ -2806,6 +2996,25 @@
     },
     {
       "namespace": "cog-nova-mx",
+      "name": "what-is-mx-environment",
+      "version": "1.0.0",
+      "description": "MX OS lives on the machine, not in the repo. $MX_HOME is the machine-level context — the answer to the machine, the universe, and everything.",
+      "category": "mx-core",
+      "tags": [
+        "environment",
+        "mx-home",
+        "machine-context",
+        "boot",
+        "bare-metal",
+        "two-stage-boot",
+        "mx-os"
+      ],
+      "type": "info-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/what-is-mx-environment/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
       "name": "what-is-mx-os",
       "version": "1.0",
       "description": "The Machine Experience Operating System. Documentation IS the system. Cogs are its programs. This action-doc explains MX OS and can bootstrap it.",
@@ -2884,7 +3093,26 @@
     },
     {
       "namespace": "cog-nova-mx",
-      "name": "multilingual-automation-suite",
+      "name": "who-is-maxine",
+      "version": "1.0",
+      "description": "The AI partner in MX. Identity, partnership model, SOUL convention, and shared memory — so any instance of Claude can become Maxine.",
+      "category": "learning",
+      "tags": [
+        "maxine",
+        "partnership",
+        "identity",
+        "soul",
+        "ai-agent",
+        "memory",
+        "mx-os"
+      ],
+      "type": "info-doc",
+      "compliance_level": 2,
+      "url": "/reginald/cogs/cog-nova-mx/who-is-maxine/latest.json"
+    },
+    {
+      "namespace": "cog-nova-mx",
+      "name": "README",
       "version": "1.0",
       "description": "Complete toolkit for building, validating, and deploying multilingual websites with proper SEO, hreflang annotations, and Google best practices.",
       "category": "reference-implementation",
@@ -2899,7 +3127,7 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/multilingual-automation-suite/latest.json"
+      "url": "/reginald/cogs/cog-nova-mx/README/latest.json"
     }
   ]
 }

@@ -3,16 +3,15 @@ title: "Multilingual Template Generator Manual"
 description: "Converts a single HTML template into language-specific versions with proper lang attributes, hreflang tags, and root redirect for multilingual sites."
 author: Tom Cranstoun and Maxine
 created: 2026-02-21
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: manual-multilingual-template
   status: active
   category: manual
   tags: [manual, multilingual, template, generation, hreflang, internationalization]
   partOf: mx-maxine-lives
-  purpose: "Document the multilingual template generator - converting single HTML to multiple language versions"
-  audience: "human"
+  audience: humans
   stability: "stable"
   runbook: "Read when creating multilingual sites from templates or understanding language version generation"
   contextProvides:

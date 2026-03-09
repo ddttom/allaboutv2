@@ -2,13 +2,12 @@
 version: 0.1.0
 description: Validate links — critical for llms.txt and documentation
 
-created: 2026-02-06T12:31:00Z
-modified: 2026-02-06T12:31:00Z
+created: 2026-02-06
+modified: 2026-02-06
 
 author: Maxine (MX - Machine eXperience Engine)
 
 mx:
-  name: link-checker
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: draft

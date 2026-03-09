@@ -2,11 +2,11 @@
 title: Cogify Workflow Manual
 description: Complete guide to converting existing content into MX-enhanced format with metadata, accessibility, and WebMCP integration.
 author: Tom Cranstoun and Maxine
-created: 2026-02-20T00:00:00.000Z
+created: 2026-02-20
+modified: 2026-03-02
 version: "1.5"
 
 mx:
-  name: manual-cogify
   status: active
   category: manual
   tags:
@@ -23,8 +23,7 @@ mx:
     - cogify-this
     - enhanced-audit
     - pixel-perfect-web-replication
-  purpose: Document cogify - usage, workflow, and best practices
-  audience: human
+  audience: humans
   stability: stable
   runbook: Read when working with cogify or understanding its functionality
   contextProvides:
@@ -198,7 +197,6 @@ cp allaboutv2/mx/demo/salva/assets/script.js my-business/assets/
 **Required fields:**
 
 ```yaml
-name: business-name                    # Unique identifier (kebab-case)
 title: "Business Name"                 # Human-readable title
 description: "One-sentence summary"    # Brief description
 version: "1.0.0"                       # Semantic version
@@ -986,7 +984,6 @@ YAML validation failed: Missing required field 'description'
 **Fix:** Add all required fields to YAML frontmatter:
 
 ```yaml
-name: my-cog
 title: "My Cog"
 description: "Brief description"
 version: "1.0.0"
@@ -1067,7 +1064,7 @@ window.mcp_tools = {
 
 - **Cogify-This:** `scripts/cogs/cogify-this.cog.md` (v1.3.0)
 - **Pixel-Perfect Replication:** `scripts/cogs/pixel-perfect-web-replication.cog.md`
-- **Cog Unified Spec:** `MX-The-Gathering/deliverables/cog-unified-spec.md`
+- **Cog Unified Spec:** `mx-canon/mx-the-gathering/specifications/cog-unified-spec.cog.md`
 
 ### Documentation
 

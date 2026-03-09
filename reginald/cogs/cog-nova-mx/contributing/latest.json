@@ -1,6 +1,6 @@
 {
   "namespace": "cog-nova-mx",
-  "name": "contributing",
+  "name": "CONTRIBUTING",
   "version": "2.0-draft",
   "description": "Contribution guidelines for the block architecture. Open standard, backward compatible, no proprietary lock-in.",
   "author": "Tom Cranstoun",
@@ -20,5 +20,5 @@
   "modified": "2026-02-12",
   "source_path": "mx-canon/mx-maxine-lives/CONTRIBUTING.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/CONTRIBUTING.cog.md",
-  "content_url": "/reginald/cogs/cog-nova-mx/contributing/content.md"
+  "content_url": "/reginald/cogs/cog-nova-mx/CONTRIBUTING/content.md"
 }

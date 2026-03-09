@@ -1,0 +1,26 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "cog-publication-workflow",
+  "version": "1.0",
+  "description": "Cog publication workflow — author, validate, register, and publish a cog to the Reginald registry.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-tools",
+  "tags": [
+    "cog",
+    "publication",
+    "registry",
+    "reginald",
+    "workflow",
+    "validation"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-03-03",
+  "modified": "2026-03-03",
+  "source_path": "scripts/cogs/cog-publication-workflow.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/cog-publication-workflow.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/cog-publication-workflow/content.md"
+}

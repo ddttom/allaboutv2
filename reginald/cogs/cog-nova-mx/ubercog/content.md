@@ -3,12 +3,11 @@ version: "1.5.0"
 description: The repo-level briefing. What this repository is, what lives where, how to route. Any agent reading this can navigate the MX-Hub.
 
 created: 2026-02-14
-modified: 2026-02-26
+modified: 2026-03-08
 
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: ubercog
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -20,11 +19,11 @@ mx:
   tags: [ubercog, gateway, briefing, routing, repo, mx-hub, onboarding]
 
   audience: both
-  readingLevel: accessible
-  purpose: Brief any AI agent on this repository — what it contains, how it is structured, and how to route to the right place
+  readingLevel: beginner
 
   contentType: "briefing-doc"
   runbook: "mx exec ubercog"
+
   execute:
     runtime: runbook
     command: mx ubercog
@@ -91,11 +90,11 @@ The machine uber cog (`$MX_HOME/UBER.cog.md`) told you about the universe. This 
 | `CHANGELOG.md` | What changed and when | When you need history |
 | `planner.md` | Prioritised deadlines and commitments by date | When checking timeline |
 | `next-steps-plan.md` | Active project roadmap and tracking | When planning work |
-| `datalake/knowledge/guides/stakeholders/COLLEAGUE-SUMMARY.md` | Internal business summary for team onboarding | When briefing colleagues |
-| `datalake/knowledge/guides/stakeholders/INVESTOR-SUMMARY.md` | Confidential investor deck and projections | When preparing fundraising |
-| `mx-canon/mx-maxine-lives/management/plans/mx-messaging.cog.md` | Brand messaging framework | When writing external content |
+| `mx-canon/ssot/pitches/partners/colleague-summary.md` | Internal business summary for team onboarding | When briefing colleagues |
+| `mx-canon/ssot/pitches/investors/investor-summary.md` | Confidential investor deck and projections | When preparing fundraising |
+| `mx-canon/ssot/mx-messaging-framework.md` | Brand messaging framework | When writing external content |
 | `mx-canon/mx-maxine-lives/management/plans/mx-agent-independence.cog.md` | Core architectural principle | When understanding MX philosophy |
-| `datalake/knowledge/specifications/mcp-prd.md` | Product requirements for MCP integration | When working on IDE integration |
+| `mx-canon/ssot/specifications/mcp-prd.md` | Product requirements for MCP integration | When working on IDE integration |
 | `scripts/cogs/INSTALLME.cog.md` | Action cog with embedded setup script | When setting up new machine |
 | `getting-started.cog.md` | Human onboarding guide (action cog) | When joining the team |
 | `MAXINE-DECISIONS.md` | Decision authority boundaries | See `mx-canon/mx-maxine-lives/MAXINE-DECISIONS.md` |
@@ -150,7 +149,6 @@ The brain has its own routing system. Read `mx-canon/mx-maxine-lives/ROUTING.md`
 | Location | What |
 |----------|------|
 | `mx-maxine-app/` | Maxine — Primary application (Electron app, PWA, embedded server, AI router) |
-| `Maxine/` | Maxine app directory (may be alternate build or deprecated) |
 | `mx-reginald/` | Cog registry, core tool cogs, query scripts |
 | `mx-audit/` | Web Audit Suite — Production website analysis tool [SUBMODULE] |
 
@@ -171,9 +169,9 @@ MX-Hub contains critical business and operational documents that guide strategy,
 
 | File/Directory | What | When to Read |
 |----------------|------|--------------|
-| `COLLEAGUE-SUMMARY.md` | Internal business summary for team onboarding. Explains what MX is, why it matters, business model, revenue streams. | When onboarding team members or partners |
+| `mx-canon/ssot/pitches/partners/colleague-summary.md` | Internal business summary for team onboarding. Explains what MX is, why it matters, business model, revenue streams. | When onboarding team members or partners |
 | `INVESTOR-SUMMARY.md` | Confidential investor deck. Market opportunity, valuation scenarios (£5M–£1B+), financial projections, use of funds. | When preparing for fundraising or investor meetings |
-| `mx-messaging.cog.md` | Brand messaging framework. Doc/cog terminology split, product family (Maxine, Reginald), audience metadata (tech/business/humans). | When writing external content or marketing materials |
+| `mx-canon/ssot/mx-messaging-framework.md` | Brand messaging framework. Doc/cog terminology split, product family (Maxine, Reginald), audience metadata (tech/business/humans). | When writing external content or marketing materials |
 | `mx-agent-independence.cog.md` | Core architectural principle. "The file IS the platform." MX is agent-agnostic, no vendor lock-in. | When understanding MX philosophy and architecture |
 | `mcp-prd.md` | Product Requirements Document for MCP-based VS Code control. Detailed specifications for AI-powered IDE integration via Model Context Protocol. | When working on IDE integration or MCP features |
 | `mx-crm/` | Contact and relationship management system [SUBMODULE, PRIVATE]. Plain-text CRM with contact files (`mx-crm/contacts/`), strategy notes (`mx-crm/strategy/`), interaction logs, and task tracking. Maxine monitors and updates during heartbeats. | When tracking partnerships, outreach, or relationship status |
@@ -188,15 +186,15 @@ Route to `datalake/manuscripts/mx-books/mx-corpus/corpus/` (Corpus) or `mx-handb
 
 ### "I need to create or edit a blog post"
 
-Route to `mx-canon/mx-maxine-lives/communications/blogs/`. Read `scripts/cogs/mx-os/blog-generator.cog.md` for the full template and pipeline. Three stages: draft (md) → QA (html) → published (allaboutv2).
+Route to `mx-canon/mx-maxine-lives/communications/blogs/`. Read `scripts/cogs/blog-generator.cog.md` for the full template and pipeline. Three stages: draft (md) → QA (html) → published (allaboutv2).
 
 ### "I need to work on the Maxine app"
 
-Route to `mx-maxine-app/`. Read `mx-canon/mx-app/SOUL.md` for scope. The uber Maxine plan is at `mx-canon/mx-app/uber-maxine-plan.cog.md`.
+Route to `mx-maxine-app/`. Read `mx-canon/mx-app/product-brief.md` for scope. The uber Maxine plan is at `mx-canon/mx-app/uber-maxine-plan.cog.md`.
 
 ### "I need to find or create a cog"
 
-Query the registry: `npm run cog:list`, `npm run cog:find -- <term>`. Registries are at `datalake/registries/`. The canonical spec is at `mx-canon/mx-the-gathering/specifications/cog-unified-spec.md`.
+Query the registry: `npm run cog:list`, `npm run cog:find -- <term>`. Registries are at `datalake/registries/`. The canonical spec is at `mx-canon/mx-the-gathering/specifications/cog-unified-spec.cog.md`.
 
 ### "I need to understand a decision"
 
@@ -216,7 +214,7 @@ Route to `planner.md` for prioritised commitments by date (Boye London 26 Feb, F
 
 ### "I need to onboard a colleague or prepare investor materials"
 
-Route to `COLLEAGUE-SUMMARY.md` for team onboarding (explains MX, business model, revenue). For fundraising, see `INVESTOR-SUMMARY.md` (valuation scenarios, financial projections, use of funds). Both confidential.
+Route to `mx-canon/ssot/pitches/partners/colleague-summary.md` for team onboarding (explains MX, business model, revenue). For fundraising, see `INVESTOR-SUMMARY.md` (valuation scenarios, financial projections, use of funds). Both confidential.
 
 ### "I need to understand AI agent discovery or the llms.txt standard"
 

@@ -1,0 +1,27 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "2026-02-13-routing-pipeline",
+  "version": "1.0",
+  "description": "ADR #2: Routing pipeline with prompt preprocessing, spell correction, and route-based context injection to cut inference cost.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "accepted",
+  "category": "adr",
+  "tags": [
+    "adr",
+    "routing",
+    "hook",
+    "inference-reduction",
+    "aspell",
+    "preprocessing",
+    "pipeline"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-13",
+  "modified": "2026-02-13",
+  "source_path": "mx-canon/mx-maxine-lives/registers/ADR/2026-02-13-routing-pipeline.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/registers/ADR/2026-02-13-routing-pipeline.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/2026-02-13-routing-pipeline/content.md"
+}

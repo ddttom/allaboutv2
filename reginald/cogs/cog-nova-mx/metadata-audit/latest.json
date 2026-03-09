@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "metadata-audit",
   "version": "1.0",
-  "description": "Audit all YAML frontmatter across the entire hub — compare every field against the canonical field dictionary, detect deprecated fields, namespace errors, missing required fields, and mx: object sprawl.",
+  "description": "Audit all YAML frontmatter — compare against the field dictionary, detect deprecated fields, namespace errors, missing required fields, and mx: object sprawl.",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "mx.machine.experience@gmail.com",
   "license": "proprietary",

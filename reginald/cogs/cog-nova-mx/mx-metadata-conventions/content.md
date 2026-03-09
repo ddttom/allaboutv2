@@ -7,14 +7,12 @@ modified: 2026-02-15
 version: "1.0"
 
 mx:
-  name: mx-metadata-conventions
   status: active
   category: deliverable
   contentType: info-doc
   tags: [metadata, conventions, html, javascript, css, file-types, embrace-extend, blocks, namespace]
   audience: [tech, business]
-  purpose: "implementation-spec"
-  buildsOn: [what-is-a-cog, field-dictionary]
+  buildsOn: [what-is-a-cog, fields]
   partOf: mx-maxine-lives
   runbook: "This document defines how MX metadata works in every file type. Read this before adding metadata to non-markdown files. The Gathering spec defines the principles; this document defines the rules."
 ---
@@ -28,6 +26,14 @@ Every file type has its own conventions for metadata. JavaScript has JSDoc. HTML
 What MX adds is an identity layer. Your JavaScript file already describes its functions with `@param` and `@returns`. MX adds `@mx:name` and `@mx:purpose` so the file can introduce itself to any AI agent, any registry, any machine that needs to understand what it is.
 
 The architecture is: **embrace** what the file already says. **Extend** with what MX needs. Never duplicate. Never wrap. The pre-existing metadata IS the block.
+
+---
+
+## Standards Hierarchy
+
+Everything that benefits SEO, GEO (Generative Engine Optimisation), accessibility, and usability also benefits MX. Established web standards — HTML semantics, WCAG, Schema.org, Open Graph, Dublin Core, `robots.txt`, `sitemap.xml` — come first. MX adds governance and lifecycle metadata where those standards leave gaps. MX never duplicates or replaces what existing standards already provide.
+
+A well-built MX page is also a well-built SEO page, a well-built accessible page, and a well-built GEO page. The standards reinforce each other.
 
 ---
 
@@ -291,7 +297,7 @@ Is this field useful to ALL implementations?
 
 ### @mx-ai-* pattern
 
-Older files (e.g. `mx-yaml-generator.js`, `mx-yaml-templates.js`) use `@mx-ai-assistance`, `@mx-ai-editable`, `@mx-ai-contextProvides`. These are deprecated. Migrate to:
+The `@mx-ai-*` pattern is deprecated. If encountered in any file, migrate to the canonical `@mx:*` format:
 
 | Deprecated | Canonical |
 | --- | --- |

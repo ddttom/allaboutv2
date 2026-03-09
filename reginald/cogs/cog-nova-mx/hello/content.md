@@ -7,15 +7,13 @@ modified: 2026-02-14
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: hello
   status: active
   license: proprietary
   category: mx-core
   partOf: mx-os
   tags: [hello, introduction, maxine, identity, team]
-  audience: [team, collaborators]
-  readingLevel: accessible
-  purpose: "Give team members and collaborators a clear introduction to Maxine, MX OS, and how we work together"
+  audience: [business, business]
+  readingLevel: beginner
   ownership: gestalt
 ---
 

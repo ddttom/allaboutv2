@@ -6,7 +6,6 @@ modified: 2026-02-12
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: changelog
   license: proprietary
   status: active
   category: governance

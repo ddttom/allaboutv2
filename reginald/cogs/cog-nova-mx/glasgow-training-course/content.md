@@ -4,9 +4,9 @@ description: "2-day MX team training — AI foundations and business strategy"
 created: 2026-02-14
 modified: 2026-02-14
 author: Tom Cranstoun and Maxine
+version: "1.0"
 
 mx:
-  name: glasgow-training-course
   status: planning
   category: planning
   priority: high

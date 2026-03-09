@@ -8,7 +8,6 @@ modified: 2026-02-10
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: mx-reminders
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,8 +18,7 @@ mx:
   tags: [reminders, tasks, persistence, session, productivity, mx-os]
 
   audience: both
-  readingLevel: non-technical
-  purpose: Keep action items visible across sessions so nothing falls through the cracks
+  readingLevel: beginner
 
   contentType: "action-doc"
   runbook: "mx exec mx-reminders"

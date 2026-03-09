@@ -2,11 +2,11 @@
 title: MX Repository Architecture — Complete System Reference
 description: Comprehensive guide to MX repository structure, Canon organization, product architecture, and operational concepts.
 author: Tom Cranstoun and Maxine
-created: 2026-02-21T00:00:00.000Z
+created: 2026-02-21
+modified: 2026-03-08
 version: "1.0"
 
 mx:
-  name: manual-repository-architecture
   status: active
   license: proprietary
   category: manual
@@ -24,8 +24,7 @@ mx:
   refersTo:
     - manual-maxine-lives
     - ROUTING
-  purpose: Provide complete system reference for understanding MX repository architecture, structure, and concepts
-  audience: human
+  audience: humans
   stability: stable
   runbook: "mx exec manual-repository-architecture"
   contextProvides:
@@ -109,7 +108,7 @@ Unset mode is an error state. The repository must be explicitly set to hub or st
 │   └── switch-to-standalone.sh        # Standalone activation
 │
 ├── datalake/                          # Publications
-│   └── manuscripts/mx-books/         # Corpus, Handbook, Appendices
+│   └── manuscripts/mx-books/          # Corpus, Handbook, Appendices
 │
 └── docs/                              # User documentation
 ```
@@ -285,8 +284,8 @@ CLAUDE.md is pure routing logic. The configurations do the work.
 │   │   └── cog-graph.js               # Dependency tree
 │   └── lib/                           # Shared utilities
 │
-├── Publications (datalake/)
-│   ├── publications/
+├── Manuscripts (datalake/)
+│   ├── manuscripts/
 │   │   └── mx-books/
 │   │       ├── mx-corpus/              # The primary book
 │   │       ├── mx-handbook/           # Practitioner guide
@@ -367,7 +366,7 @@ This is not bureaucracy. It is clarity. In a distributed system where cogs refer
 |-----------|---------|--------|
 | **MX-The-Gathering** | Independent standards body (like POSIX) | Active |
 | **MX-OS** | Operating system implementation (like Linux) | Active |
-| **MX-Cog-Registry** | Cog registry deliverables (cogs now in scripts/cogs/) | Active |
+| **MX-Cog-Registry** | Cog registry deliverables (action cogs live in scripts/cogs/) | Active |
 | **MX-Maxine-Lives** | The brain (decisions, thinking, management) | Active |
 | **MX-Contacts** | Contact cog library | Active |
 | **mx-reginald** | Registry product documentation | Active |
@@ -669,7 +668,7 @@ Pohl imagined one device per person. MX OS makes every object a joymaker.
 - Cog-Nova-MX = implementer (like Mozilla/Chrome)
 - The Gathering owns the spec, implementers build products on it
 
-**Canonical Spec:** `mx-canon/mx-the-gathering/specifications/cog-unified-spec.md`
+**Canonical Spec:** `mx-canon/mx-the-gathering/specifications/cog-unified-spec.cog.md`
 
 ---
 
@@ -749,7 +748,7 @@ Most action-docs use `runtime: runbook` because the AI agent is the universal ex
 
 | Collection | Location | Type |
 |-----------|----------|------|
-| **Canon Registry** | `scripts/cogs/` | Core system cogs |
+| **Action Cogs** | `scripts/cogs/` | Core system cogs |
 | **Reginald Core** | `mx-reginald/cogs/core/` (hub mode) | Tool action-docs |
 | **Contacts** | `mx-crm/contacts/` | Contact info-docs |
 | **Skills** | `.claude/skills/*/cog.md` | Entry point action-docs |
@@ -1158,8 +1157,8 @@ npm run mode:status      # Check mode
 | **Brain root** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/mx-canon/mx-maxine-lives/` |
 | **Brain routing** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/mx-canon/mx-maxine-lives/ROUTING.md` |
 | **Manuals** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/mx-canon/mx-maxine-lives/manuals/` |
-| **Cog registry** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/scripts/cogs/` |
-| **Cog spec** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/mx-canon/mx-the-gathering/specifications/cog-unified-spec.md` |
+| **Cog registry** | `/Users/tomcranstoun/Documents/GitHub/MX-hub/scripts/cogs/` |
+| **Cog spec** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/mx-canon/mx-the-gathering/specifications/cog-unified-spec.cog.md` |
 | **Skills** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/.claude/skills/` |
 | **Mode configs** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/.claude/mode-configs/` |
 | **Reginald cogs** | `/Users/tomcranstoun/Documents/MX/MX-The-Books/repo/mx-reginald/cogs/core/` (hub only) |

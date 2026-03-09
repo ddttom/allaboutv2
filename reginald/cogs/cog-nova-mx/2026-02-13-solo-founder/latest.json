@@ -1,0 +1,25 @@
+{
+  "namespace": "cog-nova-mx",
+  "name": "2026-02-13-solo-founder",
+  "version": "1.0",
+  "description": "Risk #1: Solo founder as single point of failure. Critical severity, medium likelihood, catastrophic impact.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "open",
+  "category": "risk",
+  "tags": [
+    "risk",
+    "founder",
+    "bus-factor",
+    "critical",
+    "mitigation"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-13",
+  "modified": "2026-02-13",
+  "source_path": "mx-canon/mx-maxine-lives/management/risks/2026-02-13-solo-founder.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/management/risks/2026-02-13-solo-founder.cog.md",
+  "content_url": "/reginald/cogs/cog-nova-mx/2026-02-13-solo-founder/content.md"
+}

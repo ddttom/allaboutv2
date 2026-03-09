@@ -3,16 +3,15 @@ title: "Multilingual Validator Manual"
 description: "Validates multilingual site implementation for SEO compliance, checking lang attributes, hreflang tags, directory structure, and root redirect."
 author: Tom Cranstoun and Maxine
 created: 2026-02-21
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: manual-multilingual-validator
   status: active
   category: manual
   tags: [manual, multilingual, validation, seo, quality-assurance, hreflang]
   partOf: mx-maxine-lives
-  purpose: "Document the multilingual validator tool - SEO compliance checking and validation workflow"
-  audience: "human"
+  audience: humans
   stability: "stable"
   runbook: "Read when validating multilingual sites, checking SEO compliance, or troubleshooting hreflang issues"
   contextProvides:

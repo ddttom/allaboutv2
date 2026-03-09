@@ -1,6 +1,6 @@
 ---
 version: "1.0"
-description: How to build operational action-docs — the development lifecycle from description to working tool. Describe, create, test, wire. The pattern that turns natural language into MX OS applications.
+description: How to build action-docs — from description to working tool. Describe, create, test, wire. The pattern that turns natural language into MX OS applications.
 
 created: 2026-02-09
 modified: 2026-02-09
@@ -8,7 +8,6 @@ modified: 2026-02-09
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: building-action-docs
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
   tags: [development, lifecycle, operational, entry-points, scaffold, tutorial, worked-example, mx-contacts]
 
-  audience: developers
-  readingLevel: technical
-  purpose: Document the complete lifecycle of building an operational action-doc — from a human describing what they need, through AI creating the action-doc, to wiring up entry points so anyone can invoke it from anywhere
+  audience: tech
+  readingLevel: advanced
 
   execute:
     runtime: runbook

@@ -2,11 +2,11 @@
 title: Manuals Registry
 description: Index of all MX system manuals. One brain, one registry. Every manual is a cog.
 author: Tom Cranstoun and Maxine
-created: 2026-02-13T00:00:00.000Z
+created: 2026-02-13
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: manuals-registry
   status: active
   license: proprietary
   category: registry
@@ -122,8 +122,7 @@ mx:
         description: Find the manual for a given topic or tool
       - name: register
         description: Add a new manual to the registry
-  purpose: Document manuals registry - usage, workflow, and best practices
-  audience: human
+  audience: humans
   stability: stable
   runbook: "mx exec manuals-registry"
   contextProvides:

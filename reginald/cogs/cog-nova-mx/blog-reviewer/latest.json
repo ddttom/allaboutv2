@@ -2,7 +2,7 @@
   "namespace": "cog-nova-mx",
   "name": "blog-reviewer",
   "version": "1.0.0",
-  "description": "Review any blog post — scan for AI writing patterns, check dual-audience balance, interview the author, gather specifics, rewrite. Accepts markdown, HTML, or plain text.",
+  "description": "Review blog posts — scan for AI writing patterns, check dual-audience balance, interview the author, rewrite. Accepts markdown, HTML, or plain text.",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "mx.machine.experience@gmail.com",
   "license": "proprietary",

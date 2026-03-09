@@ -3,16 +3,15 @@ title: "Content Parity Checker Manual"
 description: "Compares content across multilingual site language versions to identify translation gaps, structural differences, and outdated translations."
 author: Tom Cranstoun and Maxine
 created: 2026-02-21
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: manual-parity-checker
   status: active
   category: manual
   tags: [manual, multilingual, parity, quality-assurance, translation, content]
   partOf: mx-maxine-lives
-  purpose: "Document the content parity checker - detecting translation gaps and content inconsistencies"
-  audience: "human"
+  audience: humans
   stability: "stable"
   runbook: "Read when checking translation completeness, identifying content gaps, or ensuring multilingual parity"
   contextProvides:

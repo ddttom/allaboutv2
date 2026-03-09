@@ -8,7 +8,6 @@ modified: 2026-02-11
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: env
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -20,8 +19,7 @@ mx:
   tags: [environment, config, settings, hostname, project, convention]
 
   audience: both
-  readingLevel: technical
-  purpose: Centralise project-level configuration so that cogs and templates reference values from one place instead of hardcoding them across hundreds of files
+  readingLevel: advanced
 
   contentType: "config-doc"
   runbook: "mx exec env"

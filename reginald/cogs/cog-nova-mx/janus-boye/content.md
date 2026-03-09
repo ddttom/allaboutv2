@@ -2,9 +2,10 @@
 description: Founder of Boye & Company, CMS Experts Group, CMS Summit organiser
 author: Tom Cranstoun
 created: 2026-02-09
+modified: 2026-03-02
+version: "1.0"
 
 mx:
-  name: janus-boye
   contentType: contact
   category: contact
   tags: [contact, mentor, cms, industry]

@@ -1,6 +1,6 @@
 {
   "namespace": "cog-nova-mx",
-  "name": "hello",
+  "name": "HELLO",
   "version": "1.1",
   "description": "Maxine introduces herself, the MX system, and the gestalt. For team members and collaborators.",
   "author": "Tom Cranstoun and Maxine",
@@ -21,5 +21,5 @@
   "modified": "2026-02-14",
   "source_path": "mx-canon/mx-maxine-lives/HELLO.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/HELLO.cog.md",
-  "content_url": "/reginald/cogs/cog-nova-mx/hello/content.md"
+  "content_url": "/reginald/cogs/cog-nova-mx/HELLO/content.md"
 }

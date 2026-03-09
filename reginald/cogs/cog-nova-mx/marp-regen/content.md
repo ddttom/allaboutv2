@@ -8,7 +8,6 @@ modified: 2026-02-26
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: marp-regen
   maintainer: tom.cranstoun@gmail.com
   license: proprietary
   status: published
@@ -18,8 +17,7 @@ mx:
   tags: [marp, presentation, pptx, slides, regenerate]
 
   audience: both
-  readingLevel: technical
-  purpose: "Convert Marp markdown to PPTX using marp-cli"
+  readingLevel: advanced
 
   execute:
     runtime: bash

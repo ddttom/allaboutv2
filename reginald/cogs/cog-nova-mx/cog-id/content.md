@@ -1,6 +1,6 @@
 ---
 version: "1.1.0"
-description: "Generate, register, and decode cog IDs — obfuscated MD5 hashes that trace documents back to the cog that created them. The namespace-aware identity layer for MX OS."
+description: "Generate, register, and decode cog IDs — MD5 hashes tracing documents to their originating cog. The namespace-aware identity layer for MX OS."
 
 created: 2026-02-14
 modified: 2026-02-14
@@ -8,7 +8,6 @@ modified: 2026-02-14
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: cog-id
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
 
@@ -19,8 +18,7 @@ mx:
   tags: [cog-id, identity, hash, md5, obfuscation, namespace, x-mx-p-ref, registry, privacy]
 
   audience: [machines, tech]
-  readingLevel: technical
-  purpose: "Give any AI agent or developer a repeatable workflow for generating cog IDs, registering them in two-level registries (repo + personal), and decoding them. Includes Node.js reference implementation."
+  readingLevel: advanced
 
   contentType: "action-doc"
   runbook: "mx exec cog-id"

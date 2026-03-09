@@ -8,7 +8,6 @@ modified: 2026-02-09
 author: Tom Cranstoun
 
 mx:
-  name: what-is-a-cog
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -18,9 +17,8 @@ mx:
   refersTo: [cog-unified-spec, mx-principles]
   tags: [cog, introduction, metadata, standard, the-gathering]
 
-  audience: content-strategists
-  readingLevel: non-technical
-  purpose: Explain the cog format to someone encountering it for the first time
+  audience: tech
+  readingLevel: beginner
 
   contentType: "action-doc"
   runbook: "mx exec what-is-a-cog"
@@ -56,7 +54,7 @@ One file. Two audiences. No guessing.
 
 ```yaml
 ---
-name: my-first-cog
+title: "My First Cog"
 version: "1.0"
 description: What this document is about
 author: Your Name
@@ -78,7 +76,7 @@ That is a cog. You already know how to make one.
 
 Three things:
 
-1. **Standardised frontmatter.** Not just any YAML — a defined set of fields that any tool can expect to find. Name, version, description, author, tags, category. The [COG specification](cog-unified-spec.md) defines the full schema.
+1. **Standardised frontmatter.** Not just any YAML — a defined set of fields that any tool can expect to find. Name, version, description, author, tags, category. The [COG specification](cog-unified-spec.cog.md) defines the full schema.
 
 2. **Machine-readable by design.** The metadata is not buried in prose. It sits at the top in a format every programming language can parse. An AI agent reading this cog knows immediately: this is a learning document, written for content strategists, about the cog format itself.
 
@@ -129,7 +127,7 @@ Any document can be a cog. The barrier to entry is three fields and two `---` li
 
 Start simple. Improve over time. Every field you add is a question an AI agent does not have to answer by reading your prose.
 
-Read the [full specification](cog-unified-spec.md) when you want to go deeper. But the format is intentionally simple. If you can write a README, you can write a cog.
+Read the [full specification](cog-unified-spec.cog.md) when you want to go deeper. But the format is intentionally simple. If you can write a README, you can write a cog.
 
 ---
 

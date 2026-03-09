@@ -1,6 +1,6 @@
 ---
 version: "1.0"
-description: No single agent can do everything. When you need something you do not have — diary access, email, location, a booking system — ask the agent that does. This cog describes how agents ask other agents for help.
+description: When you need something you don't have — diary, email, location, bookings — ask the agent that does. How agents request capabilities from other agents.
 
 created: 2026-02-09
 modified: 2026-02-09
@@ -8,7 +8,6 @@ modified: 2026-02-09
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: asking-for-help
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs, the-personal-cog]
   tags: [delegation, agents, inter-agent, handoff, diary, email, capabilities, reach-out]
 
-  audience: developers
-  readingLevel: technical
-  purpose: Document the pattern of agent-to-agent delegation — how an AI agent that needs a capability it does not have asks another agent or service that does
+  audience: tech
+  readingLevel: advanced
 
   contentType: "action-doc"
   runbook: "mx exec asking-for-help"

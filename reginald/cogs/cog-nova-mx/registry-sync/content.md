@@ -8,7 +8,6 @@ modified: 2026-02-17
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: registry-sync
   maintainer: tom.cranstoun@gmail.com
   license: proprietary
   status: published
@@ -20,7 +19,6 @@ mx:
   tags: [registry, automation, hooks, git, cog-management, reginald, sync]
 
   audience: both
-  purpose: "Keep mx-reginald registry synchronized with cog files across multiple trigger points — pre-commit, VS Code save, Claude Code tools, and manual."
 
   execute:
     runtime: runbook

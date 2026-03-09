@@ -2,10 +2,10 @@
 description: "What COGs are, how they work, and the ecosystem behind them"
 author: Tom Cranstoun
 created: 2026-02-08
+modified: 2026-03-02
 version: "1.0"
 
 mx:
-  name: cog-system
   status: draft
   category: specification
   tags: [cog, system, specification, mx-reginald]
@@ -26,9 +26,9 @@ mx:
     scope: "system-overview"
     description: "What COGs are, how they work, and the ecosystem behind them"
 
-  publicationDate: "2026-02-08T00:00:00Z"
-  expires: "2026-08-08T00:00:00Z"
-  lastVerified: "2026-02-08T00:00:00Z"
+  publicationDate: "2026-02-08"
+  expires: "2026-08-08"
+  lastVerified: "2026-02-08"
   signature: "unsigned"
   mxCompliance: "level-2"
   registry: "allabout.network"

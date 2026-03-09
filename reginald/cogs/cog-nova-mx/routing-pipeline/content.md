@@ -1,6 +1,6 @@
 ---
 version: "1.0.0"
-description: "Preprocess user prompts with spell correction, route matching, and context injection. Cut inference cost by telling Claude where to look before it starts searching."
+description: "Preprocess prompts with spell correction, route matching, and context injection. Reduce inference cost by directing Claude before it starts searching."
 
 created: 2026-02-13
 modified: 2026-02-13
@@ -8,7 +8,6 @@ modified: 2026-02-13
 author: Tom Cranstoun and Maxine
 
 mx:
-  name: routing-pipeline
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
@@ -19,9 +18,8 @@ mx:
   buildsOn: [what-is-a-cog, what-is-mx-os, how-mx-os-runs]
   tags: [routing, inference-reduction, preprocessing, hook, aspell, pipeline, sop]
 
-  audience: ai-agents
-  readingLevel: technical
-  purpose: Give any AI agent a repeatable workflow for preprocessing prompts with routing context — reducing inference cost and improving accuracy
+  audience: agents
+  readingLevel: advanced
 
   execute:
     runtime: runbook

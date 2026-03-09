@@ -2,13 +2,12 @@
 version: "2.1"
 description: Unified COG registry management — scan, list, show, find, filter, count, validate, graph, sync, and snapshot the cog registry
 
-created: 2026-02-09T22:00:00Z
+created: 2026-02-09
 modified: 2026-02-23
 
 author: Maxine (MX - Machine eXperience Engine)
 
 mx:
-  name: cog-query
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: active
