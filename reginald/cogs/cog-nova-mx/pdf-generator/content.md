@@ -695,7 +695,7 @@ execute:
         Emoji Detection Report
         =====================
 
-        chapter-00-what-are-ai-agents.md:107
+        chapter-00-introduction-to-mx.md:107
           Current:  **💰 FINANCIAL SNAPSHOT FOR EXECUTIVES**
           Replace:  **FINANCIAL SNAPSHOT FOR EXECUTIVES**
           Category: Decorative (remove)
@@ -775,7 +775,7 @@ execute:
         partOf: mx-illustrations
         inherits: book-svg-style
         purpose: "Business case visualization for competitive timing decisions"
-        refersTo: [chapter-00-what-are-ai-agents, competitive-analysis]
+        refersTo: [chapter-00-introduction-to-mx, competitive-analysis]
 
         visualType: timeline
         concept: first-mover-advantage
