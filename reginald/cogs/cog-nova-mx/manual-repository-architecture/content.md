@@ -109,7 +109,7 @@ Unset mode is an error state. The repository must be explicitly set to hub or st
 │   └── switch-to-standalone.sh        # Standalone activation
 │
 ├── datalake/                          # Publications
-│   └── publications/mx-books/         # Corpus, Handbook, Appendices
+│   └── manuscripts/mx-books/         # Corpus, Handbook, Appendices
 │
 └── docs/                              # User documentation
 ```
