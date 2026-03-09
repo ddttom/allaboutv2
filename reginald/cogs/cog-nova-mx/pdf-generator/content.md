@@ -905,10 +905,11 @@ execute:
 
         The PDF generation commands include:
         ```bash
-        --resource-path=datalake/manuscripts/mx-books/mx-corpus/corpus:datalake/assets/images/bitmap/book-illustrations
+        --resource-path=datalake/manuscripts/mx-books/shared:datalake/manuscripts/mx-books/mx-corpus/corpus:datalake/assets/images/bitmap/book-illustrations
         ```
 
-        This tells Pandoc to search both the chapter directory AND the bitmap illustrations
+        This tells Pandoc to search the shared content directory (for chapter-00 SVGs),
+        the chapter directory, AND the bitmap illustrations
         directory for images.
 
         ### Step 4: Generate PDF with diagrams
