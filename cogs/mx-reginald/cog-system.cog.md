@@ -229,7 +229,7 @@ Two publications define the discipline:
 
 **MX: The Handbook** publishes 2 April 2026. The practical guide — how to make your documentation machine-readable, how to structure content for AI agents, how to stop losing sales to hallucinated prices and non-existent commands. 300-400 pages of "here's how you do it."
 
-**MX: The Corpus** publishes 1 July 2026. The comprehensive specification — ~800 pages of the complete technical reference. If The Handbook tells you what to do, The Corpus tells you why it works and how to extend it.
+**MX: The Protocols** publishes 1 July 2026. The comprehensive specification — ~800 pages of the complete technical reference. If The Handbook tells you what to do, The Protocols tells you why it works and how to extend it.
 
 Together they provide the foundation for the COG format and everything in the REGINALD registry.
 
@@ -258,7 +258,7 @@ Together they provide the foundation for the COG format and everything in the RE
 | First COG created (this document) | 8 February 2026 |
 | MX: The Handbook publishes | 2 April 2026 |
 | REGINALD general availability, CMS Summit Frankfurt | 12 May 2026 |
-| MX: The Corpus publishes | 1 July 2026 |
+| MX: The Protocols publishes | 1 July 2026 |
 
 ---
 

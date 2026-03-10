@@ -28,7 +28,7 @@ mx:
 
 ## Context
 
-MX OS uses `.cog.svg` files as the canonical format for illustrations across all publications (handbook, corpus, presentations). These SVG files include:
+MX OS uses `.cog.svg` files as the canonical format for illustrations across all publications (handbook, protocols, presentations). These SVG files include:
 
 - **YAML frontmatter** in XML comments (`=== ... ===` delimiters)
 - **CSS styling** via embedded `<style>` tags with classes

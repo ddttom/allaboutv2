@@ -217,9 +217,9 @@ Making the web work for **everyone and everything that uses it.**
 - 26 Feb: London CMS Experts (first public audience)
 - 2 Apr: MX: The Handbook publication
 - 12 May: Frankfurt CMS Summit (railway narrative, demo)
-- 1 Jul: MX: The Corpus publication
+- 1 Jul: MX: The Protocols publication
 
-**After Corpus:** Maxine product launch planning begins.
+**After Protocols:** Maxine product launch planning begins.
 
 ## This Document's Purpose
 

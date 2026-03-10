@@ -81,7 +81,7 @@ allaboutv2/README.md
     Use:      datalake/pipeline/drafts/
 
   Line 58: Old outputs/ path should be mx-outputs/
-    Found:    Build outputs appear in outputs/corpus/
+    Found:    Build outputs appear in outputs/protocols/
     Use:      mx-outputs/
 ```
 

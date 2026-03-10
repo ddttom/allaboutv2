@@ -1228,7 +1228,7 @@ mx:
     - name: book
       type: string
       definition: "Which book this chapter belongs to."
-      example: "MX Corpus"
+      example: "MX Protocols"
       notes: "Identifies which book a chapter belongs to."
       status: canonical
       profile: book
@@ -3492,7 +3492,7 @@ Not every document needs every field. A blog post needs different metadata from 
 |---------|---------------|-----------------|
 | **Core** | Every MX document | `title`, `description`, `author`, `created`, `modified` |
 | **Cog** | `.cog.md` files in the registry | `name`, `category`, `partOf` |
-| **Book** | Corpus and Handbook chapters | `book`, `chapter`, `wordCount`, `copyright` |
+| **Book** | Protocols and Handbook chapters | `book`, `chapter`, `wordCount`, `copyright` |
 | **Blog** | Published articles | `publicationDate`, `blogState` |
 | **Contact** | Person records | `relationship`, `role`, `company` |
 | **Folder** | `.mx.yaml.md` folder metadata | `folderType`, `stability`, `lifecycle`, `domain` |

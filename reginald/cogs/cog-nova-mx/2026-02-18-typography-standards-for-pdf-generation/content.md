@@ -17,7 +17,7 @@ mx:
     title: "Typography Standards for PDF Generation"
     status: accepted
     date: 2026-02-18
-    context: "MX publications (Handbook, Corpus, case studies) require professional typography that prevents awkward page breaks. Widows (single lines at top of page), orphans (single lines at bottom of page), and split context (tables/code blocks separated from headings) create poor reading experiences and reduce publication quality."
+    context: "MX publications (Handbook, Protocols, case studies) require professional typography that prevents awkward page breaks. Widows (single lines at top of page), orphans (single lines at bottom of page), and split context (tables/code blocks separated from headings) create poor reading experiences and reduce publication quality."
     decision: "Establish universal typography standards using LaTeX penalty settings and intelligent spacing. Apply widow/orphan prevention (\\widowpenalty=10000, \\clubpenalty=10000) and flexible page bottoms (\\raggedbottom) to all book metadata.yaml files. Use needspace package for tables and code blocks requiring context preservation."
     consequences: "Consistent professional typography across all MX publications. Eliminates single-line orphans and preserves context for tables/code. Universal standards reduce decision-making overhead and establish clear patterns. Requires needspace LaTeX package installation (via tlmgr). May create uneven page bottoms (acceptable trade-off for readability)."
 
@@ -31,7 +31,7 @@ mx:
 MX OS publishes three main book products:
 
 - **MX: The Handbook** — practical implementation guide
-- **MX: The Corpus** — comprehensive reference work
+- **MX: The Protocols** — comprehensive reference work
 - **Case Studies** — implementation examples and patterns
 
 As of February 2026, these publications required consistent typography standards to ensure professional quality. Specific concerns identified:
@@ -61,7 +61,7 @@ Both patterns create poor reading experiences:
 
 Should typography controls be:
 
-1. **Universal** — same settings in all metadata.yaml files (Handbook, Corpus, case studies)
+1. **Universal** — same settings in all metadata.yaml files (Handbook, Protocols, case studies)
 2. **Per-book** — different settings per publication based on specific needs
 3. **Optional** — available but not required, applied when issues arise
 
@@ -149,7 +149,7 @@ npm run illustrations:generate
 ### Why Universal (Not Per-Book)?
 
 **1. Consistency Across Product Line**
-All MX publications represent the same brand and quality level. Readers expect consistent typography whether reading the Handbook, Corpus, or a case study. Universal standards ensure this.
+All MX publications represent the same brand and quality level. Readers expect consistent typography whether reading the Handbook, Protocols, or a case study. Universal standards ensure this.
 
 **2. Reduced Decision Overhead**
 Developers and content authors shouldn't need to decide typography policy for each publication. Universal standards eliminate "should I add widow prevention to this book?" questions.
@@ -191,7 +191,7 @@ When creating new books, case studies, or white papers, quality typography comes
 All MX publications meet professional typesetting standards. No widows, no orphans, no awkwardly split context.
 
 **2. Universal Application**
-One decision covers all publications. Handbook, Corpus, case studies, future books — all benefit immediately.
+One decision covers all publications. Handbook, Protocols, case studies, future books — all benefit immediately.
 
 **3. Automated Enforcement**
 LaTeX enforces the standards automatically during PDF generation. No manual review needed to catch widow/orphan issues.
@@ -333,14 +333,14 @@ For each build machine:
 
 3. **Update all book metadata.yaml files:**
    - Handbook: `datalake/assets/configs/books/handbook/metadata.yaml`
-   - Corpus: `datalake/assets/configs/books/corpus/metadata.yaml`
+   - Protocols: `datalake/assets/configs/books/protocols/metadata.yaml`
    - Case studies: `datalake/assets/configs/books/case-studies/metadata.yaml`
 
 4. **Regenerate PDFs to verify:**
 
    ```bash
    npm run pdf:mx-generate      # Handbook
-   npm run pdf:corpus-generate   # Corpus
+   npm run pdf:protocols-generate   # Protocols
    ```
 
 ### Verification Process
@@ -394,14 +394,14 @@ After adding typography settings:
 - ✅ pdf-generator.cog.md updated to v1.8.2 with Step 7.6
 - ✅ Handbook metadata.yaml updated with typography settings
 - ✅ Handbook PDF regenerated and verified (2026-02-18)
-- ⏳ Corpus metadata.yaml pending update
+- ⏳ Protocols metadata.yaml pending update
 - ⏳ Case studies metadata.yaml pending update
 
 **Next Actions:**
 
-1. Apply typography settings to Corpus metadata.yaml
+1. Apply typography settings to Protocols metadata.yaml
 2. Apply typography settings to case studies metadata.yaml
-3. Add needspace usage to Handbook/Corpus content where needed
+3. Add needspace usage to Handbook/Protocols content where needed
 4. Document in authoring guidelines for future publications
 
 ---

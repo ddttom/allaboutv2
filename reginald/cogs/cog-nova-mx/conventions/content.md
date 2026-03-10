@@ -91,7 +91,7 @@ Where things live. These are not suggestions — if content goes elsewhere, it's
 
 | Content | Location | Notes |
 |---------|----------|-------|
-| Corpus manuscripts | `datalake/manuscripts/mx-books/mx-corpus/corpus/` | Chapter files: `chapter-*.md` |
+| Protocols manuscripts | `datalake/manuscripts/mx-books/mx-protocols/protocols/` | Chapter files: `chapter-*.md` |
 | Handbook chapters | `datalake/manuscripts/mx-books/mx-handbook/chapters/` | Chapter files: `chapter-*.md` |
 | Blog drafts (md) | `mx-canon/mx-maxine-lives/communications/blogs/md/` | Markdown source |
 | Blog templates | `mx-canon/mx-maxine-lives/communications/blogs/md/templates/` | EDS and MX templates |
@@ -103,13 +103,13 @@ Where things live. These are not suggestions — if content goes elsewhere, it's
 
 | Content | Location | Notes |
 |---------|----------|-------|
-| Corpus PDFs | `mx-outputs/pdf/books/corpus/` | PDF, Kindle, simple formats |
-| Corpus HTML | `mx-outputs/html/books/corpus/` | Standalone HTML for print |
+| Protocols PDFs | `mx-outputs/pdf/books/protocols/` | PDF, Kindle, simple formats |
+| Protocols HTML | `mx-outputs/html/books/protocols/` | Standalone HTML for print |
 | Handbook PDFs | `mx-outputs/pdf/books/handbook/` | PDF, Kindle, simple formats |
 | Handbook HTML | `mx-outputs/html/books/handbook/` | Standalone HTML |
 | Chapter 00 standalone | `mx-outputs/pdf/books/chapters/` | PDF and HTML |
 | Blog HTML (QA) | `mx-canon/mx-maxine-lives/communications/blogs/html/allabout/` | Brain copy for review |
-| Blog HTML (other) | `communications/blogs/html/{corpus,outputs,lifecycle}/` | By provenance |
+| Blog HTML (other) | `communications/blogs/html/{protocols,outputs,lifecycle}/` | By provenance |
 | Client deliverables | `mx-outputs/datalake/clients/{client-name}/` | Per-client |
 | Temp/working | `mx-outputs/datalake/tmp/` | Gitignored |
 

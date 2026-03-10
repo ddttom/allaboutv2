@@ -534,7 +534,7 @@ mx:
           - **Code blocks:** `\needspace{7\baselineskip}` (heading + 5 lines of code)
           - **Large content:** Use `longtable` or `samepage` environment instead
           **Scope:**
-          These settings are **universal** — apply to all book metadata.yaml files (Handbook, Corpus, case studies). They establish consistent typography standards across all MX publications.
+          These settings are **universal** — apply to all book metadata.yaml files (Handbook, Protocols, case studies). They establish consistent typography standards across all MX publications.
           **Trade-offs:**
           - **Pro:** Professional typography, no awkward widows/orphans, context preserved
           - **Pro:** Readers never see single orphaned lines or split context
@@ -667,7 +667,7 @@ mx:
           concept: first-mover-advantage
           audience: business
           usedIn:
-            - book: mx-corpus
+            - book: mx-protocols
               chapters: [chapter-00]
               context: "Illustrates competitive positioning section"
           tags: [timeline, business-case, competitive-advantage]
@@ -763,20 +763,20 @@ mx:
           **Path handling:** Pandoc's `--resource-path` searches both flat and subdirectory structures automatically.
           The PDF generation commands include:
           ```bash
-          --resource-path=datalake/manuscripts/mx-books/shared:datalake/manuscripts/mx-books/mx-corpus/corpus:datalake/assets/images/bitmap/book-illustrations
+          --resource-path=datalake/manuscripts/mx-books/shared:datalake/manuscripts/mx-books/mx-protocols/protocols:datalake/assets/images/bitmap/book-illustrations
           ```
           This tells Pandoc to search the shared content directory (for chapter-00 SVGs),
           the chapter directory, AND the bitmap illustrations directory for images.
           ### Step 4: Generate PDF with diagrams
           For full book with diagrams:
           ```bash
-          npm run pdf:corpus-all
+          npm run pdf:protocols-all
           ```
           This runs:
           1. `npm run illustrations:generate` (SVG → PNG conversion)
-          2. `npm run pdf:corpus-html` (HTML preview)
-          3. `npm run pdf:corpus-kindle` (Kindle 6×9 PDF)
-          4. `npm run pdf:corpus-generate` (A4 PDF with XeLaTeX)
+          2. `npm run pdf:protocols-html` (HTML preview)
+          3. `npm run pdf:protocols-kindle` (Kindle 6×9 PDF)
+          4. `npm run pdf:protocols-generate` (A4 PDF with XeLaTeX)
           5. `npm run pdf:appendix` (Appendix HTML generation)
           For single chapter testing:
           ```bash
@@ -931,7 +931,7 @@ This cog enforces a git-first workflow:
 
 - `scripts/mx-pdf.sh` — the bash engine this cog wraps
 - `scripts/generate-document-pdf.js` — the Node engine for diagram-heavy documents
-- `datalake/assets/configs/books/corpus/metadata.yaml` — full book configuration (covers, fancy headers)
+- `datalake/assets/configs/books/protocols/metadata.yaml` — full book configuration (covers, fancy headers)
 - `.claude/skills/mx-c-pdf-generator/skill.md` — the Claude Code skill entry point
 
 ---

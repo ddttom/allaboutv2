@@ -108,7 +108,7 @@ Unset mode is an error state. The repository must be explicitly set to hub or st
 │   └── switch-to-standalone.sh        # Standalone activation
 │
 ├── datalake/                          # Publications
-│   └── manuscripts/mx-books/          # Corpus, Handbook, Appendices
+│   └── manuscripts/mx-books/          # Protocols, Handbook, Appendices
 │
 └── docs/                              # User documentation
 ```
@@ -287,7 +287,7 @@ CLAUDE.md is pure routing logic. The configurations do the work.
 ├── Manuscripts (datalake/)
 │   ├── manuscripts/
 │   │   └── mx-books/
-│   │       ├── mx-corpus/              # The primary book
+│   │       ├── mx-protocols/              # The primary book
 │   │       ├── mx-handbook/           # Practitioner guide
 │   │       ├── mx-appendices/         # Reference materials
 │   │       └── shared/                # Fonts, styles, templates

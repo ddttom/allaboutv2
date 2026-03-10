@@ -76,7 +76,7 @@ But this is a naming decision that affects every document, pitch, book, and spec
 - `cog-unified-spec.cog.md` — all block type references
 - `block-architecture-decision` ADR — title and content
 - Vision statement — architecture description
-- MX: The Handbook and MX: The Corpus — manuscript chapters
+- MX: The Handbook and MX: The Protocols — manuscript chapters
 - Messaging framework (`mx-messaging-framework.md`)
 - All skills and manuals that reference block types
 - YAML field name: `blocks:` array in frontmatter

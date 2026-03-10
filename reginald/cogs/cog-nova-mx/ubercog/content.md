@@ -135,7 +135,7 @@ The brain has its own routing system. Read `mx-canon/mx-maxine-lives/ROUTING.md`
 
 | Location | What |
 |----------|------|
-| `datalake/manuscripts/mx-books/` | Book manuscripts (Corpus, Handbook, Appendices, Code Examples) |
+| `datalake/manuscripts/mx-books/` | Book manuscripts (Protocols, Handbook, Appendices, Code Examples) |
 | `datalake/` | Central knowledge index, schemas, guides, image assets, configs |
 | `mx-crm/` | CRM — contacts, prospects, client deliverables, outreach templates [SUBMODULE, PRIVATE]. Single source of truth for all contact and relationship data. |
 | `prompts/` | AI prompt templates and system instructions |
@@ -182,7 +182,7 @@ MX-Hub contains critical business and operational documents that guide strategy,
 
 ### "I need to write or edit a book chapter"
 
-Route to `datalake/manuscripts/mx-books/mx-corpus/corpus/` (Corpus) or `mx-handbook/chapters/` (Handbook). Shared chapters (Ch00, Glossary) are in `datalake/manuscripts/mx-books/shared/`. British English, first person, real examples only.
+Route to `datalake/manuscripts/mx-books/mx-protocols/protocols/` (Protocols) or `mx-handbook/chapters/` (Handbook). Shared chapters (Ch00, Glossary) are in `datalake/manuscripts/mx-books/shared/`. British English, first person, real examples only.
 
 ### "I need to create or edit a blog post"
 
@@ -307,15 +307,15 @@ npm run blog:qa                   # Validate HTML in QA stage for WCAG complianc
 npm run blog:publish              # Deploy blogs from QA to allaboutv2
 ```
 
-### PDF Generation — Corpus (MX: The Corpus)
+### PDF Generation — Protocols (MX: The Protocols)
 
 ```bash
-# Generate Corpus book in multiple formats
-npm run pdf:corpus-html            # HTML version (open and print to PDF with ⌘+P)
-npm run pdf:corpus-generate        # PDF directly via xelatex (full formatting)
-npm run pdf:corpus-kindle          # Kindle-formatted PDF (6"×9", optimized margins)
-npm run pdf:corpus-simple          # Simple PDF without fancy formatting
-npm run pdf:corpus-all             # Generate all Corpus formats (HTML + PDF + Kindle)
+# Generate Protocols book in multiple formats
+npm run pdf:protocols-html            # HTML version (open and print to PDF with ⌘+P)
+npm run pdf:protocols-generate        # PDF directly via xelatex (full formatting)
+npm run pdf:protocols-kindle          # Kindle-formatted PDF (6"×9", optimized margins)
+npm run pdf:protocols-simple          # Simple PDF without fancy formatting
+npm run pdf:protocols-all             # Generate all Protocols formats (HTML + PDF + Kindle)
 npm run illustrations:generate    # Generate illustrations before PDF build
 npm run pdf:appendix              # Generate appendix HTML
 ```

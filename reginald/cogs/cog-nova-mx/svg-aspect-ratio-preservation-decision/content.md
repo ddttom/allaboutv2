@@ -211,7 +211,7 @@ ADR #4 chose qlmanage for **CSS rendering accuracy**. This ADR refines that deci
 This workflow applies to:
 
 - MX Handbook (diagrams, flowcharts, timelines)
-- MX Corpus (architecture diagrams, illustrations)
+- MX Protocols (architecture diagrams, illustrations)
 - Blog posts (screenshots, diagrams)
 - Presentations (slide graphics)
 - Any SVG used in PDF output

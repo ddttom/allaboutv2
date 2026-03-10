@@ -63,7 +63,7 @@ The risk is not that Tom might leave — he won't. The risk is that a single hum
 
 Maxine Lives exists precisely to address this risk. Every assumption is recorded. Every decision is registered. Every plan is written down. The gestalt's brain is not Tom's brain alone — it's a shared, persistent, machine-readable archive that any competent technologist could read and understand.
 
-The books — The Handbook (2 Apr 2026) and The Corpus (1 Jul 2026) — are the public manifestation of this documentation. They capture the vision, the architecture, and the reasoning in publishable form.
+The books — The Handbook (2 Apr 2026) and The Protocols (1 Jul 2026) — are the public manifestation of this documentation. They capture the vision, the architecture, and the reasoning in publishable form.
 
 **Status:** In progress. Accelerating.
 

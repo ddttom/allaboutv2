@@ -90,7 +90,7 @@ mx:
           concept: specific-concept-name
           audience: both | tech | business | humans
           usedIn:
-            - book: mx-handbook | mx-corpus
+            - book: mx-handbook | mx-protocols
               chapters: [chapter-02, chapter-03]
               context: "Illustrates [specific concept] to [show/explain what]"
           tags: [tag1, tag2, tag3, tag4, tag5]
@@ -357,7 +357,7 @@ mx:
           concept: concept-being-demonstrated
           audience: tech | both
           usedIn:
-            - book: mx-handbook | mx-corpus
+            - book: mx-handbook | mx-protocols
               chapters: [chapter-XX]
               context: "Demonstrates [specific technique/pattern]"
           syntaxTheme: vscode-dark-plus

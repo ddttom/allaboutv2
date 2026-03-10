@@ -10,7 +10,7 @@ mx:
   status: active
   category: marketing
   contentType: info-doc
-  tags: [mx, landing-page, corpus, handbook, coming-soon, machine-experience, books, companion-web, ai-agents, waitlist, email-signup]
+  tags: [mx, landing-page, protocols, handbook, coming-soon, machine-experience, books, companion-web, ai-agents, waitlist, email-signup]
   audience: ["humans", "machines"]
   buildsOn: [mx-messaging, mx-concepts]
   runbook: "This is the public landing page for Cog-Nova-MX on allabout.network. It introduces MX to first-time visitors — both human and machine. For humans: render the HTML at coming-soon.cog.html. For machines: read this cog for structured metadata about MX, the books, the product family, and contact information."
@@ -40,7 +40,7 @@ Machine Experience (MX) fixes this. It makes your content readable by every AI a
 
 ## Join the Waitlist
 
-Be the first to know when the MX Handbook and MX Corpus launch.
+Be the first to know when the MX Handbook and MX Protocols launch.
 
 **[Join the Waitlist](https://forms.gle/443wpx4th4ZzYPdA8)**
 
@@ -52,7 +52,7 @@ A practical guide to adding Machine Experience to your CMS, your website, and yo
 
 **Expected publication: 2 April 2026**
 
-### The MX Corpus
+### The MX Protocols
 
 The definitive reference for those implementing MX at scale. Architecture, standards, the companion web, and enterprise implementation patterns.
 
