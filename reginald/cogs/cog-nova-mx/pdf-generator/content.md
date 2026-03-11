@@ -841,7 +841,7 @@ mx:
           ### Components (in order)
 
           1. **Preface** (includes acknowledgements) — generated from markdown
-          2. **Chapter 0 — Introduction to MX** — pre-built PDF
+          2. **MX: The Introduction** — pre-built PDF
           3. **The AI Tipping Point — CMS Kickoff 2024** — external PDF
 
           ### Output

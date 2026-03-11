@@ -38,7 +38,7 @@ mx:
              - Generated to: `mx-outputs/pdf/books/free-book/preface.pdf`
              - Config: `datalake/assets/configs/books/free-book/metadata.yaml`
 
-          2. **Chapter 0 — Introduction to MX**
+          2. **MX: The Introduction**
              - Pre-built: `mx-outputs/pdf/books/chapters/chapter-00-introduction-to-mx.pdf`
              - Generated via: `npm run pdf:chapter00-simple` (if missing)
 
