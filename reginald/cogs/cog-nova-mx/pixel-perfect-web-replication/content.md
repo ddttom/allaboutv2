@@ -239,7 +239,7 @@ mx:
 
 ## What This Cog Does
 
-This action-doc provides a complete, battle-tested workflow for creating pixel-perfect MX-enhanced reference implementations from existing websites. It eliminates guesswork through:
+This action-doc provides a complete, proven workflow for creating pixel-perfect MX-enhanced reference implementations from existing websites. It eliminates guesswork through:
 
 1. **Comprehensive HTML/CSS Audit** - Captures complete DOM tree, computed CSS, cascade resolution, and all assets
 2. **Automated Visual Capture** - Playwright screenshots, exact colors, typography, and layout measurements

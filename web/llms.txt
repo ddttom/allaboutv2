@@ -46,7 +46,7 @@ The book examines how modern web design optimised for human users fails for AI a
 ## Implementation Guides
 
 - Appendix A: https://allabout.network/invisible-users/appendix-a.html - Implementation Cookbook (quick-reference recipes for common patterns)
-- Appendix B: https://allabout.network/invisible-users/appendix-b.html - Battle-Tested Lessons (production learnings and pitfalls to avoid)
+- Appendix B: https://allabout.network/invisible-users/appendix-b.html - Proven Lessons (production learnings and pitfalls to avoid)
 - Appendix C: https://allabout.network/invisible-users/appendix-c.html - Web Audit Suite User Guide (complete tool documentation)
 - Appendix D: https://allabout.network/invisible-users/appendix-d.html - AI-Friendly HTML Guide (comprehensive semantic HTML patterns)
 

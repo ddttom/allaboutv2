@@ -854,7 +854,7 @@ Explore your notebook structure and repository files through an organized, hiera
     - chapter-02-the-invisible-failure.md
   ▶ Appendices (12 files)
     - appendix-a-implementation-cookbook.md
-    - appendix-b-battle-tested-lessons.md
+    - appendix-b-proven-lessons.md
     - appendix-c-web-audit-suite-guide.md
   ▶ Miscellaneous (3 files)
     - advice.md

@@ -465,7 +465,7 @@ The Spectrum Card block uses Adobe Spectrum for:
 - **Professional Design**: Enterprise-grade design system
 - **Accessibility**: Built-in accessibility features
 - **Consistency**: Matches Adobe product ecosystem
-- **Quality**: Battle-tested components
+- **Quality**: Proven components
 - **Support**: Well-documented and maintained
 
 ### Author Benefits

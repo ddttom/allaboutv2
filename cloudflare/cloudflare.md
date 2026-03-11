@@ -262,7 +262,7 @@ The worker uses a two-file approach: one production file (`cloudflare-worker.js`
 5. **Processes push invalidation** requests from Adobe EDS
 6. **Returns content** to visitor via Cloudflare
 
-**Why the Worker is necessary:** Cloudflare Pro plan supports Transform Rules, but the Worker approach is battle-tested and proven. Transform Rules could potentially replace the Worker for host header rewriting, but the current Worker implementation is stable and efficient (0.8ms CPU time). Consider evaluating Transform Rules as an alternative in the future if Worker limits become a concern.
+**Why the Worker is necessary:** Cloudflare Pro plan supports Transform Rules, but the Worker approach is validated and proven. Transform Rules could potentially replace the Worker for host header rewriting, but the current Worker implementation is stable and efficient (0.8ms CPU time). Consider evaluating Transform Rules as an alternative in the future if Worker limits become a concern.
 
 ### Worker Metrics
 
