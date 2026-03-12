@@ -1,0 +1,26 @@
+{
+  "namespace": "cognovamx",
+  "name": "uber-maxine-plan",
+  "version": "1.0",
+  "description": "Master plan for Maxine — the distributed AI partner. Single source of truth for what Maxine is, where she is, and where she's going.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "product",
+  "tags": [
+    "maxine",
+    "plan",
+    "architecture",
+    "roadmap",
+    "product",
+    "master-plan"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-11",
+  "modified": "2026-02-12",
+  "source_path": "mx-canon/mx-app/uber-maxine-plan.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-app/uber-maxine-plan.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/uber-maxine-plan/content.md"
+}

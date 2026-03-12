@@ -219,4 +219,4 @@ curl -H "Accept-Language: en-US,en;q=0.9" -L https://allabout.network/mx/demo/sa
 
 ---
 
-**Cog-Nova-MX Ltd** — Making the web work for everyone and everything that uses it.
+**CogNovaMX Ltd** — Making the web work for everyone and everything that uses it.

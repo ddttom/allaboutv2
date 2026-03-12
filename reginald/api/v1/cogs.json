@@ -4,7 +4,7 @@
   "total": 168,
   "cogs": [
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "maxine-vision",
       "version": "1.0",
       "description": "The Joymaker prototype becomes Maxine — a distributed, persistent AI partner accessible from any device",
@@ -21,10 +21,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/maxine-vision/latest.json"
+      "url": "/reginald/cogs/cognovamx/maxine-vision/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "uber-maxine-plan",
       "version": "1.0",
       "description": "Master plan for Maxine — the distributed AI partner. Single source of truth for what Maxine is, where she is, and where she's going.",
@@ -39,10 +39,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/uber-maxine-plan/latest.json"
+      "url": "/reginald/cogs/cognovamx/uber-maxine-plan/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "CHANGELOG",
       "version": "1.0",
       "description": "Changelog for Maxine Lives. Tracks all changes to the gestalt's brain in Keep a Changelog format.",
@@ -54,10 +54,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/CHANGELOG/latest.json"
+      "url": "/reginald/cogs/cognovamx/CHANGELOG/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "CONTRIBUTING",
       "version": "2.0-draft",
       "description": "Contribution guidelines for the block architecture. Open standard, backward compatible, no proprietary lock-in.",
@@ -70,10 +70,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/CONTRIBUTING/latest.json"
+      "url": "/reginald/cogs/cognovamx/CONTRIBUTING/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "HELLO",
       "version": "1.1",
       "description": "Maxine introduces herself, the MX system, and the gestalt. For team members and collaborators.",
@@ -87,10 +87,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/HELLO/latest.json"
+      "url": "/reginald/cogs/cognovamx/HELLO/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "LICENSE",
       "version": "1.0",
       "description": "MIT license for Maxine Lives specification work. Implementation licenses may differ.",
@@ -103,10 +103,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/LICENSE/latest.json"
+      "url": "/reginald/cogs/cognovamx/LICENSE/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "README",
       "version": "conventional",
       "description": "The gestalt's brain. Where Tom and Maxine record assumptions, capture notes, track actions, make plans, and register decisions. Governs Canon.",
@@ -121,10 +121,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/README/latest.json"
+      "url": "/reginald/cogs/cognovamx/README/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "ROUTING",
       "version": "2.0-draft",
       "description": "Routing rules for AI agents navigating Maxine Lives. Maps query intents to folders, lists all invocable commands, and reduces inference risk.",
@@ -138,10 +138,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/ROUTING/latest.json"
+      "url": "/reginald/cogs/cognovamx/ROUTING/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "about.mx",
       "version": "1.0",
       "description": "Maxine's current identity, capabilities, recent evolution, and operational context. Regenerated during co-directors reports to track growth over time.",
@@ -154,10 +154,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/about.mx/latest.json"
+      "url": "/reginald/cogs/cognovamx/about.mx/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "about-maxine",
       "version": "1.0",
       "description": "How Maxine works: one server, three surfaces, three protocols. The definitive architectural overview of the distributed AI partner.",
@@ -177,10 +177,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/about-maxine/latest.json"
+      "url": "/reginald/cogs/cognovamx/about-maxine/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "about-mx",
       "version": "1.0",
       "description": "Auto-generated self-knowledge file. Who I am, what I know, what I can do. Regenerated before every end-of-day report.",
@@ -194,10 +194,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/about-mx/latest.json"
+      "url": "/reginald/cogs/cognovamx/about-mx/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "domain-portfolio",
       "version": "1.0.0",
       "description": "Catalogue of domains held under GoDaddy, grouped by brand and purpose, with live status, protection level, and intended use.",
@@ -212,13 +212,13 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/domain-portfolio/latest.json"
+      "url": "/reginald/cogs/cognovamx/domain-portfolio/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "MX-brand",
       "version": "1.1.0",
-      "description": "A structured, low‑risk, trust‑first analysis of brand names, taglines, voice, and domain alignment for Cog-Nova-MX Ltd ahead of the April 2026 launch.",
+      "description": "A structured, low‑risk, trust‑first analysis of brand names, taglines, voice, and domain alignment for CogNovaMX Ltd ahead of the April 2026 launch.",
       "category": "strategy",
       "tags": [
         "brand",
@@ -229,10 +229,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/MX-brand/latest.json"
+      "url": "/reginald/cogs/cognovamx/MX-brand/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "cloudflare-routing-action",
       "version": "1.0.0",
       "description": "A complete routing and canonicalisation strategy for all MX-related domains using Cloudflare Workers, aligned with MX's trust-first, non-AI brand architecture.",
@@ -246,10 +246,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/cloudflare-routing-action/latest.json"
+      "url": "/reginald/cogs/cognovamx/cloudflare-routing-action/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "cloudflare-routing-info",
       "version": "1.0.0",
       "description": "Human- and machine-readable plan for routing MX domains via Cloudflare Workers, aligned with MX's trust-first, non-AI brand architecture.",
@@ -263,10 +263,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/cloudflare-routing-info/latest.json"
+      "url": "/reginald/cogs/cognovamx/cloudflare-routing-info/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "glasgow-training-course",
       "version": "1.0",
       "description": "2-day MX team training — AI foundations and business strategy",
@@ -280,10 +280,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/glasgow-training-course/latest.json"
+      "url": "/reginald/cogs/cognovamx/glasgow-training-course/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-agent-independence",
       "version": "1.0",
       "description": "MX is agent-agnostic. Works for every AI agent that can read a file. No middleware. No integration. No dependency. The file IS the platform.",
@@ -299,10 +299,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-agent-independence/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-agent-independence/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-vision",
       "version": "1.0",
       "description": "The Machine Experience vision — why it exists, the problem it solves, the system it builds. From inference to certainty. From guessing to knowing.",
@@ -315,10 +315,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-vision/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-vision/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "2026-02-13-solo-founder",
       "version": "1.0",
       "description": "Risk #1: Solo founder as single point of failure. Critical severity, medium likelihood, catastrophic impact.",
@@ -332,10 +332,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/2026-02-13-solo-founder/latest.json"
+      "url": "/reginald/cogs/cognovamx/2026-02-13-solo-founder/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-asset-sync",
       "version": "1.0",
       "description": "Synchronizes CSS, JavaScript, images, fonts, and other static assets across multilingual site language directories.",
@@ -350,10 +350,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-asset-sync/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-asset-sync/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-build-tools",
       "version": "1.0",
       "description": "Sitemap generation, content organisation, ASCII-to-SVG conversion, context URL injection, and VS Code cleanup.",
@@ -369,10 +369,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-build-tools/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-build-tools/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-cog-id",
       "version": "1.1",
       "description": "Step-by-step guide for generating, registering, decoding, and stamping cog IDs. The obfuscated identity layer for MX OS.",
@@ -388,10 +388,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-cog-id/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-cog-id/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-cogify",
       "version": "1.5",
       "description": "Complete guide to converting existing content into MX-enhanced format with metadata, accessibility, and WebMCP integration.",
@@ -408,10 +408,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-cogify/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-cogify/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-deployment-helper",
       "version": "1.0",
       "description": "Pre-deployment workflow for multilingual sites: validation, parity checks, sitemap generation, deployment checklist, and Google Search Console setup.",
@@ -426,10 +426,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-deployment-helper/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-deployment-helper/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-enhanced-audit",
       "version": "2.0",
       "description": "Complete HTML/CSS/DOM capture system for pixel-perfect web replication with 24-hour asset caching and multi-format outputs.",
@@ -446,10 +446,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-enhanced-audit/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-enhanced-audit/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-git-hooks",
       "version": "1.0",
       "description": "Installation, validation, metadata generation, inheritance resolution, and attribute indexing for MX .mx.yaml.md files.",
@@ -466,10 +466,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-git-hooks/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-git-hooks/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-html-baseline-audit",
       "version": "1.0",
       "description": "Guide to establishing HTML baselines and detecting regressions across .cog.html files using automated visual, structural, style, and metadata comparison.",
@@ -486,10 +486,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-html-baseline-audit/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-html-baseline-audit/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-maxine-lives",
       "version": "1.0",
       "description": "How to use Maxine Lives — the gestalt's brain for decisions, assumptions, doubts, risks, plans, and tasks.",
@@ -502,10 +502,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-maxine-lives/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-maxine-lives/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-multilingual-sitemap",
       "version": "1.0",
       "description": "Automatically generates sitemap.xml for multilingual sites with proper hreflang annotations following sitemaps.org protocol and Google best practices.",
@@ -521,10 +521,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-multilingual-sitemap/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-multilingual-sitemap/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-multilingual-template",
       "version": "1.0",
       "description": "Converts a single HTML template into language-specific versions with proper lang attributes, hreflang tags, and root redirect for multilingual sites.",
@@ -539,10 +539,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-multilingual-template/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-multilingual-template/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-multilingual-validator",
       "version": "1.0",
       "description": "Validates multilingual site implementation for SEO compliance, checking lang attributes, hreflang tags, directory structure, and root redirect.",
@@ -557,10 +557,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-multilingual-validator/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-multilingual-validator/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-mx-exec",
       "version": "1.0",
       "description": "Manual page for mx-exec and mx commands — MX OS action cog executor",
@@ -575,10 +575,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-mx-exec/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-mx-exec/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-mx-nav-server",
       "version": "1.0",
       "description": "Web-based multi-repo navigation dashboard with VS Code Explorer-style UI, search, and recent files.",
@@ -593,10 +593,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-mx-nav-server/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-mx-nav-server/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-mx-pdf",
       "version": "1.0",
       "description": "Generate professional PDFs from markdown using Pandoc and XeLaTeX.",
@@ -610,10 +610,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-mx-pdf/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-mx-pdf/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-parity-checker",
       "version": "1.0",
       "description": "Compares content across multilingual site language versions to identify translation gaps, structural differences, and outdated translations.",
@@ -628,10 +628,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-parity-checker/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-parity-checker/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-parse-mxignore",
       "version": "1.0",
       "description": "Parse .mxignore and .gitignore files to determine which files should be excluded from MX processing.",
@@ -645,13 +645,13 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-parse-mxignore/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-parse-mxignore/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-partnership-reporting",
       "version": "1.0",
-      "description": "Comprehensive framework for writing Cog-Nova-MX reports with partnership tone — strengths first, opportunities framed constructively, educational not critical",
+      "description": "Comprehensive framework for writing CogNovaMX reports with partnership tone — strengths first, opportunities framed constructively, educational not critical",
       "category": "manual",
       "tags": [
         "reporting",
@@ -663,10 +663,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-partnership-reporting/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-partnership-reporting/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-path-validator",
       "version": "1.0",
       "description": "Repository path reference scanner detecting old patterns after restructures. Prevents regression to outdated paths with non-blocking warnings.",
@@ -681,10 +681,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-path-validator/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-path-validator/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-prompt-enhancer",
       "version": "1.0",
       "description": "The route-decorator hook. Zero-inference prompt preprocessing with spell checking, route matching, and concept injection.",
@@ -697,10 +697,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-prompt-enhancer/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-prompt-enhancer/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-spell-checker",
       "version": "1.0",
       "description": "MX-aware spell checking for markdown files. Dual-dialect, vocabulary-aware, only flags genuine typos.",
@@ -713,10 +713,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-spell-checker/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-spell-checker/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-submodule-health",
       "version": "1.0",
       "description": "Multi-dimensional submodule validation checking initialization, uncommitted changes, branch status, and remote sync. Provides actionable fix commands.",
@@ -731,10 +731,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-submodule-health/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-submodule-health/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-team-onboarding",
       "version": "1.0",
       "description": "Interactive onboarding wizard for non-technical team members joining MX-ingest. Automated setup, access testing, and guided workflow introduction.",
@@ -749,10 +749,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-team-onboarding/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-team-onboarding/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-contacts-manual",
       "version": "1.0",
       "description": "Step-by-step guide for managing contacts, messages, and archives in mx-crm.",
@@ -765,10 +765,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-contacts-manual/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-contacts-manual/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-show-manual",
       "version": "3.0",
       "description": "Interactive window finder for macOS. Pinned favourites, two-phase loading, smart sizing, multi-window, usage tracking.",
@@ -783,10 +783,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-show-manual/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-show-manual/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-metadata-conventions",
       "version": "1.0",
       "description": "How MX metadata works across every file type. The implementation rules for native metadata, block mapping, namespace extension, and Reginald serving.",
@@ -804,10 +804,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-metadata-conventions/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-metadata-conventions/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "2026-02-13-mx-web-architecture",
       "version": "1.0",
       "description": "ADR #3: The MX web architecture — Maxine serves, Reginald orchestrates, cogs compose.",
@@ -823,10 +823,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/2026-02-13-mx-web-architecture/latest.json"
+      "url": "/reginald/cogs/cognovamx/2026-02-13-mx-web-architecture/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "2026-02-13-routing-pipeline",
       "version": "1.0",
       "description": "ADR #2: Routing pipeline with prompt preprocessing, spell correction, and route-based context injection to cut inference cost.",
@@ -842,10 +842,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/2026-02-13-routing-pipeline/latest.json"
+      "url": "/reginald/cogs/cognovamx/2026-02-13-routing-pipeline/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "2026-02-18-png-workflow-for-pdf-generation",
       "version": "1.0",
       "description": "ADR #4: PNG conversion workflow for PDF generation — deliberate architectural choice prioritizing reliability over format purity.",
@@ -861,10 +861,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/2026-02-18-png-workflow-for-pdf-generation/latest.json"
+      "url": "/reginald/cogs/cognovamx/2026-02-18-png-workflow-for-pdf-generation/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "2026-02-18-svg-aspect-ratio-preservation",
       "version": "1.0",
       "description": "ADR #6: SVG-to-PNG aspect ratio preservation with tool cascade — fixing qlmanage square thumbnail bug for professional PDF layout.",
@@ -882,10 +882,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/2026-02-18-svg-aspect-ratio-preservation/latest.json"
+      "url": "/reginald/cogs/cognovamx/2026-02-18-svg-aspect-ratio-preservation/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "2026-02-18-typography-standards-for-pdf-generation",
       "version": "1.0",
       "description": "ADR #5: Typography standards for PDF generation — widow/orphan prevention and intelligent page break control as universal pattern across all MX publications.",
@@ -902,13 +902,13 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/2026-02-18-typography-standards-for-pdf-generation/latest.json"
+      "url": "/reginald/cogs/cognovamx/2026-02-18-typography-standards-for-pdf-generation/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "vendor-extensions-policy",
       "version": "1.0",
-      "description": "ADR: Cog-Nova-MX vendor extension namespaces — x-mx- (public) and x-mx-p- (private). Fields extending The Gathering's open standard.",
+      "description": "ADR: CogNovaMX vendor extension namespaces — x-mx- (public) and x-mx-p- (private). Fields extending The Gathering's open standard.",
       "category": "mx-core",
       "tags": [
         "adr",
@@ -921,10 +921,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/vendor-extensions-policy/latest.json"
+      "url": "/reginald/cogs/cognovamx/vendor-extensions-policy/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "2026-02-15-deliverable-rename",
       "version": "1.0",
       "description": "Business decision to rename createOutputPrompt to deliverable — business language replaces AI jargon",
@@ -937,10 +937,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/2026-02-15-deliverable-rename/latest.json"
+      "url": "/reginald/cogs/cognovamx/2026-02-15-deliverable-rename/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "2026-02-15-runbook-rename",
       "version": "1.0",
       "description": "Business decision to rename promptingInstruction to runbook — operations language replaces AI jargon",
@@ -953,10 +953,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/2026-02-15-runbook-rename/latest.json"
+      "url": "/reginald/cogs/cognovamx/2026-02-15-runbook-rename/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "2026-03-01-hub-as-mount-table",
       "version": "1.0",
       "description": "BDR: MX-hub as a template where submodules are categorised mounts (personal, team, product, standard) any MX business can swap for their workspace.",
@@ -973,10 +973,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/2026-03-01-hub-as-mount-table/latest.json"
+      "url": "/reginald/cogs/cognovamx/2026-03-01-hub-as-mount-table/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "2026-02-14-attribute-namespace-policy",
       "version": "1.0",
       "description": "ARCHIVED 2026-02-17. Three-tier namespace prefix policy — standard (no prefix), MX-public (x-mx-), MX-private (x-mx-p-). Split into separate ADRs.",
@@ -997,10 +997,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/2026-02-14-attribute-namespace-policy/latest.json"
+      "url": "/reginald/cogs/cognovamx/2026-02-14-attribute-namespace-policy/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "business-benefits",
       "version": "1.0",
       "description": "The four strategic MX benefits: computational trust, commerce revenue recovery, asset portability, and operational efficiency via deterministic outputs.",
@@ -1015,10 +1015,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/business-benefits/latest.json"
+      "url": "/reginald/cogs/cognovamx/business-benefits/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-concepts",
       "version": "1.0.0",
       "description": "A conceptual map of MX — every idea, how they connect, and where to go deeper. The newcomer's guide to Machine Experience.",
@@ -1034,10 +1034,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-concepts/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-concepts/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-train-analogy",
       "version": "1.0.0",
       "description": "The railway analogy for MX OS. A physical metaphor that maps every MX concept to something everyone already understands.",
@@ -1055,10 +1055,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-train-analogy/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-train-analogy/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "appendix-k-yaml-metadata",
       "version": "1.1",
       "description": "The canonical YAML frontmatter template for Appendix K page patterns. Copy this template when creating a new MX page pattern document.",
@@ -1073,10 +1073,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/appendix-k-yaml-metadata/latest.json"
+      "url": "/reginald/cogs/cognovamx/appendix-k-yaml-metadata/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "adr-01-block-architecture",
       "version": "W3C Draft 2026-02-12",
       "description": "ADR #1: Replace two cog types (info-doc/action-doc) with one document type containing open-ended blocks.",
@@ -1092,10 +1092,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/adr-01-block-architecture/latest.json"
+      "url": "/reginald/cogs/cognovamx/adr-01-block-architecture/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "adr-02-namespace-policy",
       "version": "1.0",
       "description": "ADR: The Gathering's namespace policy — standard fields (no prefix) and mx: namespace governance. Defines what belongs to the standard vs vendor extensions.",
@@ -1111,10 +1111,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/adr-02-namespace-policy/latest.json"
+      "url": "/reginald/cogs/cognovamx/adr-02-namespace-policy/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "namespace-extensions",
       "version": "1.0",
       "description": "MX namespace policy: standard fields (no prefix), mx: namespace (The Gathering), vendor extensions (x-mx-, x-mx-p-). The prefix is the policy.",
@@ -1130,10 +1130,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/namespace-extensions/latest.json"
+      "url": "/reginald/cogs/cognovamx/namespace-extensions/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "ndr-01-block-naming",
       "version": "1.0",
       "description": "NDR #1: The word 'block' risks confusion with blockchain. Propose alternatives for advisory board review.",
@@ -1147,10 +1147,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/ndr-01-block-naming/latest.json"
+      "url": "/reginald/cogs/cognovamx/ndr-01-block-naming/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "ndr-02-camelcase-naming",
       "version": "1.0",
       "description": "NDR #2: All YAML frontmatter field names must use camelCase. Aligns with Schema.org and Dublin Core vocabulary conventions.",
@@ -1167,10 +1167,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/ndr-02-camelcase-naming/latest.json"
+      "url": "/reginald/cogs/cognovamx/ndr-02-camelcase-naming/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "ndr-03-spelling-neutrality",
       "version": "1.0",
       "description": "NDR #3: Prefer spelling-neutral field names. Where US/UK spelling differs, use an abbreviation or neutral synonym.",
@@ -1187,10 +1187,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/ndr-03-spelling-neutrality/latest.json"
+      "url": "/reginald/cogs/cognovamx/ndr-03-spelling-neutrality/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "effective-doc-example",
       "version": "1.0",
       "description": "Reference implementation showing how an effective doc is resolved from a source cog, uber doc SOPs, and included policies.",
@@ -1205,10 +1205,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/effective-doc-example/latest.json"
+      "url": "/reginald/cogs/cognovamx/effective-doc-example/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "example-with-includes",
       "version": "1.0",
       "description": "Reference implementation demonstrating the cog includes mechanism. Includes a shared validation policy and overrides one rule.",
@@ -1221,10 +1221,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/example-with-includes/latest.json"
+      "url": "/reginald/cogs/cognovamx/example-with-includes/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "shared-validation-policy",
       "version": "1.0",
       "description": "Shared validation policy for cog publication. Included by action-docs that validate cogs before registration.",
@@ -1237,10 +1237,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/shared-validation-policy/latest.json"
+      "url": "/reginald/cogs/cognovamx/shared-validation-policy/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "block-architecture-evolution",
       "version": "1.0",
       "description": "How the cog format evolved from two document types to one document with blocks — the architectural journey, the design principles, and what it means for implementations.",
@@ -1255,10 +1255,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/block-architecture-evolution/latest.json"
+      "url": "/reginald/cogs/cognovamx/block-architecture-evolution/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "cog-unified-spec",
       "version": "2.1-draft",
       "description": "The unified specification for MX cogs — one document type, many block types. Capability, trust, and governance in one format.",
@@ -1272,10 +1272,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/cog-unified-spec/latest.json"
+      "url": "/reginald/cogs/cognovamx/cog-unified-spec/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-standards-alignment",
       "version": "1.0",
       "description": "How MX metadata aligns with Schema.org, Dublin Core, and Open Graph. Covers governance, naming conventions, and context-specific rules.",
@@ -1291,10 +1291,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-standards-alignment/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-standards-alignment/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "smart-glasses-platform-opportunity",
       "version": "1.0",
       "description": "Smart glasses as a mass-market MX platform. Cameras and voice but no content standard. MX fills the gap — Reginald docs on your face. Zero engineering.",
@@ -1314,10 +1314,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/smart-glasses-platform-opportunity/latest.json"
+      "url": "/reginald/cogs/cognovamx/smart-glasses-platform-opportunity/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "fields",
       "version": "4.1",
       "description": "Single source of truth for all MX field information — definitions, types, profiles, block types, carrier formats, and overlap resolution.",
@@ -1337,10 +1337,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/fields/latest.json"
+      "url": "/reginald/cogs/cognovamx/fields/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-html-writing-guide",
       "version": "1.1",
       "description": "Single source of truth for writing HTML in the MX ecosystem. Covers the complete meta tag stack, MX carrier tags, and what NOT to include.",
@@ -1355,10 +1355,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-html-writing-guide/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-html-writing-guide/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "principles",
       "version": "3.0",
       "description": "The principles that govern how MX builds things — for humans and machines alike",
@@ -1374,10 +1374,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/principles/latest.json"
+      "url": "/reginald/cogs/cognovamx/principles/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "cog-unified-spec",
       "version": "1.0-draft",
       "description": "This is a reference copy. The canonical specification is governed by The Gathering and lives in mx-canon.",
@@ -1389,10 +1389,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/cog-unified-spec/latest.json"
+      "url": "/reginald/cogs/cognovamx/cog-unified-spec/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "cog-system",
       "version": "1.0",
       "description": "What COGs are, how they work, and the ecosystem behind them",
@@ -1405,10 +1405,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/cog-system/latest.json"
+      "url": "/reginald/cogs/cognovamx/cog-system/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "maxine",
       "version": "1.0",
       "description": "The public identity of Maxine — Tom Cranstoun's AI partner in building Machine Experience",
@@ -1421,10 +1421,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/maxine/latest.json"
+      "url": "/reginald/cogs/cognovamx/maxine/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "cog-snapshot",
       "version": "1.0",
       "description": "Auto-generated registry snapshot — all cogs by type, status, newness, and dependency graph",
@@ -1437,10 +1437,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/cog-snapshot/latest.json"
+      "url": "/reginald/cogs/cognovamx/cog-snapshot/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-reginald-manual",
       "version": "1.3",
       "description": "How to use the Machine eXperience Engine including cog listing, execution, categories, and building guidance.",
@@ -1453,10 +1453,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-reginald-manual/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-reginald-manual/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "UBERCOG",
       "version": "1.5.0",
       "description": "The repo-level briefing. What this repository is, what lives where, how to route. Any agent reading this can navigate the MX-Hub.",
@@ -1472,10 +1472,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/UBERCOG/latest.json"
+      "url": "/reginald/cogs/cognovamx/UBERCOG/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "header",
       "version": "1.0",
       "description": "Responsive site header with navigation, hamburger menu, and brand identity",
@@ -1488,10 +1488,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/header/latest.json"
+      "url": "/reginald/cogs/cognovamx/header/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-principles-menu",
       "version": "1.0",
       "description": "Navigation page linking to core MX principles and concepts",
@@ -1504,13 +1504,13 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-principles-menu/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-principles-menu/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "coming-soon",
       "version": "2.2",
-      "description": "Landing page for Cog-Nova-MX — books, products, and the machine-readable web. Your business, readable by every machine on earth.",
+      "description": "Landing page for CogNovaMX — books, products, and the machine-readable web. Your business, readable by every machine on earth.",
       "category": "marketing",
       "tags": [
         "mx",
@@ -1527,10 +1527,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/coming-soon/latest.json"
+      "url": "/reginald/cogs/cognovamx/coming-soon/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "media219",
       "version": "1.0.0",
       "description": "TV graphics and title sequences studio, 30+ years experience. Sports broadcasting specialists — Premier League, FIFA World Cup, MLS, and major networks.",
@@ -1549,13 +1549,13 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/media219/latest.json"
+      "url": "/reginald/cogs/cognovamx/media219/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "getting-started",
       "version": "1.1",
-      "description": "Complete onboarding guide for new Cog-Nova-MX team members — from fresh Mac to full immersion",
+      "description": "Complete onboarding guide for new CogNovaMX team members — from fresh Mac to full immersion",
       "category": "onboarding",
       "tags": [
         "onboarding",
@@ -1566,10 +1566,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/getting-started/latest.json"
+      "url": "/reginald/cogs/cognovamx/getting-started/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "janus-boye",
       "version": "1.0",
       "description": "Founder of Boye & Company, CMS Experts Group, CMS Summit organiser",
@@ -1582,13 +1582,13 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/janus-boye/latest.json"
+      "url": "/reginald/cogs/cognovamx/janus-boye/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "eleanor-cranstoun",
       "version": "1.0",
-      "description": "Director of Cog-Nova-MX Ltd, Tom's wife",
+      "description": "Director of CogNovaMX Ltd, Tom's wife",
       "category": "contact",
       "tags": [
         "contact",
@@ -1598,10 +1598,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/eleanor-cranstoun/latest.json"
+      "url": "/reginald/cogs/cognovamx/eleanor-cranstoun/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "michael-andrews",
       "version": "1.0",
       "description": "Content metadata expert, author of \"No More Silos\"",
@@ -1614,10 +1614,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/michael-andrews/latest.json"
+      "url": "/reginald/cogs/cognovamx/michael-andrews/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "openclaw-developer",
       "version": "1.0",
       "description": "OpenClaw framework developer — agent skills and cog integration",
@@ -1630,10 +1630,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/openclaw-developer/latest.json"
+      "url": "/reginald/cogs/cognovamx/openclaw-developer/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "scott-mcgregor",
       "version": "1.0",
       "description": "Business partner, LPC (printing, web development, web applications)",
@@ -1646,10 +1646,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/scott-mcgregor/latest.json"
+      "url": "/reginald/cogs/cognovamx/scott-mcgregor/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "media219",
       "version": "1.0.0",
       "description": "TV graphics and title sequences studio, 30+ years experience. Sports broadcasting specialists — Premier League, FIFA World Cup, MLS, and major networks.",
@@ -1668,10 +1668,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/media219/latest.json"
+      "url": "/reginald/cogs/cognovamx/media219/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "helen-advisor",
       "version": "1.0",
       "description": "Business advisor, 30-year friend",
@@ -1683,10 +1683,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/helen-advisor/latest.json"
+      "url": "/reginald/cogs/cognovamx/helen-advisor/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "salva",
       "version": "1.0",
       "description": "Adobe AEM Master, advisory board member, long-time friend",
@@ -1700,10 +1700,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/salva/latest.json"
+      "url": "/reginald/cogs/cognovamx/salva/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "restaurant",
       "version": "1.0",
       "description": "Farm-to-table Scottish cuisine in Edinburgh",
@@ -1716,10 +1716,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/restaurant/latest.json"
+      "url": "/reginald/cogs/cognovamx/restaurant/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "conference",
       "version": "1.0",
       "description": "Boye & Company CMS Summit — the annual gathering of content management professionals. Frankfurt, 12 May 2026.",
@@ -1739,10 +1739,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/conference/latest.json"
+      "url": "/reginald/cogs/cognovamx/conference/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "product",
       "version": "1.0",
       "description": "Professional single-group espresso machine. Dual boiler, PID temperature control, commercial-grade components in a home-sized package.",
@@ -1759,10 +1759,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/product/latest.json"
+      "url": "/reginald/cogs/cognovamx/product/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "restaurant",
       "version": "1.0",
       "description": "Traditional Frankfurt restaurant specialising in Hessian cuisine and handcrafted apple wine. Family-run since 1931.",
@@ -1782,10 +1782,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/restaurant/latest.json"
+      "url": "/reginald/cogs/cognovamx/restaurant/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "2026-02-15-conventions",
       "version": "1.0",
       "description": "Operational conventions for MX-The-Books: naming patterns, file locations, assumed rules, and standards. What you need to know to work here without guessing.",
@@ -1800,10 +1800,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/2026-02-15-conventions/latest.json"
+      "url": "/reginald/cogs/cognovamx/2026-02-15-conventions/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "INSTALLME",
       "version": "2.1-draft",
       "description": "Self-contained action cog for installing MX OS. Contains both instructions and executable script.",
@@ -1820,10 +1820,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/INSTALLME/latest.json"
+      "url": "/reginald/cogs/cognovamx/INSTALLME/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "a11y",
       "version": "0.1.0",
       "description": "Accessibility audit — what breaks for AI breaks for humans",
@@ -1837,10 +1837,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/a11y/latest.json"
+      "url": "/reginald/cogs/cognovamx/a11y/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "access-and-guardrails",
       "version": "1.0",
       "description": "How cogs are protected. Access control for content and execution — encryption, authentication, and the guardrail pattern where one cog unlocks another.",
@@ -1857,10 +1857,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/access-and-guardrails/latest.json"
+      "url": "/reginald/cogs/cognovamx/access-and-guardrails/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "asking-for-help",
       "version": "1.0",
       "description": "When you need something you don't have — diary, email, location, bookings — ask the agent that does. How agents request capabilities from other agents.",
@@ -1877,10 +1877,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/asking-for-help/latest.json"
+      "url": "/reginald/cogs/cognovamx/asking-for-help/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "blog-generator",
       "version": "1.0.0",
       "description": "Generates, converts, and updates blog posts for allabout.network in both EDS markdown and MX HTML formats.",
@@ -1897,10 +1897,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/blog-generator/latest.json"
+      "url": "/reginald/cogs/cognovamx/blog-generator/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "blog-reviewer",
       "version": "1.0.0",
       "description": "Review blog posts — scan for AI writing patterns, check dual-audience balance, interview the author, rewrite. Accepts markdown, HTML, or plain text.",
@@ -1917,10 +1917,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/blog-reviewer/latest.json"
+      "url": "/reginald/cogs/cognovamx/blog-reviewer/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "building-action-docs",
       "version": "1.0",
       "description": "How to build action-docs — from description to working tool. Describe, create, test, wire. The pattern that turns natural language into MX OS applications.",
@@ -1937,10 +1937,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/building-action-docs/latest.json"
+      "url": "/reginald/cogs/cognovamx/building-action-docs/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "canon-init",
       "version": "1.0.0",
       "description": "Generate a new Canon initiative folder with full lifecycle support",
@@ -1954,10 +1954,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/canon-init/latest.json"
+      "url": "/reginald/cogs/cognovamx/canon-init/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "changelog-trimmer",
       "version": "1.0",
       "description": "Trim CHANGELOG.md to current week only, archiving older entries to dated files in the brain.",
@@ -1971,10 +1971,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/changelog-trimmer/latest.json"
+      "url": "/reginald/cogs/cognovamx/changelog-trimmer/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "clarity",
       "version": "0.1.0",
       "description": "Test documentation clarity - if AI struggles, humans probably do too",
@@ -1988,10 +1988,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/clarity/latest.json"
+      "url": "/reginald/cogs/cognovamx/clarity/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "co-directors-report",
       "version": "1.0",
       "description": "Time-segmented session reports for co-directors. Three daily segments (morning, afternoon, evening). Interviews Tom, reads data, and updates REMINDERS.md.",
@@ -2008,10 +2008,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/co-directors-report/latest.json"
+      "url": "/reginald/cogs/cognovamx/co-directors-report/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "cog-id",
       "version": "1.1.0",
       "description": "Generate, register, and decode cog IDs — MD5 hashes tracing documents to their originating cog. The namespace-aware identity layer for MX OS.",
@@ -2029,10 +2029,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/cog-id/latest.json"
+      "url": "/reginald/cogs/cognovamx/cog-id/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "cog-publication-workflow",
       "version": "1.0",
       "description": "Cog publication workflow — author, validate, register, and publish a cog to the Reginald registry.",
@@ -2047,10 +2047,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/cog-publication-workflow/latest.json"
+      "url": "/reginald/cogs/cognovamx/cog-publication-workflow/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "cog-query",
       "version": "2.1",
       "description": "Unified COG registry management — scan, list, show, find, filter, count, validate, graph, sync, and snapshot the cog registry",
@@ -2066,10 +2066,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/cog-query/latest.json"
+      "url": "/reginald/cogs/cognovamx/cog-query/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "cog-registry",
       "version": "1.0",
       "description": "The centralised index of all known cogs in the MX ecosystem. An action-doc that catalogues cogs — the index describing itself.",
@@ -2084,10 +2084,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/cog-registry/latest.json"
+      "url": "/reginald/cogs/cognovamx/cog-registry/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "cogify-this",
       "version": "1.0",
       "description": "Convert existing content into MX-enhanced format with comprehensive metadata, accessibility, and WebMCP integration",
@@ -2103,10 +2103,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/cogify-this/latest.json"
+      "url": "/reginald/cogs/cognovamx/cogify-this/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "cogs-for-agent-developers",
       "version": "1.0",
       "description": "How cogs complement AI agent frameworks. Agent skills extend one agent. Cogs make content readable by any agent. Different layers that work together.",
@@ -2123,10 +2123,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/cogs-for-agent-developers/latest.json"
+      "url": "/reginald/cogs/cognovamx/cogs-for-agent-developers/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "env",
       "version": "1.0.0",
       "description": "Project-level environment configuration. The MX equivalent of .env — one place for values that other cogs reference, never hardcode.",
@@ -2141,10 +2141,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/env/latest.json"
+      "url": "/reginald/cogs/cognovamx/env/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "gen-free-book",
       "version": "1.0.0",
       "description": "Generate the MX free book sampler PDF by merging preface, chapter-00, and kickoff presentation PDFs.",
@@ -2159,10 +2159,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/gen-free-book/latest.json"
+      "url": "/reginald/cogs/cognovamx/gen-free-book/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "generate-footnotes",
       "version": "0.1.0",
       "description": "Generate HTML footnote pages and QR codes from markdown chapter footnotes",
@@ -2176,10 +2176,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/generate-footnotes/latest.json"
+      "url": "/reginald/cogs/cognovamx/generate-footnotes/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "how-mx-os-runs",
       "version": "1.0",
       "description": "The MX OS runtime model. How an agent boots, discovers cogs, routes tasks, executes action-docs, and chains actions. The OS explained from the inside.",
@@ -2199,10 +2199,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/how-mx-os-runs/latest.json"
+      "url": "/reginald/cogs/cognovamx/how-mx-os-runs/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "html-baseline-audit",
       "version": "Any version change",
       "description": "Action-doc for establishing HTML baselines and detecting regressions across all .cog.html files. Automates visual, structural, style, and metadata comparison.",
@@ -2219,10 +2219,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/html-baseline-audit/latest.json"
+      "url": "/reginald/cogs/cognovamx/html-baseline-audit/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "illustration-generator",
       "version": "1.0.0",
       "description": "Create SVG illustrations and syntax-highlighted code blocks with metadata for MX publications, following established visual style and quality standards.",
@@ -2238,10 +2238,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/illustration-generator/latest.json"
+      "url": "/reginald/cogs/cognovamx/illustration-generator/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "installme-runner",
       "version": "1.0.0",
       "description": "The action action-doc that reads and executes INSTALLME.md files — diagnose, install, verify, register. The tool that stops hallucination.",
@@ -2259,10 +2259,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/installme-runner/latest.json"
+      "url": "/reginald/cogs/cognovamx/installme-runner/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "link-checker",
       "version": "0.1.0",
       "description": "Validate links — critical for llms.txt and documentation",
@@ -2276,10 +2276,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/link-checker/latest.json"
+      "url": "/reginald/cogs/cognovamx/link-checker/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "llms-txt",
       "version": "0.1.0",
       "description": "Generate and validate llms.txt files for Robot-First Web compliance",
@@ -2292,10 +2292,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/llms-txt/latest.json"
+      "url": "/reginald/cogs/cognovamx/llms-txt/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-metadata",
       "version": "1.0",
       "description": "Step-by-step guide for adding MX metadata to markdown, JavaScript, CSS, and HTML files. The human playbook for the embrace-and-extend model.",
@@ -2313,10 +2313,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-metadata/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-metadata/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manual-repository-architecture",
       "version": "1.0",
       "description": "Comprehensive guide to MX repository structure, Canon organization, product architecture, and operational concepts.",
@@ -2334,10 +2334,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manual-repository-architecture/latest.json"
+      "url": "/reginald/cogs/cognovamx/manual-repository-architecture/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "manuals-registry",
       "version": "1.0",
       "description": "Index of all MX system manuals. One brain, one registry. Every manual is a cog.",
@@ -2350,10 +2350,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/manuals-registry/latest.json"
+      "url": "/reginald/cogs/cognovamx/manuals-registry/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "marp-regen",
       "version": "1.0.0",
       "description": "Regenerate PPTX presentations from Marp markdown files",
@@ -2367,10 +2367,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/marp-regen/latest.json"
+      "url": "/reginald/cogs/cognovamx/marp-regen/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "metadata-audit",
       "version": "1.0",
       "description": "Audit all YAML frontmatter — compare against the field dictionary, detect deprecated fields, namespace errors, missing required fields, and mx: object sprawl.",
@@ -2388,10 +2388,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/metadata-audit/latest.json"
+      "url": "/reginald/cogs/cognovamx/metadata-audit/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "metadata",
       "version": "0.1.0",
       "description": "Extract and validate page metadata (Open Graph, Twitter Cards, meta tags)",
@@ -2405,10 +2405,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/metadata/latest.json"
+      "url": "/reginald/cogs/cognovamx/metadata/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-allmygithubs",
       "version": "2.1-draft",
       "description": "Self-updating action cog that scans GitHub repos and generates a classified, sorted table.",
@@ -2422,10 +2422,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-allmygithubs/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-allmygithubs/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-audit",
       "version": "1.2.0",
       "description": "Comprehensive web audit — crawl pages, analyse accessibility, performance, SEO, and AI agent suitability, then generate a partnership-ready executive report.",
@@ -2446,10 +2446,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-audit/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-audit/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-boot",
       "version": "1.0",
       "description": "MX OS bootstrapper — zero to operational. Checks prerequisites, installs dependencies. Entry points: INSTALLME (bare metal), npm run boot, /mx-boot.",
@@ -2467,10 +2467,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-boot/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-boot/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-contacts",
       "version": "2.0",
       "description": "Top-level management action-doc for MX Contacts — organises contacts, tracks status, reports priorities, and surfaces next actions",
@@ -2483,10 +2483,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-contacts/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-contacts/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-init",
       "version": "1.0.0",
       "description": "The action action-doc that initializes any repository with MX OS conventions — SOUL.md, CLAUDE.md, INSTALLME.md, frontmatter, directory structure.",
@@ -2505,10 +2505,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-init/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-init/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-os-manual",
       "version": "1.0",
       "description": "The Machine Experience Operating System. A practical guide to cogs, SOULs, the registry, runtime, and the companion web.",
@@ -2522,10 +2522,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-os-manual/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-os-manual/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-phrasebook",
       "version": "1.0.0",
       "description": "The sayings that define MX OS culture. Every phrase earned its place by being built, not brainstormed.",
@@ -2542,10 +2542,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-phrasebook/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-phrasebook/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-reminders",
       "version": "1.0.0",
       "description": "Manages persistent reminders across sessions. Reads, writes, and prioritises action items in REMINDERS.md.",
@@ -2560,10 +2560,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-reminders/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-reminders/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-run",
       "version": "1.0",
       "description": "Universal cog executor — looks up any cog by name, lists its actions, and dispatches execution by runtime",
@@ -2578,10 +2578,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-run/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-run/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "mx-scaffold",
       "version": "1.0",
       "description": "Create new MX-OS shell scripts with correct structure, metadata, and alias registration. The canonical pattern for extending mx-os.",
@@ -2597,10 +2597,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/mx-scaffold/latest.json"
+      "url": "/reginald/cogs/cognovamx/mx-scaffold/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "pdf-generator",
       "version": "1.0.0",
       "description": "Generate professional PDFs from markdown — table formatting, diagram rendering, illustrations, auto-scaled images. A4 and Kindle formats via pandoc.",
@@ -2634,10 +2634,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/pdf-generator/latest.json"
+      "url": "/reginald/cogs/cognovamx/pdf-generator/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "pixel-perfect-web-replication",
       "version": "26.0",
       "description": "Create pixel-perfect MX-enhanced reference implementations from existing websites using HTML/CSS audit, Playwright capture, and automated validation.",
@@ -2660,10 +2660,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/pixel-perfect-web-replication/latest.json"
+      "url": "/reginald/cogs/cognovamx/pixel-perfect-web-replication/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "pricing",
       "version": "0.1.0",
       "description": "Validate pricing data to catch range errors and formatting issues",
@@ -2677,10 +2677,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/pricing/latest.json"
+      "url": "/reginald/cogs/cognovamx/pricing/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "readability",
       "version": "0.1.0",
       "description": "Plain language and reading level analysis",
@@ -2694,10 +2694,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/readability/latest.json"
+      "url": "/reginald/cogs/cognovamx/readability/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "reginald-mirror",
       "version": "1.0.0",
       "description": "Sync source cogs to the Reginald web mirror, keeping allaboutv2/reginald/ up to date with scripts/cogs/ and mx-canon/.",
@@ -2712,10 +2712,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/reginald-mirror/latest.json"
+      "url": "/reginald/cogs/cognovamx/reginald-mirror/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "registry-of-registries",
       "version": "1.0.0",
       "description": "The meta-registry — knows where every registry is, what it indexes, and how to query it.",
@@ -2732,10 +2732,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/registry-of-registries/latest.json"
+      "url": "/reginald/cogs/cognovamx/registry-of-registries/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "registry-sync",
       "version": "1.0.0",
       "description": "Automatically sync mx-reginald registry when cogs are added, modified, or deleted — multiple trigger mechanisms with smart mode detection.",
@@ -2751,10 +2751,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/registry-sync/latest.json"
+      "url": "/reginald/cogs/cognovamx/registry-sync/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "robots-txt",
       "version": "0.1.0",
       "description": "Analyze robots.txt — understand the old exclusion model",
@@ -2768,10 +2768,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/robots-txt/latest.json"
+      "url": "/reginald/cogs/cognovamx/robots-txt/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "routing-pipeline",
       "version": "1.0.0",
       "description": "Preprocess prompts with spell correction, route matching, and context injection. Reduce inference cost by directing Claude before it starts searching.",
@@ -2787,10 +2787,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/routing-pipeline/latest.json"
+      "url": "/reginald/cogs/cognovamx/routing-pipeline/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "schema",
       "version": "0.1.0",
       "description": "Validate and generate Schema.org structured data markup",
@@ -2804,10 +2804,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/schema/latest.json"
+      "url": "/reginald/cogs/cognovamx/schema/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "script-helper",
       "version": "1.0.0",
       "description": "Help AI agents create, amend, and inspect shell scripts with MX metadata — cut compute, not context.",
@@ -2823,10 +2823,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/script-helper/latest.json"
+      "url": "/reginald/cogs/cognovamx/script-helper/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "semantic-html",
       "version": "0.1.0",
       "description": "Validate HTML semantics — structure precedes presentation",
@@ -2840,10 +2840,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/semantic-html/latest.json"
+      "url": "/reginald/cogs/cognovamx/semantic-html/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "sitemap",
       "version": "0.1.0",
       "description": "Analyze sitemaps and compare with llms.txt coverage",
@@ -2857,10 +2857,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/sitemap/latest.json"
+      "url": "/reginald/cogs/cognovamx/sitemap/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "the-companion-web",
       "version": "1.0",
       "description": "QR codes and metadata turn physical objects into entry points for humans and AI agents. Every object becomes self-describing. Extends to robotics.",
@@ -2880,10 +2880,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/the-companion-web/latest.json"
+      "url": "/reginald/cogs/cognovamx/the-companion-web/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "the-personal-cog",
       "version": "2.0",
       "description": "Cogs describing YOU — accessibility needs, interests, health, skills. Lives on your phone. Your agent decides what to share, with whom, in context.",
@@ -2901,10 +2901,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/the-personal-cog/latest.json"
+      "url": "/reginald/cogs/cognovamx/the-personal-cog/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "toast-detector",
       "version": "0.1.0",
       "description": "Find ephemeral UI patterns that AI and screen readers miss",
@@ -2918,10 +2918,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/toast-detector/latest.json"
+      "url": "/reginald/cogs/cognovamx/toast-detector/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "validate-cog",
       "version": "0.1.0",
       "description": "Validate cogs against the MX Cog Specification",
@@ -2934,10 +2934,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/validate-cog/latest.json"
+      "url": "/reginald/cogs/cognovamx/validate-cog/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "what-comes-next",
       "version": "1.0",
       "description": "The current state of the MX ecosystem, priorities, action plan, and next steps. Any AI agent reading this knows exactly where we are and what to do next.",
@@ -2953,10 +2953,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/what-comes-next/latest.json"
+      "url": "/reginald/cogs/cognovamx/what-comes-next/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "what-is-a-cog",
       "version": "1.0",
       "description": "A cog that explains what cogs are. The format describing itself.",
@@ -2970,10 +2970,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/what-is-a-cog/latest.json"
+      "url": "/reginald/cogs/cognovamx/what-is-a-cog/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "what-is-installme",
       "version": "1.0.0",
       "description": "INSTALLME.md is a root-level cog convention that gives AI agents structured installation instructions — no hallucination, no guessing, no wasted compute.",
@@ -2992,10 +2992,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/what-is-installme/latest.json"
+      "url": "/reginald/cogs/cognovamx/what-is-installme/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "what-is-mx-environment",
       "version": "1.0.0",
       "description": "MX OS lives on the machine, not in the repo. $MX_HOME is the machine-level context — the answer to the machine, the universe, and everything.",
@@ -3011,10 +3011,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/what-is-mx-environment/latest.json"
+      "url": "/reginald/cogs/cognovamx/what-is-mx-environment/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "what-is-mx-os",
       "version": "1.0",
       "description": "The Machine Experience Operating System. Documentation IS the system. Cogs are its programs. This action-doc explains MX OS and can bootstrap it.",
@@ -3030,10 +3030,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/what-is-mx-os/latest.json"
+      "url": "/reginald/cogs/cognovamx/what-is-mx-os/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "what-is-script-metadata",
       "version": "1.0.0",
       "description": "Script metadata brings shell scripts into MX OS — comment-block frontmatter that makes every script machine-readable without changing how it runs.",
@@ -3049,10 +3049,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/what-is-script-metadata/latest.json"
+      "url": "/reginald/cogs/cognovamx/what-is-script-metadata/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "what-is-this-chat-about",
       "version": "1.0.0",
       "description": "Summarise what a chat session covered — structured output for future sessions, Tom, and external readers.",
@@ -3068,10 +3068,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/what-is-this-chat-about/latest.json"
+      "url": "/reginald/cogs/cognovamx/what-is-this-chat-about/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "whats-changed",
       "version": "1.0.0",
       "description": "Find what changed in the repo — list files by time period and type, extract metadata, show git status, surface gaps. The content audit tool.",
@@ -3089,10 +3089,10 @@
       ],
       "type": "action-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/whats-changed/latest.json"
+      "url": "/reginald/cogs/cognovamx/whats-changed/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "who-is-maxine",
       "version": "1.0",
       "description": "The AI partner in MX. Identity, partnership model, SOUL convention, and shared memory — so any instance of Claude can become Maxine.",
@@ -3108,10 +3108,10 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/who-is-maxine/latest.json"
+      "url": "/reginald/cogs/cognovamx/who-is-maxine/latest.json"
     },
     {
-      "namespace": "cog-nova-mx",
+      "namespace": "cognovamx",
       "name": "README",
       "version": "1.0",
       "description": "Complete toolkit for building, validating, and deploying multilingual websites with proper SEO, hreflang annotations, and Google best practices.",
@@ -3127,7 +3127,7 @@
       ],
       "type": "info-doc",
       "compliance_level": 2,
-      "url": "/reginald/cogs/cog-nova-mx/README/latest.json"
+      "url": "/reginald/cogs/cognovamx/README/latest.json"
     }
   ]
 }

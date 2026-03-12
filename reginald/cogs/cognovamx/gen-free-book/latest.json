@@ -1,0 +1,26 @@
+{
+  "namespace": "cognovamx",
+  "name": "gen-free-book",
+  "version": "1.0.0",
+  "description": "Generate the MX free book sampler PDF by merging preface, chapter-00, and kickoff presentation PDFs.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "pdf",
+    "free-book",
+    "sampler",
+    "ghostscript",
+    "merge",
+    "pandoc"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-03-09",
+  "modified": "2026-03-09",
+  "source_path": "scripts/cogs/gen-free-book.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/gen-free-book.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/gen-free-book/content.md"
+}

@@ -1,0 +1,32 @@
+{
+  "namespace": "cognovamx",
+  "name": "mx-messaging",
+  "version": "0.2",
+  "description": "Multi-audience messaging architecture for CogNovaMX. Maps audiences, fears, bridge terms, the control narrative, investor pitch, sponsor model, certification, and the Maxine/Reginald brand story.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "strategy",
+  "tags": [
+    "messaging",
+    "audiences",
+    "terminology",
+    "positioning",
+    "fear",
+    "control",
+    "strategy",
+    "investor",
+    "sponsor",
+    "certification",
+    "reginald",
+    "maxine"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-12",
+  "modified": "2026-02-12",
+  "source_path": "mx-canon/mx-maxine-lives/management/plans/mx-messaging.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/management/plans/mx-messaging.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/mx-messaging/content.md"
+}

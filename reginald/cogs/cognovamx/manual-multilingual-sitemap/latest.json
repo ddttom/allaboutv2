@@ -1,0 +1,27 @@
+{
+  "namespace": "cognovamx",
+  "name": "manual-multilingual-sitemap",
+  "version": "1.0",
+  "description": "Automatically generates sitemap.xml for multilingual sites with proper hreflang annotations following sitemaps.org protocol and Google best practices.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "manual",
+  "tags": [
+    "manual",
+    "multilingual",
+    "sitemap",
+    "seo",
+    "hreflang",
+    "google",
+    "internationalization"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-21",
+  "modified": "2026-03-02",
+  "source_path": "mx-canon/mx-maxine-lives/manuals/manual-multilingual-sitemap.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/manuals/manual-multilingual-sitemap.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/manual-multilingual-sitemap/content.md"
+}

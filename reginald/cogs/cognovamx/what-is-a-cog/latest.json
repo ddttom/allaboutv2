@@ -1,0 +1,25 @@
+{
+  "namespace": "cognovamx",
+  "name": "what-is-a-cog",
+  "version": "1.0",
+  "description": "A cog that explains what cogs are. The format describing itself.",
+  "author": "Tom Cranstoun",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "learning",
+  "tags": [
+    "cog",
+    "introduction",
+    "metadata",
+    "standard",
+    "the-gathering"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-09",
+  "modified": "2026-02-09",
+  "source_path": "scripts/cogs/what-is-a-cog.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/what-is-a-cog.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/what-is-a-cog/content.md"
+}

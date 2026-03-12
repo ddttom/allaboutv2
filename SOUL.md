@@ -14,7 +14,7 @@ This is the control document for allaboutv2.
 
 ## What This Is
 
-allaboutv2 is the allabout.network website — the public face of Cog-Nova-MX. It hosts blogs, reference implementations, product pages (Reginald, MX Technologies), and the LPC reference site. This is where MX theory becomes visible practice.
+allaboutv2 is the allabout.network website — the public face of CogNovaMX. It hosts blogs, reference implementations, product pages (Reginald, MX Technologies), and the LPC reference site. This is where MX theory becomes visible practice.
 
 ---
 

@@ -130,5 +130,5 @@ Both use identical n-language architecture patterns.
 ---
 
 **Created:** 2026-02-22
-**Author:** Cog-Nova-MX Ltd
+**Author:** CogNovaMX Ltd
 **Architecture:** N-language with shared assets

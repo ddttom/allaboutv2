@@ -1,0 +1,27 @@
+{
+  "namespace": "cognovamx",
+  "name": "mx-web-architecture-decision",
+  "version": "1.0",
+  "description": "ADR #3: The MX web architecture — Maxine serves, Reginald orchestrates, cogs compose.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "accepted",
+  "category": "architecture",
+  "tags": [
+    "adr",
+    "web-architecture",
+    "maxine-server",
+    "reginald",
+    "caching",
+    "webmcp",
+    "trust"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-13",
+  "modified": "2026-02-28",
+  "source_path": "mx-canon/mx-maxine-lives/registers/ADR/2026-02-13-mx-web-architecture.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/registers/ADR/2026-02-13-mx-web-architecture.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/mx-web-architecture-decision/content.md"
+}

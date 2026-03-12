@@ -1,0 +1,24 @@
+{
+  "namespace": "cognovamx",
+  "name": "manual-spell-checker",
+  "version": "1.0",
+  "description": "MX-aware spell checking for markdown files. Dual-dialect, vocabulary-aware, only flags genuine typos.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "manual",
+  "tags": [
+    "manual",
+    "spell-checker",
+    "markdown",
+    "quality"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-13",
+  "modified": "2026-03-02",
+  "source_path": "mx-canon/mx-maxine-lives/manuals/manual-spell-checker.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/manuals/manual-spell-checker.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/manual-spell-checker/content.md"
+}

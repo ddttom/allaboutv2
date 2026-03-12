@@ -1,0 +1,26 @@
+{
+  "namespace": "cognovamx",
+  "name": "cog-registry",
+  "version": "1.0",
+  "description": "The centralised index of all known cogs in the MX ecosystem. An action-doc that catalogues cogs — the index describing itself.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "registry",
+    "index",
+    "catalogue",
+    "cogs",
+    "discovery",
+    "builds-on-graph"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-09",
+  "modified": "2026-02-10",
+  "source_path": "scripts/cogs/cog-registry.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/cog-registry.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/cog-registry/content.md"
+}

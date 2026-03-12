@@ -1,0 +1,27 @@
+{
+  "namespace": "cognovamx",
+  "name": "manual-cog-id",
+  "version": "1.1",
+  "description": "Step-by-step guide for generating, registering, decoding, and stamping cog IDs. The obfuscated identity layer for MX OS.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "manual",
+  "tags": [
+    "manual",
+    "cog-id",
+    "identity",
+    "hash",
+    "obfuscation",
+    "x-mx-p-ref",
+    "namespace"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-14",
+  "modified": "2026-02-14",
+  "source_path": "mx-canon/mx-maxine-lives/manuals/manual-cog-id.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/manuals/manual-cog-id.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/manual-cog-id/content.md"
+}

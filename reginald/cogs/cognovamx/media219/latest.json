@@ -1,0 +1,30 @@
+{
+  "namespace": "cognovamx",
+  "name": "media219",
+  "version": "1.0.0",
+  "description": "TV graphics and title sequences studio, 30+ years experience. Sports broadcasting specialists — Premier League, FIFA World Cup, MLS, and major networks.",
+  "author": "Media219 Ltd",
+  "maintainer": "tony@media219.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "creative-services",
+  "tags": [
+    "television",
+    "graphics",
+    "title-sequences",
+    "3d-models",
+    "sports-broadcasting",
+    "motion-graphics",
+    "premier-league",
+    "fifa",
+    "mls",
+    "broadcast"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-25",
+  "modified": "2026-02-25",
+  "source_path": "mx-crm/media219/media219.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-crm/media219/media219.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/media219/content.md"
+}

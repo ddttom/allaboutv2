@@ -1,0 +1,25 @@
+{
+  "namespace": "cognovamx",
+  "name": "manual-mx-os",
+  "version": "1.0",
+  "description": "The Machine Experience Operating System. A practical guide to cogs, SOULs, the registry, runtime, and the companion web.",
+  "author": "Tom Cranstoun",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "active",
+  "category": "manual",
+  "tags": [
+    "manual",
+    "mx-os",
+    "operating-system",
+    "cogs",
+    "runtime"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-09T00:00:00.000Z",
+  "modified": "2026-02-13T00:00:00.000Z",
+  "source_path": "scripts/cogs/mx-os-manual.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/mx-os-manual.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/manual-mx-os/content.md"
+}

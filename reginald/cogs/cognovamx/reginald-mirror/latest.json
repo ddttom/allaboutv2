@@ -1,0 +1,26 @@
+{
+  "namespace": "cognovamx",
+  "name": "reginald-mirror",
+  "version": "1.0.0",
+  "description": "Sync source cogs to the Reginald web mirror, keeping allaboutv2/reginald/ up to date with scripts/cogs/ and mx-canon/.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "reginald",
+    "mirror",
+    "sync",
+    "registry",
+    "automation",
+    "cogs"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-03-09",
+  "modified": "2026-03-09",
+  "source_path": "scripts/cogs/reginald-mirror.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/reginald-mirror.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/reginald-mirror/content.md"
+}

@@ -1,0 +1,28 @@
+{
+  "namespace": "cognovamx",
+  "name": "building-action-docs",
+  "version": "1.0",
+  "description": "How to build action-docs — from description to working tool. Describe, create, test, wire. The pattern that turns natural language into MX OS applications.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "development",
+    "lifecycle",
+    "operational",
+    "entry-points",
+    "scaffold",
+    "tutorial",
+    "worked-example",
+    "mx-contacts"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-09",
+  "modified": "2026-02-09",
+  "source_path": "scripts/cogs/building-action-docs.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/building-action-docs.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/building-action-docs/content.md"
+}

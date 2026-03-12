@@ -1,0 +1,29 @@
+{
+  "namespace": "cognovamx",
+  "name": "manual-metadata",
+  "version": "1.0",
+  "description": "Step-by-step guide for adding MX metadata to markdown, JavaScript, CSS, and HTML files. The human playbook for the embrace-and-extend model.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "active",
+  "category": "manual",
+  "tags": [
+    "manual",
+    "metadata",
+    "conventions",
+    "html",
+    "javascript",
+    "css",
+    "yaml",
+    "frontmatter",
+    "embrace-extend"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-15",
+  "modified": "2026-02-15",
+  "source_path": "scripts/cogs/manual-metadata.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/manual-metadata.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/manual-metadata/content.md"
+}

@@ -1,0 +1,24 @@
+{
+  "namespace": "cognovamx",
+  "name": "about.mx",
+  "version": "1.0",
+  "description": "Maxine's current identity, capabilities, recent evolution, and operational context. Regenerated during co-directors reports to track growth over time.",
+  "author": "Maxine (gestalt-generated)",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "about",
+  "tags": [
+    "maxine",
+    "identity",
+    "self-knowledge",
+    "gestalt"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-21",
+  "modified": "2026-02-21",
+  "source_path": "mx-canon/mx-maxine-lives/about/about.mx.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/about/about.mx.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/about.mx/content.md"
+}

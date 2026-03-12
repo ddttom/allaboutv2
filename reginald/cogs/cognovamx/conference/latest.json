@@ -1,0 +1,31 @@
+{
+  "namespace": "cognovamx",
+  "name": "conference",
+  "version": "1.0",
+  "description": "Boye & Company CMS Summit — the annual gathering of content management professionals. Frankfurt, 12 May 2026.",
+  "author": "MX Demo",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "event",
+  "tags": [
+    "conference",
+    "cms",
+    "content-management",
+    "frankfurt",
+    "may-2026",
+    "speaker",
+    "professional",
+    "digital-transformation",
+    "headless-cms",
+    "ai-strategy",
+    "boye-company"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-12",
+  "modified": "2026-02-12",
+  "source_path": "mx-maxine-app/demo-cogs/conference.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-maxine-app/demo-cogs/conference.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/conference/content.md"
+}

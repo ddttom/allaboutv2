@@ -1,0 +1,29 @@
+{
+  "namespace": "cognovamx",
+  "name": "mx-boot",
+  "version": "1.0",
+  "description": "MX OS bootstrapper — zero to operational. Checks prerequisites, installs dependencies. Entry points: INSTALLME (bare metal), npm run boot, /mx-boot.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "boot",
+    "bootstrap",
+    "install",
+    "preflight",
+    "init",
+    "session",
+    "zero-to-operational",
+    "entry-point",
+    "mx-os"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-11",
+  "modified": "2026-03-03",
+  "source_path": "scripts/cogs/mx-boot.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/mx-boot.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/mx-boot/content.md"
+}

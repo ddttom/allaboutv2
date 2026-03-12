@@ -1,0 +1,25 @@
+{
+  "namespace": "cognovamx",
+  "name": "allmygithubs",
+  "version": "2.1-draft",
+  "description": "Self-updating action cog that scans GitHub repos and generates a classified, sorted table.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "github",
+    "inventory",
+    "catalog",
+    "action-cog",
+    "self-updating"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-24",
+  "modified": "2026-02-24",
+  "source_path": "scripts/cogs/mx-allmygithubs.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/mx-allmygithubs.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/allmygithubs/content.md"
+}

@@ -1,0 +1,26 @@
+{
+  "namespace": "cognovamx",
+  "name": "env",
+  "version": "1.0.0",
+  "description": "Project-level environment configuration. The MX equivalent of .env — one place for values that other cogs reference, never hardcode.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "environment",
+    "config",
+    "settings",
+    "hostname",
+    "project",
+    "convention"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-11",
+  "modified": "2026-02-11",
+  "source_path": "scripts/cogs/env.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/env.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/env/content.md"
+}

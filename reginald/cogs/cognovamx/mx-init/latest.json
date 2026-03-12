@@ -1,0 +1,30 @@
+{
+  "namespace": "cognovamx",
+  "name": "mx-init",
+  "version": "1.0.0",
+  "description": "The action action-doc that initializes any repository with MX OS conventions — SOUL.md, CLAUDE.md, INSTALLME.md, frontmatter, directory structure.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "init",
+    "onboarding",
+    "setup",
+    "mx-os",
+    "soul",
+    "claude",
+    "installme",
+    "frontmatter",
+    "conventions",
+    "action"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-10",
+  "modified": "2026-02-10",
+  "source_path": "scripts/cogs/mx-init.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/mx-init.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/mx-init/content.md"
+}

@@ -38,7 +38,7 @@
 
   <!-- Bottom bar -->
   <rect x="0" y="570" width="1200" height="60" fill="rgba(0,0,0,0.3)"/>
-  <text x="100" y="608" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" fill="#a8a8a8">Cog-Nova-MX Ltd — Making the web work for everyone and everything that uses it</text>
+  <text x="100" y="608" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" fill="#a8a8a8">CogNovaMX Ltd — Making the web work for everyone and everything that uses it</text>
   <text x="1100" y="608" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" fill="#a8a8a8" text-anchor="end">allabout.network</text>
 
   <!-- Cog file indicator (teaching moment — even the social image is MX-aware) -->

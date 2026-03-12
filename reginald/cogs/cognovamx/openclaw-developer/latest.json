@@ -1,0 +1,24 @@
+{
+  "namespace": "cognovamx",
+  "name": "openclaw-developer",
+  "version": "1.0",
+  "description": "OpenClaw framework developer — agent skills and cog integration",
+  "author": "Tom Cranstoun",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "pending",
+  "category": "contact",
+  "tags": [
+    "contact",
+    "prospect",
+    "developer",
+    "agent-framework"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-09",
+  "modified": "2026-03-02",
+  "source_path": "mx-crm/contacts/openclaw-developer/openclaw-developer.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-crm/contacts/openclaw-developer/openclaw-developer.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/openclaw-developer/content.md"
+}

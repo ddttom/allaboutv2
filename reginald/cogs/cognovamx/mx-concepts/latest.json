@@ -1,0 +1,27 @@
+{
+  "namespace": "cognovamx",
+  "name": "mx-concepts",
+  "version": "1.0.0",
+  "description": "A conceptual map of MX — every idea, how they connect, and where to go deeper. The newcomer's guide to Machine Experience.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "concepts",
+    "primer",
+    "onboarding",
+    "glossary",
+    "mental-model",
+    "newcomer",
+    "map"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-11",
+  "modified": "2026-02-11",
+  "source_path": "mx-canon/mx-os/mx-concepts.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-os/mx-concepts.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/mx-concepts/content.md"
+}

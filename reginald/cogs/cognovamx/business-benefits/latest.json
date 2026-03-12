@@ -1,0 +1,26 @@
+{
+  "namespace": "cognovamx",
+  "name": "business-benefits",
+  "version": "1.0",
+  "description": "The four strategic MX benefits: computational trust, commerce revenue recovery, asset portability, and operational efficiency via deterministic outputs.",
+  "author": "Tom Cranstoun & Maxine (Claude Sonnet 4.5)",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "Business Strategy",
+  "tags": [
+    "business-case",
+    "roi",
+    "competitive-advantage",
+    "operational-efficiency",
+    "strategic-assets",
+    "computational-trust"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-17",
+  "modified": "2026-03-02",
+  "source_path": "mx-canon/mx-os/business-benefits.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-os/business-benefits.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/business-benefits/content.md"
+}

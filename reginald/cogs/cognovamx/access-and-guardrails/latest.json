@@ -1,0 +1,28 @@
+{
+  "namespace": "cognovamx",
+  "name": "access-and-guardrails",
+  "version": "1.0",
+  "description": "How cogs are protected. Access control for content and execution — encryption, authentication, and the guardrail pattern where one cog unlocks another.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "access-control",
+    "security",
+    "encryption",
+    "oauth",
+    "guardrail",
+    "permissions",
+    "trust",
+    "authentication"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-09",
+  "modified": "2026-02-09",
+  "source_path": "scripts/cogs/access-and-guardrails.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/access-and-guardrails.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/access-and-guardrails/content.md"
+}

@@ -1,0 +1,28 @@
+{
+  "namespace": "cognovamx",
+  "name": "INSTALLME",
+  "version": "2.1-draft",
+  "description": "Self-contained action cog for installing MX OS. Contains both instructions and executable script.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "install",
+    "setup",
+    "onboarding",
+    "ai-agent",
+    "diagnostics",
+    "prerequisites",
+    "mx-os",
+    "action-cog"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-10",
+  "modified": "2026-02-24",
+  "source_path": "scripts/cogs/INSTALLME.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/INSTALLME.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/INSTALLME/content.md"
+}

@@ -1,0 +1,24 @@
+{
+  "namespace": "cognovamx",
+  "name": "LICENSE",
+  "version": "1.0",
+  "description": "MIT license for Maxine Lives specification work. Implementation licenses may differ.",
+  "author": "Tom Cranstoun",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "active",
+  "category": "governance",
+  "tags": [
+    "license",
+    "mit",
+    "open-source",
+    "the-gathering"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-12",
+  "modified": "2026-02-12",
+  "source_path": "mx-canon/mx-maxine-lives/LICENSE.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/LICENSE.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/LICENSE/content.md"
+}

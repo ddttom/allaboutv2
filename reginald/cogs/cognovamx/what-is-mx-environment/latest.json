@@ -1,0 +1,27 @@
+{
+  "namespace": "cognovamx",
+  "name": "what-is-mx-environment",
+  "version": "1.0.0",
+  "description": "MX OS lives on the machine, not in the repo. $MX_HOME is the machine-level context — the answer to the machine, the universe, and everything.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "environment",
+    "mx-home",
+    "machine-context",
+    "boot",
+    "bare-metal",
+    "two-stage-boot",
+    "mx-os"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-10",
+  "modified": "2026-02-10",
+  "source_path": "scripts/cogs/what-is-mx-environment.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/what-is-mx-environment.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/what-is-mx-environment/content.md"
+}

@@ -130,7 +130,7 @@ Patterns that optimize for machine comprehension simultaneously improve human ac
 
 **Source**: This menu synthesizes the core principles from the comprehensive MX Principles documentation. For complete technical specifications and detailed implementation guidance, see the forthcoming "MX the bible".
 
-Cog-Nova-MX Ltd - Making the web work for everyone and everything that uses it.
+CogNovaMX Ltd - Making the web work for everyone and everything that uses it.
 
 **Version**: 1.1
 **Last Updated**: 2026-02-04

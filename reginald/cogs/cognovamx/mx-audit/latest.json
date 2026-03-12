@@ -1,0 +1,32 @@
+{
+  "namespace": "cognovamx",
+  "name": "mx-audit",
+  "version": "1.2.0",
+  "description": "Comprehensive web audit — crawl pages, analyse accessibility, performance, SEO, and AI agent suitability, then generate a partnership-ready executive report.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-sales",
+  "tags": [
+    "audit",
+    "web-audit",
+    "accessibility",
+    "wcag",
+    "performance",
+    "seo",
+    "ai-agents",
+    "llms-txt",
+    "sales-enablement",
+    "partnership",
+    "white-label",
+    "report-generation"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-14",
+  "modified": "2026-02-14",
+  "source_path": "scripts/cogs/mx-audit.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/mx-audit.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/mx-audit/content.md"
+}

@@ -1,0 +1,29 @@
+{
+  "namespace": "cognovamx",
+  "name": "whats-changed",
+  "version": "1.0.0",
+  "description": "Find what changed in the repo — list files by time period and type, extract metadata, show git status, surface gaps. The content audit tool.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-content",
+  "tags": [
+    "audit",
+    "content",
+    "files",
+    "metadata",
+    "git",
+    "dashboard",
+    "activity",
+    "changed",
+    "inventory"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-11",
+  "modified": "2026-03-03",
+  "source_path": "scripts/cogs/whats-changed.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/whats-changed.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/whats-changed/content.md"
+}

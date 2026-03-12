@@ -1,0 +1,25 @@
+{
+  "namespace": "cognovamx",
+  "name": "maxine-lives-routing",
+  "version": "2.0-draft",
+  "description": "Intelligent routing rules for AI agents navigating Maxine Lives. Maps query intents to specific folders, lists all invocable commands, and reduces inference risk.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "active",
+  "category": "mx-core",
+  "tags": [
+    "routing",
+    "sop",
+    "inference-reduction",
+    "agent-navigation",
+    "machine-readable"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-13",
+  "modified": "2026-02-13",
+  "source_path": "mx-canon/mx-maxine-lives/ROUTING.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/ROUTING.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/maxine-lives-routing/content.md"
+}

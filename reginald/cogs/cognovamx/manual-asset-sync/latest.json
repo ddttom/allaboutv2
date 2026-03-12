@@ -1,0 +1,26 @@
+{
+  "namespace": "cognovamx",
+  "name": "manual-asset-sync",
+  "version": "1.0",
+  "description": "Synchronizes CSS, JavaScript, images, fonts, and other static assets across multilingual site language directories.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "manual",
+  "tags": [
+    "manual",
+    "multilingual",
+    "assets",
+    "sync",
+    "automation",
+    "workflow"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-21",
+  "modified": "2026-03-02",
+  "source_path": "mx-canon/mx-maxine-lives/manuals/manual-asset-sync.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/manuals/manual-asset-sync.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/manual-asset-sync/content.md"
+}

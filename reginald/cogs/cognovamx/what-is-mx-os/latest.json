@@ -1,0 +1,27 @@
+{
+  "namespace": "cognovamx",
+  "name": "what-is-mx-os",
+  "version": "1.0",
+  "description": "The Machine Experience Operating System. Documentation IS the system. Cogs are its programs. This action-doc explains MX OS and can bootstrap it.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "mx-os",
+    "operating-system",
+    "cogs",
+    "documentation",
+    "metadata",
+    "soul",
+    "builds-on"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-09",
+  "modified": "2026-02-09",
+  "source_path": "scripts/cogs/what-is-mx-os.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/what-is-mx-os.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/what-is-mx-os/content.md"
+}

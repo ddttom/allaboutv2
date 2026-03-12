@@ -1,0 +1,28 @@
+{
+  "namespace": "cognovamx",
+  "name": "ndr-02-camelcase-naming",
+  "version": "1.0",
+  "description": "NDR #2: All YAML frontmatter field names must use camelCase. Aligns with Schema.org and Dublin Core vocabulary conventions.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "accepted",
+  "category": "naming",
+  "tags": [
+    "ndr",
+    "naming",
+    "camelCase",
+    "fields",
+    "metadata",
+    "schema-org",
+    "dublin-core",
+    "standards"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-16",
+  "modified": "2026-03-02",
+  "source_path": "mx-canon/mx-the-gathering/naming-decisions/ndr-02-camelcase-naming.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-the-gathering/naming-decisions/ndr-02-camelcase-naming.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/ndr-02-camelcase-naming/content.md"
+}

@@ -1,0 +1,26 @@
+{
+  "namespace": "cognovamx",
+  "name": "mx-html-writing-guide",
+  "version": "1.1",
+  "description": "Single source of truth for writing HTML in the MX ecosystem. Covers the complete meta tag stack, MX carrier tags, and what NOT to include.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "proprietary",
+  "status": "active",
+  "category": "mx-core",
+  "tags": [
+    "html",
+    "meta-tags",
+    "ssot",
+    "writing-guide",
+    "carrier-format",
+    "ai-metadata"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-03-04",
+  "modified": "2026-03-04",
+  "source_path": "mx-canon/ssot/mx-html-writing-guide.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/ssot/mx-html-writing-guide.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/mx-html-writing-guide/content.md"
+}

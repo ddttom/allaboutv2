@@ -25,8 +25,8 @@ All JSON endpoints return structured data with:
 - source_url: Original source location
 
 ## Current Registry
-- Publisher: Cog-Nova-MX Ltd
-- Namespace: cog-nova-mx
+- Publisher: CogNovaMX Ltd
+- Namespace: cognovamx
 - Total COGs: 168
 - Compliance: Level 2 (Structured, no signing)
 

@@ -1,0 +1,28 @@
+{
+  "namespace": "cognovamx",
+  "name": "blog-generator",
+  "version": "1.0.0",
+  "description": "Generates, converts, and updates blog posts for allabout.network in both EDS markdown and MX HTML formats.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "published",
+  "category": "mx-core",
+  "tags": [
+    "blog",
+    "content",
+    "publishing",
+    "eds",
+    "html",
+    "allabout",
+    "writing",
+    "action"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-11",
+  "modified": "2026-02-11",
+  "source_path": "scripts/cogs/blog-generator.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/blog-generator.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/blog-generator/content.md"
+}

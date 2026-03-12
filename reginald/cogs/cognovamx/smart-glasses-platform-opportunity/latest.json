@@ -1,0 +1,31 @@
+{
+  "namespace": "cognovamx",
+  "name": "smart-glasses-platform-opportunity",
+  "version": "1.0",
+  "description": "Smart glasses as a mass-market MX platform. Cameras and voice but no content standard. MX fills the gap — Reginald docs on your face. Zero engineering.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "vision",
+  "tags": [
+    "smart-glasses",
+    "meta",
+    "platform",
+    "wearables",
+    "companion-web",
+    "strategy",
+    "market-opportunity",
+    "competitive-analysis",
+    "google",
+    "apple",
+    "samsung"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-14",
+  "modified": "2026-02-14",
+  "source_path": "mx-canon/mx-vision/smart-glasses-platform-opportunity.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-vision/smart-glasses-platform-opportunity.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/smart-glasses-platform-opportunity/content.md"
+}

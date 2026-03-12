@@ -1,0 +1,24 @@
+{
+  "namespace": "cognovamx",
+  "name": "header",
+  "version": "1.0",
+  "description": "Responsive site header with navigation, hamburger menu, and brand identity",
+  "author": "Tom Cranstoun",
+  "maintainer": [],
+  "license": "MIT",
+  "status": "draft",
+  "category": "eds-block",
+  "tags": [
+    "eds",
+    "block",
+    "header",
+    "navigation"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-22",
+  "modified": "2026-03-02",
+  "source_path": "allaboutv2/cogs/eds-blocks/header.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/allaboutv2/cogs/eds-blocks/header.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/header/content.md"
+}

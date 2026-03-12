@@ -1,0 +1,25 @@
+{
+  "namespace": "cognovamx",
+  "name": "link-checker",
+  "version": "0.1.0",
+  "description": "Validate links — critical for llms.txt and documentation",
+  "author": "Maxine (MX - Machine eXperience Engine)",
+  "maintainer": "mx.machine.experience@gmail.com",
+  "license": "proprietary",
+  "status": "draft",
+  "category": "mx-core",
+  "tags": [
+    "links",
+    "validation",
+    "broken-links",
+    "llms-txt",
+    "documentation"
+  ],
+  "type": "action-doc",
+  "compliance_level": 2,
+  "created": "2026-02-06",
+  "modified": "2026-02-06",
+  "source_path": "scripts/cogs/link-checker.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/link-checker.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/link-checker/content.md"
+}

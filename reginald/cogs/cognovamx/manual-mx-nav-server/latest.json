@@ -1,0 +1,26 @@
+{
+  "namespace": "cognovamx",
+  "name": "manual-mx-nav-server",
+  "version": "1.0",
+  "description": "Web-based multi-repo navigation dashboard with VS Code Explorer-style UI, search, and recent files.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "manual",
+  "tags": [
+    "manual",
+    "navigation",
+    "dashboard",
+    "web",
+    "repositories",
+    "explorer"
+  ],
+  "type": "info-doc",
+  "compliance_level": 2,
+  "created": "2026-02-15",
+  "modified": "2026-03-02",
+  "source_path": "mx-canon/mx-maxine-lives/manuals/manual-mx-nav-server.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/manuals/manual-mx-nav-server.cog.md",
+  "content_url": "/reginald/cogs/cognovamx/manual-mx-nav-server/content.md"
+}
