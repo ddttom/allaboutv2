@@ -98,9 +98,9 @@ mx:
   provenance:
     source:
       scripts:
-        - "scripts/lib/html-audit-utils.js"
-        - "scripts/audit-html-baseline.js"
-        - "scripts/audit-html-compare.js"
+        - "scripts/lib/html-audit-utils.cjs"
+        - "scripts/audit-html-baseline.cjs"
+        - "scripts/audit-html-compare.cjs"
       npm-scripts:
         - "audit:html:baseline"
         - "audit:html:compare"

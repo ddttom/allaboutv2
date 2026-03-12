@@ -347,7 +347,7 @@ jobs:
     "version": "1.0.0",
     "timestamp": "2026-02-21T15:30:00Z",
     "machine": "Toms-MacBook-Pro.local",
-    "source": "scripts/audit-html-baseline.js"
+    "source": "scripts/audit-html-baseline.cjs"
   },
   "baseline": {
     "established": "2026-02-21T15:30:00Z",
@@ -634,9 +634,9 @@ git commit -m "chore: establish HTML baseline"
 
 ```text
 HTML Baseline Audit System
-├── scripts/lib/html-audit-utils.js      # Shared utilities
-├── scripts/audit-html-baseline.js       # Baseline establishment
-├── scripts/audit-html-compare.js        # Regression detection
+├── scripts/lib/html-audit-utils.cjs      # Shared utilities
+├── scripts/audit-html-baseline.cjs       # Baseline establishment
+├── scripts/audit-html-compare.cjs        # Regression detection
 └── Enhanced Audit System (existing)
     └── npm run cogify                    # HTML/CSS/DOM capture
 ```
@@ -668,9 +668,9 @@ HTML Baseline Audit System
 
 **Scripts:**
 
-- `scripts/lib/html-audit-utils.js` - Shared utilities
-- `scripts/audit-html-baseline.js` - Baseline establishment
-- `scripts/audit-html-compare.js` - Regression detection
+- `scripts/lib/html-audit-utils.cjs` - Shared utilities
+- `scripts/audit-html-baseline.cjs` - Baseline establishment
+- `scripts/audit-html-compare.cjs` - Regression detection
 
 **Configuration:**
 
@@ -692,7 +692,7 @@ HTML Baseline Audit System
 
 ### Report Tone
 
-The HTML baseline comparison tool (`scripts/audit-html-compare.js`) automatically generates reports using **partnership tone** rather than critical/technical tone.
+The HTML baseline comparison tool (`scripts/audit-html-compare.cjs`) automatically generates reports using **partnership tone** rather than critical/technical tone.
 
 **Key Transformation:**
 

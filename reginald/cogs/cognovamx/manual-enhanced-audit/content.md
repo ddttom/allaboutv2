@@ -703,7 +703,7 @@ When using audit data to generate client reports, **always use partnership tone*
 
 **Automated Report Generation:**
 
-The HTML baseline comparison tool (`scripts/audit-html-compare.js`) automatically generates partnership-tone reports. All MX audit tools follow this framework.
+The HTML baseline comparison tool (`scripts/audit-html-compare.cjs`) automatically generates partnership-tone reports. All MX audit tools follow this framework.
 
 ---
 
