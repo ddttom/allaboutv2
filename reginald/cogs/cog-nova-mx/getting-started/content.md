@@ -342,7 +342,7 @@ For team members wanting deeper understanding of the architecture.
 ### Book: Chapter 0 — What Are AI Agents?
 
 - **Wordcount**: ~10,183
-- **Book**: Shared (between MX Protocols and Handbook)
+- **Book**: Shared (between MX: The Protocols and MX: The Handbook)
 - **Chapter**: 0 (anchor chapter)
 - **Status**: Written, in the manuscript
 - **Key examples**: Danube cruise pricing error (£2,030→£203,000), Ally McBeal vs legal citations

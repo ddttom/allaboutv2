@@ -1228,7 +1228,7 @@ mx:
     - name: book
       type: string
       definition: "Which book this chapter belongs to."
-      example: "MX Protocols"
+      example: "MX: The Protocols"
       notes: "Identifies which book a chapter belongs to."
       status: canonical
       profile: book

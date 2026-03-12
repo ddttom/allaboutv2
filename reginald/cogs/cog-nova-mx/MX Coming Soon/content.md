@@ -40,7 +40,7 @@ Machine Experience (MX) fixes this. It makes your content readable by every AI a
 
 ## Join the Waitlist
 
-Be the first to know when MX: The Handbook and MX Protocols launch.
+Be the first to know when MX: The Handbook and MX: The Protocols launch.
 
 **[Join the Waitlist](https://forms.gle/443wpx4th4ZzYPdA8)**
 
@@ -52,7 +52,7 @@ A practical guide to adding Machine Experience to your CMS, your website, and yo
 
 **Expected publication: 2 April 2026**
 
-### The MX Protocols
+### MX: The Protocols
 
 The definitive reference for those implementing MX at scale. Architecture, standards, the companion web, and enterprise implementation patterns.
 
