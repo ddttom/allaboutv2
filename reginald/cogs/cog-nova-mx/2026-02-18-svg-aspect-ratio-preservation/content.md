@@ -17,7 +17,7 @@ mx:
     title: "SVG-to-PNG Aspect Ratio Preservation with Tool Cascade"
     status: accepted
     date: 2026-02-18
-    context: "MX Handbook PDF generation (Feb 2026) revealed critical image clipping issue: landscape SVG diagrams (900×600, 3:2 ratio) were converted to square PNGs (2700×2700) with letterbox padding by qlmanage, causing LaTeX to scale incorrectly and clip content outside page margins."
+    context: "MX: The Handbook PDF generation (Feb 2026) revealed critical image clipping issue: landscape SVG diagrams (900×600, 3:2 ratio) were converted to square PNGs (2700×2700) with letterbox padding by qlmanage, causing LaTeX to scale incorrectly and clip content outside page margins."
     decision: "Implement tool cascade for SVG-to-PNG conversion: rsvg-convert (primary) → ImageMagick (fallback) → qlmanage (last resort). Always preserve source aspect ratio. Document qlmanage square thumbnail limitation."
     consequences: "All book diagrams maintain 3:2 aspect ratio (2700×1800 PNG from 900×600 SVG). Images scale properly in LaTeX without clipping. Professional PDF layout with readable diagrams. Universal workflow across all MX publications."
 
@@ -28,7 +28,7 @@ mx:
 
 ## Context
 
-During MX Handbook PDF generation (February 2026), we discovered that book diagrams were clipping in the PDF despite being designed at 900×600 pixels (3:2 landscape aspect ratio). Investigation revealed a fundamental limitation of macOS's qlmanage tool that was silently destroying aspect ratios.
+During MX: The Handbook PDF generation (February 2026), we discovered that book diagrams were clipping in the PDF despite being designed at 900×600 pixels (3:2 landscape aspect ratio). Investigation revealed a fundamental limitation of macOS's qlmanage tool that was silently destroying aspect ratios.
 
 ### The Problem: qlmanage Creates Square Thumbnails
 
@@ -210,7 +210,7 @@ ADR #4 chose qlmanage for **CSS rendering accuracy**. This ADR refines that deci
 
 This workflow applies to:
 
-- MX Handbook (diagrams, flowcharts, timelines)
+- MX: The Handbook (diagrams, flowcharts, timelines)
 - MX Protocols (architecture diagrams, illustrations)
 - Blog posts (screenshots, diagrams)
 - Presentations (slide graphics)
@@ -239,7 +239,7 @@ ImageMagick is nearly as good. qlmanage is last resort not just for aspect ratio
 - **Clear warnings:** Yellow alert when qlmanage used (user knows to install better tools)
 - **Automated:** `npm run illustrations:generate` handles everything
 
-### Measured Impact (MX Handbook, 2026-02-18)
+### Measured Impact (MX: The Handbook, 2026-02-18)
 
 **Before (qlmanage only):**
 

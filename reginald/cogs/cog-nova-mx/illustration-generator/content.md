@@ -496,7 +496,7 @@ Syntax-highlighted code examples with VS Code Dark+ theme:
 
 ## Why This Exists
 
-The MX Handbook needed comprehensive illustration coverage across 11 chapters. Creating illustrations ad-hoc without documented standards leads to:
+MX: The Handbook needed comprehensive illustration coverage across 11 chapters. Creating illustrations ad-hoc without documented standards leads to:
 
 - Inconsistent visual style
 - Missing or incomplete metadata

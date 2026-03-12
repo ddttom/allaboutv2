@@ -109,7 +109,7 @@ MX accounts for five agent types with different capabilities:
 
 - **[MX Manifesto](/mx/manifesto)** — The philosophical foundation
 - **[What is Machine Experience?](/mx/what-is-machine-experience)** — Introduction for newcomers
-- **[The MX Handbook](https://allabout.network/mx/handbook)** — Practical implementation guide (publishing 2 April 2026)
+- **[MX: The Handbook](https://allabout.network/mx/handbook)** — Practical implementation guide (publishing 2 April 2026)
 
 ## About This Page
 

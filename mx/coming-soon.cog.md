@@ -40,13 +40,13 @@ Machine Experience (MX) fixes this. It makes your content readable by every AI a
 
 ## Join the Waitlist
 
-Be the first to know when the MX Handbook and MX Protocols launch.
+Be the first to know when MX: The Handbook and MX Protocols launch.
 
 **[Join the Waitlist](https://forms.gle/443wpx4th4ZzYPdA8)**
 
 ## The Books
 
-### The MX Handbook
+### MX: The Handbook
 
 A practical guide to adding Machine Experience to your CMS, your website, and your content workflow. Step-by-step implementations across major platforms.
 

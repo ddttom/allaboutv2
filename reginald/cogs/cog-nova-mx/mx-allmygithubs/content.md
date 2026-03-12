@@ -199,7 +199,7 @@ Repos are classified in this priority order:
 | 🔷 mx-collaboration-with | MX |  | 2026-02-03 | [mx-collaboration-with](https://github.com/ddttom/mx-collaboration-with) |
 | 🔷 mx-exit-strategy | MX | Strategic planning repository for business exit strategy dev | 2026-01-30 | [mx-exit-strategy](https://github.com/Digital-Domain-Technologies-Ltd/mx-exit-strategy) |
 | 🔷 MX-Gathering | MX | MX Gathering - Community resources, patterns, and examples | 2026-01-28 | [MX-Gathering](https://github.com/MX-Experience/MX-Gathering) |
-| 🔷 MX-Handbook | MX | MX Handbook - Practical implementation guide for AI-ready ar | 2026-01-28 | [MX-Handbook](https://github.com/MX-Experience/MX-Handbook) |
+| 🔷 MX: The Handbook | MX | MX: The Handbook - Practical implementation guide for AI-ready ar | 2026-01-28 | [MX: The Handbook](https://github.com/MX-Experience/MX-Handbook) |
 | 🔷 MX-Bible | MX | The MX Bible - Comprehensive guide to Machine Experience pri | 2026-01-28 | [MX-Bible](https://github.com/MX-Experience/MX-Bible) |
 | 🔷 MX-Legal | MX | Private repository for MX intellectual property documentatio | 2026-01-27 | [MX-Legal](https://github.com/Digital-Domain-Technologies-Ltd/MX-Legal) |
 | allaboutv2 | Web | allabout | 2026-02-24 | [allaboutv2](https://github.com/ddttom/allaboutv2) |
