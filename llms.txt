@@ -1,3 +1,26 @@
+# allabout.network — CogNovaMX Ltd
+
+> Making the web work for everyone and everything that uses it.
+> MX (Machine Experience) is structured metadata that makes your content
+> readable by every AI agent on earth — without making it less readable by humans.
+
+## About CogNovaMX
+
+- Company: https://allabout.network/mx/
+- Author: https://www.linkedin.com/in/tom-cranstoun/
+- Contact: mailto:tom.cranstoun@gmail.com
+
+## MX Books
+
+- MX: The Handbook (2 April 2026): https://allabout.network/mx/coming-soon.html
+- MX: The Protocols (1 July 2026): https://allabout.network/mx/coming-soon.html
+
+## Waitlist
+
+- Join the waitlist: https://forms.gle/443wpx4th4ZzYPdA8
+
+---
+
 # Digital Domain Technologies (DDT)
 
 > Expert Adobe Edge Delivery Services consulting and AI integration resources by Tom Cranstoun ("The AEM Guy")
