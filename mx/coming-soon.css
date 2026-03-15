@@ -466,6 +466,19 @@ main {
         font-size: 24px;
     }
 
+    .hero {
+        padding: 48px 16px 24px;
+    }
+
+    .hero h1 {
+        max-width: none;
+        font-size: clamp(2.2rem, 9vw, 3.5rem);
+    }
+
+    .hero h1 .nowrap {
+        white-space: normal;
+    }
+
     .hero h1::before {
         width: 42vw;
     }
@@ -476,6 +489,17 @@ main {
 
     .subtitle {
         white-space: normal;
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: clamp(1.6rem, 7vw, 2.2rem);
+    }
+
+    .problem,
+    .solution,
+    .author-bio {
+        padding: 18px;
     }
 
     .cta-button {
