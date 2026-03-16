@@ -1,0 +1,47 @@
+{
+  "version": "2.0.0",
+  "generated": "2026-03-16T18:28:40.319Z",
+  "total": 2,
+  "publishers": [
+    {
+      "namespace": "cognovamx",
+      "name": "CogNovaMX Ltd",
+      "domain": "allabout.network",
+      "url": "https://allabout.network",
+      "manifest_url": null,
+      "registration_mode": "direct",
+      "cog_count": 168,
+      "resolve_modes": {
+        "hosted": 168,
+        "pointer": 0
+      },
+      "signing_key": {
+        "algorithm": "Ed25519",
+        "key_id": "reginald-signing-key-2026",
+        "public_key_url": "/reginald/api/v1/public-key.pem"
+      },
+      "status": "active",
+      "registered_at": "2026-02-06"
+    },
+    {
+      "namespace": "agentica",
+      "name": "Agentica",
+      "domain": "agentica.wiki",
+      "url": "https://agentica.wiki",
+      "manifest_url": "https://agentica.wiki/.well-known/mx-cogs.json",
+      "registration_mode": "manifest",
+      "cog_count": 1,
+      "resolve_modes": {
+        "hosted": 0,
+        "pointer": 1
+      },
+      "signing_key": {
+        "algorithm": "Ed25519",
+        "key_id": null,
+        "public_key_url": "/reginald/api/v1/public-key.pem"
+      },
+      "status": "active",
+      "registered_at": "2026-03-16"
+    }
+  ]
+}

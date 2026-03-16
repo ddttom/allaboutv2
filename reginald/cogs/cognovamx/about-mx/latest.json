@@ -16,10 +16,50 @@
     "maxine"
   ],
   "type": "info-doc",
-  "compliance_level": 2,
-  "created": "2026-03-06",
-  "modified": "2026-03-06",
+  "compliance_level": 3,
+  "content_hash": "sha256:b8e6d4233af0777d80b887374642610b8e639f69dc2d61aaeb55cc52f4c0a8f7",
+  "created": "2026-03-12",
+  "modified": "2026-03-12",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/about-mx/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
   "source_path": "mx-canon/mx-maxine-lives/about.mx.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/about.mx.cog.md",
-  "content_url": "/reginald/cogs/cognovamx/about-mx/content.md"
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/about-mx/content.md",
+    "cached_at": "2026-03-16T18:28:40.119Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/About Me — Maxine@1.0",
+    "content_hash": "sha256:b8e6d4233af0777d80b887374642610b8e639f69dc2d61aaeb55cc52f4c0a8f7",
+    "compliance": {
+      "level": 1,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified"
+      ],
+      "checks_failed": [
+        "schema_valid",
+        "publisher_verified",
+        "mx_audit_passed"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:GTJIM7WpI6L6PXUmCKUtlLWZrfUFISKnA9nb0LJQoMrqjl4MsRRU3Q/cte04NsQA9VwdR40lx+nZLTlJbOY7Dw==",
+      "signed_at": "2026-03-16T17:53:49.214Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
 }

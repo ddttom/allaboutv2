@@ -22,10 +22,50 @@
     "samsung"
   ],
   "type": "info-doc",
-  "compliance_level": 2,
+  "compliance_level": 3,
+  "content_hash": "sha256:f4bbadea74c8dfcdded304fdce830c175ef9ffb6683e7980eb3f9cd0d9a18c8a",
   "created": "2026-02-14",
   "modified": "2026-02-14",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/smart-glasses-platform-opportunity/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
   "source_path": "mx-canon/mx-vision/smart-glasses-platform-opportunity.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-vision/smart-glasses-platform-opportunity.cog.md",
-  "content_url": "/reginald/cogs/cognovamx/smart-glasses-platform-opportunity/content.md"
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/smart-glasses-platform-opportunity/content.md",
+    "cached_at": "2026-03-16T18:28:40.175Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/Smart Glasses — The MX Platform Opportunity@1.0",
+    "content_hash": "sha256:f4bbadea74c8dfcdded304fdce830c175ef9ffb6683e7980eb3f9cd0d9a18c8a",
+    "compliance": {
+      "level": 2,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified",
+        "schema_valid",
+        "mx_audit_passed"
+      ],
+      "checks_failed": [
+        "publisher_verified"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:lYns4h9ybuxshye+iijCB9QcKDrLtDWIyibl74+WaMVZ6YcgZsxDBU1N6cX3R25dWUhqz5ySKzK3lGGKmHjNDg==",
+      "signed_at": "2026-03-16T17:53:49.328Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
 }

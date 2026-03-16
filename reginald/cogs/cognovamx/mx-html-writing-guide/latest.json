@@ -17,10 +17,50 @@
     "ai-metadata"
   ],
   "type": "info-doc",
-  "compliance_level": 2,
+  "compliance_level": 3,
+  "content_hash": "sha256:812dfbf22dc9ef888d76dcb7ca2d4fdc0d15938bed8f923ec0c8ce8ed8451df3",
   "created": "2026-03-04",
   "modified": "2026-03-04",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-html-writing-guide/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
   "source_path": "mx-canon/ssot/mx-html-writing-guide.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/ssot/mx-html-writing-guide.cog.md",
-  "content_url": "/reginald/cogs/cognovamx/mx-html-writing-guide/content.md"
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/mx-html-writing-guide/content.md",
+    "cached_at": "2026-03-16T18:28:40.185Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/mx-html-writing-guide@1.1",
+    "content_hash": "sha256:812dfbf22dc9ef888d76dcb7ca2d4fdc0d15938bed8f923ec0c8ce8ed8451df3",
+    "compliance": {
+      "level": 2,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified",
+        "schema_valid",
+        "mx_audit_passed"
+      ],
+      "checks_failed": [
+        "publisher_verified"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:diqnvmGGCpspPvGUtoNSAfn3Vr5sMXUvENl9vuE+xP6jf7s74nVTEhr5z5xfyF7epe3cD1XUhqkaJuVA5Z2TBw==",
+      "signed_at": "2026-03-16T17:53:49.378Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
 }

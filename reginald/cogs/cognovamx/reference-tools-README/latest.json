@@ -1,0 +1,67 @@
+{
+  "namespace": "cognovamx",
+  "name": "reference-tools-README",
+  "version": "1.0",
+  "description": "Complete toolkit for building, validating, and deploying multilingual websites with proper SEO, hreflang annotations, and Google best practices.",
+  "author": "Tom Cranstoun and Maxine",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "active",
+  "category": "reference-implementation",
+  "tags": [
+    "multilingual",
+    "automation",
+    "seo",
+    "workflow",
+    "internationalization",
+    "i18n",
+    "tools"
+  ],
+  "type": "info-doc",
+  "compliance_level": 3,
+  "content_hash": "sha256:a360fbdf086441b703c82c01f685d85c6b886c680b7de9a6ef5f920d82f8a542",
+  "created": "2026-02-21",
+  "modified": "2026-03-02",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/reference-tools-README/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
+  "source_path": "scripts/reference-tools/README.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/reference-tools/README.cog.md",
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/reference-tools-README/content.md",
+    "cached_at": "2026-03-16T18:28:40.297Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/MX Multilingual Automation Suite@1.0",
+    "content_hash": "sha256:a360fbdf086441b703c82c01f685d85c6b886c680b7de9a6ef5f920d82f8a542",
+    "compliance": {
+      "level": 1,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified"
+      ],
+      "checks_failed": [
+        "schema_valid",
+        "publisher_verified",
+        "mx_audit_passed"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:rJDnrHj2Nd+fQMG1rcBHyPw01w67r53tgPjsYaN7A7TnapxTYHwLrOUvi602PGqmesUlCjqybOGUI147BYNABQ==",
+      "signed_at": "2026-03-16T17:53:49.582Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
+}

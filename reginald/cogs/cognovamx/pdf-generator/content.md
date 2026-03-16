@@ -1,8 +1,8 @@
 ---
-version: "1.12.1"
+version: "1.13.0"
 description: "Generate professional PDFs from markdown — table formatting, diagram rendering, illustrations, auto-scaled images. A4 and Kindle formats via pandoc."
 created: 2026-02-15
-modified: 2026-03-09
+modified: 2026-03-11
 author: Tom Cranstoun and Maxine
 
 mx:
@@ -32,6 +32,9 @@ mx:
       footnote HTML pages and QR code SVGs are up to date.
       Post-flight: Run npm run reginald:mirror after modifying this cog to sync
       the Reginald web mirror at allaboutv2/reginald/.
+      Output path: All generated PDFs go to mx-outputs/pdf/ — never alongside source
+      markdown files. Source directories contain source files only. The mx-pdf.sh script
+      defaults to mx-outputs/pdf/{basename}.pdf when no explicit output path is given.
       Git-first: Always commit source files before amending them. Never create backup
       copies, -print.md intermediates, or appended docs — git handles recovery.
       Fix emojis directly in source markdown files, never create intermediate copies.
@@ -371,7 +374,8 @@ mx:
             -f markdown-task_lists \
             --pdf-engine=xelatex --syntax-highlighting=idiomatic --toc --toc-depth=2 \
             -V geometry:margin=1in -V fontsize=11pt \
-            -V documentclass=book -V papersize=a4 -V linkcolor=blue \
+            -V documentclass=book -V papersize=a4 -V linkcolor=black -V urlcolor=black \
+            --lua-filter scripts/filters/expand-links.lua \
             -V header-includes='\usepackage{graphicx}\setkeys{Gin}{width=\textwidth,height=\textheight,keepaspectratio}' \
             -V header-includes='\usepackage{fancyhdr}' \
             --metadata title="$TITLE" --metadata author="$AUTHOR" \
@@ -386,7 +390,8 @@ mx:
             -V geometry:inner=0.625in -V geometry:outer=0.5in \
             -V geometry:top=0.625in -V geometry:bottom=0.625in \
             -V fontsize=11pt -V documentclass=book \
-            -V classoption=openright -V linkcolor=black \
+            -V classoption=openright -V linkcolor=black -V urlcolor=black \
+            --lua-filter scripts/filters/expand-links.lua \
             -V header-includes='\usepackage{graphicx}\setkeys{Gin}{width=\textwidth,height=\textheight,keepaspectratio}' \
             --metadata title="$TITLE" --metadata author="$AUTHOR"
           ```
@@ -541,6 +546,44 @@ mx:
           - **Con:** May create slightly uneven page bottoms (acceptable with `\raggedbottom`)
           - **Con:** Some pages may have extra whitespace to preserve paragraph/table integrity
           **Note:** These are penalty settings, not absolute rules. LaTeX will still break pages if there's no other option (e.g., a 20-line paragraph must break somewhere). The high penalty (10000) means LaTeX tries very hard to avoid it.
+          **Automatic code block breathing room (metadata.yaml):**
+          All metadata.yaml files include etoolbox hooks that automatically add spacing and orphan prevention around code blocks and tables:
+          ```yaml
+          # Code blocks: breathing room + keep-together
+          \BeforeBeginEnvironment{verbatim}{\needspace{5\baselineskip}\vspace{8pt plus 2pt minus 2pt}}
+          \AfterEndEnvironment{verbatim}{\vspace{8pt plus 2pt minus 2pt}}
+          \BeforeBeginEnvironment{Shaded}{\needspace{5\baselineskip}\vspace{8pt plus 2pt minus 2pt}}
+          \AfterEndEnvironment{Shaded}{\vspace{8pt plus 2pt minus 2pt}}
+          \BeforeBeginEnvironment{lstlisting}{\needspace{5\baselineskip}\vspace{8pt plus 2pt minus 2pt}}
+          \AfterEndEnvironment{lstlisting}{\vspace{8pt plus 2pt minus 2pt}}
+          # Tables: orphan prevention
+          \BeforeBeginEnvironment{longtable}{\needspace{20\baselineskip}}
+          \AfterEndEnvironment{longtable}{\vspace{4pt plus 2pt minus 2pt}}
+          ```
+          **What these hooks do:**
+          - `\needspace{5\baselineskip}` before code blocks: if fewer than 5 lines remain on the page, the entire block moves to the next page. This prevents 1-2 orphaned lines of code at the bottom.
+          - `\vspace{8pt plus 2pt minus 2pt}` before and after code blocks: adds ~8pt of vertical breathing room so code blocks don't crowd surrounding prose. The `plus/minus` allows LaTeX flexibility.
+          - `\needspace{20\baselineskip}` before tables: requires roughly half a page of space before starting a table, keeping most small-to-medium tables together on one page.
+          - Hooks apply to three environments: `verbatim` (plain code), `Shaded` (pandoc syntax-highlighted), `lstlisting` (listings package).
+          - These are automatic — no manual `\needspace` needed in source markdown for standard code blocks.
+          **Automatic heading keep-with-next (metadata.yaml):**
+          All metadata.yaml files include etoolbox `\pretocmd` hooks that inject `\needspace` before every heading level, keeping headings together with their following content:
+          ```yaml
+          # Heading keep-with-next: prevents headings from being stranded at page bottom
+          \pretocmd{\section}{\needspace{15\baselineskip}}{}{}
+          \pretocmd{\subsection}{\needspace{12\baselineskip}}{}{}
+          \pretocmd{\subsubsection}{\needspace{10\baselineskip}}{}{}
+          \pretocmd{\paragraph}{\needspace{8\baselineskip}}{}{}
+          \pretocmd{\subparagraph}{\needspace{6\baselineskip}}{}{}
+          ```
+          **What these hooks do:**
+          - Each heading demands enough vertical space for itself plus several lines of following content. If insufficient space remains, LaTeX pushes the heading (and its content) to the next page.
+          - Pandoc heading mapping: `##` → `\section`, `###` → `\subsection`, `####` → `\subsubsection`, `#####` → `\paragraph`, `######` → `\subparagraph`.
+          **Logical grouping Lua filter (keep-together.lua):**
+          The `scripts/filters/keep-together.lua` Pandoc Lua filter provides two protections:
+          1. **Logical groupings:** When a heading is followed by prose and then a code block or table, the entire group is wrapped in `\begin{samepage}...\end{samepage}` so they cannot split across pages.
+          2. **Short code blocks:** Code blocks of 12 lines or fewer are wrapped in `samepage` to prevent them from splitting across pages.
+          This filter runs after `blockquote-styles.lua` and `unicode-fallback.lua` in the pandoc pipeline.
           ### Step 8: Extract metadata
           Read the YAML frontmatter for title, author, date/created fields.
           Pass these to pandoc as `--metadata` flags. If fields are missing,
@@ -571,7 +614,7 @@ mx:
           - name: output
             type: file
             required: false
-            description: "Custom output path. Defaults to outputs/ or same directory as source."
+            description: "Custom output path. Defaults to mx-outputs/pdf/{basename}.pdf."
         outputs:
           - name: pdf
             type: file

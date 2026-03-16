@@ -17,10 +17,50 @@
     "workflow"
   ],
   "type": "info-doc",
-  "compliance_level": 2,
+  "compliance_level": 3,
+  "content_hash": "sha256:d27db63a49fd38241a8df2878bd80a81c0d1ce6442d4a88a0a28e01e3269d100",
   "created": "2026-02-21",
   "modified": "2026-03-02",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-asset-sync/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
   "source_path": "mx-canon/mx-maxine-lives/manuals/manual-asset-sync.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/manuals/manual-asset-sync.cog.md",
-  "content_url": "/reginald/cogs/cognovamx/manual-asset-sync/content.md"
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/manual-asset-sync/content.md",
+    "cached_at": "2026-03-16T18:28:40.127Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/Asset Synchronizer Manual@1.0",
+    "content_hash": "sha256:d27db63a49fd38241a8df2878bd80a81c0d1ce6442d4a88a0a28e01e3269d100",
+    "compliance": {
+      "level": 1,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified"
+      ],
+      "checks_failed": [
+        "schema_valid",
+        "publisher_verified",
+        "mx_audit_passed"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:IbuqJsWIzC/vwzwB1mZ/8JUIT8EM2xDOUfPLx4X8utiI2E8k+89Upcu7NYlazaNoD1alNpaEKiZrFlOjHq1WDQ==",
+      "signed_at": "2026-03-16T17:53:49.243Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
 }

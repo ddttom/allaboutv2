@@ -1,8 +1,8 @@
 {
   "namespace": "cognovamx",
   "name": "gen-free-book",
-  "version": "1.0.0",
-  "description": "Generate the MX free book sampler PDF by merging preface, chapter-00, and kickoff presentation PDFs.",
+  "version": "2.0.0",
+  "description": "Generate the MX introduction chapter PDF by merging chapter-00, kickoff presentation, footnotes QR page, and services advert.",
   "author": "Tom Cranstoun and Maxine",
   "maintainer": "tom.cranstoun@gmail.com",
   "license": "proprietary",
@@ -10,17 +10,56 @@
   "category": "mx-core",
   "tags": [
     "pdf",
-    "free-book",
+    "introduction-chapter",
     "sampler",
-    "ghostscript",
     "merge",
     "pandoc"
   ],
   "type": "action-doc",
-  "compliance_level": 2,
+  "compliance_level": 3,
+  "content_hash": "sha256:4b1c8f14f706788df020b680fe9a1d47f863601e6f5e67c49cacfac2e66b2887",
   "created": "2026-03-09",
   "modified": "2026-03-09",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/gen-free-book/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
   "source_path": "scripts/cogs/gen-free-book.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/gen-free-book.cog.md",
-  "content_url": "/reginald/cogs/cognovamx/gen-free-book/content.md"
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/gen-free-book/content.md",
+    "cached_at": "2026-03-16T18:28:40.229Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/unknown@2.0.0",
+    "content_hash": "sha256:4b1c8f14f706788df020b680fe9a1d47f863601e6f5e67c49cacfac2e66b2887",
+    "compliance": {
+      "level": 2,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified",
+        "schema_valid",
+        "mx_audit_passed"
+      ],
+      "checks_failed": [
+        "publisher_verified"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:szBbfoS71tLTJf0nnffu7+QypVyMKVH7KPv3MbJ/KgmBSnE5ANAx4lspmr0O8i0bjHMwUCPbxpbazD0lIOYHCw==",
+      "signed_at": "2026-03-16T17:53:49.490Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
 }

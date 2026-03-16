@@ -21,10 +21,49 @@
     "broadcast"
   ],
   "type": "info-doc",
-  "compliance_level": 2,
+  "compliance_level": 4,
+  "content_hash": "sha256:6077b30d254500170211eb751be932c1788e06b7b8be442830acd75b9ea02a27",
   "created": "2026-02-25",
   "modified": "2026-02-25",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/media219/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
   "source_path": "mx-crm/media219/media219.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-crm/media219/media219.cog.md",
-  "content_url": "/reginald/cogs/cognovamx/media219/content.md"
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/media219/content.md",
+    "cached_at": "2026-03-16T17:50:48.822Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/Media219 Ltd — Television Graphics Studio@1.0.0",
+    "content_hash": "sha256:6077b30d254500170211eb751be932c1788e06b7b8be442830acd75b9ea02a27",
+    "compliance": {
+      "level": 4,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified",
+        "schema_valid",
+        "publisher_verified",
+        "mx_audit_passed"
+      ],
+      "checks_failed": []
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:8L6a/2s51+vceGo5tCZyhl57vykP4vY2tD0H/wQ5XhDqzxOfNkV4QvA1AhLT2yXwzdgqkhMwI+gKY1io5HpXAQ==",
+      "signed_at": "2026-03-16T17:50:42.051Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
 }

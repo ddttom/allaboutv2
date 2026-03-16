@@ -1,10 +1,11 @@
 {
-  "version": "1.0.0",
-  "generated": "2026-03-09T09:21:01.644Z",
-  "total_cogs": 168,
-  "publishers": 1,
+  "version": "2.0.0",
+  "generated": "2026-03-16T18:28:40.316Z",
+  "total_cogs": 169,
+  "publishers": 2,
   "namespaces": [
-    "cognovamx"
+    "cognovamx",
+    "agentica"
   ],
   "by_category": {
     "product": 3,
@@ -21,7 +22,7 @@
     "risk": 1,
     "manual": 28,
     "mx-os": 2,
-    "architecture": 5,
+    "architecture": 6,
     "adr": 1,
     "decision-record": 3,
     "Business Strategy": 1,
@@ -32,7 +33,6 @@
     "identity": 1,
     "eds-block": 1,
     "landing-page": 1,
-    "marketing": 1,
     "creative-services": 2,
     "onboarding": 1,
     "contact": 7,
@@ -49,11 +49,20 @@
     "registry": 1,
     "mx-sales": 1,
     "mx-operations": 1,
-    "reference-implementation": 1
+    "reference-implementation": 1,
+    "reference": 1
   },
   "by_type": {
     "action-doc": 61,
-    "info-doc": 107
+    "info-doc": 108
+  },
+  "by_resolve_mode": {
+    "hosted": 168,
+    "pointer": 1
+  },
+  "by_publisher": {
+    "cognovamx": 168,
+    "agentica": 1
   },
   "top_tags": [
     {
@@ -93,11 +102,11 @@
       "count": 10
     },
     {
-      "tag": "audit",
-      "count": 9
+      "tag": "adr",
+      "count": 10
     },
     {
-      "tag": "adr",
+      "tag": "audit",
       "count": 9
     },
     {

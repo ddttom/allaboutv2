@@ -17,10 +17,50 @@
     "internationalization"
   ],
   "type": "info-doc",
-  "compliance_level": 2,
+  "compliance_level": 3,
+  "content_hash": "sha256:7ffd8d5c621e4322bddda0c3b2ac7166dc7602692dc113d6468e7198d59bd41a",
   "created": "2026-02-21",
   "modified": "2026-03-02",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-multilingual-template/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
   "source_path": "mx-canon/mx-maxine-lives/manuals/manual-multilingual-template.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/manuals/manual-multilingual-template.cog.md",
-  "content_url": "/reginald/cogs/cognovamx/manual-multilingual-template/content.md"
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/manual-multilingual-template/content.md",
+    "cached_at": "2026-03-16T18:28:40.141Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/Multilingual Template Generator Manual@1.0",
+    "content_hash": "sha256:7ffd8d5c621e4322bddda0c3b2ac7166dc7602692dc113d6468e7198d59bd41a",
+    "compliance": {
+      "level": 1,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified"
+      ],
+      "checks_failed": [
+        "schema_valid",
+        "publisher_verified",
+        "mx_audit_passed"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:FH42TPwBpJ/VZ+tGEi8CEE2aUXe8jCkq/J6y5FT2isJ2r5Vc7OJuJbYZ2qVh6Lz54gHlbqxMHCJC+PnF9qo6Cg==",
+      "signed_at": "2026-03-16T17:53:49.258Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
 }

@@ -20,10 +20,50 @@
     "inventory"
   ],
   "type": "action-doc",
-  "compliance_level": 2,
+  "compliance_level": 3,
+  "content_hash": "sha256:3abcacbd0f94da2787a080cf9c26e7278ed2868da687f4645a73e2abe74fd027",
   "created": "2026-02-11",
   "modified": "2026-03-03",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/whats-changed/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
   "source_path": "scripts/cogs/whats-changed.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/whats-changed.cog.md",
-  "content_url": "/reginald/cogs/cognovamx/whats-changed/content.md"
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/whats-changed/content.md",
+    "cached_at": "2026-03-16T18:28:40.296Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/unknown@1.0.0",
+    "content_hash": "sha256:3abcacbd0f94da2787a080cf9c26e7278ed2868da687f4645a73e2abe74fd027",
+    "compliance": {
+      "level": 1,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified"
+      ],
+      "checks_failed": [
+        "schema_valid",
+        "publisher_verified",
+        "mx_audit_passed"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:6NBKy1Yu8AIeUUaSGSM8qXg4jY2oc7H++q7zaduQOlhaH+ogyu1+WFKVL1w0Ga45K9CwZL5u/hYW/Pbooo0ACw==",
+      "signed_at": "2026-03-16T17:53:49.580Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
 }

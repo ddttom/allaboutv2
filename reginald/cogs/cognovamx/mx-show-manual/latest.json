@@ -17,10 +17,50 @@
     "maxine"
   ],
   "type": "info-doc",
-  "compliance_level": 2,
+  "compliance_level": 3,
+  "content_hash": "sha256:b7bf0495d9c10e77027030aca3560b1321fd6002ea334f36bcdd552139b11303",
   "created": "2026-02-13",
   "modified": "2026-02-15",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-show-manual/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
   "source_path": "mx-canon/mx-maxine-lives/manuals/mx-show-manual.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/manuals/mx-show-manual.cog.md",
-  "content_url": "/reginald/cogs/cognovamx/mx-show-manual/content.md"
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/mx-show-manual/content.md",
+    "cached_at": "2026-03-16T18:28:40.151Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/mx-show Manual@3.0",
+    "content_hash": "sha256:b7bf0495d9c10e77027030aca3560b1321fd6002ea334f36bcdd552139b11303",
+    "compliance": {
+      "level": 1,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified"
+      ],
+      "checks_failed": [
+        "schema_valid",
+        "publisher_verified",
+        "mx_audit_passed"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:dhctpIeoJH5jZKv71uNxxPPgX57pRkzKpCuvU7brKfJM2UtaIgYgvQRXILhknN/WY8gQdP8t9YMsFtOErHA0CA==",
+      "signed_at": "2026-03-16T17:53:49.278Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
 }

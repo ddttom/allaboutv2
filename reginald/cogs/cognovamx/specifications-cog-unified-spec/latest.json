@@ -1,0 +1,65 @@
+{
+  "namespace": "cognovamx",
+  "name": "specifications-cog-unified-spec",
+  "version": "2.1-draft",
+  "description": "The unified specification for MX cogs — one document type, many block types. Capability, trust, and governance in one format.",
+  "author": "Tom Cranstoun",
+  "maintainer": "tom.cranstoun@gmail.com",
+  "license": "MIT",
+  "status": "draft",
+  "category": "specification",
+  "tags": [
+    "cog",
+    "specification",
+    "the-gathering",
+    "open-standard",
+    "metadata"
+  ],
+  "type": "info-doc",
+  "compliance_level": 3,
+  "content_hash": "sha256:f9cee62629cc2bdf4322bc534cc58844a1087b66b993ce919a17a27b05b754e0",
+  "created": "2026-02-08",
+  "modified": "2026-03-04",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/specifications-cog-unified-spec/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
+  "source_path": "mx-canon/mx-the-gathering/specifications/cog-unified-spec.cog.md",
+  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-the-gathering/specifications/cog-unified-spec.cog.md",
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/specifications-cog-unified-spec/content.md",
+    "cached_at": "2026-03-16T18:28:40.173Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/MX Cog Unified Specification@2.1-draft",
+    "content_hash": "sha256:f9cee62629cc2bdf4322bc534cc58844a1087b66b993ce919a17a27b05b754e0",
+    "compliance": {
+      "level": 1,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified"
+      ],
+      "checks_failed": [
+        "schema_valid",
+        "publisher_verified",
+        "mx_audit_passed"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:CIPq5PAILI7+OmUDtUlWw5Ye2GaNSH+qdM2u6BNGYu/DeUVsZfkdgXHTGmiBsYkBc2kTrQwbl96wo5sb00ZVBg==",
+      "signed_at": "2026-03-16T17:53:49.324Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
+}

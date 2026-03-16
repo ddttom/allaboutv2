@@ -8,7 +8,11 @@ version: "1.0"
 mx:
   contentType: contact
   category: contact
-  tags: [contact, collaborator, metadata, content-strategy]
+  tags: [contact, collaborator, metadata, content-strategy, book-reviewer]
+  email: nextcontent01@gmail.com
+  linkedin: https://www.linkedin.com/in/michael-andrews-303720/
+  website: https://storyneedle.com
+  amazon: https://www.amazon.co.uk/gp/product/1520553463
   relationship: collaborator
   status: active
   organisation: Independent consultant

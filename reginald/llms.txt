@@ -1,42 +1,57 @@
 # REGINALD - MX COG Registry
 > Registry for Genuine Information, Notarised Authentication, and Legitimate Documentation
 
-This is a machine-readable registry of COGs (Contextual Operations Guides) -
-structured documentation that serves both humans and AI agents.
+REGINALD is a DNS-like registry for machine-readable documentation. It resolves
+COG identifiers to publisher-hosted content, with cached copies as fallback.
+Instead of scraping websites, AI agents query REGINALD for verified answers.
 
-## What is REGINALD?
-REGINALD provides verified, machine-readable documentation for AI agents.
-Instead of scraping websites and guessing, AI agents query REGINALD for
-authoritative answers with provenance and trust indicators.
+## How Resolution Works
+REGINALD works like DNS: it maps COG identifiers (namespace/name) to publisher-
+hosted content URLs. Each COG has a resolve_mode:
+- "hosted": REGINALD hosts the content (publisher submitted directly)
+- "pointer": REGINALD points to the publisher's server (with cached fallback)
+
+Resolution flow:
+1. GET /reginald/api/v1/cogs.json — discover available COGs
+2. GET /reginald/cogs/{ns}/{name}/latest.json — resolve to pointer record
+3. Read canonical_url — fetch from publisher (or cache.content_url as fallback)
+4. Verify content_hash and certificates
 
 ## API Endpoints
-- GET /reginald/api/v1/cogs.json - List all registered COGs
+- GET /reginald/api/v1/cogs.json - All registered COGs with resolve_mode
 - GET /reginald/api/v1/stats.json - Registry statistics
-- GET /reginald/cogs/{namespace}/{name}/latest.json - COG metadata
-- GET /reginald/cogs/{namespace}/{name}/content.md - Raw COG content
+- GET /reginald/api/v1/publishers.json - Registered publishers
+- GET /reginald/api/v1/public-key.pem - Ed25519 signing public key
+- GET /reginald/cogs/{namespace}/{name}/latest.json - Pointer record + certificates
+- GET /reginald/cogs/{namespace}/{name}/content.md - Cached COG content
+
+## Two-Layer Trust
+- Publisher signs content (proves "I wrote this")
+- REGINALD signs the pointer record (proves "this is registered and verified")
+- Verify publisher_certificate with the publisher's key (from publishers.json)
+- Verify registry_certificate with REGINALD's key (from public-key.pem)
+
+## Publisher Discovery
+Publishers can host .well-known/mx-cogs.json on their domain for REGINALD to
+crawl, or submit COGs directly to the registry.
 
 ## Response Format
-All JSON endpoints return structured data with:
-- namespace: Publisher identifier
-- name: COG identifier
-- version: Semantic version
-- compliance_level: Trust tier (1-5)
-- tags: Discoverable keywords
-- source_url: Original source location
+- resolve_mode: "hosted" or "pointer"
+- canonical_url: Publisher's authoritative content URL
+- cache.content_url: REGINALD's cached copy
+- content_hash: sha256 integrity hash
+- registry_certificate: REGINALD's Ed25519 signature
+- publisher: { namespace, name, domain, manifest_url }
 
 ## Current Registry
-- Publisher: CogNovaMX Ltd
-- Namespace: cognovamx
-- Total COGs: 168
-- Compliance: Level 2 (Structured, no signing)
+- Publishers: 2
+- Total COGs: 169
+- Hosted: 168 | Pointer: 1
+- Signed COGs: 168 (Ed25519, verifiable)
 
 ## Contact
 - Website: https://allabout.network
 - Email: tom.cranstoun@gmail.com
 - Registry: https://allabout.network/reginald/
 
-## Standards
-- COG Format: https://allabout.network/reginald/docs/cog-format
-- REGINALD API: https://allabout.network/reginald/docs/api
-
-Generated: 2026-03-09T09:21:01.677Z
+Generated: 2026-03-16T18:28:40.552Z

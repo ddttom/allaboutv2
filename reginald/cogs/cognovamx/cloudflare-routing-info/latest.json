@@ -16,10 +16,50 @@
     "infrastructure"
   ],
   "type": "info-doc",
-  "compliance_level": 2,
+  "compliance_level": 3,
+  "content_hash": "sha256:838271d34e0591abac6f9c329af8912186b4acd266ca697d81ad1343ec513b75",
   "created": "2026-02-15",
   "modified": "2026-02-15",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cloudflare-routing-info/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
   "source_path": "mx-canon/mx-maxine-lives/management/plans/cloudflare-routing-info.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/management/plans/cloudflare-routing-info.cog.md",
-  "content_url": "/reginald/cogs/cognovamx/cloudflare-routing-info/content.md"
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/cloudflare-routing-info/content.md",
+    "cached_at": "2026-03-16T18:28:40.124Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/MX Cloudflare Routing Plan@1.0.0",
+    "content_hash": "sha256:838271d34e0591abac6f9c329af8912186b4acd266ca697d81ad1343ec513b75",
+    "compliance": {
+      "level": 1,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified"
+      ],
+      "checks_failed": [
+        "schema_valid",
+        "publisher_verified",
+        "mx_audit_passed"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:0raX1pW39xKdQpjU6fIdWz6wMQlEFhoQkXTjjVkWP7RJyvz5BFiAX+5mjQ8v3Yq0jAx9X2eIAAqsK8udMpFOAA==",
+      "signed_at": "2026-03-16T17:53:49.230Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
 }

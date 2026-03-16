@@ -15,10 +15,50 @@
     "brain"
   ],
   "type": "action-doc",
-  "compliance_level": 2,
+  "compliance_level": 3,
+  "content_hash": "sha256:59f2f85cf3c7b8b5765751d3538aae93e96c955a733a5ff59005f56f37037c72",
   "created": "2026-02-13",
   "modified": "2026-03-02",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manuals-registry/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
   "source_path": "scripts/cogs/manuals-registry.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/manuals-registry.cog.md",
-  "content_url": "/reginald/cogs/cognovamx/manuals-registry/content.md"
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/manuals-registry/content.md",
+    "cached_at": "2026-03-16T18:28:40.241Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/Manuals Registry@1.0",
+    "content_hash": "sha256:59f2f85cf3c7b8b5765751d3538aae93e96c955a733a5ff59005f56f37037c72",
+    "compliance": {
+      "level": 1,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified"
+      ],
+      "checks_failed": [
+        "schema_valid",
+        "publisher_verified",
+        "mx_audit_passed"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:+xzVFBecBBJ/luAxCdn9O8Q55ud6ICuJzLrQIikuZKDYbjFJJAji0ZcP9mf6egFx2/WY4UeeKN4VLrVoyhsMAg==",
+      "signed_at": "2026-03-16T17:53:49.511Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
 }

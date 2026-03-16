@@ -16,10 +16,50 @@
     "ux"
   ],
   "type": "action-doc",
-  "compliance_level": 2,
+  "compliance_level": 3,
+  "content_hash": "sha256:66181bfce4784b2e152c5e742fd9727137033389bfbff814054b21c0b0eb78aa",
   "created": "2026-02-06",
   "modified": "2026-02-06",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/toast-detector/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
   "source_path": "scripts/cogs/toast-detector.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/toast-detector.cog.md",
-  "content_url": "/reginald/cogs/cognovamx/toast-detector/content.md"
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/toast-detector/content.md",
+    "cached_at": "2026-03-16T18:28:40.287Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/unknown@0.1.0",
+    "content_hash": "sha256:66181bfce4784b2e152c5e742fd9727137033389bfbff814054b21c0b0eb78aa",
+    "compliance": {
+      "level": 2,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified",
+        "schema_valid"
+      ],
+      "checks_failed": [
+        "publisher_verified",
+        "mx_audit_passed"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:r46fSLp2UJT8t8G4GGmHsJd1ZnLPJZcUwyIsxLX1otmDMm8BDHa7HRgB8Fop2TiqYxI4Sq1pf7zxUcfv76VkAw==",
+      "signed_at": "2026-03-16T17:53:49.567Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
 }

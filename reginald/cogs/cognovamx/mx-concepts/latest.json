@@ -18,10 +18,50 @@
     "map"
   ],
   "type": "info-doc",
-  "compliance_level": 2,
+  "compliance_level": 3,
+  "content_hash": "sha256:f0715ff0b3df67bf4ab98d73cbe3246d1a7de474146a9202bec4a5eea514dfce",
   "created": "2026-02-11",
   "modified": "2026-02-11",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-concepts/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
   "source_path": "mx-canon/mx-os/mx-concepts.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-os/mx-concepts.cog.md",
-  "content_url": "/reginald/cogs/cognovamx/mx-concepts/content.md"
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/mx-concepts/content.md",
+    "cached_at": "2026-03-16T18:28:40.162Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/unknown@1.0.0",
+    "content_hash": "sha256:f0715ff0b3df67bf4ab98d73cbe3246d1a7de474146a9202bec4a5eea514dfce",
+    "compliance": {
+      "level": 1,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified"
+      ],
+      "checks_failed": [
+        "schema_valid",
+        "publisher_verified",
+        "mx_audit_passed"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:JTJ+K6Ali+IgMGzA4XobG0hs1qR1NB6qbBqW/fVydPdrAsBoCpPGk5aCfbnDsIhG+vLPXSmqD/X3mg2jFZtnAQ==",
+      "signed_at": "2026-03-16T17:53:49.297Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
 }

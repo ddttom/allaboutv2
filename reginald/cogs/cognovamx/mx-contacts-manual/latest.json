@@ -15,10 +15,50 @@
     "archive"
   ],
   "type": "info-doc",
-  "compliance_level": 2,
+  "compliance_level": 3,
+  "content_hash": "sha256:66426cfb48aecbefed7dd79574a688fb8c12f26568faf6315bbdeebe023ff59c",
   "created": "2026-02-09",
   "modified": "2026-02-13",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-contacts-manual/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
   "source_path": "mx-canon/mx-maxine-lives/manuals/mx-contacts-manual.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/manuals/mx-contacts-manual.cog.md",
-  "content_url": "/reginald/cogs/cognovamx/mx-contacts-manual/content.md"
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/mx-contacts-manual/content.md",
+    "cached_at": "2026-03-16T18:28:40.150Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/MX Contacts — Manual@1.0",
+    "content_hash": "sha256:66426cfb48aecbefed7dd79574a688fb8c12f26568faf6315bbdeebe023ff59c",
+    "compliance": {
+      "level": 1,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified"
+      ],
+      "checks_failed": [
+        "schema_valid",
+        "publisher_verified",
+        "mx_audit_passed"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:oZZGlMqBjxYYBhxVgDjTv5haqrkg28my2o2BwQUtVzkMDnUbM7JoWC58M8hAioktapARZ/GH0PduZ35wU1fQBQ==",
+      "signed_at": "2026-03-16T17:53:49.276Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
 }

@@ -18,10 +18,50 @@
     "publishing"
   ],
   "type": "info-doc",
-  "compliance_level": 2,
+  "compliance_level": 3,
+  "content_hash": "sha256:916c09955f6ffb78e2f0f14bf2ca0a9601206b811a87466d88b406a2c8aa773e",
   "created": "2026-02-15",
   "modified": "2026-03-02",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-build-tools/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
   "source_path": "mx-canon/mx-maxine-lives/manuals/manual-build-tools.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/manuals/manual-build-tools.cog.md",
-  "content_url": "/reginald/cogs/cognovamx/manual-build-tools/content.md"
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/manual-build-tools/content.md",
+    "cached_at": "2026-03-16T18:28:40.129Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/Build Tools Manual@1.0",
+    "content_hash": "sha256:916c09955f6ffb78e2f0f14bf2ca0a9601206b811a87466d88b406a2c8aa773e",
+    "compliance": {
+      "level": 1,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified"
+      ],
+      "checks_failed": [
+        "schema_valid",
+        "publisher_verified",
+        "mx_audit_passed"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:rxj/VXE7Zo0ebky7RQEKTWfCIGM3Y9eYUBlDfhlEKovgHYG/ZaweyNSBcoyp5svImAQRrhH7+tk2Ej1h6OeBDA==",
+      "signed_at": "2026-03-16T17:53:49.245Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
 }

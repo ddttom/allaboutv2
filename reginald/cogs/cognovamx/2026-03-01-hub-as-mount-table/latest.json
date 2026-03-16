@@ -19,10 +19,50 @@
     "mx-os"
   ],
   "type": "info-doc",
-  "compliance_level": 2,
+  "compliance_level": 3,
+  "content_hash": "sha256:e2626e62ffecff2802b75020c64e42d21205b775e56f90917daa6696baa78c58",
   "created": "2026-03-01",
   "modified": "2026-03-02",
+  "resolve_mode": "hosted",
+  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-03-01-hub-as-mount-table/content.md",
+  "publisher": {
+    "namespace": "cognovamx",
+    "name": "CogNovaMX Ltd",
+    "domain": "allabout.network",
+    "manifest_url": null
+  },
   "source_path": "mx-canon/mx-maxine-lives/registers/BDR/2026-03-01-hub-as-mount-table.cog.md",
   "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/registers/BDR/2026-03-01-hub-as-mount-table.cog.md",
-  "content_url": "/reginald/cogs/cognovamx/2026-03-01-hub-as-mount-table/content.md"
+  "cache": {
+    "content_url": "/reginald/cogs/cognovamx/2026-03-01-hub-as-mount-table/content.md",
+    "cached_at": "2026-03-16T18:28:40.159Z",
+    "stale": false
+  },
+  "registry_certificate": {
+    "version": "1.0",
+    "cogId": "cognovamx/BDR: Hub Repository as Mount Table — Git Repos as Trackable Filesystems@1.0",
+    "content_hash": "sha256:e2626e62ffecff2802b75020c64e42d21205b775e56f90917daa6696baa78c58",
+    "compliance": {
+      "level": 1,
+      "checks_passed": [
+        "frontmatter_valid",
+        "publisher_identified"
+      ],
+      "checks_failed": [
+        "schema_valid",
+        "publisher_verified",
+        "mx_audit_passed"
+      ]
+    },
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "reginald-signing-key-2026",
+      "signature": "base64:TuPSMysS2mipdrjsJAKlhk8BRu35ti6MfHzqZmRuuNdW4uNEv/hCm7tVOVvB6+S0jUaLh1jd9+MEHvhIbfyyCw==",
+      "signed_at": "2026-03-16T17:53:49.292Z"
+    },
+    "chain": {
+      "issuer": "MX Reginald Ltd",
+      "authority": "reginald.allabout.network"
+    }
+  }
 }

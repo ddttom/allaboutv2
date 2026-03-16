@@ -1,7 +1,8 @@
 {
-  "version": "1.0.0",
-  "generated": "2026-03-09T09:21:01.643Z",
-  "total": 168,
+  "version": "2.0.0",
+  "generated": "2026-03-16T18:28:40.306Z",
+  "total": 169,
+  "signed": 168,
   "cogs": [
     {
       "namespace": "cognovamx",
@@ -20,8 +21,13 @@
         "voice"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/maxine-vision/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:459c52096e1b56a35bb04853ed5514165a2b31ecc1cd6c3b133531665d290e74",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/maxine-vision/content.md",
+      "url": "/reginald/cogs/cognovamx/maxine-vision/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.162Z"
     },
     {
       "namespace": "cognovamx",
@@ -38,8 +44,13 @@
         "master-plan"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/uber-maxine-plan/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:4fe9750dc62ddd713410c47c7e059cb2d16828872f7e593400b26d74f23a4134",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/uber-maxine-plan/content.md",
+      "url": "/reginald/cogs/cognovamx/uber-maxine-plan/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.167Z"
     },
     {
       "namespace": "cognovamx",
@@ -53,8 +64,13 @@
         "provenance"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/CHANGELOG/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:118ffe471c2f9c15c70a1caea57a7aba99e748c700212eea1cb1216f9277d8fe",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/CHANGELOG/content.md",
+      "url": "/reginald/cogs/cognovamx/CHANGELOG/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.171Z"
     },
     {
       "namespace": "cognovamx",
@@ -69,8 +85,13 @@
         "open-standard"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/CONTRIBUTING/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:dc324fe6691c1726ec976e8489fc57af7d4ac2f766e7968c18a66530992c9e0a",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/CONTRIBUTING/content.md",
+      "url": "/reginald/cogs/cognovamx/CONTRIBUTING/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.177Z"
     },
     {
       "namespace": "cognovamx",
@@ -86,8 +107,13 @@
         "team"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/HELLO/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:d4e6c124ce5250a4297c7bf67062031cbd78cbdf2f5f8b5c924298a502e126fa",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/HELLO/content.md",
+      "url": "/reginald/cogs/cognovamx/HELLO/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.181Z"
     },
     {
       "namespace": "cognovamx",
@@ -102,12 +128,17 @@
         "the-gathering"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/LICENSE/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:9b46f2f8c25a69430c8d33c51a624188f3943540ac8bdae68cb4f5a4f542eed5",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/LICENSE/content.md",
+      "url": "/reginald/cogs/cognovamx/LICENSE/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.184Z"
     },
     {
       "namespace": "cognovamx",
-      "name": "README",
+      "name": "mx-maxine-lives-README",
       "version": "conventional",
       "description": "The gestalt's brain. Where Tom and Maxine record assumptions, capture notes, track actions, make plans, and register decisions. Governs Canon.",
       "category": "mx-core",
@@ -120,8 +151,13 @@
         "meta-layer"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/README/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:6a6a07099a845035de3cac7a42505aa809ecb4ec0f2b5e6cb0f19e9a7f5d5737",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-maxine-lives-README/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-maxine-lives-README/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.190Z"
     },
     {
       "namespace": "cognovamx",
@@ -137,8 +173,13 @@
         "machine-readable"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/ROUTING/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:09ebeec4f0e63ec90b671eaafd8869525a1655ccc0f636f4486011569026b872",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/ROUTING/content.md",
+      "url": "/reginald/cogs/cognovamx/ROUTING/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.203Z"
     },
     {
       "namespace": "cognovamx",
@@ -153,8 +194,13 @@
         "gestalt"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/about.mx/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:66adb0a45006341be8fe11e4fb157daa4c52fb6f3394293d0c4407ffe5fe5244",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/about.mx/content.md",
+      "url": "/reginald/cogs/cognovamx/about.mx/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.203Z"
     },
     {
       "namespace": "cognovamx",
@@ -176,8 +222,13 @@
         "distributed"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/about-maxine/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:52d7447402c2f2fdee02188f24a14f69464231c2402a9e30a0ad9bf1c6aec0df",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/about-maxine/content.md",
+      "url": "/reginald/cogs/cognovamx/about-maxine/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.205Z"
     },
     {
       "namespace": "cognovamx",
@@ -193,8 +244,13 @@
         "maxine"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/about-mx/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:b8e6d4233af0777d80b887374642610b8e639f69dc2d61aaeb55cc52f4c0a8f7",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/about-mx/content.md",
+      "url": "/reginald/cogs/cognovamx/about-mx/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.214Z"
     },
     {
       "namespace": "cognovamx",
@@ -211,8 +267,13 @@
         "launch-readiness"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/domain-portfolio/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:3726f2e9900e66613f046b11b1c010dfbed612656ac32441b3797d4f7aea362b",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/domain-portfolio/content.md",
+      "url": "/reginald/cogs/cognovamx/domain-portfolio/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.220Z"
     },
     {
       "namespace": "cognovamx",
@@ -228,8 +289,13 @@
         "identity"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/MX-brand/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:395f6124cfe5140fe9ba62151f635729a03998abcc4a9061aaa0f7f6ca5619cb",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/MX-brand/content.md",
+      "url": "/reginald/cogs/cognovamx/MX-brand/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.226Z"
     },
     {
       "namespace": "cognovamx",
@@ -245,8 +311,13 @@
         "infrastructure"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/cloudflare-routing-action/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:39fd42e0c861e56174d393323dec0fa168252ec52d62b84bdbf778921412f6ce",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cloudflare-routing-action/content.md",
+      "url": "/reginald/cogs/cognovamx/cloudflare-routing-action/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.228Z"
     },
     {
       "namespace": "cognovamx",
@@ -262,8 +333,13 @@
         "infrastructure"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/cloudflare-routing-info/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:838271d34e0591abac6f9c329af8912186b4acd266ca697d81ad1343ec513b75",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cloudflare-routing-info/content.md",
+      "url": "/reginald/cogs/cognovamx/cloudflare-routing-info/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.230Z"
     },
     {
       "namespace": "cognovamx",
@@ -279,8 +355,13 @@
         "business"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/glasgow-training-course/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:7cb35490fbf77a2a7408ce1d4a1e0388a2a9b990662fc824101b023a52346527",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/glasgow-training-course/content.md",
+      "url": "/reginald/cogs/cognovamx/glasgow-training-course/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.233Z"
     },
     {
       "namespace": "cognovamx",
@@ -298,8 +379,13 @@
         "universal"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-agent-independence/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:3aaa03210b8b3e86c048ae32e2c58a9af5ca412acabf022e244f931f620630eb",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-agent-independence/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-agent-independence/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.235Z"
     },
     {
       "namespace": "cognovamx",
@@ -314,8 +400,13 @@
         "foundational"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-vision/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:ead8bb525439af56a00a2ac391f9fa66133162594dc062ef1a98edc7d3b617f5",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-vision/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-vision/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.238Z"
     },
     {
       "namespace": "cognovamx",
@@ -331,8 +422,13 @@
         "mitigation"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/2026-02-13-solo-founder/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:0e672d211356320dad369cee91d0e2c04b9dfe4447224081147f14602d164e02",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-13-solo-founder/content.md",
+      "url": "/reginald/cogs/cognovamx/2026-02-13-solo-founder/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.241Z"
     },
     {
       "namespace": "cognovamx",
@@ -349,8 +445,13 @@
         "workflow"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-asset-sync/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:d27db63a49fd38241a8df2878bd80a81c0d1ce6442d4a88a0a28e01e3269d100",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-asset-sync/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-asset-sync/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.243Z"
     },
     {
       "namespace": "cognovamx",
@@ -368,8 +469,13 @@
         "publishing"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-build-tools/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:916c09955f6ffb78e2f0f14bf2ca0a9601206b811a87466d88b406a2c8aa773e",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-build-tools/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-build-tools/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.245Z"
     },
     {
       "namespace": "cognovamx",
@@ -387,8 +493,13 @@
         "namespace"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-cog-id/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:2343d9b2e8b5d50a1c7f22568400c163108061b185796836e181226b0f2c541d",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-cog-id/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-cog-id/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.246Z"
     },
     {
       "namespace": "cognovamx",
@@ -407,8 +518,13 @@
         "workflow"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-cogify/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:132f935d645225537754763d4014285fcf215708b21b84c387bb105d27a88015",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-cogify/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-cogify/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.247Z"
     },
     {
       "namespace": "cognovamx",
@@ -425,8 +541,13 @@
         "automation"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-deployment-helper/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:e7456f07449f348d2c348af62dcb4d2ba6fc1e6db460a686b9f69b4fde3d211e",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-deployment-helper/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-deployment-helper/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.248Z"
     },
     {
       "namespace": "cognovamx",
@@ -445,8 +566,13 @@
         "cogify"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-enhanced-audit/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:d90d1d01cb5c7ee8ca9e03ce4674ca08f3d4177aeb64fd4acd85d2bba33dd5cf",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-enhanced-audit/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-enhanced-audit/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.249Z"
     },
     {
       "namespace": "cognovamx",
@@ -465,8 +591,13 @@
         "inheritance"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-git-hooks/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:0730c2c6cae7c863c02657eef77f3710d25a87966fc35a7b3e44b4dc5346ceb3",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-git-hooks/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-git-hooks/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.252Z"
     },
     {
       "namespace": "cognovamx",
@@ -485,8 +616,13 @@
         "validation"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-html-baseline-audit/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:dd1444b40ab4cb8efd0e240055af01268c757428b65a1209171a6233bd81de90",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-html-baseline-audit/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-html-baseline-audit/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.252Z"
     },
     {
       "namespace": "cognovamx",
@@ -501,8 +637,13 @@
         "management"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-maxine-lives/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:d77e570c08356c5593ceb2d5a8d5f97d69501d74173eb32c74e33f76ac2ff7a6",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-maxine-lives/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-maxine-lives/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.254Z"
     },
     {
       "namespace": "cognovamx",
@@ -520,8 +661,13 @@
         "internationalization"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-multilingual-sitemap/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:240ba5ee6df6c5cffbe28b101de70192f3634e213a27bb19ce2da4b2821d45c8",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-multilingual-sitemap/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-multilingual-sitemap/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.256Z"
     },
     {
       "namespace": "cognovamx",
@@ -538,8 +684,13 @@
         "internationalization"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-multilingual-template/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:7ffd8d5c621e4322bddda0c3b2ac7166dc7602692dc113d6468e7198d59bd41a",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-multilingual-template/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-multilingual-template/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.258Z"
     },
     {
       "namespace": "cognovamx",
@@ -556,8 +707,13 @@
         "hreflang"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-multilingual-validator/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:1e4db78a0ac1f2aeab6e3ddd91edff767e6dcde588bf36fd6fe17bd8efbc98b3",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-multilingual-validator/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-multilingual-validator/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.260Z"
     },
     {
       "namespace": "cognovamx",
@@ -574,8 +730,13 @@
         "shell"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-mx-exec/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:700f289a8ea6474a967bb84dece1632b730b576629fbcf20b35262555df21d11",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-mx-exec/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-mx-exec/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.261Z"
     },
     {
       "namespace": "cognovamx",
@@ -592,8 +753,13 @@
         "explorer"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-mx-nav-server/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:1993fb14d874e6068cd8fe3597092a07a01a0a0e431f4f54c243dd580f19899a",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-mx-nav-server/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-mx-nav-server/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.262Z"
     },
     {
       "namespace": "cognovamx",
@@ -609,8 +775,13 @@
         "publishing"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-mx-pdf/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:81541a7a35cd208c5fc415979b72cf2b500e3b6b952bf8399286e877b695d013",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-mx-pdf/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-mx-pdf/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.263Z"
     },
     {
       "namespace": "cognovamx",
@@ -627,8 +798,13 @@
         "content"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-parity-checker/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:655182f2252285b2c590255400ced882b713626050fee9d82a79fe2d7ab33a10",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-parity-checker/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-parity-checker/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.264Z"
     },
     {
       "namespace": "cognovamx",
@@ -644,8 +820,13 @@
         "parser"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-parse-mxignore/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:93184c78f15ed4449ad0be49b2574c884340b274468adb02d63c7151b55a38c8",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-parse-mxignore/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-parse-mxignore/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.264Z"
     },
     {
       "namespace": "cognovamx",
@@ -662,8 +843,13 @@
         "writing-style"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-partnership-reporting/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:c46f60bce2310518d8a9ed0098777fada3d8d6a8ef043a9facc9184f280bbb5c",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-partnership-reporting/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-partnership-reporting/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.266Z"
     },
     {
       "namespace": "cognovamx",
@@ -680,8 +866,13 @@
         "quality"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-path-validator/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:55ab5e913f2290980613d2ab291770d6b914185aafa98d40d880cfc64b8dbd5c",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-path-validator/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-path-validator/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.268Z"
     },
     {
       "namespace": "cognovamx",
@@ -696,8 +887,13 @@
         "routing"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-prompt-enhancer/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:33f4e0bfcf28a48a6644dd0adfdbb91340401bbdbb93fc5ea262127a5b1af920",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-prompt-enhancer/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-prompt-enhancer/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.269Z"
     },
     {
       "namespace": "cognovamx",
@@ -712,8 +908,13 @@
         "quality"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-spell-checker/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:290682c6cea2606aa0e63792255c4b844131af24296228f8e6326d0aab3838f7",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-spell-checker/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-spell-checker/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.271Z"
     },
     {
       "namespace": "cognovamx",
@@ -730,8 +931,13 @@
         "automation"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-submodule-health/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:52f2ed8e030f1de7d7992655a7a11ddac87b5af81994389a089ab7c1b0187348",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-submodule-health/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-submodule-health/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.272Z"
     },
     {
       "namespace": "cognovamx",
@@ -748,8 +954,13 @@
         "submodules"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-team-onboarding/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:35e4b5d0bd511fd3a286abf55a7666d3408bc8c24886f2df7183d58edafc4979",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-team-onboarding/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-team-onboarding/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.275Z"
     },
     {
       "namespace": "cognovamx",
@@ -764,8 +975,13 @@
         "archive"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-contacts-manual/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:66426cfb48aecbefed7dd79574a688fb8c12f26568faf6315bbdeebe023ff59c",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-contacts-manual/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-contacts-manual/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.276Z"
     },
     {
       "namespace": "cognovamx",
@@ -782,8 +998,13 @@
         "maxine"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-show-manual/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:b7bf0495d9c10e77027030aca3560b1321fd6002ea334f36bcdd552139b11303",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-show-manual/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-show-manual/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.278Z"
     },
     {
       "namespace": "cognovamx",
@@ -803,8 +1024,13 @@
         "namespace"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-metadata-conventions/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:b26be50648d0624582244613978a4feb5c4adc011d0978a719d722b2b179c8dc",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-metadata-conventions/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-metadata-conventions/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.279Z"
     },
     {
       "namespace": "cognovamx",
@@ -822,8 +1048,13 @@
         "trust"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/2026-02-13-mx-web-architecture/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:927497253b10468b860e3b0f6e1fabb1f496b115382c9f4ae90a02bcfa58f806",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-13-mx-web-architecture/content.md",
+      "url": "/reginald/cogs/cognovamx/2026-02-13-mx-web-architecture/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.280Z"
     },
     {
       "namespace": "cognovamx",
@@ -841,8 +1072,13 @@
         "pipeline"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/2026-02-13-routing-pipeline/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:9948bab4b413c80e4e9236d6736c283a93e617656142a3cb8833b1e6892d72d4",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-13-routing-pipeline/content.md",
+      "url": "/reginald/cogs/cognovamx/2026-02-13-routing-pipeline/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.281Z"
     },
     {
       "namespace": "cognovamx",
@@ -860,8 +1096,13 @@
         "build-system"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/2026-02-18-png-workflow-for-pdf-generation/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:e5a7c1add7ffa262bdc8ee28b5e0e7fd0411f2b2e67d14ab77e49d3ce20330d0",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-18-png-workflow-for-pdf-generation/content.md",
+      "url": "/reginald/cogs/cognovamx/2026-02-18-png-workflow-for-pdf-generation/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.282Z"
     },
     {
       "namespace": "cognovamx",
@@ -881,8 +1122,13 @@
         "illustration-pipeline"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/2026-02-18-svg-aspect-ratio-preservation/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:a9d7cc0f180c64567b64d713bd3e29226fc102a5f8f62af90fd86b5e9adffed8",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-18-svg-aspect-ratio-preservation/content.md",
+      "url": "/reginald/cogs/cognovamx/2026-02-18-svg-aspect-ratio-preservation/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.283Z"
     },
     {
       "namespace": "cognovamx",
@@ -901,8 +1147,38 @@
         "universal-standards"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/2026-02-18-typography-standards-for-pdf-generation/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:3820512eb406c0aaf44a4a2174d59078633cb1e4de7dd9787f1c790ef9c8467a",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-18-typography-standards-for-pdf-generation/content.md",
+      "url": "/reginald/cogs/cognovamx/2026-02-18-typography-standards-for-pdf-generation/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.285Z"
+    },
+    {
+      "namespace": "cognovamx",
+      "name": "2026-03-10-blockquote-styling-for-pdf-generation",
+      "version": "1.0",
+      "description": "ADR #6: Two-style blockquote system for PDF generation — distinguishing cross-reference callouts from pull quotes using a Pandoc Lua filter and custom LaTeX environments.",
+      "category": "architecture",
+      "tags": [
+        "adr",
+        "pdf-generation",
+        "blockquotes",
+        "pull-quotes",
+        "cross-references",
+        "lua-filter",
+        "latex",
+        "pandoc"
+      ],
+      "type": "info-doc",
+      "compliance_level": 3,
+      "content_hash": "sha256:5b6355a1f6169898ea44bdcea4a20af1f0d3e9a60bf3c0ffaff863005ed6a94e",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-03-10-blockquote-styling-for-pdf-generation/content.md",
+      "url": "/reginald/cogs/cognovamx/2026-03-10-blockquote-styling-for-pdf-generation/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.288Z"
     },
     {
       "namespace": "cognovamx",
@@ -920,8 +1196,13 @@
         "implementation"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/vendor-extensions-policy/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:c069833b1d33f276f9147d436c381f6dae65c2d54d32a4ecb07f59523e149616",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/vendor-extensions-policy/content.md",
+      "url": "/reginald/cogs/cognovamx/vendor-extensions-policy/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.289Z"
     },
     {
       "namespace": "cognovamx",
@@ -936,8 +1217,13 @@
         "deliverable"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/2026-02-15-deliverable-rename/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:36872b5f6b778ea42bd60831f1a48ce1ea58a0b87ed46b49166faf02ac1f0a52",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-15-deliverable-rename/content.md",
+      "url": "/reginald/cogs/cognovamx/2026-02-15-deliverable-rename/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.289Z"
     },
     {
       "namespace": "cognovamx",
@@ -952,8 +1238,13 @@
         "runbook"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/2026-02-15-runbook-rename/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:36153e2a2d4dea9bac675dcfe60e7797cdde76d0132e9eaf305ee3ad97fb4c4e",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-15-runbook-rename/content.md",
+      "url": "/reginald/cogs/cognovamx/2026-02-15-runbook-rename/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.290Z"
     },
     {
       "namespace": "cognovamx",
@@ -972,8 +1263,13 @@
         "mx-os"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/2026-03-01-hub-as-mount-table/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:e2626e62ffecff2802b75020c64e42d21205b775e56f90917daa6696baa78c58",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-03-01-hub-as-mount-table/content.md",
+      "url": "/reginald/cogs/cognovamx/2026-03-01-hub-as-mount-table/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.292Z"
     },
     {
       "namespace": "cognovamx",
@@ -996,8 +1292,13 @@
         "archived"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/2026-02-14-attribute-namespace-policy/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:ec4dc2216b3b23acb4914beda299626b0f464e3255ac7acb2444b06efe190835",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-14-attribute-namespace-policy/content.md",
+      "url": "/reginald/cogs/cognovamx/2026-02-14-attribute-namespace-policy/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.294Z"
     },
     {
       "namespace": "cognovamx",
@@ -1014,8 +1315,13 @@
         "computational-trust"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/business-benefits/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:877c8873b41033eb12ed230e304a071634f64727b98073ff343c284c209c3c25",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/business-benefits/content.md",
+      "url": "/reginald/cogs/cognovamx/business-benefits/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.296Z"
     },
     {
       "namespace": "cognovamx",
@@ -1033,8 +1339,13 @@
         "map"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-concepts/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:f0715ff0b3df67bf4ab98d73cbe3246d1a7de474146a9202bec4a5eea514dfce",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-concepts/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-concepts/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.297Z"
     },
     {
       "namespace": "cognovamx",
@@ -1054,8 +1365,13 @@
         "investor"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-train-analogy/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:d45e821c350c430ed4a1fa85156431ce6578e22d44f351b7cad09f725afcfe06",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-train-analogy/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-train-analogy/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.299Z"
     },
     {
       "namespace": "cognovamx",
@@ -1072,8 +1388,13 @@
         "page-pattern"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/appendix-k-yaml-metadata/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:32aaf3e2ae318c60d4f8f5fa8a757f17d4d994e5500d4003642065f63b2e83cc",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/appendix-k-yaml-metadata/content.md",
+      "url": "/reginald/cogs/cognovamx/appendix-k-yaml-metadata/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.301Z"
     },
     {
       "namespace": "cognovamx",
@@ -1091,8 +1412,13 @@
         "registry"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/adr-01-block-architecture/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:46fa5633188e9879ddbcfeaa1d27b452151508b68a8231520a9c96592aaba3ed",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/adr-01-block-architecture/content.md",
+      "url": "/reginald/cogs/cognovamx/adr-01-block-architecture/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.304Z"
     },
     {
       "namespace": "cognovamx",
@@ -1110,8 +1436,13 @@
         "vocabulary"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/adr-02-namespace-policy/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:a1c5d227f5e4bf112f1a18e60a65d82acb9827167d06a9a93235890f4cd8acb7",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/adr-02-namespace-policy/content.md",
+      "url": "/reginald/cogs/cognovamx/adr-02-namespace-policy/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.306Z"
     },
     {
       "namespace": "cognovamx",
@@ -1129,8 +1460,13 @@
         "standard"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/namespace-extensions/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:78828e56911ddfd6a9244c2c20e428472d5ef0e21216f5b5115ba58536b5c0ff",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/namespace-extensions/content.md",
+      "url": "/reginald/cogs/cognovamx/namespace-extensions/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.308Z"
     },
     {
       "namespace": "cognovamx",
@@ -1146,8 +1482,13 @@
         "advisory-board"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/ndr-01-block-naming/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:063dead72eb8640959af9873f2ff0e710ca9920c223bab1149250b9ebf9dea6c",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/ndr-01-block-naming/content.md",
+      "url": "/reginald/cogs/cognovamx/ndr-01-block-naming/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.310Z"
     },
     {
       "namespace": "cognovamx",
@@ -1166,8 +1507,13 @@
         "standards"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/ndr-02-camelcase-naming/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:2a13e177e06a02e016ad885ef733501a9a6c880b78449a1526a51e05cabce553",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/ndr-02-camelcase-naming/content.md",
+      "url": "/reginald/cogs/cognovamx/ndr-02-camelcase-naming/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.311Z"
     },
     {
       "namespace": "cognovamx",
@@ -1186,8 +1532,13 @@
         "license"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/ndr-03-spelling-neutrality/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:f4afc5c64779721c1710688ee96ea83d87ef94536100ce4846fffc93eca12fc1",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/ndr-03-spelling-neutrality/content.md",
+      "url": "/reginald/cogs/cognovamx/ndr-03-spelling-neutrality/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.313Z"
     },
     {
       "namespace": "cognovamx",
@@ -1204,8 +1555,13 @@
         "example"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/effective-doc-example/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:b71a15fd8016430f99ef859f743d2f08f9ddf93445e31e8f19c73531f367b2bb",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/effective-doc-example/content.md",
+      "url": "/reginald/cogs/cognovamx/effective-doc-example/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.314Z"
     },
     {
       "namespace": "cognovamx",
@@ -1220,8 +1576,13 @@
         "example"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/example-with-includes/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:ec0a6b4490cbcf37bd78a3c16f5908c950f9da5b48eeebe968ccb8f5c6450676",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/example-with-includes/content.md",
+      "url": "/reginald/cogs/cognovamx/example-with-includes/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.318Z"
     },
     {
       "namespace": "cognovamx",
@@ -1236,8 +1597,13 @@
         "includes-example"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/shared-validation-policy/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:df2897b93c46ddd8ffeb4efd237fecf6e657434b916f57df7dbeee66f66011dc",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/shared-validation-policy/content.md",
+      "url": "/reginald/cogs/cognovamx/shared-validation-policy/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.319Z"
     },
     {
       "namespace": "cognovamx",
@@ -1254,12 +1620,17 @@
         "design"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/block-architecture-evolution/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:4b982bb6abcb12aa797c1c916b7bb687d4c4b8b936b39b4dacfbf54c92804981",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/block-architecture-evolution/content.md",
+      "url": "/reginald/cogs/cognovamx/block-architecture-evolution/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.320Z"
     },
     {
       "namespace": "cognovamx",
-      "name": "cog-unified-spec",
+      "name": "specifications-cog-unified-spec",
       "version": "2.1-draft",
       "description": "The unified specification for MX cogs — one document type, many block types. Capability, trust, and governance in one format.",
       "category": "specification",
@@ -1271,8 +1642,13 @@
         "metadata"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/cog-unified-spec/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:f9cee62629cc2bdf4322bc534cc58844a1087b66b993ce919a17a27b05b754e0",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/specifications-cog-unified-spec/content.md",
+      "url": "/reginald/cogs/cognovamx/specifications-cog-unified-spec/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.324Z"
     },
     {
       "namespace": "cognovamx",
@@ -1290,8 +1666,13 @@
         "naming-conventions"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-standards-alignment/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:aadfff15a0f05696faf2ecbf0a272319bfa0f154e795ee427884b063aeb9b767",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-standards-alignment/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-standards-alignment/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.326Z"
     },
     {
       "namespace": "cognovamx",
@@ -1313,8 +1694,13 @@
         "samsung"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/smart-glasses-platform-opportunity/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:f4bbadea74c8dfcdded304fdce830c175ef9ffb6683e7980eb3f9cd0d9a18c8a",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/smart-glasses-platform-opportunity/content.md",
+      "url": "/reginald/cogs/cognovamx/smart-glasses-platform-opportunity/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.328Z"
     },
     {
       "namespace": "cognovamx",
@@ -1336,8 +1722,13 @@
         "database"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/fields/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:1075e2aeecff2d42a7fcd2a1243d7956368ded8a7c832afe3beacd6f3b912cf4",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/fields/content.md",
+      "url": "/reginald/cogs/cognovamx/fields/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.376Z"
     },
     {
       "namespace": "cognovamx",
@@ -1354,8 +1745,13 @@
         "ai-metadata"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-html-writing-guide/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:812dfbf22dc9ef888d76dcb7ca2d4fdc0d15938bed8f923ec0c8ce8ed8451df3",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-html-writing-guide/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-html-writing-guide/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.378Z"
     },
     {
       "namespace": "cognovamx",
@@ -1373,12 +1769,17 @@
         "standards-hierarchy"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/principles/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:5077af657b19d6936d33abd01a314d3c1475f7c1aa1216944e8d5a6f1cb45279",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/principles/content.md",
+      "url": "/reginald/cogs/cognovamx/principles/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.379Z"
     },
     {
       "namespace": "cognovamx",
-      "name": "cog-unified-spec",
+      "name": "cog-cog-unified-spec",
       "version": "1.0-draft",
       "description": "This is a reference copy. The canonical specification is governed by The Gathering and lives in mx-canon.",
       "category": "specification",
@@ -1388,8 +1789,13 @@
         "reference-copy"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/cog-unified-spec/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:9479a4cb9cdb4e9d13ddb08007a53bc653d58701cd2e3a5fe483b77ab0ea8c20",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cog-cog-unified-spec/content.md",
+      "url": "/reginald/cogs/cognovamx/cog-cog-unified-spec/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.380Z"
     },
     {
       "namespace": "cognovamx",
@@ -1404,8 +1810,13 @@
         "mx-reginald"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/cog-system/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:7f7f6af05f89eeb8a121907f4ae92a106f780e00890a34ba61956a0b30634fa5",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cog-system/content.md",
+      "url": "/reginald/cogs/cognovamx/cog-system/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.382Z"
     },
     {
       "namespace": "cognovamx",
@@ -1420,8 +1831,13 @@
         "mx-reginald"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/maxine/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:84427455528451d3606f920a2be1bbc0f983167f50122d510a56dc0092047f39",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/maxine/content.md",
+      "url": "/reginald/cogs/cognovamx/maxine/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.384Z"
     },
     {
       "namespace": "cognovamx",
@@ -1436,8 +1852,13 @@
         "auto-generated"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/cog-snapshot/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:fe095b1341137e527020b13d47683b8048f76a57bdd5531a192cd8399066a130",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cog-snapshot/content.md",
+      "url": "/reginald/cogs/cognovamx/cog-snapshot/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.386Z"
     },
     {
       "namespace": "cognovamx",
@@ -1452,8 +1873,13 @@
         "cog-query"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-reginald-manual/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:81502f2d3644a6460be57c7152df3480f338f147c70bba6b8c76f8c0c2d55a1b",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-reginald-manual/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-reginald-manual/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.387Z"
     },
     {
       "namespace": "cognovamx",
@@ -1471,8 +1897,13 @@
         "onboarding"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/UBERCOG/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:d41184a528d799d42ffc7dc02dc7e04c99b481ba83a2d6d9178b9aaf7998146b",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/UBERCOG/content.md",
+      "url": "/reginald/cogs/cognovamx/UBERCOG/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.389Z"
     },
     {
       "namespace": "cognovamx",
@@ -1487,8 +1918,13 @@
         "navigation"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/header/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:2664ef1dcfd15a4c2288b8f6b39624b333a944e6ac99a7a273fe65256afa5afb",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/header/content.md",
+      "url": "/reginald/cogs/cognovamx/header/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.393Z"
     },
     {
       "namespace": "cognovamx",
@@ -1503,35 +1939,17 @@
         "landing"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-principles-menu/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:db213a86c6aea6d7f71fa4613a18e027b3cc413a183e3dcff4c54159664e7e1e",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-principles-menu/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-principles-menu/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.396Z"
     },
     {
       "namespace": "cognovamx",
-      "name": "coming-soon",
-      "version": "2.2",
-      "description": "Landing page for CogNovaMX — books, products, and the machine-readable web. Your business, readable by every machine on earth.",
-      "category": "marketing",
-      "tags": [
-        "mx",
-        "landing-page",
-        "protocols",
-        "handbook",
-        "coming-soon",
-        "machine-experience",
-        "books",
-        "companion-web",
-        "ai-agents",
-        "waitlist",
-        "email-signup"
-      ],
-      "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/coming-soon/latest.json"
-    },
-    {
-      "namespace": "cognovamx",
-      "name": "media219",
+      "name": "demo-media219-media219",
       "version": "1.0.0",
       "description": "TV graphics and title sequences studio, 30+ years experience. Sports broadcasting specialists — Premier League, FIFA World Cup, MLS, and major networks.",
       "category": "creative-services",
@@ -1548,8 +1966,13 @@
         "broadcast"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/media219/latest.json"
+      "compliance_level": 4,
+      "content_hash": "sha256:6077b30d254500170211eb751be932c1788e06b7b8be442830acd75b9ea02a27",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/demo-media219-media219/content.md",
+      "url": "/reginald/cogs/cognovamx/demo-media219-media219/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.398Z"
     },
     {
       "namespace": "cognovamx",
@@ -1565,8 +1988,13 @@
         "getting-started"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/getting-started/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:8cc50831d41c3dacdd6e2efc7be1176a64aadff707eefb2bbc02622e8b718e79",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/getting-started/content.md",
+      "url": "/reginald/cogs/cognovamx/getting-started/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.401Z"
     },
     {
       "namespace": "cognovamx",
@@ -1581,8 +2009,13 @@
         "industry"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/janus-boye/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:f0009e8b6b6e468a7bb16087472b276929ca35a7144d8b48714599792767b269",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/janus-boye/content.md",
+      "url": "/reginald/cogs/cognovamx/janus-boye/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.403Z"
     },
     {
       "namespace": "cognovamx",
@@ -1597,8 +2030,13 @@
         "stakeholder"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/eleanor-cranstoun/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:968a83aa65b9af426787695820a56e2cf53af16ad83aff2f76e95715b072cae8",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/eleanor-cranstoun/content.md",
+      "url": "/reginald/cogs/cognovamx/eleanor-cranstoun/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.404Z"
     },
     {
       "namespace": "cognovamx",
@@ -1610,11 +2048,17 @@
         "contact",
         "collaborator",
         "metadata",
-        "content-strategy"
+        "content-strategy",
+        "book-reviewer"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/michael-andrews/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:67d78d36def3734027c442a51a9a339cd2063d9420314efa481b4c63bf2e21f4",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/michael-andrews/content.md",
+      "url": "/reginald/cogs/cognovamx/michael-andrews/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.406Z"
     },
     {
       "namespace": "cognovamx",
@@ -1629,8 +2073,13 @@
         "agent-framework"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/openclaw-developer/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:4a05030d6c8dc0b71091475a5ae28f816b34013a6409bc66d14051f0a1babaf5",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/openclaw-developer/content.md",
+      "url": "/reginald/cogs/cognovamx/openclaw-developer/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.408Z"
     },
     {
       "namespace": "cognovamx",
@@ -1645,12 +2094,17 @@
         "lpc"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/scott-mcgregor/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:5b4c180091334cd3685cec56bf0242649f6e89eeee1581505f904c3eb80727df",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/scott-mcgregor/content.md",
+      "url": "/reginald/cogs/cognovamx/scott-mcgregor/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.410Z"
     },
     {
       "namespace": "cognovamx",
-      "name": "media219",
+      "name": "mx-crm-media219-media219",
       "version": "1.0.0",
       "description": "TV graphics and title sequences studio, 30+ years experience. Sports broadcasting specialists — Premier League, FIFA World Cup, MLS, and major networks.",
       "category": "creative-services",
@@ -1667,8 +2121,13 @@
         "broadcast"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/media219/latest.json"
+      "compliance_level": 4,
+      "content_hash": "sha256:6077b30d254500170211eb751be932c1788e06b7b8be442830acd75b9ea02a27",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-crm-media219-media219/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-crm-media219-media219/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.412Z"
     },
     {
       "namespace": "cognovamx",
@@ -1682,8 +2141,13 @@
         "stakeholder"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/helen-advisor/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:f078d1173a2eb96b6a59ab21be5a3fce3ae92284591dccda6c74b5612c90bdd6",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/helen-advisor/content.md",
+      "url": "/reginald/cogs/cognovamx/helen-advisor/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.413Z"
     },
     {
       "namespace": "cognovamx",
@@ -1699,12 +2163,17 @@
         "advisory-board"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/salva/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:980fffea17ffa1789f00bed2c8369a1a55811a50cbc03de8f2f98e793eb23c03",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/salva/content.md",
+      "url": "/reginald/cogs/cognovamx/salva/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.416Z"
     },
     {
       "namespace": "cognovamx",
-      "name": "restaurant",
+      "name": "demo-restaurant",
       "version": "1.0",
       "description": "Farm-to-table Scottish cuisine in Edinburgh",
       "category": "restaurant",
@@ -1715,8 +2184,13 @@
         "farm-to-table"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/restaurant/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:b4afb0c450d2980825b20225834612253710eb2c48cdd5afb2a97fdd4ba360ec",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/demo-restaurant/content.md",
+      "url": "/reginald/cogs/cognovamx/demo-restaurant/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.420Z"
     },
     {
       "namespace": "cognovamx",
@@ -1738,8 +2212,13 @@
         "boye-company"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/conference/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:5bdd492f1a90d2c9f4683b203f25ad95eb2311f61d9d0ddd53820bd92900f77a",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/conference/content.md",
+      "url": "/reginald/cogs/cognovamx/conference/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.421Z"
     },
     {
       "namespace": "cognovamx",
@@ -1758,12 +2237,17 @@
         "professional"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/product/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:5171b2f54b3d04d47fea51cab91a4b64888ca4f46559417459e1023aa0e1f579",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/product/content.md",
+      "url": "/reginald/cogs/cognovamx/product/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.423Z"
     },
     {
       "namespace": "cognovamx",
-      "name": "restaurant",
+      "name": "demo-cogs-restaurant",
       "version": "1.0",
       "description": "Traditional Frankfurt restaurant specialising in Hessian cuisine and handcrafted apple wine. Family-run since 1931.",
       "category": "venue",
@@ -1781,8 +2265,13 @@
         "outdoor-seating"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/restaurant/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:d3ccd510781605ed659080f4106024d3d66739a166a3601cf0311bb2dc4f70e0",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/demo-cogs-restaurant/content.md",
+      "url": "/reginald/cogs/cognovamx/demo-cogs-restaurant/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.426Z"
     },
     {
       "namespace": "cognovamx",
@@ -1799,8 +2288,13 @@
         "registry"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/2026-02-15-conventions/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:afd82f15c1f279bf619a455828fbe14eb46b6ccb439b3ef51486786f23775827",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-15-conventions/content.md",
+      "url": "/reginald/cogs/cognovamx/2026-02-15-conventions/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.428Z"
     },
     {
       "namespace": "cognovamx",
@@ -1819,8 +2313,13 @@
         "action-cog"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/INSTALLME/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:813d861b6756d83ce77ffaa3882dc98f113ccf70edbd64af862b4cf8bc45c134",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/INSTALLME/content.md",
+      "url": "/reginald/cogs/cognovamx/INSTALLME/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.436Z"
     },
     {
       "namespace": "cognovamx",
@@ -1836,8 +2335,13 @@
         "audit"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/a11y/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:f610d7a721da2a3e73ca6ca5b135f3dea1cca30fd94362a1b3be2751f583b44f",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/a11y/content.md",
+      "url": "/reginald/cogs/cognovamx/a11y/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.438Z"
     },
     {
       "namespace": "cognovamx",
@@ -1856,8 +2360,13 @@
         "authentication"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/access-and-guardrails/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:a31ad6f0fff8c3ba9cdf7d854501edf0f8214592f26adb11e8420c66938db811",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/access-and-guardrails/content.md",
+      "url": "/reginald/cogs/cognovamx/access-and-guardrails/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.440Z"
     },
     {
       "namespace": "cognovamx",
@@ -1876,8 +2385,13 @@
         "reach-out"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/asking-for-help/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:fc28d18c17d983649a4f94f0b77743d4f77c1d7ca2b757b0f015f0e00900a7ae",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/asking-for-help/content.md",
+      "url": "/reginald/cogs/cognovamx/asking-for-help/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.443Z"
     },
     {
       "namespace": "cognovamx",
@@ -1896,8 +2410,13 @@
         "action"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/blog-generator/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:f774776d18b233e3b9eda6bdf470f017dcd2c7e282ceea2ce146a397984db8d2",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/blog-generator/content.md",
+      "url": "/reginald/cogs/cognovamx/blog-generator/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.454Z"
     },
     {
       "namespace": "cognovamx",
@@ -1916,8 +2435,13 @@
         "sales-enablement"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/blog-reviewer/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:40e10e51496ace33b80f52ac6537af4ececd99b042a1b71df01dd952d2df1f4c",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/blog-reviewer/content.md",
+      "url": "/reginald/cogs/cognovamx/blog-reviewer/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.457Z"
     },
     {
       "namespace": "cognovamx",
@@ -1936,8 +2460,13 @@
         "mx-contacts"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/building-action-docs/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:b5934137ec7bdb290ea9bf3f1c3d55195cc8e4c50739f58e7a6ae5c671ab01f9",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/building-action-docs/content.md",
+      "url": "/reginald/cogs/cognovamx/building-action-docs/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.460Z"
     },
     {
       "namespace": "cognovamx",
@@ -1953,8 +2482,13 @@
         "governance"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/canon-init/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:14872a2509f3cecce2be391059554880b634502d26e53036e09bd95149bf6e39",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/canon-init/content.md",
+      "url": "/reginald/cogs/cognovamx/canon-init/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.463Z"
     },
     {
       "namespace": "cognovamx",
@@ -1970,8 +2504,13 @@
         "automation"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/changelog-trimmer/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:7616e3a70731dace0e05e01245dac98c82f104fb3da18168aa77a55a767aea6b",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/changelog-trimmer/content.md",
+      "url": "/reginald/cogs/cognovamx/changelog-trimmer/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.465Z"
     },
     {
       "namespace": "cognovamx",
@@ -1987,8 +2526,13 @@
         "testing"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/clarity/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:aa7f43111210122d583c984e1080d8391a4f5227f143a2c75319201d787e45bc",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/clarity/content.md",
+      "url": "/reginald/cogs/cognovamx/clarity/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.468Z"
     },
     {
       "namespace": "cognovamx",
@@ -2007,8 +2551,13 @@
         "sop"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/co-directors-report/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:112df44f15d0c431f329ccb8287790c7e96b8bb292c0d836f20e771c0ec3041d",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/co-directors-report/content.md",
+      "url": "/reginald/cogs/cognovamx/co-directors-report/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.470Z"
     },
     {
       "namespace": "cognovamx",
@@ -2028,8 +2577,13 @@
         "privacy"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/cog-id/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:72b19407018fab753479473187319db5db91ef00bfd1b185c91df91952cd652b",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cog-id/content.md",
+      "url": "/reginald/cogs/cognovamx/cog-id/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.472Z"
     },
     {
       "namespace": "cognovamx",
@@ -2046,8 +2600,13 @@
         "validation"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/cog-publication-workflow/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:901386c77e23eeb0cafd85704f3acce8ae7bf5914f77f486262403dfd9907a4e",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cog-publication-workflow/content.md",
+      "url": "/reginald/cogs/cognovamx/cog-publication-workflow/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.474Z"
     },
     {
       "namespace": "cognovamx",
@@ -2065,8 +2624,13 @@
         "graph"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/cog-query/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:2ba10c74829b947f5e0f9b04f7b0e1a801f76488563960c5910990fe61109ed2",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cog-query/content.md",
+      "url": "/reginald/cogs/cognovamx/cog-query/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.477Z"
     },
     {
       "namespace": "cognovamx",
@@ -2083,8 +2647,13 @@
         "builds-on-graph"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/cog-registry/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:23bf92f88f746e35aff83e756ecf767f7f573ae06de5ad36d27af48f03fc683e",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cog-registry/content.md",
+      "url": "/reginald/cogs/cognovamx/cog-registry/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.478Z"
     },
     {
       "namespace": "cognovamx",
@@ -2102,8 +2671,13 @@
         "transformation"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/cogify-this/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:a705f11f3191c77d37df70724582b5640575d945865dedb89ac75ff5bccf67c2",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cogify-this/content.md",
+      "url": "/reginald/cogs/cognovamx/cogify-this/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.483Z"
     },
     {
       "namespace": "cognovamx",
@@ -2122,8 +2696,13 @@
         "metadata"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/cogs-for-agent-developers/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:44c36ce6cd3ea2236140d70d44dc9c10ff496488610f86d4451865561d023534",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cogs-for-agent-developers/content.md",
+      "url": "/reginald/cogs/cognovamx/cogs-for-agent-developers/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.485Z"
     },
     {
       "namespace": "cognovamx",
@@ -2140,26 +2719,35 @@
         "convention"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/env/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:96d2d50fe90ba6f4e2855ccdfcebc991aee12a440c1c6d601f03b75309311000",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/env/content.md",
+      "url": "/reginald/cogs/cognovamx/env/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.488Z"
     },
     {
       "namespace": "cognovamx",
       "name": "gen-free-book",
-      "version": "1.0.0",
-      "description": "Generate the MX free book sampler PDF by merging preface, chapter-00, and kickoff presentation PDFs.",
+      "version": "2.0.0",
+      "description": "Generate the MX introduction chapter PDF by merging chapter-00, kickoff presentation, footnotes QR page, and services advert.",
       "category": "mx-core",
       "tags": [
         "pdf",
-        "free-book",
+        "introduction-chapter",
         "sampler",
-        "ghostscript",
         "merge",
         "pandoc"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/gen-free-book/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:4b1c8f14f706788df020b680fe9a1d47f863601e6f5e67c49cacfac2e66b2887",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/gen-free-book/content.md",
+      "url": "/reginald/cogs/cognovamx/gen-free-book/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.490Z"
     },
     {
       "namespace": "cognovamx",
@@ -2175,8 +2763,13 @@
         "books"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/generate-footnotes/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:985e03a7e39f87b37e5756cb4321769bdf6de12a2bd4eea24f5f5802d925a4ee",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/generate-footnotes/content.md",
+      "url": "/reginald/cogs/cognovamx/generate-footnotes/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.492Z"
     },
     {
       "namespace": "cognovamx",
@@ -2198,8 +2791,13 @@
         "entry-points"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/how-mx-os-runs/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:90a2076acf24f24aa985421593fdd7bc5eea309a3f7d4c2a07d510dcd546acde",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/how-mx-os-runs/content.md",
+      "url": "/reginald/cogs/cognovamx/how-mx-os-runs/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.494Z"
     },
     {
       "namespace": "cognovamx",
@@ -2218,8 +2816,13 @@
         "ci-cd"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/html-baseline-audit/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:d819915a0fea12fb0c3c8e0cf170d1b0a31cfd9c706dcf563d587d2b0d4d3d2f",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/html-baseline-audit/content.md",
+      "url": "/reginald/cogs/cognovamx/html-baseline-audit/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.495Z"
     },
     {
       "namespace": "cognovamx",
@@ -2237,8 +2840,13 @@
         "syntax-highlighting"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/illustration-generator/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:ac6f57a6a77832535207d6ddaa3699caf660bd8a2e2e80707b33a33cc5bd90c6",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/illustration-generator/content.md",
+      "url": "/reginald/cogs/cognovamx/illustration-generator/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.497Z"
     },
     {
       "namespace": "cognovamx",
@@ -2258,8 +2866,13 @@
         "mx-os"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/installme-runner/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:bb98cb8aa894ca25bdc69e9dab1d2240f953eb44b9d85caa6d105e7f64220d1c",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/installme-runner/content.md",
+      "url": "/reginald/cogs/cognovamx/installme-runner/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.500Z"
     },
     {
       "namespace": "cognovamx",
@@ -2275,8 +2888,13 @@
         "documentation"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/link-checker/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:c69e23498a6474a475602314f456acf68e5e54f5a8d57689cc66e336197c09a2",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/link-checker/content.md",
+      "url": "/reginald/cogs/cognovamx/link-checker/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.502Z"
     },
     {
       "namespace": "cognovamx",
@@ -2291,8 +2909,13 @@
         "generation"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/llms-txt/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:915977194f6b5d5c353db76e11c348f5fb227d469ee1fa2b625c1f01448673c8",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/llms-txt/content.md",
+      "url": "/reginald/cogs/cognovamx/llms-txt/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.504Z"
     },
     {
       "namespace": "cognovamx",
@@ -2312,8 +2935,13 @@
         "embrace-extend"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-metadata/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:a96f8da449d1e8303807c65f11125e05fe1066afcfbea22ce0e1641f8e2a9280",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-metadata/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-metadata/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.504Z"
     },
     {
       "namespace": "cognovamx",
@@ -2333,8 +2961,13 @@
         "system-reference"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manual-repository-architecture/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:9a0509113cbc24e4cd4204f1d81def94d3926caf03b95ce2e2d042bfd9bd946d",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-repository-architecture/content.md",
+      "url": "/reginald/cogs/cognovamx/manual-repository-architecture/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.508Z"
     },
     {
       "namespace": "cognovamx",
@@ -2349,8 +2982,13 @@
         "brain"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/manuals-registry/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:59f2f85cf3c7b8b5765751d3538aae93e96c955a733a5ff59005f56f37037c72",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manuals-registry/content.md",
+      "url": "/reginald/cogs/cognovamx/manuals-registry/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.511Z"
     },
     {
       "namespace": "cognovamx",
@@ -2366,8 +3004,13 @@
         "regenerate"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/marp-regen/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:edcdb9406617e5c8220fc5bdda50f18146333f779e26a1c98d9f1ae4555eb0e1",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/marp-regen/content.md",
+      "url": "/reginald/cogs/cognovamx/marp-regen/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.512Z"
     },
     {
       "namespace": "cognovamx",
@@ -2387,8 +3030,13 @@
         "yaml"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/metadata-audit/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:a84e0fa6a68a23486e34838a6b23d638091b0181fe296979d36d12be155a44cd",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/metadata-audit/content.md",
+      "url": "/reginald/cogs/cognovamx/metadata-audit/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.513Z"
     },
     {
       "namespace": "cognovamx",
@@ -2404,8 +3052,13 @@
         "social"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/metadata/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:e9351d83611eed1d335e10c0b2c73f9b03059705dfb210dbd88263d5fbcb8b9a",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/metadata/content.md",
+      "url": "/reginald/cogs/cognovamx/metadata/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.515Z"
     },
     {
       "namespace": "cognovamx",
@@ -2421,8 +3074,13 @@
         "self-updating"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-allmygithubs/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:49c89f09c7dbec3ad94ebb90d9197f313e8369f621bae6b84080762a7c14b86d",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-allmygithubs/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-allmygithubs/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.518Z"
     },
     {
       "namespace": "cognovamx",
@@ -2445,8 +3103,13 @@
         "report-generation"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-audit/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:3f5683c30d43592051029f9f7634c6474bfc1c27e5259d4c0de799cda3c7d971",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-audit/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-audit/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.521Z"
     },
     {
       "namespace": "cognovamx",
@@ -2466,8 +3129,13 @@
         "mx-os"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-boot/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:8efabfa96d31acff8aae42bb846ca53ea48c630dfd6fd5b303de4726017584db",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-boot/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-boot/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.524Z"
     },
     {
       "namespace": "cognovamx",
@@ -2482,8 +3150,13 @@
         "operations"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-contacts/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:1aaf3adc0120be5a899b2c1a2812a7038f92854db8e22feee27f09d2f4c0fb91",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-contacts/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-contacts/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.527Z"
     },
     {
       "namespace": "cognovamx",
@@ -2504,8 +3177,13 @@
         "action"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-init/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:f6b6f0b6ed9900aef425cbec287e94952abe87d956af95633dde55123624f5c9",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-init/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-init/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.532Z"
     },
     {
       "namespace": "cognovamx",
@@ -2521,8 +3199,13 @@
         "runtime"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-os-manual/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:d858fe80b7734bca9855f63f6c1a53b3836f12d239ae6f980115f82698695463",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-os-manual/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-os-manual/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.534Z"
     },
     {
       "namespace": "cognovamx",
@@ -2541,8 +3224,13 @@
         "writing"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-phrasebook/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:c27ba2816b2f677f6ab17b3a820f09afeb0ba7cb810e772483201100ba166c29",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-phrasebook/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-phrasebook/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.537Z"
     },
     {
       "namespace": "cognovamx",
@@ -2559,8 +3247,13 @@
         "mx-os"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-reminders/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:2721885182bae0077a9aab6829bfe9eff6382b89c0aa59fdfe24f28470f762b6",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-reminders/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-reminders/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.539Z"
     },
     {
       "namespace": "cognovamx",
@@ -2577,8 +3270,13 @@
         "mx-os"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-run/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:c8cfa0a75c086e041864dd00e99d0498466eaa5ad25e7ba5ad0430fdb704b2a1",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-run/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-run/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.540Z"
     },
     {
       "namespace": "cognovamx",
@@ -2596,8 +3294,13 @@
         "bash"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/mx-scaffold/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:5344a40a8899c7e262c3010bfdbabf5fa4ac737c5a9227fb01d4a53299c6cec9",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-scaffold/content.md",
+      "url": "/reginald/cogs/cognovamx/mx-scaffold/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.541Z"
     },
     {
       "namespace": "cognovamx",
@@ -2633,8 +3336,13 @@
         "tool-cascade"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/pdf-generator/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:f252a2a5624428c3882fc5396c58238bb60c24773ddf266f0459f4cb14542891",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/pdf-generator/content.md",
+      "url": "/reginald/cogs/cognovamx/pdf-generator/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.544Z"
     },
     {
       "namespace": "cognovamx",
@@ -2659,8 +3367,13 @@
         "validation-baseline"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/pixel-perfect-web-replication/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:17e60259191f0f04f7a9b58b653b9f00a191b7230e6f2598651906c1dcbb3b9f",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/pixel-perfect-web-replication/content.md",
+      "url": "/reginald/cogs/cognovamx/pixel-perfect-web-replication/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.546Z"
     },
     {
       "namespace": "cognovamx",
@@ -2676,8 +3389,13 @@
         "trust"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/pricing/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:98438023397382267de704732eb92786989938dc4d33cb5df8e68a44a63cfe8f",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/pricing/content.md",
+      "url": "/reginald/cogs/cognovamx/pricing/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.546Z"
     },
     {
       "namespace": "cognovamx",
@@ -2693,8 +3411,13 @@
         "clarity"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/readability/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:d0e045d7e0b4d666b2825850fbb00a657205fffe3abaacffcf1d33c6637c5e5d",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/readability/content.md",
+      "url": "/reginald/cogs/cognovamx/readability/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.547Z"
     },
     {
       "namespace": "cognovamx",
@@ -2711,8 +3434,13 @@
         "cogs"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/reginald-mirror/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:8e7cecc5da290255248822b52b3b57c53c7311bc4b1caba81330a32521c65ced",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/reginald-mirror/content.md",
+      "url": "/reginald/cogs/cognovamx/reginald-mirror/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.548Z"
     },
     {
       "namespace": "cognovamx",
@@ -2731,8 +3459,13 @@
         "self-maintaining"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/registry-of-registries/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:6921bc7b8a142bca9764cd3a92c4c9a9360e1e2b4044816ee5f0421f9a85c16a",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/registry-of-registries/content.md",
+      "url": "/reginald/cogs/cognovamx/registry-of-registries/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.550Z"
     },
     {
       "namespace": "cognovamx",
@@ -2750,8 +3483,13 @@
         "sync"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/registry-sync/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:cd5ffa87f5602c29ab0472e6336084ab1bd2169b04cc54205fe7e93707ab15fa",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/registry-sync/content.md",
+      "url": "/reginald/cogs/cognovamx/registry-sync/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.553Z"
     },
     {
       "namespace": "cognovamx",
@@ -2767,8 +3505,13 @@
         "llms-txt"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/robots-txt/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:704be8c238965693cd8288bcaeac2eaaa1102376fb31334cba995af51f951ab0",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/robots-txt/content.md",
+      "url": "/reginald/cogs/cognovamx/robots-txt/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.556Z"
     },
     {
       "namespace": "cognovamx",
@@ -2786,8 +3529,13 @@
         "sop"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/routing-pipeline/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:00ec1f2a95df1142f1db891e2b0892f0cf337ce0195eac0f8b22f733641bd586",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/routing-pipeline/content.md",
+      "url": "/reginald/cogs/cognovamx/routing-pipeline/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.557Z"
     },
     {
       "namespace": "cognovamx",
@@ -2803,8 +3551,13 @@
         "accessibility"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/schema/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:a937fd7e3d7f67e6cab8b63b49e971be5e6a6503fcccf02c23dde3ad02cbbe89",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/schema/content.md",
+      "url": "/reginald/cogs/cognovamx/schema/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.559Z"
     },
     {
       "namespace": "cognovamx",
@@ -2822,8 +3575,13 @@
         "efficiency"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/script-helper/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:c3066ad048c76acca8005c041d140e4f637784d291bbffa33ad7360d82d4f7f1",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/script-helper/content.md",
+      "url": "/reginald/cogs/cognovamx/script-helper/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.560Z"
     },
     {
       "namespace": "cognovamx",
@@ -2839,8 +3597,13 @@
         "validation"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/semantic-html/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:b444e00828931c09843ce537c5064d5d07a4e65c5c6e41c2a0a1755fb29529bb",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/semantic-html/content.md",
+      "url": "/reginald/cogs/cognovamx/semantic-html/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.562Z"
     },
     {
       "namespace": "cognovamx",
@@ -2856,8 +3619,13 @@
         "coverage"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/sitemap/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:6c23b950c575e066fbfc0fa9e184e0468b8d5417f97d39425c88295e1122b231",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/sitemap/content.md",
+      "url": "/reginald/cogs/cognovamx/sitemap/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.562Z"
     },
     {
       "namespace": "cognovamx",
@@ -2879,8 +3647,13 @@
         "global-os"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/the-companion-web/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:3f54ded9e3423b8a6ffccd914e30a72f2233b4ba7d96937ee340922b17086952",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/the-companion-web/content.md",
+      "url": "/reginald/cogs/cognovamx/the-companion-web/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.564Z"
     },
     {
       "namespace": "cognovamx",
@@ -2900,8 +3673,13 @@
         "collection"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/the-personal-cog/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:e76f207d6655529b406fdb2bdc7e1d4bf91fee9c96b74b33b9fec1756da8f793",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/the-personal-cog/content.md",
+      "url": "/reginald/cogs/cognovamx/the-personal-cog/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.565Z"
     },
     {
       "namespace": "cognovamx",
@@ -2917,8 +3695,13 @@
         "ux"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/toast-detector/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:66181bfce4784b2e152c5e742fd9727137033389bfbff814054b21c0b0eb78aa",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/toast-detector/content.md",
+      "url": "/reginald/cogs/cognovamx/toast-detector/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.567Z"
     },
     {
       "namespace": "cognovamx",
@@ -2933,8 +3716,13 @@
         "meta"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/validate-cog/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:93c3e86611f90cc671dea8cf6a6ae077e8db00719b5352543e0f55f207a57b3b",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/validate-cog/content.md",
+      "url": "/reginald/cogs/cognovamx/validate-cog/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.567Z"
     },
     {
       "namespace": "cognovamx",
@@ -2952,8 +3740,13 @@
         "launch"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/what-comes-next/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:d19a9b535fa12ca625d342094c0e0f197de645af27b544dd0956ff5789015d80",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/what-comes-next/content.md",
+      "url": "/reginald/cogs/cognovamx/what-comes-next/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.568Z"
     },
     {
       "namespace": "cognovamx",
@@ -2969,8 +3762,13 @@
         "the-gathering"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/what-is-a-cog/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:4e0d9aefeb2280e187d5c9077ee2166e28474a2e94a641e7de92e34fa142e269",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/what-is-a-cog/content.md",
+      "url": "/reginald/cogs/cognovamx/what-is-a-cog/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.569Z"
     },
     {
       "namespace": "cognovamx",
@@ -2991,8 +3789,13 @@
         "mx-os"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/what-is-installme/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:51cceb5a0d697f7340db6d86171be64ef1970b46afe1a2e4f2e3a16f77502787",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/what-is-installme/content.md",
+      "url": "/reginald/cogs/cognovamx/what-is-installme/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.571Z"
     },
     {
       "namespace": "cognovamx",
@@ -3010,8 +3813,13 @@
         "mx-os"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/what-is-mx-environment/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:b2c6b314856f6bf7cb90faea1c4cead4ecc377f73d4462a2bd635f62606fc43e",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/what-is-mx-environment/content.md",
+      "url": "/reginald/cogs/cognovamx/what-is-mx-environment/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.571Z"
     },
     {
       "namespace": "cognovamx",
@@ -3029,8 +3837,13 @@
         "builds-on"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/what-is-mx-os/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:d77638a04e22a0a8b24e940634feb6cb08da6cdaf2c76680c19b6c1d2030aa52",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/what-is-mx-os/content.md",
+      "url": "/reginald/cogs/cognovamx/what-is-mx-os/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.573Z"
     },
     {
       "namespace": "cognovamx",
@@ -3048,8 +3861,13 @@
         "mx-os"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/what-is-script-metadata/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:df8e6d63aad92027a21e530bf409ede3ed02eeb8ba78d22917dabbd4abd492fb",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/what-is-script-metadata/content.md",
+      "url": "/reginald/cogs/cognovamx/what-is-script-metadata/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.576Z"
     },
     {
       "namespace": "cognovamx",
@@ -3067,8 +3885,13 @@
         "gestalt"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/what-is-this-chat-about/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:60fe3017900ef1c07f84b1610d501229c13693690aeb9a518595b5efc4126a1f",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/what-is-this-chat-about/content.md",
+      "url": "/reginald/cogs/cognovamx/what-is-this-chat-about/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.578Z"
     },
     {
       "namespace": "cognovamx",
@@ -3088,8 +3911,13 @@
         "inventory"
       ],
       "type": "action-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/whats-changed/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:3abcacbd0f94da2787a080cf9c26e7278ed2868da687f4645a73e2abe74fd027",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/whats-changed/content.md",
+      "url": "/reginald/cogs/cognovamx/whats-changed/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.580Z"
     },
     {
       "namespace": "cognovamx",
@@ -3107,12 +3935,17 @@
         "mx-os"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/who-is-maxine/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:4fd404a655ddbf7b6fc5a2377fa3436c44380c33d25d96198c267f6fc3b71d46",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/who-is-maxine/content.md",
+      "url": "/reginald/cogs/cognovamx/who-is-maxine/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.581Z"
     },
     {
       "namespace": "cognovamx",
-      "name": "README",
+      "name": "reference-tools-README",
       "version": "1.0",
       "description": "Complete toolkit for building, validating, and deploying multilingual websites with proper SEO, hreflang annotations, and Google best practices.",
       "category": "reference-implementation",
@@ -3126,8 +3959,34 @@
         "tools"
       ],
       "type": "info-doc",
-      "compliance_level": 2,
-      "url": "/reginald/cogs/cognovamx/README/latest.json"
+      "compliance_level": 3,
+      "content_hash": "sha256:a360fbdf086441b703c82c01f685d85c6b886c680b7de9a6ef5f920d82f8a542",
+      "resolve_mode": "hosted",
+      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/reference-tools-README/content.md",
+      "url": "/reginald/cogs/cognovamx/reference-tools-README/latest.json",
+      "signed": true,
+      "signed_at": "2026-03-16T17:53:49.582Z"
+    },
+    {
+      "namespace": "agentica",
+      "name": "machine-experience",
+      "version": "1.0.0",
+      "description": "Machine Experience (MX) is the practice of designing and publishing web content so that AI agents can read, interpret, and act upon it reliably.",
+      "category": "reference",
+      "tags": [
+        "machine-experience",
+        "mx",
+        "ai-agents",
+        "semantic-html",
+        "schema-org",
+        "web-standards"
+      ],
+      "type": "info-doc",
+      "compliance_level": 1,
+      "content_hash": "sha256:7bf54c97e45258e5b951ee1baddcee9e24be5d81be932bb3853bddfd8271b11e",
+      "resolve_mode": "pointer",
+      "canonical_url": "https://agentica.wiki/articles/machine-experience",
+      "url": "/reginald/cogs/agentica/machine-experience/latest.json"
     }
   ]
 }

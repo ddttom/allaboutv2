@@ -216,6 +216,10 @@ Route to `planner.md` for prioritised commitments by date (Boye London 26 Feb, F
 
 Route to `mx-canon/ssot/pitches/partners/colleague-summary.md` for team onboarding (explains MX, business model, revenue). For fundraising, see `INVESTOR-SUMMARY.md` (valuation scenarios, financial projections, use of funds). Both confidential.
 
+### "I need grant application materials"
+
+Route to `mx-canon/ssot/business-case/grants/`. Two complementary briefs for Helen (grant writer): `reginald-grant.md` (product company, GBP 250-500K) and `gathering-grant.md` (open standards body, GBP 100-250K). PDFs at `mx-outputs/pdf/`. Confidential.
+
 ### "I need to understand AI agent discovery or the llms.txt standard"
 
 Route to `llms.txt` at repository root. This is the standard AI discovery file per llms.txt specification. 272 lines documenting project structure, book manuscripts, Web Audit Suite, and access guidelines for any AI agent.

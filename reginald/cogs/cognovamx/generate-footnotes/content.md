@@ -30,7 +30,7 @@ mx:
             description: HTML footnote pages at allaboutv2/mx/footnotes/
           - name: qr-codes
             type: file
-            description: QR code SVGs alongside chapter markdown files
+            description: QR code PNGs alongside chapter markdown files, generated using the qrcode npm package
 
       - name: list
         description: List all chapters that have footnotes
@@ -43,7 +43,7 @@ mx:
 Scans all markdown files in `datalake/manuscripts/mx-books/` for Pandoc-style footnote definitions (`[^name]: ...`), then generates:
 
 1. **HTML footnote pages** at `allaboutv2/mx/footnotes/{book}-{chapter}.html` — each footnote listed with its description and clickable URLs on separate lines
-2. **QR code SVGs** alongside each chapter file — encoding the URL to the footnote page
+2. **QR code PNGs** alongside each chapter file — actual scannable QR codes encoding the URL to the footnote page, generated using the `qrcode` npm package (from `scripts/qr-code-generator/node_modules/`). Chapter markdown references the `.png` version.
 
 ## When to run
 
@@ -56,16 +56,20 @@ Scans all markdown files in `datalake/manuscripts/mx-books/` for Pandoc-style fo
 1. Finds all `.md` files with `[^` footnote patterns
 2. Groups footnotes by chapter file
 3. Generates one HTML page per chapter with footnotes
-4. Generates one QR code SVG per chapter
+4. Generates one QR code card PNG per chapter (scannable QR code + title + URL + description)
 5. HTML follows allaboutv2 conventions (MX carrier metadata, Schema.org JSON-LD)
 
 ## Output
 
 - `allaboutv2/mx/footnotes/shared-chapter-00.html`
-- `datalake/manuscripts/mx-books/shared/chapter-00-footnotes-qr.svg`
+- `datalake/manuscripts/mx-books/shared/chapter-00-footnotes-qr.png`
 - (additional files as more chapters gain footnotes)
 
 The script is idempotent — safe to re-run whenever footnotes change.
+
+## QR code generation
+
+QR codes are generated as composite card images: a scannable QR code on the left with "Footnotes & References" title, the footnote page URL, and a description on the right. Generated using the `qrcode` npm package (from `scripts/qr-code-generator/node_modules/`) for the QR code, composed into an SVG card, then converted to PNG via `rsvg-convert`. Each card is placed alongside the chapter markdown file. The QR code uses high error correction (Level H), suitable for print.
 
 ## PDF footnote formatting
 
