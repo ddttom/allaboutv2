@@ -45,13 +45,13 @@ crawl, or submit COGs directly to the registry.
 
 ## Current Registry
 - Publishers: 2
-- Total COGs: 169
-- Hosted: 168 | Pointer: 1
-- Signed COGs: 168 (Ed25519, verifiable)
+- Total COGs: 168
+- Hosted: 167 | Pointer: 1
+- Signed COGs: 167 (Ed25519, verifiable)
 
 ## Contact
 - Website: https://allabout.network
 - Email: tom.cranstoun@gmail.com
 - Registry: https://allabout.network/reginald/
 
-Generated: 2026-03-16T18:28:40.552Z
+Generated: 2026-03-16T20:48:02.564Z

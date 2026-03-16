@@ -1,8 +1,8 @@
 {
   "version": "2.0.0",
-  "generated": "2026-03-16T18:28:40.306Z",
-  "total": 169,
-  "signed": 168,
+  "generated": "2026-03-16T20:48:02.436Z",
+  "total": 168,
+  "signed": 167,
   "cogs": [
     {
       "namespace": "cognovamx",
@@ -1880,30 +1880,6 @@
       "url": "/reginald/cogs/cognovamx/mx-reginald-manual/latest.json",
       "signed": true,
       "signed_at": "2026-03-16T17:53:49.387Z"
-    },
-    {
-      "namespace": "cognovamx",
-      "name": "UBERCOG",
-      "version": "1.5.0",
-      "description": "The repo-level briefing. What this repository is, what lives where, how to route. Any agent reading this can navigate the MX-Hub.",
-      "category": "mx-core",
-      "tags": [
-        "ubercog",
-        "gateway",
-        "briefing",
-        "routing",
-        "repo",
-        "mx-hub",
-        "onboarding"
-      ],
-      "type": "action-doc",
-      "compliance_level": 3,
-      "content_hash": "sha256:d41184a528d799d42ffc7dc02dc7e04c99b481ba83a2d6d9178b9aaf7998146b",
-      "resolve_mode": "hosted",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/UBERCOG/content.md",
-      "url": "/reginald/cogs/cognovamx/UBERCOG/latest.json",
-      "signed": true,
-      "signed_at": "2026-03-16T17:53:49.389Z"
     },
     {
       "namespace": "cognovamx",
@@ -3982,7 +3958,7 @@
         "web-standards"
       ],
       "type": "info-doc",
-      "compliance_level": 1,
+      "compliance_level": 2,
       "content_hash": "sha256:7bf54c97e45258e5b951ee1baddcee9e24be5d81be932bb3853bddfd8271b11e",
       "resolve_mode": "pointer",
       "canonical_url": "https://agentica.wiki/articles/machine-experience",

@@ -1,7 +1,7 @@
 {
   "version": "2.0.0",
-  "generated": "2026-03-16T18:28:40.316Z",
-  "total_cogs": 169,
+  "generated": "2026-03-16T20:48:02.442Z",
+  "total_cogs": 168,
   "publishers": 2,
   "namespaces": [
     "cognovamx",
@@ -10,7 +10,7 @@
   "by_category": {
     "product": 3,
     "governance": 3,
-    "mx-core": 62,
+    "mx-core": 61,
     "about": 1,
     "deliverable": 2,
     "business": 1,
@@ -53,15 +53,15 @@
     "reference": 1
   },
   "by_type": {
-    "action-doc": 61,
+    "action-doc": 60,
     "info-doc": 108
   },
   "by_resolve_mode": {
-    "hosted": 168,
+    "hosted": 167,
     "pointer": 1
   },
   "by_publisher": {
-    "cognovamx": 168,
+    "cognovamx": 167,
     "agentica": 1
   },
   "top_tags": [
@@ -110,10 +110,6 @@
       "count": 9
     },
     {
-      "tag": "routing",
-      "count": 8
-    },
-    {
       "tag": "cog",
       "count": 8
     },
@@ -134,16 +130,20 @@
       "count": 7
     },
     {
-      "tag": "multilingual",
+      "tag": "routing",
       "count": 7
     },
     {
-      "tag": "onboarding",
+      "tag": "multilingual",
       "count": 7
     },
     {
       "tag": "contact",
       "count": 7
+    },
+    {
+      "tag": "architecture",
+      "count": 6
     }
   ]
 }

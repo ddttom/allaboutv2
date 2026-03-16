@@ -2,7 +2,7 @@
   "name": "reginald-registry",
   "version": "2.0.0",
   "description": "REGINALD - Registry for Genuine Information, Notarised Authentication, and Legitimate Documentation",
-  "generated": "2026-03-16T18:28:40.301Z",
+  "generated": "2026-03-16T20:48:02.434Z",
   "publishers": [
     {
       "name": "CogNovaMX Ltd",
@@ -590,13 +590,6 @@
       "compliance": 3,
       "category": "manual",
       "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/UBERCOG": {
-      "latest": "1.5.0",
-      "compliance": 3,
-      "category": "mx-core",
-      "type": "action-doc",
       "resolve_mode": "hosted"
     },
     "cognovamx/header": {
@@ -1203,7 +1196,7 @@
     },
     "agentica/machine-experience": {
       "latest": "1.0.0",
-      "compliance": 1,
+      "compliance": 2,
       "category": "reference",
       "type": "info-doc",
       "resolve_mode": "pointer"

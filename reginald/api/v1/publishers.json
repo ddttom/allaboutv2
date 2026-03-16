@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-  "generated": "2026-03-16T18:28:40.319Z",
+  "generated": "2026-03-16T20:48:02.445Z",
   "total": 2,
   "publishers": [
     {
@@ -10,9 +10,9 @@
       "url": "https://allabout.network",
       "manifest_url": null,
       "registration_mode": "direct",
-      "cog_count": 168,
+      "cog_count": 167,
       "resolve_modes": {
-        "hosted": 168,
+        "hosted": 167,
         "pointer": 0
       },
       "signing_key": {

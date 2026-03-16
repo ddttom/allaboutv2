@@ -1566,26 +1566,6 @@
       "signature": "base64:+wmyiU4B0LkQ8GSX6HsZms8EOizqLQEyiFxi5U9PQNiq5f454gKTqUk6X+fzp/eJkZRf0htvc10Bj+qZxVGDCA=="
     },
     {
-      "name": "UBERCOG",
-      "version": "1.5.0",
-      "description": "The repo-level briefing. What this repository is, what lives where, how to route. Any agent reading this can navigate the MX-Hub.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/UBERCOG/content.md",
-      "content_hash": "sha256:d41184a528d799d42ffc7dc02dc7e04c99b481ba83a2d6d9178b9aaf7998146b",
-      "category": "mx-core",
-      "tags": [
-        "ubercog",
-        "gateway",
-        "briefing",
-        "routing",
-        "repo",
-        "mx-hub",
-        "onboarding"
-      ],
-      "type": "action-doc",
-      "modified": "2026-03-08",
-      "signature": "base64:tOTA/pPEnm5n2J/H0ES2OiVAzK6TDmGiK87NmiRM3kXu5JGMfjx3ChOxZKmVr7xNrI3KdYgzJc7VsHDOD3geDw=="
-    },
-    {
       "name": "header",
       "version": "1.0",
       "description": "Responsive site header with navigation, hamburger menu, and brand identity",
@@ -3304,6 +3284,6 @@
       "signature": "base64:rJDnrHj2Nd+fQMG1rcBHyPw01w67r53tgPjsYaN7A7TnapxTYHwLrOUvi602PGqmesUlCjqybOGUI147BYNABQ=="
     }
   ],
-  "manifest_hash": "sha256:dd73e30b3793a2d4935c81b2885f2870b4ee69677c74440af77f65610ea28179",
-  "generated": "2026-03-16T18:28:40.558Z"
+  "manifest_hash": "sha256:a6774c08a04e015f26d4e6f36b3b16af2f317d9d108b816c72f7e93a47d79a65",
+  "generated": "2026-03-16T20:48:02.565Z"
 }
