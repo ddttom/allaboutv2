@@ -23,20 +23,12 @@
   "content_hash": "sha256:c27ba2816b2f677f6ab17b3a820f09afeb0ba7cb810e772483201100ba166c29",
   "created": "2026-02-10",
   "modified": "2026-02-11",
-  "resolve_mode": "hosted",
-  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-phrasebook/content.md",
+  "resolve_mode": "pointer",
+  "canonical_url": "https://content.allabout.network/cogs/cognovamx/mx-phrasebook/content.md",
   "publisher": {
     "namespace": "cognovamx",
     "name": "CogNovaMX Ltd",
-    "domain": "allabout.network",
-    "manifest_url": null
-  },
-  "source_path": "scripts/cogs/mx-phrasebook.cog.md",
-  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/mx-phrasebook.cog.md",
-  "cache": {
-    "content_url": "/reginald/cogs/cognovamx/mx-phrasebook/content.md",
-    "cached_at": "2026-03-16T20:48:02.409Z",
-    "stale": false
+    "domain": "allabout.network"
   },
   "registry_certificate": {
     "version": "1.0",

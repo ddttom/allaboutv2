@@ -20,20 +20,12 @@
   "content_hash": "sha256:063dead72eb8640959af9873f2ff0e710ca9920c223bab1149250b9ebf9dea6c",
   "created": "2026-02-13",
   "modified": "2026-03-02",
-  "resolve_mode": "hosted",
-  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/ndr-01-block-naming/content.md",
+  "resolve_mode": "pointer",
+  "canonical_url": "https://content.allabout.network/cogs/cognovamx/ndr-01-block-naming/content.md",
   "publisher": {
     "namespace": "cognovamx",
     "name": "CogNovaMX Ltd",
-    "domain": "allabout.network",
-    "manifest_url": null
-  },
-  "source_path": "mx-canon/mx-the-gathering/naming-decisions/ndr-01-block-naming.cog.md",
-  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-the-gathering/naming-decisions/ndr-01-block-naming.cog.md",
-  "cache": {
-    "content_url": "/reginald/cogs/cognovamx/ndr-01-block-naming/content.md",
-    "cached_at": "2026-03-16T20:48:02.336Z",
-    "stale": false
+    "domain": "allabout.network"
   },
   "registry_certificate": {
     "version": "1.0",

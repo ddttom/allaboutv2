@@ -19,20 +19,12 @@
   "content_hash": "sha256:db213a86c6aea6d7f71fa4613a18e027b3cc413a183e3dcff4c54159664e7e1e",
   "created": "2026-02-22",
   "modified": "2026-03-02",
-  "resolve_mode": "hosted",
-  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-principles-menu/content.md",
+  "resolve_mode": "pointer",
+  "canonical_url": "https://content.allabout.network/cogs/cognovamx/mx-principles-menu/content.md",
   "publisher": {
     "namespace": "cognovamx",
     "name": "CogNovaMX Ltd",
-    "domain": "allabout.network",
-    "manifest_url": null
-  },
-  "source_path": "allaboutv2/cogs/mx-landing/mx-principles-menu.cog.md",
-  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/allaboutv2/cogs/mx-landing/mx-principles-menu.cog.md",
-  "cache": {
-    "content_url": "/reginald/cogs/cognovamx/mx-principles-menu/content.md",
-    "cached_at": "2026-03-16T20:48:02.356Z",
-    "stale": false
+    "domain": "allabout.network"
   },
   "registry_certificate": {
     "version": "1.0",

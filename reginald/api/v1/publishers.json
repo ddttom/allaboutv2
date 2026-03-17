@@ -1,6 +1,6 @@
 {
-  "version": "2.0.0",
-  "generated": "2026-03-16T20:48:02.445Z",
+  "version": "3.0.0",
+  "generated": "2026-03-17T09:02:51.492Z",
   "total": 2,
   "publishers": [
     {
@@ -10,11 +10,9 @@
       "url": "https://allabout.network",
       "manifest_url": null,
       "registration_mode": "direct",
-      "cog_count": 167,
-      "resolve_modes": {
-        "hosted": 167,
-        "pointer": 0
-      },
+      "content_base_url": "https://content.allabout.network",
+      "cog_count": 82,
+      "namespace_index_url": "/reginald/api/v1/namespaces/cognovamx/cogs.json",
       "signing_key": {
         "algorithm": "Ed25519",
         "key_id": "reginald-signing-key-2026",
@@ -30,11 +28,9 @@
       "url": "https://agentica.wiki",
       "manifest_url": "https://agentica.wiki/.well-known/mx-cogs.json",
       "registration_mode": "manifest",
+      "content_base_url": "https://agentica.wiki",
       "cog_count": 1,
-      "resolve_modes": {
-        "hosted": 0,
-        "pointer": 1
-      },
+      "namespace_index_url": "/reginald/api/v1/namespaces/agentica/cogs.json",
       "signing_key": {
         "algorithm": "Ed25519",
         "key_id": null,

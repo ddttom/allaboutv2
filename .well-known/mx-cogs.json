@@ -13,66 +13,10 @@
   },
   "cogs": [
     {
-      "name": "maxine-vision",
-      "version": "1.0",
-      "description": "The Joymaker prototype becomes Maxine — a distributed, persistent AI partner accessible from any device",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/maxine-vision/content.md",
-      "content_hash": "sha256:459c52096e1b56a35bb04853ed5514165a2b31ecc1cd6c3b133531665d290e74",
-      "category": "product",
-      "tags": [
-        "maxine",
-        "joymaker",
-        "vision",
-        "architecture",
-        "product",
-        "distributed",
-        "pwa",
-        "voice"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-11",
-      "signature": "base64:zc9QfyA7BkVnbG/Wz9V6S27w5AUpJCGidptTfVylXDITmUZbsbGh5zviZFikotA29SC/neL+Hq/qCMgXChA2Bw=="
-    },
-    {
-      "name": "uber-maxine-plan",
-      "version": "1.0",
-      "description": "Master plan for Maxine — the distributed AI partner. Single source of truth for what Maxine is, where she is, and where she's going.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/uber-maxine-plan/content.md",
-      "content_hash": "sha256:4fe9750dc62ddd713410c47c7e059cb2d16828872f7e593400b26d74f23a4134",
-      "category": "product",
-      "tags": [
-        "maxine",
-        "plan",
-        "architecture",
-        "roadmap",
-        "product",
-        "master-plan"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-12",
-      "signature": "base64:DG+SrLimfo/SQM+imcjAIXzxj73IhtFXYsLsbUiOZl3kwHMEDlJU7mhTtoqZBKP23CB7/X3x/pCF6htqk2qZBQ=="
-    },
-    {
-      "name": "CHANGELOG",
-      "version": "1.0",
-      "description": "Changelog for Maxine Lives. Tracks all changes to the gestalt's brain in Keep a Changelog format.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/CHANGELOG/content.md",
-      "content_hash": "sha256:118ffe471c2f9c15c70a1caea57a7aba99e748c700212eea1cb1216f9277d8fe",
-      "category": "governance",
-      "tags": [
-        "changelog",
-        "history",
-        "provenance"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-12",
-      "signature": "base64:/Wx4DkHrKgEr4Cch+D1UVy8EblG1GlXeeGT7Gq/9DXU0Z5lRE3MUoFG4RRQaQQI95Gnmp+ZL2olDq8jEjJ6qDw=="
-    },
-    {
       "name": "CONTRIBUTING",
       "version": "2.0-draft",
       "description": "Contribution guidelines for the block architecture. Open standard, backward compatible, no proprietary lock-in.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/CONTRIBUTING/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/CONTRIBUTING/content.md",
       "content_hash": "sha256:dc324fe6691c1726ec976e8489fc57af7d4ac2f766e7968c18a66530992c9e0a",
       "category": "governance",
       "tags": [
@@ -86,28 +30,10 @@
       "signature": "base64:ljVYMje2ak2V3LNnUti3t3PEDXgxdsdb1srAp7/1QBQA4eTFXI3e5oxfdtnOlOIj13w2X2MkRcWXoBIkqTf+BA=="
     },
     {
-      "name": "HELLO",
-      "version": "1.1",
-      "description": "Maxine introduces herself, the MX system, and the gestalt. For team members and collaborators.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/HELLO/content.md",
-      "content_hash": "sha256:d4e6c124ce5250a4297c7bf67062031cbd78cbdf2f5f8b5c924298a502e126fa",
-      "category": "mx-core",
-      "tags": [
-        "hello",
-        "introduction",
-        "maxine",
-        "identity",
-        "team"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-14",
-      "signature": "base64:RaMjK1qEKtgu2p/mqQJu7+L4VlKGOTMC+c83T6GDPiH5Q9N+gHty1rHImaGR3qTXl2AhTW634z43uMwrAHW2Aw=="
-    },
-    {
       "name": "LICENSE",
       "version": "1.0",
       "description": "MIT license for Maxine Lives specification work. Implementation licenses may differ.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/LICENSE/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/LICENSE/content.md",
       "content_hash": "sha256:9b46f2f8c25a69430c8d33c51a624188f3943540ac8bdae68cb4f5a4f542eed5",
       "category": "governance",
       "tags": [
@@ -121,64 +47,10 @@
       "signature": "base64:47spPm4EI1wn7DwQjn+zSj2PxoiJHHiN/GAOrlBXvzLDyK4/1UlQQ7w53s4p7UCzyrX8VfVwM7R1rzJFFWLcBw=="
     },
     {
-      "name": "mx-maxine-lives-README",
-      "version": "conventional",
-      "description": "The gestalt's brain. Where Tom and Maxine record assumptions, capture notes, track actions, make plans, and register decisions. Governs Canon.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-maxine-lives-README/content.md",
-      "content_hash": "sha256:6a6a07099a845035de3cac7a42505aa809ecb4ec0f2b5e6cb0f19e9a7f5d5737",
-      "category": "mx-core",
-      "tags": [
-        "gestalt",
-        "brain",
-        "decisions",
-        "memory",
-        "institutional-memory",
-        "meta-layer"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-13",
-      "signature": "base64:lfpOnQ+Ud5oAuMma0yVxLZhmEDKvLktOdqJgCn6Wue9Ph6j6zNZBHbDYPlHKF9cbPWfBJpu5R7amqaXHGy8hBA=="
-    },
-    {
-      "name": "ROUTING",
-      "version": "2.0-draft",
-      "description": "Routing rules for AI agents navigating Maxine Lives. Maps query intents to folders, lists all invocable commands, and reduces inference risk.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/ROUTING/content.md",
-      "content_hash": "sha256:09ebeec4f0e63ec90b671eaafd8869525a1655ccc0f636f4486011569026b872",
-      "category": "mx-core",
-      "tags": [
-        "routing",
-        "sop",
-        "inference-reduction",
-        "agent-navigation",
-        "machine-readable"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-13",
-      "signature": "base64:WtWi1YA+gmn2KAkclb1DDZ/SqXYkYCg6v1MykKjfJAW6zcgtDVapoc/TFyZvF+Q46OUGzqxGd6POwqYRz4z6CA=="
-    },
-    {
-      "name": "about.mx",
-      "version": "1.0",
-      "description": "Maxine's current identity, capabilities, recent evolution, and operational context. Regenerated during co-directors reports to track growth over time.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/about.mx/content.md",
-      "content_hash": "sha256:66adb0a45006341be8fe11e4fb157daa4c52fb6f3394293d0c4407ffe5fe5244",
-      "category": "about",
-      "tags": [
-        "maxine",
-        "identity",
-        "self-knowledge",
-        "gestalt"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-21",
-      "signature": "base64:+87I60a1XMiVp28QWKdWYLNq+950fC47SzDhOcNO6gd0jRQ4pZLfHC1ug+SCIhj0LfuK9m4FhGO3CXpTu3XDBg=="
-    },
-    {
       "name": "about-maxine",
       "version": "1.0",
       "description": "How Maxine works: one server, three surfaces, three protocols. The definitive architectural overview of the distributed AI partner.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/about-maxine/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/about-maxine/content.md",
       "content_hash": "sha256:52d7447402c2f2fdee02188f24a14f69464231c2402a9e30a0ad9bf1c6aec0df",
       "category": "deliverable",
       "tags": [
@@ -202,7 +74,7 @@
       "name": "about-mx",
       "version": "1.0",
       "description": "Auto-generated self-knowledge file. Who I am, what I know, what I can do. Regenerated before every end-of-day report.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/about-mx/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/about-mx/content.md",
       "content_hash": "sha256:b8e6d4233af0777d80b887374642610b8e639f69dc2d61aaeb55cc52f4c0a8f7",
       "category": "mx-core",
       "tags": [
@@ -217,632 +89,10 @@
       "signature": "base64:GTJIM7WpI6L6PXUmCKUtlLWZrfUFISKnA9nb0LJQoMrqjl4MsRRU3Q/cte04NsQA9VwdR40lx+nZLTlJbOY7Dw=="
     },
     {
-      "name": "domain-portfolio",
-      "version": "1.0.0",
-      "description": "Catalogue of domains held under GoDaddy, grouped by brand and purpose, with live status, protection level, and intended use.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/domain-portfolio/content.md",
-      "content_hash": "sha256:3726f2e9900e66613f046b11b1c010dfbed612656ac32441b3797d4f7aea362b",
-      "category": "business",
-      "tags": [
-        "domains",
-        "dns",
-        "brand",
-        "godaddy",
-        "infrastructure",
-        "launch-readiness"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-15",
-      "signature": "base64:QLl9tVUHHwVfsE2GLdJuWFFTk7p6bZbLVoydvJsAA3mJ0yL/5I+M97D0QuirQLqAJzN4eOqAEk2L6m6pJiofBA=="
-    },
-    {
-      "name": "MX-brand",
-      "version": "1.1.0",
-      "description": "A structured, low‑risk, trust‑first analysis of brand names, taglines, voice, and domain alignment for CogNovaMX Ltd ahead of the April 2026 launch.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/MX-brand/content.md",
-      "content_hash": "sha256:395f6124cfe5140fe9ba62151f635729a03998abcc4a9061aaa0f7f6ca5619cb",
-      "category": "strategy",
-      "tags": [
-        "brand",
-        "naming",
-        "strategy",
-        "launch",
-        "identity"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-15",
-      "signature": "base64:ZhAYY3vl9vhK0XvlbosbGX07aJoVrd4FNVleJFhQYTPXZWsfXjtcpGuPfh66gZwQwmcf6w8LeHKqwx50pTjpDg=="
-    },
-    {
-      "name": "cloudflare-routing-action",
-      "version": "1.0.0",
-      "description": "A complete routing and canonicalisation strategy for all MX-related domains using Cloudflare Workers, aligned with MX's trust-first, non-AI brand architecture.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cloudflare-routing-action/content.md",
-      "content_hash": "sha256:39fd42e0c861e56174d393323dec0fa168252ec52d62b84bdbf778921412f6ce",
-      "category": "infrastructure",
-      "tags": [
-        "cloudflare",
-        "routing",
-        "dns",
-        "workers",
-        "infrastructure"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-15",
-      "signature": "base64:GWbNff6G74e44CUHli8898KXaOjTpmRxToFg5WS7NrCdA8CgvL51nsj2cmLBvEVq60fVB+h+gNOwc+fK+Jp3DA=="
-    },
-    {
-      "name": "cloudflare-routing-info",
-      "version": "1.0.0",
-      "description": "Human- and machine-readable plan for routing MX domains via Cloudflare Workers, aligned with MX's trust-first, non-AI brand architecture.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cloudflare-routing-info/content.md",
-      "content_hash": "sha256:838271d34e0591abac6f9c329af8912186b4acd266ca697d81ad1343ec513b75",
-      "category": "infrastructure",
-      "tags": [
-        "cloudflare",
-        "routing",
-        "dns",
-        "workers",
-        "infrastructure"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-15",
-      "signature": "base64:0raX1pW39xKdQpjU6fIdWz6wMQlEFhoQkXTjjVkWP7RJyvz5BFiAX+5mjQ8v3Yq0jAx9X2eIAAqsK8udMpFOAA=="
-    },
-    {
-      "name": "glasgow-training-course",
-      "version": "1.0",
-      "description": "2-day MX team training — AI foundations and business strategy",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/glasgow-training-course/content.md",
-      "content_hash": "sha256:7cb35490fbf77a2a7408ce1d4a1e0388a2a9b990662fc824101b023a52346527",
-      "category": "planning",
-      "tags": [
-        "training",
-        "team",
-        "glasgow",
-        "ai",
-        "business"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-14",
-      "signature": "base64:Mu3vBMeOsjaXipNSfgdzKMgNhUWDq0hBoSqFz+LNLL1HNtPWpvF7C3fUKfw0nrzAHsY3bYojiDwUHt+bog0GBw=="
-    },
-    {
-      "name": "mx-agent-independence",
-      "version": "1.0",
-      "description": "MX is agent-agnostic. Works for every AI agent that can read a file. No middleware. No integration. No dependency. The file IS the platform.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-agent-independence/content.md",
-      "content_hash": "sha256:3aaa03210b8b3e86c048ae32e2c58a9af5ca412acabf022e244f931f620630eb",
-      "category": "principle",
-      "tags": [
-        "mx",
-        "agent-independence",
-        "cog",
-        "standard",
-        "inference-reduction",
-        "sustainability",
-        "universal"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-15",
-      "signature": "base64:M+QcpA1eOf985LZcl84qAz9SGSA7mvsEEnjzqyAdl2NIgvGc2RmSlk46I4OKUJ3/+6LTT+x8JG/U1pttjx3ACA=="
-    },
-    {
-      "name": "mx-vision",
-      "version": "1.0",
-      "description": "The Machine Experience vision — why it exists, the problem it solves, the system it builds. From inference to certainty. From guessing to knowing.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-vision/content.md",
-      "content_hash": "sha256:ead8bb525439af56a00a2ac391f9fa66133162594dc062ef1a98edc7d3b617f5",
-      "category": "vision",
-      "tags": [
-        "mx",
-        "vision",
-        "machine-experience",
-        "foundational"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:PJowiAKJqGbijiAxEtIyesA1DD4gNL2eSCSNWXrymYT98qdcZY6sDZvE2oJSvtXWTZTb6xrzFhtQNTB8nz6QDQ=="
-    },
-    {
-      "name": "2026-02-13-solo-founder",
-      "version": "1.0",
-      "description": "Risk #1: Solo founder as single point of failure. Critical severity, medium likelihood, catastrophic impact.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-13-solo-founder/content.md",
-      "content_hash": "sha256:0e672d211356320dad369cee91d0e2c04b9dfe4447224081147f14602d164e02",
-      "category": "risk",
-      "tags": [
-        "risk",
-        "founder",
-        "bus-factor",
-        "critical",
-        "mitigation"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-13",
-      "signature": "base64:8OACXOn/who53QEGavHHrUc+gXgAVKViK2GW5LorvZnVz11gprFlh1pndqjJm93+fsh/wIWyY9GJ1nMtQ1jqDA=="
-    },
-    {
-      "name": "manual-asset-sync",
-      "version": "1.0",
-      "description": "Synchronizes CSS, JavaScript, images, fonts, and other static assets across multilingual site language directories.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-asset-sync/content.md",
-      "content_hash": "sha256:d27db63a49fd38241a8df2878bd80a81c0d1ce6442d4a88a0a28e01e3269d100",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "multilingual",
-        "assets",
-        "sync",
-        "automation",
-        "workflow"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:IbuqJsWIzC/vwzwB1mZ/8JUIT8EM2xDOUfPLx4X8utiI2E8k+89Upcu7NYlazaNoD1alNpaEKiZrFlOjHq1WDQ=="
-    },
-    {
-      "name": "manual-build-tools",
-      "version": "1.0",
-      "description": "Sitemap generation, content organisation, ASCII-to-SVG conversion, context URL injection, and VS Code cleanup.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-build-tools/content.md",
-      "content_hash": "sha256:916c09955f6ffb78e2f0f14bf2ca0a9601206b811a87466d88b406a2c8aa773e",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "build",
-        "tools",
-        "sitemap",
-        "svg",
-        "cleanup",
-        "publishing"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:rxj/VXE7Zo0ebky7RQEKTWfCIGM3Y9eYUBlDfhlEKovgHYG/ZaweyNSBcoyp5svImAQRrhH7+tk2Ej1h6OeBDA=="
-    },
-    {
-      "name": "manual-cog-id",
-      "version": "1.1",
-      "description": "Step-by-step guide for generating, registering, decoding, and stamping cog IDs. The obfuscated identity layer for MX OS.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-cog-id/content.md",
-      "content_hash": "sha256:2343d9b2e8b5d50a1c7f22568400c163108061b185796836e181226b0f2c541d",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "cog-id",
-        "identity",
-        "hash",
-        "obfuscation",
-        "x-mx-p-ref",
-        "namespace"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-14",
-      "signature": "base64:FSSYYqjumtPnHFFwKVAgtiEKaxz+IMafECgUBzKQrGaiSO0xod0b+ubjH6agR3pZ8T+uD4Ai+WS4CUk8u/x4Aw=="
-    },
-    {
-      "name": "manual-cogify",
-      "version": "1.5",
-      "description": "Complete guide to converting existing content into MX-enhanced format with metadata, accessibility, and WebMCP integration.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-cogify/content.md",
-      "content_hash": "sha256:132f935d645225537754763d4014285fcf215708b21b84c387bb105d27a88015",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "cogify",
-        "conversion",
-        "mx-enhancement",
-        "metadata",
-        "webmcp",
-        "accessibility",
-        "workflow"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:pQtykSMa5kFc8R8b3jZcBBTXOQuUw0XKuebi6d09y/rj+HFuvF3umgdByow6SlSWuRUtXZvj7bQ0V9k2ydnMAQ=="
-    },
-    {
-      "name": "manual-deployment-helper",
-      "version": "1.0",
-      "description": "Pre-deployment workflow for multilingual sites: validation, parity checks, sitemap generation, deployment checklist, and Google Search Console setup.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-deployment-helper/content.md",
-      "content_hash": "sha256:e7456f07449f348d2c348af62dcb4d2ba6fc1e6db460a686b9f69b4fde3d211e",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "multilingual",
-        "deployment",
-        "workflow",
-        "orchestration",
-        "automation"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:uWg50/jU6j2dtZ/x9C/S5H2VdgRg2jyrwM8zUBW3pEZWHmLOfuF+Q33mOYattJtiEqS8LBV6k/vhyDuxkSXPAA=="
-    },
-    {
-      "name": "manual-enhanced-audit",
-      "version": "2.0",
-      "description": "Complete HTML/CSS/DOM capture system for pixel-perfect web replication with 24-hour asset caching and multi-format outputs.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-enhanced-audit/content.md",
-      "content_hash": "sha256:d90d1d01cb5c7ee8ca9e03ce4674ca08f3d4177aeb64fd4acd85d2bba33dd5cf",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "audit",
-        "playwright",
-        "dom",
-        "css",
-        "caching",
-        "web-replication",
-        "cogify"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:c9+f8qvZOVQUOrpKX1qfkHd5l3OT43cSSRgAk4T02wvkDleFsQVFfXyNyplbzKqCtYLmiY/uVrs007WBsiRMDA=="
-    },
-    {
-      "name": "manual-git-hooks",
-      "version": "1.0",
-      "description": "Installation, validation, metadata generation, inheritance resolution, and attribute indexing for MX .mx.yaml.md files.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-git-hooks/content.md",
-      "content_hash": "sha256:0730c2c6cae7c863c02657eef77f3710d25a87966fc35a7b3e44b4dc5346ceb3",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "git",
-        "hooks",
-        "metadata",
-        "yaml",
-        "validation",
-        "generation",
-        "inheritance"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:gteME3cGu5OdDMoWZMiHhydOVC7gVrVvpmBKlL2IcObmHSIvgjTmbzg6YHwJBciaH8b+iM+5oGRO0HEofNwJDg=="
-    },
-    {
-      "name": "manual-html-baseline-audit",
-      "version": "1.0",
-      "description": "Guide to establishing HTML baselines and detecting regressions across .cog.html files using automated visual, structural, style, and metadata comparison.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-html-baseline-audit/content.md",
-      "content_hash": "sha256:dd1444b40ab4cb8efd0e240055af01268c757428b65a1209171a6233bd81de90",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "html",
-        "audit",
-        "baseline",
-        "regression",
-        "testing",
-        "automation",
-        "validation"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:Cr5V21ykwHIXl9Z8CvXsCV9CxBhd+5Y80417px65+bbJPjiwqPxd5dpzOpVtQD9OHpevY4IevKj9giqdJ9ybDg=="
-    },
-    {
-      "name": "manual-maxine-lives",
-      "version": "1.0",
-      "description": "How to use Maxine Lives — the gestalt's brain for decisions, assumptions, doubts, risks, plans, and tasks.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-maxine-lives/content.md",
-      "content_hash": "sha256:d77e570c08356c5593ceb2d5a8d5f97d69501d74173eb32c74e33f76ac2ff7a6",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "maxine-lives",
-        "brain",
-        "management"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:IPScC4NP0HGHBsZPp/ZNXVW+jvDkbF4Yml+SKQRhUzUJGHUu6cL4G5sk4MiPoxEJAR9EmSd/d5ibJVZkMKbKDw=="
-    },
-    {
-      "name": "manual-multilingual-sitemap",
-      "version": "1.0",
-      "description": "Automatically generates sitemap.xml for multilingual sites with proper hreflang annotations following sitemaps.org protocol and Google best practices.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-multilingual-sitemap/content.md",
-      "content_hash": "sha256:240ba5ee6df6c5cffbe28b101de70192f3634e213a27bb19ce2da4b2821d45c8",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "multilingual",
-        "sitemap",
-        "seo",
-        "hreflang",
-        "google",
-        "internationalization"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:u/37L5TwBseXEpE91ItsUUeaAnylrOHQadchHh2g77JPqMIwLscAmxqAGZR2RsjSZJpqO1l6zjuVhkbcYHKvBQ=="
-    },
-    {
-      "name": "manual-multilingual-template",
-      "version": "1.0",
-      "description": "Converts a single HTML template into language-specific versions with proper lang attributes, hreflang tags, and root redirect for multilingual sites.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-multilingual-template/content.md",
-      "content_hash": "sha256:7ffd8d5c621e4322bddda0c3b2ac7166dc7602692dc113d6468e7198d59bd41a",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "multilingual",
-        "template",
-        "generation",
-        "hreflang",
-        "internationalization"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:FH42TPwBpJ/VZ+tGEi8CEE2aUXe8jCkq/J6y5FT2isJ2r5Vc7OJuJbYZ2qVh6Lz54gHlbqxMHCJC+PnF9qo6Cg=="
-    },
-    {
-      "name": "manual-multilingual-validator",
-      "version": "1.0",
-      "description": "Validates multilingual site implementation for SEO compliance, checking lang attributes, hreflang tags, directory structure, and root redirect.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-multilingual-validator/content.md",
-      "content_hash": "sha256:1e4db78a0ac1f2aeab6e3ddd91edff767e6dcde588bf36fd6fe17bd8efbc98b3",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "multilingual",
-        "validation",
-        "seo",
-        "quality-assurance",
-        "hreflang"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:Do7cFpOzvUvte8udGMUG7v0nLbcYJfzGIjj5TgvpdcpgJbK9Q8HqDpNpeMJb/kugepTqefnr/MxqOrrbblF0DA=="
-    },
-    {
-      "name": "manual-mx-exec",
-      "version": "1.0",
-      "description": "Manual page for mx-exec and mx commands — MX OS action cog executor",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-mx-exec/content.md",
-      "content_hash": "sha256:700f289a8ea6474a967bb84dece1632b730b576629fbcf20b35262555df21d11",
-      "category": "mx-os",
-      "tags": [
-        "manual",
-        "mx-exec",
-        "mx",
-        "action-cog",
-        "cli",
-        "shell"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-24",
-      "signature": "base64:B2fPvl8NTvwt2XOnedb4dbyPa8RhR+eGnEYooHYGVurVmNbQ38qBaU7rhnA0gCDZAsxKccG/N3yzP9wMGEY+CA=="
-    },
-    {
-      "name": "manual-mx-nav-server",
-      "version": "1.0",
-      "description": "Web-based multi-repo navigation dashboard with VS Code Explorer-style UI, search, and recent files.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-mx-nav-server/content.md",
-      "content_hash": "sha256:1993fb14d874e6068cd8fe3597092a07a01a0a0e431f4f54c243dd580f19899a",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "navigation",
-        "dashboard",
-        "web",
-        "repositories",
-        "explorer"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:jA9K4J4x/VSAgbSz2crFWqoEtBbifxAcVuSGjLBQ5UrrcV2VMY16HkiJ7q9lJ6LDF36yJgRQ7uyKAOPKq5A2Bg=="
-    },
-    {
-      "name": "manual-mx-pdf",
-      "version": "1.0",
-      "description": "Generate professional PDFs from markdown using Pandoc and XeLaTeX.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-mx-pdf/content.md",
-      "content_hash": "sha256:81541a7a35cd208c5fc415979b72cf2b500e3b6b952bf8399286e877b695d013",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "mx-pdf",
-        "pdf",
-        "pandoc",
-        "publishing"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:cqQCpiKWgkh+Iyqzp6dWjFVEw1wL1b1FcntynIG+2b+JLm5yV4cTTPjTLbUnJw901PyxNa8wWOpbQhWnVVPvDw=="
-    },
-    {
-      "name": "manual-parity-checker",
-      "version": "1.0",
-      "description": "Compares content across multilingual site language versions to identify translation gaps, structural differences, and outdated translations.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-parity-checker/content.md",
-      "content_hash": "sha256:655182f2252285b2c590255400ced882b713626050fee9d82a79fe2d7ab33a10",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "multilingual",
-        "parity",
-        "quality-assurance",
-        "translation",
-        "content"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:etsMrI1Mem3Xs01eXXrfYnNUpRDCDLp4relGXsrUtL97VSQqT8hgMKxMXN0vBjOZ6EMqke/6JcZe0TfZtd4jCQ=="
-    },
-    {
-      "name": "manual-parse-mxignore",
-      "version": "1.0",
-      "description": "Parse .mxignore and .gitignore files to determine which files should be excluded from MX processing.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-parse-mxignore/content.md",
-      "content_hash": "sha256:93184c78f15ed4449ad0be49b2574c884340b274468adb02d63c7151b55a38c8",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "mxignore",
-        "gitignore",
-        "filtering",
-        "parser"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:finsDLKQXNJkya7Zd72MBu8GTMifNgjhW3Z/Wwg8Kvgv412eV1neHskTMT7jeRx4HrevxBAVJuvipuDraK45BQ=="
-    },
-    {
-      "name": "manual-partnership-reporting",
-      "version": "1.0",
-      "description": "Comprehensive framework for writing CogNovaMX reports with partnership tone — strengths first, opportunities framed constructively, educational not critical",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-partnership-reporting/content.md",
-      "content_hash": "sha256:c46f60bce2310518d8a9ed0098777fada3d8d6a8ef043a9facc9184f280bbb5c",
-      "category": "manual",
-      "tags": [
-        "reporting",
-        "tone",
-        "partnership",
-        "mx-analysis",
-        "geo-analysis",
-        "writing-style"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-21",
-      "signature": "base64:2/570F9X1hDwuxhz7IVNY+QPXiUdEmkXuJfwzvmoS9Rl9AW12IIvfSY2tJoVWo92Rw3e3c4Bn2vfkvu5dUahCA=="
-    },
-    {
-      "name": "manual-path-validator",
-      "version": "1.0",
-      "description": "Repository path reference scanner detecting old patterns after restructures. Prevents regression to outdated paths with non-blocking warnings.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-path-validator/content.md",
-      "content_hash": "sha256:55ab5e913f2290980613d2ab291770d6b914185aafa98d40d880cfc64b8dbd5c",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "validation",
-        "paths",
-        "regression",
-        "automation",
-        "quality"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:pdh9jCxhuxYdjF4KD3MXzWnIvV+Y0WW9xLni+2FGi/hXBHiUQxIUbNZDQ6YcVpRaWz3XhSBM/3JJoeeJVuSJAQ=="
-    },
-    {
-      "name": "manual-prompt-enhancer",
-      "version": "1.0",
-      "description": "The route-decorator hook. Zero-inference prompt preprocessing with spell checking, route matching, and concept injection.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-prompt-enhancer/content.md",
-      "content_hash": "sha256:33f4e0bfcf28a48a6644dd0adfdbb91340401bbdbb93fc5ea262127a5b1af920",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "prompt-enhancer",
-        "hooks",
-        "routing"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:75Qpo+eE7y0GRXkoyqWYp6Q9BEUV26KmxWX7M89BdRWD5Uj/9f3KHNEw+i1/seikDHKo4N/dMaSseTDGZELHDA=="
-    },
-    {
-      "name": "manual-spell-checker",
-      "version": "1.0",
-      "description": "MX-aware spell checking for markdown files. Dual-dialect, vocabulary-aware, only flags genuine typos.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-spell-checker/content.md",
-      "content_hash": "sha256:290682c6cea2606aa0e63792255c4b844131af24296228f8e6326d0aab3838f7",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "spell-checker",
-        "markdown",
-        "quality"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:4HPC3T1gIGY9WSrcDlmBcf2p/bySuU5xy7YrII8rMGuAMBikdAyJZB1LqcmCCeyCE5v40zEES+hVL3+D9pQyCw=="
-    },
-    {
-      "name": "manual-submodule-health",
-      "version": "1.0",
-      "description": "Multi-dimensional submodule validation checking initialization, uncommitted changes, branch status, and remote sync. Provides actionable fix commands.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-submodule-health/content.md",
-      "content_hash": "sha256:52f2ed8e030f1de7d7992655a7a11ddac87b5af81994389a089ab7c1b0187348",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "submodules",
-        "validation",
-        "git",
-        "health",
-        "automation"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:5y01KG+wTUm3kuEwaZzyca5oI4rIm24YMjK5gySbw2TvBySfpBD8grAkRV2teSIKYcZzmhVuvtSpeYQcsJ42AA=="
-    },
-    {
-      "name": "manual-team-onboarding",
-      "version": "1.0",
-      "description": "Interactive onboarding wizard for non-technical team members joining MX-ingest. Automated setup, access testing, and guided workflow introduction.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-team-onboarding/content.md",
-      "content_hash": "sha256:35e4b5d0bd511fd3a286abf55a7666d3408bc8c24886f2df7183d58edafc4979",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "onboarding",
-        "team",
-        "mx-ingest",
-        "automation",
-        "submodules"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:lJHpiJqXrYazfSCI5Pg1ymTk3biyPlY8cqgKXSrltIU1JQpIaP9J2sepzjc/3dFrTK1BAoAd2pFcnj71l9EoDw=="
-    },
-    {
-      "name": "mx-contacts-manual",
-      "version": "1.0",
-      "description": "Step-by-step guide for managing contacts, messages, and archives in mx-crm.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-contacts-manual/content.md",
-      "content_hash": "sha256:66426cfb48aecbefed7dd79574a688fb8c12f26568faf6315bbdeebe023ff59c",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "contacts",
-        "messages",
-        "archive"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-13",
-      "signature": "base64:oZZGlMqBjxYYBhxVgDjTv5haqrkg28my2o2BwQUtVzkMDnUbM7JoWC58M8hAioktapARZ/GH0PduZ35wU1fQBQ=="
-    },
-    {
-      "name": "mx-show-manual",
-      "version": "3.0",
-      "description": "Interactive window finder for macOS. Pinned favourites, two-phase loading, smart sizing, multi-window, usage tracking.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-show-manual/content.md",
-      "content_hash": "sha256:b7bf0495d9c10e77027030aca3560b1321fd6002ea334f36bcdd552139b11303",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "mx-show",
-        "windows",
-        "display",
-        "fzf",
-        "maxine"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-15",
-      "signature": "base64:dhctpIeoJH5jZKv71uNxxPPgX57pRkzKpCuvU7brKfJM2UtaIgYgvQRXILhknN/WY8gQdP8t9YMsFtOErHA0CA=="
-    },
-    {
       "name": "mx-metadata-conventions",
       "version": "1.0",
       "description": "How MX metadata works across every file type. The implementation rules for native metadata, block mapping, namespace extension, and Reginald serving.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-metadata-conventions/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/mx-metadata-conventions/content.md",
       "content_hash": "sha256:b26be50648d0624582244613978a4feb5c4adc011d0978a719d722b2b179c8dc",
       "category": "deliverable",
       "tags": [
@@ -861,234 +111,10 @@
       "signature": "base64:hJrN2h85E63nehHYwSbbO3mDns5/ROYrZEPYGQplKHNVaWgi1mIgPsMWSxXfvDrPa/GczferwaAoy0QzAaoUAg=="
     },
     {
-      "name": "2026-02-13-mx-web-architecture",
-      "version": "1.0",
-      "description": "ADR #3: The MX web architecture — Maxine serves, Reginald orchestrates, cogs compose.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-13-mx-web-architecture/content.md",
-      "content_hash": "sha256:927497253b10468b860e3b0f6e1fabb1f496b115382c9f4ae90a02bcfa58f806",
-      "category": "architecture",
-      "tags": [
-        "adr",
-        "web-architecture",
-        "maxine-server",
-        "reginald",
-        "caching",
-        "webmcp",
-        "trust"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:S39UbkokWwB2AXU/Ur4XxpUGqjwbwVPmJvB/kKzAPar3BVQLx/jVsSpzVSqZaPhcWYzTVHyZKTHTC/L72oP3Bg=="
-    },
-    {
-      "name": "2026-02-13-routing-pipeline",
-      "version": "1.0",
-      "description": "ADR #2: Routing pipeline with prompt preprocessing, spell correction, and route-based context injection to cut inference cost.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-13-routing-pipeline/content.md",
-      "content_hash": "sha256:9948bab4b413c80e4e9236d6736c283a93e617656142a3cb8833b1e6892d72d4",
-      "category": "adr",
-      "tags": [
-        "adr",
-        "routing",
-        "hook",
-        "inference-reduction",
-        "aspell",
-        "preprocessing",
-        "pipeline"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-13",
-      "signature": "base64:1kbvwZBqOy3NVNQccQpOOE0wgY5+9BAsL2teZt33SxFhjD+ePz+Q+KE8sUWg/SBFW8cRbEaMstCH6klxseklBg=="
-    },
-    {
-      "name": "2026-02-18-png-workflow-for-pdf-generation",
-      "version": "1.0",
-      "description": "ADR #4: PNG conversion workflow for PDF generation — deliberate architectural choice prioritizing reliability over format purity.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-18-png-workflow-for-pdf-generation/content.md",
-      "content_hash": "sha256:e5a7c1add7ffa262bdc8ee28b5e0e7fd0411f2b2e67d14ab77e49d3ce20330d0",
-      "category": "architecture",
-      "tags": [
-        "adr",
-        "pdf-generation",
-        "svg",
-        "png",
-        "illustration-pipeline",
-        "latex",
-        "build-system"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:BldQRVrLTMu9XXdVX8ydi/dH97o0klXIzZzu3BxATq8ni2gLeXbTCt9wBf5FWpdj1aQKYv70Hb+G6ekwuJT0DA=="
-    },
-    {
-      "name": "2026-02-18-svg-aspect-ratio-preservation",
-      "version": "1.0",
-      "description": "ADR #6: SVG-to-PNG aspect ratio preservation with tool cascade — fixing qlmanage square thumbnail bug for professional PDF layout.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-18-svg-aspect-ratio-preservation/content.md",
-      "content_hash": "sha256:a9d7cc0f180c64567b64d713bd3e29226fc102a5f8f62af90fd86b5e9adffed8",
-      "category": "architecture",
-      "tags": [
-        "adr",
-        "pdf-generation",
-        "svg",
-        "png",
-        "aspect-ratio",
-        "rsvg-convert",
-        "imagemagick",
-        "qlmanage",
-        "illustration-pipeline"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:kNtYwGZscV9/mJmokucHn8GZcJbLCHsNMVFzNwNMoUGoZL7Lg7tPII1OYtqI8cqzyAzlQTKonW3GTwGNpdYoDg=="
-    },
-    {
-      "name": "2026-02-18-typography-standards-for-pdf-generation",
-      "version": "1.0",
-      "description": "ADR #5: Typography standards for PDF generation — widow/orphan prevention and intelligent page break control as universal pattern across all MX publications.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-18-typography-standards-for-pdf-generation/content.md",
-      "content_hash": "sha256:3820512eb406c0aaf44a4a2174d59078633cb1e4de7dd9787f1c790ef9c8467a",
-      "category": "architecture",
-      "tags": [
-        "adr",
-        "pdf-generation",
-        "typography",
-        "page-breaks",
-        "widow-orphan-prevention",
-        "needspace",
-        "latex",
-        "universal-standards"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:dsLLxdZgjDxBLibJyPR7lERXK5dNxFwQ5KuW16kdFB26v0JLpavLBmtk/6pNAYKYzGPh3TEIPxji5qi8rLtHBw=="
-    },
-    {
-      "name": "2026-03-10-blockquote-styling-for-pdf-generation",
-      "version": "1.0",
-      "description": "ADR #6: Two-style blockquote system for PDF generation — distinguishing cross-reference callouts from pull quotes using a Pandoc Lua filter and custom LaTeX environments.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-03-10-blockquote-styling-for-pdf-generation/content.md",
-      "content_hash": "sha256:5b6355a1f6169898ea44bdcea4a20af1f0d3e9a60bf3c0ffaff863005ed6a94e",
-      "category": "architecture",
-      "tags": [
-        "adr",
-        "pdf-generation",
-        "blockquotes",
-        "pull-quotes",
-        "cross-references",
-        "lua-filter",
-        "latex",
-        "pandoc"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-10",
-      "signature": "base64:WA5vC3qm2HwiC6GI4OKWZihLpDdcI2kTvPdcHNE/bBZxIdQOoQFfDaldayTmSLuBg4bGwRrssdnkW7FHrMm1CQ=="
-    },
-    {
-      "name": "vendor-extensions-policy",
-      "version": "1.0",
-      "description": "ADR: CogNovaMX vendor extension namespaces — x-mx- (public) and x-mx-p- (private). Fields extending The Gathering's open standard.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/vendor-extensions-policy/content.md",
-      "content_hash": "sha256:c069833b1d33f276f9147d436c381f6dae65c2d54d32a4ecb07f59523e149616",
-      "category": "mx-core",
-      "tags": [
-        "adr",
-        "namespace",
-        "vendor-extensions",
-        "x-mx",
-        "privacy",
-        "obfuscation",
-        "implementation"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-17",
-      "signature": "base64:hwngaVnUTi3MbWA1e2gk1+SonEtFTr+HNcYyG1pnNpT90ABFE992HcwDpzfrdegy1wl6xnvFdK5CfcpAXufrAg=="
-    },
-    {
-      "name": "2026-02-15-deliverable-rename",
-      "version": "1.0",
-      "description": "Business decision to rename createOutputPrompt to deliverable — business language replaces AI jargon",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-15-deliverable-rename/content.md",
-      "content_hash": "sha256:36872b5f6b778ea42bd60831f1a48ce1ea58a0b87ed46b49166faf02ac1f0a52",
-      "category": "decision-record",
-      "tags": [
-        "metadata",
-        "terminology",
-        "business-language",
-        "deliverable"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:QYCBEWL8T/fXEjRfr4C0EsEmawiq4LmulE6lidPwYmadyewNEQ7eqYjTevyjfVNqGTqTYEZTkK00e9jAu+gRAQ=="
-    },
-    {
-      "name": "2026-02-15-runbook-rename",
-      "version": "1.0",
-      "description": "Business decision to rename promptingInstruction to runbook — operations language replaces AI jargon",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-15-runbook-rename/content.md",
-      "content_hash": "sha256:36153e2a2d4dea9bac675dcfe60e7797cdde76d0132e9eaf305ee3ad97fb4c4e",
-      "category": "decision-record",
-      "tags": [
-        "metadata",
-        "terminology",
-        "business-language",
-        "runbook"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:xGa/2+NL2isFofZG4wLCJukL0TUGPs1fzN6kpsqpRcT97zxk7k6ZpkshG0G/xpnrq99Eji7rD4+vMGly+lGMAg=="
-    },
-    {
-      "name": "2026-03-01-hub-as-mount-table",
-      "version": "1.0",
-      "description": "BDR: MX-hub as a template where submodules are categorised mounts (personal, team, product, standard) any MX business can swap for their workspace.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-03-01-hub-as-mount-table/content.md",
-      "content_hash": "sha256:e2626e62ffecff2802b75020c64e42d21205b775e56f90917daa6696baa78c58",
-      "category": "decision-record",
-      "tags": [
-        "architecture",
-        "submodules",
-        "mount-table",
-        "filesystem",
-        "git",
-        "hub",
-        "template",
-        "mx-os"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:TuPSMysS2mipdrjsJAKlhk8BRu35ti6MfHzqZmRuuNdW4uNEv/hCm7tVOVvB6+S0jUaLh1jd9+MEHvhIbfyyCw=="
-    },
-    {
-      "name": "2026-02-14-attribute-namespace-policy",
-      "version": "1.0",
-      "description": "ARCHIVED 2026-02-17. Three-tier namespace prefix policy — standard (no prefix), MX-public (x-mx-), MX-private (x-mx-p-). Split into separate ADRs.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-14-attribute-namespace-policy/content.md",
-      "content_hash": "sha256:ec4dc2216b3b23acb4914beda299626b0f464e3255ac7acb2444b06efe190835",
-      "category": "mx-core",
-      "tags": [
-        "adr",
-        "namespace",
-        "attributes",
-        "fields",
-        "policy",
-        "cog-id",
-        "x-mx",
-        "privacy",
-        "obfuscation",
-        "governance",
-        "naming-conventions",
-        "archived"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-17",
-      "signature": "base64:IZYVoIQLgUKhH847Dh1VfYf5nfdApXxo0w/FHgXYeDhk//PxnPtMNYxoxxnHoWtpr7iuJq1FKGbLd2/XWte7Dg=="
-    },
-    {
       "name": "business-benefits",
       "version": "1.0",
       "description": "The four strategic MX benefits: computational trust, commerce revenue recovery, asset portability, and operational efficiency via deterministic outputs.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/business-benefits/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/business-benefits/content.md",
       "content_hash": "sha256:877c8873b41033eb12ed230e304a071634f64727b98073ff343c284c209c3c25",
       "category": "Business Strategy",
       "tags": [
@@ -1107,7 +133,7 @@
       "name": "mx-concepts",
       "version": "1.0.0",
       "description": "A conceptual map of MX — every idea, how they connect, and where to go deeper. The newcomer's guide to Machine Experience.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-concepts/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/mx-concepts/content.md",
       "content_hash": "sha256:f0715ff0b3df67bf4ab98d73cbe3246d1a7de474146a9202bec4a5eea514dfce",
       "category": "mx-core",
       "tags": [
@@ -1127,7 +153,7 @@
       "name": "mx-train-analogy",
       "version": "1.0.0",
       "description": "The railway analogy for MX OS. A physical metaphor that maps every MX concept to something everyone already understands.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-train-analogy/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/mx-train-analogy/content.md",
       "content_hash": "sha256:d45e821c350c430ed4a1fa85156431ce6578e22d44f351b7cad09f725afcfe06",
       "category": "mx-core",
       "tags": [
@@ -1149,7 +175,7 @@
       "name": "appendix-k-yaml-metadata",
       "version": "1.1",
       "description": "The canonical YAML frontmatter template for Appendix K page patterns. Copy this template when creating a new MX page pattern document.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/appendix-k-yaml-metadata/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/appendix-k-yaml-metadata/content.md",
       "content_hash": "sha256:32aaf3e2ae318c60d4f8f5fa8a757f17d4d994e5500d4003642065f63b2e83cc",
       "category": "template",
       "tags": [
@@ -1168,7 +194,7 @@
       "name": "adr-01-block-architecture",
       "version": "W3C Draft 2026-02-12",
       "description": "ADR #1: Replace two cog types (info-doc/action-doc) with one document type containing open-ended blocks.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/adr-01-block-architecture/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/adr-01-block-architecture/content.md",
       "content_hash": "sha256:46fa5633188e9879ddbcfeaa1d27b452151508b68a8231520a9c96592aaba3ed",
       "category": "architecture",
       "tags": [
@@ -1188,7 +214,7 @@
       "name": "adr-02-namespace-policy",
       "version": "1.0",
       "description": "ADR: The Gathering's namespace policy — standard fields (no prefix) and mx: namespace governance. Defines what belongs to the standard vs vendor extensions.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/adr-02-namespace-policy/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/adr-02-namespace-policy/content.md",
       "content_hash": "sha256:a1c5d227f5e4bf112f1a18e60a65d82acb9827167d06a9a93235890f4cd8acb7",
       "category": "standard",
       "tags": [
@@ -1208,7 +234,7 @@
       "name": "namespace-extensions",
       "version": "1.0",
       "description": "MX namespace policy: standard fields (no prefix), mx: namespace (The Gathering), vendor extensions (x-mx-, x-mx-p-). The prefix is the policy.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/namespace-extensions/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/namespace-extensions/content.md",
       "content_hash": "sha256:78828e56911ddfd6a9244c2c20e428472d5ef0e21216f5b5115ba58536b5c0ff",
       "category": "standard",
       "tags": [
@@ -1228,7 +254,7 @@
       "name": "ndr-01-block-naming",
       "version": "1.0",
       "description": "NDR #1: The word 'block' risks confusion with blockchain. Propose alternatives for advisory board review.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/ndr-01-block-naming/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/ndr-01-block-naming/content.md",
       "content_hash": "sha256:063dead72eb8640959af9873f2ff0e710ca9920c223bab1149250b9ebf9dea6c",
       "category": "naming",
       "tags": [
@@ -1246,7 +272,7 @@
       "name": "ndr-02-camelcase-naming",
       "version": "1.0",
       "description": "NDR #2: All YAML frontmatter field names must use camelCase. Aligns with Schema.org and Dublin Core vocabulary conventions.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/ndr-02-camelcase-naming/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/ndr-02-camelcase-naming/content.md",
       "content_hash": "sha256:2a13e177e06a02e016ad885ef733501a9a6c880b78449a1526a51e05cabce553",
       "category": "naming",
       "tags": [
@@ -1267,7 +293,7 @@
       "name": "ndr-03-spelling-neutrality",
       "version": "1.0",
       "description": "NDR #3: Prefer spelling-neutral field names. Where US/UK spelling differs, use an abbreviation or neutral synonym.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/ndr-03-spelling-neutrality/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/ndr-03-spelling-neutrality/content.md",
       "content_hash": "sha256:f4afc5c64779721c1710688ee96ea83d87ef94536100ce4846fffc93eca12fc1",
       "category": "naming",
       "tags": [
@@ -1288,7 +314,7 @@
       "name": "effective-doc-example",
       "version": "1.0",
       "description": "Reference implementation showing how an effective doc is resolved from a source cog, uber doc SOPs, and included policies.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/effective-doc-example/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/effective-doc-example/content.md",
       "content_hash": "sha256:b71a15fd8016430f99ef859f743d2f08f9ddf93445e31e8f19c73531f367b2bb",
       "category": "mx-core",
       "tags": [
@@ -1307,7 +333,7 @@
       "name": "example-with-includes",
       "version": "1.0",
       "description": "Reference implementation demonstrating the cog includes mechanism. Includes a shared validation policy and overrides one rule.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/example-with-includes/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/example-with-includes/content.md",
       "content_hash": "sha256:ec0a6b4490cbcf37bd78a3c16f5908c950f9da5b48eeebe968ccb8f5c6450676",
       "category": "mx-core",
       "tags": [
@@ -1324,7 +350,7 @@
       "name": "shared-validation-policy",
       "version": "1.0",
       "description": "Shared validation policy for cog publication. Included by action-docs that validate cogs before registration.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/shared-validation-policy/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/shared-validation-policy/content.md",
       "content_hash": "sha256:df2897b93c46ddd8ffeb4efd237fecf6e657434b916f57df7dbeee66f66011dc",
       "category": "mx-core",
       "tags": [
@@ -1341,7 +367,7 @@
       "name": "block-architecture-evolution",
       "version": "1.0",
       "description": "How the cog format evolved from two document types to one document with blocks — the architectural journey, the design principles, and what it means for implementations.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/block-architecture-evolution/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/block-architecture-evolution/content.md",
       "content_hash": "sha256:4b982bb6abcb12aa797c1c916b7bb687d4c4b8b936b39b4dacfbf54c92804981",
       "category": "mx-core",
       "tags": [
@@ -1360,7 +386,7 @@
       "name": "specifications-cog-unified-spec",
       "version": "2.1-draft",
       "description": "The unified specification for MX cogs — one document type, many block types. Capability, trust, and governance in one format.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/specifications-cog-unified-spec/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/specifications-cog-unified-spec/content.md",
       "content_hash": "sha256:f9cee62629cc2bdf4322bc534cc58844a1087b66b993ce919a17a27b05b754e0",
       "category": "specification",
       "tags": [
@@ -1378,7 +404,7 @@
       "name": "mx-standards-alignment",
       "version": "1.0",
       "description": "How MX metadata aligns with Schema.org, Dublin Core, and Open Graph. Covers governance, naming conventions, and context-specific rules.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-standards-alignment/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/mx-standards-alignment/content.md",
       "content_hash": "sha256:aadfff15a0f05696faf2ecbf0a272319bfa0f154e795ee427884b063aeb9b767",
       "category": "standard",
       "tags": [
@@ -1395,34 +421,10 @@
       "signature": "base64:kGNS0G3WypLqBpeDrj9IYgalmYc13I3TFkNI20qeWiXiJp8bbdD89pS93Lcg60mO/f+tx/k4dqJoXN95nT1kCQ=="
     },
     {
-      "name": "smart-glasses-platform-opportunity",
-      "version": "1.0",
-      "description": "Smart glasses as a mass-market MX platform. Cameras and voice but no content standard. MX fills the gap — Reginald docs on your face. Zero engineering.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/smart-glasses-platform-opportunity/content.md",
-      "content_hash": "sha256:f4bbadea74c8dfcdded304fdce830c175ef9ffb6683e7980eb3f9cd0d9a18c8a",
-      "category": "vision",
-      "tags": [
-        "smart-glasses",
-        "meta",
-        "platform",
-        "wearables",
-        "companion-web",
-        "strategy",
-        "market-opportunity",
-        "competitive-analysis",
-        "google",
-        "apple",
-        "samsung"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-14",
-      "signature": "base64:lYns4h9ybuxshye+iijCB9QcKDrLtDWIyibl74+WaMVZ6YcgZsxDBU1N6cX3R25dWUhqz5ySKzK3lGGKmHjNDg=="
-    },
-    {
       "name": "fields",
       "version": "4.1",
       "description": "Single source of truth for all MX field information — definitions, types, profiles, block types, carrier formats, and overlap resolution.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/fields/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/fields/content.md",
       "content_hash": "sha256:1075e2aeecff2d42a7fcd2a1243d7956368ded8a7c832afe3beacd6f3b912cf4",
       "category": "standard",
       "tags": [
@@ -1446,7 +448,7 @@
       "name": "mx-html-writing-guide",
       "version": "1.1",
       "description": "Single source of truth for writing HTML in the MX ecosystem. Covers the complete meta tag stack, MX carrier tags, and what NOT to include.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-html-writing-guide/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/mx-html-writing-guide/content.md",
       "content_hash": "sha256:812dfbf22dc9ef888d76dcb7ca2d4fdc0d15938bed8f923ec0c8ce8ed8451df3",
       "category": "mx-core",
       "tags": [
@@ -1465,7 +467,7 @@
       "name": "principles",
       "version": "3.0",
       "description": "The principles that govern how MX builds things — for humans and machines alike",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/principles/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/principles/content.md",
       "content_hash": "sha256:5077af657b19d6936d33abd01a314d3c1475f7c1aa1216944e8d5a6f1cb45279",
       "category": "mx-core",
       "tags": [
@@ -1485,7 +487,7 @@
       "name": "cog-cog-unified-spec",
       "version": "1.0-draft",
       "description": "This is a reference copy. The canonical specification is governed by The Gathering and lives in mx-canon.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cog-cog-unified-spec/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/cog-cog-unified-spec/content.md",
       "content_hash": "sha256:9479a4cb9cdb4e9d13ddb08007a53bc653d58701cd2e3a5fe483b77ab0ea8c20",
       "category": "specification",
       "tags": [
@@ -1501,7 +503,7 @@
       "name": "cog-system",
       "version": "1.0",
       "description": "What COGs are, how they work, and the ecosystem behind them",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cog-system/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/cog-system/content.md",
       "content_hash": "sha256:7f7f6af05f89eeb8a121907f4ae92a106f780e00890a34ba61956a0b30634fa5",
       "category": "specification",
       "tags": [
@@ -1518,7 +520,7 @@
       "name": "maxine",
       "version": "1.0",
       "description": "The public identity of Maxine — Tom Cranstoun's AI partner in building Machine Experience",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/maxine/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/maxine/content.md",
       "content_hash": "sha256:84427455528451d3606f920a2be1bbc0f983167f50122d510a56dc0092047f39",
       "category": "identity",
       "tags": [
@@ -1535,7 +537,7 @@
       "name": "cog-snapshot",
       "version": "1.0",
       "description": "Auto-generated registry snapshot — all cogs by type, status, newness, and dependency graph",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cog-snapshot/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/cog-snapshot/content.md",
       "content_hash": "sha256:fe095b1341137e527020b13d47683b8048f76a57bdd5531a192cd8399066a130",
       "category": "mx-core",
       "tags": [
@@ -1552,7 +554,7 @@
       "name": "mx-reginald-manual",
       "version": "1.3",
       "description": "How to use the Machine eXperience Engine including cog listing, execution, categories, and building guidance.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-reginald-manual/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/mx-reginald-manual/content.md",
       "content_hash": "sha256:81502f2d3644a6460be57c7152df3480f338f147c70bba6b8c76f8c0c2d55a1b",
       "category": "manual",
       "tags": [
@@ -1569,7 +571,7 @@
       "name": "header",
       "version": "1.0",
       "description": "Responsive site header with navigation, hamburger menu, and brand identity",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/header/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/header/content.md",
       "content_hash": "sha256:2664ef1dcfd15a4c2288b8f6b39624b333a944e6ac99a7a273fe65256afa5afb",
       "category": "eds-block",
       "tags": [
@@ -1586,7 +588,7 @@
       "name": "mx-principles-menu",
       "version": "1.0",
       "description": "Navigation page linking to core MX principles and concepts",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-principles-menu/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/mx-principles-menu/content.md",
       "content_hash": "sha256:db213a86c6aea6d7f71fa4613a18e027b3cc413a183e3dcff4c54159664e7e1e",
       "category": "landing-page",
       "tags": [
@@ -1603,7 +605,7 @@
       "name": "demo-media219-media219",
       "version": "1.0.0",
       "description": "TV graphics and title sequences studio, 30+ years experience. Sports broadcasting specialists — Premier League, FIFA World Cup, MLS, and major networks.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/demo-media219-media219/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/demo-media219-media219/content.md",
       "content_hash": "sha256:6077b30d254500170211eb751be932c1788e06b7b8be442830acd75b9ea02a27",
       "category": "creative-services",
       "tags": [
@@ -1626,7 +628,7 @@
       "name": "getting-started",
       "version": "1.1",
       "description": "Complete onboarding guide for new CogNovaMX team members — from fresh Mac to full immersion",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/getting-started/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/getting-started/content.md",
       "content_hash": "sha256:8cc50831d41c3dacdd6e2efc7be1176a64aadff707eefb2bbc02622e8b718e79",
       "category": "onboarding",
       "tags": [
@@ -1641,258 +643,10 @@
       "signature": "base64:AGb6y6vyUJWJ1CS0VNaJk2NEs87xL/tiN9xz8LjjfSkUpVK8QulyhkIdRKm3tVMmlnA8yKi+3Y8PGdIAASqdBQ=="
     },
     {
-      "name": "janus-boye",
-      "version": "1.0",
-      "description": "Founder of Boye & Company, CMS Experts Group, CMS Summit organiser",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/janus-boye/content.md",
-      "content_hash": "sha256:f0009e8b6b6e468a7bb16087472b276929ca35a7144d8b48714599792767b269",
-      "category": "contact",
-      "tags": [
-        "contact",
-        "mentor",
-        "cms",
-        "industry"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:JDAO489GFDrPUrko4SKnQrqlK5QaGaxnaPKvDD8BskwuvYPU0etZoy3BfkMtKAZc+EBVlgVCgItXlsJRP58mCQ=="
-    },
-    {
-      "name": "eleanor-cranstoun",
-      "version": "1.0",
-      "description": "Director of CogNovaMX Ltd, Tom's wife",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/eleanor-cranstoun/content.md",
-      "content_hash": "sha256:968a83aa65b9af426787695820a56e2cf53af16ad83aff2f76e95715b072cae8",
-      "category": "contact",
-      "tags": [
-        "contact",
-        "family",
-        "director",
-        "stakeholder"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:huTDE3js6Bx3Y23UowEUHzhJu0nrbt23QE1OPi9tCgywmnUelkIiY+A719GtJR962wEU0VdpsDFdZ6C1zEybDQ=="
-    },
-    {
-      "name": "michael-andrews",
-      "version": "1.0",
-      "description": "Content metadata expert, author of \"No More Silos\"",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/michael-andrews/content.md",
-      "content_hash": "sha256:67d78d36def3734027c442a51a9a339cd2063d9420314efa481b4c63bf2e21f4",
-      "category": "contact",
-      "tags": [
-        "contact",
-        "collaborator",
-        "metadata",
-        "content-strategy",
-        "book-reviewer"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:LArJPKvrkX2CRkNGVL9fMXhsymUbbVNsJrJe/BrS5a5agLJ/x3vnqeD55w2WdxJSbdc8MyPBX7H18Zz6YTpGCQ=="
-    },
-    {
-      "name": "openclaw-developer",
-      "version": "1.0",
-      "description": "OpenClaw framework developer — agent skills and cog integration",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/openclaw-developer/content.md",
-      "content_hash": "sha256:4a05030d6c8dc0b71091475a5ae28f816b34013a6409bc66d14051f0a1babaf5",
-      "category": "contact",
-      "tags": [
-        "contact",
-        "prospect",
-        "developer",
-        "agent-framework"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:ecbVhd8RjLAL9zUCFf+0qxhvg0Qltft+RcDQmJVhIVr1ZGU6+KPHfH9SK82ihgqjENM2bZe2AHrKyORMQUPICg=="
-    },
-    {
-      "name": "scott-mcgregor",
-      "version": "1.0",
-      "description": "Business partner, LPC (printing, web development, web applications)",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/scott-mcgregor/content.md",
-      "content_hash": "sha256:5b4c180091334cd3685cec56bf0242649f6e89eeee1581505f904c3eb80727df",
-      "category": "contact",
-      "tags": [
-        "contact",
-        "partner",
-        "shareholder",
-        "lpc"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:ToZhKJrlBGqoI3lWunOu7LKYJrXNKjF+thpqRVXzvHnzG/dJ/i2f2m6DgFSJ6oB29oBeND/MX4AiOQW8Zs+OAw=="
-    },
-    {
-      "name": "mx-crm-media219-media219",
-      "version": "1.0.0",
-      "description": "TV graphics and title sequences studio, 30+ years experience. Sports broadcasting specialists — Premier League, FIFA World Cup, MLS, and major networks.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-crm-media219-media219/content.md",
-      "content_hash": "sha256:6077b30d254500170211eb751be932c1788e06b7b8be442830acd75b9ea02a27",
-      "category": "creative-services",
-      "tags": [
-        "television",
-        "graphics",
-        "title-sequences",
-        "3d-models",
-        "sports-broadcasting",
-        "motion-graphics",
-        "premier-league",
-        "fifa",
-        "mls",
-        "broadcast"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-25",
-      "signature": "base64:8L6a/2s51+vceGo5tCZyhl57vykP4vY2tD0H/wQ5XhDqzxOfNkV4QvA1AhLT2yXwzdgqkhMwI+gKY1io5HpXAQ=="
-    },
-    {
-      "name": "helen-advisor",
-      "version": "1.0",
-      "description": "Business advisor, 30-year friend",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/helen-advisor/content.md",
-      "content_hash": "sha256:f078d1173a2eb96b6a59ab21be5a3fce3ae92284591dccda6c74b5612c90bdd6",
-      "category": "contact",
-      "tags": [
-        "contact",
-        "advisor",
-        "stakeholder"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:VSiGfBaFDLpvrxnEuLuR+/DtZD0eCeCL12Zw0TN5H9GcSoOWUsuLLzJQVV3Z6BTF3AISnaxj+Na+d4bKiYfRBw=="
-    },
-    {
-      "name": "salva",
-      "version": "1.0",
-      "description": "Adobe AEM Master, advisory board member, long-time friend",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/salva/content.md",
-      "content_hash": "sha256:980fffea17ffa1789f00bed2c8369a1a55811a50cbc03de8f2f98e793eb23c03",
-      "category": "contact",
-      "tags": [
-        "contact",
-        "advisor",
-        "adobe",
-        "aem",
-        "advisory-board"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:rpvGlbWhITMSSh+zRTmzmg1CPBwSmqDiCNjQ1CjkegH8/B76Q1+J5LkZ8vI5OjHp1ycM7vnBtpcW3L7TlaJrBQ=="
-    },
-    {
-      "name": "demo-restaurant",
-      "version": "1.0",
-      "description": "Farm-to-table Scottish cuisine in Edinburgh",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/demo-restaurant/content.md",
-      "content_hash": "sha256:b4afb0c450d2980825b20225834612253710eb2c48cdd5afb2a97fdd4ba360ec",
-      "category": "restaurant",
-      "tags": [
-        "restaurant",
-        "scottish",
-        "edinburgh",
-        "farm-to-table"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:rMN5eUz7ml3xtFhmmJcVi7hfEhonsCzesX/ALPAIfOgoHMazuKfa9ngr/dD2QkRKTUKqes3OmX2QnjZeBo9RBQ=="
-    },
-    {
-      "name": "conference",
-      "version": "1.0",
-      "description": "Boye & Company CMS Summit — the annual gathering of content management professionals. Frankfurt, 12 May 2026.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/conference/content.md",
-      "content_hash": "sha256:5bdd492f1a90d2c9f4683b203f25ad95eb2311f61d9d0ddd53820bd92900f77a",
-      "category": "event",
-      "tags": [
-        "conference",
-        "cms",
-        "content-management",
-        "frankfurt",
-        "may-2026",
-        "speaker",
-        "professional",
-        "digital-transformation",
-        "headless-cms",
-        "ai-strategy",
-        "boye-company"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-12",
-      "signature": "base64:B0SOt9SzDejP+rXIc5WIxxyvkopCo3e82r+bWcNOezd/ieVYOpQd+C1aCPkdh/OvuKubDU+xHt2a6UNSdd2hDQ=="
-    },
-    {
-      "name": "product",
-      "version": "1.0",
-      "description": "Professional single-group espresso machine. Dual boiler, PID temperature control, commercial-grade components in a home-sized package.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/product/content.md",
-      "content_hash": "sha256:5171b2f54b3d04d47fea51cab91a4b64888ca4f46559417459e1023aa0e1f579",
-      "category": "product",
-      "tags": [
-        "product",
-        "coffee",
-        "espresso-machine",
-        "appliance",
-        "warranty",
-        "support",
-        "italian",
-        "professional"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-12",
-      "signature": "base64:jvEhpL7My4W8/kpn28NIh5RQSeQCMT3sXO9XEAUjth27dJhNM1lXWuA/Z4nQvpEJiYnRbCXSoG519HRfvbTfDQ=="
-    },
-    {
-      "name": "demo-cogs-restaurant",
-      "version": "1.0",
-      "description": "Traditional Frankfurt restaurant specialising in Hessian cuisine and handcrafted apple wine. Family-run since 1931.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/demo-cogs-restaurant/content.md",
-      "content_hash": "sha256:d3ccd510781605ed659080f4106024d3d66739a166a3601cf0311bb2dc4f70e0",
-      "category": "venue",
-      "tags": [
-        "restaurant",
-        "dining",
-        "frankfurt",
-        "german-cuisine",
-        "hessian",
-        "apple-wine",
-        "vegetarian",
-        "wheelchair-accessible",
-        "step-free",
-        "accessible-toilet",
-        "outdoor-seating"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-12",
-      "signature": "base64:gSTO+e0bpvCtiw+K58RHiE0NhrhAnVDjAGJBlwvqtg2IiYcSSZn5V+XGO9nqmm6zoiKo6QTE05iSlUb99Yb3BA=="
-    },
-    {
-      "name": "2026-02-15-conventions",
-      "version": "1.0",
-      "description": "Operational conventions for MX-The-Books: naming patterns, file locations, assumed rules, and standards. What you need to know to work here without guessing.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/2026-02-15-conventions/content.md",
-      "content_hash": "sha256:afd82f15c1f279bf619a455828fbe14eb46b6ccb439b3ef51486786f23775827",
-      "category": "convention",
-      "tags": [
-        "conventions",
-        "naming",
-        "locations",
-        "patterns",
-        "operations",
-        "registry"
-      ],
-      "type": "action-doc",
-      "modified": "2026-02-15",
-      "signature": "base64:TA0oW5FTe8aZPQ3UxAwuFD3G5ljs6C89LiRd21IblEv2IXI39IWoFD1x2LdU8MIxUAkuui5+jxf1PtWpmjcaAg=="
-    },
-    {
       "name": "INSTALLME",
       "version": "2.1-draft",
       "description": "Self-contained action cog for installing MX OS. Contains both instructions and executable script.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/INSTALLME/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/INSTALLME/content.md",
       "content_hash": "sha256:813d861b6756d83ce77ffaa3882dc98f113ccf70edbd64af862b4cf8bc45c134",
       "category": "mx-core",
       "tags": [
@@ -1913,7 +667,7 @@
       "name": "a11y",
       "version": "0.1.0",
       "description": "Accessibility audit — what breaks for AI breaks for humans",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/a11y/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/a11y/content.md",
       "content_hash": "sha256:f610d7a721da2a3e73ca6ca5b135f3dea1cca30fd94362a1b3be2751f583b44f",
       "category": "mx-core",
       "tags": [
@@ -1928,52 +682,10 @@
       "signature": "base64:LQlT1bCR+qIy1xba7P2cOLBa//TGfAPYGy8ntNoDoH5l+K0LjX+ix3OeG9IwDea30aTWy2cq5Xc37VG46hzsDA=="
     },
     {
-      "name": "access-and-guardrails",
-      "version": "1.0",
-      "description": "How cogs are protected. Access control for content and execution — encryption, authentication, and the guardrail pattern where one cog unlocks another.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/access-and-guardrails/content.md",
-      "content_hash": "sha256:a31ad6f0fff8c3ba9cdf7d854501edf0f8214592f26adb11e8420c66938db811",
-      "category": "mx-core",
-      "tags": [
-        "access-control",
-        "security",
-        "encryption",
-        "oauth",
-        "guardrail",
-        "permissions",
-        "trust",
-        "authentication"
-      ],
-      "type": "action-doc",
-      "modified": "2026-02-09",
-      "signature": "base64:FZlQj2gXnGIavf0Mm9UmRGXDZ1iqHbgC/W9reIbvdfM5kxqJAd+8FWTT30oS9USt3f89Jae8BGHIgfouVZb8AA=="
-    },
-    {
-      "name": "asking-for-help",
-      "version": "1.0",
-      "description": "When you need something you don't have — diary, email, location, bookings — ask the agent that does. How agents request capabilities from other agents.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/asking-for-help/content.md",
-      "content_hash": "sha256:fc28d18c17d983649a4f94f0b77743d4f77c1d7ca2b757b0f015f0e00900a7ae",
-      "category": "mx-core",
-      "tags": [
-        "delegation",
-        "agents",
-        "inter-agent",
-        "handoff",
-        "diary",
-        "email",
-        "capabilities",
-        "reach-out"
-      ],
-      "type": "action-doc",
-      "modified": "2026-02-09",
-      "signature": "base64:rmhDtvNsZ5cbPbkWnz4lwtgeq4mgWs1KwawDbjgdE4FGdbRSAIp3ZJj8rr48JfTEwSv+qlOR5mpIuYRdbbRzCQ=="
-    },
-    {
       "name": "blog-generator",
       "version": "1.0.0",
       "description": "Generates, converts, and updates blog posts for allabout.network in both EDS markdown and MX HTML formats.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/blog-generator/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/blog-generator/content.md",
       "content_hash": "sha256:f774776d18b233e3b9eda6bdf470f017dcd2c7e282ceea2ce146a397984db8d2",
       "category": "mx-core",
       "tags": [
@@ -1994,7 +706,7 @@
       "name": "blog-reviewer",
       "version": "1.0.0",
       "description": "Review blog posts — scan for AI writing patterns, check dual-audience balance, interview the author, rewrite. Accepts markdown, HTML, or plain text.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/blog-reviewer/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/blog-reviewer/content.md",
       "content_hash": "sha256:40e10e51496ace33b80f52ac6537af4ececd99b042a1b71df01dd952d2df1f4c",
       "category": "mx-content",
       "tags": [
@@ -2015,7 +727,7 @@
       "name": "building-action-docs",
       "version": "1.0",
       "description": "How to build action-docs — from description to working tool. Describe, create, test, wire. The pattern that turns natural language into MX OS applications.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/building-action-docs/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/building-action-docs/content.md",
       "content_hash": "sha256:b5934137ec7bdb290ea9bf3f1c3d55195cc8e4c50739f58e7a6ae5c671ab01f9",
       "category": "mx-core",
       "tags": [
@@ -2033,46 +745,10 @@
       "signature": "base64:MQFfA4DfIUtE99FSvCQf4MecNmWRuUrz38gAH7/hTyl9Dky6kIqP9ByMR/qxW2DfCh/bEVNdA+Rc933s2/HnAw=="
     },
     {
-      "name": "canon-init",
-      "version": "1.0.0",
-      "description": "Generate a new Canon initiative folder with full lifecycle support",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/canon-init/content.md",
-      "content_hash": "sha256:14872a2509f3cecce2be391059554880b634502d26e53036e09bd95149bf6e39",
-      "category": "mx-canon",
-      "tags": [
-        "canon",
-        "template",
-        "meta",
-        "initiative",
-        "governance"
-      ],
-      "type": "action-doc",
-      "modified": "2026-02-09",
-      "signature": "base64:7WS1jyaixi+G2VhDenxisfnMnLLf+ly6XzHOOEcykVxLKw2mktAL14GBMo8O5HA31AbCh7MT7BDI5YQ7yh9NAg=="
-    },
-    {
-      "name": "changelog-trimmer",
-      "version": "1.0",
-      "description": "Trim CHANGELOG.md to current week only, archiving older entries to dated files in the brain.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/changelog-trimmer/content.md",
-      "content_hash": "sha256:7616e3a70731dace0e05e01245dac98c82f104fb3da18168aa77a55a767aea6b",
-      "category": "mx-tools",
-      "tags": [
-        "changelog",
-        "trim",
-        "archive",
-        "maintenance",
-        "automation"
-      ],
-      "type": "action-doc",
-      "modified": "2026-02-15",
-      "signature": "base64:6AbzNqD7ENafWoNYh+1kGKIUQF4859jd+7DZO6FjvTzhixpmjDW+QlxPwMEScVrUdbAuhnFdChjjHp1d2ZtYDA=="
-    },
-    {
       "name": "clarity",
       "version": "0.1.0",
       "description": "Test documentation clarity - if AI struggles, humans probably do too",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/clarity/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/clarity/content.md",
       "content_hash": "sha256:aa7f43111210122d583c984e1080d8391a4f5227f143a2c75319201d787e45bc",
       "category": "mx-core",
       "tags": [
@@ -2087,31 +763,10 @@
       "signature": "base64:o30SM1e30rd/ViW3wJFY1W62rcyrobPG0/KiDG76f4fj2eO0JjdmLOebW8awEDBYJyKQGJ7T/WB1UgaggDssBA=="
     },
     {
-      "name": "co-directors-report",
-      "version": "1.0",
-      "description": "Time-segmented session reports for co-directors. Three daily segments (morning, afternoon, evening). Interviews Tom, reads data, and updates REMINDERS.md.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/co-directors-report/content.md",
-      "content_hash": "sha256:112df44f15d0c431f329ccb8287790c7e96b8bb292c0d836f20e771c0ec3041d",
-      "category": "mx-core",
-      "tags": [
-        "reporting",
-        "governance",
-        "co-directors",
-        "session",
-        "board",
-        "stakeholders",
-        "archive",
-        "sop"
-      ],
-      "type": "action-doc",
-      "modified": "2026-02-14",
-      "signature": "base64:Jw+z2dCzJJ2uOnVPgPNHMJpzIotVMtd5BBD2UQkSSH41IzHyqCEqleXW+ZH01VPF5FbORjqCARAXWSPci/laDQ=="
-    },
-    {
       "name": "cog-id",
       "version": "1.1.0",
       "description": "Generate, register, and decode cog IDs — MD5 hashes tracing documents to their originating cog. The namespace-aware identity layer for MX OS.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cog-id/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/cog-id/content.md",
       "content_hash": "sha256:72b19407018fab753479473187319db5db91ef00bfd1b185c91df91952cd652b",
       "category": "mx-core",
       "tags": [
@@ -2133,7 +788,7 @@
       "name": "cog-publication-workflow",
       "version": "1.0",
       "description": "Cog publication workflow — author, validate, register, and publish a cog to the Reginald registry.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cog-publication-workflow/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/cog-publication-workflow/content.md",
       "content_hash": "sha256:901386c77e23eeb0cafd85704f3acce8ae7bf5914f77f486262403dfd9907a4e",
       "category": "mx-tools",
       "tags": [
@@ -2152,7 +807,7 @@
       "name": "cog-query",
       "version": "2.1",
       "description": "Unified COG registry management — scan, list, show, find, filter, count, validate, graph, sync, and snapshot the cog registry",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cog-query/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/cog-query/content.md",
       "content_hash": "sha256:2ba10c74829b947f5e0f9b04f7b0e1a801f76488563960c5910990fe61109ed2",
       "category": "mx-core",
       "tags": [
@@ -2172,7 +827,7 @@
       "name": "cog-registry",
       "version": "1.0",
       "description": "The centralised index of all known cogs in the MX ecosystem. An action-doc that catalogues cogs — the index describing itself.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cog-registry/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/cog-registry/content.md",
       "content_hash": "sha256:23bf92f88f746e35aff83e756ecf767f7f573ae06de5ad36d27af48f03fc683e",
       "category": "mx-core",
       "tags": [
@@ -2191,7 +846,7 @@
       "name": "cogify-this",
       "version": "1.0",
       "description": "Convert existing content into MX-enhanced format with comprehensive metadata, accessibility, and WebMCP integration",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cogify-this/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/cogify-this/content.md",
       "content_hash": "sha256:a705f11f3191c77d37df70724582b5640575d945865dedb89ac75ff5bccf67c2",
       "category": "mx-tools",
       "tags": [
@@ -2211,7 +866,7 @@
       "name": "cogs-for-agent-developers",
       "version": "1.0",
       "description": "How cogs complement AI agent frameworks. Agent skills extend one agent. Cogs make content readable by any agent. Different layers that work together.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cogs-for-agent-developers/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/cogs-for-agent-developers/content.md",
       "content_hash": "sha256:44c36ce6cd3ea2236140d70d44dc9c10ff496488610f86d4451865561d023534",
       "category": "learning",
       "tags": [
@@ -2232,7 +887,7 @@
       "name": "env",
       "version": "1.0.0",
       "description": "Project-level environment configuration. The MX equivalent of .env — one place for values that other cogs reference, never hardcode.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/env/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/env/content.md",
       "content_hash": "sha256:96d2d50fe90ba6f4e2855ccdfcebc991aee12a440c1c6d601f03b75309311000",
       "category": "mx-core",
       "tags": [
@@ -2248,46 +903,10 @@
       "signature": "base64:RyMUCCGE9j1FNUAbAPNQP6lBdyHDPl6mUqM8j50tQbkeFGJxT0oKUuXGDeuEUBlQgJH+nFksLPaMoXcbMcuuDQ=="
     },
     {
-      "name": "gen-free-book",
-      "version": "2.0.0",
-      "description": "Generate the MX introduction chapter PDF by merging chapter-00, kickoff presentation, footnotes QR page, and services advert.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/gen-free-book/content.md",
-      "content_hash": "sha256:4b1c8f14f706788df020b680fe9a1d47f863601e6f5e67c49cacfac2e66b2887",
-      "category": "mx-core",
-      "tags": [
-        "pdf",
-        "introduction-chapter",
-        "sampler",
-        "merge",
-        "pandoc"
-      ],
-      "type": "action-doc",
-      "modified": "2026-03-09",
-      "signature": "base64:szBbfoS71tLTJf0nnffu7+QypVyMKVH7KPv3MbJ/KgmBSnE5ANAx4lspmr0O8i0bjHMwUCPbxpbazD0lIOYHCw=="
-    },
-    {
-      "name": "generate-footnotes",
-      "version": "0.1.0",
-      "description": "Generate HTML footnote pages and QR codes from markdown chapter footnotes",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/generate-footnotes/content.md",
-      "content_hash": "sha256:985e03a7e39f87b37e5756cb4321769bdf6de12a2bd4eea24f5f5802d925a4ee",
-      "category": "mx-tools",
-      "tags": [
-        "footnotes",
-        "html",
-        "qr-code",
-        "generation",
-        "books"
-      ],
-      "type": "action-doc",
-      "modified": "2026-03-09",
-      "signature": "base64:rQxuZgnsKighdB6iALHDE9+1AWY8UJU4ONZ3IN3W8aBB3KID2h3FxreCzLCBlJCB1sex0/ou1SGsWF3cRHk0DQ=="
-    },
-    {
       "name": "how-mx-os-runs",
       "version": "1.0",
       "description": "The MX OS runtime model. How an agent boots, discovers cogs, routes tasks, executes action-docs, and chains actions. The OS explained from the inside.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/how-mx-os-runs/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/how-mx-os-runs/content.md",
       "content_hash": "sha256:90a2076acf24f24aa985421593fdd7bc5eea309a3f7d4c2a07d510dcd546acde",
       "category": "mx-core",
       "tags": [
@@ -2311,7 +930,7 @@
       "name": "html-baseline-audit",
       "version": "Any version change",
       "description": "Action-doc for establishing HTML baselines and detecting regressions across all .cog.html files. Automates visual, structural, style, and metadata comparison.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/html-baseline-audit/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/html-baseline-audit/content.md",
       "content_hash": "sha256:d819915a0fea12fb0c3c8e0cf170d1b0a31cfd9c706dcf563d587d2b0d4d3d2f",
       "category": "validation",
       "tags": [
@@ -2329,52 +948,10 @@
       "signature": "base64:4V2D1Vzh12PYVku66pTT4UOMRfD9KbnppT9JKhvqGauT4AD/OKjsgHk4RNHC/0hKdiNPTWavQWmHi+AmV0++Dg=="
     },
     {
-      "name": "illustration-generator",
-      "version": "1.0.0",
-      "description": "Create SVG illustrations and syntax-highlighted code blocks with metadata for MX publications, following established visual style and quality standards.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/illustration-generator/content.md",
-      "content_hash": "sha256:ac6f57a6a77832535207d6ddaa3699caf660bd8a2e2e80707b33a33cc5bd90c6",
-      "category": "content-creation",
-      "tags": [
-        "illustration",
-        "svg",
-        "visual-design",
-        "style-guide",
-        "metadata",
-        "code-blocks",
-        "syntax-highlighting"
-      ],
-      "type": "action-doc",
-      "modified": "YYYY-MM-DD",
-      "signature": "base64:msYlpR3bWbhtzIKkLqPun2Zh3hdmhO/FuN7vVoboLiONgEFf/FA1cldgqniELOuHQOTMVHQOnEbNu9xGo6uQDA=="
-    },
-    {
-      "name": "installme-runner",
-      "version": "1.0.0",
-      "description": "The action action-doc that reads and executes INSTALLME.md files — diagnose, install, verify, register. The tool that stops hallucination.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/installme-runner/content.md",
-      "content_hash": "sha256:bb98cb8aa894ca25bdc69e9dab1d2240f953eb44b9d85caa6d105e7f64220d1c",
-      "category": "mx-core",
-      "tags": [
-        "installme",
-        "runner",
-        "action",
-        "install",
-        "diagnostics",
-        "prerequisites",
-        "ai-agent",
-        "executor",
-        "mx-os"
-      ],
-      "type": "action-doc",
-      "modified": "2026-02-10",
-      "signature": "base64:wfjDXjO/C2JqX5+es+GsJv71rFA6LhNEFjNZTQ6LmdWHgPaR/2en1gh7n3J9Ouj9fmaxWNFiJO0KlLmdnmxDDQ=="
-    },
-    {
       "name": "link-checker",
       "version": "0.1.0",
       "description": "Validate links — critical for llms.txt and documentation",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/link-checker/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/link-checker/content.md",
       "content_hash": "sha256:c69e23498a6474a475602314f456acf68e5e54f5a8d57689cc66e336197c09a2",
       "category": "mx-core",
       "tags": [
@@ -2392,7 +969,7 @@
       "name": "llms-txt",
       "version": "0.1.0",
       "description": "Generate and validate llms.txt files for Robot-First Web compliance",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/llms-txt/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/llms-txt/content.md",
       "content_hash": "sha256:915977194f6b5d5c353db76e11c348f5fb227d469ee1fa2b625c1f01448673c8",
       "category": "mx-core",
       "tags": [
@@ -2406,89 +983,10 @@
       "signature": "base64:9JmtLHYwtDX+Zngkz4K3lGSPf3Id6RS6id7KNlDEAaIZ1d5RZd01Mo3LiUgEFfREup/niW5HuyNnIJpbCSBPBg=="
     },
     {
-      "name": "manual-metadata",
-      "version": "1.0",
-      "description": "Step-by-step guide for adding MX metadata to markdown, JavaScript, CSS, and HTML files. The human playbook for the embrace-and-extend model.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-metadata/content.md",
-      "content_hash": "sha256:a96f8da449d1e8303807c65f11125e05fe1066afcfbea22ce0e1641f8e2a9280",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "metadata",
-        "conventions",
-        "html",
-        "javascript",
-        "css",
-        "yaml",
-        "frontmatter",
-        "embrace-extend"
-      ],
-      "type": "action-doc",
-      "modified": "2026-02-15",
-      "signature": "base64:IwTbMm7jp8Wx0oo475oDBh4KtQYaY10dRavQDI0Nk66Owf6k0Nr9fk9X1/v6vjcm3gxCfwCz7rdzic02RTuwAw=="
-    },
-    {
-      "name": "manual-repository-architecture",
-      "version": "1.0",
-      "description": "Comprehensive guide to MX repository structure, Canon organization, product architecture, and operational concepts.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manual-repository-architecture/content.md",
-      "content_hash": "sha256:9a0509113cbc24e4cd4204f1d81def94d3926caf03b95ce2e2d042bfd9bd946d",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "architecture",
-        "repository-structure",
-        "canon",
-        "mx-os",
-        "brain",
-        "reginald",
-        "maxine",
-        "system-reference"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-08",
-      "signature": "base64:Zh+I1ILp9arqQa90WVgB4+Fn9l2VQXT+VPIkwFhhlFMNooCP6hy3Nk2kZmfC8djZNA2JU/Mapw2LzDtpV2BHBg=="
-    },
-    {
-      "name": "manuals-registry",
-      "version": "1.0",
-      "description": "Index of all MX system manuals. One brain, one registry. Every manual is a cog.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/manuals-registry/content.md",
-      "content_hash": "sha256:59f2f85cf3c7b8b5765751d3538aae93e96c955a733a5ff59005f56f37037c72",
-      "category": "registry",
-      "tags": [
-        "registry",
-        "manuals",
-        "index",
-        "brain"
-      ],
-      "type": "action-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:+xzVFBecBBJ/luAxCdn9O8Q55ud6ICuJzLrQIikuZKDYbjFJJAji0ZcP9mf6egFx2/WY4UeeKN4VLrVoyhsMAg=="
-    },
-    {
-      "name": "marp-regen",
-      "version": "1.0.0",
-      "description": "Regenerate PPTX presentations from Marp markdown files",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/marp-regen/content.md",
-      "content_hash": "sha256:edcdb9406617e5c8220fc5bdda50f18146333f779e26a1c98d9f1ae4555eb0e1",
-      "category": "mx-tools",
-      "tags": [
-        "marp",
-        "presentation",
-        "pptx",
-        "slides",
-        "regenerate"
-      ],
-      "type": "action-doc",
-      "modified": "2026-02-26",
-      "signature": "base64:AgdOrbMvtstx9FLarpxk6wrKzU6kIJmbWCDDazes4nRbTcE+WscH6W1cPqAmTe3Up3LP5vWmNIQR51ubltg2DQ=="
-    },
-    {
       "name": "metadata-audit",
       "version": "1.0",
       "description": "Audit all YAML frontmatter — compare against the field dictionary, detect deprecated fields, namespace errors, missing required fields, and mx: object sprawl.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/metadata-audit/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/metadata-audit/content.md",
       "content_hash": "sha256:a84e0fa6a68a23486e34838a6b23d638091b0181fe296979d36d12be155a44cd",
       "category": "mx-tools",
       "tags": [
@@ -2510,7 +1008,7 @@
       "name": "metadata",
       "version": "0.1.0",
       "description": "Extract and validate page metadata (Open Graph, Twitter Cards, meta tags)",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/metadata/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/metadata/content.md",
       "content_hash": "sha256:e9351d83611eed1d335e10c0b2c73f9b03059705dfb210dbd88263d5fbcb8b9a",
       "category": "mx-core",
       "tags": [
@@ -2525,28 +1023,10 @@
       "signature": "base64:cyeW6leBHv2NmY7kSBSGoAMN48eSr8h7yQPV6mWaUFivpfxwCHeaPxBOMRMqeuv4yZEbEwu8HRmuRw2s9TA1DQ=="
     },
     {
-      "name": "mx-allmygithubs",
-      "version": "2.1-draft",
-      "description": "Self-updating action cog that scans GitHub repos and generates a classified, sorted table.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-allmygithubs/content.md",
-      "content_hash": "sha256:49c89f09c7dbec3ad94ebb90d9197f313e8369f621bae6b84080762a7c14b86d",
-      "category": "mx-core",
-      "tags": [
-        "github",
-        "inventory",
-        "catalog",
-        "action-cog",
-        "self-updating"
-      ],
-      "type": "action-doc",
-      "modified": "2026-02-24",
-      "signature": "base64:JB+RXaCxHtMRvZ0vAG09FUqdgBloWyaY1XOGq60Mm2eWVDbkNYnePjTS6PZVd8lZIpZB/HUniu86rEpgpqo7DA=="
-    },
-    {
       "name": "mx-audit",
       "version": "1.2.0",
       "description": "Comprehensive web audit — crawl pages, analyse accessibility, performance, SEO, and AI agent suitability, then generate a partnership-ready executive report.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-audit/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/mx-audit/content.md",
       "content_hash": "sha256:3f5683c30d43592051029f9f7634c6474bfc1c27e5259d4c0de799cda3c7d971",
       "category": "mx-sales",
       "tags": [
@@ -2571,7 +1051,7 @@
       "name": "mx-boot",
       "version": "1.0",
       "description": "MX OS bootstrapper — zero to operational. Checks prerequisites, installs dependencies. Entry points: INSTALLME (bare metal), npm run boot, /mx-boot.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-boot/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/mx-boot/content.md",
       "content_hash": "sha256:8efabfa96d31acff8aae42bb846ca53ea48c630dfd6fd5b303de4726017584db",
       "category": "mx-core",
       "tags": [
@@ -2590,27 +1070,10 @@
       "signature": "base64:EXxHtfRyit16B5OLjkKLFPfxnnSuUUylMSM8b9kd2H7a1IaUzIOxCVMsbndK8ynDmBv63q1h2GPG+YyRq9C+AQ=="
     },
     {
-      "name": "mx-contacts",
-      "version": "2.0",
-      "description": "Top-level management action-doc for MX Contacts — organises contacts, tracks status, reports priorities, and surfaces next actions",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-contacts/content.md",
-      "content_hash": "sha256:1aaf3adc0120be5a899b2c1a2812a7038f92854db8e22feee27f09d2f4c0fb91",
-      "category": "mx-operations",
-      "tags": [
-        "contacts",
-        "relationship-management",
-        "folder-structure",
-        "operations"
-      ],
-      "type": "action-doc",
-      "modified": "2026-02-09",
-      "signature": "base64:Axy+hivydKUYLGgxjP15Qo/fSELuYN1kbwXq9oPPcplKfDhzVbtPclYyp92M+XpR/gyALUdyDXwvm4pYcSP/Bw=="
-    },
-    {
       "name": "mx-init",
       "version": "1.0.0",
       "description": "The action action-doc that initializes any repository with MX OS conventions — SOUL.md, CLAUDE.md, INSTALLME.md, frontmatter, directory structure.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-init/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/mx-init/content.md",
       "content_hash": "sha256:f6b6f0b6ed9900aef425cbec287e94952abe87d956af95633dde55123624f5c9",
       "category": "mx-core",
       "tags": [
@@ -2630,28 +1093,10 @@
       "signature": "base64:RR5ZnuWEgdD1Vj/HueaPVvzfcxytaL+FH/IJx1xs7FZhQXjHN7xbp9xrfvRfwQ9SbQWQUN1Ro3dp+NnQRFJBCw=="
     },
     {
-      "name": "mx-os-manual",
-      "version": "1.0",
-      "description": "The Machine Experience Operating System. A practical guide to cogs, SOULs, the registry, runtime, and the companion web.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-os-manual/content.md",
-      "content_hash": "sha256:d858fe80b7734bca9855f63f6c1a53b3836f12d239ae6f980115f82698695463",
-      "category": "manual",
-      "tags": [
-        "manual",
-        "mx-os",
-        "operating-system",
-        "cogs",
-        "runtime"
-      ],
-      "type": "info-doc",
-      "modified": "2026-02-13",
-      "signature": "base64:WFMq3nyzcaSAyZFvmUy1da83hojlWtd0C3lDorPBHUH/OvDc+nAZwME6Jv4pUZJGR0ay/d7hb/u7YVtq3yxoAw=="
-    },
-    {
       "name": "mx-phrasebook",
       "version": "1.0.0",
       "description": "The sayings that define MX OS culture. Every phrase earned its place by being built, not brainstormed.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-phrasebook/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/mx-phrasebook/content.md",
       "content_hash": "sha256:c27ba2816b2f677f6ab17b3a820f09afeb0ba7cb810e772483201100ba166c29",
       "category": "mx-core",
       "tags": [
@@ -2669,29 +1114,10 @@
       "signature": "base64:ITkn1AbvO2XziFtkBxoiTqPUXprFei7kA/mMZDQWb8tVSaApow1Is4ltyZwifRIqcv4k6Nw+oeGhFYDcp8faCA=="
     },
     {
-      "name": "mx-reminders",
-      "version": "1.0.0",
-      "description": "Manages persistent reminders across sessions. Reads, writes, and prioritises action items in REMINDERS.md.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-reminders/content.md",
-      "content_hash": "sha256:2721885182bae0077a9aab6829bfe9eff6382b89c0aa59fdfe24f28470f762b6",
-      "category": "mx-core",
-      "tags": [
-        "reminders",
-        "tasks",
-        "persistence",
-        "session",
-        "productivity",
-        "mx-os"
-      ],
-      "type": "action-doc",
-      "modified": "2026-02-10",
-      "signature": "base64:21IqPoQ9LHnXBhTcJnCmJpZTb9KzQsPmw2bIOiknw8FcnXApoD33JBumbauW7cYppF6fyYUgtXcxTYEtOyt8Bw=="
-    },
-    {
       "name": "mx-run",
       "version": "1.0",
       "description": "Universal cog executor — looks up any cog by name, lists its actions, and dispatches execution by runtime",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-run/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/mx-run/content.md",
       "content_hash": "sha256:c8cfa0a75c086e041864dd00e99d0498466eaa5ad25e7ba5ad0430fdb704b2a1",
       "category": "mx-core",
       "tags": [
@@ -2710,7 +1136,7 @@
       "name": "mx-scaffold",
       "version": "1.0",
       "description": "Create new MX-OS shell scripts with correct structure, metadata, and alias registration. The canonical pattern for extending mx-os.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/mx-scaffold/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/mx-scaffold/content.md",
       "content_hash": "sha256:5344a40a8899c7e262c3010bfdbabf5fa4ac737c5a9227fb01d4a53299c6cec9",
       "category": "mx-core",
       "tags": [
@@ -2727,48 +1153,10 @@
       "signature": "base64:3/Pd0xD/i9QQLW0CWSpehCxVvCcJuSi4OyILeyuATQtfiC+jvPwHAR/Duk9m4AQ8u8B2KTUIKCweHNimq98wBg=="
     },
     {
-      "name": "pdf-generator",
-      "version": "1.0.0",
-      "description": "Generate professional PDFs from markdown — table formatting, diagram rendering, illustrations, auto-scaled images. A4 and Kindle formats via pandoc.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/pdf-generator/content.md",
-      "content_hash": "sha256:f252a2a5624428c3882fc5396c58238bb60c24773ddf266f0459f4cb14542891",
-      "category": "mx-core",
-      "tags": [
-        "pdf",
-        "generation",
-        "pandoc",
-        "xelatex",
-        "emoji-cleanup",
-        "unicode-cleanup",
-        "zero-width-space",
-        "task-lists",
-        "document-production",
-        "kindle",
-        "a4",
-        "diagrams",
-        "svg",
-        "png-conversion",
-        "illustrations",
-        "ascii-art",
-        "code-blocks",
-        "syntax-highlighting",
-        "page-breaks",
-        "typography",
-        "widow-orphan-prevention",
-        "aspect-ratio",
-        "rsvg-convert",
-        "imagemagick",
-        "tool-cascade"
-      ],
-      "type": "action-doc",
-      "modified": "2026-02-17",
-      "signature": "base64:eWpfd88+CwIIEWos5dMppuIPXsLCN17Vp25nZVgdeHGiDQN1Hn+JvCKKssjsYDCFRZWXOsv8uXBrAVc8p3HaAw=="
-    },
-    {
       "name": "pixel-perfect-web-replication",
       "version": "26.0",
       "description": "Create pixel-perfect MX-enhanced reference implementations from existing websites using HTML/CSS audit, Playwright capture, and automated validation.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/pixel-perfect-web-replication/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/pixel-perfect-web-replication/content.md",
       "content_hash": "sha256:17e60259191f0f04f7a9b58b653b9f00a191b7230e6f2598651906c1dcbb3b9f",
       "category": "mx-tools",
       "tags": [
@@ -2795,7 +1183,7 @@
       "name": "pricing",
       "version": "0.1.0",
       "description": "Validate pricing data to catch range errors and formatting issues",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/pricing/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/pricing/content.md",
       "content_hash": "sha256:98438023397382267de704732eb92786989938dc4d33cb5df8e68a44a63cfe8f",
       "category": "mx-core",
       "tags": [
@@ -2813,7 +1201,7 @@
       "name": "readability",
       "version": "0.1.0",
       "description": "Plain language and reading level analysis",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/readability/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/readability/content.md",
       "content_hash": "sha256:d0e045d7e0b4d666b2825850fbb00a657205fffe3abaacffcf1d33c6637c5e5d",
       "category": "mx-core",
       "tags": [
@@ -2831,7 +1219,7 @@
       "name": "reginald-mirror",
       "version": "1.0.0",
       "description": "Sync source cogs to the Reginald web mirror, keeping allaboutv2/reginald/ up to date with scripts/cogs/ and mx-canon/.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/reginald-mirror/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/reginald-mirror/content.md",
       "content_hash": "sha256:8e7cecc5da290255248822b52b3b57c53c7311bc4b1caba81330a32521c65ced",
       "category": "mx-core",
       "tags": [
@@ -2850,7 +1238,7 @@
       "name": "registry-of-registries",
       "version": "1.0.0",
       "description": "The meta-registry — knows where every registry is, what it indexes, and how to query it.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/registry-of-registries/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/registry-of-registries/content.md",
       "content_hash": "sha256:6921bc7b8a142bca9764cd3a92c4c9a9360e1e2b4044816ee5f0421f9a85c16a",
       "category": "mx-core",
       "tags": [
@@ -2871,7 +1259,7 @@
       "name": "registry-sync",
       "version": "1.0.0",
       "description": "Automatically sync mx-reginald registry when cogs are added, modified, or deleted — multiple trigger mechanisms with smart mode detection.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/registry-sync/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/registry-sync/content.md",
       "content_hash": "sha256:cd5ffa87f5602c29ab0472e6336084ab1bd2169b04cc54205fe7e93707ab15fa",
       "category": "mx-core",
       "tags": [
@@ -2891,7 +1279,7 @@
       "name": "robots-txt",
       "version": "0.1.0",
       "description": "Analyze robots.txt — understand the old exclusion model",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/robots-txt/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/robots-txt/content.md",
       "content_hash": "sha256:704be8c238965693cd8288bcaeac2eaaa1102376fb31334cba995af51f951ab0",
       "category": "mx-core",
       "tags": [
@@ -2909,7 +1297,7 @@
       "name": "routing-pipeline",
       "version": "1.0.0",
       "description": "Preprocess prompts with spell correction, route matching, and context injection. Reduce inference cost by directing Claude before it starts searching.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/routing-pipeline/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/routing-pipeline/content.md",
       "content_hash": "sha256:00ec1f2a95df1142f1db891e2b0892f0cf337ce0195eac0f8b22f733641bd586",
       "category": "mx-core",
       "tags": [
@@ -2929,7 +1317,7 @@
       "name": "schema",
       "version": "0.1.0",
       "description": "Validate and generate Schema.org structured data markup",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/schema/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/schema/content.md",
       "content_hash": "sha256:a937fd7e3d7f67e6cab8b63b49e971be5e6a6503fcccf02c23dde3ad02cbbe89",
       "category": "mx-core",
       "tags": [
@@ -2947,7 +1335,7 @@
       "name": "script-helper",
       "version": "1.0.0",
       "description": "Help AI agents create, amend, and inspect shell scripts with MX metadata — cut compute, not context.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/script-helper/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/script-helper/content.md",
       "content_hash": "sha256:c3066ad048c76acca8005c041d140e4f637784d291bbffa33ad7360d82d4f7f1",
       "category": "mx-core",
       "tags": [
@@ -2967,7 +1355,7 @@
       "name": "semantic-html",
       "version": "0.1.0",
       "description": "Validate HTML semantics — structure precedes presentation",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/semantic-html/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/semantic-html/content.md",
       "content_hash": "sha256:b444e00828931c09843ce537c5064d5d07a4e65c5c6e41c2a0a1755fb29529bb",
       "category": "mx-core",
       "tags": [
@@ -2985,7 +1373,7 @@
       "name": "sitemap",
       "version": "0.1.0",
       "description": "Analyze sitemaps and compare with llms.txt coverage",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/sitemap/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/sitemap/content.md",
       "content_hash": "sha256:6c23b950c575e066fbfc0fa9e184e0468b8d5417f97d39425c88295e1122b231",
       "category": "mx-core",
       "tags": [
@@ -3003,7 +1391,7 @@
       "name": "the-companion-web",
       "version": "1.0",
       "description": "QR codes and metadata turn physical objects into entry points for humans and AI agents. Every object becomes self-describing. Extends to robotics.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/the-companion-web/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/the-companion-web/content.md",
       "content_hash": "sha256:3f54ded9e3423b8a6ffccd914e30a72f2233b4ba7d96937ee340922b17086952",
       "category": "mx-core",
       "tags": [
@@ -3027,7 +1415,7 @@
       "name": "the-personal-cog",
       "version": "2.0",
       "description": "Cogs describing YOU — accessibility needs, interests, health, skills. Lives on your phone. Your agent decides what to share, with whom, in context.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/the-personal-cog/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/the-personal-cog/content.md",
       "content_hash": "sha256:e76f207d6655529b406fdb2bdc7e1d4bf91fee9c96b74b33b9fec1756da8f793",
       "category": "mx-core",
       "tags": [
@@ -3049,7 +1437,7 @@
       "name": "toast-detector",
       "version": "0.1.0",
       "description": "Find ephemeral UI patterns that AI and screen readers miss",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/toast-detector/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/toast-detector/content.md",
       "content_hash": "sha256:66181bfce4784b2e152c5e742fd9727137033389bfbff814054b21c0b0eb78aa",
       "category": "mx-core",
       "tags": [
@@ -3067,7 +1455,7 @@
       "name": "validate-cog",
       "version": "0.1.0",
       "description": "Validate cogs against the MX Cog Specification",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/validate-cog/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/validate-cog/content.md",
       "content_hash": "sha256:93c3e86611f90cc671dea8cf6a6ae077e8db00719b5352543e0f55f207a57b3b",
       "category": "mx-core",
       "tags": [
@@ -3084,7 +1472,7 @@
       "name": "what-comes-next",
       "version": "1.0",
       "description": "The current state of the MX ecosystem, priorities, action plan, and next steps. Any AI agent reading this knows exactly where we are and what to do next.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/what-comes-next/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/what-comes-next/content.md",
       "content_hash": "sha256:d19a9b535fa12ca625d342094c0e0f197de645af27b544dd0956ff5789015d80",
       "category": "mx-core",
       "tags": [
@@ -3104,7 +1492,7 @@
       "name": "what-is-a-cog",
       "version": "1.0",
       "description": "A cog that explains what cogs are. The format describing itself.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/what-is-a-cog/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/what-is-a-cog/content.md",
       "content_hash": "sha256:4e0d9aefeb2280e187d5c9077ee2166e28474a2e94a641e7de92e34fa142e269",
       "category": "learning",
       "tags": [
@@ -3122,7 +1510,7 @@
       "name": "what-is-installme",
       "version": "1.0.0",
       "description": "INSTALLME.md is a root-level cog convention that gives AI agents structured installation instructions — no hallucination, no guessing, no wasted compute.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/what-is-installme/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/what-is-installme/content.md",
       "content_hash": "sha256:51cceb5a0d697f7340db6d86171be64ef1970b46afe1a2e4f2e3a16f77502787",
       "category": "mx-core",
       "tags": [
@@ -3145,7 +1533,7 @@
       "name": "what-is-mx-environment",
       "version": "1.0.0",
       "description": "MX OS lives on the machine, not in the repo. $MX_HOME is the machine-level context — the answer to the machine, the universe, and everything.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/what-is-mx-environment/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/what-is-mx-environment/content.md",
       "content_hash": "sha256:b2c6b314856f6bf7cb90faea1c4cead4ecc377f73d4462a2bd635f62606fc43e",
       "category": "mx-core",
       "tags": [
@@ -3165,7 +1553,7 @@
       "name": "what-is-mx-os",
       "version": "1.0",
       "description": "The Machine Experience Operating System. Documentation IS the system. Cogs are its programs. This action-doc explains MX OS and can bootstrap it.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/what-is-mx-os/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/what-is-mx-os/content.md",
       "content_hash": "sha256:d77638a04e22a0a8b24e940634feb6cb08da6cdaf2c76680c19b6c1d2030aa52",
       "category": "mx-core",
       "tags": [
@@ -3185,7 +1573,7 @@
       "name": "what-is-script-metadata",
       "version": "1.0.0",
       "description": "Script metadata brings shell scripts into MX OS — comment-block frontmatter that makes every script machine-readable without changing how it runs.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/what-is-script-metadata/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/what-is-script-metadata/content.md",
       "content_hash": "sha256:df8e6d63aad92027a21e530bf409ede3ed02eeb8ba78d22917dabbd4abd492fb",
       "category": "mx-core",
       "tags": [
@@ -3202,30 +1590,10 @@
       "signature": "base64:5GEL2xtJ9oFnf0u8jjdgK4nHljeT/DwY8uhsmsY5mZIqli+znmqsznIYt534kkqJoNHsRpp/mMFgjpYSgGUCAA=="
     },
     {
-      "name": "what-is-this-chat-about",
-      "version": "1.0.0",
-      "description": "Summarise what a chat session covered — structured output for future sessions, Tom, and external readers.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/what-is-this-chat-about/content.md",
-      "content_hash": "sha256:60fe3017900ef1c07f84b1610d501229c13693690aeb9a518595b5efc4126a1f",
-      "category": "mx-os",
-      "tags": [
-        "session",
-        "summary",
-        "chat",
-        "context",
-        "memory",
-        "audit",
-        "gestalt"
-      ],
-      "type": "action-doc",
-      "modified": "{YYYY-MM-DD}",
-      "signature": "base64:YhKRuGz46HccUpl3GnC35TcJX4XpD4KCT4OKdTb4rpIBJ+l7S2P7qqukugJw+2dDaklLjRl9rQupKOKPKleiCw=="
-    },
-    {
       "name": "whats-changed",
       "version": "1.0.0",
       "description": "Find what changed in the repo — list files by time period and type, extract metadata, show git status, surface gaps. The content audit tool.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/whats-changed/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/whats-changed/content.md",
       "content_hash": "sha256:3abcacbd0f94da2787a080cf9c26e7278ed2868da687f4645a73e2abe74fd027",
       "category": "mx-content",
       "tags": [
@@ -3247,7 +1615,7 @@
       "name": "who-is-maxine",
       "version": "1.0",
       "description": "The AI partner in MX. Identity, partnership model, SOUL convention, and shared memory — so any instance of Claude can become Maxine.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/who-is-maxine/content.md",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/who-is-maxine/content.md",
       "content_hash": "sha256:4fd404a655ddbf7b6fc5a2377fa3436c44380c33d25d96198c267f6fc3b71d46",
       "category": "learning",
       "tags": [
@@ -3262,28 +1630,8 @@
       "type": "info-doc",
       "modified": "2026-02-09",
       "signature": "base64:KGBzbeNmB5IjAus5dnYQwbW3yNWr8qwbtdier9w4WUhoAvfAkorjXwxK8q9fbq4Fun27Y2wG6ExKl5SzOiCvBA=="
-    },
-    {
-      "name": "reference-tools-README",
-      "version": "1.0",
-      "description": "Complete toolkit for building, validating, and deploying multilingual websites with proper SEO, hreflang annotations, and Google best practices.",
-      "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/reference-tools-README/content.md",
-      "content_hash": "sha256:a360fbdf086441b703c82c01f685d85c6b886c680b7de9a6ef5f920d82f8a542",
-      "category": "reference-implementation",
-      "tags": [
-        "multilingual",
-        "automation",
-        "seo",
-        "workflow",
-        "internationalization",
-        "i18n",
-        "tools"
-      ],
-      "type": "info-doc",
-      "modified": "2026-03-02",
-      "signature": "base64:rJDnrHj2Nd+fQMG1rcBHyPw01w67r53tgPjsYaN7A7TnapxTYHwLrOUvi602PGqmesUlCjqybOGUI147BYNABQ=="
     }
   ],
-  "manifest_hash": "sha256:a6774c08a04e015f26d4e6f36b3b16af2f317d9d108b816c72f7e93a47d79a65",
-  "generated": "2026-03-16T20:48:02.565Z"
+  "manifest_hash": "sha256:4ab0deb5d55bc37f699545960b7a7619dd49be5221f981c2295e70adf224ddd0",
+  "generated": "2026-03-17T09:02:51.534Z"
 }

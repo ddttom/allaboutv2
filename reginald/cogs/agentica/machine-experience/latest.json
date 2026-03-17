@@ -37,14 +37,6 @@
   "publisher": {
     "namespace": "agentica",
     "name": "Agentica",
-    "domain": "agentica.wiki",
-    "manifest_url": "https://agentica.wiki/.well-known/mx-cogs.json"
-  },
-  "source_path": null,
-  "source_url": "https://agentica.wiki/articles/machine-experience",
-  "cache": {
-    "content_url": "/reginald/cogs/agentica/machine-experience/content.md",
-    "cached_at": "2026-03-16T15:00:00.000Z",
-    "stale": false
+    "domain": "agentica.wiki"
   }
 }

@@ -18,20 +18,12 @@
   "content_hash": "sha256:9479a4cb9cdb4e9d13ddb08007a53bc653d58701cd2e3a5fe483b77ab0ea8c20",
   "created": "2026-02-08",
   "modified": "2026-03-02",
-  "resolve_mode": "hosted",
-  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/cog-cog-unified-spec/content.md",
+  "resolve_mode": "pointer",
+  "canonical_url": "https://content.allabout.network/cogs/cognovamx/cog-cog-unified-spec/content.md",
   "publisher": {
     "namespace": "cognovamx",
     "name": "CogNovaMX Ltd",
-    "domain": "allabout.network",
-    "manifest_url": null
-  },
-  "source_path": "mx-canon/ssot/specifications/cog/cog-unified-spec.cog.md",
-  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/ssot/specifications/cog/cog-unified-spec.cog.md",
-  "cache": {
-    "content_url": "/reginald/cogs/cognovamx/cog-cog-unified-spec/content.md",
-    "cached_at": "2026-03-16T20:48:02.352Z",
-    "stale": false
+    "domain": "allabout.network"
   },
   "registry_certificate": {
     "version": "1.0",

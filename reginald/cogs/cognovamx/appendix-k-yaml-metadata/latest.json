@@ -21,20 +21,12 @@
   "content_hash": "sha256:32aaf3e2ae318c60d4f8f5fa8a757f17d4d994e5500d4003642065f63b2e83cc",
   "created": "2026-02-06",
   "modified": "2026-02-27",
-  "resolve_mode": "hosted",
-  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/appendix-k-yaml-metadata/content.md",
+  "resolve_mode": "pointer",
+  "canonical_url": "https://content.allabout.network/cogs/cognovamx/appendix-k-yaml-metadata/content.md",
   "publisher": {
     "namespace": "cognovamx",
     "name": "CogNovaMX Ltd",
-    "domain": "allabout.network",
-    "manifest_url": null
-  },
-  "source_path": "mx-canon/mx-the-gathering/appendix-k-yaml-metadata.cog.md",
-  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-the-gathering/appendix-k-yaml-metadata.cog.md",
-  "cache": {
-    "content_url": "/reginald/cogs/cognovamx/appendix-k-yaml-metadata/content.md",
-    "cached_at": "2026-03-16T20:48:02.334Z",
-    "stale": false
+    "domain": "allabout.network"
   },
   "registry_certificate": {
     "version": "1.0",

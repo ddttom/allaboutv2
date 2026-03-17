@@ -22,20 +22,12 @@
   "content_hash": "sha256:a1c5d227f5e4bf112f1a18e60a65d82acb9827167d06a9a93235890f4cd8acb7",
   "created": "2026-02-17",
   "modified": "2026-02-17",
-  "resolve_mode": "hosted",
-  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/adr-02-namespace-policy/content.md",
+  "resolve_mode": "pointer",
+  "canonical_url": "https://content.allabout.network/cogs/cognovamx/adr-02-namespace-policy/content.md",
   "publisher": {
     "namespace": "cognovamx",
     "name": "CogNovaMX Ltd",
-    "domain": "allabout.network",
-    "manifest_url": null
-  },
-  "source_path": "mx-canon/mx-the-gathering/architecture-decisions/adr-02-namespace-policy.cog.md",
-  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-the-gathering/architecture-decisions/adr-02-namespace-policy.cog.md",
-  "cache": {
-    "content_url": "/reginald/cogs/cognovamx/adr-02-namespace-policy/content.md",
-    "cached_at": "2026-03-16T20:48:02.335Z",
-    "stale": false
+    "domain": "allabout.network"
   },
   "registry_certificate": {
     "version": "1.0",

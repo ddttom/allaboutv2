@@ -1,149 +1,123 @@
 {
-  "version": "2.0.0",
-  "generated": "2026-03-16T20:48:02.442Z",
-  "total_cogs": 168,
+  "version": "3.0.0",
+  "generated": "2026-03-17T09:02:51.489Z",
+  "total_cogs": 83,
   "publishers": 2,
   "namespaces": [
     "cognovamx",
     "agentica"
   ],
   "by_category": {
-    "product": 3,
-    "governance": 3,
-    "mx-core": 61,
-    "about": 1,
+    "governance": 2,
     "deliverable": 2,
-    "business": 1,
-    "strategy": 1,
-    "infrastructure": 2,
-    "planning": 1,
-    "principle": 1,
-    "vision": 2,
-    "risk": 1,
-    "manual": 28,
-    "mx-os": 2,
-    "architecture": 6,
-    "adr": 1,
-    "decision-record": 3,
+    "mx-core": 48,
     "Business Strategy": 1,
     "template": 1,
+    "architecture": 1,
     "standard": 4,
     "naming": 3,
     "specification": 3,
     "identity": 1,
+    "manual": 1,
     "eds-block": 1,
     "landing-page": 1,
-    "creative-services": 2,
+    "creative-services": 1,
     "onboarding": 1,
-    "contact": 7,
-    "restaurant": 1,
-    "event": 1,
-    "venue": 1,
-    "convention": 1,
     "mx-content": 2,
-    "mx-canon": 1,
-    "mx-tools": 7,
+    "mx-tools": 4,
     "learning": 3,
     "validation": 1,
-    "content-creation": 1,
-    "registry": 1,
     "mx-sales": 1,
-    "mx-operations": 1,
-    "reference-implementation": 1,
     "reference": 1
   },
   "by_type": {
-    "action-doc": 60,
-    "info-doc": 108
+    "action-doc": 42,
+    "info-doc": 41
   },
-  "by_resolve_mode": {
-    "hosted": 167,
-    "pointer": 1
-  },
-  "by_publisher": {
-    "cognovamx": 167,
+  "by_namespace": {
+    "cognovamx": 82,
     "agentica": 1
   },
   "top_tags": [
     {
-      "tag": "manual",
-      "count": 28
-    },
-    {
       "tag": "metadata",
-      "count": 22
+      "count": 15
     },
     {
       "tag": "mx-os",
-      "count": 19
-    },
-    {
-      "tag": "validation",
       "count": 14
     },
     {
-      "tag": "automation",
-      "count": 12
-    },
-    {
       "tag": "accessibility",
-      "count": 11
+      "count": 10
     },
     {
       "tag": "registry",
-      "count": 11
+      "count": 9
     },
     {
-      "tag": "maxine",
-      "count": 10
-    },
-    {
-      "tag": "identity",
-      "count": 10
-    },
-    {
-      "tag": "adr",
-      "count": 10
-    },
-    {
-      "tag": "audit",
+      "tag": "validation",
       "count": 9
     },
     {
       "tag": "cog",
-      "count": 8
+      "count": 7
     },
     {
-      "tag": "namespace",
-      "count": 8
+      "tag": "identity",
+      "count": 6
+    },
+    {
+      "tag": "audit",
+      "count": 6
+    },
+    {
+      "tag": "the-gathering",
+      "count": 5
     },
     {
       "tag": "html",
-      "count": 8
+      "count": 5
+    },
+    {
+      "tag": "namespace",
+      "count": 5
+    },
+    {
+      "tag": "onboarding",
+      "count": 5
+    },
+    {
+      "tag": "specification",
+      "count": 5
+    },
+    {
+      "tag": "llms-txt",
+      "count": 5
     },
     {
       "tag": "seo",
-      "count": 8
+      "count": 5
     },
     {
       "tag": "governance",
-      "count": 7
+      "count": 4
     },
     {
-      "tag": "routing",
-      "count": 7
+      "tag": "maxine",
+      "count": 4
     },
     {
-      "tag": "multilingual",
-      "count": 7
+      "tag": "blocks",
+      "count": 4
     },
     {
-      "tag": "contact",
-      "count": 7
+      "tag": "frontmatter",
+      "count": 4
     },
     {
-      "tag": "architecture",
-      "count": 6
+      "tag": "standards",
+      "count": 4
     }
   ]
 }

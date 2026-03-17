@@ -22,20 +22,12 @@
   "content_hash": "sha256:c3066ad048c76acca8005c041d140e4f637784d291bbffa33ad7360d82d4f7f1",
   "created": "2026-02-10",
   "modified": "2026-02-10",
-  "resolve_mode": "hosted",
-  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/script-helper/content.md",
+  "resolve_mode": "pointer",
+  "canonical_url": "https://content.allabout.network/cogs/cognovamx/script-helper/content.md",
   "publisher": {
     "namespace": "cognovamx",
     "name": "CogNovaMX Ltd",
-    "domain": "allabout.network",
-    "manifest_url": null
-  },
-  "source_path": "scripts/cogs/script-helper.cog.md",
-  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/scripts/cogs/script-helper.cog.md",
-  "cache": {
-    "content_url": "/reginald/cogs/cognovamx/script-helper/content.md",
-    "cached_at": "2026-03-16T20:48:02.420Z",
-    "stale": false
+    "domain": "allabout.network"
   },
   "registry_certificate": {
     "version": "1.0",

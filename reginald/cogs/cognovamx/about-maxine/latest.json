@@ -26,20 +26,12 @@
   "content_hash": "sha256:52d7447402c2f2fdee02188f24a14f69464231c2402a9e30a0ad9bf1c6aec0df",
   "created": "2026-02-13",
   "modified": "2026-02-13",
-  "resolve_mode": "hosted",
-  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/about-maxine/content.md",
+  "resolve_mode": "pointer",
+  "canonical_url": "https://content.allabout.network/cogs/cognovamx/about-maxine/content.md",
   "publisher": {
     "namespace": "cognovamx",
     "name": "CogNovaMX Ltd",
-    "domain": "allabout.network",
-    "manifest_url": null
-  },
-  "source_path": "mx-canon/mx-maxine-lives/about-maxine.cog.md",
-  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/mx-canon/mx-maxine-lives/about-maxine.cog.md",
-  "cache": {
-    "content_url": "/reginald/cogs/cognovamx/about-maxine/content.md",
-    "cached_at": "2026-03-16T20:48:02.302Z",
-    "stale": false
+    "domain": "allabout.network"
   },
   "registry_certificate": {
     "version": "1.0",

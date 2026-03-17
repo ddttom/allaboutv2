@@ -1,8 +1,8 @@
 {
   "name": "reginald-registry",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "REGINALD - Registry for Genuine Information, Notarised Authentication, and Legitimate Documentation",
-  "generated": "2026-03-16T20:48:02.434Z",
+  "generated": "2026-03-17T09:02:51.479Z",
   "publishers": [
     {
       "name": "CogNovaMX Ltd",
@@ -18,1188 +18,510 @@
     }
   ],
   "endpoints": {
-    "cogs": "/reginald/api/v1/cogs.json",
+    "namespaces": "/reginald/api/v1/namespaces.json",
     "stats": "/reginald/api/v1/stats.json",
     "publishers": "/reginald/api/v1/publishers.json",
     "public_key": "/reginald/api/v1/public-key.pem",
     "llms": "/reginald/llms.txt"
   },
   "entries": {
-    "cognovamx/maxine-vision": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "product",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/uber-maxine-plan": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "product",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/CHANGELOG": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "governance",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
     "cognovamx/CONTRIBUTING": {
       "latest": "2.0-draft",
       "compliance": 3,
       "category": "governance",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/HELLO": {
-      "latest": "1.1",
-      "compliance": 3,
-      "category": "mx-core",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/LICENSE": {
       "latest": "1.0",
       "compliance": 3,
       "category": "governance",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/mx-maxine-lives-README": {
-      "latest": "conventional",
-      "compliance": 3,
-      "category": "mx-core",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/ROUTING": {
-      "latest": "2.0-draft",
-      "compliance": 3,
-      "category": "mx-core",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/about.mx": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "about",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/about-maxine": {
       "latest": "1.0",
       "compliance": 3,
       "category": "deliverable",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/about-mx": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/domain-portfolio": {
-      "latest": "1.0.0",
-      "compliance": 3,
-      "category": "business",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/MX-brand": {
-      "latest": "1.1.0",
-      "compliance": 3,
-      "category": "strategy",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/cloudflare-routing-action": {
-      "latest": "1.0.0",
-      "compliance": 3,
-      "category": "infrastructure",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/cloudflare-routing-info": {
-      "latest": "1.0.0",
-      "compliance": 3,
-      "category": "infrastructure",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/glasgow-training-course": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "planning",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/mx-agent-independence": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "principle",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/mx-vision": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "vision",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/2026-02-13-solo-founder": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "risk",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-asset-sync": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-build-tools": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-cog-id": {
-      "latest": "1.1",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-cogify": {
-      "latest": "1.5",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-deployment-helper": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-enhanced-audit": {
-      "latest": "2.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-git-hooks": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-html-baseline-audit": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-maxine-lives": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-multilingual-sitemap": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-multilingual-template": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-multilingual-validator": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-mx-exec": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "mx-os",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-mx-nav-server": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-mx-pdf": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-parity-checker": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-parse-mxignore": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-partnership-reporting": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-path-validator": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-prompt-enhancer": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-spell-checker": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-submodule-health": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-team-onboarding": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/mx-contacts-manual": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/mx-show-manual": {
-      "latest": "3.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/mx-metadata-conventions": {
       "latest": "1.0",
       "compliance": 3,
       "category": "deliverable",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/2026-02-13-mx-web-architecture": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "architecture",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/2026-02-13-routing-pipeline": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "adr",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/2026-02-18-png-workflow-for-pdf-generation": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "architecture",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/2026-02-18-svg-aspect-ratio-preservation": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "architecture",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/2026-02-18-typography-standards-for-pdf-generation": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "architecture",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/2026-03-10-blockquote-styling-for-pdf-generation": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "architecture",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/vendor-extensions-policy": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "mx-core",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/2026-02-15-deliverable-rename": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "decision-record",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/2026-02-15-runbook-rename": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "decision-record",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/2026-03-01-hub-as-mount-table": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "decision-record",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/2026-02-14-attribute-namespace-policy": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "mx-core",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/business-benefits": {
       "latest": "1.0",
       "compliance": 3,
       "category": "Business Strategy",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/mx-concepts": {
       "latest": "1.0.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/mx-train-analogy": {
       "latest": "1.0.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/appendix-k-yaml-metadata": {
       "latest": "1.1",
       "compliance": 3,
       "category": "template",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/adr-01-block-architecture": {
       "latest": "W3C Draft 2026-02-12",
       "compliance": 3,
       "category": "architecture",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/adr-02-namespace-policy": {
       "latest": "1.0",
       "compliance": 3,
       "category": "standard",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/namespace-extensions": {
       "latest": "1.0",
       "compliance": 3,
       "category": "standard",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/ndr-01-block-naming": {
       "latest": "1.0",
       "compliance": 3,
       "category": "naming",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/ndr-02-camelcase-naming": {
       "latest": "1.0",
       "compliance": 3,
       "category": "naming",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/ndr-03-spelling-neutrality": {
       "latest": "1.0",
       "compliance": 3,
       "category": "naming",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/effective-doc-example": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/example-with-includes": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/shared-validation-policy": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/block-architecture-evolution": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/specifications-cog-unified-spec": {
       "latest": "2.1-draft",
       "compliance": 3,
       "category": "specification",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/mx-standards-alignment": {
       "latest": "1.0",
       "compliance": 3,
       "category": "standard",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/smart-glasses-platform-opportunity": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "vision",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/fields": {
       "latest": "4.1",
       "compliance": 3,
       "category": "standard",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/mx-html-writing-guide": {
       "latest": "1.1",
       "compliance": 3,
       "category": "mx-core",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/principles": {
       "latest": "3.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/cog-cog-unified-spec": {
       "latest": "1.0-draft",
       "compliance": 3,
       "category": "specification",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/cog-system": {
       "latest": "1.0",
       "compliance": 3,
       "category": "specification",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/maxine": {
       "latest": "1.0",
       "compliance": 3,
       "category": "identity",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/cog-snapshot": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/mx-reginald-manual": {
       "latest": "1.3",
       "compliance": 3,
       "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/header": {
       "latest": "1.0",
       "compliance": 3,
       "category": "eds-block",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/mx-principles-menu": {
       "latest": "1.0",
       "compliance": 3,
       "category": "landing-page",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/demo-media219-media219": {
       "latest": "1.0.0",
       "compliance": 4,
       "category": "creative-services",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/getting-started": {
       "latest": "1.1",
       "compliance": 3,
       "category": "onboarding",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/janus-boye": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "contact",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/eleanor-cranstoun": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "contact",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/michael-andrews": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "contact",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/openclaw-developer": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "contact",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/scott-mcgregor": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "contact",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/mx-crm-media219-media219": {
-      "latest": "1.0.0",
-      "compliance": 4,
-      "category": "creative-services",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/helen-advisor": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "contact",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/salva": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "contact",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/demo-restaurant": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "restaurant",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/conference": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "event",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/product": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "product",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/demo-cogs-restaurant": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "venue",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/2026-02-15-conventions": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "convention",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/INSTALLME": {
       "latest": "2.1-draft",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/a11y": {
       "latest": "0.1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/access-and-guardrails": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/asking-for-help": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/blog-generator": {
       "latest": "1.0.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/blog-reviewer": {
       "latest": "1.0.0",
       "compliance": 3,
       "category": "mx-content",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/building-action-docs": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/canon-init": {
-      "latest": "1.0.0",
-      "compliance": 3,
-      "category": "mx-canon",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/changelog-trimmer": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "mx-tools",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/clarity": {
       "latest": "0.1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/co-directors-report": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/cog-id": {
       "latest": "1.1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/cog-publication-workflow": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-tools",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/cog-query": {
       "latest": "2.1",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/cog-registry": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/cogify-this": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-tools",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/cogs-for-agent-developers": {
       "latest": "1.0",
       "compliance": 3,
       "category": "learning",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/env": {
       "latest": "1.0.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/gen-free-book": {
-      "latest": "2.0.0",
-      "compliance": 3,
-      "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/generate-footnotes": {
-      "latest": "0.1.0",
-      "compliance": 3,
-      "category": "mx-tools",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/how-mx-os-runs": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/html-baseline-audit": {
       "latest": "Any version change",
       "compliance": 3,
       "category": "validation",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/illustration-generator": {
-      "latest": "1.0.0",
-      "compliance": 3,
-      "category": "content-creation",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/installme-runner": {
-      "latest": "1.0.0",
-      "compliance": 3,
-      "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/link-checker": {
       "latest": "0.1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/llms-txt": {
       "latest": "0.1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-metadata": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manual-repository-architecture": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/manuals-registry": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "registry",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/marp-regen": {
-      "latest": "1.0.0",
-      "compliance": 3,
-      "category": "mx-tools",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/metadata-audit": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-tools",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/metadata": {
       "latest": "0.1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/mx-allmygithubs": {
-      "latest": "2.1-draft",
-      "compliance": 3,
-      "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/mx-audit": {
       "latest": "1.2.0",
       "compliance": 3,
       "category": "mx-sales",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/mx-boot": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/mx-contacts": {
-      "latest": "2.0",
-      "compliance": 3,
-      "category": "mx-operations",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/mx-init": {
       "latest": "1.0.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/mx-os-manual": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "manual",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/mx-phrasebook": {
       "latest": "1.0.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/mx-reminders": {
-      "latest": "1.0.0",
-      "compliance": 3,
-      "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/mx-run": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/mx-scaffold": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/pdf-generator": {
-      "latest": "1.0.0",
-      "compliance": 3,
-      "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/pixel-perfect-web-replication": {
       "latest": "26.0",
       "compliance": 3,
       "category": "mx-tools",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/pricing": {
       "latest": "0.1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/readability": {
       "latest": "0.1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/reginald-mirror": {
       "latest": "1.0.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/registry-of-registries": {
       "latest": "1.0.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/registry-sync": {
       "latest": "1.0.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/robots-txt": {
       "latest": "0.1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/routing-pipeline": {
       "latest": "1.0.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/schema": {
       "latest": "0.1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/script-helper": {
       "latest": "1.0.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/semantic-html": {
       "latest": "0.1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/sitemap": {
       "latest": "0.1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/the-companion-web": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/the-personal-cog": {
       "latest": "2.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/toast-detector": {
       "latest": "0.1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/validate-cog": {
       "latest": "0.1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/what-comes-next": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/what-is-a-cog": {
       "latest": "1.0",
       "compliance": 3,
       "category": "learning",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/what-is-installme": {
       "latest": "1.0.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/what-is-mx-environment": {
       "latest": "1.0.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "cognovamx/what-is-mx-os": {
       "latest": "1.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/what-is-script-metadata": {
       "latest": "1.0.0",
       "compliance": 3,
       "category": "mx-core",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/what-is-this-chat-about": {
-      "latest": "1.0.0",
-      "compliance": 3,
-      "category": "mx-os",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/whats-changed": {
       "latest": "1.0.0",
       "compliance": 3,
       "category": "mx-content",
-      "type": "action-doc",
-      "resolve_mode": "hosted"
+      "type": "action-doc"
     },
     "cognovamx/who-is-maxine": {
       "latest": "1.0",
       "compliance": 3,
       "category": "learning",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
-    },
-    "cognovamx/reference-tools-README": {
-      "latest": "1.0",
-      "compliance": 3,
-      "category": "reference-implementation",
-      "type": "info-doc",
-      "resolve_mode": "hosted"
+      "type": "info-doc"
     },
     "agentica/machine-experience": {
       "latest": "1.0.0",
       "compliance": 2,
       "category": "reference",
-      "type": "info-doc",
-      "resolve_mode": "pointer"
+      "type": "info-doc"
     }
   }
 }

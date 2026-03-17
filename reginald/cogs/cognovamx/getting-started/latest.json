@@ -20,20 +20,12 @@
   "content_hash": "sha256:8cc50831d41c3dacdd6e2efc7be1176a64aadff707eefb2bbc02622e8b718e79",
   "created": "2026-02-24",
   "modified": "2026-02-24",
-  "resolve_mode": "hosted",
-  "canonical_url": "https://allabout.network/reginald/cogs/cognovamx/getting-started/content.md",
+  "resolve_mode": "pointer",
+  "canonical_url": "https://content.allabout.network/cogs/cognovamx/getting-started/content.md",
   "publisher": {
     "namespace": "cognovamx",
     "name": "CogNovaMX Ltd",
-    "domain": "allabout.network",
-    "manifest_url": null
-  },
-  "source_path": "getting-started.cog.md",
-  "source_url": "https://github.com/Digital-Domain-Technologies-Ltd/MX-hub/blob/main/getting-started.cog.md",
-  "cache": {
-    "content_url": "/reginald/cogs/cognovamx/getting-started/content.md",
-    "cached_at": "2026-03-16T20:48:02.357Z",
-    "stale": false
+    "domain": "allabout.network"
   },
   "registry_certificate": {
     "version": "1.0",
