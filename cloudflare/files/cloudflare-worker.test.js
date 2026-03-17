@@ -911,7 +911,7 @@ describe('handleRequest Integration', () => {
 
     // Verify version header still present and shows current version
     expect(response.headers.get('cfw')).toBe(WORKER_VERSION);
-    expect(WORKER_VERSION).toBe('1.2.0');
+    expect(WORKER_VERSION).toBe('1.3.0');
   });
 
   test('includes speculation rules in HTML responses', async () => {
