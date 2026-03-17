@@ -4,7 +4,8 @@ compatibility_date = "2024-01-01"
 
 [vars]
 ORIGIN_HOSTNAME = "main--allaboutv2--ddttom.aem.live"
-MX_OUTPUTS_HOSTNAME = "mx-outputs.pages.dev"
+MX_OUTPUTS_HOSTNAME = "raw.githubusercontent.com"
+MX_OUTPUTS_REPO_PATH = "/Digital-Domain-Technologies-Ltd/MX-outputs/main"
 PUSH_INVALIDATION = "enabled"
 
 [[routes]]
@@ -19,6 +20,4 @@ zone_name = "allabout.network"
 pattern = "content.allabout.network/*"
 zone_name = "allabout.network"
 
-[[routes]]
-pattern = "reginald.allabout.network/*"
-zone_name = "allabout.network"
+# reginald.allabout.network now handled by reginald-api Worker (mx-reginald/worker/)

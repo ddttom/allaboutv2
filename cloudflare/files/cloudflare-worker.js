@@ -495,13 +495,21 @@ export const shouldLanguageRedirect = (remainingPath, site) => {
  * @param {string} mxOutputsHostname - mx-outputs Pages hostname
  * @returns {Response} Proxied response from mx-outputs origin
  */
-const handleMxSubdomain = async (request, url, subdomain, mxOutputsHostname) => {
-  // Map subdomain to directory prefix in mx-outputs:
-  // content.allabout.network/cogs/* → mx-outputs.pages.dev/content/cogs/*
-  // reginald.allabout.network/api/* → mx-outputs.pages.dev/reginald/api/*
+const handleMxSubdomain = async (request, url, subdomain, env) => {
+  // Map subdomain to directory in mx-outputs GitHub repo:
+  // reginald.allabout.network/api/* → raw.githubusercontent.com/{repo}/main/reginald/api/*
+  // content.allabout.network/cogs/* → raw.githubusercontent.com/{repo}/main/content/cogs/*
+
+  // Bare root → serve index.html (GitHub raw doesn't serve directory listings)
+  let subPath = url.pathname;
+  if (subPath === '/' || subPath === '') {
+    subPath = '/index.html';
+  }
+
+  const repoPath = env.MX_OUTPUTS_REPO_PATH || '/Digital-Domain-Technologies-Ltd/MX-outputs/main';
   const originUrl = new URL(url);
-  originUrl.hostname = mxOutputsHostname;
-  originUrl.pathname = `/${subdomain}${url.pathname}`;
+  originUrl.hostname = env.MX_OUTPUTS_HOSTNAME;
+  originUrl.pathname = `${repoPath}/${subdomain}${subPath}`;
 
   const originReq = new Request(originUrl, {
     method: request.method,
@@ -514,6 +522,23 @@ const handleMxSubdomain = async (request, url, subdomain, mxOutputsHostname) => 
 
   // Create mutable response for header modifications
   resp = new Response(resp.body, resp);
+
+  // GitHub raw serves everything as text/plain — set correct Content-Type from extension
+  const ext = getExtension(subPath);
+  const contentTypes = {
+    json: 'application/json',
+    md: 'text/markdown',
+    txt: 'text/plain',
+    html: 'text/html',
+    xml: 'application/xml',
+    yaml: 'text/yaml',
+    yml: 'text/yaml',
+    pem: 'application/x-pem-file',
+  };
+  if (contentTypes[ext]) {
+    resp.headers.set('Content-Type', `${contentTypes[ext]}; charset=utf-8`);
+  }
+
   resp.headers.set('Access-Control-Allow-Origin', '*');
   resp.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
   resp.headers.set('Access-Control-Allow-Headers', 'Content-Type');
@@ -548,14 +573,11 @@ const handleRequest = async (request, env, _ctx) => {
   }
 
   // --- Multi-origin routing: MX subdomains ---
-  // content.allabout.network → mx-outputs (COG content files)
-  // reginald.allabout.network → mx-outputs (registry API + pointer records)
+  // content.allabout.network → GitHub raw mx-outputs repo (COG content files)
+  // reginald.allabout.network → now handled by reginald-api Worker (mx-reginald/worker/)
   if (env.MX_OUTPUTS_HOSTNAME) {
     if (publicHostname === 'content.allabout.network') {
-      return handleMxSubdomain(request, url, 'content', env.MX_OUTPUTS_HOSTNAME);
-    }
-    if (publicHostname === 'reginald.allabout.network') {
-      return handleMxSubdomain(request, url, 'reginald', env.MX_OUTPUTS_HOSTNAME);
+      return handleMxSubdomain(request, url, 'content', env);
     }
   }
 
