@@ -13,12 +13,12 @@
 * OF ANY KIND, either express or implied. See the License for the specific language
 * governing permissions and limitations under the License.
 *
-* @version 1.2.0
+* @version 1.3.0
  */
 
 // Worker version - hardcoded for compatibility
 // Update this when package.json version changes
-export const WORKER_VERSION = '1.2.0';
+export const WORKER_VERSION = '1.3.0';
 
 // Picture placeholder configuration
 export const PICTURE_PLACEHOLDER_CONFIG = {
@@ -486,6 +486,43 @@ export const shouldLanguageRedirect = (remainingPath, site) => {
   return false;
 };
 
+/**
+ * Handles requests for MX subdomains (content.allabout.network, reginald.allabout.network).
+ * Routes to the mx-outputs Cloudflare Pages origin with path prefix mapping.
+ * @param {Request} request - Incoming request
+ * @param {URL} url - Parsed URL
+ * @param {string} subdomain - 'content' or 'reginald'
+ * @param {string} mxOutputsHostname - mx-outputs Pages hostname
+ * @returns {Response} Proxied response from mx-outputs origin
+ */
+const handleMxSubdomain = async (request, url, subdomain, mxOutputsHostname) => {
+  // Map subdomain to directory prefix in mx-outputs:
+  // content.allabout.network/cogs/* → mx-outputs.pages.dev/content/cogs/*
+  // reginald.allabout.network/api/* → mx-outputs.pages.dev/reginald/api/*
+  const originUrl = new URL(url);
+  originUrl.hostname = mxOutputsHostname;
+  originUrl.pathname = `/${subdomain}${url.pathname}`;
+
+  const originReq = new Request(originUrl, {
+    method: request.method,
+    headers: request.headers,
+  });
+
+  let resp = await fetch(originReq, {
+    cf: { cacheEverything: true, cacheTtl: 300 },
+  });
+
+  // Create mutable response for header modifications
+  resp = new Response(resp.body, resp);
+  resp.headers.set('Access-Control-Allow-Origin', '*');
+  resp.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  resp.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+  resp.headers.set('cfw', WORKER_VERSION);
+  resp.headers.delete('age');
+
+  return resp;
+};
+
 const handleRequest = async (request, env, _ctx) => {
   // Validate required environment variables
   if (!env.ORIGIN_HOSTNAME) {
@@ -510,6 +547,29 @@ const handleRequest = async (request, env, _ctx) => {
     });
   }
 
+  // --- Multi-origin routing: MX subdomains ---
+  // content.allabout.network → mx-outputs (COG content files)
+  // reginald.allabout.network → mx-outputs (registry API + pointer records)
+  if (env.MX_OUTPUTS_HOSTNAME) {
+    if (publicHostname === 'content.allabout.network') {
+      return handleMxSubdomain(request, url, 'content', env.MX_OUTPUTS_HOSTNAME);
+    }
+    if (publicHostname === 'reginald.allabout.network') {
+      return handleMxSubdomain(request, url, 'reginald', env.MX_OUTPUTS_HOSTNAME);
+    }
+  }
+
+  // Backward-compatible redirect: allabout.network/reginald/* → reginald.allabout.network/*
+  if (url.pathname.startsWith('/reginald/') || url.pathname === '/reginald') {
+    const redirectUrl = new URL(request.url);
+    redirectUrl.hostname = 'reginald.allabout.network';
+    redirectUrl.pathname = url.pathname.replace(/^\/reginald/, '') || '/';
+    return new Response(null, {
+      status: 301,
+      headers: { Location: redirectUrl.toString() },
+    });
+  }
+
   if (url.port) {
     // Cloudflare opens a couple more ports than 443, so we redirect visitors
     // to the default port to avoid confusion.
@@ -529,10 +589,10 @@ const handleRequest = async (request, env, _ctx) => {
   }
 
   // --- Language redirect (before origin fetch) ---
-  // Fetch language config from origin with 1-hour edge cache
+  // Fetch language config from mx-outputs (reginald API) with 1-hour edge cache
   try {
     const configUrl = new URL('/reginald/api/v1/language-config.json', url);
-    configUrl.hostname = env.ORIGIN_HOSTNAME;
+    configUrl.hostname = env.MX_OUTPUTS_HOSTNAME || env.ORIGIN_HOSTNAME;
     const configResp = await fetch(configUrl, { cf: { cacheTtl: 3600 } });
     if (configResp.ok) {
       const langConfig = await configResp.json();

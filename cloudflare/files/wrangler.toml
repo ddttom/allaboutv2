@@ -4,6 +4,7 @@ compatibility_date = "2024-01-01"
 
 [vars]
 ORIGIN_HOSTNAME = "main--allaboutv2--ddttom.aem.live"
+MX_OUTPUTS_HOSTNAME = "mx-outputs.pages.dev"
 PUSH_INVALIDATION = "enabled"
 
 [[routes]]
@@ -12,4 +13,12 @@ zone_name = "allabout.network"
 
 [[routes]]
 pattern = "www.allabout.network/*"
+zone_name = "allabout.network"
+
+[[routes]]
+pattern = "content.allabout.network/*"
+zone_name = "allabout.network"
+
+[[routes]]
+pattern = "reginald.allabout.network/*"
 zone_name = "allabout.network"
