@@ -13,12 +13,26 @@
 * OF ANY KIND, either express or implied. See the License for the specific language
 * governing permissions and limitations under the License.
 *
-* @version 1.3.0
+* @version 1.4.0
  */
+
+// --- REGINALD API imports (write-side handlers) ---
+import { handleSubscribe } from './reginald/handlers/subscribe.js';
+import { handleStripeWebhook } from './reginald/handlers/stripe-webhook.js';
+import { handleRegister } from './reginald/handlers/register.js';
+import { handleStatus } from './reginald/handlers/status.js';
+import { handleTokenRotate } from './reginald/handlers/token-rotate.js';
+import { handlePublisherAnalytics } from './reginald/handlers/publisher-analytics.js';
+import { handlePublisherAliveness } from './reginald/handlers/publisher-aliveness.js';
+import { handlePublisherCogs } from './reginald/handlers/publisher-cogs.js';
+import * as subscriptionsDb from './reginald/db/subscriptions.js';
+import * as publishersDb from './reginald/db/publishers.js';
+import * as audit from './reginald/db/audit.js';
+import { runAlivenessChecks } from './reginald/lib/aliveness.js';
 
 // Worker version - hardcoded for compatibility
 // Update this when package.json version changes
-export const WORKER_VERSION = '1.3.0';
+export const WORKER_VERSION = '1.4.0';
 
 // Picture placeholder configuration
 export const PICTURE_PLACEHOLDER_CONFIG = {
@@ -487,6 +501,26 @@ export const shouldLanguageRedirect = (remainingPath, site) => {
 };
 
 /**
+ * Categorise an AI agent or browser from User-Agent string.
+ * Pure function - fully testable without Cloudflare Workers runtime.
+ * @param {string} userAgent - User-Agent header value
+ * @returns {string} Agent category
+ */
+export const categoriseAgent = (userAgent) => {
+  if (!userAgent) return 'unknown';
+  const ua = userAgent.toLowerCase();
+  if (ua.includes('chatgpt') || ua.includes('openai')) return 'chatgpt';
+  if (ua.includes('claude') || ua.includes('anthropic')) return 'claude';
+  if (ua.includes('perplexity')) return 'perplexity';
+  if (ua.includes('gptbot')) return 'gptbot';
+  if (ua.includes('googlebot') || ua.includes('google-extended')) return 'googlebot';
+  if (ua.includes('bingbot')) return 'bingbot';
+  if (ua.includes('mozilla') || ua.includes('chrome') || ua.includes('safari')) return 'browser';
+  if (ua.includes('bot') || ua.includes('crawler') || ua.includes('spider')) return 'bot';
+  return 'unknown';
+};
+
+/**
  * Handles requests for MX subdomains (content.allabout.network, reginald.allabout.network).
  * Routes to the mx-outputs Cloudflare Pages origin with path prefix mapping.
  * @param {Request} request - Incoming request
@@ -541,9 +575,27 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
 
   resp.headers.set('Access-Control-Allow-Origin', '*');
   resp.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  resp.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+  resp.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   resp.headers.set('cfw', WORKER_VERSION);
   resp.headers.delete('age');
+
+  // Resolution analytics: log COG resolutions to Analytics Engine (fire-and-forget)
+  if (subdomain === 'reginald' && env.ANALYTICS) {
+    try {
+      const parts = subPath.split('/').filter(Boolean);
+      let ns = '';
+      let cog = '';
+      if (parts[0] === 'cogs' && parts.length >= 3) {
+        ns = parts[1];
+        cog = parts[2];
+      }
+      env.ANALYTICS.writeDataPoint({
+        blobs: [ns, cog, categoriseAgent(request.headers.get('User-Agent')), request.cf?.country || 'XX'],
+        doubles: [resp.status],
+        indexes: [ns],
+      });
+    } catch (_) { /* analytics never blocks response */ }
+  }
 
   return resp;
 };
@@ -566,15 +618,49 @@ const handleRequest = async (request, env, _ctx) => {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         'Access-Control-Max-Age': '86400',
       },
     });
   }
 
   // --- Multi-origin routing: MX subdomains ---
+
+  // reginald.allabout.network — write-side API routes (D1 + Stripe) + read-side (GitHub proxy)
+  if (publicHostname === 'reginald.allabout.network') {
+    const method = request.method;
+    const path = url.pathname;
+
+    // Write-side API routes (authenticated, D1-backed)
+    if (method === 'POST' && path === '/api/v1/subscribe')       return handleSubscribe(request, env);
+    if (method === 'POST' && path === '/api/v1/stripe/webhook')  return handleStripeWebhook(request, env);
+    if (method === 'POST' && path === '/api/v1/register')        return handleRegister(request, env);
+    if (method === 'GET'  && path === '/api/v1/publisher/status') return handleStatus(request, env);
+    if (method === 'POST' && path === '/api/v1/publisher/token/rotate') return handleTokenRotate(request, env);
+
+    // Dashboard API endpoints
+    if (method === 'GET' && path === '/api/v1/publisher/analytics')  return handlePublisherAnalytics(request, env);
+    if (method === 'GET' && path === '/api/v1/publisher/aliveness')  return handlePublisherAliveness(request, env);
+    if (method === 'GET' && path === '/api/v1/publisher/cogs')       return handlePublisherCogs(request, env);
+
+    // Subscription success/cancelled pages
+    if (method === 'GET' && path === '/api/v1/subscribe/success') {
+      const namespace = url.searchParams.get('namespace') || 'your namespace';
+      return new Response(subscribeSuccessHTML(namespace), {
+        headers: { 'Content-Type': 'text/html' },
+      });
+    }
+    if (method === 'GET' && path === '/api/v1/subscribe/cancelled') {
+      return new Response(subscribeCancelledHTML(), {
+        headers: { 'Content-Type': 'text/html' },
+      });
+    }
+
+    // All other GET requests → GitHub proxy (read-side: static JSON, index.html, etc.)
+    return handleMxSubdomain(request, url, 'reginald', env);
+  }
+
   // content.allabout.network → GitHub raw mx-outputs repo (COG content files)
-  // reginald.allabout.network → now handled by reginald-api Worker (mx-reginald/worker/)
   if (env.MX_OUTPUTS_HOSTNAME) {
     if (publicHostname === 'content.allabout.network') {
       return handleMxSubdomain(request, url, 'content', env);
@@ -776,6 +862,87 @@ const handleRequest = async (request, env, _ctx) => {
   return resp;
 };
 
+// --- REGINALD scheduled handlers ---
+
+/**
+ * Daily cron (02:00 UTC): suspend subscriptions past grace period.
+ * @param {object} env
+ */
+async function runSubscriptionExpiry(env) {
+  const expired = await subscriptionsDb.findExpiredGrace(env.DB);
+
+  for (const sub of expired) {
+    await subscriptionsDb.updateByStripeId(env.DB, sub.stripe_subscription_id, {
+      status: 'suspended',
+    });
+    await publishersDb.updateStatus(env.DB, sub.publisher_id, 'suspended');
+    await audit.log(env.DB, sub.publisher_id, 'subscription_suspended', {
+      reason: 'grace_period_expired',
+      grace_period_end: sub.grace_period_end,
+    });
+    console.log(`Suspended publisher ${sub.namespace} — grace period expired`);
+  }
+
+  if (expired.length > 0) {
+    console.log(`Cron: suspended ${expired.length} expired subscription(s)`);
+  }
+}
+
+// --- REGINALD success/cancelled HTML pages ---
+
+function subscribeSuccessHTML(namespace) {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MX-Reginald — Subscription Active</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; max-width: 600px; margin: 80px auto; padding: 0 20px; color: #333; }
+    h1 { color: #1a7f37; }
+    .warning { color: #9a6700; background: #fff8c5; border: 1px solid #d4a72c; border-radius: 6px; padding: 12px; margin: 16px 0; }
+  </style>
+</head>
+<body>
+  <h1>Subscription Active</h1>
+  <p>Your MX-Reginald publisher listing for <strong>${namespace}</strong> is now active.</p>
+  <p>Your API token has been generated. Check your email for setup instructions, or use the <code>/api/v1/publisher/status</code> endpoint to verify your subscription.</p>
+  <div class="warning">
+    <strong>Important:</strong> Store your API token securely. It cannot be retrieved again. If lost, use the token rotation endpoint to generate a new one.
+  </div>
+  <p><a href="https://reginald.allabout.network">Return to MX-Reginald</a></p>
+</body>
+</html>`;
+}
+
+function subscribeCancelledHTML() {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MX-Reginald — Checkout Cancelled</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; max-width: 600px; margin: 80px auto; padding: 0 20px; color: #333; }
+  </style>
+</head>
+<body>
+  <h1>Checkout Cancelled</h1>
+  <p>Your subscription checkout was cancelled. No charges were made.</p>
+  <p>You can restart the process at any time by calling <code>POST /api/v1/subscribe</code>.</p>
+  <p><a href="https://reginald.allabout.network">Return to MX-Reginald</a></p>
+</body>
+</html>`;
+}
+
 export default {
   fetch: handleRequest,
+  async scheduled(event, env, ctx) {
+    // Daily at 02:00 UTC — suspend expired subscriptions
+    if (event.cron === '0 2 * * *') {
+      await runSubscriptionExpiry(env);
+    }
+    // Monthly on 1st at 03:00 UTC — run aliveness checks
+    if (event.cron === '0 3 1 * *') {
+      await runAlivenessChecks(env);
+    }
+  },
 };

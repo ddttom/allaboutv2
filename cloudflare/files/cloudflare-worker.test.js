@@ -37,6 +37,7 @@ import worker, {
   detectLanguage,
   findLanguageSite,
   shouldLanguageRedirect,
+  categoriseAgent,
   WORKER_VERSION,
   PICTURE_PLACEHOLDER_CONFIG,
 } from './cloudflare-worker.js';
@@ -911,7 +912,7 @@ describe('handleRequest Integration', () => {
 
     // Verify version header still present and shows current version
     expect(response.headers.get('cfw')).toBe(WORKER_VERSION);
-    expect(WORKER_VERSION).toBe('1.3.0');
+    expect(WORKER_VERSION).toBe('1.4.0');
   });
 
   test('includes speculation rules in HTML responses', async () => {
@@ -1329,5 +1330,58 @@ describe('shouldLanguageRedirect', () => {
   test('handles site without redirectPaths', () => {
     const noRedirect = { excludePaths: ['/assets/'] };
     expect(shouldLanguageRedirect('/', noRedirect)).toBe(false);
+  });
+});
+
+// ============================================================
+// categoriseAgent Tests
+// ============================================================
+describe('categoriseAgent', () => {
+  test('identifies ChatGPT', () => {
+    expect(categoriseAgent('ChatGPT-User/1.0')).toBe('chatgpt');
+    expect(categoriseAgent('Mozilla/5.0 (compatible; OpenAI)')).toBe('chatgpt');
+  });
+
+  test('identifies Claude', () => {
+    expect(categoriseAgent('ClaudeBot/1.0')).toBe('claude');
+    expect(categoriseAgent('Anthropic-Agent/2.0')).toBe('claude');
+  });
+
+  test('identifies Perplexity', () => {
+    expect(categoriseAgent('PerplexityBot/1.0')).toBe('perplexity');
+  });
+
+  test('identifies GPTBot', () => {
+    expect(categoriseAgent('GPTBot/1.0')).toBe('gptbot');
+  });
+
+  test('identifies Googlebot', () => {
+    expect(categoriseAgent('Googlebot/2.1')).toBe('googlebot');
+    expect(categoriseAgent('Google-Extended')).toBe('googlebot');
+  });
+
+  test('identifies Bingbot', () => {
+    expect(categoriseAgent('bingbot/2.0')).toBe('bingbot');
+  });
+
+  test('identifies browsers', () => {
+    expect(categoriseAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')).toBe('browser');
+  });
+
+  test('identifies generic bots', () => {
+    expect(categoriseAgent('SomeBot/1.0')).toBe('bot');
+    expect(categoriseAgent('web-crawler/3.0')).toBe('bot');
+    expect(categoriseAgent('spider-agent')).toBe('bot');
+  });
+
+  test('returns unknown for null or empty', () => {
+    expect(categoriseAgent(null)).toBe('unknown');
+    expect(categoriseAgent(undefined)).toBe('unknown');
+    expect(categoriseAgent('')).toBe('unknown');
+  });
+
+  test('returns unknown for unrecognised agent', () => {
+    expect(categoriseAgent('curl/7.88.1')).toBe('unknown');
+    expect(categoriseAgent('custom-http-client')).toBe('unknown');
   });
 });
