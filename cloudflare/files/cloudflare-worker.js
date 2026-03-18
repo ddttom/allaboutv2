@@ -568,8 +568,22 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
     yaml: 'text/yaml',
     yml: 'text/yaml',
     pem: 'application/x-pem-file',
+    css: 'text/css',
+    js: 'application/javascript',
+    svg: 'image/svg+xml',
+    png: 'image/png',
+    jpg: 'image/jpeg',
+    jpeg: 'image/jpeg',
+    gif: 'image/gif',
+    ico: 'image/x-icon',
+    woff: 'font/woff',
+    woff2: 'font/woff2',
   };
-  if (contentTypes[ext]) {
+  // Filename-specific overrides (llms.txt served as HTML so browsers render it)
+  const filename = subPath.split('/').pop();
+  if (filename === 'llms.txt') {
+    resp.headers.set('Content-Type', 'text/html; charset=utf-8');
+  } else if (contentTypes[ext]) {
     resp.headers.set('Content-Type', `${contentTypes[ext]}; charset=utf-8`);
   }
 
@@ -858,6 +872,11 @@ const handleRequest = async (request, env, _ctx) => {
 
   // Add worker version header
   resp.headers.set('cfw', WORKER_VERSION);
+
+  // llms.txt served as HTML so browsers render it
+  if (url.pathname.endsWith('/llms.txt') || url.pathname === '/llms.txt') {
+    resp.headers.set('Content-Type', 'text/html; charset=utf-8');
+  }
 
   return resp;
 };
