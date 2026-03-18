@@ -1218,7 +1218,7 @@
     {
       "name": "reginald-mirror",
       "version": "1.0.0",
-      "description": "Sync source cogs to the Reginald web mirror, keeping allaboutv2/reginald/ up to date with scripts/cogs/ and mx-canon/.",
+      "description": "Sync source cogs to the Reginald web mirror, keeping mx-outputs/reginald/ up to date with scripts/cogs/ and mx-canon/.",
       "canonical_url": "https://content.allabout.network/cogs/cognovamx/reginald-mirror/content.md",
       "content_hash": "sha256:8e7cecc5da290255248822b52b3b57c53c7311bc4b1caba81330a32521c65ced",
       "category": "mx-core",

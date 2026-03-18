@@ -1,6 +1,6 @@
 ---
 version: "1.0.0"
-description: "Sync source cogs to the Reginald web mirror, keeping allaboutv2/reginald/ up to date with scripts/cogs/ and mx-canon/."
+description: "Sync source cogs to the Reginald web mirror, keeping mx-outputs/reginald/ up to date with scripts/cogs/ and mx-canon/."
 created: 2026-03-09
 modified: 2026-03-09
 author: Tom Cranstoun and Maxine
@@ -23,9 +23,9 @@ mx:
     command: mx reginald-mirror
     policy: |
       Source cogs in scripts/cogs/ and mx-canon/ are authoritative.
-      The Reginald mirror at allaboutv2/reginald/ must reflect source state.
+      The Reginald mirror at mx-outputs/reginald/ must reflect source state.
       Run this after any cog modification to keep the mirror current.
-      The sync pipeline is: source cogs → mx-reginald/index.json → allaboutv2/reginald/
+      The sync pipeline is: source cogs → mx-reginald/index.json → mx-outputs/reginald/
     actions:
       - name: sync
         description: "Full mirror sync — update registry index then regenerate Reginald mirror."
@@ -56,7 +56,7 @@ mx:
           1. **Update registry** — `npm run cog:sync` scans all `.cog.md` files
              and regenerates `mx-reginald/index.json`
           2. **Regenerate mirror** — `npm run reginald:generate` reads the registry
-             and writes static files to `allaboutv2/reginald/`:
+             and writes static files to `mx-outputs/reginald/`:
              - `cogs/cognovamx/{name}/latest.json` — extracted metadata
              - `cogs/cognovamx/{name}/content.md` — full cog content
              - `api/v1/cogs.json` — API endpoint
@@ -66,22 +66,22 @@ mx:
 
           ### Output
 
-          Mirror files at `allaboutv2/reginald/`
+          Mirror files at `mx-outputs/reginald/`
 
           ### Post-Sync
 
-          After syncing, commit changes in the allaboutv2 submodule:
+          After syncing, commit changes in the mx-outputs submodule:
           ```bash
-          git -C allaboutv2 add reginald/
-          git -C allaboutv2 commit -m "chore: sync Reginald mirror"
-          git -C allaboutv2 push
-          git add allaboutv2
-          git commit -m "chore: update allaboutv2 submodule with Reginald mirror sync"
+          git -C mx-outputs add reginald/ content/ .well-known/
+          git -C mx-outputs commit -m "chore: sync Reginald output"
+          git -C mx-outputs push
+          git add mx-outputs
+          git commit -m "chore: update mx-outputs submodule with Reginald sync"
           ```
         outputs:
           - name: mirror
             type: file
-            description: "Updated mirror at allaboutv2/reginald/"
+            description: "Updated mirror at mx-outputs/reginald/"
           - name: registry
             type: file
             description: "Updated registry at mx-reginald/index.json"
@@ -98,7 +98,7 @@ mx:
           ```bash
           # Count source cogs vs mirror entries
           echo "Source cogs: $(find scripts/cogs mx-canon -name '*.cog.md' | wc -l)"
-          echo "Mirror entries: $(find allaboutv2/reginald/cogs -name 'latest.json' | wc -l)"
+          echo "Mirror entries: $(find mx-outputs/reginald/cogs -name 'latest.json' | wc -l)"
           ```
 
           ### What to Check
@@ -116,11 +116,11 @@ mx:
 
 # Reginald Mirror Sync
 
-Keeps the Reginald web mirror at `allaboutv2/reginald/` synchronised with source cogs across the repository.
+Keeps the Reginald web mirror at `mx-outputs/reginald/` synchronised with source cogs across the repository.
 
 ## What This Does
 
-The Reginald mirror is the published version of all MX cogs, served via the allabout.network website. This cog automates the two-step sync pipeline:
+The Reginald output is the published version of all MX cogs, served via `reginald.allabout.network` (registry API) and `content.allabout.network` (COG content). Generated files are deployed to Cloudflare Pages from the mx-outputs repository. This cog automates the two-step sync pipeline:
 
 1. **Registry update** — scans all `.cog.md` files and rebuilds `mx-reginald/index.json`
 2. **Mirror generation** — transforms the registry into static web files (JSON metadata, markdown content, API endpoints, llms.txt)
@@ -134,7 +134,7 @@ Without automated mirroring, source cogs and their published versions drift apar
 1. Run `npm run reginald:mirror` after modifying any cog
 2. The script handles both registry sync and mirror generation
 3. Report the total cog count from the output
-4. Commit allaboutv2 submodule changes separately (submodule-first workflow)
+4. Commit mx-outputs submodule changes separately (submodule-first workflow)
 
 ## Dependencies
 
