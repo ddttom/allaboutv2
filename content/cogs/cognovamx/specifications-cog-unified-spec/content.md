@@ -90,7 +90,7 @@ A cog is composed of blocks. Each block has a type that declares what its conten
 
 The markdown body of every cog is its prose block. It is never declared in YAML — it is implicit. The prose block is for humans. It reads like a well-written blog post: informative, editorial, authoritative. The YAML is for machines. The markdown is for humans.
 
-If a cog has a `prose-source` field in its frontmatter, the prose block is inherited from an external file. This allows one cog to carry the machine-readable YAML while a companion `.md` file carries the human narrative.
+Any MX-aware file can declare `mx.inherits` to extend another file. The inheriting file adds structured metadata on top of the target's content. The target can be any file type — `.md`, `.cog.md`, `.html`, `.json`, `.yaml`, or anything else. Paths can be relative or absolute. The older `prose-source` field is deprecated in favour of `inherits`.
 
 ### The Essence Block
 

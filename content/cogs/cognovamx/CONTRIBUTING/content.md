@@ -12,7 +12,7 @@ mx:
   partOf: mx-maxine-lives
   tags: [contributing, governance, the-gathering, open-standard]
 
-  prose-source: CONTRIBUTING.md
+  inherits: CONTRIBUTING.md
 
   blocks:
     - prose:

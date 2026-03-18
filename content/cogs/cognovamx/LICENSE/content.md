@@ -12,7 +12,7 @@ mx:
   partOf: mx-maxine-lives
   tags: [license, mit, open-source, the-gathering]
 
-  prose-source: LICENSE
+  inherits: LICENSE
 
   blocks:
     - prose:

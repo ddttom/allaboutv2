@@ -244,7 +244,8 @@ mx:
         - name: prose-source
           type: string
           required: false
-          description: "External file path for inherited prose content. Allows one cog to carry machine-readable YAML while a companion .md file carries the human narrative."
+          description: "Deprecated — use mx.inherits instead. External file path for inherited prose content."
+          status: deprecated
 
     - name: essence
       implicit: false
