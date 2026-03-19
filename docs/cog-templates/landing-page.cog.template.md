@@ -5,12 +5,12 @@ mx:
     version: "1.0"
     id: "cog-{publisher-id}-{subject-slug}-{YYYYMMDD}"
     type: "certificate-of-genuineness"
-    status: "draft"  # draft | signed | registered | active
+    status: "draft"  # draft | attested | registered | active
 
     publisher:
       name: "{Publisher Name}"
       verified: false
-      signedBy: "unsigned"
+      attestedBy: "unattested"
       contact: "{email@example.com}"
       website: "{https://example.com}"
 
@@ -22,9 +22,9 @@ mx:
 
     publicationDate: "{YYYY-MM-DDTHH:MM:SSZ}"
     expires: "{YYYY-MM-DDTHH:MM:SSZ}"  # Typically 6 months from issued
-    lastVerified: "{YYYY-MM-DDTHH:MM:SSZ}"
+    maintainedDate: "{YYYY-MM-DDTHH:MM:SSZ}"
 
-    signature: "unsigned"
+    attestation: "unattested"
     mxCompliance: "level-2"
     registry: "allabout.network"
 

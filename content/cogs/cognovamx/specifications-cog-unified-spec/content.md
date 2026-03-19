@@ -1008,7 +1008,7 @@ subject:
 
 publicationDate: "2026-02-08T14:30:00Z"
 expires: "2026-08-08T14:30:00Z"
-lastVerified: "2026-02-08T14:30:00Z"
+maintainedDate: "2026-02-08T14:30:00Z"
 
 signature: "mx-sig-..."
 mxCompliance: "level-3"

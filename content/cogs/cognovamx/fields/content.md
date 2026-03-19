@@ -1636,7 +1636,7 @@ mx:
       status: canonical
       profile: cog
 
-    - name: lastVerified
+    - name: maintainedDate
       type: string
       definition: "Date the cog was last verified accurate. ISO 8601 format (YYYY-MM-DD)."
       example: 2026-03-01
@@ -3236,7 +3236,7 @@ mx:
       description: "Fields specific to .cog.md files. Machine identifier is derived from filename."
       required: [category, partOf]
       recommended: [buildsOn, tags]
-      optional: [requires, refersTo, execute, blocks, policy, cogId, cogType, publicationDate, expires, correctionSla, lastVerified, updateTriggers]
+      optional: [requires, refersTo, execute, blocks, policy, cogId, cogType, publicationDate, expires, correctionSla, maintainedDate, updateTriggers]
 
     - name: book
       description: "Fields for book manuscript chapters."
@@ -4998,7 +4998,7 @@ mx:
     calculation: "SUM(orders.total) WHERE orders.user_id = users.id"
     tables: [users, orders]
     owner: "analytics-team"
-    lastVerified: 2026-02-15
+    maintainedDate: 2026-02-15
 ```
 
 ---

@@ -5,10 +5,10 @@
     "name": "CogNovaMX Ltd",
     "domain": "allabout.network",
     "contact": "tom.cranstoun@gmail.com",
-    "signing_key": {
+    "attestation_key": {
       "algorithm": "Ed25519",
       "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAjokg/YnZGInXxxVojvioExnE0CRha51+Fld3ybjk4A4=\n-----END PUBLIC KEY-----",
-      "key_id": "reginald-signing-key-2026"
+      "key_id": "reginald-attestation-key-2026"
     }
   },
   "cogs": [
@@ -27,7 +27,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-12",
-      "signature": "base64:ljVYMje2ak2V3LNnUti3t3PEDXgxdsdb1srAp7/1QBQA4eTFXI3e5oxfdtnOlOIj13w2X2MkRcWXoBIkqTf+BA=="
+      "attestation": "base64:ljVYMje2ak2V3LNnUti3t3PEDXgxdsdb1srAp7/1QBQA4eTFXI3e5oxfdtnOlOIj13w2X2MkRcWXoBIkqTf+BA=="
     },
     {
       "name": "LICENSE",
@@ -44,7 +44,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-12",
-      "signature": "base64:47spPm4EI1wn7DwQjn+zSj2PxoiJHHiN/GAOrlBXvzLDyK4/1UlQQ7w53s4p7UCzyrX8VfVwM7R1rzJFFWLcBw=="
+      "attestation": "base64:47spPm4EI1wn7DwQjn+zSj2PxoiJHHiN/GAOrlBXvzLDyK4/1UlQQ7w53s4p7UCzyrX8VfVwM7R1rzJFFWLcBw=="
     },
     {
       "name": "about-maxine",
@@ -68,7 +68,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-13",
-      "signature": "base64:wYO8L6qzFsP+O5H0QD2NzlKcmCBcioPuCJvHl3bT6BPOTlmUMvgIdFrrE9tuQ5mO6bW+YtfhuF3haOeEdnG7Bg=="
+      "attestation": "base64:wYO8L6qzFsP+O5H0QD2NzlKcmCBcioPuCJvHl3bT6BPOTlmUMvgIdFrrE9tuQ5mO6bW+YtfhuF3haOeEdnG7Bg=="
     },
     {
       "name": "about-mx",
@@ -86,7 +86,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-12",
-      "signature": "base64:GTJIM7WpI6L6PXUmCKUtlLWZrfUFISKnA9nb0LJQoMrqjl4MsRRU3Q/cte04NsQA9VwdR40lx+nZLTlJbOY7Dw=="
+      "attestation": "base64:GTJIM7WpI6L6PXUmCKUtlLWZrfUFISKnA9nb0LJQoMrqjl4MsRRU3Q/cte04NsQA9VwdR40lx+nZLTlJbOY7Dw=="
     },
     {
       "name": "mx-metadata-conventions",
@@ -108,7 +108,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-15",
-      "signature": "base64:hJrN2h85E63nehHYwSbbO3mDns5/ROYrZEPYGQplKHNVaWgi1mIgPsMWSxXfvDrPa/GczferwaAoy0QzAaoUAg=="
+      "attestation": "base64:hJrN2h85E63nehHYwSbbO3mDns5/ROYrZEPYGQplKHNVaWgi1mIgPsMWSxXfvDrPa/GczferwaAoy0QzAaoUAg=="
     },
     {
       "name": "business-benefits",
@@ -127,7 +127,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-02",
-      "signature": "base64:NE93jnW9VLsux2u+g9SGYeXI5kvvNl7E5cKrgxYe8QZrUfQgj4YELQrwtcKqDCRXNZ2n0hfdug9X1qzLlA3EBg=="
+      "attestation": "base64:NE93jnW9VLsux2u+g9SGYeXI5kvvNl7E5cKrgxYe8QZrUfQgj4YELQrwtcKqDCRXNZ2n0hfdug9X1qzLlA3EBg=="
     },
     {
       "name": "mx-concepts",
@@ -147,7 +147,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-11",
-      "signature": "base64:JTJ+K6Ali+IgMGzA4XobG0hs1qR1NB6qbBqW/fVydPdrAsBoCpPGk5aCfbnDsIhG+vLPXSmqD/X3mg2jFZtnAQ=="
+      "attestation": "base64:JTJ+K6Ali+IgMGzA4XobG0hs1qR1NB6qbBqW/fVydPdrAsBoCpPGk5aCfbnDsIhG+vLPXSmqD/X3mg2jFZtnAQ=="
     },
     {
       "name": "mx-train-analogy",
@@ -169,7 +169,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-11",
-      "signature": "base64:gqqLV1YYFXAO7mftIcoc/kJBeDfA5sFFykYZspnG8J/Brkw9tS2ARSxt6Ut+rojbkPFziTiEQZTapttLEvXgDg=="
+      "attestation": "base64:gqqLV1YYFXAO7mftIcoc/kJBeDfA5sFFykYZspnG8J/Brkw9tS2ARSxt6Ut+rojbkPFziTiEQZTapttLEvXgDg=="
     },
     {
       "name": "appendix-k-yaml-metadata",
@@ -188,7 +188,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-27",
-      "signature": "base64:iQnZ0CXra9Vm+ksGUP4Qu+AamkB9moCu2MLC7R0/GnGLwlyHitbbo7ofzI+jGVwhaj5ZinEz6a8mHbFRfOYUDQ=="
+      "attestation": "base64:iQnZ0CXra9Vm+ksGUP4Qu+AamkB9moCu2MLC7R0/GnGLwlyHitbbo7ofzI+jGVwhaj5ZinEz6a8mHbFRfOYUDQ=="
     },
     {
       "name": "adr-01-block-architecture",
@@ -208,7 +208,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-13",
-      "signature": "base64:VFziGlqIbSbJeolYcN5Ea7PW/YrKxqShTVEnYU4PNH533mD+DBjIovtcDghagzxJaEUQGxeNGsUxHGx++kaeDA=="
+      "attestation": "base64:VFziGlqIbSbJeolYcN5Ea7PW/YrKxqShTVEnYU4PNH533mD+DBjIovtcDghagzxJaEUQGxeNGsUxHGx++kaeDA=="
     },
     {
       "name": "adr-02-namespace-policy",
@@ -228,7 +228,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-17",
-      "signature": "base64:7A3u1bAJ8Cvn6x1LbaijmI7WF9eoptAyBuEaqzBHREQAt6J7sIKP5UuyLg9GGkpRUywEcO/skyxlPnDqu7VoBQ=="
+      "attestation": "base64:7A3u1bAJ8Cvn6x1LbaijmI7WF9eoptAyBuEaqzBHREQAt6J7sIKP5UuyLg9GGkpRUywEcO/skyxlPnDqu7VoBQ=="
     },
     {
       "name": "namespace-extensions",
@@ -248,7 +248,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-01",
-      "signature": "base64:5JFg1YiDuSrBfESYvJz36BZAg7CLR7QZUhJZfKSIdqByBPVEZSRQMhFzT6kcw+/7a6/cijDSK3b3wjvzz/+fAQ=="
+      "attestation": "base64:5JFg1YiDuSrBfESYvJz36BZAg7CLR7QZUhJZfKSIdqByBPVEZSRQMhFzT6kcw+/7a6/cijDSK3b3wjvzz/+fAQ=="
     },
     {
       "name": "ndr-01-block-naming",
@@ -266,7 +266,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-02",
-      "signature": "base64:rIeRMP+7mNRZOpEA/K1GwU6hdGtKU8AjflFvOMOnavTHkFOHLepkVQa8LiAuKA7r+thiE9BbKEXbpwMsKiXkCg=="
+      "attestation": "base64:rIeRMP+7mNRZOpEA/K1GwU6hdGtKU8AjflFvOMOnavTHkFOHLepkVQa8LiAuKA7r+thiE9BbKEXbpwMsKiXkCg=="
     },
     {
       "name": "ndr-02-camelcase-naming",
@@ -287,7 +287,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-02",
-      "signature": "base64:pi5bLtnX4cdlUsguVckxsGiwnrDkFDd1gDO/XcBNcfpH41OoKqWadsDJv4zjf+s2n0pP6pwek8u6u/b7YRgmBw=="
+      "attestation": "base64:pi5bLtnX4cdlUsguVckxsGiwnrDkFDd1gDO/XcBNcfpH41OoKqWadsDJv4zjf+s2n0pP6pwek8u6u/b7YRgmBw=="
     },
     {
       "name": "ndr-03-spelling-neutrality",
@@ -308,7 +308,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-02",
-      "signature": "base64:tKul6J6coizvpaqNG4ZIe9vcyUiKjRsWM+Bf6MOof20bgHhXoWKX56q2cJfOf1BmJREIgZz3tPHP5OLiffOdAQ=="
+      "attestation": "base64:tKul6J6coizvpaqNG4ZIe9vcyUiKjRsWM+Bf6MOof20bgHhXoWKX56q2cJfOf1BmJREIgZz3tPHP5OLiffOdAQ=="
     },
     {
       "name": "effective-doc-example",
@@ -327,7 +327,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-04",
-      "signature": "base64:Fkv+2r1SXNn4uyxw0i3FnQk5ZKMJy42OZr7r8tOfRbwELYHOpYdzbw78M0Kz1nj9z+N1LlIJnyEHXGLpICZ8Dw=="
+      "attestation": "base64:Fkv+2r1SXNn4uyxw0i3FnQk5ZKMJy42OZr7r8tOfRbwELYHOpYdzbw78M0Kz1nj9z+N1LlIJnyEHXGLpICZ8Dw=="
     },
     {
       "name": "example-with-includes",
@@ -344,7 +344,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-03-04",
-      "signature": "base64:jKq42u4mO6Xfki4J5GefZ56FMepjl5ssCRJvAm+6nZmgUmTbIwpDj2S1troLtdn87Gazmb6DRMFwFLc9JgvhCw=="
+      "attestation": "base64:jKq42u4mO6Xfki4J5GefZ56FMepjl5ssCRJvAm+6nZmgUmTbIwpDj2S1troLtdn87Gazmb6DRMFwFLc9JgvhCw=="
     },
     {
       "name": "shared-validation-policy",
@@ -361,7 +361,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-04",
-      "signature": "base64:PQVXGHDSC8Gh7LGIfY0GmrWUgw8kM5rIzI49FypFJ8+P5eqQ88aPHIpMqK1xJ1/XPVfQ6WFbKMBcsb0nYA5iCg=="
+      "attestation": "base64:PQVXGHDSC8Gh7LGIfY0GmrWUgw8kM5rIzI49FypFJ8+P5eqQ88aPHIpMqK1xJ1/XPVfQ6WFbKMBcsb0nYA5iCg=="
     },
     {
       "name": "block-architecture-evolution",
@@ -380,7 +380,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-04",
-      "signature": "base64:u4YtbzDec6MeP/+TBhDpO/EPcMtoj49SXJUDjN+72/dPQiK0WLHiyn+l3DA0rC8ckL72oTpEbbAqCnKzhBzXDw=="
+      "attestation": "base64:u4YtbzDec6MeP/+TBhDpO/EPcMtoj49SXJUDjN+72/dPQiK0WLHiyn+l3DA0rC8ckL72oTpEbbAqCnKzhBzXDw=="
     },
     {
       "name": "specifications-cog-unified-spec",
@@ -398,7 +398,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-04",
-      "signature": "base64:CIPq5PAILI7+OmUDtUlWw5Ye2GaNSH+qdM2u6BNGYu/DeUVsZfkdgXHTGmiBsYkBc2kTrQwbl96wo5sb00ZVBg=="
+      "attestation": "base64:CIPq5PAILI7+OmUDtUlWw5Ye2GaNSH+qdM2u6BNGYu/DeUVsZfkdgXHTGmiBsYkBc2kTrQwbl96wo5sb00ZVBg=="
     },
     {
       "name": "mx-standards-alignment",
@@ -418,7 +418,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-17",
-      "signature": "base64:kGNS0G3WypLqBpeDrj9IYgalmYc13I3TFkNI20qeWiXiJp8bbdD89pS93Lcg60mO/f+tx/k4dqJoXN95nT1kCQ=="
+      "attestation": "base64:kGNS0G3WypLqBpeDrj9IYgalmYc13I3TFkNI20qeWiXiJp8bbdD89pS93Lcg60mO/f+tx/k4dqJoXN95nT1kCQ=="
     },
     {
       "name": "fields",
@@ -442,7 +442,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-03",
-      "signature": "base64:asQnLiOkI7EXBO9X8nbYoOZ7S9YQpojj/vNNdcWdE97temLnJXl9x87qFM7SIJBkJx4DRzq1d43aUTRcH/s9Cg=="
+      "attestation": "base64:asQnLiOkI7EXBO9X8nbYoOZ7S9YQpojj/vNNdcWdE97temLnJXl9x87qFM7SIJBkJx4DRzq1d43aUTRcH/s9Cg=="
     },
     {
       "name": "mx-html-writing-guide",
@@ -461,7 +461,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-04",
-      "signature": "base64:diqnvmGGCpspPvGUtoNSAfn3Vr5sMXUvENl9vuE+xP6jf7s74nVTEhr5z5xfyF7epe3cD1XUhqkaJuVA5Z2TBw=="
+      "attestation": "base64:diqnvmGGCpspPvGUtoNSAfn3Vr5sMXUvENl9vuE+xP6jf7s74nVTEhr5z5xfyF7epe3cD1XUhqkaJuVA5Z2TBw=="
     },
     {
       "name": "principles",
@@ -481,7 +481,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-04",
-      "signature": "base64:HaExmB0sEYskaOKzl20gCKW90/ALevYU8Lp8Tjj637wYZbaOvFawulHRhqCTRfsMG/CueGcwQNP1zLXkl3XoBA=="
+      "attestation": "base64:HaExmB0sEYskaOKzl20gCKW90/ALevYU8Lp8Tjj637wYZbaOvFawulHRhqCTRfsMG/CueGcwQNP1zLXkl3XoBA=="
     },
     {
       "name": "cog-cog-unified-spec",
@@ -497,7 +497,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-02",
-      "signature": "base64:r05Jge1f7a6QJH1uTyrjXlPKcGJW6kvO8gMvQ+w0IO4rHhUZ3kBSnzg1bP8rff3k+TyzNTzB1MkOdapGLLgzCw=="
+      "attestation": "base64:r05Jge1f7a6QJH1uTyrjXlPKcGJW6kvO8gMvQ+w0IO4rHhUZ3kBSnzg1bP8rff3k+TyzNTzB1MkOdapGLLgzCw=="
     },
     {
       "name": "cog-system",
@@ -514,7 +514,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-02",
-      "signature": "base64:8tY3gCzZZnvvKiNiG9aDQwt5uQ4kAZV2SSxUsg+c9cqO+nvsvK+p3DqTlTR1cFRvNuRYrK7lDPpKsfZ5hAQtDA=="
+      "attestation": "base64:8tY3gCzZZnvvKiNiG9aDQwt5uQ4kAZV2SSxUsg+c9cqO+nvsvK+p3DqTlTR1cFRvNuRYrK7lDPpKsfZ5hAQtDA=="
     },
     {
       "name": "maxine",
@@ -531,7 +531,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-02",
-      "signature": "base64:IH3nfb/e3xBPsMeaI9AZwOZ3kCO4qbkLkyg4naKZSEmL0fI3eurL+5ACBPO5ZE3u10bDagxa+Csudj+ncNtMCQ=="
+      "attestation": "base64:IH3nfb/e3xBPsMeaI9AZwOZ3kCO4qbkLkyg4naKZSEmL0fI3eurL+5ACBPO5ZE3u10bDagxa+Csudj+ncNtMCQ=="
     },
     {
       "name": "cog-snapshot",
@@ -548,7 +548,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-23",
-      "signature": "base64:iT88ZooKEWNDMNINx43r6CRpJa75cG6erq7aMi/sN1QV6eB0owUXwy4C/KfdqOiUfqjOULeDxLmmFdy9+MooBg=="
+      "attestation": "base64:iT88ZooKEWNDMNINx43r6CRpJa75cG6erq7aMi/sN1QV6eB0owUXwy4C/KfdqOiUfqjOULeDxLmmFdy9+MooBg=="
     },
     {
       "name": "mx-reginald-manual",
@@ -565,7 +565,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-23",
-      "signature": "base64:+wmyiU4B0LkQ8GSX6HsZms8EOizqLQEyiFxi5U9PQNiq5f454gKTqUk6X+fzp/eJkZRf0htvc10Bj+qZxVGDCA=="
+      "attestation": "base64:+wmyiU4B0LkQ8GSX6HsZms8EOizqLQEyiFxi5U9PQNiq5f454gKTqUk6X+fzp/eJkZRf0htvc10Bj+qZxVGDCA=="
     },
     {
       "name": "header",
@@ -582,7 +582,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-02",
-      "signature": "base64:7Pa9G9zvRTMMTcmFGsmc/2nkgxJQXDtwvDZvqtTZwQrlWLksGrbKcQmTBpqr6Z95aZPZ3S7huXBMwKcFEf6QDA=="
+      "attestation": "base64:7Pa9G9zvRTMMTcmFGsmc/2nkgxJQXDtwvDZvqtTZwQrlWLksGrbKcQmTBpqr6Z95aZPZ3S7huXBMwKcFEf6QDA=="
     },
     {
       "name": "mx-principles-menu",
@@ -599,7 +599,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-03-02",
-      "signature": "base64:HTKBlPQzkrTlTa7WjoMtQULRUmOIqRTwDrw8fP/OaxJGVjvuNHzLJyM2asPFJLFtowi3qO8Sw47mrvaQKw+UDg=="
+      "attestation": "base64:HTKBlPQzkrTlTa7WjoMtQULRUmOIqRTwDrw8fP/OaxJGVjvuNHzLJyM2asPFJLFtowi3qO8Sw47mrvaQKw+UDg=="
     },
     {
       "name": "demo-media219-media219",
@@ -622,7 +622,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-25",
-      "signature": "base64:8L6a/2s51+vceGo5tCZyhl57vykP4vY2tD0H/wQ5XhDqzxOfNkV4QvA1AhLT2yXwzdgqkhMwI+gKY1io5HpXAQ=="
+      "attestation": "base64:8L6a/2s51+vceGo5tCZyhl57vykP4vY2tD0H/wQ5XhDqzxOfNkV4QvA1AhLT2yXwzdgqkhMwI+gKY1io5HpXAQ=="
     },
     {
       "name": "getting-started",
@@ -640,7 +640,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-24",
-      "signature": "base64:AGb6y6vyUJWJ1CS0VNaJk2NEs87xL/tiN9xz8LjjfSkUpVK8QulyhkIdRKm3tVMmlnA8yKi+3Y8PGdIAASqdBQ=="
+      "attestation": "base64:AGb6y6vyUJWJ1CS0VNaJk2NEs87xL/tiN9xz8LjjfSkUpVK8QulyhkIdRKm3tVMmlnA8yKi+3Y8PGdIAASqdBQ=="
     },
     {
       "name": "INSTALLME",
@@ -661,7 +661,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-24",
-      "signature": "base64:majCvOoSD/3zq75XuwbPJ4vk3kgsW/qZ+X9B4AU4qo2HPL/vTUqi/TW0BGm4lnbP7rsHyvxplCpLNVkGYe+4DA=="
+      "attestation": "base64:majCvOoSD/3zq75XuwbPJ4vk3kgsW/qZ+X9B4AU4qo2HPL/vTUqi/TW0BGm4lnbP7rsHyvxplCpLNVkGYe+4DA=="
     },
     {
       "name": "a11y",
@@ -679,7 +679,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-06",
-      "signature": "base64:LQlT1bCR+qIy1xba7P2cOLBa//TGfAPYGy8ntNoDoH5l+K0LjX+ix3OeG9IwDea30aTWy2cq5Xc37VG46hzsDA=="
+      "attestation": "base64:LQlT1bCR+qIy1xba7P2cOLBa//TGfAPYGy8ntNoDoH5l+K0LjX+ix3OeG9IwDea30aTWy2cq5Xc37VG46hzsDA=="
     },
     {
       "name": "blog-generator",
@@ -700,7 +700,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-11",
-      "signature": "base64:QtTexjPbSuGsb0C93s6WDRKViGyyH/y0ULphlxKdGezt7PRZ2ZIH9mh0TjNrBV89PIU/SLOGWMqhmLeitLtoAw=="
+      "attestation": "base64:QtTexjPbSuGsb0C93s6WDRKViGyyH/y0ULphlxKdGezt7PRZ2ZIH9mh0TjNrBV89PIU/SLOGWMqhmLeitLtoAw=="
     },
     {
       "name": "blog-reviewer",
@@ -721,7 +721,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-11",
-      "signature": "base64:5jylsaTjhGu84KE+6nPofcjE8IrHt+5t63W8g6EbzS2WGqJ6LSzRVcmAEyTUqQpVohCTuqwia/ulZ++F/KdvCw=="
+      "attestation": "base64:5jylsaTjhGu84KE+6nPofcjE8IrHt+5t63W8g6EbzS2WGqJ6LSzRVcmAEyTUqQpVohCTuqwia/ulZ++F/KdvCw=="
     },
     {
       "name": "building-action-docs",
@@ -742,7 +742,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-09",
-      "signature": "base64:MQFfA4DfIUtE99FSvCQf4MecNmWRuUrz38gAH7/hTyl9Dky6kIqP9ByMR/qxW2DfCh/bEVNdA+Rc933s2/HnAw=="
+      "attestation": "base64:MQFfA4DfIUtE99FSvCQf4MecNmWRuUrz38gAH7/hTyl9Dky6kIqP9ByMR/qxW2DfCh/bEVNdA+Rc933s2/HnAw=="
     },
     {
       "name": "clarity",
@@ -760,7 +760,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-06",
-      "signature": "base64:o30SM1e30rd/ViW3wJFY1W62rcyrobPG0/KiDG76f4fj2eO0JjdmLOebW8awEDBYJyKQGJ7T/WB1UgaggDssBA=="
+      "attestation": "base64:o30SM1e30rd/ViW3wJFY1W62rcyrobPG0/KiDG76f4fj2eO0JjdmLOebW8awEDBYJyKQGJ7T/WB1UgaggDssBA=="
     },
     {
       "name": "cog-id",
@@ -782,7 +782,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-14",
-      "signature": "base64:RvX+BzyBlSMMpx0qATxfDLWmlQMdHnHBDN1ghxP/i0hMPgtO5T4TpF/Ixtu+POSL4zKi+qmD1tAXPZ/nUD6ODw=="
+      "attestation": "base64:RvX+BzyBlSMMpx0qATxfDLWmlQMdHnHBDN1ghxP/i0hMPgtO5T4TpF/Ixtu+POSL4zKi+qmD1tAXPZ/nUD6ODw=="
     },
     {
       "name": "cog-publication-workflow",
@@ -801,7 +801,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-03-03",
-      "signature": "base64:IEh1BENHN0wFe/v+232M1UxDSi9Gi2FgxCUrhFTw219MsZgQl9WSW7cAGLu+ujhR7QtwuBX4TlwC7Sgr8KYmCQ=="
+      "attestation": "base64:IEh1BENHN0wFe/v+232M1UxDSi9Gi2FgxCUrhFTw219MsZgQl9WSW7cAGLu+ujhR7QtwuBX4TlwC7Sgr8KYmCQ=="
     },
     {
       "name": "cog-query",
@@ -821,7 +821,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-23",
-      "signature": "base64:o8B8M+LAMLXiF3w+slfJeEvAZm4M7JCeqPp6YzkGJkIz3Lz2Ucxgq7p/JC5ueV9AWLPvfMvelY/vDFp7ByVZBA=="
+      "attestation": "base64:o8B8M+LAMLXiF3w+slfJeEvAZm4M7JCeqPp6YzkGJkIz3Lz2Ucxgq7p/JC5ueV9AWLPvfMvelY/vDFp7ByVZBA=="
     },
     {
       "name": "cog-registry",
@@ -840,7 +840,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-10",
-      "signature": "base64:9J3emq5NEHr/eSzvsL1VHtlKgPjOrXOqOynFyj7qRAdeSDw8yHpRJ5QNOl5rpkTK+WPKd13RUd+vzMf684oJDg=="
+      "attestation": "base64:9J3emq5NEHr/eSzvsL1VHtlKgPjOrXOqOynFyj7qRAdeSDw8yHpRJ5QNOl5rpkTK+WPKd13RUd+vzMf684oJDg=="
     },
     {
       "name": "cogify-this",
@@ -860,7 +860,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-20",
-      "signature": "base64:vAXEeRtH/XXbsCw0rJgJ4ke46e4uhPE2llvE6KJrilCAZ3pkHWPzoXZ5e/SuDFm8nU+iGwbjHEJ1OLjM4Tk1Cg=="
+      "attestation": "base64:vAXEeRtH/XXbsCw0rJgJ4ke46e4uhPE2llvE6KJrilCAZ3pkHWPzoXZ5e/SuDFm8nU+iGwbjHEJ1OLjM4Tk1Cg=="
     },
     {
       "name": "cogs-for-agent-developers",
@@ -881,7 +881,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-09",
-      "signature": "base64:PSR7gBrqnXurB67WGtViwti5zpSQMfouOPvEfXU7RT4rmBg3xe6Ibx7vQCxJS+NbkplI7OznFkIDfn1jy/9gDA=="
+      "attestation": "base64:PSR7gBrqnXurB67WGtViwti5zpSQMfouOPvEfXU7RT4rmBg3xe6Ibx7vQCxJS+NbkplI7OznFkIDfn1jy/9gDA=="
     },
     {
       "name": "env",
@@ -900,7 +900,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-11",
-      "signature": "base64:RyMUCCGE9j1FNUAbAPNQP6lBdyHDPl6mUqM8j50tQbkeFGJxT0oKUuXGDeuEUBlQgJH+nFksLPaMoXcbMcuuDQ=="
+      "attestation": "base64:RyMUCCGE9j1FNUAbAPNQP6lBdyHDPl6mUqM8j50tQbkeFGJxT0oKUuXGDeuEUBlQgJH+nFksLPaMoXcbMcuuDQ=="
     },
     {
       "name": "how-mx-os-runs",
@@ -924,7 +924,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-10",
-      "signature": "base64:mJimj5OGTogY07K5RzmjBp5x1VJ9Nl8DF+QB0XqOv2nJM9GR0+ZYIf9r41o1HMRYze+M/N8WXMWjvH5YQpvCCA=="
+      "attestation": "base64:mJimj5OGTogY07K5RzmjBp5x1VJ9Nl8DF+QB0XqOv2nJM9GR0+ZYIf9r41o1HMRYze+M/N8WXMWjvH5YQpvCCA=="
     },
     {
       "name": "html-baseline-audit",
@@ -945,7 +945,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-21",
-      "signature": "base64:4V2D1Vzh12PYVku66pTT4UOMRfD9KbnppT9JKhvqGauT4AD/OKjsgHk4RNHC/0hKdiNPTWavQWmHi+AmV0++Dg=="
+      "attestation": "base64:4V2D1Vzh12PYVku66pTT4UOMRfD9KbnppT9JKhvqGauT4AD/OKjsgHk4RNHC/0hKdiNPTWavQWmHi+AmV0++Dg=="
     },
     {
       "name": "link-checker",
@@ -963,7 +963,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-06",
-      "signature": "base64:4jgl2VgzESVbx5BdoplSM4EkLoNBBwFl8DiwaRHkCM+yXVxi4M20hyEM7OERwbAxc3ZtFurwrutVPRqWVBgHAw=="
+      "attestation": "base64:4jgl2VgzESVbx5BdoplSM4EkLoNBBwFl8DiwaRHkCM+yXVxi4M20hyEM7OERwbAxc3ZtFurwrutVPRqWVBgHAw=="
     },
     {
       "name": "llms-txt",
@@ -980,7 +980,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-06",
-      "signature": "base64:9JmtLHYwtDX+Zngkz4K3lGSPf3Id6RS6id7KNlDEAaIZ1d5RZd01Mo3LiUgEFfREup/niW5HuyNnIJpbCSBPBg=="
+      "attestation": "base64:9JmtLHYwtDX+Zngkz4K3lGSPf3Id6RS6id7KNlDEAaIZ1d5RZd01Mo3LiUgEFfREup/niW5HuyNnIJpbCSBPBg=="
     },
     {
       "name": "metadata-audit",
@@ -1002,7 +1002,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-16",
-      "signature": "base64:nid/KDV2NI069JTZMJIsByUEujDbm2HNPkT6TYvjbuQmIcXpQVkElxhppGZrVAP0yV4gj+He6M4Xa1eY7Tt0AQ=="
+      "attestation": "base64:nid/KDV2NI069JTZMJIsByUEujDbm2HNPkT6TYvjbuQmIcXpQVkElxhppGZrVAP0yV4gj+He6M4Xa1eY7Tt0AQ=="
     },
     {
       "name": "metadata",
@@ -1020,7 +1020,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-06",
-      "signature": "base64:cyeW6leBHv2NmY7kSBSGoAMN48eSr8h7yQPV6mWaUFivpfxwCHeaPxBOMRMqeuv4yZEbEwu8HRmuRw2s9TA1DQ=="
+      "attestation": "base64:cyeW6leBHv2NmY7kSBSGoAMN48eSr8h7yQPV6mWaUFivpfxwCHeaPxBOMRMqeuv4yZEbEwu8HRmuRw2s9TA1DQ=="
     },
     {
       "name": "mx-audit",
@@ -1045,7 +1045,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-14",
-      "signature": "base64:96cjBC/s0iUhwGFUGznwZ5jEMGBv8rbsLlQf16nUI+/oQOSjT02TjSn/r1jdaL1MsKPpFlbyI04UJquEl1TrAA=="
+      "attestation": "base64:96cjBC/s0iUhwGFUGznwZ5jEMGBv8rbsLlQf16nUI+/oQOSjT02TjSn/r1jdaL1MsKPpFlbyI04UJquEl1TrAA=="
     },
     {
       "name": "mx-boot",
@@ -1067,7 +1067,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-03-03",
-      "signature": "base64:EXxHtfRyit16B5OLjkKLFPfxnnSuUUylMSM8b9kd2H7a1IaUzIOxCVMsbndK8ynDmBv63q1h2GPG+YyRq9C+AQ=="
+      "attestation": "base64:EXxHtfRyit16B5OLjkKLFPfxnnSuUUylMSM8b9kd2H7a1IaUzIOxCVMsbndK8ynDmBv63q1h2GPG+YyRq9C+AQ=="
     },
     {
       "name": "mx-init",
@@ -1090,7 +1090,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-10",
-      "signature": "base64:RR5ZnuWEgdD1Vj/HueaPVvzfcxytaL+FH/IJx1xs7FZhQXjHN7xbp9xrfvRfwQ9SbQWQUN1Ro3dp+NnQRFJBCw=="
+      "attestation": "base64:RR5ZnuWEgdD1Vj/HueaPVvzfcxytaL+FH/IJx1xs7FZhQXjHN7xbp9xrfvRfwQ9SbQWQUN1Ro3dp+NnQRFJBCw=="
     },
     {
       "name": "mx-phrasebook",
@@ -1111,7 +1111,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-11",
-      "signature": "base64:ITkn1AbvO2XziFtkBxoiTqPUXprFei7kA/mMZDQWb8tVSaApow1Is4ltyZwifRIqcv4k6Nw+oeGhFYDcp8faCA=="
+      "attestation": "base64:ITkn1AbvO2XziFtkBxoiTqPUXprFei7kA/mMZDQWb8tVSaApow1Is4ltyZwifRIqcv4k6Nw+oeGhFYDcp8faCA=="
     },
     {
       "name": "mx-run",
@@ -1130,7 +1130,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-11",
-      "signature": "base64:psTE7MhNOtrZCzq5l/eFdACaieUDxrW01jCsGTrmllZBQI1wcZgX2/yVGzVVrw5fqcfzLpxWpJwlxEzPVpBgAQ=="
+      "attestation": "base64:psTE7MhNOtrZCzq5l/eFdACaieUDxrW01jCsGTrmllZBQI1wcZgX2/yVGzVVrw5fqcfzLpxWpJwlxEzPVpBgAQ=="
     },
     {
       "name": "mx-scaffold",
@@ -1150,7 +1150,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-03-03",
-      "signature": "base64:3/Pd0xD/i9QQLW0CWSpehCxVvCcJuSi4OyILeyuATQtfiC+jvPwHAR/Duk9m4AQ8u8B2KTUIKCweHNimq98wBg=="
+      "attestation": "base64:3/Pd0xD/i9QQLW0CWSpehCxVvCcJuSi4OyILeyuATQtfiC+jvPwHAR/Duk9m4AQ8u8B2KTUIKCweHNimq98wBg=="
     },
     {
       "name": "pixel-perfect-web-replication",
@@ -1177,7 +1177,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-20",
-      "signature": "base64:XDTBfcVmBtEaLe7le9fmIWsJIlJNcHiAs8Ky5HlQfqv20UF9Yb7d0iRC3LEU4JizNLKQwGn73zXxw4guJJmICQ=="
+      "attestation": "base64:XDTBfcVmBtEaLe7le9fmIWsJIlJNcHiAs8Ky5HlQfqv20UF9Yb7d0iRC3LEU4JizNLKQwGn73zXxw4guJJmICQ=="
     },
     {
       "name": "pricing",
@@ -1195,7 +1195,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-06",
-      "signature": "base64:mK67a1pf3aK3sQFROw4qzdqNvu6sQp0HmIoBG0uvhrybsU57ravFttPzQOUdStu1G7WDu+F6VJHunOUN8S15DQ=="
+      "attestation": "base64:mK67a1pf3aK3sQFROw4qzdqNvu6sQp0HmIoBG0uvhrybsU57ravFttPzQOUdStu1G7WDu+F6VJHunOUN8S15DQ=="
     },
     {
       "name": "readability",
@@ -1213,7 +1213,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-06",
-      "signature": "base64:GsZ8KJvSzLVJnYs9l9EJ+/1CARerfjzhOEcT55+igKRsmstZk4DgNx+1LFMWrQiJfo3lwPjkMJszpDRUgDzkAg=="
+      "attestation": "base64:GsZ8KJvSzLVJnYs9l9EJ+/1CARerfjzhOEcT55+igKRsmstZk4DgNx+1LFMWrQiJfo3lwPjkMJszpDRUgDzkAg=="
     },
     {
       "name": "reginald-mirror",
@@ -1232,7 +1232,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-03-09",
-      "signature": "base64:qXEWLBBXYvE3CrJH9IXpl5VCe7Je2+NReJkyj4nhGMM6qphcyLjeEeqoFfxhsfSF9OnPTtlqO/PM+TY1+KMLDw=="
+      "attestation": "base64:qXEWLBBXYvE3CrJH9IXpl5VCe7Je2+NReJkyj4nhGMM6qphcyLjeEeqoFfxhsfSF9OnPTtlqO/PM+TY1+KMLDw=="
     },
     {
       "name": "registry-of-registries",
@@ -1253,7 +1253,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-03-03",
-      "signature": "base64:ttGviglQDj5GGx8GVIKIaskAZXuVqEJMui08JcIJh2PIT1hmVYRQEyOD3rBotE3SGtHuK+fVUSzLi16tAaM6DQ=="
+      "attestation": "base64:ttGviglQDj5GGx8GVIKIaskAZXuVqEJMui08JcIJh2PIT1hmVYRQEyOD3rBotE3SGtHuK+fVUSzLi16tAaM6DQ=="
     },
     {
       "name": "registry-sync",
@@ -1273,7 +1273,7 @@
       ],
       "type": "action-doc",
       "modified": "3,",
-      "signature": "base64:0FvcT9ktpv/8eLfpl/n25vGvUoxOydXxGFnekupZVTOXMoi8CDZ3Z1+jyXRDl/3TRK4MxlkknAsLRY2hHIjcAw=="
+      "attestation": "base64:0FvcT9ktpv/8eLfpl/n25vGvUoxOydXxGFnekupZVTOXMoi8CDZ3Z1+jyXRDl/3TRK4MxlkknAsLRY2hHIjcAw=="
     },
     {
       "name": "robots-txt",
@@ -1291,7 +1291,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-06",
-      "signature": "base64:wBieMIbU4No90LIqbkYrlETdyVj8qVl5Z2MneM0RjqUmMx0apCKc3Vk5pUlC38pEZ+v1whcuhvAOUXeqCISgCA=="
+      "attestation": "base64:wBieMIbU4No90LIqbkYrlETdyVj8qVl5Z2MneM0RjqUmMx0apCKc3Vk5pUlC38pEZ+v1whcuhvAOUXeqCISgCA=="
     },
     {
       "name": "routing-pipeline",
@@ -1311,7 +1311,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-13",
-      "signature": "base64:pIWmm+6zlHq+CehdGAxwEohxpZ7SUZzXbygcZF+qcSTE+deoDV1QFpDuXJjp5h6iy3qB5Cv8lNLH90alqstvCw=="
+      "attestation": "base64:pIWmm+6zlHq+CehdGAxwEohxpZ7SUZzXbygcZF+qcSTE+deoDV1QFpDuXJjp5h6iy3qB5Cv8lNLH90alqstvCw=="
     },
     {
       "name": "schema",
@@ -1329,7 +1329,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-06",
-      "signature": "base64:ikMU4IzBR7NfiAY/0NkrmAAgSUUPXMRTuLiIZr+oVTATWvFbSKnVvrsWstFPtdp+XEq3+dMcLEsAlb3ozPh/BQ=="
+      "attestation": "base64:ikMU4IzBR7NfiAY/0NkrmAAgSUUPXMRTuLiIZr+oVTATWvFbSKnVvrsWstFPtdp+XEq3+dMcLEsAlb3ozPh/BQ=="
     },
     {
       "name": "script-helper",
@@ -1349,7 +1349,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-10",
-      "signature": "base64:Re+MmUUeuInUrJVDY1gKhJWZ/UuSlF5myNNyuHtL6+AhX/Cjmc530WliMhBPwMT0DPe11o+A12OQxMhHzllLAQ=="
+      "attestation": "base64:Re+MmUUeuInUrJVDY1gKhJWZ/UuSlF5myNNyuHtL6+AhX/Cjmc530WliMhBPwMT0DPe11o+A12OQxMhHzllLAQ=="
     },
     {
       "name": "semantic-html",
@@ -1367,7 +1367,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-06",
-      "signature": "base64:XKXmgHiiY/oAy3A6WMkqh9T4OS2ZEaKHscwNwr44qQD3VOutX3kW6Y8yhKcg7VY6u3SDifmKOZNIs97TNrP1Ag=="
+      "attestation": "base64:XKXmgHiiY/oAy3A6WMkqh9T4OS2ZEaKHscwNwr44qQD3VOutX3kW6Y8yhKcg7VY6u3SDifmKOZNIs97TNrP1Ag=="
     },
     {
       "name": "sitemap",
@@ -1385,7 +1385,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-06",
-      "signature": "base64:1eZh3F1EqqsKkvCyXBo2/IV6w/w+0R2c3UuLbpXugbudV2KDEHK0Qri3A7IkOnzV7SU+oQh+6g4Orf7Mn319Bg=="
+      "attestation": "base64:1eZh3F1EqqsKkvCyXBo2/IV6w/w+0R2c3UuLbpXugbudV2KDEHK0Qri3A7IkOnzV7SU+oQh+6g4Orf7Mn319Bg=="
     },
     {
       "name": "the-companion-web",
@@ -1409,7 +1409,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-09",
-      "signature": "base64:lSEUcGyX4udf/E6yEW+dF76NkogvNgRbNdAp4LTmE6eXay/8olQamqLjjWv4V8rE4r26OQbCxdrCTHu/Nfm5Cw=="
+      "attestation": "base64:lSEUcGyX4udf/E6yEW+dF76NkogvNgRbNdAp4LTmE6eXay/8olQamqLjjWv4V8rE4r26OQbCxdrCTHu/Nfm5Cw=="
     },
     {
       "name": "the-personal-cog",
@@ -1431,7 +1431,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-10",
-      "signature": "base64:FQSduD9PztAf9copNIT2P9OafIeNJrrxpbNi9xQjbki2ClkvHHSH7xEhff1JTJrLf4caVGm1L5PBu2etOL5qDg=="
+      "attestation": "base64:FQSduD9PztAf9copNIT2P9OafIeNJrrxpbNi9xQjbki2ClkvHHSH7xEhff1JTJrLf4caVGm1L5PBu2etOL5qDg=="
     },
     {
       "name": "toast-detector",
@@ -1449,7 +1449,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-06",
-      "signature": "base64:r46fSLp2UJT8t8G4GGmHsJd1ZnLPJZcUwyIsxLX1otmDMm8BDHa7HRgB8Fop2TiqYxI4Sq1pf7zxUcfv76VkAw=="
+      "attestation": "base64:r46fSLp2UJT8t8G4GGmHsJd1ZnLPJZcUwyIsxLX1otmDMm8BDHa7HRgB8Fop2TiqYxI4Sq1pf7zxUcfv76VkAw=="
     },
     {
       "name": "validate-cog",
@@ -1466,7 +1466,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-06",
-      "signature": "base64:BgR3+iO+Ze99gdn5Zp6l/KxTqozW8F4SYZH9bvrmxMA+dOieV++hFUOyMNKYRLrXeXC4247W3MnsF8b1PJLhAQ=="
+      "attestation": "base64:BgR3+iO+Ze99gdn5Zp6l/KxTqozW8F4SYZH9bvrmxMA+dOieV++hFUOyMNKYRLrXeXC4247W3MnsF8b1PJLhAQ=="
     },
     {
       "name": "what-comes-next",
@@ -1486,7 +1486,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-09",
-      "signature": "base64:2Gm9RIHfCuqIgEREMZcyb2H8cQeK7t6vRILv6TpL2UpK+2xc5KWosQT6XeS3BBFlv98rdTS/4UklYHdnCqWOCw=="
+      "attestation": "base64:2Gm9RIHfCuqIgEREMZcyb2H8cQeK7t6vRILv6TpL2UpK+2xc5KWosQT6XeS3BBFlv98rdTS/4UklYHdnCqWOCw=="
     },
     {
       "name": "what-is-a-cog",
@@ -1504,7 +1504,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-09",
-      "signature": "base64:EvqPl4ZI8FFi2b/bCrkMHjodM6hVfghpZmP1YkHpBGGgKMxkLcRyAVo7ez9QusvE4hnt2oyEgWS6uNrmcmncCA=="
+      "attestation": "base64:EvqPl4ZI8FFi2b/bCrkMHjodM6hVfghpZmP1YkHpBGGgKMxkLcRyAVo7ez9QusvE4hnt2oyEgWS6uNrmcmncCA=="
     },
     {
       "name": "what-is-installme",
@@ -1527,7 +1527,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-10",
-      "signature": "base64:AgeywQOQ2ICql7U/baWWFn9Km4hIzmtp5lggmYDr9Xklgy9rk6g9cFFHXGwncLJXm85F5gRvaRZJk85SoK1qCA=="
+      "attestation": "base64:AgeywQOQ2ICql7U/baWWFn9Km4hIzmtp5lggmYDr9Xklgy9rk6g9cFFHXGwncLJXm85F5gRvaRZJk85SoK1qCA=="
     },
     {
       "name": "what-is-mx-environment",
@@ -1547,7 +1547,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-10",
-      "signature": "base64:nIDqhBiaYXhRy1JObSS01/ZV6ZJ+oegw7K6RsW0NTYb8raJTUKOEn4PrhvREb1XJYLYDThyin2t8wPqXb71XDA=="
+      "attestation": "base64:nIDqhBiaYXhRy1JObSS01/ZV6ZJ+oegw7K6RsW0NTYb8raJTUKOEn4PrhvREb1XJYLYDThyin2t8wPqXb71XDA=="
     },
     {
       "name": "what-is-mx-os",
@@ -1567,7 +1567,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-09",
-      "signature": "base64:1Q1YoBmpNu/Ft87JTxgMdbYbIjKjZMcG8m4gWTb0zx0TBFc7A+DPu7HfwZiaq9hNvSRL1+cPtItOykZNTjjcAA=="
+      "attestation": "base64:1Q1YoBmpNu/Ft87JTxgMdbYbIjKjZMcG8m4gWTb0zx0TBFc7A+DPu7HfwZiaq9hNvSRL1+cPtItOykZNTjjcAA=="
     },
     {
       "name": "what-is-script-metadata",
@@ -1587,7 +1587,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-02-10",
-      "signature": "base64:5GEL2xtJ9oFnf0u8jjdgK4nHljeT/DwY8uhsmsY5mZIqli+znmqsznIYt534kkqJoNHsRpp/mMFgjpYSgGUCAA=="
+      "attestation": "base64:5GEL2xtJ9oFnf0u8jjdgK4nHljeT/DwY8uhsmsY5mZIqli+znmqsznIYt534kkqJoNHsRpp/mMFgjpYSgGUCAA=="
     },
     {
       "name": "whats-changed",
@@ -1609,7 +1609,7 @@
       ],
       "type": "action-doc",
       "modified": "2026-03-03",
-      "signature": "base64:6NBKy1Yu8AIeUUaSGSM8qXg4jY2oc7H++q7zaduQOlhaH+ogyu1+WFKVL1w0Ga45K9CwZL5u/hYW/Pbooo0ACw=="
+      "attestation": "base64:6NBKy1Yu8AIeUUaSGSM8qXg4jY2oc7H++q7zaduQOlhaH+ogyu1+WFKVL1w0Ga45K9CwZL5u/hYW/Pbooo0ACw=="
     },
     {
       "name": "who-is-maxine",
@@ -1629,7 +1629,7 @@
       ],
       "type": "info-doc",
       "modified": "2026-02-09",
-      "signature": "base64:KGBzbeNmB5IjAus5dnYQwbW3yNWr8qwbtdier9w4WUhoAvfAkorjXwxK8q9fbq4Fun27Y2wG6ExKl5SzOiCvBA=="
+      "attestation": "base64:KGBzbeNmB5IjAus5dnYQwbW3yNWr8qwbtdier9w4WUhoAvfAkorjXwxK8q9fbq4Fun27Y2wG6ExKl5SzOiCvBA=="
     }
   ],
   "manifest_hash": "sha256:4ab0deb5d55bc37f699545960b7a7619dd49be5221f981c2295e70adf224ddd0",

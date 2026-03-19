@@ -6,7 +6,7 @@ version: "1.0"
 
 mx:
   name: "{block-name}"
-  status: "draft"  # draft | signed | registered | active
+  status: "draft"  # draft | attested | registered | active
   category: "eds-block"
   tags: [eds, block, "{block-category}"]
   cogId: "cog-eds-block-{block-name}-{YYYYMMDD}"
@@ -16,7 +16,7 @@ mx:
   publisher:
     name: "{Publisher Name}"
     verified: false
-    signedBy: "unsigned"
+    attestedBy: "unattested"
     contact: "{email@example.com}"
     website: "{https://example.com}"
 
@@ -28,8 +28,8 @@ mx:
 
   publicationDate: "{YYYY-MM-DDTHH:MM:SSZ}"
   expires: "{YYYY-MM-DDTHH:MM:SSZ}"
-  lastVerified: "{YYYY-MM-DDTHH:MM:SSZ}"
-  signature: "unsigned"
+  maintainedDate: "{YYYY-MM-DDTHH:MM:SSZ}"
+  attestation: "unattested"
   mxCompliance: "level-2"
   registry: "allabout.network"
 

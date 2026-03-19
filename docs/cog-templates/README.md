@@ -27,9 +27,9 @@ These templates target **Level 2** compliance:
 |-------|------|--------------|----------|
 | 1 | Basic | YAML present, publisher identified | Internal docs |
 | **2** | **Structured** | **MX-compliant structure, maintainer identified** | **Public docs** |
-| 3 | Signed | Cryptographically signed, review cycle defined | REGINALD minimum |
-| 4 | Registered | Signed + registered with SLA | Commercial docs |
-| 5 | Audited | Signed + registered + third-party verified | Regulated industries |
+| 3 | Attested | Cryptographically attested, review cycle defined | REGINALD minimum |
+| 4 | Registered | Attested + registered with SLA | Commercial docs |
+| 5 | Audited | Attested + registered + third-party verified | Regulated industries |
 
 ## How to Use
 
@@ -153,7 +153,7 @@ To move from Level 2 to Level 3:
 1. Ensure all required fields are complete
 2. Define specific `update_triggers`
 3. Set a concrete `correction_sla`
-4. Submit for cryptographic signing
+4. Submit for cryptographic attestation
 
 ## See Also
 

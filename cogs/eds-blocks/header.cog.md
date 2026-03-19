@@ -28,7 +28,7 @@ mx:
 
   publicationDate: "2026-02-22"
   expires: "2026-08-22"
-  lastVerified: "2026-02-22"
+  maintainedDate: "2026-02-22"
   signature: "unsigned"
   mxCompliance: "level-2"
   registry: "allabout.network"
