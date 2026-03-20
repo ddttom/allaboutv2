@@ -1,4 +1,5 @@
 ---
+
 version: "1.0.0"
 description: "Project-level environment configuration. The MX equivalent of .env — one place for values that other cogs reference, never hardcode."
 
@@ -61,7 +62,7 @@ mx:
     date-format-prose: "DD Month YYYY"
     date-format-meta: "YYYY-MM-DD"
     reading-speed-wpm: 200
-    blog-state: draft
+    blogState: draft
 
   ai:
     preferred-access: html
@@ -162,6 +163,7 @@ mx:
             type: object
             description: "Summary of changes made or proposed"
 ---
+
 
 # Project Environment
 

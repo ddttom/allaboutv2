@@ -1,4 +1,5 @@
 ---
+
 title: "The Principles That Changed How I Build for Everyone"
 author: "Tom Cranstoun"
 created: "2026-02-03"
@@ -7,9 +8,9 @@ description: "A practitioner's guide to Machine Experience principles that make 
 mx:
   author-email: "tom@digitaldomaintechnologies.com"
   contentState: "published"
-  content-filename: "principles-changed-how-i-build"
-  blog-url: "https://allabout.network/blogs/mx/principles-changed-how-i-build.html"
-  publication-date: "2026-02-03"
+  contentFilename: "principles-changed-how-i-build"
+  blogUrl: "https://allabout.network/blogs/mx/principles-changed-how-i-build.html"
+  publicationDate: "2026-02-03"
   tags:
     - machine-experience
     - design-principles
@@ -38,6 +39,7 @@ mx:
     - "Tom Cranstoun"
     - "Claude Sonnet 4.5 (transformation from technical documentation)"
 ---
+
 
 # The Principles That Changed How I make digital products work better for humans, AI agents, and everyone in between
 
