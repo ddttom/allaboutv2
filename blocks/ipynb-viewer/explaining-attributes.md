@@ -345,7 +345,7 @@ These attributes control behavior rather than display.
 ```json
 {
   "metadata": {
-    "title": "Invisible Users",
+    "title": "MX: The Handbook",
     "splash-page": "https://allabout.network/dam/media_1f892fe947de031bcd3da71e54220726833215931.png?width=2000&format=webply&optimize=medium"
   }
 }

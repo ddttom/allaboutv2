@@ -165,16 +165,16 @@ The project is in active development with a focus on educational content deliver
 
 - **Status**: ✅ Completed automatic sitemap regeneration integration
 - **Changes implemented**:
-  - Created `scripts/generate-invisible-users-sitemap.js` for automatic sitemap generation
+  - Created `scripts/generate-mx-handbook-sitemap.js` for automatic sitemap generation
   - Added new Step 2 to step-commit workflow for sitemap regeneration
-  - Detects HTML and PDF changes in `invisible-users/` folder
-  - Automatically regenerates `invisible-users/sitemap.xml` when changes detected
-  - Added npm script: `npm run generate-sitemap:invisible-users`
+  - Detects HTML and PDF changes in `mx-handbook/` folder
+  - Automatically regenerates `mx-handbook/sitemap.xml` when changes detected
+  - Added npm script: `npm run generate-sitemap:mx-handbook`
   - Renumbered existing step-commit steps (2-9 → 3-10)
   - Hardcoded priority/changefreq rules based on file type
   - ES module compatible with project's module system
 
-### invisible-users/notebook.ipynb (2026-01-13)
+### mx-handbook/notebook.ipynb (2026-01-13)
 
 - **Status**: ✅ Completed major synchronization with manuscript v2.0
 - **Changes implemented**:
@@ -211,7 +211,7 @@ The project is in active development with a focus on educational content deliver
 
 ### Educational Content
 
-- **invisible-users/notebook.ipynb**: Interactive companion to "The Invisible Users" manuscript
+- **mx-handbook/notebook.ipynb**: Interactive companion to "MX: The Handbook" manuscript
   - 37 cells covering preface, 12 chapters, and appendices
   - JavaScript visualizations for failure types
   - Smart links to GitHub-hosted manuscript files

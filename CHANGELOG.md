@@ -197,7 +197,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - **ipynb-viewer Help Button Fallback Path**: Fixed incorrect help.md path in fallback URL (2026-01-16)
-  - **Root Cause**: Fallback URL pointed to `/invisible-users/docs/help.md` which returned 404
+  - **Root Cause**: Fallback URL pointed to `/mx-handbook/docs/help.md` which returned 404
   - **Solution**: Corrected path to `/docs/help.md` where the file actually exists
   - **Correct Priority**:
     1. First try: `https://github.com/ddttom/allaboutv2/blob/main/docs/help.md` (standard location)
@@ -263,7 +263,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Documentation Updates**: Updated help.md to match current implementation
     - Documented categorized folders (Chapters, Appendix, Miscellaneous)
     - Added file categorization patterns and hardcoded inclusion list
-    - Removed redundant invisible-users/docs/ directory
+    - Removed redundant mx-handbook/docs/ directory
     - Single source of truth: docs/help.md in allaboutv2 repository
     - Commits: 30bb069a, 7c733032
   - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`, `docs/help.md`
@@ -308,7 +308,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Commits: 3ccfbf37, 8001f778
 
 - **Invisible Users Notebook - Part 13**: Added complete appendices reference section to notebook
-  - **Location**: `invisible-users/notebook.ipynb`
+  - **Location**: `mx-handbook/notebook.ipynb`
   - **Content**: New Part 13 cell listing all 12 appendices with descriptions
   - **Organization**: Appendices grouped into 5 logical sections:
     - Implementation Guidance (A, B, C)
@@ -322,7 +322,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `appendix-c-web-audit-suite-guide.md` (was web-audit-suite-user-guide)
     - `appendix-h-live-llms.md` (was example-llmstxt-file)
   - **Usage Guide**: Added recommendations for navigating appendices by use case
-  - Files modified: `invisible-users/notebook.ipynb`
+  - Files modified: `mx-handbook/notebook.ipynb`
   - Commit: 2f6b9af9
 
 - **Unified Overlay Architecture for ipynb-viewer**: Complete refactor to eliminate multiple overlay confusion
@@ -395,8 +395,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added JSON-LD structured data (WebApplication type) with complete author/publisher information
   - Added breadcrumb navigation, time required (PT60M), educational level (Intermediate)
   - Changed HTML lang to 'en-GB' for consistency
-  - Updated page title to be more descriptive: "The Invisible Users - Interactive Notebook | AI-Friendly Web Content Guide"
-  - Files modified: `invisible-users/notebook.html`
+  - Updated page title to be more descriptive: "MX: The Handbook - Interactive Notebook | AI-Friendly Web Content Guide"
+  - Files modified: `mx-handbook/notebook.html`
 
 ### Changed
 
@@ -413,12 +413,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - RUM tracking not needed for test/demo page
   - Keeps essential `loadBlock` functionality
   - Cleaner, more focused code
-  - Files modified: `invisible-users/notebook.html`
+  - Files modified: `mx-handbook/notebook.html`
 
 - **Renamed notebook block ID**: Changed from 'test-notebook' to 'notebook'
   - Cleaner, more concise identifier
   - Matches production naming conventions
-  - Files modified: `invisible-users/notebook.html`
+  - Files modified: `mx-handbook/notebook.html`
 
 - **Refactored ipynb-viewer home button implementation**: Unified duplicate home button implementations into single reusable function
   - Issue: Two separate home button implementations (paged overlay and GitHub markdown overlay) with duplicated code
@@ -537,10 +537,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js`
   - Commits: 7f6dd772
 
-- **Removed broken navigation-guide.md link**: Cleaned up non-existent file reference in invisible-users notebook
+- **Removed broken navigation-guide.md link**: Cleaned up non-existent file reference in mx-handbook notebook
   - Issue: Link to `navigation-guide.md` returned 404 (file doesn't exist in repository)
   - Solution: Removed reference to navigation guide from Book Structure section
-  - Files modified: `invisible-users/notebook.ipynb` (cell-2)
+  - Files modified: `mx-handbook/notebook.ipynb` (cell-2)
   - Commits: 7f6dd772
 
 ### Changed
@@ -578,18 +578,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Priority: URL hash takes precedence over metadata (allows user override)
   - Behavior: Graceful degradation when metadata omitted (opens on first cell)
   - Example: `"opening-page": "preface.md"` or `"opening-page": "#preface.md"`
-  - Applied to: invisible-users notebook now opens with preface.md
-  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js` (lines 3441-3464, 3739, 3755), `invisible-users/notebook.ipynb` (metadata)
+  - Applied to: mx-handbook notebook now opens with preface.md
+  - Files modified: `blocks/ipynb-viewer/ipynb-viewer.js` (lines 3441-3464, 3739, 3755), `mx-handbook/notebook.ipynb` (metadata)
   - Commits: 734e4be2 (implementation), 7bfb4264 (documentation)
 
 ### Fixed
 
-- **Broken link in invisible-users notebook**: Updated implementation roadmap filename
+- **Broken link in mx-handbook notebook**: Updated implementation roadmap filename
   - Issue: Links to `implementation-checklist.md` returned 404 errors
   - Root cause: File was renamed to `appendix-f-implementation-roadmap.md` but notebook links not updated
   - Solution: Updated all 4 references in notebook to use correct filename
   - Result: Implementation roadmap links now resolve correctly
-  - Files modified: `invisible-users/notebook.ipynb` (lines 96, 1917, 2611, 2724)
+  - Files modified: `mx-handbook/notebook.ipynb` (lines 96, 1917, 2611, 2724)
   - Commits: f6101820
 
 - **List processing order with bold/italic formatting**: Fixed lists that contain bold or italic text
@@ -780,11 +780,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Automatic sitemap regeneration**: Created new Step 2 in step-commit workflow
-  - Created `scripts/generate-invisible-users-sitemap.js` for sitemap generation
-  - Detects HTML and PDF file changes in `invisible-users/` folder
-  - Automatically regenerates `invisible-users/sitemap.xml` when changes detected
-  - Commits sitemap separately with message: "chore: Regenerate invisible-users sitemap"
-  - Added npm script: `npm run generate-sitemap:invisible-users` for manual generation
+  - Created `scripts/generate-mx-handbook-sitemap.js` for sitemap generation
+  - Detects HTML and PDF file changes in `mx-handbook/` folder
+  - Automatically regenerates `mx-handbook/sitemap.xml` when changes detected
+  - Commits sitemap separately with message: "chore: Regenerate mx-handbook sitemap"
+  - Added npm script: `npm run generate-sitemap:mx-handbook` for manual generation
   - ES module compatible (uses `import` instead of `require`)
 
 ### Changed
@@ -797,11 +797,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Technical Details
 
 - **Sitemap configuration**: Hardcoded priority and changefreq rules
-  - Priority 1.0: index.html, appendix-index.html, the-invisible-users.pdf
+  - Priority 1.0: index.html, appendix-index.html, the-mx-handbook.pdf
   - Priority 0.9: news.html (weekly changefreq), faq.html
   - Priority 0.8: appendix-[a-l].html, for-reviewers.html, notebook.html
   - Priority 0.7: default fallback (yearly changefreq)
-- **URL pattern**: Direct `/invisible-users/{filename}` format
+- **URL pattern**: Direct `/mx-handbook/{filename}` format
 - **File detection**: Scans for `.html` and `.pdf` files, excluding hidden files and subdirectories
 
 ## [2026-01-13] - Invisible Users Notebook Reorganization
@@ -809,17 +809,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **File organization**: Moved notebook files to dedicated subdirectory
-  - Moved `invisible-users.ipynb` → `invisible-users/notebook.ipynb`
-  - Moved `invisible-users.html` → `invisible-users/notebook.html`
-  - Updated HTML file to reference new notebook path (`/invisible-users/notebook.ipynb`)
+  - Moved `mx-handbook.ipynb` → `mx-handbook/notebook.ipynb`
+  - Moved `mx-handbook.html` → `mx-handbook/notebook.html`
+  - Updated HTML file to reference new notebook path (`/mx-handbook/notebook.ipynb`)
   - Updated all documentation references (README.md, PROJECTSTATE.md, CHANGELOG.md)
-  - Consolidates invisible-users content in single directory with existing HTML appendices
+  - Consolidates mx-handbook content in single directory with existing HTML appendices
 
 ## [2026-01-13] - Invisible Users Notebook Update
 
 ### Fixed
 
-- **invisible-users/notebook.ipynb**: Fixed all smart links to use correct ipynb-viewer pattern
+- **mx-handbook/notebook.ipynb**: Fixed all smart links to use correct ipynb-viewer pattern
   - Converted from full GitHub URLs back to relative paths (preface.md)
   - Updated repo metadata to point to manuscript directory (tree/main/packages/manuscript/manuscript)
   - Fixed 20 cells to use proper ipynb-viewer smart link pattern
@@ -829,7 +829,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **invisible-users/notebook.ipynb**: Updated to align with manuscript v2.0
+- **mx-handbook/notebook.ipynb**: Updated to align with manuscript v2.0
   - Expanded from 10 to 12 chapters (added Chapter 9: The Platform Race, Chapter 12: What Agent Creators Must Build)
   - Updated total word count from ~41,700 to ~58,000 words
   - Renumbered chapters: old Chapter 9→10 (Designing for Both), old Chapter 10→11 (Technical Advice)
@@ -837,7 +837,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added January 2026 platform launch context (Amazon, Microsoft, Google)
   - Added new Part 9 section covering The Platform Race
   - Updated all chapter cross-references and links throughout
-  - Updated repository URL to github.com/Digital-Domain-Technologies-Ltd/invisible-users-manuscript
+  - Updated repository URL to github.com/Digital-Domain-Technologies-Ltd/mx-handbook-manuscript
   - Updated metadata last-modified date to 2026-01-13
 
 ### Added

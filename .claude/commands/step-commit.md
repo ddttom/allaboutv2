@@ -5,11 +5,11 @@ Execute the systematic "step commit" workflow:
    - Commit all current code changes with a clear, descriptive commit message
    - Do NOT add attribution or "Generated with" messages
 
-2. Sitemap Regeneration (invisible-users)
-   - Check for tracked changes in invisible-users/ folder (HTML or PDF files)
-   - If changes found, run: node scripts/generate-invisible-users-sitemap.js
+2. Sitemap Regeneration (mx-handbook)
+   - Check for tracked changes in mx-handbook/ folder (HTML or PDF files)
+   - If changes found, run: node scripts/generate-mx-handbook-sitemap.js
    - Verify sitemap.xml was regenerated successfully
-   - Commit sitemap changes separately: "chore: Regenerate invisible-users sitemap"
+   - Commit sitemap changes separately: "chore: Regenerate mx-handbook sitemap"
 
 3. Linting
    - Run lint on all changed files

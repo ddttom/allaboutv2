@@ -291,7 +291,7 @@ Score: 100/100
 When using the skill through Claude Code:
 
 ```
-Validate the invisible-users/notebook.ipynb file, it should have 12 parts
+Validate the mx-handbook/notebook.ipynb file, it should have 12 parts
 ```
 
 Claude will:

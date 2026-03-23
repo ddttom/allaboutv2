@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Tom Cranstoun">
+    <meta name="description" content="Interactive demonstration of MX: The Handbook - a comprehensive guide to building AI-friendly web content with practical examples, testing strategies, and implementation patterns.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://allabout.network/mx-handbook/notebook.html">
+    <meta property="og:title" content="MX: The Handbook - Interactive Notebook | AI-Friendly Web Content Guide">
+    <meta property="og:description" content="Interactive demonstration of MX: The Handbook - a comprehensive guide to building AI-friendly web content with practical examples, testing strategies, and implementation patterns.">
+    <meta property="og:image" content="https://allabout.network/images/mx-handbook-og.jpg">
+    <meta property="og:site_name" content="MX: The Handbook">
+    <meta property="og:locale" content="en_GB">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://allabout.network/mx-handbook/notebook.html">
+    <meta name="twitter:title" content="MX: The Handbook - Interactive Notebook">
+    <meta name="twitter:description" content="Interactive guide to building AI-friendly web content with practical examples and implementation patterns.">
+    <meta name="twitter:image" content="https://allabout.network/images/mx-handbook-og.jpg">
+    <meta name="twitter:creator" content="@tomcranstoun">
+
+
+    <!-- MX carrier metadata -->
+    <meta name="mx:status" content="active">
+    <meta name="mx:contentType" content="document">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://allabout.network/mx-handbook/notebook.html">
+
+    <title>MX: The Handbook - Interactive Notebook | AI-Friendly Web Content Guide</title>
+
+    <!-- Schema.org structured data for web application -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "MX: The Handbook - Interactive Notebook",
+        "description": "Interactive demonstration and guide for building AI-friendly web content, featuring practical examples and implementation patterns",
+        "datePublished": "2026-01-14",
+        "dateModified": "2026-01-14",
+        "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun",
+            "email": "tom.cranstoun@gmail.com",
+            "url": "https://allabout.network/tom-cranstoun.html",
+            "image": "https://allabout.network/images/tom-cranstoun.jpg"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Digital Domain Technologies Ltd",
+            "url": "https://allabout.network"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://allabout.network/mx-handbook/notebook.html"
+        },
+        "applicationCategory": "Educational",
+        "keywords": "AI-friendly content, web accessibility, AI agents, interactive documentation, implementation guide",
+        "timeRequired": "PT60M",
+        "educationalLevel": "Intermediate",
+        "inLanguage": "en-GB",
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://allabout.network/mx-handbook/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Interactive Notebook",
+                    "item": "https://allabout.network/mx-handbook/notebook.html"
+                }
+            ]
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "GBP"
+        }
+    }
+    </script>
+
+    <!-- EDS Core Styles -->
+    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="/styles/fonts.css">
+
+    <!-- Prevent FOUC -->
+    <style>
+        body:not(.appear) {
+            visibility: hidden;
+        }
+    </style>
+    <script>
+        // Add appear class immediately, before DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('appear');
+        });
+    </script>
+</head>
+<body>
+    <main>
+        <!-- IPynb Viewer Block - Index Variation (Auto-opens) -->
+        <div class="ipynb-viewer notebook index block"
+             id="notebook"
+             data-block-name="ipynb-viewer"
+             data-block-status="initialized">
+            <div>
+                <div>/mx-handbook/notebook.ipynb</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- EDS Core Scripts -->
+    <script type="module">
+        import { loadBlock } from '/scripts/aem.js';
+
+        // Load the notebook block
+        const block = document.querySelector('#notebook');
+
+        try {
+            // Load block (will fetch /docs-navigation.ipynb)
+            await loadBlock(block);
+        } catch (error) {
+            console.error('❌ Block failed to load:', error);
+            block.innerHTML = `<p style="color: red; padding: 2rem;">Failed to load block: ${error.message}</p>`;
+        }
+    </script>
+</body>
+</html>

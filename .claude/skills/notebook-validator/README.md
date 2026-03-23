@@ -105,7 +105,7 @@ The skill activates automatically when you:
 **Example prompts:**
 
 ```
-Validate the invisible-users/notebook.ipynb file, it should have 12 parts
+Validate the mx-handbook/notebook.ipynb file, it should have 12 parts
 Check if docs-navigation.ipynb is production ready
 Verify notebook quality for educational.ipynb with transitions required
 ```

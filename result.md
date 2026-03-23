@@ -34,7 +34,7 @@ I modified `/blocks/ipynb-viewer/ipynb-viewer.js` with the following changes:
 
 ## Verification
 
-Verified using the test case: `http://localhost:3000/invisible-users/notebook.html#appendix-a-implementation-cookbook.md`
+Verified using the test case: `http://localhost:3000/mx-handbook/notebook.html#appendix-a-implementation-cookbook.md`
 
 **Result:** Code blocks in the "Implementation Cookbook" (e.g., Recipe 1) now render correctly with:
 

@@ -1,6 +1,6 @@
 /**
 
-* The Invisible Users - Common JavaScript
+* MX: The Handbook - Common JavaScript
 * Shared functionality across all tutorial pages
  * @file common.js
  * @version 1.0

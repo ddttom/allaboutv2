@@ -90,7 +90,7 @@ To deploy this site:
    - `.xml` → `application/xml; charset=utf-8`
 
 3. **Update URLs** in the following files:
-   - Change `https://allabout.network/invisible-users/web/site/` to your domain
+   - Change `https://allabout.network/mx-handbook/web/site/` to your domain
    - Files to update: all HTML files (Schema.org URLs), sitemap.xml, llms.txt
 
 4. **Test accessibility:**
@@ -123,7 +123,7 @@ These pages are examples from:
 
 **MX-Bible: Designing the Web for AI Agents and Everyone Else**
 By Tom Cranstoun
-<https://allabout.network/invisible-users>
+<https://allabout.network/mx-handbook>
 
 ## Licence
 
@@ -135,4 +135,4 @@ For questions about these patterns:
 
 - **Email:** <tom.cranstoun@gmail.com>
 - **Website:** <https://allabout.network>
-- **GitHub:** <https://github.com/Digital-Domain-Technologies-Ltd/invisible-users-manuscript>
+- **GitHub:** <https://github.com/Digital-Domain-Technologies-Ltd/mx-handbook-manuscript>

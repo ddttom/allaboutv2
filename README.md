@@ -160,7 +160,7 @@ Access your tests at: `http://localhost:3000/blocks/your-block/test.html`
 ├── notebooks/             # NEW: Shareable .ipynb files for end users
 │   └── example.ipynb      # Example interactive notebook
 ├── docs-navigation.ipynb  # NEW: Interactive documentation navigator (88/100 validation score)
-├── invisible-users/notebook.ipynb  # NEW: Interactive book companion (100/100 validation score)
+├── mx-handbook/notebook.ipynb  # NEW: Interactive book companion (100/100 validation score)
 ├── ipynb-tests/           # NEW: Generated HTML previews from JSLab
 ├── docs/                   # Documentation
 │   ├── for-ai/            # Comprehensive AI-focused development guides
@@ -320,7 +320,7 @@ Each block should include:
 
 **📖 MX: The Handbook** - Book companion notebook
 
-- **[invisible-users/notebook.ipynb](invisible-users/notebook.ipynb)** - Interactive exploration of AI agents and modern web design
+- **[mx-handbook/notebook.ipynb](mx-handbook/notebook.ipynb)** - Interactive exploration of AI agents and modern web design
   - Companion to "MX: The Handbook" by Tom Cranstoun
   - 10 parts covering all book chapters with interactive demonstrations
   - 36 cells including 9 interactive JavaScript visualizations

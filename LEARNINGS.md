@@ -130,12 +130,12 @@ const partHeading = lines.find((line) => {
 - `/main/file` = raw content (API/download)
 - **Metadata should be**: Base repo only (no tree, blob, or branch)
 
-**Real example (invisible-users-manuscript):**
+**Real example (mx-handbook-manuscript):**
 
 ```
 Repository structure: Chapter files at root level
-✅ Correct: "repo": "https://github.com/.../invisible-users-manuscript"
-❌ Wrong:   "repo": "https://github.com/.../invisible-users-manuscript/packages/manuscript/manuscript"
+✅ Correct: "repo": "https://github.com/.../mx-handbook-manuscript"
+❌ Wrong:   "repo": "https://github.com/.../mx-handbook-manuscript/packages/manuscript/manuscript"
 ```
 
 **Documentation:** See `blocks/ipynb-viewer/README.md` section on "Smart Links and GitHub Integration"
@@ -188,7 +188,7 @@ Repository structure: Chapter files at root level
 - `### Heading` = Sub-item under previous `##` heading
 - `#### Heading` = Nested further under `###`
 
-**Real example (invisible-users/notebook.ipynb):**
+**Real example (mx-handbook/notebook.ipynb):**
 
 - **Issue 1**: Part 12 used `###` (level-3) and was missing from outline
   - Fix: Changed to `##` (level-2) for consistency
@@ -291,7 +291,7 @@ When removing emojis from headings, remember to update action card links to matc
 - Update corresponding action card link: `[Key Insight](#)` instead of `[💡 Key Insight](#)`
 - Smart link resolution requires link text to match heading text (fuzzy matching applies)
 
-**Real example (invisible-users/notebook.ipynb):**
+**Real example (mx-handbook/notebook.ipynb):**
 
 - Removed emojis from 19 cells including headings in cells 1, 7, 37, 38, 40
 - Fixed broken action card links after emoji removal
@@ -313,7 +313,7 @@ When removing emojis from headings, remember to update action card links to matc
 - Users won't see sub-sections when expanding parts in the outline sidebar
 - Proper newlines ensure consistent rendering across all notebook viewers
 
-**Problem example (Cell 40 from invisible-users/notebook.ipynb):**
+**Problem example (Cell 40 from mx-handbook/notebook.ipynb):**
 
 ```python
 # ❌ WRONG - All content in single string without newlines
@@ -365,7 +365,7 @@ If you have a cell with massive single-line string:
 2. Add `\n` to end of each line except the last
 3. Verify with VSCode outline - all sub-sections should be visible
 
-**Real example fix (invisible-users/notebook.ipynb Cell 40):**
+**Real example fix (mx-handbook/notebook.ipynb Cell 40):**
 
 - **Before**: 1 line (massive string) - 0 sub-sections visible in outline
 - **After**: 177 lines (properly formatted) - 7 sub-sections visible in outline
@@ -420,10 +420,10 @@ The notebook-validator script does NOT catch this issue because:
   - Returns file contents directly
   - Used for fetching, embedding, downloading
 
-**Real example (invisible-users SVG inlining):**
+**Real example (mx-handbook SVG inlining):**
 
-- **Bug**: `https://raw.githubusercontent.com/Digital-Domain-Technologies-Ltd/invisible-users-manuscript/raw/main/illustrations/chapter-02-illustration.svg` → 404
-- **Fix**: `https://raw.githubusercontent.com/Digital-Domain-Technologies-Ltd/invisible-users-manuscript/main/illustrations/chapter-02-illustration.svg` → 200
+- **Bug**: `https://raw.githubusercontent.com/Digital-Domain-Technologies-Ltd/mx-handbook-manuscript/raw/main/illustrations/chapter-02-illustration.svg` → 404
+- **Fix**: `https://raw.githubusercontent.com/Digital-Domain-Technologies-Ltd/mx-handbook-manuscript/main/illustrations/chapter-02-illustration.svg` → 200
 
 **How the bug occurred:**
 
@@ -1017,7 +1017,7 @@ const blockElementPattern = /^<(h[1-6]|table|ul|ol|blockquote|pre|hr)|^__CODEBLO
 
 ```bash
 # Test URL
-http://localhost:3000/invisible-users/notebook.html#appendix-a-implementation-cookbook.md
+http://localhost:3000/mx-handbook/notebook.html#appendix-a-implementation-cookbook.md
 
 # Check HTML structure in DevTools
 document.querySelector('.ipynb-github-md-overlay pre code').childNodes

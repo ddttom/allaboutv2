@@ -1526,9 +1526,9 @@ The block uses semantic URL hashes for better bookmarking and sharing:
 **Example URLs:**
 
 ```
-invisible-users/notebook.html#chapter-1-what-you-will-learn
-invisible-users/notebook.html#part-2-understanding-invisible-users
-invisible-users/notebook.html#appendix-a-implementation-cookbook
+mx-handbook/notebook.html#chapter-1-what-you-will-learn
+mx-handbook/notebook.html#part-2-understanding-mx-handbook
+mx-handbook/notebook.html#appendix-a-implementation-cookbook
 ```
 
 **Benefits:**

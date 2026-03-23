@@ -1372,7 +1372,7 @@ onNodeClick(node);
   - Removed closeOverlay() call to prevent tree disappearing on errors
   - Help overlay now opens on top instead of replacing current overlay
   - Updated docs/help.md to match current implementation (categorized folders)
-  - Removed redundant invisible-users/docs/ directory
+  - Removed redundant mx-handbook/docs/ directory
   - Single source of truth: docs/help.md in allaboutv2 repository
 - **Fixed:** Tree ordering for logical reading flow
   - preface.md now always appears first in Chapters folder
