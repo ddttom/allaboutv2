@@ -578,6 +578,7 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
     ico: 'image/x-icon',
     woff: 'font/woff',
     woff2: 'font/woff2',
+    pdf: 'application/pdf',
   };
   // Filename-specific overrides (llms.txt served as HTML so browsers render it)
   const filename = subPath.split('/').pop();
