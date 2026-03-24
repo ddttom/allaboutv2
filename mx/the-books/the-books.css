@@ -700,6 +700,132 @@ a.card:focus-visible {
     font-size: 1rem;
 }
 
+/* ── Split layout (narrative + highlights) ── */
+
+.split-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 32px;
+    align-items: start;
+}
+
+.split-narrative {
+    display: grid;
+    gap: 14px;
+}
+
+.split-narrative p {
+    margin: 0;
+    font-size: 1.04rem;
+    line-height: 1.65;
+    color: var(--mx-muted);
+}
+
+.split-highlights {
+    display: grid;
+    gap: 0;
+    border: 1px solid var(--mx-border);
+    background: #fff;
+}
+
+.highlight-item {
+    display: grid;
+    gap: 4px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--mx-border);
+}
+
+.highlight-item:last-child {
+    border-bottom: none;
+}
+
+.highlight-number {
+    font-family: "Mozilla Headline", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--mx-blue);
+}
+
+.highlight-label {
+    font-size: 0.88rem;
+    color: var(--mx-muted);
+    letter-spacing: 0.01em;
+}
+
+/* ── Track record cards ── */
+
+.track-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.track-card {
+    position: relative;
+    display: grid;
+    gap: 10px;
+    padding: 24px;
+    border: 1px solid var(--mx-border);
+    background: #fff;
+}
+
+.track-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 40px;
+    height: 3px;
+    background: var(--mx-blue);
+}
+
+.track-card h3 {
+    margin: 0;
+    font-family: "Mozilla Headline", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+}
+
+.track-card p {
+    margin: 0;
+    color: var(--mx-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+/* ── Highlight label bold ── */
+
+.highlight-label-bold {
+    font-family: "Mozilla Headline", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--mx-text);
+}
+
+/* ── Gathering principles strip ── */
+
+.gathering-principles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.principle-tag {
+    display: inline-flex;
+    padding: 8px 16px;
+    border: 1px solid rgba(49, 67, 220, 0.22);
+    background: var(--mx-blue-soft);
+    font-size: 0.88rem;
+    color: var(--mx-blue);
+    letter-spacing: 0.01em;
+}
+
 /* ── Client logo strip ── */
 
 .client-strip {
@@ -739,6 +865,18 @@ a.card:focus-visible {
     .service-grid,
     .quote-grid {
         grid-template-columns: 1fr;
+    }
+
+    .split-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .split-highlights {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .track-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .content-block,
@@ -794,6 +932,14 @@ a.card:focus-visible {
     .content-block,
     .author-bio {
         padding: 18px;
+    }
+
+    .split-highlights {
+        grid-template-columns: 1fr;
+    }
+
+    .track-grid {
+        grid-template-columns: 1fr;
     }
 
     .cta-button {
