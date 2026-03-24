@@ -585,7 +585,9 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   if (filename === 'llms.txt') {
     resp.headers.set('Content-Type', 'text/html; charset=utf-8');
   } else if (contentTypes[ext]) {
-    resp.headers.set('Content-Type', `${contentTypes[ext]}; charset=utf-8`);
+    const ct = contentTypes[ext];
+    const isText = ct.startsWith('text/') || ct === 'application/json' || ct === 'application/xml' || ct === 'application/javascript';
+    resp.headers.set('Content-Type', isText ? `${ct}; charset=utf-8` : ct);
   }
 
   resp.headers.set('Access-Control-Allow-Origin', '*');
