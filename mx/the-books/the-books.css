@@ -621,6 +621,96 @@ a.card:focus-visible {
     align-items: center;
 }
 
+/* ── Testimonial quotes ── */
+
+.quote-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.quote {
+    padding: 24px;
+    border: 1px solid var(--mx-border);
+    background: #fff;
+    display: grid;
+    gap: 12px;
+}
+
+.quote p {
+    margin: 0;
+    font-size: 1.04rem;
+    font-style: italic;
+    color: var(--mx-muted);
+}
+
+.quote cite {
+    font-style: normal;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--mx-text);
+}
+
+/* ── Service cards (2-column) ── */
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.service-card {
+    position: relative;
+    display: grid;
+    gap: 12px;
+    padding: 28px;
+    border: 1px solid rgba(15, 16, 20, 0.14);
+    background: #fff;
+}
+
+.service-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 48px;
+    height: 4px;
+    background: var(--mx-blue);
+}
+
+.service-card h3 {
+    margin: 0;
+    font-family: "Mozilla Headline", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+}
+
+.service-card p {
+    margin: 0;
+    color: var(--mx-muted);
+    font-size: 1rem;
+}
+
+/* ── Client logo strip ── */
+
+.client-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.client-tag {
+    display: inline-flex;
+    padding: 8px 16px;
+    border: 1px solid var(--mx-border);
+    background: #fff;
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--mx-text);
+}
+
 /* ── Responsive: 900px ── */
 
 @media (max-width: 900px) {
@@ -637,7 +727,9 @@ a.card:focus-visible {
         min-width: 180px;
     }
 
-    .card-grid {
+    .card-grid,
+    .service-grid,
+    .quote-grid {
         grid-template-columns: 1fr;
     }
 
