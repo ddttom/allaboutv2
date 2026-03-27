@@ -36,10 +36,10 @@ How to use the Machine eXperience Engine.
 
 MX is an engine that runs on cogs. Each cog is a self-describing module that does one thing well. Together, they power the Robot-First Web.
 
-**Engine:** MX (Machine eXperience Engine)  
-**Cogs:** Modular capabilities  
-**Fuel:** Content, data, user intent  
-**Output:** Robot-First experiences  
+**Engine:** MX (Machine eXperience Engine)
+**Cogs:** Modular capabilities
+**Fuel:** Content, data, user intent
+**Output:** Robot-First experiences
 
 ---
 

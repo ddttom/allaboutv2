@@ -635,7 +635,7 @@ Still supported for existing pages. Generates EDS error script which worker dete
 
 ## License
 
-Based on Adobe's Cloudflare Worker template (Apache License 2.0)  
+Based on Adobe's Cloudflare Worker template (Apache License 2.0)
 Modified by Digital Domain Technologies Ltd
 
 ## Limitations
