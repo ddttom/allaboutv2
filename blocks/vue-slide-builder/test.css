@@ -1,0 +1,244 @@
+/**
+ * @description Test harness styles for vue-slide-builder block
+ * @version 1.0
+ * @author Tom Cranstoun
+ * @mx:status active
+ * @mx:contentType stylesheet
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: #f5f5f5;
+    padding: 20px;
+}
+
+.test-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.test-header {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.test-header h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: #42b883;
+}
+
+.test-header p {
+    color: #7f8c8d;
+    font-size: 16px;
+}
+
+.framework-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #42b883 0%, #35495e 100%);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.test-info {
+    background: #e8f5e9;
+    border-left: 4px solid #42b883;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 4px;
+}
+
+.test-info h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #2e7d32;
+}
+
+.test-info ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.test-info li {
+    padding: 5px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.test-info li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #4caf50;
+    font-weight: bold;
+}
+
+.block-wrapper {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.block-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.block-header h2 {
+    font-size: 24px;
+    color: #42b883;
+    margin-bottom: 5px;
+}
+
+.block-header .block-type {
+    font-size: 14px;
+    color: #7f8c8d;
+    font-weight: 500;
+}
+
+/* Block container styles */
+.vue-slide-builder {
+    width: 100%;
+    min-height: 400px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background: #fafafa;
+}
+
+.test-notes {
+    background: #fff8e1;
+    border-left: 4px solid #ffc107;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 4px;
+}
+
+.test-notes h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #f57f17;
+}
+
+.test-notes p {
+    margin-bottom: 10px;
+    line-height: 1.8;
+}
+
+.test-notes strong {
+    color: #e65100;
+}
+
+.test-notes .hash-warning {
+    background: #ffecb3;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.console-output {
+    background: #263238;
+    color: #aed581;
+    padding: 20px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    margin-top: 30px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.console-output h3 {
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.console-line {
+    padding: 3px 0;
+}
+
+.console-error {
+    color: #ff5252;
+}
+
+.console-warn {
+    color: #ffb74d;
+}
+
+.console-info {
+    color: #4fc3f7;
+}
+
+.test-checklist {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.test-checklist h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #42b883;
+}
+
+.checklist-item {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+}
+
+.checklist-item:last-child {
+    border-bottom: none;
+}
+
+.checklist-item input[type="checkbox"] {
+    margin-right: 15px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #42b883;
+}
+
+.checklist-item label {
+    cursor: pointer;
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .test-header,
+    .block-wrapper,
+    .test-info,
+    .test-notes,
+    .test-checklist {
+        padding: 20px;
+    }
+
+    .test-header h1 {
+        font-size: 24px;
+    }
+}

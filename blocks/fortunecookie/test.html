@@ -17,113 +17,7 @@
     <!-- Block Styles -->
     <link rel="stylesheet" href="fortunecookie.css">
 
-    <style>
-        /* EDS pattern - ensure body appears */
-        body.appear {
-            display: block;
-        }
-
-        /* Test page styling */
-        body {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
-
-        .test-section {
-            margin: 3rem 0;
-            padding: 2rem;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            background: #f9f9f9;
-        }
-
-        .test-section h2 {
-            margin-top: 0;
-            color: #333;
-            border-bottom: 2px solid #0078d4;
-            padding-bottom: 0.5rem;
-        }
-
-        .test-description {
-            color: #666;
-            font-style: italic;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: #fff;
-            border-left: 4px solid #0078d4;
-        }
-
-        /* Highlight the fortunecookie blocks for testing */
-        .fortunecookie {
-            margin: 1rem 0;
-            padding: 1.5rem;
-            background: white;
-            border: 2px dashed #0078d4;
-            border-radius: 8px;
-            min-height: 50px;
-        }
-
-        .fortunecookie p {
-            margin: 0;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
-        .fortunecookie strong {
-            color: #0078d4;
-        }
-
-        /* Test utilities */
-        .test-controls {
-            margin: 2rem 0;
-            padding: 1rem;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .test-button {
-            background: #0078d4;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            margin: 0.5rem;
-            font-size: 1rem;
-        }
-
-        .test-button:hover {
-            background: #005a9e;
-        }
-
-        .test-button:active {
-            transform: translateY(1px);
-        }
-
-        #test-results {
-            margin-top: 2rem;
-            padding: 1rem;
-            background: #fff;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-        }
-
-        .result-success {
-            color: #28a745;
-        }
-
-        .result-error {
-            color: #dc3545;
-        }
-
-        .result-info {
-            color: #17a2b8;
-        }
-    </style>
+    <link rel="stylesheet" href="/blocks/fortunecookie/test.css">
 </head>
 <body>
     <h1>Fortune Cookie Block Test Page</h1>
@@ -177,8 +71,8 @@
             ✅ Tests styling in constrained footer-like environment
         </p>
 
-        <footer style="background: #f0f0f0; padding: 2rem; border-radius: 8px;">
-            <p style="margin: 0 0 1rem 0; color: #666;">© 2024 Your Company. All rights reserved.</p>
+        <footer class="test-inline-1">
+            <p class="test-inline-2">© 2024 Your Company. All rights reserved.</p>
             <div class="fortunecookie block" data-block-name="fortunecookie" data-test-id="test-3">
             </div>
         </footer>
@@ -207,10 +101,10 @@
         <div class="fortunecookie block" data-block-name="fortunecookie" data-test-id="test-5">
         </div>
 
-        <div id="structure-check" style="margin-top: 1rem; padding: 1rem; background: #fff; border-radius: 4px;">
+        <div id="structure-check" class="test-inline-3">
             <strong>Structure Check:</strong> (Run after blocks load)
             <button class="test-button" onclick="checkStructure()">Verify HTML Structure</button>
-            <pre id="structure-output" style="margin-top: 0.5rem; color: #666;"></pre>
+            <pre id="structure-output" class="test-inline-4"></pre>
         </div>
     </div>
 

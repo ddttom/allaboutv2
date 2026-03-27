@@ -17,175 +17,7 @@
     <!-- Block Styles -->
     <link rel="stylesheet" href="index.css">
 
-    <style>
-        /* EDS pattern - ensure body appears */
-        body.appear {
-            display: block;
-        }
-
-        /* Test page styling */
-        body {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
-
-        .test-section {
-            margin: 3rem 0;
-            padding: 2rem;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            background: #f9f9f9;
-        }
-
-        .test-section h2 {
-            margin-top: 0;
-            color: #333;
-            border-bottom: 2px solid #0078d4;
-            padding-bottom: 0.5rem;
-        }
-
-        .test-description {
-            color: #666;
-            font-style: italic;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: #fff;
-            border-left: 4px solid #0078d4;
-        }
-
-        /* Highlight the index block for testing */
-        .index {
-            margin: 1rem 0;
-        }
-
-        /* Test utilities */
-        .test-controls {
-            margin: 2rem 0;
-            padding: 1rem;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .test-button {
-            background: #0078d4;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            margin: 0.5rem;
-            font-size: 1rem;
-        }
-
-        .test-button:hover {
-            background: #005a9e;
-        }
-
-        .test-button:active {
-            transform: translateY(1px);
-        }
-
-        #test-results {
-            margin-top: 2rem;
-            padding: 1rem;
-            background: #fff;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .result-success {
-            color: #28a745;
-        }
-
-        .result-error {
-            color: #dc3545;
-        }
-
-        .result-info {
-            color: #17a2b8;
-        }
-
-        /* Sample content headings for testing */
-        .sample-content {
-            margin: 2rem 0;
-            padding: 2rem;
-            background: white;
-            border-radius: 8px;
-        }
-
-        .sample-content h1,
-        .sample-content h2,
-        .sample-content h3,
-        .sample-content h4,
-        .sample-content h5,
-        .sample-content h6 {
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .sample-content h1 {
-            color: #0078d4;
-            font-size: 2rem;
-        }
-
-        .sample-content h2 {
-            color: #005a9e;
-            font-size: 1.6rem;
-        }
-
-        .sample-content h3 {
-            color: #004578;
-            font-size: 1.3rem;
-        }
-
-        .sample-content h4 {
-            color: #003052;
-            font-size: 1.1rem;
-        }
-
-        .sample-content h5 {
-            color: #001b2b;
-            font-size: 1rem;
-        }
-
-        .sample-content h6 {
-            color: #000;
-            font-size: 0.9rem;
-        }
-
-        .sample-content p {
-            margin: 0.5rem 0;
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* Sticky positioning test */
-        .sticky-index {
-            position: sticky;
-            top: 1rem;
-            z-index: 100;
-        }
-
-        /* Split layout for sidebar test */
-        .split-layout {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 2rem;
-            align-items: start;
-        }
-
-        @media (max-width: 768px) {
-            .split-layout {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/blocks/index/test.css">
 </head>
 <body>
     <h1>Index Block Test Page</h1>
@@ -263,7 +95,7 @@
             ✅ Verifies each instance can expand/collapse independently
         </p>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div class="test-inline-1">
             <div>
                 <h4>Index Instance A</h4>
                 <div class="index block" data-block-name="index" data-test-id="test-2a">
@@ -316,8 +148,8 @@
         <div class="index block" data-block-name="index" data-test-id="test-4">
         </div>
 
-        <button class="test-button" onclick="verifyIndentation()" style="margin-top: 1rem;">Verify Indentation</button>
-        <pre id="indentation-output" style="margin-top: 1rem; padding: 1rem; background: white; border-radius: 4px;"></pre>
+        <button class="test-button" onclick="verifyIndentation()" class="test-inline-2">Verify Indentation</button>
+        <pre id="indentation-output" class="test-inline-3"></pre>
     </div>
 
     <!-- Test Case 5: Navigation Testing -->
@@ -332,10 +164,10 @@
         <div class="index block" data-block-name="index" data-test-id="test-5">
         </div>
 
-        <div style="margin-top: 1rem;">
+        <div class="test-inline-2">
             <button class="test-button" onclick="listAllHeadingIDs()">List All Heading IDs</button>
             <button class="test-button" onclick="validateAnchorLinks()">Validate Anchor Links</button>
-            <pre id="navigation-output" style="margin-top: 1rem; padding: 1rem; background: white; border-radius: 4px;"></pre>
+            <pre id="navigation-output" class="test-inline-3"></pre>
         </div>
     </div>
 

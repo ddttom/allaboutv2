@@ -1,0 +1,170 @@
+/**
+ * @description Test harness styles for remove-icon-styles block
+ * @version 1.0
+ * @author Tom Cranstoun
+ * @mx:status active
+ * @mx:contentType stylesheet
+ */
+
+/* Test-specific styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.6;
+}
+
+.test-section {
+    margin: 3rem 0;
+    padding: 2rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.test-section h2 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 2px solid #0078d4;
+    padding-bottom: 0.5rem;
+}
+
+.test-description {
+    background: #fff;
+    padding: 1rem;
+    border-left: 4px solid #0078d4;
+    margin-bottom: 1.5rem;
+}
+
+.test-content {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 4px;
+}
+
+.icon-showcase {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.icon-item {
+    text-align: center;
+    padding: 1rem;
+    border: 1px dashed #ccc;
+}
+
+.icon-item p {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+
+/* Custom icon size classes for testing */
+.icon.small {
+    height: 16px;
+    width: 16px;
+}
+
+.icon.medium {
+    height: 32px;
+    width: 32px;
+}
+
+.icon.large {
+    height: 48px;
+    width: 48px;
+}
+
+.icon.xlarge {
+    height: 64px;
+    width: 64px;
+}
+
+/* Responsive icon test */
+.icon.responsive {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .icon.responsive {
+        height: 2rem;
+        width: 2rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .icon.responsive {
+        height: 3rem;
+        width: 3rem;
+    }
+}
+
+/* Inline icon test */
+.icon.inline {
+    height: 1em;
+    width: 1em;
+    vertical-align: middle;
+}
+
+/* Test result indicators */
+.test-pass {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.test-fail {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.checklist {
+    list-style: none;
+    padding: 0;
+}
+
+.checklist li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.checklist li:before {
+    content: "□ ";
+    margin-right: 0.5rem;
+    color: #666;
+}
+
+code {
+    background: #f4f4f4;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.warning {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 1rem 0;
+}
+
+.info {
+    background: #d1ecf1;
+    border: 1px solid #17a2b8;
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 1rem 0;
+}
+/* Converted from inline style= attributes */
+.test-inline-1 { font-size: 1rem; }
+.test-inline-2 { font-size: 1.5rem; }
+.test-inline-3 { font-size: 2rem; }
+.test-inline-4 { padding: 0.5rem 1rem; cursor: pointer; }
+.test-inline-5 { margin-top: 3rem; padding: 2rem; border-top: 2px solid #e0e0e0; color: #666; }
+

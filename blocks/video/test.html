@@ -16,103 +16,7 @@
     <!-- Video Block Styles -->
     <link rel="stylesheet" href="/blocks/video/video.css">
 
-    <style>
-        /* EDS pattern - ensure body appears */
-        body.appear {
-            display: block;
-        }
-
-        /* Test page specific styles */
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        .test-info {
-            background: #f0f0f0;
-            padding: 1rem;
-            border-bottom: 2px solid #667eea;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-
-        .test-info h2 {
-            margin: 0 0 0.5rem 0;
-            color: #667eea;
-        }
-
-        .test-info p {
-            margin: 0.25rem 0;
-            font-size: 0.9rem;
-        }
-
-        .test-info code {
-            background: white;
-            padding: 0.2rem 0.4rem;
-            border-radius: 3px;
-            font-family: monospace;
-        }
-
-        .test-section {
-            margin-bottom: 3rem;
-            border: 2px solid #e0e0e0;
-            background: white;
-        }
-
-        .test-section h3 {
-            background: #667eea;
-            color: white;
-            padding: 0.75rem 1rem;
-            margin: 0;
-            font-size: 1rem;
-        }
-
-        .test-section .description {
-            padding: 1rem;
-            background: #f9f9f9;
-            border-bottom: 1px solid #e0e0e0;
-            font-size: 0.9rem;
-        }
-
-        .test-section .description strong {
-            color: #667eea;
-        }
-
-        /* Status indicators */
-        .status {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            border-radius: 3px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .status.success {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .status.info {
-            background: #e3f2fd;
-            color: #1976d2;
-        }
-
-        .status.warning {
-            background: #fff3e0;
-            color: #e65100;
-        }
-
-        /* Spacer to test lazy loading */
-        .spacer {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="/blocks/video/test.css">
 </head>
 <body>
     <div class="test-info">
@@ -247,7 +151,7 @@
                     </div>
                 </div>
             </div>
-            <div style="height: 50vh; background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
+            <div class="test-inline-1">
                 Space between videos (scroll past this)
             </div>
             <div class="video-wrapper">
@@ -257,7 +161,7 @@
                     </div>
                 </div>
             </div>
-            <div style="height: 50vh; background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
+            <div class="test-inline-1">
                 Space between videos (scroll past this)
             </div>
             <div class="video-wrapper">
@@ -386,9 +290,9 @@
         });
     </script>
 
-    <div style="padding: 2rem; background: #f9f9f9; border-top: 2px solid #667eea; font-family: system-ui;">
-        <h3 style="margin-top: 0; color: #667eea;">Testing Instructions</h3>
-        <ol style="line-height: 1.8;">
+    <div class="test-inline-2">
+        <h3 class="test-inline-3">Testing Instructions</h3>
+        <ol class="test-inline-4">
             <li><strong>Poster Tests (1-2):</strong> Click play button on poster images to load videos</li>
             <li><strong>Lazy Load Tests (3-4):</strong> Scroll down to trigger IntersectionObserver</li>
             <li><strong>Autoplay Test (5):</strong> Scroll to video and verify muted autoplay begins</li>
@@ -397,8 +301,8 @@
             <li><strong>Console Monitoring:</strong> Watch browser console for lazy load events and debug info</li>
         </ol>
 
-        <h3 style="color: #667eea;">Expected Results</h3>
-        <ul style="line-height: 1.8;">
+        <h3 class="test-inline-5">Expected Results</h3>
+        <ul class="test-inline-4">
             <li><strong>Videos with posters:</strong> Display custom image with play button overlay</li>
             <li><strong>Videos without posters:</strong> Reserve space (16:9) then load when scrolled into view</li>
             <li><strong>Autoplay video:</strong> Muted, looping, no controls, begins automatically when visible</li>
@@ -407,16 +311,16 @@
             <li><strong>All videos:</strong> 16:9 aspect ratio maintained, responsive width</li>
         </ul>
 
-        <h3 style="color: #667eea;">Performance Checks</h3>
-        <ul style="line-height: 1.8;">
+        <h3 class="test-inline-5">Performance Checks</h3>
+        <ul class="test-inline-4">
             <li><strong>Network Tab:</strong> Verify videos don't load until scrolled into view</li>
             <li><strong>Layout Shift:</strong> Check for no jumping/shifting as videos load</li>
             <li><strong>Memory Usage:</strong> Monitor memory with multiple videos (DevTools Performance)</li>
             <li><strong>IntersectionObserver:</strong> Verify observer disconnects after loading</li>
         </ul>
 
-        <h3 style="color: #667eea;">Platform Testing</h3>
-        <ul style="line-height: 1.8;">
+        <h3 class="test-inline-5">Platform Testing</h3>
+        <ul class="test-inline-4">
             <li><strong>YouTube:</strong>
                 <ul>
                     <li>Standard URL format (watch?v=)</li>
@@ -442,9 +346,9 @@
             </li>
         </ul>
 
-        <h3 style="color: #667eea;">Browser Console Commands</h3>
+        <h3 class="test-inline-5">Browser Console Commands</h3>
         <p>Try these commands in the browser console:</p>
-        <pre style="background: #333; color: #0f0; padding: 1rem; border-radius: 4px; overflow-x: auto;">
+        <pre class="test-inline-6">
 // Check all video blocks
 document.querySelectorAll('.video.block')
 

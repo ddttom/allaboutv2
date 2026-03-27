@@ -1,0 +1,40 @@
+/**
+ * @description Styles for 404 Not Found page
+ * @version 1.0
+ * @author Tom Cranstoun
+ * @mx:status active
+ * @mx:contentType stylesheet
+ */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    font-size: 3em;
+    margin: 0;
+}
+
+p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

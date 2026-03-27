@@ -1,0 +1,49 @@
+/**
+ * @description Test harness styles for bio block
+ * @version 1.0
+ * @author Tom Cranstoun
+ * @mx:status active
+ * @mx:contentType stylesheet
+ */
+
+/* EDS pattern - ensure body appears */
+body.appear {
+    display: block;
+}
+
+/* Test page styling */
+body {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.test-section {
+    margin: 3rem 0;
+    padding: 2rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.test-section h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.test-description {
+    color: #666;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #fff;
+    border-left: 4px solid #0078d4;
+}
+
+/* Highlight the bio blocks for testing */
+.bio {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: white;
+    border: 1px dashed #0078d4;
+}

@@ -1,0 +1,111 @@
+/**
+ * @description Test harness styles for video block
+ * @version 1.0
+ * @author Tom Cranstoun
+ * @mx:status active
+ * @mx:contentType stylesheet
+ */
+
+/* EDS pattern - ensure body appears */
+body.appear {
+    display: block;
+}
+
+/* Test page specific styles */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.test-info {
+    background: #f0f0f0;
+    padding: 1rem;
+    border-bottom: 2px solid #667eea;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.test-info h2 {
+    margin: 0 0 0.5rem 0;
+    color: #667eea;
+}
+
+.test-info p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+}
+
+.test-info code {
+    background: white;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: monospace;
+}
+
+.test-section {
+    margin-bottom: 3rem;
+    border: 2px solid #e0e0e0;
+    background: white;
+}
+
+.test-section h3 {
+    background: #667eea;
+    color: white;
+    padding: 0.75rem 1rem;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.test-section .description {
+    padding: 1rem;
+    background: #f9f9f9;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 0.9rem;
+}
+
+.test-section .description strong {
+    color: #667eea;
+}
+
+/* Status indicators */
+.status {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status.info {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.status.warning {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+/* Spacer to test lazy loading */
+.spacer {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+}
+/* Converted from inline style= attributes */
+.test-inline-1 { height: 50vh; background: #f5f5f5; display: flex; align-items: center; justify-content: center; }
+.test-inline-2 { padding: 2rem; background: #f9f9f9; border-top: 2px solid #667eea; font-family: system-ui; }
+.test-inline-3 { margin-top: 0; color: #667eea; }
+.test-inline-4 { line-height: 1.8; }
+.test-inline-5 { color: #667eea; }
+.test-inline-6 { background: #333; color: #0f0; padding: 1rem; border-radius: 4px; overflow-x: auto; }
+

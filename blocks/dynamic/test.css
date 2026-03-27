@@ -1,0 +1,114 @@
+/**
+ * @description Test harness styles for dynamic block
+ * @version 1.0
+ * @author Tom Cranstoun
+ * @mx:status active
+ * @mx:contentType stylesheet
+ */
+
+/* EDS pattern - ensure body appears */
+body.appear {
+    display: block;
+}
+
+/* Test page styling */
+body {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    background: #f5f5f5;
+}
+
+.test-section {
+    margin: 3rem 0;
+    padding: 2rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background: white;
+}
+
+.test-section h2 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 2px solid #0078d4;
+    padding-bottom: 0.5rem;
+}
+
+.test-description {
+    color: #666;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #f0f8ff;
+    border-left: 4px solid #0078d4;
+    border-radius: 4px;
+}
+
+.test-controls {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: #fff8e1;
+    border-radius: 4px;
+    border: 1px solid #ffc107;
+}
+
+.test-button {
+    background: #0078d4;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0.5rem;
+    font-size: 14px;
+}
+
+.test-button:hover {
+    background: #005a9e;
+}
+
+.test-results {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+/* Highlight the dynamic blocks for testing */
+.dynamic {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: white;
+    border: 2px dashed #0078d4;
+    min-height: 100px;
+}
+
+.status-indicator {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 1rem;
+}
+
+.status-loading {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-loaded {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-error {
+    background: #f8d7da;
+    color: #721c24;
+}
+/* Converted from inline style= attributes */
+.test-inline-1 { display: none; }
+

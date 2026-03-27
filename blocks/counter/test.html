@@ -9,247 +9,8 @@
   <meta name="mx:contentType" content="reference-implementation">
   <meta name="mx:tags" content="test">
   <title>Counter Block - Test Suite</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      line-height: 1.6;
-      color: #333;
-      background: #f5f5f5;
-      padding: 2rem;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    h1 {
-      color: #2c3e50;
-      margin-bottom: 0.5rem;
-      font-size: 2rem;
-    }
-
-    .subtitle {
-      color: #7f8c8d;
-      margin-bottom: 2rem;
-      font-size: 1rem;
-    }
-
-    h2 {
-      color: #34495e;
-      margin: 2rem 0 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #3498db;
-      font-size: 1.5rem;
-    }
-
-    h3 {
-      color: #555;
-      margin: 1.5rem 0 0.75rem;
-      font-size: 1.1rem;
-    }
-
-    .test-section {
-      margin: 1.5rem 0;
-      padding: 1.5rem;
-      background: #f8f9fa;
-      border-radius: 4px;
-      border-left: 4px solid #3498db;
-    }
-
-    .test-description {
-      margin-bottom: 1rem;
-      color: #555;
-      font-size: 0.95rem;
-    }
-
-    .test-result {
-      margin-top: 1rem;
-      padding: 0.75rem;
-      background: white;
-      border-radius: 4px;
-      border: 1px solid #dee2e6;
-    }
-
-    .counter {
-      margin: 1rem 0;
-    }
-
-    .expected {
-      margin-top: 0.5rem;
-      padding: 0.5rem;
-      background: #e8f4f8;
-      border-left: 3px solid #3498db;
-      font-size: 0.9rem;
-    }
-
-    .expected strong {
-      color: #2980b9;
-    }
-
-    .info-box {
-      background: #fff3cd;
-      border: 1px solid #ffc107;
-      border-radius: 4px;
-      padding: 1rem;
-      margin: 1rem 0;
-    }
-
-    .info-box strong {
-      color: #856404;
-    }
-
-    .success-box {
-      background: #d4edda;
-      border: 1px solid #28a745;
-      border-radius: 4px;
-      padding: 1rem;
-      margin: 1rem 0;
-    }
-
-    .success-box strong {
-      color: #155724;
-    }
-
-    .error-box {
-      background: #f8d7da;
-      border: 1px solid #dc3545;
-      border-radius: 4px;
-      padding: 1rem;
-      margin: 1rem 0;
-    }
-
-    .error-box strong {
-      color: #721c24;
-    }
-
-    code {
-      background: #e9ecef;
-      padding: 0.2rem 0.4rem;
-      border-radius: 3px;
-      font-family: 'Courier New', monospace;
-      font-size: 0.9rem;
-    }
-
-    .event-log {
-      margin-top: 1rem;
-      padding: 1rem;
-      background: #282c34;
-      color: #abb2bf;
-      border-radius: 4px;
-      font-family: 'Courier New', monospace;
-      font-size: 0.85rem;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    .event-log-entry {
-      padding: 0.25rem 0;
-      border-bottom: 1px solid #3e4451;
-    }
-
-    .event-log-entry:last-child {
-      border-bottom: none;
-    }
-
-    .timestamp {
-      color: #61afef;
-    }
-
-    .event-type {
-      color: #98c379;
-    }
-
-    .event-value {
-      color: #e5c07b;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1rem 0;
-    }
-
-    th, td {
-      padding: 0.75rem;
-      text-align: left;
-      border-bottom: 1px solid #dee2e6;
-    }
-
-    th {
-      background: #f8f9fa;
-      font-weight: 600;
-      color: #495057;
-    }
-
-    .controls {
-      margin: 1rem 0;
-      padding: 1rem;
-      background: white;
-      border-radius: 4px;
-      border: 1px solid #dee2e6;
-    }
-
-    .controls button {
-      margin: 0.25rem;
-      padding: 0.5rem 1rem;
-      background: #3498db;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: background 0.2s;
-    }
-
-    .controls button:hover {
-      background: #2980b9;
-    }
-
-    .controls button:disabled {
-      background: #95a5a6;
-      cursor: not-allowed;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin: 1rem 0;
-    }
-
-    .stat-card {
-      background: white;
-      padding: 1rem;
-      border-radius: 4px;
-      border-left: 4px solid #3498db;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    .stat-label {
-      font-size: 0.85rem;
-      color: #7f8c8d;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .stat-value {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #2c3e50;
-      margin-top: 0.25rem;
-    }
-  </style>
+  
+    <link rel="stylesheet" href="/blocks/counter/test.css">
 </head>
 <body>
   <div class="container">
@@ -402,7 +163,7 @@
           <button onclick="setCounterValue(0)">Reset to 0</button>
           <button onclick="readCounterValue()">Read Current Value</button>
         </div>
-        <div id="programmatic-result" class="info-box" style="display: none;"></div>
+        <div id="programmatic-result" class="info-box test-inline-1" ></div>
       </div>
       <div class="expected">
         <strong>Expected:</strong> Buttons programmatically control the counter value
@@ -455,7 +216,7 @@
         <div class="counter" id="accessibility-counter">0</div>
         <div class="info-box">
           <strong>Manual Testing Required:</strong>
-          <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+          <ul class="test-inline-2">
             <li>Press Tab to focus on buttons</li>
             <li>Verify focus indicators are visible</li>
             <li>Press Space or Enter to activate buttons</li>
@@ -477,14 +238,6 @@
         Tests custom theming via CSS variables.
       </div>
       <div class="test-result">
-        <style>
-          #themed-counter counter-element {
-            --counter-button-bg: #28a745;
-            --counter-button-color: white;
-            --counter-display-bg: #e9ecef;
-            --counter-display-color: #495057;
-          }
-        </style>
         <div class="counter" id="themed-counter">0</div>
       </div>
       <div class="expected">

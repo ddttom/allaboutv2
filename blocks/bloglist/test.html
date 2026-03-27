@@ -17,155 +17,7 @@
     <!-- Block-specific CSS -->
     <link rel="stylesheet" href="/blocks/bloglist/bloglist.css">
 
-    <style>
-        /* EDS pattern - ensure body appears */
-        body.appear {
-            display: block;
-        }
-
-        /* Test page styling */
-        body {
-            padding: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        }
-
-        .test-header {
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            border-bottom: 3px solid #0078d4;
-        }
-
-        .test-header h1 {
-            margin: 0 0 0.5rem 0;
-            color: #0078d4;
-        }
-
-        .test-header p {
-            margin: 0.5rem 0;
-            color: #666;
-        }
-
-        .test-section {
-            margin: 3rem 0;
-            padding: 2rem;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            background: #f9f9f9;
-        }
-
-        .test-section h2 {
-            margin-top: 0;
-            color: #333;
-            border-bottom: 2px solid #0078d4;
-            padding-bottom: 0.5rem;
-        }
-
-        .test-description {
-            color: #666;
-            font-style: italic;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: #fff;
-            border-left: 4px solid #0078d4;
-            line-height: 1.6;
-        }
-
-        .test-notes {
-            background: #fffbcc;
-            border-left: 4px solid #f4a700;
-            padding: 1rem;
-            margin: 1rem 0;
-        }
-
-        .test-notes strong {
-            color: #d97706;
-        }
-
-        /* Highlight the bloglist blocks for testing */
-        .bloglist {
-            margin: 1rem 0;
-            background: white;
-            border: 2px dashed #0078d4;
-            padding: 1rem;
-        }
-
-        /* Mock data container */
-        .mock-data {
-            background: #f0f0f0;
-            padding: 1rem;
-            border-radius: 4px;
-            margin: 1rem 0;
-            font-family: monospace;
-            font-size: 0.85rem;
-            white-space: pre-wrap;
-            overflow-x: auto;
-        }
-
-        /* Status indicators */
-        .status {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.875rem;
-        }
-
-        .status.pass {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status.fail {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .status.info {
-            background: #d1ecf1;
-            color: #0c5460;
-        }
-
-        /* Console output styling */
-        #console-output {
-            background: #1e1e1e;
-            color: #d4d4d4;
-            padding: 1rem;
-            border-radius: 4px;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 0.875rem;
-            max-height: 400px;
-            overflow-y: auto;
-            margin-top: 1rem;
-        }
-
-        #console-output .log-entry {
-            margin: 0.25rem 0;
-            padding: 0.25rem;
-            border-left: 3px solid transparent;
-        }
-
-        #console-output .log-success {
-            color: #4ec9b0;
-            border-left-color: #4ec9b0;
-        }
-
-        #console-output .log-error {
-            color: #f48771;
-            border-left-color: #f48771;
-        }
-
-        #console-output .log-info {
-            color: #569cd6;
-            border-left-color: #569cd6;
-        }
-
-        #console-output .log-warn {
-            color: #dcdcaa;
-            border-left-color: #dcdcaa;
-        }
-    </style>
+    <link rel="stylesheet" href="/blocks/bloglist/test.css">
 </head>
 <body>
     <div class="test-header">
@@ -491,7 +343,7 @@ Elements:
     </div>
 
     <!-- Summary Section -->
-    <div class="test-section" style="background: #e8f4fd; border-color: #0078d4;">
+    <div class="test-section test-inline-1" >
         <h2>Test Summary</h2>
         <div id="test-summary"></div>
     </div>
@@ -710,46 +562,46 @@ Elements:
         // Update summary section
         const summaryEl = document.getElementById('test-summary');
         summaryEl.innerHTML = `
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                <div style="padding: 1rem; background: white; border-radius: 4px;">
-                    <h3 style="margin: 0 0 0.5rem 0;">Total Tests</h3>
-                    <p style="font-size: 2rem; margin: 0; font-weight: bold;">${testResults.total}</p>
+            <div class="test-inline-2">
+                <div class="test-inline-3">
+                    <h3 class="test-inline-4">Total Tests</h3>
+                    <p class="test-inline-5">${testResults.total}</p>
                 </div>
-                <div style="padding: 1rem; background: #d4edda; border-radius: 4px; border: 2px solid #155724;">
-                    <h3 style="margin: 0 0 0.5rem 0; color: #155724;">Passed</h3>
-                    <p style="font-size: 2rem; margin: 0; font-weight: bold; color: #155724;">${testResults.passed}</p>
+                <div class="test-inline-6">
+                    <h3 class="test-inline-7">Passed</h3>
+                    <p class="test-inline-8">${testResults.passed}</p>
                 </div>
-                <div style="padding: 1rem; background: #f8d7da; border-radius: 4px; border: 2px solid #721c24;">
-                    <h3 style="margin: 0 0 0.5rem 0; color: #721c24;">Failed</h3>
-                    <p style="font-size: 2rem; margin: 0; font-weight: bold; color: #721c24;">${testResults.failed}</p>
+                <div class="test-inline-9">
+                    <h3 class="test-inline-10">Failed</h3>
+                    <p class="test-inline-11">${testResults.failed}</p>
                 </div>
-                <div style="padding: 1rem; background: #fff3cd; border-radius: 4px; border: 2px solid #856404;">
-                    <h3 style="margin: 0 0 0.5rem 0; color: #856404;">Warnings</h3>
-                    <p style="font-size: 2rem; margin: 0; font-weight: bold; color: #856404;">${testResults.warnings}</p>
+                <div class="test-inline-12">
+                    <h3 class="test-inline-13">Warnings</h3>
+                    <p class="test-inline-14">${testResults.warnings}</p>
                 </div>
             </div>
-            <div style="margin-top: 1rem; padding: 1rem; background: white; border-radius: 4px;">
-                <h3 style="margin: 0 0 0.5rem 0;">Success Rate</h3>
-                <div style="width: 100%; height: 40px; background: #f0f0f0; border-radius: 4px; overflow: hidden;">
-                    <div style="width: ${successRate}%; height: 100%; background: ${successRate >= 70 ? '#28a745' : '#dc3545'}; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; transition: width 0.3s ease;">
+            <div class="test-inline-15">
+                <h3 class="test-inline-4">Success Rate</h3>
+                <div class="test-inline-16">
+                    <div class="test-inline-17">
                         ${successRate}%
                     </div>
                 </div>
             </div>
             ${testResults.warnings > 0 ? `
-            <div style="margin-top: 1rem; padding: 1rem; background: #fffbcc; border-radius: 4px; border-left: 4px solid #f4a700;">
-                <h3 style="margin: 0 0 0.5rem 0; color: #d97706;">⚠️ Code Issues Detected</h3>
-                <ul style="margin: 0.5rem 0;">
+            <div class="test-inline-18">
+                <h3 class="test-inline-19">⚠️ Code Issues Detected</h3>
+                <ul class="test-inline-20">
                     <li><strong>Line 17-19:</strong> Sorts by title instead of lastModified</li>
                     <li><strong>Line 25:</strong> Uses sortedBlogItems instead of limitedBlogItems (shows all items, not 4)</li>
                 </ul>
-                <p style="margin: 0.5rem 0 0 0; font-size: 0.875rem;">
+                <p class="test-inline-21">
                     See console output above for detailed analysis.
                 </p>
             </div>
             ` : ''}
-            <div style="margin-top: 1rem; padding: 1rem; background: white; border-radius: 4px;">
-                <p style="margin: 0; text-align: center;">
+            <div class="test-inline-15">
+                <p class="test-inline-22">
                     ${testResults.failed === 0 && testResults.warnings === 0
                         ? '🎉 <strong>All tests passed with no issues!</strong>'
                         : testResults.failed === 0

@@ -1,0 +1,45 @@
+/**
+ * @description Test harness styles for overlay block
+ * @version 1.0
+ * @author Tom Cranstoun
+ * @mx:status active
+ * @mx:contentType stylesheet
+ */
+
+/* Test page specific styles */
+body {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.test-section {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+.test-section h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.test-section p {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.overlay {
+    margin: 1rem 0;
+}
+
+/* EDS pattern - ensure body appears */
+body.appear {
+    display: block;
+}
+/* Converted from inline style= attributes */
+.test-inline-1 { display: flex; gap: 1rem; flex-wrap: wrap; }
+.test-inline-2 { background-color: #e3f2fd; }
+

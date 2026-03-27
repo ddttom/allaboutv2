@@ -16,133 +16,7 @@
     <!-- Showcaser Block Styles -->
     <link rel="stylesheet" href="/blocks/showcaser/showcaser.css">
 
-    <style>
-        /* EDS pattern - ensure body appears */
-        body.appear {
-            display: block;
-        }
-
-        /* Test page specific styles */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-
-        .test-info {
-            background: #f0f0f0;
-            padding: 1rem;
-            border-bottom: 2px solid #0066cc;
-        }
-
-        .test-info h2 {
-            margin: 0 0 0.5rem 0;
-            color: #0066cc;
-        }
-
-        .test-info p {
-            margin: 0.25rem 0;
-            font-size: 0.9rem;
-        }
-
-        .test-info code {
-            background: white;
-            padding: 0.2rem 0.4rem;
-            border-radius: 3px;
-            font-family: monospace;
-        }
-
-        /* Status indicators */
-        .status {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            border-radius: 3px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .status.success {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .status.info {
-            background: #e3f2fd;
-            color: #1976d2;
-        }
-
-        .status.error {
-            background: #ffebee;
-            color: #c62828;
-        }
-
-        /* Sample Code Sections */
-        .code-samples {
-            margin: 2rem;
-            padding: 2rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .code-samples h2 {
-            color: #0066cc;
-            margin-top: 0;
-        }
-
-        .code-samples h3 {
-            color: #333;
-            margin-top: 2rem;
-            border-bottom: 2px solid #e0e0e0;
-            padding-bottom: 0.5rem;
-        }
-
-        .code-samples p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* Instructions section */
-        .instructions {
-            padding: 2rem;
-            background: #f9f9f9;
-            border-top: 2px solid #0066cc;
-        }
-
-        .instructions h3 {
-            margin-top: 0;
-            color: #0066cc;
-        }
-
-        .instructions ol,
-        .instructions ul {
-            line-height: 1.8;
-        }
-
-        .instructions strong {
-            color: #0066cc;
-        }
-
-        /* Showcaser wrapper */
-        .showcaser-test-wrapper {
-            margin: 2rem;
-        }
-
-        /* Fix header for test environment */
-        header {
-            background: #0066cc;
-            color: white;
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-    </style>
+    <link rel="stylesheet" href="/blocks/showcaser/test.css">
 </head>
 <body>
     <header>
@@ -458,8 +332,8 @@ console.log('User Statistics:', stats);</code></pre>
 
     <!-- Showcaser Block -->
     <div class="showcaser-test-wrapper">
-        <h2 style="color: #0066cc; margin-bottom: 1rem;">Showcaser Block</h2>
-        <p style="color: #666;">The block below collects all code snippets from this page:</p>
+        <h2 class="test-inline-1">Showcaser Block</h2>
+        <p class="test-inline-2">The block below collects all code snippets from this page:</p>
 
         <div class="showcaser block">
         </div>

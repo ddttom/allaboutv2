@@ -16,91 +16,7 @@
     <!-- Hero Block Styles -->
     <link rel="stylesheet" href="/blocks/hero/hero.css">
 
-    <style>
-        /* EDS pattern - ensure body appears */
-        body.appear {
-            display: block;
-        }
-
-        /* Test page specific styles */
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        .test-info {
-            background: #f0f0f0;
-            padding: 1rem;
-            border-bottom: 2px solid #667eea;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-
-        .test-info h2 {
-            margin: 0 0 0.5rem 0;
-            color: #667eea;
-        }
-
-        .test-info p {
-            margin: 0.25rem 0;
-            font-size: 0.9rem;
-        }
-
-        .test-info code {
-            background: white;
-            padding: 0.2rem 0.4rem;
-            border-radius: 3px;
-            font-family: monospace;
-        }
-
-        .test-section {
-            margin-bottom: 3rem;
-            border: 2px solid #e0e0e0;
-            background: white;
-        }
-
-        .test-section h3 {
-            background: #667eea;
-            color: white;
-            padding: 0.75rem 1rem;
-            margin: 0;
-            font-size: 1rem;
-        }
-
-        .test-section .description {
-            padding: 1rem;
-            background: #f9f9f9;
-            border-bottom: 1px solid #e0e0e0;
-            font-size: 0.9rem;
-        }
-
-        .test-section .description strong {
-            color: #667eea;
-        }
-
-        /* Reduce hero height for testing */
-        main .hero {
-            min-height: 400px;
-        }
-
-        /* Status indicators */
-        .status {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            border-radius: 3px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .status.success {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .status.info {
-            background: #e3f2fd;
-            color: #1976d2;
-        }
-    </style>
+    <link rel="stylesheet" href="/blocks/hero/test.css">
 </head>
 <body>
     <div class="test-info">
@@ -317,9 +233,9 @@
         init();
     </script>
 
-    <div style="padding: 2rem; background: #f9f9f9; border-top: 2px solid #667eea; font-family: system-ui;">
-        <h3 style="margin-top: 0; color: #667eea;">Testing Instructions</h3>
-        <ol style="line-height: 1.8;">
+    <div class="test-inline-1">
+        <h3 class="test-inline-2">Testing Instructions</h3>
+        <ol class="test-inline-3">
             <li><strong>Responsive Testing:</strong> Resize your browser window to < 768px and >= 768px to see image swapping</li>
             <li><strong>Image Merging:</strong> Open browser DevTools and inspect each hero block - should have only ONE picture element</li>
             <li><strong>Variations:</strong> Verify that manual, techem, and embolden variations apply correct styles</li>
@@ -327,8 +243,8 @@
             <li><strong>Console Output:</strong> Review console logs for decoration process details</li>
         </ol>
 
-        <h3 style="color: #667eea;">Expected Results</h3>
-        <ul style="line-height: 1.8;">
+        <h3 class="test-inline-4">Expected Results</h3>
+        <ul class="test-inline-3">
             <li>Each hero block should have exactly 1 picture element after decoration (down from 2)</li>
             <li>The first picture's desktop source should be replaced with the second picture's desktop source</li>
             <li>The second picture element should be removed entirely</li>
@@ -337,8 +253,8 @@
             <li>At >= 768px viewport, "Desktop 2" images display (merged from second picture)</li>
         </ul>
 
-        <h3 style="color: #667eea;">Variation Styles to Verify</h3>
-        <ul style="line-height: 1.8;">
+        <h3 class="test-inline-4">Variation Styles to Verify</h3>
+        <ul class="test-inline-3">
             <li><strong>Manual:</strong> White text, 100px top padding, 69px line height on h2</li>
             <li><strong>Techem:</strong> Center-aligned text, 3rem h3 font size, max-width constraint</li>
             <li><strong>Embolden:</strong> Bolder font weight throughout</li>

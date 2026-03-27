@@ -93,12 +93,8 @@
     <link rel="stylesheet" href="/styles/styles.css">
     <link rel="stylesheet" href="/styles/fonts.css">
 
-    <!-- Prevent FOUC -->
-    <style>
-        body:not(.appear) {
-            visibility: hidden;
-        }
-    </style>
+    <!-- Shared book pages styles (includes FOUC prevention) -->
+    <link rel="stylesheet" href="book-pages.css">
     <script>
         // Add appear class immediately, before DOMContentLoaded
         document.addEventListener('DOMContentLoaded', () => {

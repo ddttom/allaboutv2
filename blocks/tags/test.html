@@ -13,200 +13,7 @@
     <!-- EDS Core Styles -->
     <link rel="stylesheet" href="/styles/styles.css">
 
-    <style>
-        /* EDS pattern - ensure body appears */
-        body.appear {
-            display: block;
-        }
-
-        /* Test page specific styles */
-        body {
-            margin: 0;
-            padding: 2rem;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .test-info {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .test-info h1 {
-            margin: 0 0 1rem 0;
-            font-size: 2rem;
-        }
-
-        .test-info p {
-            margin: 0.5rem 0;
-            opacity: 0.95;
-        }
-
-        .test-info code {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 0.2rem 0.5rem;
-            border-radius: 3px;
-            font-family: 'Monaco', 'Courier New', monospace;
-        }
-
-        .test-section {
-            margin: 2rem 0;
-            padding: 2rem;
-            border: 2px solid #e1e4e8;
-            border-radius: 8px;
-            background: #f6f8fa;
-        }
-
-        .test-section h2 {
-            margin: 0 0 1rem 0;
-            color: #667eea;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 0.5rem;
-        }
-
-        .test-description {
-            background: white;
-            padding: 1rem;
-            margin: 1rem 0;
-            border-left: 4px solid #667eea;
-            border-radius: 4px;
-        }
-
-        .test-description strong {
-            color: #667eea;
-        }
-
-        .test-case {
-            margin: 1.5rem 0;
-            padding: 1.5rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .test-case h3 {
-            margin: 0 0 1rem 0;
-            color: #333;
-            font-size: 1.1rem;
-        }
-
-        .test-metadata {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 4px;
-            margin: 1rem 0;
-            font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 0.9rem;
-            border: 1px solid #e1e4e8;
-        }
-
-        .test-metadata strong {
-            color: #667eea;
-        }
-
-        .test-output {
-            margin: 1rem 0;
-            padding: 1rem;
-            background: #fff;
-            border: 2px dashed #667eea;
-            border-radius: 4px;
-            min-height: 50px;
-        }
-
-        .test-controls {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin: 2rem 0;
-        }
-
-        .test-button {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            margin: 0.5rem;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .test-button:hover {
-            background: #5568d3;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
-        }
-
-        .test-button:active {
-            transform: translateY(0);
-        }
-
-        #test-results {
-            margin-top: 1rem;
-            padding: 1rem;
-            background: #f8f9fa;
-            border-radius: 4px;
-            font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 0.9rem;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .result-success {
-            color: #28a745;
-            padding: 0.25rem 0;
-        }
-
-        .result-error {
-            color: #dc3545;
-            padding: 0.25rem 0;
-        }
-
-        .result-info {
-            color: #17a2b8;
-            padding: 0.25rem 0;
-        }
-
-        .config-display {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 4px;
-            margin: 1rem 0;
-            border: 1px solid #e1e4e8;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .config-display pre {
-            margin: 0;
-            font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 0.85rem;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-
-        /* Highlight the tags blocks for testing */
-        .tags.block {
-            margin: 1rem 0;
-            padding: 1rem;
-            min-height: 40px;
-            background: white;
-        }
-
-        /* Add some visual separation */
-        hr {
-            border: none;
-            border-top: 2px solid #e1e4e8;
-            margin: 2rem 0;
-        }
-    </style>
+    <link rel="stylesheet" href="/blocks/tags/test.css">
 </head>
 <body>
     <div class="test-info">
@@ -304,7 +111,7 @@
                 <div class="tags block" data-block-name="tags" data-test-id="test-4">
                 </div>
             </div>
-            <p style="color: #666; font-style: italic; margin-top: 0.5rem;">
+            <p class="test-inline-1">
                 Expected: Block should be empty or not visible
             </p>
         </div>
@@ -319,7 +126,7 @@
 
         <div class="test-case">
             <h3>Scenario: Three Blocks with Same Config</h3>
-            <p style="color: #666; margin-bottom: 1rem;">
+            <p class="test-inline-2">
                 All blocks should display identical tags based on the global config
             </p>
             <div class="test-output">

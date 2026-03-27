@@ -1,0 +1,109 @@
+/**
+ * @description Test harness styles for shoelace block
+ * @version 1.0
+ * @author Tom Cranstoun
+ * @mx:status active
+ * @mx:contentType stylesheet
+ */
+
+body {
+  margin: 0;
+  padding: 2rem;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f5f5f5;
+}
+
+.test-section {
+  background: white;
+  margin: 2rem 0;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.test-section h2 {
+  margin-top: 0;
+  color: #1e40af;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+}
+
+.test-section h3 {
+  color: #374151;
+  margin-top: 1.5rem;
+}
+
+.test-container {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+}
+
+.shoelace {
+  padding: 1rem;
+  background: white;
+  border-radius: 4px;
+}
+
+.test-controls {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.test-controls button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.test-controls button:hover {
+  background: #f3f4f6;
+}
+
+.test-output {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #1f2937;
+  color: #e5e7eb;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.test-output .log-entry {
+  margin: 0.25rem 0;
+}
+
+.test-output .log-success {
+  color: #10b981;
+}
+
+.test-output .log-error {
+  color: #ef4444;
+}
+
+.test-output .log-info {
+  color: #3b82f6;
+}
+
+/* Spacing between Shoelace components */
+.shoelace sl-button,
+.shoelace sl-input,
+.shoelace sl-select,
+.shoelace sl-card,
+.shoelace sl-alert {
+  margin: 0.5rem;
+}
+
+.shoelace sl-card {
+  max-width: 400px;
+}

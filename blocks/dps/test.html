@@ -12,60 +12,8 @@
   <script src="/scripts/aem.js" type="module"></script>
   <script src="/scripts/scripts.js" type="module"></script>
   <link rel="stylesheet" href="/styles/styles.css">
-  <style>
-    /* Test page specific styles */
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .test-info {
-      background: #f0f0f0;
-      padding: 20px;
-      margin: 20px;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-
-    .test-info h2 {
-      margin-top: 0;
-      color: #2c3e50;
-    }
-
-    .test-info ul {
-      margin: 10px 0;
-      padding-left: 20px;
-    }
-
-    .test-info li {
-      margin: 5px 0;
-    }
-
-    .test-info code {
-      background: #fff;
-      padding: 2px 6px;
-      border-radius: 3px;
-      font-family: 'Courier New', monospace;
-      color: #e74c3c;
-    }
-
-    .start-button {
-      background: #3498db;
-      color: white;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      cursor: pointer;
-      margin: 20px;
-      transition: background 0.3s;
-    }
-
-    .start-button:hover {
-      background: #2980b9;
-    }
-  </style>
+  
+    <link rel="stylesheet" href="/blocks/dps/test.css">
 </head>
 <body>
   <!-- Test Information Panel (will be hidden when presentation starts) -->
@@ -225,7 +173,7 @@
           <div>Expected Benefits</div>
           <div>Why digital transformation matters</div>
           <div>
-            <p style="font-size: 18px; margin-bottom: 20px;">Organizations that successfully transform see significant improvements:</p>
+            <p class="test-inline-1">Organizations that successfully transform see significant improvements:</p>
             <ul>
               <li>40% reduction in operational costs</li>
               <li>60% faster time-to-market</li>
@@ -284,8 +232,8 @@
 
           // Show error in block
           block.innerHTML = `
-            <div style="padding: 20px; background: #fee; border: 2px solid #e00; border-radius: 8px; margin: 20px;">
-              <h2 style="color: #e00; margin-top: 0;">DPS Block Error</h2>
+            <div class="test-inline-2">
+              <h2 class="test-inline-3">DPS Block Error</h2>
               <p><strong>Error:</strong> ${error.message}</p>
               <p>Check the browser console for more details.</p>
             </div>
