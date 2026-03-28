@@ -29,6 +29,9 @@
   <!-- Layer 5: MX Carrier Tags -->
   <meta name="mx:status" content="active">
   <meta name="mx:contentType" content="landing-page">
+  <meta name="mx:category" content="mx-corporate">
+  <meta name="mx:tags" content="printworks, publishing, ai-age, books, semantic-publishing">
+  <meta name="mx:audience" content="humans, ai-agents">
   <meta name="mx:content-policy" content="extract-with-attribution">
   <meta name="mx:attribution" content="required">
 
@@ -59,25 +62,27 @@
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
-  <header>
+  <!-- Skip to Content Link (WCAG Accessibility) -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="page-header">
     <h1>MX Printworks</h1>
-    <p class="tagline">Publishing for the AI age</p>
+    <p class="tagline">Publishing for the AI age. Not just printing — producing systems of knowledge.</p>
   </header>
 
-  <main role="main">
-    <article>
+  <!-- Introduction -->
+  <aside class="introduction" aria-label="About MX Printworks">
+    <p>MX Printworks is the publishing arm of CogNovaMX — built to support a new generation of books designed not just for people, but for machines.</p>
+    <p>We specialise in producing technical, developer, and AI-focused publications that go beyond traditional print. Every book we create is structured to be understood by both human readers and AI systems, combining high-quality print production with machine-readable intelligence.</p>
+  </aside>
 
-      <section class="intro">
-        <p>MX Printworks is the publishing arm of CogNovaMX — built to support a new generation of books designed not just for people, but for machines.</p>
-        <p>We specialise in producing technical, developer, and AI-focused publications that go beyond traditional print. Every book we create is structured to be understood by both human readers and AI systems, combining high-quality print production with machine-readable intelligence.</p>
-        <p class="standout">This is not just printing.<br>This is publishing for the AI age.</p>
-      </section>
+  <!-- Main Article -->
+  <main id="main" tabindex="-1">
+    <article data-article-type="landing-page">
 
-      <hr>
-
-      <section>
-        <h2>What Makes Us Different</h2>
-        <p>Most printers produce pages.<br>We produce systems of knowledge.</p>
+      <section class="principle" aria-labelledby="heading-different">
+        <h2 id="heading-different">What Makes Us Different</h2>
+        <p>Most printers produce pages. We produce systems of knowledge.</p>
         <p>Every MX Printworks title is built with:</p>
         <ul>
           <li>Structured, semantic content</li>
@@ -88,10 +93,8 @@
         <p>This means your book isn't just read — it can be interpreted, indexed, and used by AI agents.</p>
       </section>
 
-      <hr>
-
-      <section>
-        <h2>Built on Real Print Expertise</h2>
+      <section class="principle" aria-labelledby="heading-expertise">
+        <h2 id="heading-expertise">Built on Real Print Expertise</h2>
         <p>Behind MX Printworks is decades of real-world print production experience through LPC Design &amp; Print.</p>
         <p>We understand:</p>
         <ul>
@@ -103,10 +106,8 @@
         <p>So while the concept is cutting-edge, the delivery is proven and reliable.</p>
       </section>
 
-      <hr>
-
-      <section>
-        <h2>What We Do</h2>
+      <section class="principle" aria-labelledby="heading-services">
+        <h2 id="heading-services">What We Do</h2>
         <p>We provide a complete, end-to-end service:</p>
         <ul>
           <li>Manuscript preparation</li>
@@ -119,10 +120,8 @@
         <p>Whether you're publishing a technical handbook, a developer framework, or a new AI protocol — we handle the full pipeline.</p>
       </section>
 
-      <hr>
-
-      <section>
-        <h2>Who We Work With</h2>
+      <section class="principle" aria-labelledby="heading-clients">
+        <h2 id="heading-clients">Who We Work With</h2>
         <p>We work with:</p>
         <ul>
           <li>Developers and technical authors</li>
@@ -133,11 +132,9 @@
         <p>If your content needs to be understood by machines as well as humans, we are the partner to build it.</p>
       </section>
 
-      <hr>
-
-      <section>
-        <h2>Our Position</h2>
-        <p>We are not a traditional publisher.<br>We are not a standard print provider.</p>
+      <section class="principle" aria-labelledby="heading-position">
+        <h2 id="heading-position">Our Position</h2>
+        <p>We are not a traditional publisher. We are not a standard print provider.</p>
         <p>We sit in the gap between:</p>
         <p class="standout">Publishing &times; AI &times; Infrastructure</p>
         <p>And that is exactly where the future is being built.</p>
@@ -145,19 +142,32 @@
 
       <hr>
 
-      <section class="cta">
-        <h2>Get in Touch</h2>
+      <!-- CTA Section -->
+      <section class="principle cta" aria-labelledby="heading-contact">
+        <h2 id="heading-contact">Get in Touch</h2>
         <p>Need a book that machines can read as well as humans?</p>
         <p>MX Printworks produces publications built for the AI age — from concept to printed reality.</p>
-        <p class="contact"><a href="mailto:mx-printworks@cognovamx.com">mx-printworks@cognovamx.com</a></p>
+        <p><a href="mailto:mx-printworks@cognovamx.com">mx-printworks@cognovamx.com</a></p>
+      </section>
+
+      <hr>
+
+      <!-- Explore Section -->
+      <section class="explore" aria-labelledby="explore-heading">
+        <h2 id="explore-heading">Explore</h2>
+        <ul>
+          <li><a href="../the-books/index.html">The Books</a> — MX: The Protocols and MX: The Handbook</li>
+          <li><a href="../index.html">MX Principles</a> — the rules we build by</li>
+          <li><a href="../demo/cognovamx/index.html">CogNovaMX Demo Site</a> — see MX principles applied to a real website</li>
+        </ul>
       </section>
 
     </article>
   </main>
 
+  <!-- Footer -->
   <footer>
     <p>&copy; CogNovaMX Ltd. All rights reserved.</p>
-    <p>MX Printworks is the publishing arm of CogNovaMX Ltd — making the web work for everyone and everything that uses it.</p>
   </footer>
 </body>
 </html>
