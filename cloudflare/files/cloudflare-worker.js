@@ -709,6 +709,19 @@ const handleRequest = async (request, env, _ctx) => {
     });
   }
 
+  // Root path redirect: bare domain → /index.html (GitHub-hosted homepage)
+  if (url.pathname === '/' || url.pathname === '') {
+    const redirectUrl = new URL(request.url);
+    redirectUrl.pathname = '/index.html';
+    return new Response(null, {
+      status: 302,
+      headers: {
+        Location: redirectUrl.toString(),
+        'Cache-Control': 'no-cache',
+      },
+    });
+  }
+
   if (url.pathname.startsWith('/drafts/')) {
     return new Response('Not Found', { status: 404 });
   }

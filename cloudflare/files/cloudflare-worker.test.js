@@ -941,6 +941,67 @@ describe('handleRequest Integration', () => {
 });
 
 // ============================================================
+// Root Path Redirect Tests
+// ============================================================
+describe('Root Path Redirect', () => {
+  beforeEach(() => {
+    MockHTMLRewriter.activeHandlers = [];
+    global.HTMLRewriter = MockHTMLRewriter;
+    global.Response = class Response {
+      constructor(body, init) {
+        this.body = body;
+        this.status = init?.status || 200;
+        this.statusText = init?.statusText || 'OK';
+        this.headers = new Map(init?.headers ? Object.entries(init.headers) : []);
+        this.bodyUsed = false;
+      }
+
+      async text() {
+        if (this.bodyUsed) throw new Error('Body already used');
+        this.bodyUsed = true;
+        return typeof this.body === 'string' ? this.body : '';
+      }
+    };
+    global.fetch = vi.fn().mockResolvedValue(new Response('<html></html>', {
+      headers: { 'content-type': 'text/html' },
+    }));
+  });
+
+  afterEach(() => {
+    delete global.HTMLRewriter;
+    delete global.Response;
+    delete global.fetch;
+  });
+
+  test('redirects bare domain root / to /index.html', async () => {
+    const env = { ORIGIN_HOSTNAME: 'main--test--owner.aem.live' };
+    const request = {
+      url: 'https://allabout.network/',
+      method: 'GET',
+      headers: new Map(),
+    };
+
+    const response = await worker.fetch(request, env);
+
+    expect(response.status).toBe(302);
+    expect(response.headers.get('Location')).toBe('https://allabout.network/index.html');
+  });
+
+  test('does not redirect non-root paths', async () => {
+    const env = { ORIGIN_HOSTNAME: 'main--test--owner.aem.live' };
+    const request = {
+      url: 'https://allabout.network/mx/index.html',
+      method: 'GET',
+      headers: new Map(),
+    };
+
+    const response = await worker.fetch(request, env);
+
+    expect(response.status).toBe(200);
+  });
+});
+
+// ============================================================
 // Content-Encoding Safety Tests
 // ============================================================
 // These tests verify the fix for the double-encoding bug where
