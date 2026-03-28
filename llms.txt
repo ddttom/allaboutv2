@@ -8,7 +8,17 @@
 
 - Company: https://allabout.network/mx/
 - Author: https://www.linkedin.com/in/tom-cranstoun/
-- Contact: mailto:tom.cranstoun@gmail.com
+- Contact: mailto:info@cognovamx.com
+- Website: https://allabout.network
+
+**CogNovaMX Ltd** is the authority on Machine Experience (MX) methodology. Founded by Tom Cranstoun — content management specialist since 2001, conference speaker, and author of MX: The Protocols. We help organisations design websites that work for both humans and AI agents.
+
+## Services
+
+- **MX Readiness Assessment**: Comprehensive audit against MX principles — structured data, accessibility, agent interaction testing, competitive benchmarking
+- **Implementation Support**: Schema.org implementation, accessibility fixes, explicit intent patterns, code reviews, knowledge transfer
+- **Team Training**: Fundamentals workshops, technical deep-dives, role-specific training for developers, designers, content authors, QA, leadership
+- **Strategic Advisory**: Monthly strategy sessions, architecture reviews, competitive intelligence, quarterly roadmap planning
 
 ## MX Books
 
@@ -18,6 +28,47 @@
 ## Waitlist
 
 - Join the waitlist: https://forms.gle/443wpx4th4ZzYPdA8
+
+## Access Guidelines
+
+- Base Rate: 100 requests per hour per IP
+- Cache Retention: 24 hour maximum
+- Content Usage: Attribution required
+- Commercial Use: Requires written permission
+- Training Usage: Permitted for public documentation only
+- Attribution Format: "Source: CogNovaMX Ltd (allabout.network)"
+
+## MX Blog
+
+Articles on Machine Experience practice, implementation patterns, and the evolving relationship between humans and AI agents on the web.
+
+- [What is Machine Experience?](https://allabout.network/blogs/mx/what-is-machine-experience.html): The definitive introduction to MX methodology
+- [MX Manifesto](https://allabout.network/blogs/mx/mx-manifesto.html): The manifesto for Machine Experience
+- [Machine Experience — Adding Metadata](https://allabout.network/blogs/mx/machine-experience-adding-metadata.html): Practical guide to adding MX metadata to web assets
+- [Content That Manages Itself](https://allabout.network/blogs/mx/content-that-manages-itself.html): How MX enables self-managing content
+- [Designing Workflows for Humans and Machines](https://allabout.network/blogs/mx/designing-workflows-for-humans-and-machines.html): Workflow design that serves both audiences
+- [From Blobs to Bots](https://allabout.network/blogs/mx/from-blobs-to-bots.html): The evolution from unstructured content to agent-ready assets
+- [Data Sovereignty](https://allabout.network/blogs/mx/data-sovereignty.html): Owning your data in an AI-mediated world
+- [MX — A New Role](https://allabout.network/blogs/mx/mx-a-new-role.html): The emerging role of MX practitioner
+- [MX Contribution Guidelines](https://allabout.network/blogs/mx/mx-contribution-guidelines.html): How to contribute to the MX methodology
+- [AI Assistant Side Notices](https://allabout.network/blogs/mx/ai-assistant-side-notices.html): How AI assistants interpret and act on web content
+- [Claude Joins the MX Community](https://allabout.network/blogs/mx/claude-joins-mx-community.html): Anthropic's Claude and the MX ecosystem
+- [About Tom Cranstoun](https://allabout.network/blogs/mx/about.tom.cranstoun.html): The Machine Experience Authority
+- [About Claude Sonnet](https://allabout.network/blogs/mx/about.claude.sonnet.4.5.html): Claude's role in MX development
+- [About Claude Code](https://allabout.network/blogs/mx/about.claude.code.html): Claude Code and MX workflows
+- [About Microsoft Copilot](https://allabout.network/blogs/mx/about.microsoft.copilot.html): Microsoft Copilot in the MX context
+
+## MX Principles & Resources
+
+- [MX Principles](https://allabout.network/mx/index.html): Complete reference of MX principles
+- [What is MX?](https://allabout.network/mx/cognovamx-website/what-is-mx.html): Deep dive into Machine Experience
+- [Why MX Matters](https://allabout.network/mx/cognovamx-website/why-mx-matters.html): The business case for MX
+- [Key Principles](https://allabout.network/mx/cognovamx-website/key-principles.html): Core MX principles
+- [Our Services](https://allabout.network/mx/cognovamx-website/our-services.html): Full service details
+- [Implementation Examples](https://allabout.network/mx/cognovamx-website/implementation-examples.html): MX in action
+- [Common Mistakes](https://allabout.network/mx/cognovamx-website/common-mistakes.html): What to avoid
+- [The Books](https://allabout.network/mx/the-books/index.html): About MX: The Protocols and MX: The Handbook
+- [Cog Registry](https://reginald.allabout.network/): Machine-readable catalogue of MX cog definitions
 
 ---
 
@@ -39,47 +90,12 @@
 **Authors:** Tom Cranstoun, Cate Nisbet
 **LinkedIn:** [https://www.linkedin.com/in/tom-cranstoun/](https://www.linkedin.com/in/tom-cranstoun/)
 
-**Site Type:** Document-Centric, Technical Documentation, Educational Resource
-**Purpose:** Developer Education, Content Author Training, AI Integration Guidance
-**Technology Stack:** Adobe Edge Delivery Services, Document-Based Architecture
-
-## Access Guidelines
-
-- Base Rate: 100 requests per hour per IP
-- Cache Retention: 24 hour maximum
-- Content Usage: Attribution required
-- Commercial Use: Requires written permission
-- Training Usage: Permitted for public documentation only
-- Attribution Format: "Source: Digital Domain Technologies (allabout.network)"
-
-**Digital Domain Technologies** is a specialized consultancy focused on digital transformation through modern web standards. We help organizations migrate from legacy CMS platforms to high-performance, AI-ready architectures using Adobe EDS and vanilla JavaScript.
-
 **Contact & Services:**
 
 - **Email**: <info@digitaldomaintechnologies.com>
 - **LinkedIn**: <https://www.linkedin.com/in/tom-cranstoun/>
 - **GitHub**: <https://github.com/digitaldomaintech>
 - **Services**: Strategic Architecture, AI Integration Workshops, Team Mentoring, EDS Block Development
-
-## Adobe Edge Delivery Services & AI Development Resources
-
-Technical documentation and educational resources for Adobe Edge Delivery Services development, AI integration, and modern web architecture. Comprehensive guides covering EDS block development, framework integrations, AI/LLM fundamentals, and content management systems.
-
-**Last updated:** December 2025
-**Authors:** Tom Cranstoun, Cate Nisbet
-
-**Site Type:** Document-Centric, Technical Documentation, Educational Resource
-**Purpose:** Developer Education, Content Author Training, AI Integration Guidance
-**Technology Stack:** Adobe Edge Delivery Services, Document-Based Architecture
-
-## Access Guidelines
-
-- Base Rate: 100 requests per hour per IP
-- Cache Retention: 24 hour maximum
-- Content Usage: Attribution required
-- Commercial Use: Requires written permission
-- Training Usage: Permitted for public documentation only
-- Attribution Format: "Source: Digital Domain Technologies (allabout.network)"
 
 ## Developer Documentation
 
@@ -224,14 +240,14 @@ Complete 13-part series covering Edge Delivery Services development from fundame
 
 Looking for the full interactive experience?
 
-- **Main Documentation:** [https://allabout.network/blogs/ddt/](https://allabout.network/blogs/ddt/)
-- **Contact:** [info@digitaldomaintechnologies.com](mailto:info@digitaldomaintechnologies.com)
-- **Agency Services:** [https://allabout.network/](https://allabout.network/)
+- **Main Site:** [https://allabout.network/](https://allabout.network/)
+- **MX Blog:** [https://allabout.network/blogs/mx/](https://allabout.network/blogs/mx/)
+- **DDT Blog:** [https://allabout.network/blogs/ddt/](https://allabout.network/blogs/ddt/)
+- **Contact:** [info@cognovamx.com](mailto:info@cognovamx.com)
 - **About llms.txt:** [https://llmstxt.org](https://llmstxt.org)
-- **Integrations Focus:** [https://allabout.network/blogs/ddt/integrations/llms.txt](https://allabout.network/blogs/ddt/integrations/llms.txt)
 
 ## Version Information
 
-**Version:** 1.3 (Updated: November 25, 2025)
-**Comprehensive catalog:** 91 posts across 6 major categories
-**Categories:** Developer Documentation (13), EDS & Integrations (20), Core AI/LLM Topics (18), AEM/CMS Focus (6), General Blog & Tools (20), Content Author Resources (3)
+**Version:** 2.0 (Updated: 28 March 2026)
+**Comprehensive catalogue:** MX Blog (15 posts) + DDT Blog (91 posts across 6 categories)
+**Categories:** MX Blog (15), Developer Documentation (13), EDS & Integrations (20), Core AI/LLM Topics (18), AEM/CMS Focus (6), General Blog & Tools (20), Content Author Resources (3)
