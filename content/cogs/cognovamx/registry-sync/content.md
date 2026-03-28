@@ -8,7 +8,7 @@ modified: 2026-02-17
 author: Tom Cranstoun and Maxine
 
 mx:
-  maintainer: info@allabout.network
+  maintainer: info@cognovamx.com
   license: proprietary
   status: published
 

@@ -1419,7 +1419,7 @@ mx:
     - name: email
       type: string
       definition: "Contact email address."
-      example: "info@allabout.network"
+      example: "info@cognovamx.com"
       status: canonical
       profile: contact
 

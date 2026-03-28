@@ -6,7 +6,7 @@ modified: 2026-03-09
 author: Tom Cranstoun and Maxine
 
 mx:
-  maintainer: info@allabout.network
+  maintainer: info@cognovamx.com
   license: proprietary
   status: published
   category: mx-core

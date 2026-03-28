@@ -8,7 +8,7 @@ description: "The unified specification for MX cogs — one document type, many 
 
 mx:
   status: draft
-  maintainer: info@allabout.network
+  maintainer: info@cognovamx.com
   category: specification
   tags: [cog, specification, the-gathering, open-standard, metadata]
   governed-by: The Gathering

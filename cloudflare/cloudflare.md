@@ -96,7 +96,7 @@ graph TD
 
 ## Cloudflare Account Details
 
-**Account:** info@allabout.network
+**Account:** info@cognovamx.com
 **Plan:** Pro ($20/month)  
 
 ### Nameservers
@@ -964,7 +964,7 @@ curl -sI https://allabout.network | grep cfw
 ### Primary Contacts
 
 **Domain Owner:** Tom Cranstoun  
-**Email:** info@allabout.network  
+**Email:** info@cognovamx.com  
 **Company:** CogNovaMX Ltd
 
 ### Official Documentation
@@ -1049,7 +1049,7 @@ dig main--allaboutv2--ddttom.aem.live +short
 **Domain Registrar (GoDaddy):**
 
 - Only needed for nameserver changes
-- Account: info@allabout.network
+- Account: info@cognovamx.com
 - Support: https://uk.godaddy.com/contact-us
 
 ---

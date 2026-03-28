@@ -17,7 +17,7 @@ mx:
     name: "CogNovaMX Ltd"
     verified: false
     signedBy: "unsigned"
-    contact: "info@allabout.network"
+    contact: "info@cognovamx.com"
     website: "https://allabout.network"
 
   subject:
@@ -36,8 +36,8 @@ mx:
   maintainer:
     name: "Tom Cranstoun"
     role: "MX Authority"
-    contact: "info@allabout.network"
-    escalation: "info@allabout.network"
+    contact: "info@cognovamx.com"
+    escalation: "info@cognovamx.com"
 
   reviewCycle: "quarterly"
   updateTriggers:

@@ -36,7 +36,7 @@ mx:
   default-author:
     name: Tom Cranstoun
     linkedin: https://www.linkedin.com/in/tom-cranstoun/
-    email: info@allabout.network
+    email: info@cognovamx.com
     image: https://allabout.network/media_126e99d56f06caf788bee715aff92281d2e31a206.png
     bio: "has been building content systems since 1977, specializing in Adobe Experience Manager, Edge Delivery Services, and Machine Experience (MX) strategic advisory."
     profile-page: about.tom.cranstoun.html
