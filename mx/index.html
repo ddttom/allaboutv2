@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Tom Cranstoun">
+  <meta name="description" content="The MX Principles — the rules that govern how Machine Experience builds things, for humans and machines alike. Every principle, explained.">
+
+  <!-- Robots Meta Tags (SEO) -->
+  <meta name="robots" content="index, follow">
+
+  <!-- Canonical URL (SEO) -->
+  <link rel="canonical" href="https://allabout.network/mx/index.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://allabout.network/mx/index.html">
+  <meta property="og:title" content="MX Principles — The Rules We Build By">
+  <meta property="og:description" content="The MX Principles — the rules that govern how Machine Experience builds things, for humans and machines alike. Every principle, explained.">
+  <meta property="og:site_name" content="AllAbout.Network">
+  <meta property="og:locale" content="en_GB">
+  <meta property="article:published_time" content="2026-03-28">
+  <meta property="article:author" content="Tom Cranstoun">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MX Principles — The Rules We Build By">
+  <meta name="twitter:description" content="The MX Principles — the rules that govern how Machine Experience builds things, for humans and machines alike. Every principle, explained.">
+  <meta name="twitter:site" content="@tomcranstoun">
+
+  <link rel="llms-txt" href="/llms.txt">
+
+  <!-- MX carrier metadata -->
+  <meta name="mx:status" content="active">
+  <meta name="mx:contentType" content="reference">
+  <meta name="mx:category" content="mx-core">
+  <meta name="mx:tags" content="principles, design, writing, metadata, accessibility, standards-hierarchy">
+  <meta name="mx:audience" content="humans, ai-agents">
+
+  <title>MX Principles — The Rules We Build By | Tom Cranstoun</title>
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "MX Principles — The Rules We Build By",
+    "description": "The MX Principles — the rules that govern how Machine Experience builds things, for humans and machines alike. Every principle, explained.",
+    "datePublished": "2026-03-28",
+    "dateModified": "2026-03-28",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "url": "https://allabout.network"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CogNovaMX Ltd",
+      "url": "https://allabout.network"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://allabout.network/mx/index.html"
+    },
+    "articleSection": "Machine Experience",
+    "keywords": ["machine-experience", "mx-principles", "design-for-both", "metadata", "accessibility", "wcag", "schema-org", "convergence", "ai-agents"],
+    "inLanguage": "en-GB"
+  }
+  </script>
+
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <!-- Skip to Content Link (WCAG Accessibility) -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="page-header">
+    <h1>MX Principles</h1>
+    <p class="tagline">The rules we build by. Not guidelines. Not suggestions. Principles — the things that stay true even when everything else changes.</p>
+  </header>
+
+  <!-- Introduction -->
+  <aside class="introduction" aria-label="About MX Principles">
+    <p>MX is the practice of making the web work for everyone and everything that uses it. Humans and machines, reading the same content, understanding it equally. These principles define how we get there.</p>
+    <p>They apply to every cog, every document, every script, every piece of work that carries the MX name.</p>
+  </aside>
+
+  <!-- Collapsible Table of Contents -->
+  <details class="table-of-contents" data-state="initially-collapsed">
+    <summary>Contents</summary>
+    <nav aria-label="Table of contents">
+      <ol>
+        <li><a href="#design-for-both">1. Design for Both</a></li>
+        <li><a href="#metadata-driven-architecture">2. Metadata-Driven Architecture</a></li>
+        <li><a href="#context-declaration">3. Context Declaration</a></li>
+        <li><a href="#universal-accessibility">4. Universal Accessibility</a></li>
+        <li><a href="#context-preserving-references">5. Context-Preserving References</a></li>
+        <li><a href="#size-neutral-documentation">6. Size-Neutral Documentation</a></li>
+        <li><a href="#executable-documentation">7. Executable Documentation</a></li>
+        <li><a href="#wcag-informed-design">8. WCAG-Informed Design</a></li>
+        <li><a href="#name-consistency">9. Name Consistency for Related Files</a></li>
+        <li><a href="#metadata-everywhere">10. Metadata Everywhere</a></li>
+        <li><a href="#consistent-attribute-placement">11. Consistent Attribute Placement</a></li>
+        <li><a href="#folder-soul-convention">12. Folder SOUL.md Convention</a></li>
+        <li><a href="#write-like-a-blog">13. Write Like a Blog</a></li>
+        <li><a href="#any-document-can-be-a-cog">14. Any Document Can Be a Cog</a></li>
+        <li><a href="#use-existing-standards">15. Use Existing Standards</a></li>
+        <li><a href="#cogs-all-the-way-down">16. Cogs All the Way Down</a></li>
+        <li><a href="#output-introduces-itself">17. Output Introduces Itself</a></li>
+        <li><a href="#embrace-and-extend">18. Embrace and Extend</a></li>
+        <li><a href="#design-for-the-worst-agent">19. Design for the Worst Agent</a></li>
+        <li><a href="#convergence">20. Convergence</a></li>
+      </ol>
+    </nav>
+  </details>
+
+  <!-- Main Article -->
+  <main id="main" tabindex="-1">
+    <article data-article-type="reference-page">
+
+      <section class="principle" id="design-for-both" aria-labelledby="heading-1">
+        <h2 id="heading-1">1. Design for Both</h2>
+        <p>Every design decision should work for humans AND machines. Not one at the expense of the other.</p>
+        <p>This is the founding principle. When we put YAML frontmatter on a markdown file, the YAML is for machines and the markdown is for humans. Same file. Both audiences served. When we hide configuration files with a dot prefix, humans get a clean workspace and machines get discoverable metadata. Both win.</p>
+        <p>The test is simple: does this decision help one audience while hurting the other? If yes, find a better decision.</p>
+      </section>
+
+      <section class="principle" id="metadata-driven-architecture" aria-labelledby="heading-2">
+        <h2 id="heading-2">2. Metadata-Driven Architecture</h2>
+        <p>Every piece of content should carry structured metadata that tells machines what it is, who it is for, and how it relates to everything else.</p>
+        <p>MX uses four layers: repository level (metadata at root), directory level (per-package metadata), file level (YAML frontmatter), and code level (annotations). Each layer adds context. Together they create a self-describing system where an AI agent can navigate as intelligently as a human.</p>
+        <p>The minimum: every file should declare its purpose, audience, and stability. Everything else builds from there.</p>
+      </section>
+
+      <section class="principle" id="context-declaration" aria-labelledby="heading-3">
+        <h2 id="heading-3">3. Context Declaration</h2>
+        <p>Files should say what context they provide and what context they need.</p>
+        <p>An AI agent encounters a file. Without context declaration, it has to guess what to read first. With explicit context fields, the agent knows exactly what this file offers and what it needs to read before it can work effectively.</p>
+        <p>This creates a self-documenting dependency graph. The connections are in the metadata.</p>
+      </section>
+
+      <section class="principle" id="universal-accessibility" aria-labelledby="heading-4">
+        <h2 id="heading-4">4. Universal Accessibility</h2>
+        <p>Content must work for every type of AI agent — CLI tools that cannot run JavaScript, browser agents, server-based processors, IDE integrations with limited context windows.</p>
+        <p>The implication: plain text over proprietary formats. Markdown over Word. YAML over binary config. Semantic HTML with Schema.org structured data. Explicit relationships over implicit ones.</p>
+        <p>If it requires a specific rendering engine to understand, it fails this test.</p>
+      </section>
+
+      <section class="principle" id="context-preserving-references" aria-labelledby="heading-5">
+        <h2 id="heading-5">5. Context-Preserving References</h2>
+        <p>Links must still make sense when a document leaves its repository.</p>
+        <p>Documents get extracted. They become PDFs, blog posts, email attachments, AI context windows. A relative path is meaningless outside the repo. The human cannot mentally reconstruct the folder tree. The machine cannot resolve the path.</p>
+        <p>The fix: every cross-document reference includes the document title and an absolute URL alongside the relative path. It works in the repo, in a PDF, in a chat window, everywhere.</p>
+      </section>
+
+      <section class="principle" id="size-neutral-documentation" aria-labelledby="heading-6">
+        <h2 id="heading-6">6. Size-Neutral Documentation</h2>
+        <p>Never hardcode counts in prose. They go stale instantly.</p>
+        <p>Write "the principles" not "twelve principles." Write "the cog ecosystem" not "thirty-five cogs." The moment someone adds a cog, every document that says "thirty-five" is wrong. Nobody updates them. The documentation lies.</p>
+        <p>Use specific numbers only when the number IS the information: WCAG requires 4.5:1 contrast. Node.js 20.x. Version 2.0. Everything else uses descriptive language that stays true regardless of what gets added or removed.</p>
+      </section>
+
+      <section class="principle" id="executable-documentation" aria-labelledby="heading-7">
+        <h2 id="heading-7">7. Executable Documentation</h2>
+        <p>Documents should contain their own generation instructions.</p>
+        <p>The problem is documentation drift. The build instructions live in one place. The output paths live in another. The quality criteria live in someone's head. When these separate, they diverge.</p>
+        <p>MX embeds generation fields directly in document metadata: a runbook (context injected whenever a machine reads the file) and a deliverable (complete generation instructions with output path). The document is self-executing. Everything needed to regenerate it lives inside it.</p>
+      </section>
+
+      <section class="principle" id="wcag-informed-design" aria-labelledby="heading-8">
+        <h2 id="heading-8">8. WCAG-Informed Design</h2>
+        <p>Accessibility standards for disabled users provide proven patterns that also work for machines.</p>
+        <p>WCAG represents decades of research into making content accessible. Semantic HTML helps screen readers AND AI agents. Clear heading hierarchy helps keyboard navigation AND automated parsing. Proper contrast ratios help low-vision users.</p>
+        <p>The convergence is real: patterns optimised for disabled users consistently optimise for machine readability too. WCAG compliance is also the law in the US, UK, EU, and Canada. Following it is not optional.</p>
+      </section>
+
+      <section class="principle" id="name-consistency" aria-labelledby="heading-9">
+        <h2 id="heading-9">9. Name Consistency for Related Files</h2>
+        <p>Related files should share a base name. <code>blog-post.html</code>, <code>blog-post.css</code>, <code>blog-post-social.svg</code>. Not three different names that happen to be related.</p>
+        <p>Machines can inspect HTML to find linked stylesheets. Humans cannot. When a human sees three files with the same base name, the relationship is instant. When the names differ, the human has to open files and trace references.</p>
+        <p>The pattern: <code>{base-name}.{extension}</code> or <code>{base-name}-{descriptor}.{extension}</code>. Always.</p>
+      </section>
+
+      <section class="principle" id="metadata-everywhere" aria-labelledby="heading-10">
+        <h2 id="heading-10">10. Metadata Everywhere</h2>
+        <p>Every artefact must carry its own metadata, and that metadata must survive format transformations.</p>
+        <p>Content moves: markdown becomes SVG, SVG becomes PNG, PNG goes into a PDF. Each transformation risks stripping metadata. A PDF without provenance metadata is a dead artefact — a machine cannot determine where it came from, what it contains, or whether it is current.</p>
+        <p>The fix: re-embed metadata at every transformation step. YAML frontmatter in markdown. XML metadata in SVG. XMP in PDF. HTML meta tags on web pages. Minimum metadata at every stage: what it is, where it came from, who made it, when, and why.</p>
+      </section>
+
+      <section class="principle" id="consistent-attribute-placement" aria-labelledby="heading-11">
+        <h2 id="heading-11">11. Consistent Attribute Placement</h2>
+        <p>Every attribute has one canonical home. Version lives in YAML frontmatter, not filenames. Status lives in a metadata field, not a <code>-draft</code> suffix. Date lives in frontmatter and git history, not the filename.</p>
+        <p>When attributes are scattered across filenames, titles, body text, and metadata, they inevitably drift out of sync. The filename says v1, the frontmatter says v2, nobody knows which is current.</p>
+        <p>One home per attribute eliminates this. Filenames describe what a document IS. Frontmatter describes everything about it. Git tracks its full history. Nothing is duplicated. Nothing can disagree.</p>
+      </section>
+
+      <section class="principle" id="folder-soul-convention" aria-labelledby="heading-12">
+        <h2 id="heading-12">12. Folder SOUL.md Convention</h2>
+        <p>Any folder representing a coherent body of work should have a SOUL.md — a control document that defines voice, constraints, and narrative.</p>
+        <p>Without it, folders drift. Twenty documents follow one tone. A twenty-first contradicts them all because the author did not know what the folder was trying to say.</p>
+        <p>The rule: on entering any folder, check for a SOUL.md. If present, read it before editing or creating any file. The SOUL defines the voice, the constraints, and the story. Everything in that folder must be consistent with it.</p>
+      </section>
+
+      <section class="principle" id="write-like-a-blog" aria-labelledby="heading-13">
+        <h2 id="heading-13">13. Write Like a Blog</h2>
+        <p>The human-readable section of every cog should read like a well-written blog post. Informative, not technical. Editorial and authoritative. Storytelling and honest.</p>
+        <p>A cog has two sections: YAML frontmatter for machines and markdown for humans. If the markdown reads like a specification, both audiences are consuming the same dry, structured content — and neither is well served. The machine gets better value from structured YAML. The human gets better value from narrative prose.</p>
+        <p>The test: could this section be published as a blog post that someone would actually want to read? If not, rewrite it.</p>
+      </section>
+
+      <section class="principle" id="any-document-can-be-a-cog" aria-labelledby="heading-14">
+        <h2 id="heading-14">14. Any Document Can Be a Cog</h2>
+        <p>Any document can become a cog. Add YAML frontmatter and it is machine-readable. That is the whole barrier to entry.</p>
+        <p>But there is a cost equation hiding in that simplicity. When the metadata is strong — rich description, clear tags, explicit relationships — an AI agent reads the frontmatter and knows what to do. When the metadata is weak, the agent has to read the entire document to understand what it is. That is compute spent because the metadata was not strong enough.</p>
+        <p>A cog with three fields works. A cog with rich metadata works better and costs less to use. Every field you add to the frontmatter is a question an AI agent does not have to answer by reading your prose.</p>
+      </section>
+
+      <section class="principle" id="use-existing-standards" aria-labelledby="heading-15">
+        <h2 id="heading-15">15. Use Existing Standards</h2>
+        <p>Never invent when you can adopt. Every new convention is cognitive overload for humans — and we design for both.</p>
+        <p>Everything that benefits SEO, GEO (Generative Engine Optimisation), accessibility, and usability also benefits MX. Established web standards — HTML semantics, WCAG, Schema.org, Open Graph, Dublin Core, <code>robots.txt</code>, <code>sitemap.xml</code> — come first. MX adds governance and lifecycle metadata where those standards leave gaps. MX never duplicates or replaces what existing standards already provide.</p>
+        <p>The rule: before creating anything new, ask whether a standard or convention already exists. If it does, use it. If it almost fits, extend it. Only if nothing exists do you invent — and then you document why.</p>
+      </section>
+
+      <section class="principle" id="cogs-all-the-way-down" aria-labelledby="heading-16">
+        <h2 id="heading-16">16. Cogs All the Way Down</h2>
+        <p>There is an old story about a scientist giving a lecture on cosmology. Afterwards, an elderly woman tells him he is wrong — the world sits on the back of a giant turtle. "And what does the turtle stand on?" he asks. "It is turtles all the way down," she replies.</p>
+        <p>MX is cogs all the way down. The machine describes itself with a cog. The repository describes itself with cog-shaped metadata. The folder describes itself. The document describes itself. The script describes itself. Every level of the stack uses the same pattern: structured metadata for machines, readable prose for humans.</p>
+        <p>This is not cleverness. It is consistency. When every level speaks the same language, an AI agent can navigate from the machine to the metadata without learning a new format at each layer. One pattern, learned once, applied everywhere.</p>
+      </section>
+
+      <section class="principle" id="output-introduces-itself" aria-labelledby="heading-17">
+        <h2 id="heading-17">17. Output Introduces Itself</h2>
+        <p>Every piece of machine-readable output must be self-describing.</p>
+        <p>When a tool produces a snapshot, it does not output a bare array. It wraps the data in a metadata envelope: name, description, content type, source, version, timestamp, and a runbook explaining exactly how the data was created. Any reader — human or AI — encountering this output for the first time knows what it is, where it came from, and how it was generated.</p>
+        <p>The rule: if a script or API produces structured output, wrap it in a metadata envelope. The output should never need a separate README to explain itself.</p>
+      </section>
+
+      <section class="principle" id="embrace-and-extend" aria-labelledby="heading-18">
+        <h2 id="heading-18">18. Embrace and Extend</h2>
+        <p>MX does not replace existing metadata conventions. It reads what is already there and adds an identity layer on top.</p>
+        <p>Every file type has its own conventions. JavaScript has JSDoc. HTML has meta tags. CSS has comments at the top. These conventions have been around for decades. They work. MX does not replace them.</p>
+        <p>What MX adds is governance: name, purpose, status, content type. The pattern is two steps: <strong>embrace</strong> what the file already says, then <strong>extend</strong> with MX governance fields. Never duplicate. The result: a file that works exactly as before for tools that do not understand MX, and is fully machine-readable for tools that do.</p>
+      </section>
+
+      <section class="principle" id="design-for-the-worst-agent" aria-labelledby="heading-19">
+        <h2 id="heading-19">19. Design for the Worst Agent</h2>
+        <p>You cannot detect which AI agent is visiting. User-Agent strings are spoofable. The agent might be a server-side model with no JavaScript execution. It might be a local model with fewer than 100 million parameters and a tiny context window. It might be a browser extension with full DOM access but no ability to follow links.</p>
+        <p>The principle: design for the agent with the least capability. If the worst agent can understand the page, every agent can. This means: critical information in the HTML, not locked behind JavaScript. Explicit structure, not inferred relationships. Redundancy across formats — the same fact in meta tags, Schema.org JSON-LD, and visible text — because different agents read different parts of the page.</p>
+        <p>This is not over-engineering. It is strategic redundancy for an audience you cannot predict.</p>
+      </section>
+
+      <section class="principle" id="convergence" aria-labelledby="heading-20">
+        <h2 id="heading-20">20. Convergence</h2>
+        <p>Patterns that work for one audience consistently work for all.</p>
+        <p>Semantic HTML helps screen readers AND AI agents. Clear heading hierarchy helps keyboard navigation AND automated parsing. Schema.org structured data helps search engines AND language models. Accessible form labels help disabled users AND browser automation agents. Good SEO helps human searchers AND AI citation systems.</p>
+        <p>This convergence is not coincidental. It reflects a shared underlying truth: explicit, structured, unambiguous content is universally comprehensible. When you optimise for accessibility, you get machine readability as a side effect. When you optimise for MX, you get accessibility as a side effect.</p>
+        <p>The principle: never treat SEO, accessibility, usability, and MX as separate workstreams. They are the same workstream viewed from different angles.</p>
+      </section>
+
+      <hr>
+
+      <!-- Additional principles without numbers -->
+      <section class="principle" id="timeless-prose" aria-labelledby="heading-timeless">
+        <h2 id="heading-timeless">Timeless Prose</h2>
+        <p>Documents should read as if they have always existed in their current form.</p>
+        <p>No "this update includes." No "previously, we used." No "migrated from." These phrases anchor content to a moment in time. When that moment passes, the document reads like a changelog instead of a reference.</p>
+        <p>The fix: state what IS, not what CHANGED. The reader does not need to know what came before. They need to know what to do now.</p>
+      </section>
+
+      <hr>
+
+      <!-- Explore Section -->
+      <section class="explore" aria-labelledby="explore-heading">
+        <h2 id="explore-heading">Explore</h2>
+        <ul>
+          <li><a href="the-books/index.html">The Books</a> — MX: The Protocols and MX: The Handbook</li>
+          <li><a href="demo/cognovamx/index.html">CogNovaMX Demo Site</a> — see MX principles applied to a real website</li>
+          <li><a href="key-principles.html">Key Principles: The Three Pillars</a> — structured data, accessibility, and explicit intent</li>
+          <li><a href="principles-changed-how-i-build.html">How These Principles Changed How I Build</a></li>
+        </ul>
+      </section>
+
+    </article>
+  </main>
+
+  <!-- Floating Back to Top Button -->
+  <a href="#" class="back-to-top" aria-label="Back to top">
+    Back to Top
+  </a>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; Tom Cranstoun. All rights reserved.</p>
+  </footer>
+</body>
+</html>
