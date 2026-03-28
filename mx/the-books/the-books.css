@@ -340,6 +340,38 @@ a.card:focus-visible {
     letter-spacing: -0.01em;
 }
 
+/* ── Hostile list ── */
+
+.hostile-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+}
+
+.hostile-list li {
+    padding: 14px 0 14px 24px;
+    position: relative;
+    font-size: 1.04rem;
+    color: var(--mx-muted);
+    border-bottom: 1px solid var(--mx-border);
+}
+
+.hostile-list li:last-child {
+    border-bottom: none;
+}
+
+.hostile-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 22px;
+    width: 8px;
+    height: 8px;
+    background: var(--mx-blue);
+}
+
 /* ── CTA button ── */
 
 .cta-button {
