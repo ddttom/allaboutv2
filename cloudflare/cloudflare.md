@@ -96,7 +96,7 @@ graph TD
 
 ## Cloudflare Account Details
 
-**Account:** tom.cranstoun@gmail.com
+**Account:** info@allabout.network
 **Plan:** Pro ($20/month)  
 
 ### Nameservers
@@ -964,7 +964,7 @@ curl -sI https://allabout.network | grep cfw
 ### Primary Contacts
 
 **Domain Owner:** Tom Cranstoun  
-**Email:** tom.cranstoun@gmail.com  
+**Email:** info@allabout.network  
 **Company:** CogNovaMX Ltd
 
 ### Official Documentation
@@ -1049,7 +1049,7 @@ dig main--allaboutv2--ddttom.aem.live +short
 **Domain Registrar (GoDaddy):**
 
 - Only needed for nameserver changes
-- Account: tom.cranstoun@gmail.com
+- Account: info@allabout.network
 - Support: https://uk.godaddy.com/contact-us
 
 ---

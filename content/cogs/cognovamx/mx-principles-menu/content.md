@@ -17,7 +17,7 @@ mx:
     name: "CogNovaMX Ltd"
     verified: false
     signedBy: "unsigned"
-    contact: "tom.cranstoun@gmail.com"
+    contact: "info@allabout.network"
     website: "https://allabout.network"
 
   subject:
@@ -36,8 +36,8 @@ mx:
   maintainer:
     name: "Tom Cranstoun"
     role: "MX Authority"
-    contact: "tom.cranstoun@gmail.com"
-    escalation: "tom.cranstoun@gmail.com"
+    contact: "info@allabout.network"
+    escalation: "info@allabout.network"
 
   reviewCycle: "quarterly"
   updateTriggers:

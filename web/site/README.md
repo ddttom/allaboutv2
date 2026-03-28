@@ -133,6 +133,6 @@ These example pages are provided for educational purposes. You may copy, adapt, 
 
 For questions about these patterns:
 
-- **Email:** <tom.cranstoun@gmail.com>
+- **Email:** <info@allabout.network>
 - **Website:** <https://allabout.network>
 - **GitHub:** <https://github.com/Digital-Domain-Technologies-Ltd/mx-handbook-manuscript>

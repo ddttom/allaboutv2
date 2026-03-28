@@ -8,7 +8,7 @@ modified: 2026-02-17
 author: Tom Cranstoun and Maxine
 
 mx:
-  maintainer: tom.cranstoun@gmail.com
+  maintainer: info@allabout.network
   license: proprietary
   status: published
 

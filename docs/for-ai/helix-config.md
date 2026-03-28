@@ -500,7 +500,7 @@ Add email-based access control:
 
 ```
 access.allow = *@digitaldomaintechnologies.com
-admin.role.publish = tom.cranstoun@gmail.com
+admin.role.publish = info@allabout.network
 ```
 
 **Purpose:** Restrict who can view/publish content

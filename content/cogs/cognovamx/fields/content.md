@@ -1419,7 +1419,7 @@ mx:
     - name: email
       type: string
       definition: "Contact email address."
-      example: "tom.cranstoun@gmail.com"
+      example: "info@allabout.network"
       status: canonical
       profile: contact
 

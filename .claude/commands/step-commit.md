@@ -37,7 +37,7 @@ Execute the systematic "step commit" workflow:
 6. Documentation Updates
    - Update any necessary documentation files
    - Verify docs/sales-enablement/PITCH.md and BLOG.md reflect current features and approach
-   - Ensure contact information is consistent (<tom.cranstoun@gmail.com>)
+   - Ensure contact information is consistent (<info@allabout.network>)
    - Commit documentation changes
 
 7. Learning Documentation
