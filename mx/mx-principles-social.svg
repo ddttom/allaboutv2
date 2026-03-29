@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f1f1f1"/>
+      <stop offset="100%" style="stop-color:#e94560"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.03">
+    <line x1="0" y1="0" x2="1200" y2="630" stroke="#fff" stroke-width="1"/>
+    <line x1="400" y1="0" x2="1200" y2="400" stroke="#fff" stroke-width="1"/>
+    <line x1="0" y1="200" x2="800" y2="630" stroke="#fff" stroke-width="1"/>
+    <line x1="1200" y1="0" x2="0" y2="630" stroke="#fff" stroke-width="1"/>
+    <line x1="800" y1="0" x2="0" y2="400" stroke="#fff" stroke-width="1"/>
+    <line x1="1200" y1="200" x2="400" y2="630" stroke="#fff" stroke-width="1"/>
+  </g>
+
+  <!-- Decorative principle numbers (background texture) -->
+  <g opacity="0.04" font-family="monospace" font-size="28" fill="#fff">
+    <text x="750" y="80">1. Design for Both</text>
+    <text x="780" y="130">2. Metadata-Driven</text>
+    <text x="810" y="180">3. Context Declaration</text>
+    <text x="840" y="230">4. Universal Accessibility</text>
+    <text x="870" y="280">5. Context-Preserving</text>
+    <text x="900" y="330">6. Size-Neutral</text>
+    <text x="930" y="380">7. Executable Docs</text>
+    <text x="960" y="430">8. WCAG-Informed</text>
+    <text x="750" y="480">15. Use Existing Standards</text>
+    <text x="780" y="530">20. Convergence</text>
+  </g>
+
+  <!-- MX logo mark -->
+  <text x="100" y="200" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="120" font-weight="800" fill="url(#accent)">MX</text>
+
+  <!-- Accent line -->
+  <rect x="100" y="230" width="120" height="4" rx="2" fill="#e94560"/>
+
+  <!-- Title -->
+  <text x="100" y="310" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="48" font-weight="700" fill="#f1f1f1">MX Principles</text>
+
+  <!-- Subtitle -->
+  <text x="100" y="370" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="32" font-weight="400" fill="#a8a8a8">The rules we build by.</text>
+
+  <!-- Description -->
+  <text x="100" y="435" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" fill="#888">Design for both humans and machines. Use existing standards.</text>
+  <text x="100" y="468" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" fill="#888">Metadata everywhere. Convergence.</text>
+
+  <!-- Author -->
+  <text x="100" y="525" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" fill="#e94560">Tom Cranstoun</text>
+
+  <!-- Bottom bar -->
+  <rect x="0" y="570" width="1200" height="60" fill="rgba(0,0,0,0.3)"/>
+  <text x="100" y="608" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" fill="#a8a8a8">CogNovaMX Ltd — Making the web work for everyone and everything that uses it</text>
+  <text x="1100" y="608" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" fill="#a8a8a8" text-anchor="end">allabout.network/mx</text>
+</svg>
