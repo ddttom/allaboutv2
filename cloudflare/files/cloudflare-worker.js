@@ -593,6 +593,8 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   resp.headers.set('Access-Control-Allow-Origin', '*');
   resp.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
   resp.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  resp.headers.set('X-Frame-Options', 'SAMEORIGIN');
+  resp.headers.set('X-Content-Type-Options', 'nosniff');
   resp.headers.set('cfw', WORKER_VERSION);
   resp.headers.delete('age');
 
@@ -885,6 +887,15 @@ const handleRequest = async (request, env, _ctx) => {
   resp.headers.set('Access-Control-Allow-Origin', '*');
   resp.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   resp.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Add security headers
+  resp.headers.set('X-Frame-Options', 'SAMEORIGIN');
+  resp.headers.set('X-Content-Type-Options', 'nosniff');
+
+  // Add CSP for /mx/ pages (static HTML — no EDS dependencies)
+  if (url.pathname.startsWith('/mx/') || url.pathname === '/mx') {
+    resp.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' https://allabout.network; font-src 'self'; connect-src 'self' https://static.cloudflareinsights.com; frame-ancestors 'self'");
+  }
 
   // Add worker version header
   resp.headers.set('cfw', WORKER_VERSION);
