@@ -340,7 +340,7 @@ Server-side Accept-Language detection and 302 redirect for n-language sites. Rep
   "version": "1.0",
   "sites": [
     {
-      "pathPrefix": "/mx/demo/salva",
+      "pathPrefix": "/demo/salva",
       "languages": ["es", "en"],
       "default": "es",
       "redirectPaths": ["/", "/index.html"],

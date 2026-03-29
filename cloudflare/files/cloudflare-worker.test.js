@@ -1302,14 +1302,14 @@ describe('detectLanguage', () => {
 describe('findLanguageSite', () => {
   const sites = [
     {
-      pathPrefix: '/mx/demo/salva',
+      pathPrefix: '/demo/salva',
       languages: ['es', 'en'],
       default: 'es',
       redirectPaths: ['/', '/index.html'],
       excludePaths: ['/assets/'],
     },
     {
-      pathPrefix: '/mx/demo/other',
+      pathPrefix: '/demo/other',
       languages: ['de', 'en'],
       default: 'de',
       redirectPaths: ['/', '/index.html'],
@@ -1318,27 +1318,27 @@ describe('findLanguageSite', () => {
   ];
 
   test('matches site by exact pathPrefix', () => {
-    const result = findLanguageSite('/mx/demo/salva', sites);
+    const result = findLanguageSite('/demo/salva', sites);
     expect(result).not.toBeNull();
-    expect(result.site.pathPrefix).toBe('/mx/demo/salva');
+    expect(result.site.pathPrefix).toBe('/demo/salva');
     expect(result.remainingPath).toBe('/');
   });
 
   test('matches site with trailing slash', () => {
-    const result = findLanguageSite('/mx/demo/salva/', sites);
+    const result = findLanguageSite('/demo/salva/', sites);
     expect(result).not.toBeNull();
     expect(result.remainingPath).toBe('/');
   });
 
   test('matches site with subpath', () => {
-    const result = findLanguageSite('/mx/demo/salva/index.html', sites);
+    const result = findLanguageSite('/demo/salva/index.html', sites);
     expect(result).not.toBeNull();
     expect(result.remainingPath).toBe('/index.html');
   });
 
   test('matches correct site from multiple', () => {
-    const result = findLanguageSite('/mx/demo/other/', sites);
-    expect(result.site.pathPrefix).toBe('/mx/demo/other');
+    const result = findLanguageSite('/demo/other/', sites);
+    expect(result.site.pathPrefix).toBe('/demo/other');
   });
 
   test('returns null for unregistered path', () => {
@@ -1347,18 +1347,18 @@ describe('findLanguageSite', () => {
   });
 
   test('returns null for null or empty sites', () => {
-    expect(findLanguageSite('/mx/demo/salva/', null)).toBeNull();
-    expect(findLanguageSite('/mx/demo/salva/', [])).toBeNull();
+    expect(findLanguageSite('/demo/salva/', null)).toBeNull();
+    expect(findLanguageSite('/demo/salva/', [])).toBeNull();
   });
 
   test('does not partially match pathPrefix', () => {
-    expect(findLanguageSite('/mx/demo/salva-extra/', sites)).toBeNull();
+    expect(findLanguageSite('/demo/salva-extra/', sites)).toBeNull();
   });
 });
 
 describe('shouldLanguageRedirect', () => {
   const site = {
-    pathPrefix: '/mx/demo/salva',
+    pathPrefix: '/demo/salva',
     languages: ['es', 'en'],
     default: 'es',
     redirectPaths: ['/', '/index.html'],

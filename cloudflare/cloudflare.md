@@ -1221,7 +1221,7 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 
 **404 fallback feature:**
 
-- When origin returns 404 for extensionless paths (e.g., `/mx/demo/salva/es`), worker issues 302 redirect to `path/index.html`
+- When origin returns 404 for extensionless paths (e.g., `/demo/salva/es`), worker issues 302 redirect to `path/index.html`
 - Uses 302 (temporary) not 301 — routing convenience, not permanent resource move
 - Supports directory-style URLs for multilingual demos and clean URL patterns
 

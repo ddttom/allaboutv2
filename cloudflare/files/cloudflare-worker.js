@@ -457,7 +457,7 @@ export const detectLanguage = (acceptLanguageHeader, availableLanguages, default
 /**
  * Finds a registered language site matching the given pathname.
  * Pure function - fully testable without Cloudflare Workers runtime.
- * @param {string} pathname - Request pathname (e.g., "/mx/demo/salva/")
+ * @param {string} pathname - Request pathname (e.g., "/demo/salva/")
  * @param {Array<{pathPrefix: string}>} sites - Registered site configurations
  * @returns {{site: object, remainingPath: string}|null} Matched site and remaining path, or null
  */

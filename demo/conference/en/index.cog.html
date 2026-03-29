@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<!--
+---
+name: mx-summit-conference-en
+title: "MX Summit 2026 - The Machine Experience Conference"
+description: "Join industry leaders at MX Summit Frankfurt to explore how AI agents are transforming digital experiences"
+version: "1.0.0"
+created: "2026-02-22"
+modified: "2026-02-22"
+author: "CogNovaMX Ltd"
+category: mx-reference-implementations
+status: active
+tags: [conference, n-language, mx, ai-agents, frankfurt, webmcp, schema-org]
+audience: [tech, business, humans]
+
+languages:
+  - code: en
+    name: English
+    url: /en/index.html
+    default: true
+  - code: de
+    name: Deutsch
+    url: /de/index.html
+
+hreflang:
+  - lang: en
+    href: https://allabout.network/demo/conference/en/index.html
+  - lang: de
+    href: https://allabout.network/demo/conference/de/index.html
+  - lang: x-default
+    href: https://allabout.network/demo/conference/en/index.html
+
+builds-on:
+  - cog: mx-canon/mx-the-gathering/cog-unified-spec
+    version: "2.0"
+    relationship: complies-with
+  - standard: schema.org/Event
+    version: "26.0"
+    relationship: implements
+
+partOf: mx-reference-implementations
+
+mx:
+  runtime: browser
+  architecture: n-language-shared-assets
+  runbook: |
+    N-Language Conference Demo (English version)
+    Proves n-lang architecture works for conferences, not just restaurants.
+    Shared assets in /assets/, language content in /en/ and /de/.
+
+policy:
+  merging: mixin
+  inheritance: soft
+  accessibility:
+    level: AA
+    required: true
+  languages:
+    architecture: n-language-shared-assets
+    default: en
+    fallback: en
+  privacy:
+    tracking: none
+    cookies: none
+---
+-->
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Basic Meta -->
+  <title>MX Summit 2026 - The Machine Experience Conference | Frankfurt</title>
+  <meta name="description" content="Join industry leaders at MX Summit Frankfurt to explore how AI agents are transforming digital experiences. May 12, 2026.">
+  <meta name="author" content="Tom Cranstoun">
+
+  <!-- Language Declarations -->
+  <meta http-equiv="content-language" content="en">
+  <link rel="alternate" hreflang="en" href="https://allabout.network/demo/conference/en/index.html" />
+  <link rel="alternate" hreflang="de" href="https://allabout.network/demo/conference/de/index.html" />
+  <link rel="alternate" hreflang="x-default" href="https://allabout.network/demo/conference/en/index.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="MX Summit 2026 - Frankfurt">
+  <meta property="og:description" content="Join industry leaders at MX Summit Frankfurt to explore how AI agents are transforming digital experiences. May 12, 2026.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://allabout.network/demo/conference/en/index.html">
+  <meta property="og:locale" content="en_GB">
+
+  <!-- WebMCP Declaration -->
+  <meta name="mcp:version" content="1.0">
+  <meta name="mcp:tools" content="get-conference-info, toggle-language, get-language-info">
+
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@tomcranstoun">
+  <meta name="twitter:title" content="MX Summit 2026 - Frankfurt">
+  <meta name="twitter:description" content="Join industry leaders at MX Summit Frankfurt to explore how AI agents are transforming digital experiences. May 12, 2026.">
+
+  <!-- MX carrier metadata -->
+  <meta name="mx:status" content="active">
+  <meta name="mx:contentType" content="demo">
+  <meta name="mx:content-policy" content="public">
+  <meta name="mx:attribution" content="CogNovaMX Ltd">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet (shared across all languages) -->
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "MX Summit 2026",
+    "description": "The Machine Experience Conference - exploring how AI agents are transforming digital experiences",
+    "startDate": "2026-05-12T09:00:00+02:00",
+    "endDate": "2026-05-12T18:00:00+02:00",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "location": {
+      "@type": "Place",
+      "name": "Messe Frankfurt",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Ludwig-Erhard-Anlage 1",
+        "addressLocality": "Frankfurt",
+        "postalCode": "60327",
+        "addressCountry": "DE"
+      }
+    },
+    "organizer": {
+      "@type": "Organization",
+      "name": "CogNovaMX Ltd",
+      "url": "https://allabout.network"
+    },
+    "inLanguage": ["en", "de"],
+    "url": "https://allabout.network/demo/conference/"
+  }
+  </script>
+  <link rel="llms-txt" href="/llms.txt">
+</head>
+<body>
+
+  <!-- Skip Navigation Link (Accessibility) -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Header -->
+  <header role="banner">
+    <div class="header-container">
+      <div class="logo">MX <span>Summit</span></div>
+
+      <nav id="nav" role="navigation" aria-label="Main navigation" aria-expanded="false">
+        <button class="nav-hamburger" type="button" aria-controls="nav" aria-label="Open navigation">
+          <span class="nav-hamburger-icon"></span>
+        </button>
+
+        <div class="nav-sections">
+          <ul>
+            <li><a href="#speakers">Speakers</a></li>
+            <li><a href="#schedule">Schedule</a></li>
+            <li><a href="#venue">Venue</a></li>
+            <li><a href="#register">Register</a></li>
+          </ul>
+
+          <div class="nav-language">
+            <select class="language-select" aria-label="Select language">
+              <option value="en" selected>English</option>
+              <option value="de">Deutsch</option>
+            </select>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content" role="main">
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <p class="hero-date">May 12, 2026</p>
+      <h1>MX Summit 2026</h1>
+      <p class="hero-tagline">The Machine Experience Conference — exploring how AI agents are transforming digital experiences</p>
+      <p class="hero-location">📍 Messe Frankfurt, Germany</p>
+      <div class="cta-buttons">
+        <a href="#register" class="btn btn-primary">Register Now</a>
+        <a href="#schedule" class="btn btn-secondary">View Schedule</a>
+      </div>
+    </section>
+
+    <!-- Speakers Section -->
+    <section id="speakers">
+      <h2>Featured Speakers</h2>
+      <div class="speakers-grid">
+        <div class="speaker-card">
+          <div class="speaker-photo">👤</div>
+          <h3 class="speaker-name">Tom Cranstoun</h3>
+          <p class="speaker-role">Keynote Speaker</p>
+          <p class="speaker-company">CogNovaMX Ltd</p>
+        </div>
+        <div class="speaker-card">
+          <div class="speaker-photo">👤</div>
+          <h3 class="speaker-name">Dr. Sarah Chen</h3>
+          <p class="speaker-role">AI Research Lead</p>
+          <p class="speaker-company">TechVision Labs</p>
+        </div>
+        <div class="speaker-card">
+          <div class="speaker-photo">👤</div>
+          <h3 class="speaker-name">Marcus Weber</h3>
+          <p class="speaker-role">CTO</p>
+          <p class="speaker-company">Digital Horizons GmbH</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="section-dark">
+      <h2>Conference Schedule</h2>
+      <div class="schedule-container">
+        <div class="schedule-item">
+          <div class="schedule-time">09:00</div>
+          <div class="schedule-content">
+            <h3>Registration & Coffee</h3>
+            <p>Check-in and networking with fellow attendees</p>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">10:00</div>
+          <div class="schedule-content">
+            <h3>Opening Keynote: The Machine Experience Revolution</h3>
+            <p>Tom Cranstoun — Why AI agents need structured content</p>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">11:30</div>
+          <div class="schedule-content">
+            <h3>Panel: CMS in the Age of AI</h3>
+            <p>Industry experts discuss the future of content management</p>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">13:00</div>
+          <div class="schedule-content">
+            <h3>Lunch & Networking</h3>
+            <p>Connect with speakers and attendees</p>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">14:30</div>
+          <div class="schedule-content">
+            <h3>Workshop: Building MX-Enhanced Websites</h3>
+            <p>Hands-on session with COGs and WebMCP</p>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-time">16:30</div>
+          <div class="schedule-content">
+            <h3>Closing Remarks & The Gathering Launch</h3>
+            <p>What's next for the MX community</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Venue Section -->
+    <section id="venue">
+      <h2>Venue</h2>
+      <div class="venue-container">
+        <div class="venue-info">
+          <h3>Messe Frankfurt</h3>
+          <p>Ludwig-Erhard-Anlage 1<br>60327 Frankfurt am Main<br>Germany</p>
+          <p>Located in the heart of Frankfurt's exhibition district, easily accessible by public transport and just 15 minutes from Frankfurt Airport.</p>
+          <a href="https://www.messefrankfurt.com" class="btn btn-primary" target="_blank" rel="noopener">Venue Website</a>
+        </div>
+        <div class="venue-map">
+          <p>Map placeholder</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Registration Section -->
+    <section id="register" class="section-dark">
+      <h2>Register Now</h2>
+      <form class="registration-form">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="company">Company</label>
+          <input type="text" id="company" name="company">
+        </div>
+        <div class="form-group">
+          <label for="ticket">Ticket Type</label>
+          <select id="ticket" name="ticket">
+            <option value="standard">Standard - €299</option>
+            <option value="early">Early Bird - €199</option>
+            <option value="vip">VIP - €499</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Complete Registration</button>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer role="contentinfo">
+    <div class="footer-content">
+      <p>&copy; 2026 MX Summit - Organized by CogNovaMX Ltd</p>
+      <p class="footer-note">
+        MX Reference Implementation — N-language architecture demo<br>
+        Proves the pattern works for conferences, not just restaurants.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript (shared across all languages) -->
+  <script src="../assets/script.js"></script>
+
+</body>
+</html>

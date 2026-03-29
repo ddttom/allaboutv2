@@ -916,7 +916,7 @@ For multilingual sites, use the n-language architecture with shared assets:
 
 - `n-lang-business-template.cog.html` - N-language architecture with hamburger nav pattern
 
-**Reference implementation:** `allaboutv2/mx/demo/salva/` - Los Granainos restaurant demo
+**Reference implementation:** `allaboutv2/demo/salva/` - Los Granainos restaurant demo
 
 ❌ **DON'T:**
 
