@@ -901,6 +901,11 @@ const handleRequest = async (request, env, _ctx) => {
     resp.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' https://allabout.network; font-src 'self'; connect-src 'self' https://static.cloudflareinsights.com; frame-ancestors 'self'");
   }
 
+  // Block AI agents and crawlers from indexing PDFs (proprietary content)
+  if (url.pathname.toLowerCase().endsWith('.pdf')) {
+    resp.headers.set('X-Robots-Tag', 'noindex, nofollow');
+  }
+
   // Add worker version header
   resp.headers.set('cfw', WORKER_VERSION);
 
