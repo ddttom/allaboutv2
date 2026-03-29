@@ -22,8 +22,8 @@
 
 ## MX Books
 
-- MX: The Handbook (2 April 2026): https://allabout.network/mx/coming-soon.html
-- MX: The Protocols (1 July 2026): https://allabout.network/mx/coming-soon.html
+- MX: The Handbook (2 April 2026): https://allabout.network/mx/the-books/index.html
+- MX: The Protocols (1 July 2026): https://allabout.network/mx/the-books/index.html
 
 ## Waitlist
 
