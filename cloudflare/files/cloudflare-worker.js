@@ -825,6 +825,10 @@ const handleRequest = async (request, env, _ctx) => {
       headers: {
         Location: fallbackUrl.toString(),
         'Cache-Control': 'no-cache',
+        'Strict-Transport-Security': 'max-age=31557600',
+        'X-Frame-Options': 'SAMEORIGIN',
+        'X-Content-Type-Options': 'nosniff',
+        'cfw': WORKER_VERSION,
       },
     });
   }
