@@ -333,11 +333,19 @@ hr {
    5. LAYOUT
    ══════════════════════════════════════════════ */
 
-main {
+main,
+.blog-introduction,
+.table-of-contents,
+.introduction,
+.page-header {
     position: relative;
     z-index: 1;
     width: min(var(--mx-max-width), calc(100% - 32px));
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+main {
     padding: 28px 0 72px;
 }
 
