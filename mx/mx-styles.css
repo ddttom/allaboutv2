@@ -333,11 +333,7 @@ hr {
    5. LAYOUT
    ══════════════════════════════════════════════ */
 
-main,
-.blog-introduction,
-.table-of-contents,
-.introduction,
-.page-header {
+body > *:not(nav[aria-label="MX section navigation"]):not(.skip-link):not(script) {
     position: relative;
     z-index: 1;
     width: min(var(--mx-max-width), calc(100% - 32px));
