@@ -311,6 +311,14 @@ a:focus-visible {
   transform: translateY(-1px);
 }
 
+.mx-explanation-cta {
+  margin-top: 1.5rem;
+}
+
+.author-cta {
+  margin-top: 1rem;
+}
+
 .hero-cta {
   display: flex;
   gap: 1rem;

@@ -14,6 +14,14 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- MX Bookshop -->
+  <url>
+    <loc>https://allabout.network/mx/bookshop/index.html</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
   <!-- MX Books -->
   <url>
     <loc>https://allabout.network/mx/the-books/index.html</loc>
