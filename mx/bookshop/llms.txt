@@ -9,6 +9,7 @@ This site sells three books about Machine Experience (MX) — the discipline of 
 ### MX: The Intro (Free)
 The starter guide to Machine Experience. Free advance preview introducing the foundations: how agent mediation alters discovery, governance, compliance and operational load.
 - Price: Free
+- ISBN: 978-1-067638-41-2
 - Status: Available now
 - Format: eBook (PDF)
 

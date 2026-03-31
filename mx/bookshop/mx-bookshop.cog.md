@@ -31,6 +31,7 @@ The starter guide to building a web that works for AI agents and everyone else. 
 
 - **Format:** eBook (PDF)
 - **Price:** Free
+- **ISBN:** 978-1-067638-41-2
 - **Availability:** Available now
 
 ### MX: The Handbook
