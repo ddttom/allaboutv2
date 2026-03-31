@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Sitemap: https://allabout.network/mx/bookshop/sitemap.xml
+
+# MX metadata
+# This site is designed for both human and AI agent consumption.
+# Cog metadata: mx-bookshop.cog.md
+# LLMs context: llms.txt
