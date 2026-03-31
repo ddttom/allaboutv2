@@ -68,8 +68,8 @@ All content is freely accessible for educational purposes. These patterns are de
 
 ## Documentation
 
-- [Appendix K: Common Page Patterns](https://allabout.network/mx-handbook/web/appendix-k.html): Complete documentation for these patterns
-- [Appendix D: AI-Friendly HTML Guide](https://allabout.network/mx-handbook/web/appendix-d.html): Comprehensive patterns beyond basic page types
+- [Appendix K: Common Page Patterns](https://allabout.network/mx/online-material/appendices/appendix-k.html): Complete documentation for these patterns
+- [Appendix D: AI-Friendly HTML Guide](https://allabout.network/mx/online-material/appendices/appendix-d.html): Comprehensive patterns beyond basic page types
 - [Main Project](https://allabout.network/mx-handbook/): MX: The Handbook book project
 
 ## Key Features Demonstrated
@@ -89,7 +89,7 @@ Each page pattern includes:
 If a specific pattern is unavailable, alternative examples are available at:
 
 - [GitHub Repository](https://github.com/Digital-Domain-Technologies-Ltd/mx-handbook-manuscript): Source code and additional examples
-- [Appendix Index](https://allabout.network/mx-handbook/web/appendix-index.html): All appendices with implementation guidance
+- [Appendix Index](https://allabout.network/mx/online-material/appendices/appendix-index.html): All appendices with implementation guidance
 
 ## Attribution
 
