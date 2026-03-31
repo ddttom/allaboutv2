@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Blog State Tracking -->
+  <meta name="blog-state" content="published">
+  <meta name="blog-draft-date" content="2026-03-31">
+  <meta name="blog-review-date" content="2026-03-31">
+  <meta name="blog-publication-date" content="2026-03-31">
+  <meta name="blog-last-modified" content="2026-03-31">
+  <meta name="blog-review-status" content="published">
+
+  <meta name="author" content="Tom Cranstoun">
+  <meta name="description" content="Diagnostic guide for website owners — the structured signals AI agents look for, what each gap costs, and what fixing it involves. Covers robots.txt, llms.txt, agent cards, semantic HTML, Schema.org, and WCAG.">
+
+  <!-- Robots Meta Tags (SEO) -->
+  <meta name="robots" content="index, follow">
+
+  <!-- Canonical URL (SEO) -->
+  <link rel="canonical" href="https://allabout.network/blogs/mx/agent-discoverability-checklist.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://allabout.network/blogs/mx/agent-discoverability-checklist.html">
+  <meta property="og:title" content="Agent Discoverability: What Your Site Is Missing">
+  <meta property="og:description" content="Diagnostic guide for website owners — the structured signals AI agents look for, what each gap costs, and what fixing it involves.">
+  <meta property="og:site_name" content="AllAbout.Network">
+  <meta property="article:published_time" content="2026-03-31">
+  <meta property="article:author" content="Tom Cranstoun">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://allabout.network/blogs/mx/agent-discoverability-checklist.html">
+  <meta name="twitter:title" content="Agent Discoverability: What Your Site Is Missing">
+  <meta name="twitter:description" content="Diagnostic guide for website owners — the structured signals AI agents look for, what each gap costs, and what fixing it involves.">
+
+  <link rel="llms-txt" href="/llms.txt">
+
+  <!-- MX carrier metadata -->
+  <meta name="mx:status" content="active">
+  <meta name="mx:contentType" content="blog-post">
+
+  <title>Agent Discoverability: What Your Site Is Missing | Tom Cranstoun</title>
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Agent Discoverability: What Your Site Is Missing",
+    "description": "Diagnostic guide for website owners — the structured signals AI agents look for, what each gap costs, and what fixing it involves.",
+    "datePublished": "2026-03-31",
+    "dateModified": "2026-03-31",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "url": "https://www.linkedin.com/in/tom-cranstoun/",
+      "image": "https://allabout.network/media_126e99d56f06caf788bee715aff92281d2e31a206.png"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AllAbout.Network",
+      "url": "https://allabout.network"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://allabout.network/blogs/mx/agent-discoverability-checklist.html"
+    },
+    "articleSection": "Machine Experience",
+    "keywords": ["agent-discoverability", "llms-txt", "agent-card", "schema-org", "semantic-html", "robots-txt", "wcag", "machine-experience", "convergence-principle", "5-stage-journey"],
+    "wordCount": 2500,
+    "inLanguage": "en-GB"
+  }
+  </script>
+
+  <!-- Schema.org Question JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Question",
+    "name": "What signals do AI agents look for when evaluating a website?",
+    "text": "What structured signals do AI agents need to discover, cite, compare, and transact on a website, and what does each gap cost?",
+    "answerCount": 1,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "AI agents follow a 5-stage journey (Discovery, Citation, Compare, Pricing, Confidence) and look for specific signals at each stage: permissive robots.txt, descriptive llms.txt, agent cards for services, semantic HTML structure, Schema.org JSON-LD, and WCAG-compliant content. Audits show 70% of professional sites lack semantic HTML, 85% have no llms.txt, 60% block AI crawlers, and 55% have incomplete Schema.org. Missing any stage breaks the entire chain — and unlike humans, agents don't offer second chances.",
+      "url": "https://allabout.network/blogs/mx/agent-discoverability-checklist.html"
+    }
+  }
+  </script>
+
+  <link rel="stylesheet" href="shared-mx.css">
+</head>
+<body>
+  <!-- Skip to Content Link (WCAG Accessibility) -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Blog Introduction -->
+  <aside class="blog-introduction"
+         aria-label="Blog introduction"
+         data-component="blog-header">
+    <div class="introduction-content">
+      <a href="about.tom.cranstoun.html" aria-label="View Tom Cranstoun's profile">
+        <img src="https://allabout.network/media_126e99d56f06caf788bee715aff92281d2e31a206.png"
+             alt="Tom Cranstoun profile picture"
+             class="author-image"
+             width="80"
+             height="80">
+      </a>
+      <div class="introduction-text">
+        <div class="introduction-message">Machine Experience (MX) is the practice of adding metadata and instructions to internet assets so AI agents don't have to guess.</div>
+        <div class="author-name">Author: <strong>Tom Cranstoun</strong></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Collapsible Index (TOC) - Pre-collapsed -->
+  <details id="index" class="table-of-contents" data-state="initially-collapsed">
+    <summary>Index</summary>
+    <nav aria-label="Table of contents">
+      <ul>
+        <li><a href="#the-5-stage-agent-journey">The 5-Stage Agent Journey</a></li>
+        <li><a href="#the-crawl-layer">The Crawl Layer</a></li>
+        <li><a href="#the-site-description-layer">The Site Description Layer</a></li>
+        <li><a href="#the-service-description-layer">The Service Description Layer</a></li>
+        <li><a href="#the-page-structure-layer">The Page Structure Layer</a></li>
+        <li><a href="#the-structured-data-layer">The Structured Data Layer</a></li>
+        <li><a href="#the-accessibility-layer">The Accessibility Layer</a></li>
+        <li><a href="#what-this-means-in-practice">What This Means in Practice</a></li>
+      </ul>
+    </nav>
+  </details>
+
+  <!-- Main Article -->
+  <main id="main" tabindex="-1">
+    <article data-article-type="blog-post" data-word-count="2500">
+      <header>
+        <h1>Agent Discoverability: What Your Site Is Missing</h1>
+        <div class="article-meta"
+             data-published="2026-03-31"
+             data-modified="2026-03-31"
+             data-reading-time="12 min">
+          <time datetime="2026-03-31">31 March 2026</time>
+          <span>·</span>
+          <span>12 min read</span>
+        </div>
+      </header>
+
+<p>AI agents that act on behalf of users — finding services, comparing options, making recommendations, completing transactions — do not discover websites the way search engines do. They look for structured signals at specific locations. If those signals are absent, the site is functionally invisible to that class of agent, regardless of how good its content is.</p>
+<p>Most sites are missing most of these signals. Recent audits paint a stark picture: 70% of professional sites lack proper semantic HTML, 85% have no llms.txt file, 60% actively block major AI crawlers, and 55% have missing or partial Schema.org coverage. These are not budget-constrained sites. These patterns appear across organisations with sophisticated digital teams, substantial web budgets, and public commitments to digital excellence. The gap is not about resources. It is about awareness.</p>
+<p>This post diagnoses what the signals are, what the absence of each one costs, and what fixing it involves.</p>
+
+<h2 id="the-5-stage-agent-journey" tabindex="-1">The 5-Stage Agent Journey</h2>
+<p>Before examining individual layers, it helps to understand what agents are trying to do. When AI agents interact with a website, they follow a predictable journey with five stages:</p>
+<ol>
+<li><strong>Discovery</strong> — Can agents find you? Requires crawlable structure, semantic HTML, server-side rendering.</li>
+<li><strong>Citation</strong> — Can agents confidently cite you? Requires fact-level clarity, Schema.org JSON-LD, citation-worthy architecture.</li>
+<li><strong>Compare</strong> — Can agents understand your offering relative to others? Requires explicit comparison attributes, structured pricing data.</li>
+<li><strong>Pricing</strong> — Can agents understand your costs without error? Requires Schema.org Product/Offer types with unambiguous currency (ISO 4217 codes).</li>
+<li><strong>Confidence</strong> — Can agents complete the user's goal? Requires explicit form semantics, DOM-reflected state, persistent feedback.</li>
+</ol>
+<p>The catastrophic failure principle applies: miss any stage and the entire chain breaks. A site that is discoverable but uncitable is functionally the same as a site that is invisible — the agent cannot recommend it. Each layer described below maps to one or more of these stages.</p>
+
+<h2 id="the-crawl-layer" tabindex="-1">The Crawl Layer</h2>
+<p>Before any content is read, an agent checks whether it is permitted to read it. This is Stage 1 — Discovery — and it starts with <code>robots.txt</code>.</p>
+<p>Audits show 60% of professional sites block major AI agents. Sites routinely block GPTBot, ClaudeBot, Amazonbot, and other AI crawlers through robots.txt directives or services like Cloudflare. The irony is stark: organisations want AI-mediated recommendations but actively prevent agents from accessing the content they need to make those recommendations.</p>
+<p>Many sites block AI crawlers without intending to — typically because they added broad disallow rules to block scrapers and those rules catch legitimate AI user-agent strings too. The result is a site that has actively told AI systems to stay away. If your robots.txt blocks AI crawlers, you are opting out of AI indexing entirely. Zero recommendations. Zero citations. Complete invisibility.</p>
+<p>Check your <code>robots.txt</code> and verify which user agents are disallowed. The worst-agent design principle applies here: you cannot detect which agent is visiting — User-Agent strings are spoofable. Design for the worst agent, and you are compatible with all agents.</p>
+<p>The inverse problem also exists: no <code>robots.txt</code> at all, which leaves AI systems with no guidance. A minimal <code>robots.txt</code> that explicitly permits reputable AI crawlers is a positive signal, not just the absence of a negative one.</p>
+
+<h2 id="the-site-description-layer" tabindex="-1">The Site Description Layer</h2>
+<p>An agent that is permitted to crawl your site still has no structured description of what it will find. <code>llms.txt</code> fills this gap — and 85% of sites have not implemented it.</p>
+<p>A site without <code>llms.txt</code> forces AI systems to infer its purpose, structure, and permissions from page content alone. That inference is imprecise. The model may mischaracterise the site's subject matter, miss important content areas, or apply default permissions that do not match your intent.</p>
+<p><code>llms.txt</code> is a plain text file at your domain root. It describes the site in terms an AI can use: what it is for, what its main sections contain, which pages are most relevant, and what you permit. It takes less than an hour to write for most sites and requires no technical infrastructure beyond the ability to place a file at your domain root.</p>
+<p>There is an important caveat. llms.txt is served as a text or markdown MIME type, not HTML. Training-time crawlers (Common Crawl and its derivatives) do not typically ingest non-HTML files. At inference time, agents go straight to relevant pages — they do not fetch a site-level directory first. To close this gap today, publish the same content as an HTML page (for example, <code>/llms.html</code> or <code>/about/for-agents</code>) and include it in your sitemap, so training crawlers ingest it and the guidance enters model knowledge bases.</p>
+<p>A site without one is leaving its AI representation to chance. A site with one — plus an HTML equivalent in the sitemap — is providing agents with a briefing document before they start working with the content. For a full guide, see <a href="llms-txt-guide.html">What Is llms.txt and Why Does Your Site Need One</a>.</p>
+
+<h2 id="the-service-description-layer" tabindex="-1">The Service Description Layer</h2>
+<p><code>llms.txt</code> describes content. An agent card describes a service.</p>
+<p>If your site is more than a collection of articles — if it offers something that agents might want to use on behalf of a user, from booking to data retrieval to document processing — an agent card is how you make that service findable in agentic workflows.</p>
+<p>The Agent2Agent (A2A) protocol defines the format: a JSON file at <code>/.well-known/agent-card.json</code> describing your service's capabilities, endpoint, and authentication requirements. An agent looking for a service that can perform a particular task will check this location. If there is nothing there, your service is absent from that selection process.</p>
+<p>For informational sites, this layer is less pressing. For transactional or service-oriented sites — anything where Stage 5 (Confidence) matters — it is the most important gap to close.</p>
+
+<h2 id="the-page-structure-layer" tabindex="-1">The Page Structure Layer</h2>
+<p>At the individual page level, agents extract meaning from HTML structure. They rely on semantic elements — <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;header&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code> — to understand what a page contains and how it is organised.</p>
+<p>70% of sites audited lack proper semantic HTML. Most use generic <code>&lt;div&gt;</code> containers with CSS classes for visual hierarchy. Agents parsing served HTML — the static HTML sent from your server before JavaScript executes — cannot distinguish navigation from content from sidebars. The structure that humans see visually does not exist in the HTML.</p>
+<p>This is the served HTML versus rendered HTML distinction. Many AI agents — server-side parsers like those behind ChatGPT and Claude — fetch your URL and process raw HTML without executing JavaScript. If your site requires JavaScript to display products, show prices, or render navigation, these agents see nothing. Your carefully crafted user experience is invisible to them.</p>
+<p>Even browser-based agents that execute JavaScript need semantic structure. They can see everything humans see, but they parse structure like server-side agents. Visual design cues — colour, spacing, animation — do not help agents understand content purpose.</p>
+<p>The practical rule: design for the worst-case agent (served HTML, no JavaScript), and you automatically support all agents.</p>
+<p>Audit a sample of your pages. Check whether the HTML uses semantic elements correctly, whether heading hierarchy is logical and unbroken, whether the main content area is identifiable as <code>&lt;main&gt;</code>, and whether navigation, sidebars, and footers are correctly labelled. These are the same checks that WCAG accessibility audits perform — the convergence principle in practice.</p>
+
+<h2 id="the-structured-data-layer" tabindex="-1">The Structured Data Layer</h2>
+<p>Schema.org markup tells machines not just that something is content, but what kind of content it is. An <code>Article</code> is different from a <code>Product</code>, a <code>LocalBusiness</code>, an <code>Event</code>, or a <code>Service</code>. Each type carries specific properties that agents can read and act on.</p>
+<p>55% of sites audited have missing or partial Schema.org coverage. Structured data exists on some pages but not others. Product pages have pricing Schema.org, but comparison tables lack it. Event pages have dates but not registration URLs. The inconsistent implementation forces agents to guess which pages contain authoritative data.</p>
+<p>A page with proper structured pricing metadata answers the question of what something costs in milliseconds at near-zero compute cost. A page without it forces every visiting machine to spend tokens figuring out the price, the currency, and the availability — and to risk getting it wrong. The Danube cruise error, where £2,030 became £203,000 because European decimal formatting was misinterpreted, is not a theoretical risk. It happened.</p>
+<p>The six Schema.org types that cover about 90% of what most sites need: Organisation/LocalBusiness, Article/BlogPosting, Product/Offer, FAQPage, HowTo, and WebPage/WebSite. Use JSON-LD — it separates structured data from your HTML, making it easier to maintain, simpler to implement, and more reliably parsed.</p>
+<p>Common gaps to check: articles without <code>Article</code> markup, product pages without <code>Product</code> and <code>Offer</code> markup, contact pages without <code>LocalBusiness</code> or <code>Organization</code> markup, and FAQ content without <code>FAQPage</code> markup. Each gap is an opportunity for an agent to misunderstand what the page contains.</p>
+
+<h2 id="the-accessibility-layer" tabindex="-1">The Accessibility Layer</h2>
+<p>WCAG compliance and agent discoverability are not separate concerns. The convergence principle — that the techniques which make content accessible to disabled users are the same techniques that make it accessible to AI agents — means that accessibility failures are also machine readability failures.</p>
+<p>The overlap is not coincidental. Both groups — disabled users and AI agents — lack access to visual design cues. A missing <code>&lt;main&gt;</code> element forces screen reader users to navigate the entire page to find primary content. It forces agents to do the same. Missing alt text blocks both agents and blind users. Visual-only state indicators exclude both agents and keyboard users.</p>
+<p>The specific WCAG criteria that map directly to agent discoverability:</p>
+<ul>
+<li><strong>WCAG 1.1.1</strong> (Non-text Content) — alt text on images. Without it, agents cannot understand visual content.</li>
+<li><strong>WCAG 1.3.1</strong> (Info and Relationships) — semantic structure. Without it, agents cannot parse page hierarchy.</li>
+<li><strong>WCAG 2.4.4</strong> (Link Purpose) — meaningful link text. "Click here" tells an agent nothing about destination.</li>
+<li><strong>WCAG 4.1.1</strong> (Parsing) — valid HTML. Malformed markup breaks machine parsers.</li>
+</ul>
+<p>75% of sites audited have explicit state missing — form validation errors display as visual colour changes, checkout progress shows via CSS-animated steppers, button states indicate loading with spinners. None of this state appears in HTML attributes where agents can read it. State exists visually but not semantically.</p>
+<p>A WCAG audit of your site is simultaneously an MX audit. Errors in the accessibility report are errors in your machine experience. They are the same problems. One implementation serves both audiences.</p>
+
+<h2 id="what-this-means-in-practice" tabindex="-1">What This Means in Practice</h2>
+<p>A site that has addressed all of these layers — permissive <code>robots.txt</code>, descriptive <code>llms.txt</code> (with HTML equivalent), an agent card for its services, semantic HTML, Schema.org JSON-LD, and WCAG-compliant content — is as visible to AI agents as a well-optimised site is to search engines.</p>
+<p>A site that has addressed none of them is invisible to the growing class of agents that act on behalf of users, regardless of how good its content is or how strong its search engine ranking. And unlike humans who persist through bad UX and can be won back with improvements, agents provide no analytics visibility and offer no second chance. First-mover citation advantage creates durable competitive moats — machines that have learned to prefer a competitor are unlikely to periodically re-evaluate the alternatives.</p>
+<p>The work is not novel. Most of it is the same structured, semantic, accessible content practice that good web development has always recommended. The urgency is new. As agent-mediated discovery becomes a standard part of how people find and use services, the cost of these gaps grows proportionally.</p>
+<p><em>MX: The Handbook</em> sets out the full framework for designing content that serves both human and machine audiences, across all of these layers, from document metadata to site-level discoverability. <em>MX: The Protocols</em> covers the technical specifications, templates, and phased implementation in detail.</p>
+
+<h3>Related reading</h3>
+<ul>
+<li><a href="llms-txt-guide.html">What Is llms.txt and Why Does Your Site Need One</a> — practical guide to the site description layer</li>
+<li><a href="what-is-machine-experience.html">What Is Machine Experience?</a> — the discipline behind these patterns</li>
+<li><a href="machine-experience-adding-metadata.html">Machine Experience: Adding Metadata</a> — the 5-stage agent journey in depth</li>
+<li><a href="mx-a-new-role.html">MX: A New Role</a> — served vs rendered HTML and audit data</li>
+</ul>
+
+<hr>
+<p><em>Tom Cranstoun is the Machine Experience Authority and founder of the MX community. His book MX: The Handbook is available now. He consults on MX strategy through CogNovaMX Ltd.</em></p>
+
+    </article>
+  </main>
+
+  <!-- Floating Back to Top Button -->
+  <a href="#" class="back-to-top" aria-label="Back to top">
+    Back to Top
+  </a>
+
+  <!-- Footer -->
+  <footer>
+    <p>© Tom Cranstoun. All rights reserved.</p>
+  </footer>
+</body>
+</html>
