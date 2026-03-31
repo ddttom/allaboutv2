@@ -200,12 +200,12 @@
 </code></pre>
 <h2 id=”why-this-matters” tabindex=”-1”>Why This Matters for AI Agents</h2>
 <p>AI agents fall into five categories, each with different capabilities. Server-side agents like ChatGPT and Claude fetch raw HTML without executing JavaScript or rendering CSS. They see the DOM as plain text. Browser automation agents like Perplexity use headless Chrome but still rely on semantic attributes to determine state. Local agents running on device have limited context windows and need every byte to count.</p>
-<p>When state is encoded visually &mdash; through colour, opacity, position, or animation &mdash; it is invisible to every agent that does not render the page. A greyed-out button looks disabled to a human eye. To an AI agent parsing served HTML, it is an active, clickable button unless the <code>disabled</code> attribute is present.</p>
+<p>When state is encoded visually  — through colour, opacity, position, or animation  — it is invisible to every agent that does not render the page. A greyed-out button looks disabled to a human eye. To an AI agent parsing served HTML, it is an active, clickable button unless the <code>disabled</code> attribute is present.</p>
 <p>This is not a hypothetical risk. Agents that encounter ambiguous state make one of two choices: they guess (and sometimes guess wrong, triggering unintended actions) or they skip the element entirely (and the user loses functionality). Neither outcome is acceptable for enterprise digital platforms.</p>
-<p>The solution is always the same: declare state, intent, and meaning in the markup itself. Use the attributes that HTML and ARIA provide. They exist precisely for this purpose &mdash; making meaning machine-readable without relying on visual presentation.</p>
+<p>The solution is always the same: declare state, intent, and meaning in the markup itself. Use the attributes that HTML and ARIA provide. They exist precisely for this purpose  — making meaning machine-readable without relying on visual presentation.</p>
 <p>Every pattern on this page follows the same principle: if you removed all CSS from the page, could a machine still understand what each element does? If the answer is yes, your markup is explicit. If the answer is no, you have an implicit dependency that will break for at least one agent type.</p>
 <h2 id=”the-pattern” tabindex=”-1”>The Pattern</h2>
-<p><strong>Ask:</strong> &ldquo;If I removed all CSS, would the state, intent, and meaning still be clear?&rdquo;</p>
+<p><strong>Ask:</strong> "If I removed all CSS, would the state, intent, and meaning still be clear?"</p>
 <p>If no, make it explicit through:</p>
 <ul>
 <li>Semantic HTML elements (<code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;button&gt;</code> rather than styled <code>&lt;div&gt;</code> elements)</li>
@@ -215,8 +215,8 @@
 <li>Clear text descriptions visible to all consumers</li>
 </ul>
 <p><strong>Humans infer from visual design. Machines cannot. Declare explicitly.</strong></p>
-<p>&rarr; <a href=”implementation-examples.html”>Implementation Examples</a>
-&rarr; <a href=”our-services.html”>Get MX Audit</a></p>
+<p>→ <a href=”implementation-examples.html”>Implementation Examples</a>
+→ <a href=”our-services.html”>Get MX Audit</a></p>
 
 
       <!-- Author Bio Link (added if author is Tom Cranstoun) -->
