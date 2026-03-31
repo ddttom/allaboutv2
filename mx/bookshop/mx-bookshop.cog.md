@@ -40,6 +40,7 @@ Everything you need to design the web for AI agents — and everyone else. The f
 
 - **Format:** eBook
 - **Price:** TBC
+- **ISBN:** 978-1-067638-40-5
 - **Availability:** Coming soon
 
 ### MX: The Protocols
