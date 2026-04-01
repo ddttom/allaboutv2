@@ -89,7 +89,7 @@ Each page pattern includes:
 If a specific pattern is unavailable, alternative examples are available at:
 
 - [GitHub Repository](https://github.com/Digital-Domain-Technologies-Ltd/mx-handbook-manuscript): Source code and additional examples
-- [Appendix Index](https://allabout.network/mx/online-material/appendices/appendix-index.html): All appendices with implementation guidance
+- [Appendix Index](https://allabout.network/mx/online-material/appendices/index.html): All appendices with implementation guidance
 
 ## Attribution
 
