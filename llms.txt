@@ -6,7 +6,7 @@
 
 ## About CogNovaMX
 
-- Company: https://allabout.network/mx/
+- Company: https://mx.allabout.network/
 - Author: https://www.linkedin.com/in/tom-cranstoun/
 - Contact: mailto:info@cognovamx.com
 - Website: https://allabout.network
@@ -60,7 +60,7 @@ Articles on Machine Experience practice, implementation patterns, and the evolvi
 
 ## MX Principles & Resources
 
-- [MX Principles](https://allabout.network/mx/index.html): Complete reference of MX principles
+- [MX Principles](https://mx.allabout.network/learn/mx-principles.html): Complete reference of MX principles
 - [What is MX?](https://mx.allabout.network/learn/what-is-mx.html): Deep dive into Machine Experience
 - [Why MX Matters](https://mx.allabout.network/learn/why-mx-matters.html): The business case for MX
 - [Key Principles](https://mx.allabout.network/learn/key-principles.html): Core MX principles

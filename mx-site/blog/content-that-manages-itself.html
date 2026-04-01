@@ -145,7 +145,7 @@ status: active
 
 <p>The document is the program. The AI agent is the runtime.</p>
 
-<p>This pattern extends further than installation guides. We build self-contained documents we call cogs &mdash; short for components of governance. Technically, they're markdown files with structured YAML frontmatter. In business terms, think of them as SOPs that machines can actually read.</p>
+<p>This pattern extends further than installation guides. We build self-contained documents we call cogs — short for components of governance. Technically, they're markdown files with structured YAML frontmatter. In business terms, think of them as SOPs that machines can actually read.</p>
 
 <p>Every organisation has standard operating procedures. Onboarding checklists. Deployment runbooks. Content approval workflows. Security review processes. They live in wikis, shared drives, people's heads. Humans read them, interpret them, and carry out the steps. Machines can't touch them.</p>
 
@@ -174,7 +174,7 @@ review-cycle: quarterly
 
 <p>Your security review SOP provides "authentication-overview." Your API governance SOP requires "authentication-overview" and provides "api-security-patterns." Your release process requires "api-security-patterns." Those <code>requires</code> and <code>provides</code> fields in the YAML frontmatter are all it takes.</p>
 
-<p>Nobody had to build that hierarchy manually. No taxonomy needed configuring. No graph database, no dedicated tooling. The procedures declared their own relationships using two fields in a text file. A machine reading the release process knows it needs the API governance SOP first, and that SOP needs the security review. The reading order, the prerequisites, the knowledge chain &mdash; all explicit in the content itself.</p>
+<p>Nobody had to build that hierarchy manually. No taxonomy needed configuring. No graph database, no dedicated tooling. The procedures declared their own relationships using two fields in a text file. A machine reading the release process knows it needs the API governance SOP first, and that SOP needs the security review. The reading order, the prerequisites, the knowledge chain — all explicit in the content itself.</p>
 
 <p>This is what I mean by content that manages itself. Not content that magically rewrites itself. Content that carries enough information about itself that machines can do the managing humans have been doing manually for decades.</p>
 
@@ -186,7 +186,7 @@ review-cycle: quarterly
 
 <p>If you're a CMS vendor or architect, the technical implication is significant. The traditional CMS model assumes content needs a system wrapped around it. Content goes into the CMS. The CMS provides structure, workflow, metadata, permissions, publishing. Without the CMS, the content is just files.</p>
 
-<p>Self-managing content inverts that. The content carries its own structure in standard formats &mdash; YAML, markdown, plain text. No proprietary schema. No database dependency for the metadata layer. The CMS becomes a coordination layer, not a container. It orchestrates rather than imprisons. This doesn't make CMS platforms irrelevant. It makes them lighter. Let the content handle the content concerns. Let the CMS handle the people concerns.</p>
+<p>Self-managing content inverts that. The content carries its own structure in standard formats — YAML, markdown, plain text. No proprietary schema. No database dependency for the metadata layer. The CMS becomes a coordination layer, not a container. It orchestrates rather than imprisons. This doesn't make CMS platforms irrelevant. It makes them lighter. Let the content handle the content concerns. Let the CMS handle the people concerns.</p>
 
 <p>If you're a content strategist, think about what this means for governance. Today you maintain taxonomies, tagging guidelines, and style guides as separate documents that people are supposed to follow. With self-managing content, the governance rules live in the content itself. A document either has the required frontmatter fields or it doesn't. A machine can validate that in milliseconds across thousands of documents.</p>
 
@@ -198,7 +198,7 @@ review-cycle: quarterly
 
 <p>Next step: add dependency declarations. What does this document require a reader to already understand? What does it provide? Now the document knows where it fits in a larger body of work.</p>
 
-<p>Next step: add instructions. What should happen when someone &mdash; or something &mdash; encounters this document? What actions can be taken based on it? Now you've got an SOP that machines can follow.</p>
+<p>Next step: add instructions. What should happen when someone — or something — encounters this document? What actions can be taken based on it? Now you've got an SOP that machines can follow.</p>
 
 <p>Each step is incremental. Each step uses existing standards. Markdown, YAML, plain text. No proprietary formats. No new platforms to learn. No vendor lock-in.</p>
 
@@ -208,9 +208,9 @@ review-cycle: quarterly
 
 <p>I've been running a system built entirely on this pattern. The SOPs ARE the system. The documentation IS the configuration. Plain text files are the platform. Every procedure declares itself, relates itself to others, and in some cases executes itself.</p>
 
-<p>It works. Not theoretically. In production, with AI agents reading and acting on content daily. We built a registry for these self-managing documents &mdash; a place where AI agents look up verified, governed SOPs instead of guessing. The registry is live. The documents are real. The technology is nothing exotic &mdash; markdown, YAML, git, standard tooling your developers already know. The business outcome is what matters: the overhead of managing content drops because the content carries the management burden itself.</p>
+<p>It works. Not theoretically. In production, with AI agents reading and acting on content daily. We built a registry for these self-managing documents — a place where AI agents look up verified, governed SOPs instead of guessing. The registry is live. The documents are real. The technology is nothing exotic — markdown, YAML, git, standard tooling your developers already know. The business outcome is what matters: the overhead of managing content drops because the content carries the management burden itself.</p>
 
-<p>Organisations are gaining machine workers alongside human workers. Content operations built for humans alone will struggle to serve both. Content that manages itself &mdash; procedures that describe themselves in ways both people and machines can read and act on &mdash; is how you bridge that gap.</p>
+<p>Organisations are gaining machine workers alongside human workers. Content operations built for humans alone will struggle to serve both. Content that manages itself — procedures that describe themselves in ways both people and machines can read and act on — is how you bridge that gap.</p>
 
 <p>The technologists on your team will recognise the patterns. The business people will recognise the savings: less manual overhead, machine-enforceable governance, AI-ready content from day one.</p>
 
