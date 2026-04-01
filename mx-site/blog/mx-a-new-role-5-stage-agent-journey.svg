@@ -1,0 +1,73 @@
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <title>5-Stage Agent Journey</title>
+
+  <!-- Stage 1: Discovery -->
+  <rect x="50" y="50" width="150" height="80" fill="#0066cc" stroke="#003d7a" stroke-width="2" rx="4"/>
+  <text x="125" y="85" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Stage 1:</text>
+  <text x="125" y="105" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Discovery</text>
+  <text x="125" y="165" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Crawlable structure</text>
+  <text x="125" y="180" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Semantic HTML</text>
+
+  <!-- Arrow 1 -->
+  <path d="M 200 90 L 230 90" stroke="#0066cc" stroke-width="3" marker-end="url(#arrowblue2)"/>
+
+  <!-- Stage 2: Citation -->
+  <rect x="230" y="50" width="150" height="80" fill="#0066cc" stroke="#003d7a" stroke-width="2" rx="4"/>
+  <text x="305" y="85" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Stage 2:</text>
+  <text x="305" y="105" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Citation</text>
+  <text x="305" y="165" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Fact-level clarity</text>
+  <text x="305" y="180" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Schema.org</text>
+
+  <!-- Arrow 2 -->
+  <path d="M 380 90 L 410 90" stroke="#0066cc" stroke-width="3" marker-end="url(#arrowblue2)"/>
+
+  <!-- Stage 3: Compare -->
+  <rect x="410" y="50" width="150" height="80" fill="#0066cc" stroke="#003d7a" stroke-width="2" rx="4"/>
+  <text x="485" y="85" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Stage 3:</text>
+  <text x="485" y="105" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Compare</text>
+  <text x="485" y="165" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">JSON-LD pricing</text>
+  <text x="485" y="180" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Explicit attributes</text>
+
+  <!-- Arrow 3 -->
+  <path d="M 560 90 L 590 90" stroke="#0066cc" stroke-width="3" marker-end="url(#arrowblue2)"/>
+
+  <!-- Stage 4: Pricing -->
+  <rect x="590" y="50" width="150" height="80" fill="#0066cc" stroke="#003d7a" stroke-width="2" rx="4"/>
+  <text x="665" y="85" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Stage 4:</text>
+  <text x="665" y="105" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Pricing</text>
+  <text x="665" y="165" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Structured data</text>
+  <text x="665" y="180" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Visible state</text>
+
+  <!-- Arrow 4 -->
+  <path d="M 665 130 L 665 160" stroke="#0066cc" stroke-width="3" marker-end="url(#arrowblue2)"/>
+
+  <!-- Stage 5: Confidence -->
+  <rect x="590" y="210" width="150" height="80" fill="#0066cc" stroke="#003d7a" stroke-width="2" rx="4"/>
+  <text x="665" y="245" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Stage 5:</text>
+  <text x="665" y="265" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Confidence</text>
+  <text x="665" y="325" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Persistent feedback</text>
+  <text x="665" y="340" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Validation indicators</text>
+
+  <!-- Failure markers (red X) -->
+  <text x="215" y="95" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#dc2626">✗</text>
+  <text x="395" y="95" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#dc2626">✗</text>
+  <text x="575" y="95" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#dc2626">✗</text>
+  <text x="665" y="145" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#dc2626">✗</text>
+
+  <!-- Failure consequences -->
+  <rect x="50" y="380" width="800" height="160" fill="#fef2f2" stroke="#dc2626" stroke-width="2" rx="4"/>
+  <text x="450" y="410" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#dc2626">Failure Consequences at Each Stage</text>
+
+  <text x="70" y="440" font-family="Arial, sans-serif" font-size="13" fill="#7f1d1d">Stage 1 failure: Agent never discovers you exist. Zero recommendations.</text>
+  <text x="70" y="465" font-family="Arial, sans-serif" font-size="13" fill="#7f1d1d">Stage 2 failure: Agent knows you exist but can't confidently cite you. Recommends competitors.</text>
+  <text x="70" y="490" font-family="Arial, sans-serif" font-size="13" fill="#7f1d1d">Stage 3 failure: Agent cannot compare your offering. Skips you in comparison lists.</text>
+  <text x="70" y="515" font-family="Arial, sans-serif" font-size="13" fill="#7f1d1d">Stage 4 failure: Agent misunderstands pricing by orders of magnitude. £2,030 becomes £203,000.</text>
+  <text x="70" y="540" font-family="Arial, sans-serif" font-size="13" fill="#7f1d1d">Stage 5 failure: Entire commerce chain breaks. Agent abandons cart, never completes purchase.</text>
+
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowblue2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#0066cc"/>
+    </marker>
+  </defs>
+</svg>

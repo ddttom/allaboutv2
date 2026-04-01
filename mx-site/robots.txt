@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mx.allabout.network/sitemap.xml

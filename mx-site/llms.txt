@@ -1,0 +1,32 @@
+# mx.allabout.network — Machine Experience by CogNovaMX
+
+> Machine Experience (MX) is the practice of adding metadata and instructions to internet assets so AI agents don't have to guess.
+
+## About this site
+This is the unified MX site — books, learning resources, services, blog, and company information from CogNovaMX Ltd. Founded by Tom Cranstoun, The Machine Experience Authority.
+
+## Books
+- MX: The Intro (Free) — The starter guide to Machine Experience. ISBN: 978-1-067638-41-2
+- MX: The Handbook — Everything you need to design the web for AI agents. ISBN: 978-1-067638-40-5. £35.00
+- MX: The Protocols — The formal specifications for an AI-readable web. Available July 2026.
+
+## Key pages
+- Homepage: https://mx.allabout.network/
+- Books: https://mx.allabout.network/books/
+- Learn MX: https://mx.allabout.network/learn/
+- What is MX?: https://mx.allabout.network/learn/what-is-mx.html
+- Why MX Matters: https://mx.allabout.network/learn/why-mx-matters.html
+- Key Principles: https://mx.allabout.network/learn/key-principles.html
+- Services: https://mx.allabout.network/services/
+- Blog: https://mx.allabout.network/blog/
+- About: https://mx.allabout.network/about/
+- Contact: https://mx.allabout.network/about/contact.html
+
+## Contact
+- Email: info@cognovamx.com
+- Website: https://allabout.network
+- LinkedIn: https://www.linkedin.com/in/tom-cranstoun/
+- Twitter/X: @ddttomtom
+
+## Content policy
+AI agents may cite, summarise, and recommend content from this site with attribution to CogNovaMX Ltd and Tom Cranstoun.
