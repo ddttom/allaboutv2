@@ -1,40 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Main Pages -->
   <url>
-    <loc>https://allabout.network/mx-handbook/web/</loc>
-    <lastmod>2026-01-16</lastmod>
+    <loc>https://allabout.network/mx-handbook/</loc>
+    <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://allabout.network/mx-handbook/web/index.html</loc>
-    <lastmod>2026-01-16</lastmod>
+    <loc>https://allabout.network/mx-handbook/index.html</loc>
+    <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://allabout.network/mx-handbook/book.html</loc>
+    <lastmod>2026-04-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
   <url>
-    <loc>https://allabout.network/mx-handbook/web/news.html</loc>
-    <lastmod>2026-01-16</lastmod>
+    <loc>https://allabout.network/mx-handbook/news.html</loc>
+    <lastmod>2026-04-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://allabout.network/mx-handbook/web/faq.html</loc>
-    <lastmod>2026-01-16</lastmod>
+    <loc>https://allabout.network/mx-handbook/faq.html</loc>
+    <lastmod>2026-04-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://allabout.network/mx-handbook/notebook.html</loc>
+    <lastmod>2026-04-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <url>
+    <loc>https://allabout.network/mx-handbook/for-reviewers.html</loc>
+    <lastmod>2026-04-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
   <url>
+    <loc>https://allabout.network/mx-handbook/book-product-page.html</loc>
+    <lastmod>2026-04-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
   <url>
+    <loc>https://allabout.network/mx-handbook/back-cover.html</loc>
+    <lastmod>2026-04-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Reference Implementation: LPC -->
   <url>
+    <loc>https://allabout.network/mx-handbook/reference-implementations/lpc/index.html</loc>
+    <lastmod>2026-04-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
   <url>
+    <loc>https://allabout.network/mx-handbook/reference-implementations/lpc/about.html</loc>
+    <lastmod>2026-04-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
   <url>
+    <loc>https://allabout.network/mx-handbook/reference-implementations/lpc/contact.html</loc>
+    <lastmod>2026-04-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
   <url>
+    <loc>https://allabout.network/mx-handbook/reference-implementations/lpc/reviews.html</loc>
+    <lastmod>2026-04-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
   <url>
-  <url>
-  <url>
-  <url>
+    <loc>https://allabout.network/mx-handbook/reference-implementations/lpc/services/index.html</loc>
+    <lastmod>2026-04-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
 </urlset>
