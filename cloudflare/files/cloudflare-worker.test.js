@@ -990,7 +990,7 @@ describe('Root Path Redirect', () => {
   test('does not redirect non-root paths', async () => {
     const env = { ORIGIN_HOSTNAME: 'main--test--owner.aem.live' };
     const request = {
-      url: 'https://allabout.network/mx/index.html',
+      url: 'https://allabout.network/some-page.html',
       method: 'GET',
       headers: new Map(),
     };
@@ -998,6 +998,20 @@ describe('Root Path Redirect', () => {
     const response = await worker.fetch(request, env);
 
     expect(response.status).toBe(200);
+  });
+
+  test('redirects /mx/* paths to mx.allabout.network', async () => {
+    const env = { ORIGIN_HOSTNAME: 'main--test--owner.aem.live' };
+    const request = {
+      url: 'https://allabout.network/mx/coming-soon.html',
+      method: 'GET',
+      headers: new Map(),
+    };
+
+    const response = await worker.fetch(request, env);
+
+    expect(response.status).toBe(301);
+    expect(response.headers.get('Location')).toBe('https://mx.allabout.network/books/');
   });
 });
 
