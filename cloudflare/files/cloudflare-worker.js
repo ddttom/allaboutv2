@@ -691,7 +691,9 @@ const handleRequest = async (request, env, _ctx) => {
     originUrl.pathname = `/ddttom/allaboutv2/main/mx-site${mxSitePath}`;
     originUrl.port = '';
     originUrl.protocol = 'https:';
-    const originResp = await fetch(originUrl.toString());
+    const originResp = await fetch(originUrl.toString(), {
+      cf: { cacheTtl: 60, cacheEverything: true },
+    });
     if (!originResp.ok) {
       return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
     }
@@ -714,7 +716,7 @@ const handleRequest = async (request, env, _ctx) => {
       headers: {
         'Content-Type': contentType,
         'Access-Control-Allow-Origin': '*',
-        'Cache-Control': 'public, max-age=300',
+        'Cache-Control': 'public, max-age=60',
         'X-Served-By': 'mx-site',
       },
     });
