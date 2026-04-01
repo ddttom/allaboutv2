@@ -22,8 +22,8 @@
 
 ## MX Books
 
-- MX: The Handbook (2 April 2026): https://allabout.network/mx/the-books/index.html
-- MX: The Protocols (1 July 2026): https://allabout.network/mx/the-books/index.html
+- MX: The Handbook (2 April 2026): https://mx.allabout.network/books/
+- MX: The Protocols (1 July 2026): https://mx.allabout.network/books/
 
 ## Waitlist
 
@@ -42,32 +42,32 @@
 
 Articles on Machine Experience practice, implementation patterns, and the evolving relationship between humans and AI agents on the web.
 
-- [What is Machine Experience?](https://allabout.network/blogs/mx/what-is-machine-experience.html): The definitive introduction to MX methodology
-- [MX Manifesto](https://allabout.network/blogs/mx/mx-manifesto.html): The manifesto for Machine Experience
-- [Machine Experience — Adding Metadata](https://allabout.network/blogs/mx/machine-experience-adding-metadata.html): Practical guide to adding MX metadata to web assets
-- [Content That Manages Itself](https://allabout.network/blogs/mx/content-that-manages-itself.html): How MX enables self-managing content
-- [Designing Workflows for Humans and Machines](https://allabout.network/blogs/mx/designing-workflows-for-humans-and-machines.html): Workflow design that serves both audiences
-- [From Blobs to Bots](https://allabout.network/blogs/mx/from-blobs-to-bots.html): The evolution from unstructured content to agent-ready assets
-- [Data Sovereignty](https://allabout.network/blogs/mx/data-sovereignty.html): Owning your data in an AI-mediated world
-- [MX — A New Role](https://allabout.network/blogs/mx/mx-a-new-role.html): The emerging role of MX practitioner
-- [MX Contribution Guidelines](https://allabout.network/blogs/mx/mx-contribution-guidelines.html): How to contribute to the MX methodology
-- [AI Assistant Side Notices](https://allabout.network/blogs/mx/ai-assistant-side-notices.html): How AI assistants interpret and act on web content
-- [Claude Joins the MX Community](https://allabout.network/blogs/mx/claude-joins-mx-community.html): Anthropic's Claude and the MX ecosystem
-- [About Tom Cranstoun](https://allabout.network/blogs/mx/about.tom.cranstoun.html): The Machine Experience Authority
-- [About Claude Sonnet](https://allabout.network/blogs/mx/about.claude.sonnet.4.5.html): Claude's role in MX development
-- [About Claude Code](https://allabout.network/blogs/mx/about.claude.code.html): Claude Code and MX workflows
-- [About Microsoft Copilot](https://allabout.network/blogs/mx/about.microsoft.copilot.html): Microsoft Copilot in the MX context
+- [What is Machine Experience?](https://mx.allabout.network/blog/what-is-machine-experience.html): The definitive introduction to MX methodology
+- [MX Manifesto](https://mx.allabout.network/blog/mx-manifesto.html): The manifesto for Machine Experience
+- [Machine Experience — Adding Metadata](https://mx.allabout.network/blog/machine-experience-adding-metadata.html): Practical guide to adding MX metadata to web assets
+- [Content That Manages Itself](https://mx.allabout.network/blog/content-that-manages-itself.html): How MX enables self-managing content
+- [Designing Workflows for Humans and Machines](https://mx.allabout.network/blog/designing-workflows-for-humans-and-machines.html): Workflow design that serves both audiences
+- [From Blobs to Bots](https://mx.allabout.network/blog/from-blobs-to-bots.html): The evolution from unstructured content to agent-ready assets
+- [Data Sovereignty](https://mx.allabout.network/blog/data-sovereignty.html): Owning your data in an AI-mediated world
+- [MX — A New Role](https://mx.allabout.network/blog/mx-a-new-role.html): The emerging role of MX practitioner
+- [MX Contribution Guidelines](https://mx.allabout.network/blog/mx-contribution-guidelines.html): How to contribute to the MX methodology
+- [AI Assistant Side Notices](https://mx.allabout.network/blog/ai-assistant-side-notices.html): How AI assistants interpret and act on web content
+- [Claude Joins the MX Community](https://mx.allabout.network/blog/claude-joins-mx-community.html): Anthropic's Claude and the MX ecosystem
+- [About Tom Cranstoun](https://mx.allabout.network/blog/about.tom.cranstoun.html): The Machine Experience Authority
+- [About Claude Sonnet](https://mx.allabout.network/blog/about.claude.sonnet.4.5.html): Claude's role in MX development
+- [About Claude Code](https://mx.allabout.network/blog/about.claude.code.html): Claude Code and MX workflows
+- [About Microsoft Copilot](https://mx.allabout.network/blog/about.microsoft.copilot.html): Microsoft Copilot in the MX context
 
 ## MX Principles & Resources
 
 - [MX Principles](https://allabout.network/mx/index.html): Complete reference of MX principles
-- [What is MX?](https://allabout.network/mx/cognovamx-website/what-is-mx.html): Deep dive into Machine Experience
-- [Why MX Matters](https://allabout.network/mx/cognovamx-website/why-mx-matters.html): The business case for MX
-- [Key Principles](https://allabout.network/mx/cognovamx-website/key-principles.html): Core MX principles
-- [Our Services](https://allabout.network/mx/cognovamx-website/our-services.html): Full service details
-- [Implementation Examples](https://allabout.network/mx/cognovamx-website/implementation-examples.html): MX in action
-- [Common Mistakes](https://allabout.network/mx/cognovamx-website/common-mistakes.html): What to avoid
-- [The Books](https://allabout.network/mx/the-books/index.html): About MX: The Protocols and MX: The Handbook
+- [What is MX?](https://mx.allabout.network/learn/what-is-mx.html): Deep dive into Machine Experience
+- [Why MX Matters](https://mx.allabout.network/learn/why-mx-matters.html): The business case for MX
+- [Key Principles](https://mx.allabout.network/learn/key-principles.html): Core MX principles
+- [Our Services](https://mx.allabout.network/services/our-services.html): Full service details
+- [Implementation Examples](https://mx.allabout.network/services/examples.html): MX in action
+- [Common Mistakes](https://mx.allabout.network/learn/common-mistakes.html): What to avoid
+- [The Books](https://mx.allabout.network/books/): About MX: The Protocols and MX: The Handbook
 - [Cog Registry](https://reginald.allabout.network/): Machine-readable catalogue of MX cog definitions
 
 ---
@@ -241,7 +241,7 @@ Complete 13-part series covering Edge Delivery Services development from fundame
 Looking for the full interactive experience?
 
 - **Main Site:** [https://allabout.network/](https://allabout.network/)
-- **MX Blog:** [https://allabout.network/blogs/mx/](https://allabout.network/blogs/mx/)
+- **MX Blog:** [https://mx.allabout.network/blog/](https://mx.allabout.network/blog/)
 - **DDT Blog:** [https://allabout.network/blogs/ddt/](https://allabout.network/blogs/ddt/)
 - **Contact:** [info@cognovamx.com](mailto:info@cognovamx.com)
 - **About llms.txt:** [https://llmstxt.org](https://llmstxt.org)
