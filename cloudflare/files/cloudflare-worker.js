@@ -692,7 +692,7 @@ const handleRequest = async (request, env, _ctx) => {
     originUrl.port = '';
     originUrl.protocol = 'https:';
     const originResp = await fetch(originUrl.toString(), {
-      cf: { cacheTtl: 60, cacheEverything: true },
+      cf: { cacheTtl: 86400, cacheEverything: true },
     });
     if (!originResp.ok) {
       return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
@@ -716,7 +716,7 @@ const handleRequest = async (request, env, _ctx) => {
       headers: {
         'Content-Type': contentType,
         'Access-Control-Allow-Origin': '*',
-        'Cache-Control': 'public, max-age=60',
+        'Cache-Control': 'public, max-age=86400',
         'X-Served-By': 'mx-site',
       },
     });
