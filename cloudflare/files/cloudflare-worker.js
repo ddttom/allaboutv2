@@ -679,11 +679,81 @@ const handleRequest = async (request, env, _ctx) => {
     return handleMxSubdomain(request, url, 'reginald', env);
   }
 
+  // mx.allabout.network → GitHub raw allaboutv2 repo (unified MX site)
+  if (publicHostname === 'mx.allabout.network') {
+    const mxSitePath = url.pathname === '/' ? '/index.html' : url.pathname;
+    const originUrl = new URL(url);
+    originUrl.hostname = 'raw.githubusercontent.com';
+    originUrl.pathname = `/Digital-Domain-Technologies-Ltd/allaboutV2/main/mx-site${mxSitePath}`;
+    originUrl.port = '';
+    originUrl.protocol = 'https:';
+    const originResp = await fetch(originUrl.toString());
+    if (!originResp.ok) {
+      return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
+    }
+    const ext = mxSitePath.split('.').pop().toLowerCase();
+    const mimeMap = {
+      html: 'text/html; charset=utf-8',
+      css: 'text/css; charset=utf-8',
+      js: 'application/javascript; charset=utf-8',
+      json: 'application/json',
+      xml: 'application/xml',
+      txt: 'text/plain; charset=utf-8',
+      svg: 'image/svg+xml',
+      png: 'image/png',
+      jpg: 'image/jpeg',
+      jpeg: 'image/jpeg',
+    };
+    const contentType = mimeMap[ext] || 'application/octet-stream';
+    return new Response(originResp.body, {
+      status: 200,
+      headers: {
+        'Content-Type': contentType,
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'public, max-age=300',
+        'X-Served-By': 'mx-site',
+      },
+    });
+  }
+
   // content.allabout.network → GitHub raw mx-outputs repo (COG content files)
   if (env.MX_OUTPUTS_HOSTNAME) {
     if (publicHostname === 'content.allabout.network') {
       return handleMxSubdomain(request, url, 'content', env);
     }
+  }
+
+  // Backward-compatible redirect: allabout.network/mx/bookshop/* → mx.allabout.network/books/*
+  if (url.pathname.startsWith('/mx/bookshop')) {
+    const redirectUrl = new URL(request.url);
+    redirectUrl.hostname = 'mx.allabout.network';
+    redirectUrl.pathname = url.pathname.replace(/^\/mx\/bookshop/, '/books') || '/books/';
+    return new Response(null, {
+      status: 301,
+      headers: { Location: redirectUrl.toString() },
+    });
+  }
+
+  // Backward-compatible redirect: allabout.network/mx/cognovamx-website/* → mx.allabout.network/learn/*
+  if (url.pathname.startsWith('/mx/cognovamx-website/')) {
+    const redirectUrl = new URL(request.url);
+    redirectUrl.hostname = 'mx.allabout.network';
+    redirectUrl.pathname = url.pathname.replace(/^\/mx\/cognovamx-website/, '/learn');
+    return new Response(null, {
+      status: 301,
+      headers: { Location: redirectUrl.toString() },
+    });
+  }
+
+  // Backward-compatible redirect: allabout.network/blogs/mx/* → mx.allabout.network/blog/*
+  if (url.pathname.startsWith('/blogs/mx/')) {
+    const redirectUrl = new URL(request.url);
+    redirectUrl.hostname = 'mx.allabout.network';
+    redirectUrl.pathname = url.pathname.replace(/^\/blogs\/mx/, '/blog');
+    return new Response(null, {
+      status: 301,
+      headers: { Location: redirectUrl.toString() },
+    });
   }
 
   // Backward-compatible redirect: allabout.network/reginald/* → reginald.allabout.network/*

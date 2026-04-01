@@ -20,4 +20,8 @@ zone_name = "allabout.network"
 pattern = "content.allabout.network/*"
 zone_name = "allabout.network"
 
+[[routes]]
+pattern = "mx.allabout.network/*"
+zone_name = "allabout.network"
+
 # reginald.allabout.network now handled by reginald-api Worker (mx-reginald/worker/)
