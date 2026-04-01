@@ -684,7 +684,7 @@ const handleRequest = async (request, env, _ctx) => {
     const mxSitePath = url.pathname === '/' ? '/index.html' : url.pathname;
     const originUrl = new URL(url);
     originUrl.hostname = 'raw.githubusercontent.com';
-    originUrl.pathname = `/Digital-Domain-Technologies-Ltd/allaboutV2/main/mx-site${mxSitePath}`;
+    originUrl.pathname = `/ddttom/allaboutv2/main/mx-site${mxSitePath}`;
     originUrl.port = '';
     originUrl.protocol = 'https:';
     const originResp = await fetch(originUrl.toString());
