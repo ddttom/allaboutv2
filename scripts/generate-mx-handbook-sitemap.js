@@ -12,7 +12,7 @@ const CONFIG = {
 // Priority and changefreq rules for specific files
 const RULES = {
   'index.html': { priority: 1.0, changefreq: 'monthly' },
-  'appendix-index.html': { priority: 1.0, changefreq: 'monthly' },
+  'index.html': { priority: 1.0, changefreq: 'monthly' },
   'news.html': { priority: 0.9, changefreq: 'weekly' },
   'faq.html': { priority: 0.9, changefreq: 'monthly' },
   'for-reviewers.html': { priority: 0.8, changefreq: 'monthly' },
