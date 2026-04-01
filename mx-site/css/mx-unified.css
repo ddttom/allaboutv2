@@ -42,8 +42,8 @@
   --mx-font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 
   /* Layout */
-  --mx-max-width: 1200px;
-  --mx-content-width: 800px;
+  --mx-max-width: 960px;
+  --mx-content-width: 960px;
   --mx-section-padding: 5rem 2rem;
 }
 
@@ -331,7 +331,7 @@ a:focus-visible {
 /* ── Book cards ── */
 .books-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: 2.5rem;
   margin-top: 2rem;
 }
