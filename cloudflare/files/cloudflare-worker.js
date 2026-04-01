@@ -681,7 +681,11 @@ const handleRequest = async (request, env, _ctx) => {
 
   // mx.allabout.network → GitHub raw allaboutv2 repo (unified MX site)
   if (publicHostname === 'mx.allabout.network') {
-    const mxSitePath = url.pathname === '/' ? '/index.html' : url.pathname;
+    let mxSitePath = url.pathname;
+    // Append index.html for directory paths (/ or /books/ etc.)
+    if (mxSitePath.endsWith('/')) mxSitePath += 'index.html';
+    // If no extension, try as directory with index.html
+    if (!mxSitePath.includes('.')) mxSitePath += '/index.html';
     const originUrl = new URL(url);
     originUrl.hostname = 'raw.githubusercontent.com';
     originUrl.pathname = `/ddttom/allaboutv2/main/mx-site${mxSitePath}`;
