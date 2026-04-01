@@ -35,6 +35,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -209,6 +210,7 @@ a:focus-visible {
 }
 
 .hero-title-graphic {
+  width: 100%;
   max-width: 480px;
   margin-bottom: 1.5rem;
 }
@@ -218,6 +220,7 @@ a:focus-visible {
   color: var(--mx-text-muted);
   margin-bottom: 2rem;
   line-height: 1.8;
+  overflow-wrap: break-word;
 }
 
 .hero-books {
@@ -368,7 +371,7 @@ a:focus-visible {
 /* ── Proposition section ── */
 .proposition-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 2rem;
   margin-top: 2rem;
 }
