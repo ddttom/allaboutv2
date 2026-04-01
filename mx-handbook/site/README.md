@@ -90,7 +90,7 @@ To deploy this site:
    - `.xml` → `application/xml; charset=utf-8`
 
 3. **Update URLs** in the following files:
-   - Change `https://allabout.network/mx-handbook/web/site/` to your domain
+   - Change `https://allabout.network/mx-handbook/site/` to your domain
    - Files to update: all HTML files (Schema.org URLs), sitemap.xml, llms.txt
 
 4. **Test accessibility:**
