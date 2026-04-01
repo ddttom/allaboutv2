@@ -754,38 +754,6 @@ footer p {
   fill: white;
 }
 
-/* Floating reviewer badge (index, book) */
-.floating-reviewer-badge {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  animation: gentle-pulse 2s ease-in-out infinite;
-}
-
-@keyframes gentle-pulse {
-  0%, 100% {
-    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-  }
-  50% {
-    box-shadow: 0 6px 16px rgba(220, 38, 38, 0.5);
-  }
-}
-
-.floating-reviewer-badge::before {
-  content: "\1F4CB";
-  font-size: 1.2rem;
-}
 
 /* ==========================================================================
    Responsive
@@ -827,10 +795,4 @@ footer p {
     font-size: 0.85rem;
   }
 
-  .floating-reviewer-badge {
-    top: 15px;
-    right: 15px;
-    padding: 8px 16px;
-    font-size: 0.8rem;
-  }
 }
