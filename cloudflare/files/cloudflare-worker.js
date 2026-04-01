@@ -729,22 +729,51 @@ const handleRequest = async (request, env, _ctx) => {
     }
   }
 
-  // Backward-compatible redirect: allabout.network/mx/bookshop/* → mx.allabout.network/books/*
-  if (url.pathname.startsWith('/mx/bookshop')) {
+  // Redirect all /mx/* paths to mx.allabout.network (mx/ folder removed, content lives in mx-site)
+  if (url.pathname.startsWith('/mx/') || url.pathname === '/mx') {
     const redirectUrl = new URL(request.url);
     redirectUrl.hostname = 'mx.allabout.network';
-    redirectUrl.pathname = url.pathname.replace(/^\/mx\/bookshop/, '/books') || '/books/';
-    return new Response(null, {
-      status: 301,
-      headers: { Location: redirectUrl.toString() },
-    });
-  }
+    const remaining = url.pathname.replace(/^\/mx\/?/, '');
 
-  // Backward-compatible redirect: allabout.network/mx/cognovamx-website/* → mx.allabout.network/learn/*
-  if (url.pathname.startsWith('/mx/cognovamx-website/')) {
-    const redirectUrl = new URL(request.url);
-    redirectUrl.hostname = 'mx.allabout.network';
-    redirectUrl.pathname = url.pathname.replace(/^\/mx\/cognovamx-website/, '/learn');
+    // Specific path mappings for old URLs
+    const mxRedirects = {
+      '': '/',
+      'index.html': '/learn/mx-principles.html',
+      'coming-soon.html': '/books/',
+      'coming-soon.cog.html': '/books/',
+      'mx-principles-menu.html': '/learn/mx-principles.html',
+      'principles-changed-how-i-build.html': '/blog/principles-changed-how-i-build.html',
+      'mx-introduction-chapter.pdf': '/books/mx-introduction-chapter.pdf',
+      'the-books/index.html': '/books/',
+      'the-books/introduction.html': '/books/introduction.html',
+      'the-books/handbook.html': '/books/handbook.html',
+      'the-books/protocols.html': '/books/protocols.html',
+      'the-books/the-author.html': '/books/the-author.html',
+      'the-books/training-vs-inference.html': '/books/training-vs-inference.html',
+      'online-material/index.html': '/books/footnotes.html',
+      'online-material/appendices/index.html': '/books/appendices/',
+      'printworks/': '/about/printworks.html',
+      'printworks/index.html': '/about/printworks.html',
+      'sitemap.xml': '/sitemap.xml',
+    };
+
+    // Check exact match first
+    if (mxRedirects[remaining] !== undefined) {
+      redirectUrl.pathname = mxRedirects[remaining];
+    } else if (remaining.startsWith('online-material/appendices/')) {
+      // Appendix files: /mx/online-material/appendices/X → /books/appendices/X
+      redirectUrl.pathname = remaining.replace('online-material/appendices/', '/books/appendices/');
+    } else if (remaining.startsWith('bookshop')) {
+      // Legacy bookshop path
+      redirectUrl.pathname = remaining.replace(/^bookshop/, '/books') || '/books/';
+    } else if (remaining.startsWith('cognovamx-website/')) {
+      // Legacy cognovamx-website path
+      redirectUrl.pathname = remaining.replace(/^cognovamx-website/, '/learn');
+    } else {
+      // Default: redirect to mx.allabout.network root
+      redirectUrl.pathname = '/';
+    }
+
     return new Response(null, {
       status: 301,
       headers: { Location: redirectUrl.toString() },
@@ -976,10 +1005,7 @@ const handleRequest = async (request, env, _ctx) => {
   resp.headers.set('X-Frame-Options', 'SAMEORIGIN');
   resp.headers.set('X-Content-Type-Options', 'nosniff');
 
-  // Add CSP for /mx/ pages (static HTML — no EDS dependencies)
-  if (url.pathname.startsWith('/mx/') || url.pathname === '/mx') {
-    resp.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' https://allabout.network; font-src 'self'; connect-src 'self' https://static.cloudflareinsights.com; frame-ancestors 'self'");
-  }
+  // /mx/ CSP removed — all /mx/ paths now 301-redirect to mx.allabout.network
 
   // Block AI agents and crawlers from indexing PDFs (proprietary content)
   if (url.pathname.toLowerCase().endsWith('.pdf')) {
