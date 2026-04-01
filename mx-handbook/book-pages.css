@@ -23,10 +23,6 @@ body {
   background: #ffffff;
 }
 
-/* FOUC prevention (notebook page) */
-body:not(.appear) {
-  visibility: hidden;
-}
 
 /* ==========================================================================
    Header
