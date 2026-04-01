@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="utf-8">
+    <!-- Layer 1: Document Fundamentals -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training vs Inference — The distinction that changes everything | CogNovaMX Ltd</title>
+    <meta name="author" content="Tom Cranstoun">
+    <meta name="description" content="AI models access your website in two fundamentally different ways: at training time and at inference time. Understanding this distinction is the key to Machine Experience.">
+    <link rel="canonical" href="https://allabout.network/mx/the-books/training-vs-inference.html">
+
+    <!-- Layer 2: Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Training vs Inference — The distinction that changes everything">
+    <meta property="og:description" content="AI models access your website in two fundamentally different ways: at training time and at inference time. Understanding this distinction is the key to Machine Experience.">
+    <meta property="og:url" content="https://allabout.network/mx/the-books/training-vs-inference.html">
+    <meta property="og:image" content="https://allabout.network/mx/coming-soon-social.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="Training vs Inference — The distinction that changes everything">
+    <meta property="og:site_name" content="AllAbout.Network">
+    <meta property="og:locale" content="en_GB">
+
+    <!-- Layer 3: Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@ddttomtom">
+    <meta name="twitter:title" content="Training vs Inference — The distinction that changes everything">
+    <meta name="twitter:description" content="AI models access your website in two fundamentally different ways: at training time and at inference time. Understanding this distinction is the key to Machine Experience.">
+    <meta name="twitter:image" content="https://allabout.network/mx/coming-soon-social.png">
+    <meta name="twitter:image:alt" content="Training vs Inference — The distinction that changes everything">
+    <meta name="twitter:creator" content="@ddttomtom">
+
+    <!-- Layer 4: Discovery -->
+    <link rel="llms-txt" href="/llms.txt">
+
+    <!-- Layer 5: MX Carrier Tags -->
+    <meta name="mx:status" content="active">
+    <meta name="mx:contentType" content="article">
+    <meta name="mx:category" content="education">
+    <meta name="mx:tags" content="mx, training, inference, ai-agents, machine-experience, common-crawl">
+    <meta name="mx:content-policy" content="extract-with-attribution">
+    <meta name="mx:attribution" content="required">
+
+    <!-- Layer 6: Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Training vs Inference — The distinction that changes everything",
+        "description": "AI models access your website in two fundamentally different ways: at training time and at inference time. Understanding this distinction is the key to Machine Experience.",
+        "url": "https://allabout.network/mx/the-books/training-vs-inference.html",
+        "inLanguage": "en-GB",
+        "datePublished": "2026-04-01",
+        "dateModified": "2026-04-01",
+        "image": "https://allabout.network/mx/coming-soon-social.png",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://allabout.network/mx/the-books/training-vs-inference.html"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Tom Cranstoun",
+            "url": "https://www.linkedin.com/in/tom-cranstoun/"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "CogNovaMX Ltd",
+            "url": "https://allabout.network"
+        },
+        "isPartOf": {
+            "@type": "Book",
+            "name": "MX: The Handbook",
+            "author": { "@type": "Person", "name": "Tom Cranstoun" }
+        }
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "AllAbout.Network",
+                "item": "https://allabout.network"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "The Books",
+                "item": "https://allabout.network/mx/the-books/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Training vs Inference",
+                "item": "https://allabout.network/mx/the-books/training-vs-inference.html"
+            }
+        ]
+    }
+    </script>
+
+    <!-- Layer 7: Stylesheets -->
+    <link rel="preconnect" href="https://static.cloudflareinsights.com">
+    <link rel="preload" href="../../website/public/fonts/mozilla-headline/mozilla-headline-400.ttf" as="font" type="font/truetype" crossorigin>
+    <link rel="stylesheet" href="../mx-styles.css">
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav aria-label="MX section navigation">
+        <a href="../index.html">MX Principles</a>
+        <a href="index.html">The Books</a>
+        <a href="../cognovamx-website/index.html">CogNovaMX</a>
+        <a href="../principles-changed-how-i-build.html">Principles in Practice</a>
+    </nav>
+
+    <main id="main-content">
+
+        <header class="hero">
+            <div class="hero-brand">
+                <div class="hero-logo" role="img" aria-label="CogNovaMX">MX</div>
+                <div class="hero-badge">Machine Experience</div>
+            </div>
+            <h1>
+                <span>Training vs</span>
+                <span class="accent">Inference.</span>
+            </h1>
+            <p class="subtitle">Two fundamentally different ways machines access your website — and why both demand the same solution.</p>
+        </header>
+
+        <section class="section" aria-label="The distinction">
+            <h2 class="section-title">The distinction that changes everything</h2>
+            <div class="content-block">
+                <p>Every AI model that mentions your business got its information one of two ways. Either it absorbed your content months ago, during training — or it is fetching your page right now, while a user waits for an answer. These are fundamentally different mechanisms with different consequences, and understanding the difference is the single most important insight in Machine Experience.</p>
+            </div>
+        </section>
+
+        <section class="section" aria-label="Training-time access">
+            <h2 class="section-title">Training-time access</h2>
+            <div class="content-block">
+                <p>Large language models are trained on massive datasets — Common Crawl snapshots, Wikipedia dumps, curated web archives. This happens months or years before the model ever processes a user query. Your website content, as it existed when the training data was collected, gets baked into the model's weights.</p>
+                <ul class="feature-list">
+                    <li><strong>Historical, not current.</strong> A model trained on your 2024 site will confidently describe your 2024 offerings even if everything has changed since.</li>
+                    <li><strong>Comprehensive but frozen.</strong> Training crawlers index broadly across your site, but once data enters a training set there is no mechanism to update or remove it.</li>
+                    <li><strong>Generally respects robots.txt.</strong> Common Crawl honours exclusion rules, though compliance is inconsistent across all training data sources.</li>
+                    <li><strong>Stale impressions compound.</strong> If your company restructured, rebranded, or changed pricing since the training data capture, the model carries outdated impressions indefinitely.</li>
+                </ul>
+                <p>The consequence: wrong guidance in recommendations, delivered with confidence, over months or years.</p>
+            </div>
+        </section>
+
+        <section class="section" aria-label="Inference-time access">
+            <h2 class="section-title">Inference-time access</h2>
+            <div class="content-block">
+                <p>This is the newer, more consequential access pattern. When a user asks "What does company X charge for their premium plan?", the machine fetches your website <em>right now</em>, during the conversation. This is inference-time access, and it is growing fast — AI referral traffic to retail is surging year-over-year.</p>
+                <ul class="feature-list">
+                    <li><strong>Real-time.</strong> The machine reads your current page, not a historical snapshot. What it finds (or fails to find) determines its answer immediately.</li>
+                    <li><strong>Selective.</strong> Unlike training crawlers, inference-time agents fetch specific pages relevant to the user's query, not your entire site.</li>
+                    <li><strong>May not respect robots.txt.</strong> There is no industry consensus on whether inference-time fetches should honour traditional crawl restrictions.</li>
+                    <li><strong>Immediate consequences.</strong> If your page fails for a machine at inference time, you lose that customer right now. There is no second chance.</li>
+                </ul>
+                <p>The consequence: a lost transaction you never knew about, because the machine could not read your page.</p>
+            </div>
+        </section>
+
+        <section class="section" aria-label="Comparison">
+            <h2 class="section-title">Side by side</h2>
+            <div class="content-block">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Aspect</th>
+                            <th scope="col">Training-time</th>
+                            <th scope="col">Inference-time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>When</td>
+                            <td>Months or years before use</td>
+                            <td>During the user's conversation</td>
+                        </tr>
+                        <tr>
+                            <td>Source</td>
+                            <td>Historical snapshots (Common Crawl)</td>
+                            <td>Current live pages</td>
+                        </tr>
+                        <tr>
+                            <td>Scope</td>
+                            <td>Comprehensive crawl of entire site</td>
+                            <td>Selective — specific pages only</td>
+                        </tr>
+                        <tr>
+                            <td>Updates</td>
+                            <td>Frozen in model weights</td>
+                            <td>Always current</td>
+                        </tr>
+                        <tr>
+                            <td>robots.txt</td>
+                            <td>Generally respected</td>
+                            <td>No consensus</td>
+                        </tr>
+                        <tr>
+                            <td>Business impact</td>
+                            <td>Stale impressions over months</td>
+                            <td>Lost customer right now</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="section" aria-label="What breaks">
+            <h2 class="section-title">What breaks at inference time</h2>
+            <div class="content-block">
+                <p>Inference-time access is where MX patterns pay off most directly. When a machine fetches your page during a live conversation, every structural failure becomes an immediate business failure:</p>
+                <ul class="hostile-list">
+                    <li>If pricing is in a JavaScript-rendered widget with no server-side fallback, the raw parser sees nothing — and tells the user it could not find your prices</li>
+                    <li>If product comparison data lives inside a canvas chart, the machine cannot extract it — your competitor's plain HTML table wins</li>
+                    <li>If your page uses <code>div</code> elements instead of semantic HTML, the machine wastes tokens guessing at structure — and guesses wrong</li>
+                    <li>If your content hides behind a cookie wall or consent banner, the machine sees only the overlay — never the page beneath it</li>
+                    <li>If dynamic pricing changes between requests, the machine gets two different answers and no way to know which is current</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section" aria-label="One solution">
+            <h2 class="section-title">One solution serves both</h2>
+            <div class="content-block">
+                <p>The good news: you do not need different strategies for training-time and inference-time access. Proper semantic HTML, structured data, and explicit metadata improve both simultaneously.</p>
+                <ul class="feature-list">
+                    <li><strong>At training time</strong> — clean structure means better representation in the training data, producing more accurate baseline knowledge about your business.</li>
+                    <li><strong>At inference time</strong> — the same clean structure means machines extracting current information do so accurately, without hallucination.</li>
+                </ul>
+                <p>This is the core MX insight: every pattern that helps one access mechanism helps both. The difference is that inference-time makes the consequences immediate and visible.</p>
+            </div>
+        </section>
+
+        <section class="section" aria-label="What to do">
+            <h2 class="section-title">Where to start</h2>
+            <div class="content-block">
+                <p>The five-step action framework from <a href="introduction.html">MX: The Introduction</a> applies directly here: Audit, Understand, Prioritise, Implement, Measure. Start by understanding what machines actually see when they fetch your pages — not what humans see in a browser.</p>
+                <p>For the full technical foundation, including the five types of machine that visit your site and how each reads your content differently, download the free Introduction or continue to <a href="handbook.html">MX: The Handbook</a> for implementation patterns.</p>
+            </div>
+        </section>
+
+        <section class="section" aria-label="From the books">
+            <h2 class="section-title">From the books</h2>
+            <div class="quote-grid">
+                <div class="quote">
+                    <p>"A model trained on your 2024 site will confidently describe your 2024 offerings even if everything has changed."</p>
+                    <cite>Chapter 2 — How AI Reads</cite>
+                </div>
+                <div class="quote">
+                    <p>"Codified content costs almost nothing for a machine to process. It doesn't require reasoning. It just requires reading."</p>
+                    <cite>Chapter 2 — How AI Reads</cite>
+                </div>
+                <div class="quote">
+                    <p>"Design for the worst machine, not the best. If a constrained local model running on a £30 device can parse your page, every machine can."</p>
+                    <cite>Chapter 1 — Don't Make AI Think</cite>
+                </div>
+            </div>
+        </section>
+
+        <section class="section signup-section" aria-label="Read more">
+            <h2 class="section-title">Go deeper</h2>
+            <p class="signup-intro">The training-vs-inference distinction is covered in Chapter 2 of MX: The Handbook. Start with the free Introduction.</p>
+            <div class="cta-group">
+                <a href="../mx-introduction-chapter.pdf" class="cta-button secondary" target="_blank" rel="noopener noreferrer">
+                    Read the Introduction
+                </a>
+                <a href="handbook.html" class="cta-button">
+                    MX: The Handbook
+                </a>
+            </div>
+        </section>
+
+        <section class="section contact" aria-label="Contact">
+            <p><a href="mailto:info@cognovamx.com">info@cognovamx.com</a> · <a href="https://www.linkedin.com/in/tom-cranstoun/" rel="noopener noreferrer">LinkedIn</a> · <a href="https://allabout.network" rel="noopener noreferrer">allabout.network</a></p>
+        </section>
+
+    </main>
+
+    <footer class="tagline">
+        &copy; CogNovaMX Ltd. All rights reserved.
+    </footer>
+
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"a9d5099c610c4c4bb9858a3c7896cda3","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
