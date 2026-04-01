@@ -190,11 +190,14 @@
 .hero--section > * {
   max-width: 960px;
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero--section h1 {
-  max-width: 16ch;
-  margin: 0;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
   font-family: var(--mx-font-heading);
   font-size: clamp(3rem, 8vw, 6.7rem);
   font-weight: 400;
@@ -228,9 +231,10 @@
 }
 
 .hero--section .subtitle {
-  max-width: none;
-  width: fit-content;
-  margin: 0;
+  max-width: 960px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
   color: var(--mx-text-muted);
   font-size: clamp(1.08rem, 1.5vw, 1.35rem);
   line-height: 1.55;
@@ -252,6 +256,8 @@
 .hero--compact > * {
   max-width: 960px;
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero--compact h1 {
