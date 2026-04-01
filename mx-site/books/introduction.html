@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en-GB" dir="ltr">
 <head>
     <meta charset="utf-8">
     <!-- Layer 1: Document Fundamentals -->
@@ -14,12 +14,12 @@
     <meta property="og:title" content="MX: The Introduction — Free primer on Machine Experience">
     <meta property="og:description" content="MX: The Introduction — a free primer on Machine Experience. Why machines misread the web, the business case for fixing it, and a five-step action framework.">
     <meta property="og:url" content="https://mx.allabout.network/books/introduction.html">
-    <meta property="og:image" content="https://allabout.network/mx/coming-soon-social.png">
+    <meta property="og:image" content="https://mx.allabout.network/images/hero-backdrop.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:alt" content="MX: The Introduction — Free primer on Machine Experience">
-    <meta property="og:site_name" content="AllAbout.Network">
+    <meta property="og:site_name" content="CogNovaMX">
     <meta property="og:locale" content="en_GB">
 
     <!-- Layer 3: Twitter Card -->
@@ -27,7 +27,7 @@
     <meta name="twitter:site" content="@ddttomtom">
     <meta name="twitter:title" content="MX: The Introduction — Free primer on Machine Experience">
     <meta name="twitter:description" content="MX: The Introduction — a free primer on Machine Experience. Why machines misread the web, the business case for fixing it, and a five-step action framework.">
-    <meta name="twitter:image" content="https://allabout.network/mx/coming-soon-social.png">
+    <meta name="twitter:image" content="https://mx.allabout.network/images/hero-backdrop.jpg">
     <meta name="twitter:image:alt" content="MX: The Introduction — Free primer on Machine Experience">
     <meta name="twitter:creator" content="@ddttomtom">
 
@@ -53,7 +53,7 @@
         "inLanguage": "en-GB",
         "datePublished": "2026-03-24",
         "dateModified": "2026-03-29",
-        "image": "https://allabout.network/mx/coming-soon-social.png",
+        "image": "https://mx.allabout.network/images/hero-backdrop.jpg",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https://mx.allabout.network/books/introduction.html"
@@ -104,22 +104,31 @@
     </script>
 
     <!-- Layer 7: Stylesheets -->
-    <link rel="preconnect" href="https://static.cloudflareinsights.com">
-    <link rel="preload" href="../../website/public/fonts/mozilla-headline/mozilla-headline-400.ttf" as="font" type="font/truetype" crossorigin>
-    <link rel="stylesheet" href="../mx-styles.css">
+    <link rel="stylesheet" href="../css/mx-unified.css">
+    <link rel="stylesheet" href="../css/mx-hero.css">
 </head>
 <body>
 
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#main" class="skip-link">Skip to main content</a>
 
-    <nav aria-label="MX section navigation">
-        <a href="../index.html">MX Principles</a>
-        <a href="index.html">The Books</a>
-        <a href="https://mx.allabout.network/learn/">CogNovaMX</a>
-        <a href="../principles-changed-how-i-build.html">Principles in Practice</a>
-    </nav>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="/" class="header-logo" aria-label="CogNovaMX home">
+        <img src="../images/logo.png" alt="CogNovaMX" width="221" height="40" loading="eager">
+      </a>
+      <button class="mobile-menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">&#9776;</button>
+      <nav class="header-nav" id="main-nav" aria-label="Main navigation">
+        <a href="/">Home</a>
+        <a href="/books/" aria-current="page">Books</a>
+        <a href="/learn/">Learn</a>
+        <a href="/services/">Services</a>
+        <a href="/blog/">Blog</a>
+        <a href="/about/">About</a>
+      </nav>
+    </div>
+  </header>
 
-    <main id="main-content">
+    <main id="main">
 
         <header class="book-hero">
             <div class="book-meta">
@@ -166,7 +175,7 @@
             <h2 class="section-title">Read it now</h2>
             <p class="signup-intro">The Introduction is free. No sign-up required.</p>
             <p class="signup-intro">ISBN: 978-1-067638-41-2</p>
-            <a href="../mx-introduction-chapter.pdf" class="cta-button" target="_blank" rel="noopener noreferrer">
+            <a href="mx-introduction-chapter.pdf" class="cta-button" target="_blank" rel="noopener noreferrer">
                 Download PDF
             </a>
         </section>
@@ -177,10 +186,34 @@
 
     </main>
 
-    <footer class="tagline">
-        &copy; CogNovaMX Ltd. All rights reserved.
-    </footer>
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="../images/logo.png" alt="CogNovaMX" width="160" height="29" loading="lazy">
+        <p>Making the web work for everyone and everything that uses it.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="/books/">Books</a></li>
+          <li><a href="/learn/">Learn MX</a></li>
+          <li><a href="/services/">Services</a></li>
+          <li><a href="/blog/">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <a href="mailto:mx-printworks@cognovamx.com">mx-printworks@cognovamx.com</a>
+        <p>120 Main Street, Largs, Scotland</p>
+        <p>Published by CogNovaMX Ltd</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 CogNovaMX Ltd. All rights reserved.</span>
+      <span>Designed with Machine Experience in mind.</span>
+    </div>
+  </footer>
 
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"a9d5099c610c4c4bb9858a3c7896cda3","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+    <script src="../js/app.js"></script>
 </body>
 </html>

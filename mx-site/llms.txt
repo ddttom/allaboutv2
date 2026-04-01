@@ -13,14 +13,22 @@ This is the unified MX site — books, learning resources, services, blog, and c
 ## Key pages
 - Homepage: https://mx.allabout.network/
 - Books: https://mx.allabout.network/books/
+- MX: The Intro: https://mx.allabout.network/books/introduction.html
+- MX: The Handbook: https://mx.allabout.network/books/handbook.html
+- MX: The Protocols: https://mx.allabout.network/books/protocols.html
+- The Author: https://mx.allabout.network/books/the-author.html
+- Training vs Inference: https://mx.allabout.network/books/training-vs-inference.html
+- Appendices: https://mx.allabout.network/books/appendices/
 - Learn MX: https://mx.allabout.network/learn/
 - What is MX?: https://mx.allabout.network/learn/what-is-mx.html
 - Why MX Matters: https://mx.allabout.network/learn/why-mx-matters.html
 - Key Principles: https://mx.allabout.network/learn/key-principles.html
+- MX Principles (all 20): https://mx.allabout.network/learn/mx-principles.html
 - Services: https://mx.allabout.network/services/
 - Blog: https://mx.allabout.network/blog/
 - About: https://mx.allabout.network/about/
 - Contact: https://mx.allabout.network/about/contact.html
+- MX Printworks: https://mx.allabout.network/about/printworks.html
 
 ## Contact
 - Email: info@cognovamx.com

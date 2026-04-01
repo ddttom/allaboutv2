@@ -35,4 +35,27 @@
   <url><loc>https://mx.allabout.network/blog/about.claude.code.html</loc><priority>0.5</priority></url>
   <url><loc>https://mx.allabout.network/blog/about.claude.sonnet.4.5.html</loc><priority>0.5</priority></url>
   <url><loc>https://mx.allabout.network/blog/about.microsoft.copilot.html</loc><priority>0.5</priority></url>
+  <!-- Migrated from mx/ -->
+  <url><loc>https://mx.allabout.network/books/introduction.html</loc><priority>0.8</priority></url>
+  <url><loc>https://mx.allabout.network/books/handbook.html</loc><priority>0.8</priority></url>
+  <url><loc>https://mx.allabout.network/books/protocols.html</loc><priority>0.8</priority></url>
+  <url><loc>https://mx.allabout.network/books/the-author.html</loc><priority>0.7</priority></url>
+  <url><loc>https://mx.allabout.network/books/training-vs-inference.html</loc><priority>0.7</priority></url>
+  <url><loc>https://mx.allabout.network/books/footnotes.html</loc><priority>0.5</priority></url>
+  <url><loc>https://mx.allabout.network/books/appendices/</loc><priority>0.6</priority></url>
+  <url><loc>https://mx.allabout.network/books/appendices/appendix-a.html</loc><priority>0.5</priority></url>
+  <url><loc>https://mx.allabout.network/books/appendices/appendix-b.html</loc><priority>0.5</priority></url>
+  <url><loc>https://mx.allabout.network/books/appendices/appendix-c.html</loc><priority>0.5</priority></url>
+  <url><loc>https://mx.allabout.network/books/appendices/appendix-d.html</loc><priority>0.5</priority></url>
+  <url><loc>https://mx.allabout.network/books/appendices/appendix-e.html</loc><priority>0.5</priority></url>
+  <url><loc>https://mx.allabout.network/books/appendices/appendix-f.html</loc><priority>0.5</priority></url>
+  <url><loc>https://mx.allabout.network/books/appendices/appendix-g.html</loc><priority>0.5</priority></url>
+  <url><loc>https://mx.allabout.network/books/appendices/appendix-h.html</loc><priority>0.5</priority></url>
+  <url><loc>https://mx.allabout.network/books/appendices/appendix-i.html</loc><priority>0.5</priority></url>
+  <url><loc>https://mx.allabout.network/books/appendices/appendix-j.html</loc><priority>0.5</priority></url>
+  <url><loc>https://mx.allabout.network/books/appendices/appendix-k.html</loc><priority>0.5</priority></url>
+  <url><loc>https://mx.allabout.network/books/appendices/appendix-l.html</loc><priority>0.5</priority></url>
+  <url><loc>https://mx.allabout.network/learn/mx-principles.html</loc><priority>0.7</priority></url>
+  <url><loc>https://mx.allabout.network/blog/principles-changed-how-i-build.html</loc><priority>0.6</priority></url>
+  <url><loc>https://mx.allabout.network/about/printworks.html</loc><priority>0.6</priority></url>
 </urlset>

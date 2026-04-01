@@ -127,7 +127,7 @@ Every artefact must carry its own metadata, and that metadata must survive forma
 
 Content moves: markdown becomes SVG, SVG becomes PNG, PNG goes into a PDF. Each transformation risks stripping metadata. A PDF without provenance metadata is a dead artefact — a machine cannot determine where it came from, what it contains, or whether it is current.
 
-The fix: re-embed metadata at every transformation step. YAML frontmatter in markdown. XML metadata in SVG. XMP in PDF. HTML meta tags on web pages. The MX namespace (`https://allabout.network/mx/ns/1.0`) stays consistent across all formats.
+The fix: re-embed metadata at every transformation step. YAML frontmatter in markdown. XML metadata in SVG. XMP in PDF. HTML meta tags on web pages. The MX namespace (`https://mx.allabout.network/ns/1.0`) stays consistent across all formats.
 
 Minimum metadata at every stage: what it is, where it came from, who made it, when, and why.
 

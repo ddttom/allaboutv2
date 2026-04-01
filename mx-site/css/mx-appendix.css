@@ -23,20 +23,9 @@
    PANDOC BASE STYLES
    ============================================*/
 
-html {
-  color: #1a1a1a;
-  background-color: #fdfdfd;
-}
+/* html and body base styles provided by mx-unified.css */
 
-body {
-  margin: 0 auto;
-  max-width: 36em;
-  padding-left: 50px;
-  padding-right: 50px;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  -webkit-hyphens: auto;
-  hyphens: auto;
+.blog-page {
   overflow-wrap: break-word;
   text-rendering: optimizeLegibility;
   font-kerning: normal;
@@ -179,7 +168,7 @@ td {
   padding: 0.125em 0.5em 0.25em 0.5em;
 }
 
-header {
+#title-block-header {
   margin-bottom: 4em;
   text-align: center;
 }
@@ -222,11 +211,7 @@ ul.task-list li input[type="checkbox"] {
    SYNTAX HIGHLIGHTING
    ============================================*/
 
-html {
-  -webkit-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-}
+/* text-size-adjust provided by mx-unified.css */
 
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
@@ -322,53 +307,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    CUSTOM ENHANCEMENTS
    ============================================*/
 
-/*Body overrides for better layout*/
-body {
-  max-width: 900px !important;
-  margin: 2rem auto !important;
-  padding: 0 2rem !important;
-  padding-left: 2rem !important;
-  padding-right: 2rem !important;
-  padding-top: 2rem !important;
-  padding-bottom: 2rem !important;
+/* Content layout scoped to blog-page container */
+.blog-page {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 2rem;
   line-height: 1.6;
 }
 
 @media (max-width: 768px) {
-  body {
-    padding: 0 1rem !important;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-    margin: 1rem auto !important;
-  }
-}
-
-/*Pre-publication header banner*/
-body::before {
-  content: "PRE-PUBLICATION SAMPLE - FOR REVIEWERS";
-  display: block;
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: #fff3cd;
-  border-bottom: 2px solid #ff9800;
-  color: #856404;
-  text-align: center;
-  font-weight: bold;
-  font-size: 0.9rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 0.75rem 1rem;
-  margin: -2rem -2rem 2rem -2rem;
-  z-index: 1000;
-}
-
-@media (max-width: 768px) {
-  body::before {
-    font-size: 0.8rem;
-    padding: 0.5rem 0.75rem;
-    margin: -1rem -1rem 1rem -1rem;
+  .blog-page {
+    padding: 0 1rem;
+    margin: 1rem auto;
   }
 }
 
@@ -397,7 +347,9 @@ a:not(.floating-home-button):not(.floating-top-button):not(.copy-button):active 
    FLOATING NAVIGATION BUTTONS
    ============================================*/
 
+/* Hide floating nav buttons — mx-site header handles navigation */
 .floating-home-button {
+  display: none;
   position: fixed;
   top: 20px;
   left: 20px;
@@ -433,6 +385,7 @@ a:not(.floating-home-button):not(.floating-top-button):not(.copy-button):active 
 }
 
 .floating-top-button {
+  display: none;
   position: fixed;
   bottom: 20px;
   left: 20px;
