@@ -27,7 +27,6 @@ The book examines how modern web design optimised for human users fails for AI a
 - FAQ: https://allabout.network/mx-handbook/faq.html - Frequently asked questions about the book and project
 - Book Product Page: https://allabout.network/mx-handbook/book-product-page.html - Example AI-friendly product page
 - Back Cover: https://allabout.network/mx-handbook/back-cover.html - Book back cover
-- Interactive Notebook: https://allabout.network/mx-handbook/notebook.html - Interactive demonstration
 - Appendix Index: https://allabout.network/mx/online-material/appendices/appendix-index.html - Landing page with all appendices
 
 ## Access Guidelines
