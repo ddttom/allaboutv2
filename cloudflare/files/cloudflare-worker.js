@@ -534,10 +534,14 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   // reginald.allabout.network/api/* → raw.githubusercontent.com/{repo}/main/reginald/api/*
   // content.allabout.network/cogs/* → raw.githubusercontent.com/{repo}/main/content/cogs/*
 
-  // Bare root → serve index.html (GitHub raw doesn't serve directory listings)
+  // Resolve directory-style paths to index.html (GitHub raw doesn't serve directory listings)
   let subPath = url.pathname;
   if (subPath === '/' || subPath === '') {
     subPath = '/index.html';
+  } else if (subPath.endsWith('/')) {
+    subPath += 'index.html';
+  } else if (!subPath.includes('.')) {
+    subPath += '/index.html';
   }
 
   const repoPath = env.MX_OUTPUTS_REPO_PATH || '/Digital-Domain-Technologies-Ltd/MX-outputs/main';
@@ -679,57 +683,17 @@ const handleRequest = async (request, env, _ctx) => {
     return handleMxSubdomain(request, url, 'reginald', env);
   }
 
-  // mx.allabout.network → GitHub raw allaboutv2 repo (unified MX site)
-  if (publicHostname === 'mx.allabout.network') {
-    let mxSitePath = url.pathname;
-    // Append index.html for directory paths (/ or /books/ etc.)
-    if (mxSitePath.endsWith('/')) mxSitePath += 'index.html';
-    // If no extension, try as directory with index.html
-    if (!mxSitePath.includes('.')) mxSitePath += '/index.html';
-    const originUrl = new URL(url);
-    originUrl.hostname = 'raw.githubusercontent.com';
-    originUrl.pathname = `/ddttom/allaboutv2/main/mx-site${mxSitePath}`;
-    originUrl.port = '';
-    originUrl.protocol = 'https:';
-    const originResp = await fetch(originUrl.toString(), {
-      cf: { cacheTtl: 86400, cacheEverything: true },
-    });
-    if (!originResp.ok) {
-      return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
-    }
-    const ext = mxSitePath.split('.').pop().toLowerCase();
-    const mimeMap = {
-      html: 'text/html; charset=utf-8',
-      css: 'text/css; charset=utf-8',
-      js: 'application/javascript; charset=utf-8',
-      json: 'application/json',
-      xml: 'application/xml',
-      txt: 'text/plain; charset=utf-8',
-      svg: 'image/svg+xml',
-      png: 'image/png',
-      jpg: 'image/jpeg',
-      jpeg: 'image/jpeg',
-    };
-    const contentType = mimeMap[ext] || 'application/octet-stream';
-    return new Response(originResp.body, {
-      status: 200,
-      headers: {
-        'Content-Type': contentType,
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control': 'public, max-age=86400',
-        'X-Served-By': 'mx-site',
-      },
-    });
-  }
-
-  // content.allabout.network → GitHub raw mx-outputs repo (COG content files)
+  // mx.allabout.network and content.allabout.network → GitHub raw mx-outputs repo
   if (env.MX_OUTPUTS_HOSTNAME) {
+    if (publicHostname === 'mx.allabout.network') {
+      return handleMxSubdomain(request, url, 'mx-site', env);
+    }
     if (publicHostname === 'content.allabout.network') {
       return handleMxSubdomain(request, url, 'content', env);
     }
   }
 
-  // Redirect all /mx/* paths to mx.allabout.network (mx/ folder removed, content lives in mx-site)
+  // Redirect all /mx/* paths to mx.allabout.network (served from mx-outputs/mx-site/)
   if (url.pathname.startsWith('/mx/') || url.pathname === '/mx') {
     const redirectUrl = new URL(request.url);
     redirectUrl.hostname = 'mx.allabout.network';
