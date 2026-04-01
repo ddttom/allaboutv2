@@ -220,5 +220,5 @@ Instead:
 ## Related
 
 - [a11y cog](a11y.md)
-- [Tom's MX talk](https://allabout.network/blogs/mx/)
+- [Tom's MX talk](https://mx.allabout.network/blog/)
 - [ARIA Live Regions](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions)

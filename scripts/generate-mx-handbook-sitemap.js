@@ -3,7 +3,7 @@ import path from 'path';
 
 // Configuration
 const CONFIG = {
-  BASE_URL: 'https://allabout.network/mx-handbook/',
+  BASE_URL: 'https://mx.allabout.network/books/',
   INPUT_DIR: 'mx-handbook',
   OUTPUT_FILE: 'mx-handbook/sitemap.xml',
   FILE_PATTERNS: ['.html', '.pdf'],

@@ -111,7 +111,7 @@ mx:
              | File | Line | Hardcoded Value | Should Reference |
              |------|------|-----------------|------------------|
              | blog-generator.cog.md | 142 | allabout.network | site.hostname |
-             | data-sovereignty.html | 24 | https://allabout.network/blogs/mx/ | site.base-url + paths.mx-blog-url |
+             | data-sovereignty.html | 24 | https://mx.allabout.network/blog/ | site.base-url + paths.mx-blog-url |
 
           5. Summary: "{count} hardcoded references found across {file-count} files"
 
@@ -205,7 +205,7 @@ Do not write:
 
 ```
 Output path: allaboutv2/blogs/mx/{slug}.html
-URL pattern: https://allabout.network/blogs/mx/{slug}.html
+URL pattern: https://mx.allabout.network/blog/{slug}.html
 ```
 
 Write instead:

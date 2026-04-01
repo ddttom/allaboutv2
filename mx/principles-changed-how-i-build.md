@@ -9,7 +9,7 @@ mx:
   author-email: "tom@digitaldomaintechnologies.com"
   contentState: "published"
   contentFilename: "principles-changed-how-i-build"
-  blogUrl: "https://allabout.network/blogs/mx/principles-changed-how-i-build.html"
+  blogUrl: "https://mx.allabout.network/blog/principles-changed-how-i-build.html"
   publicationDate: "2026-02-03"
   tags:
     - machine-experience

@@ -3,5 +3,5 @@ Disallow: /drafts/
 Disallow: /demo/
 Sitemap: https://allabout.network/mx-sitemap.xml
 Sitemap: https://allabout.network/eds-sitemap.xml
-Sitemap: https://allabout.network/blogs/mx/sitemap.xml
+Sitemap: https://mx.allabout.network/blog/sitemap.xml
 Sitemap: https://allabout.network/mx/sitemap.xml

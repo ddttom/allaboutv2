@@ -1279,7 +1279,7 @@ mx:
     - name: blogUrl
       type: string
       definition: "Published URL of the blog post."
-      example: "https://allabout.network/blogs/mx/field-dictionary"
+      example: "https://mx.allabout.network/blog/field-dictionary"
       notes: "Published URL. Set after deployment."
       status: canonical
       profile: blog

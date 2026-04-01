@@ -140,7 +140,7 @@ mx:
           ## MX HTML Blog Generation
 
           Output path: mx-canon/mx-maxine-lives/communications/blogs/html/allabout/{slug}.html
-          URL pattern: https://allabout.network/blogs/mx/{slug}.html
+          URL pattern: https://mx.allabout.network/blog/{slug}.html
           Social card: mx-canon/mx-maxine-lives/communications/blogs/html/allabout/{slug}-social.svg
           Publish to host: npm run blog:publish -- {slug}
 
@@ -169,14 +169,14 @@ mx:
             <!-- 3. Robots -->
             <meta name="robots" content="index, follow">
             <meta name="X-Robots-Tag" content="index, follow">
-            <link rel="canonical" href="https://allabout.network/blogs/mx/{slug}.html">
+            <link rel="canonical" href="https://mx.allabout.network/blog/{slug}.html">
 
             <!-- 4. Open Graph -->
             <meta property="og:type" content="article">
-            <meta property="og:url" content="https://allabout.network/blogs/mx/{slug}.html">
+            <meta property="og:url" content="https://mx.allabout.network/blog/{slug}.html">
             <meta property="og:title" content="{title}">
             <meta property="og:description" content="{description}">
-            <meta property="og:image" content="https://allabout.network/blogs/mx/{slug}-social.svg">
+            <meta property="og:image" content="https://mx.allabout.network/blog/{slug}-social.svg">
             <meta property="og:image:width" content="1200">
             <meta property="og:image:height" content="630">
             <meta property="og:site_name" content="AllAbout.Network">
@@ -185,10 +185,10 @@ mx:
 
             <!-- 5. Twitter Card -->
             <meta name="twitter:card" content="summary_large_image">
-            <meta name="twitter:url" content="https://allabout.network/blogs/mx/{slug}.html">
+            <meta name="twitter:url" content="https://mx.allabout.network/blog/{slug}.html">
             <meta name="twitter:title" content="{title}">
             <meta name="twitter:description" content="{description}">
-            <meta name="twitter:image" content="https://allabout.network/blogs/mx/{slug}-social.svg">
+            <meta name="twitter:image" content="https://mx.allabout.network/blog/{slug}-social.svg">
 
             <!-- 6. MX Carrier Tags -->
             <meta name="mx:content-policy" content="extract-with-attribution">
@@ -219,7 +219,7 @@ mx:
               },
               "mainEntityOfPage": {
                 "@type": "WebPage",
-                "@id": "https://allabout.network/blogs/mx/{slug}.html"
+                "@id": "https://mx.allabout.network/blog/{slug}.html"
               },
               "articleSection": "Machine Experience",
               "keywords": [{keywords-as-json-array}],

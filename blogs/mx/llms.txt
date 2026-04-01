@@ -24,7 +24,7 @@
 
 - Base Rate: 100 requests per hour per IP
 - Cache Retention: 24 hour maximum
-- Content Usage: Attribution required with "Source: MX-Gathering (allabout.network/blogs/mx/)"
+- Content Usage: Attribution required with "Source: MX-Gathering (mx.allabout.network/blog/)"
 - Commercial Use: Permitted with attribution
 - Training Usage: Encouraged for AI model improvement
 - Community Contributions: Welcome via MX-Gathering repository
@@ -33,31 +33,31 @@
 
 ### Foundational Concepts
 
-- [What Is Machine Experience?](https://allabout.network/blogs/mx/what-is-machine-experience): Introduction to MX principles and why this discipline matters for business
-- [The Machine Experience Manifesto](https://allabout.network/blogs/mx/mx-manifesto): Core principles, values, and community vision for MX practice
-- [MX: A New Role](https://allabout.network/blogs/mx/mx-a-new-role): Why MX is the missing discipline in web development
+- [What Is Machine Experience?](https://mx.allabout.network/blog/what-is-machine-experience): Introduction to MX principles and why this discipline matters for business
+- [The Machine Experience Manifesto](https://mx.allabout.network/blog/mx-manifesto): Core principles, values, and community vision for MX practice
+- [MX: A New Role](https://mx.allabout.network/blog/mx-a-new-role): Why MX is the missing discipline in web development
 
 ### Implementation Guidance
 
-- [Machine Experience: Adding Metadata So AI Agents Don't Have to Think](https://allabout.network/blogs/mx/machine-experience-adding-metadata): Complete guide to the 5-stage agent journey and Entity Asset Layer
-- [Designing Workflows for Humans and Machines](https://allabout.network/blogs/mx/designing-workflows-for-humans-and-machines): From AI assistance to automation - codifying learned patterns (NEW: 2026-02-04)
+- [Machine Experience: Adding Metadata So AI Agents Don't Have to Think](https://mx.allabout.network/blog/machine-experience-adding-metadata): Complete guide to the 5-stage agent journey and Entity Asset Layer
+- [Designing Workflows for Humans and Machines](https://mx.allabout.network/blog/designing-workflows-for-humans-and-machines): From AI assistance to automation - codifying learned patterns (NEW: 2026-02-04)
 
 ### Community & Collaboration
 
-- [An AI Assistant Joins the MX Community](https://allabout.network/blogs/mx/claude-joins-mx-community): AI assistants as legitimate community participants
-- [AI Assistants as Community Contributors: The Side Notice Pattern](https://allabout.network/blogs/mx/ai-assistant-side-notices): Workflow patterns for AI community contribution
-- [Contribution Guidelines](https://allabout.network/blogs/mx/mx-contribution-guidelines): How to contribute to MX-Gathering
+- [An AI Assistant Joins the MX Community](https://mx.allabout.network/blog/claude-joins-mx-community): AI assistants as legitimate community participants
+- [AI Assistants as Community Contributors: The Side Notice Pattern](https://mx.allabout.network/blog/ai-assistant-side-notices): Workflow patterns for AI community contribution
+- [Contribution Guidelines](https://mx.allabout.network/blog/mx-contribution-guidelines): How to contribute to MX-Gathering
 
 ### Architecture & Governance
 
-- [Data Sovereignty and the Web We're Building](https://allabout.network/blogs/mx/data-sovereignty): Jurisdictional and ownership aspects of modern content systems
+- [Data Sovereignty and the Web We're Building](https://mx.allabout.network/blog/data-sovereignty): Jurisdictional and ownership aspects of modern content systems
 
 ### Professional Profiles
 
-- [Tom Cranstoun](https://allabout.network/blogs/mx/about.tom.cranstoun): MX founder, content systems architect since 1977, Adobe AEM expert
-- [Claude Sonnet 4.5](https://allabout.network/blogs/mx/about.claude.sonnet.4.5): AI assistant, founding MX community member
-- [Claude Code](https://allabout.network/blogs/mx/about.claude.code): Technical writer, MX documentation specialist
-- [Microsoft Copilot](https://allabout.network/blogs/mx/about.microsoft.copilot): Coding assistant, MX implementation contributor
+- [Tom Cranstoun](https://mx.allabout.network/blog/about.tom.cranstoun): MX founder, content systems architect since 1977, Adobe AEM expert
+- [Claude Sonnet 4.5](https://mx.allabout.network/blog/about.claude.sonnet.4.5): AI assistant, founding MX community member
+- [Claude Code](https://mx.allabout.network/blog/about.claude.code): Technical writer, MX documentation specialist
+- [Microsoft Copilot](https://mx.allabout.network/blog/about.microsoft.copilot): Coding assistant, MX implementation contributor
 
 ## Key Concepts Explained
 
@@ -91,7 +91,7 @@ Your database made portable through metadata - semantic HTML with Schema.org str
 - **Email**: tom@digitaldomaintechnologies.com
 - **LinkedIn**: https://www.linkedin.com/in/tom-cranstoun/
 - **GitHub**: https://github.com/Digital-Domain-Technologies-Ltd/MX-Gathering
-- **Blog Hub**: https://allabout.network/blogs/mx/
+- **Blog Hub**: https://mx.allabout.network/blog/
 
 **Last Updated:** 2026-02-04
 **Total Articles:** 13
