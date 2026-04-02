@@ -602,9 +602,9 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   resp.headers.set('X-Content-Type-Options', 'nosniff');
   resp.headers.set('cfw', WORKER_VERSION);
   resp.headers.delete('age');
-  // GitHub raw adds a restrictive CSP (default-src 'none'; sandbox) — remove it
-  // so that HTML pages on mx/content/reginald subdomains can load CSS, JS, and images
-  resp.headers.delete('Content-Security-Policy');
+  // GitHub raw adds a restrictive CSP (default-src 'none'; sandbox) — replace it
+  // with a permissive policy that allows CSS, JS, images, and fonts from same origin
+  resp.headers.set('Content-Security-Policy', "default-src 'self'; img-src 'self' https://allabout.network https://*.allabout.network data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https://allabout.network https://*.allabout.network; frame-ancestors 'self'");
 
   // Resolution analytics: log COG resolutions to Analytics Engine (fire-and-forget)
   if (subdomain === 'reginald' && env.ANALYTICS) {
