@@ -579,6 +579,7 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
     jpg: 'image/jpeg',
     jpeg: 'image/jpeg',
     gif: 'image/gif',
+    webp: 'image/webp',
     ico: 'image/x-icon',
     woff: 'font/woff',
     woff2: 'font/woff2',
