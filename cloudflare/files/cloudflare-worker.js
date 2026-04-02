@@ -606,6 +606,12 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   // with a permissive policy that allows CSS, JS, images, and fonts from same origin
   resp.headers.set('Content-Security-Policy', "default-src 'self'; img-src 'self' https://allabout.network https://*.allabout.network data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https://allabout.network https://*.allabout.network; frame-ancestors 'self'");
 
+  // Set Last-Modified header for content freshness signals (AI agents and search engines)
+  // GitHub raw doesn't provide Last-Modified; use current date as deployment-time proxy
+  if (!resp.headers.has('Last-Modified')) {
+    resp.headers.set('Last-Modified', new Date().toUTCString());
+  }
+
   // Resolution analytics: log COG resolutions to Analytics Engine (fire-and-forget)
   if (subdomain === 'reginald' && env.ANALYTICS) {
     try {
