@@ -601,6 +601,9 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   resp.headers.set('X-Content-Type-Options', 'nosniff');
   resp.headers.set('cfw', WORKER_VERSION);
   resp.headers.delete('age');
+  // GitHub raw adds a restrictive CSP (default-src 'none'; sandbox) — remove it
+  // so that HTML pages on mx/content/reginald subdomains can load CSS, JS, and images
+  resp.headers.delete('Content-Security-Policy');
 
   // Resolution analytics: log COG resolutions to Analytics Engine (fire-and-forget)
   if (subdomain === 'reginald' && env.ANALYTICS) {
