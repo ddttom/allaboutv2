@@ -39,7 +39,7 @@ allaboutv2 is the allabout.network website — the public face of CogNovaMX. It 
 ## Constraints
 
 1. **Practice what we preach.** The allabout.network site must pass its own MX audit. If it does not, fix it.
-2. **Blog source lives in Canon.** Blog markdown is authored in `mx-canon/mx-maxine-lives/communications/blogs/md/`. The HTML output is generated here.
+2. **Blog source lives in mx-outputs.** Blog HTML is authored and served from `mx-outputs/mx-site/blog/` (single source of truth).
 3. **Semantic HTML required.** Every page uses proper heading hierarchy, Schema.org markup, and accessible structure.
 4. **Submodule discipline.** Commit and push allaboutv2 before updating the pointer in the main repo.
 

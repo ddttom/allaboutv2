@@ -46,7 +46,7 @@ mx:
         description: Find blog posts in the current project and let the author choose which to review
         usage: |
           1. Search the current repository for blog-like files:
-             - Look in: mx-canon/mx-maxine-lives/communications/blogs/md/, mx-canon/mx-maxine-lives/communications/blogs/html/
+             - Look in: mx-outputs/mx-site/blog/
              - File patterns: *.md with content-state in frontmatter, *.html with article or blog in filename
              - Also check for files with contentType: "blog-post" in YAML frontmatter
 
@@ -328,7 +328,7 @@ Example:
 ✓ Blog post revised and saved
 
 Output:
-  /Users/tom/Documents/MX/mx-canon/mx-maxine-lives/communications/blogs/md/content-that-manages-itself-revised.md
+  /Users/tom/Documents/MX/mx-outputs/mx-site/blog/content-that-manages-itself-revised.html
 ```
 
 Not just "saved to blogs/md/" — the full absolute path from root.

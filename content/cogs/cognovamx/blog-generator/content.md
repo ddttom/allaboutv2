@@ -55,7 +55,7 @@ mx:
 
           ## EDS Blog Generation
 
-          Output path: mx-canon/mx-maxine-lives/communications/blogs/md/{slug}-blog.md
+          Output path: mx-outputs/mx-site/blog/{slug}-blog.md
           URL pattern: https://allabout.network/blogs/ddt/{slug}
 
           Template:
@@ -135,13 +135,13 @@ mx:
           - Separate major sections with --- (horizontal rules)
           - Tables use GFM syntax with :---- alignment markers
 
-          Reference: mx-canon/mx-maxine-lives/communications/blogs/md/content-that-manages-itself-blog.md
+          Reference: mx-outputs/mx-site/blog/content-that-manages-itself-blog.md
 
           ## MX HTML Blog Generation
 
-          Output path: mx-canon/mx-maxine-lives/communications/blogs/html/allabout/{slug}.html
+          Output path: mx-outputs/mx-site/blog/{slug}.html
           URL pattern: https://mx.allabout.network/blog/{slug}.html
-          Social card: mx-canon/mx-maxine-lives/communications/blogs/html/allabout/{slug}-social.svg
+          Social card: mx-outputs/mx-site/blog/{slug}-social.svg
           Publish to host: npm run blog:publish -- {slug}
 
           The MX HTML template has 16 sections. Generate all of them:
@@ -402,7 +402,7 @@ mx:
           5. Build the table of contents from all h2 headings
           6. Calculate word count and reading time
           7. Generate the social card SVG
-          8. Save to mx-canon/mx-maxine-lives/communications/blogs/html/allabout/{slug}.html
+          8. Save to mx-outputs/mx-site/blog/{slug}.html
           9. Tell the user: run `npm run blog:publish -- {slug}` to deploy to allaboutv2
 
           ## MX to EDS Conversion
@@ -428,7 +428,7 @@ mx:
              - <hr> becomes ---
              - <p> becomes plain paragraphs with blank lines
           4. Wrap in the EDS template (bio table, index table, metadata table, EDS blocks)
-          5. Save to mx-canon/mx-maxine-lives/communications/blogs/md/{slug}-blog.md
+          5. Save to mx-outputs/mx-site/blog/{slug}-blog.md
 
           Rules:
           - Preserve all links and references
@@ -514,8 +514,8 @@ Both formats have rigid templates. Getting them wrong means broken rendering, mi
 | Aspect | EDS Blog | MX Blog |
 |--------|----------|---------|
 | Format | Markdown with EDS tables | Semantic HTML |
-| Location (QA) | `mx-canon/mx-maxine-lives/communications/blogs/md/` | `mx-canon/mx-maxine-lives/communications/blogs/html/allabout/` |
-| Location (Published) | EDS auto-deploys | `allaboutv2/blogs/mx/` (via `npm run blog:publish`) |
+| Location | `mx-outputs/mx-site/blog/` | `mx-outputs/mx-site/blog/` |
+| Deployment | EDS auto-deploys | `allaboutv2/blogs/mx/` (via `npm run blog:publish`) |
 | URL | `/blogs/ddt/{slug}` | `/blogs/mx/{slug}.html` |
 | Styling | EDS stylesheet (automatic) | `shared-mx.css` (linked) |
 | Metadata | Bottom metadata table | Head meta tags + JSON-LD |
@@ -576,9 +576,8 @@ The cog enforces Tom's writing conventions:
 ## Reference Files
 
 - **Project config:** `env.cog.md` (read this FIRST — all hostnames, URLs, author details, paths)
-- **EDS template reference:** `mx-canon/mx-maxine-lives/communications/blogs/md/content-that-manages-itself-blog.md`
-- **MX template reference:** `mx-canon/mx-maxine-lives/communications/blogs/html/allabout/data-sovereignty.html`
-- **MX stylesheet:** `mx-canon/mx-maxine-lives/communications/blogs/html/allabout/shared-mx.css`
+- **MX template reference:** `mx-outputs/mx-site/blog/data-sovereignty.html`
+- **MX stylesheet:** `mx-outputs/mx-site/css/mx-blog.css`
 - **Writing style guide:** `.claude/skills/news/templates/blog-entry.md`
 - **Tom's blog catalogue:** `allaboutv2/blogs/ddt/my-blog.json`
 

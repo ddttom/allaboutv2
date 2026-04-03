@@ -50,7 +50,6 @@ Articles on Machine Experience practice, implementation patterns, and the evolvi
 - [From Blobs to Bots](https://mx.allabout.network/blog/from-blobs-to-bots.html): The evolution from unstructured content to agent-ready assets
 - [Data Sovereignty](https://mx.allabout.network/blog/data-sovereignty.html): Owning your data in an AI-mediated world
 - [MX — A New Role](https://mx.allabout.network/blog/mx-a-new-role.html): The emerging role of MX practitioner
-- [MX Contribution Guidelines](https://mx.allabout.network/blog/mx-contribution-guidelines.html): How to contribute to the MX methodology
 - [AI Assistant Side Notices](https://mx.allabout.network/blog/ai-assistant-side-notices.html): How AI assistants interpret and act on web content
 - [Claude Joins the MX Community](https://mx.allabout.network/blog/claude-joins-mx-community.html): Anthropic's Claude and the MX ecosystem
 - [About Tom Cranstoun](https://mx.allabout.network/blog/about.tom.cranstoun.html): The Machine Experience Authority
