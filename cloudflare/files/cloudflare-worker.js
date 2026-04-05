@@ -634,6 +634,24 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
     } catch (_) { /* analytics never blocks response */ }
   }
 
+  // Serve custom 404 page instead of bare text when origin returns 404
+  if (resp.status === 404 && subdomain === 'mx-site') {
+    const errorPageUrl = new URL(originUrl);
+    errorPageUrl.pathname = `${repoPath}/${subdomain}/404.html`;
+    const errorResp = await fetch(new Request(errorPageUrl, { method: 'GET' }), {
+      cf: { cacheEverything: true, cacheTtl: 300 },
+    });
+    if (errorResp.ok) {
+      const errorPage = new Response(errorResp.body, {
+        status: 404,
+        statusText: 'Not Found',
+        headers: resp.headers,
+      });
+      errorPage.headers.set('Content-Type', 'text/html; charset=utf-8');
+      return errorPage;
+    }
+  }
+
   return resp;
 };
 
