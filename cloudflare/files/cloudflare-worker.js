@@ -600,6 +600,10 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   resp.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   resp.headers.set('X-Frame-Options', 'SAMEORIGIN');
   resp.headers.set('X-Content-Type-Options', 'nosniff');
+  // Prevent AI agents and search engines from indexing/following PDF files
+  if (ext === 'pdf') {
+    resp.headers.set('X-Robots-Tag', 'noindex, nofollow');
+  }
   resp.headers.set('cfw', WORKER_VERSION);
   resp.headers.delete('age');
   // GitHub raw adds a restrictive CSP (default-src 'none'; sandbox) — replace it
