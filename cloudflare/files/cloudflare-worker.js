@@ -608,7 +608,7 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   resp.headers.delete('age');
   // GitHub raw adds a restrictive CSP (default-src 'none'; sandbox) — replace it
   // with a permissive policy that allows CSS, JS, images, and fonts from same origin
-  resp.headers.set('Content-Security-Policy', "default-src 'self'; img-src 'self' https://allabout.network https://*.allabout.network data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https://allabout.network https://*.allabout.network; frame-ancestors 'self'");
+  resp.headers.set('Content-Security-Policy', "default-src 'self'; img-src 'self' https://allabout.network https://*.allabout.network data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; font-src 'self'; connect-src 'self' https://allabout.network https://*.allabout.network https://cloudflareinsights.com; frame-ancestors 'self'");
 
   // Set Last-Modified header for content freshness signals (AI agents and search engines)
   // GitHub raw doesn't provide Last-Modified; use current date as deployment-time proxy
