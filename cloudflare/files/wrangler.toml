@@ -8,6 +8,23 @@ MX_OUTPUTS_HOSTNAME = "raw.githubusercontent.com"
 MX_OUTPUTS_REPO_PATH = "/Digital-Domain-Technologies-Ltd/MX-outputs/main"
 PUSH_INVALIDATION = "enabled"
 
+# Book sales — Stripe price IDs and MailerLite group IDs.
+# Replace placeholders with real values from Stripe Dashboard / MailerLite.
+STRIPE_HANDBOOK_PDF_PRICE_ID = "placeholder-set-in-dashboard"
+STRIPE_HANDBOOK_PHYSICAL_PRICE_ID = "placeholder-set-in-dashboard"
+MAILERLITE_GROUP_HANDBOOK_PDF = "placeholder-set-in-dashboard"
+MAILERLITE_GROUP_HANDBOOK_PHYSICAL = "placeholder-set-in-dashboard"
+
+# Secrets (set via `wrangler secret put` — never commit values):
+#   STRIPE_SECRET_KEY        — sk_test_... or sk_live_...
+#   STRIPE_WEBHOOK_SECRET    — whsec_... from Stripe Dashboard webhook endpoint
+#   MAILERLITE_API_KEY       — MailerLite Developer API token
+
+# R2 bucket for book PDFs (handbook, protocols, introduction).
+[[r2_buckets]]
+binding = "BOOKS_R2"
+bucket_name = "mx-books"
+
 [[routes]]
 pattern = "allabout.network/*"
 zone_name = "allabout.network"

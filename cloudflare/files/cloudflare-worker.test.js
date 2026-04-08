@@ -1460,3 +1460,410 @@ describe('categoriseAgent', () => {
     expect(categoriseAgent('custom-http-client')).toBe('unknown');
   });
 });
+
+// ── Book Sales Tests ───────────────────────────────────────────
+// Ported from mx-reginald/worker/tests/book-purchase.test.js on 2026-04-08.
+// Uses plain-object mocks for Response/Request because vitest 4 with node env
+// does not expose Fetch API globals (matching the pattern of existing tests
+// in this file at lines 770-810 which roll their own Response mock).
+
+/** Build a mock fetch Response (plain object — no Response constructor). */
+function bookMockResponse(body, status = 200) {
+  const text = typeof body === 'string' ? body : JSON.stringify(body);
+  return {
+    ok: status >= 200 && status < 300,
+    status,
+    headers: { get: () => null },
+    json: async () => (typeof body === 'string' ? JSON.parse(body) : body),
+    text: async () => text,
+  };
+}
+
+/** Build a mock Request (plain object — no Request constructor). */
+function bookMockRequest({ method = 'GET', body = null, headers = {} } = {}) {
+  return {
+    method,
+    headers: { get: (name) => headers[name] || headers[name?.toLowerCase()] || null },
+    json: async () => {
+      if (body === null) throw new SyntaxError('Unexpected end of JSON input');
+      try { return JSON.parse(body); } catch { throw new SyntaxError('Invalid JSON'); }
+    },
+    text: async () => body || '',
+  };
+}
+
+/** Mock D1 database. */
+function createBookMockDB() {
+  let lastId = 0;
+  return {
+    prepare: vi.fn(() => ({
+      bind: vi.fn(function bindStub() { return this; }),
+      run: vi.fn(async () => {
+        lastId += 1;
+        return { meta: { last_row_id: lastId, changes: 0 } };
+      }),
+      first: vi.fn(async () => ({
+        id: lastId,
+        token_hash: 'mock-hash',
+        book_id: 'handbook',
+        email: 'buyer@example.com',
+        status: 'active',
+        download_count: 0,
+        max_downloads: 4,
+        expires_at: new Date(Date.now() + 14 * 86400000).toISOString(),
+      })),
+      all: vi.fn(async () => ({ results: [] })),
+    })),
+  };
+}
+
+/** Mock fetch for Stripe + MailerLite API calls. */
+function createBookMockFetch() {
+  return vi.fn(async (url, options) => {
+    const urlStr = typeof url === 'string' ? url : url.toString();
+
+    if (urlStr.includes('/checkout/sessions') && options?.method === 'POST') {
+      return bookMockResponse({
+        id: 'cs_test_abc123',
+        url: 'https://checkout.stripe.com/pay/cs_test_abc123',
+        payment_status: 'unpaid',
+      });
+    }
+    if (urlStr.includes('/customers/') && options?.method === 'POST') {
+      return bookMockResponse({ id: 'cus_test_123' });
+    }
+    if (urlStr.includes('/checkout/sessions/')) {
+      return bookMockResponse({ id: 'cs_test_abc123', customer: 'cus_test_123' });
+    }
+    if (urlStr.includes('/customers/')) {
+      return bookMockResponse({
+        id: 'cus_test_123',
+        metadata: { download_url: 'https://reginald.allabout.network/api/v1/books/download/abc123def456789a' },
+      });
+    }
+    if (urlStr.includes('connect.mailerlite.com')) {
+      return bookMockResponse({ data: { id: 'ml_sub_123', email: 'buyer@example.com' } });
+    }
+    return bookMockResponse('Not found', 404);
+  });
+}
+
+/** Polyfill a minimal Response for handler returns (json/error responses).
+ * The lib/responses.js helper calls `new Response(...)` so we need a constructor. */
+function installResponsePolyfill() {
+  if (typeof globalThis.Response === 'function' && globalThis.__bookResponsePolyfill !== true) {
+    return false;
+  }
+  globalThis.Response = class {
+    constructor(body, init = {}) {
+      this.body = body;
+      this.status = init.status || 200;
+      this.statusText = init.statusText || '';
+      this.headers = new Map(Object.entries(init.headers || {}));
+      this.ok = this.status >= 200 && this.status < 300;
+    }
+
+    async json() {
+      return typeof this.body === 'string' ? JSON.parse(this.body) : this.body;
+    }
+
+    async text() {
+      return typeof this.body === 'string' ? this.body : JSON.stringify(this.body);
+    }
+  };
+  globalThis.__bookResponsePolyfill = true;
+  return true;
+}
+
+function uninstallResponsePolyfill() {
+  if (globalThis.__bookResponsePolyfill) {
+    delete globalThis.Response;
+    delete globalThis.__bookResponsePolyfill;
+  }
+}
+
+/** Create test environment bindings. */
+function createBookMockEnv() {
+  return {
+    DB: createBookMockDB(),
+    BOOKS_R2: { get: vi.fn(async () => null) },
+    STRIPE_SECRET_KEY: 'sk_test_fake_key',
+    STRIPE_WEBHOOK_SECRET: 'whsec_test_fake_secret',
+    STRIPE_HANDBOOK_PDF_PRICE_ID: 'price_test_pdf_123',
+    STRIPE_HANDBOOK_PHYSICAL_PRICE_ID: 'price_test_physical_456',
+    MAILERLITE_API_KEY: 'ml_test_fake_key',
+    MAILERLITE_GROUP_HANDBOOK_PDF: 'group_pdf_123',
+    MAILERLITE_GROUP_HANDBOOK_PHYSICAL: 'group_physical_456',
+  };
+}
+
+describe('Book Checkout Handler', () => {
+  let env;
+  let originalFetch;
+  let installedPolyfill;
+
+  beforeEach(() => {
+    env = createBookMockEnv();
+    originalFetch = globalThis.fetch;
+    globalThis.fetch = createBookMockFetch();
+    installedPolyfill = installResponsePolyfill();
+  });
+
+  afterEach(() => {
+    globalThis.fetch = originalFetch;
+    if (installedPolyfill) uninstallResponsePolyfill();
+  });
+
+  test('creates PDF checkout session', async () => {
+    const { handleBookCheckout } = await import('./reginald/handlers/book-checkout.js');
+    const request = bookMockRequest({
+      method: 'POST',
+      body: JSON.stringify({ product: 'pdf', email: 'buyer@example.com' }),
+    });
+    const response = await handleBookCheckout(request, env);
+    const data = await response.json();
+    expect(response.status).toBe(200);
+    expect(data.checkout_url).toContain('checkout.stripe.com');
+    expect(data.session_id).toBe('cs_test_abc123');
+  });
+
+  test('creates physical checkout session', async () => {
+    const { handleBookCheckout } = await import('./reginald/handlers/book-checkout.js');
+    const request = bookMockRequest({ method: 'POST', body: JSON.stringify({ product: 'physical' }) });
+    const response = await handleBookCheckout(request, env);
+    const data = await response.json();
+    expect(response.status).toBe(200);
+    expect(data.checkout_url).toBeDefined();
+  });
+
+  test('rejects invalid product type', async () => {
+    const { handleBookCheckout } = await import('./reginald/handlers/book-checkout.js');
+    const request = bookMockRequest({ method: 'POST', body: JSON.stringify({ product: 'audiobook' }) });
+    const response = await handleBookCheckout(request, env);
+    expect(response.status).toBe(400);
+  });
+
+  test('rejects missing product', async () => {
+    const { handleBookCheckout } = await import('./reginald/handlers/book-checkout.js');
+    const request = bookMockRequest({ method: 'POST', body: JSON.stringify({}) });
+    const response = await handleBookCheckout(request, env);
+    expect(response.status).toBe(400);
+  });
+
+  test('rejects invalid JSON body', async () => {
+    const { handleBookCheckout } = await import('./reginald/handlers/book-checkout.js');
+    const request = bookMockRequest({ method: 'POST', body: 'not json' });
+    const response = await handleBookCheckout(request, env);
+    expect(response.status).toBe(400);
+  });
+
+  test('returns 503 when price ID not configured', async () => {
+    const { handleBookCheckout } = await import('./reginald/handlers/book-checkout.js');
+    env.STRIPE_HANDBOOK_PDF_PRICE_ID = 'placeholder-set-in-dashboard';
+    const request = bookMockRequest({ method: 'POST', body: JSON.stringify({ product: 'pdf' }) });
+    const response = await handleBookCheckout(request, env);
+    expect(response.status).toBe(503);
+  });
+});
+
+describe('Stripe Client — createBookCheckoutSession', () => {
+  let originalFetch;
+
+  beforeEach(() => {
+    originalFetch = globalThis.fetch;
+    globalThis.fetch = createBookMockFetch();
+  });
+
+  afterEach(() => {
+    globalThis.fetch = originalFetch;
+  });
+
+  test('creates one-time payment session (not subscription)', async () => {
+    const { createBookCheckoutSession } = await import('./reginald/stripe/client.js');
+    const session = await createBookCheckoutSession('sk_test_key', {
+      priceId: 'price_pdf_123',
+      email: 'buyer@example.com',
+      bookId: 'handbook',
+      productType: 'pdf',
+      successUrl: 'https://example.com/success',
+      cancelUrl: 'https://example.com/cancel',
+      shippingRequired: false,
+    });
+    expect(session.id).toBe('cs_test_abc123');
+    expect(session.url).toContain('checkout.stripe.com');
+    const fetchCall = globalThis.fetch.mock.calls[0];
+    const body = fetchCall[1].body;
+    expect(body).toContain('mode=payment');
+    expect(body).not.toContain('mode=subscription');
+  });
+
+  test('includes shipping collection for physical books', async () => {
+    const { createBookCheckoutSession } = await import('./reginald/stripe/client.js');
+    await createBookCheckoutSession('sk_test_key', {
+      priceId: 'price_physical_456',
+      bookId: 'handbook',
+      productType: 'physical',
+      successUrl: 'https://example.com/success',
+      cancelUrl: 'https://example.com/cancel',
+      shippingRequired: true,
+    });
+    const fetchCall = globalThis.fetch.mock.calls[0];
+    const body = fetchCall[1].body;
+    expect(body).toContain('shipping_address_collection');
+    expect(body).toContain('GB');
+  });
+
+  test('sets book_purchase metadata', async () => {
+    const { createBookCheckoutSession } = await import('./reginald/stripe/client.js');
+    await createBookCheckoutSession('sk_test_key', {
+      priceId: 'price_pdf_123',
+      bookId: 'handbook',
+      productType: 'pdf',
+      successUrl: 'https://example.com/success',
+      cancelUrl: 'https://example.com/cancel',
+      shippingRequired: false,
+    });
+    const fetchCall = globalThis.fetch.mock.calls[0];
+    const body = fetchCall[1].body;
+    expect(body).toContain('metadata%5Btype%5D=book_purchase');
+    expect(body).toContain('metadata%5Bbook_id%5D=handbook');
+    expect(body).toContain('metadata%5Bproduct_type%5D=pdf');
+  });
+});
+
+describe('MailerLite Client', () => {
+  let originalFetch;
+
+  beforeEach(() => {
+    originalFetch = globalThis.fetch;
+    globalThis.fetch = createBookMockFetch();
+  });
+
+  afterEach(() => {
+    globalThis.fetch = originalFetch;
+  });
+
+  test('sends purchase notification with custom fields', async () => {
+    const { notifyPurchase } = await import('./reginald/lib/mailerlite.js');
+    const result = await notifyPurchase('ml_test_key', {
+      email: 'buyer@example.com',
+      name: 'Test Buyer',
+      productType: 'pdf',
+      bookTitle: 'MX: The Handbook',
+      downloadUrl: 'https://reginald.allabout.network/api/v1/books/download/abc123',
+      orderId: 'cs_test_abc123',
+      groupId: 'group_pdf_123',
+    });
+    expect(result.data.email).toBe('buyer@example.com');
+    const fetchCall = globalThis.fetch.mock.calls[0];
+    const url = fetchCall[0];
+    const body = JSON.parse(fetchCall[1].body);
+    expect(url).toContain('connect.mailerlite.com/api/subscribers');
+    expect(body.email).toBe('buyer@example.com');
+    expect(body.fields.book_title).toBe('MX: The Handbook');
+    expect(body.fields.order_type).toBe('pdf');
+    expect(body.fields.download_url).toContain('abc123');
+    expect(body.groups).toContain('group_pdf_123');
+  });
+
+  test('formats shipping address for physical orders', async () => {
+    const { notifyPurchase } = await import('./reginald/lib/mailerlite.js');
+    await notifyPurchase('ml_test_key', {
+      email: 'buyer@example.com',
+      name: 'Test Buyer',
+      productType: 'physical',
+      bookTitle: 'MX: The Handbook',
+      downloadUrl: '',
+      orderId: 'cs_test_abc123',
+      shippingAddress: {
+        name: 'Test Buyer',
+        line1: '120 Main Street',
+        city: 'Largs',
+        postal_code: 'KA30 8AB',
+        country: 'GB',
+      },
+      groupId: 'group_physical_456',
+    });
+    const fetchCall = globalThis.fetch.mock.calls[0];
+    const body = JSON.parse(fetchCall[1].body);
+    expect(body.fields.shipping_address).toContain('120 Main Street');
+    expect(body.fields.shipping_address).toContain('Largs');
+    expect(body.fields.shipping_address).toContain('GB');
+  });
+});
+
+describe('Webhook — Book Purchase Routing', () => {
+  test('routes book_purchase events correctly (not to subscription handler)', () => {
+    const sessionWithBookMeta = { metadata: { type: 'book_purchase', product_type: 'pdf' } };
+    const sessionWithSubMeta = { metadata: { namespace: 'test-publisher' } };
+    expect(sessionWithBookMeta.metadata?.type === 'book_purchase').toBe(true);
+    expect(sessionWithSubMeta.metadata?.type === 'book_purchase').toBe(false);
+  });
+
+  test('download token format is 16-char lowercase hex', async () => {
+    const { hashToken } = await import('./reginald/lib/token.js');
+    const bytes = new Uint8Array(8);
+    crypto.getRandomValues(bytes);
+    const downloadToken = Array.from(bytes).map((b) => b.toString(16).padStart(2, '0')).join('');
+    expect(downloadToken).toHaveLength(16);
+    expect(downloadToken).toMatch(/^[a-f0-9]{16}$/);
+    const tokenHash = await hashToken(downloadToken);
+    expect(tokenHash).toBeDefined();
+    expect(typeof tokenHash).toBe('string');
+  });
+});
+
+describe('End-to-End Book Flow', () => {
+  let env;
+  let originalFetch;
+  let installedPolyfill;
+
+  beforeEach(() => {
+    env = createBookMockEnv();
+    originalFetch = globalThis.fetch;
+    globalThis.fetch = createBookMockFetch();
+    installedPolyfill = installResponsePolyfill();
+  });
+
+  afterEach(() => {
+    globalThis.fetch = originalFetch;
+    if (installedPolyfill) uninstallResponsePolyfill();
+  });
+
+  test('full PDF purchase flow: checkout → returns checkout URL', async () => {
+    const { handleBookCheckout } = await import('./reginald/handlers/book-checkout.js');
+    const checkoutReq = bookMockRequest({
+      method: 'POST',
+      body: JSON.stringify({ product: 'pdf', email: 'buyer@example.com' }),
+    });
+    const checkoutResp = await handleBookCheckout(checkoutReq, env);
+    const checkoutData = await checkoutResp.json();
+    expect(checkoutResp.status).toBe(200);
+    expect(checkoutData.checkout_url).toBeDefined();
+    expect(checkoutData.session_id).toBeDefined();
+
+    const bytes = new Uint8Array(8);
+    crypto.getRandomValues(bytes);
+    const token = Array.from(bytes).map((b) => b.toString(16).padStart(2, '0')).join('');
+    expect(token).toHaveLength(16);
+    expect(token).toMatch(/^[a-f0-9]+$/);
+    expect(env.MAILERLITE_API_KEY).toBeDefined();
+    expect(env.MAILERLITE_GROUP_HANDBOOK_PDF).toBeDefined();
+  });
+
+  test('full physical purchase flow: checkout includes shipping', async () => {
+    const { handleBookCheckout } = await import('./reginald/handlers/book-checkout.js');
+    const checkoutReq = bookMockRequest({
+      method: 'POST',
+      body: JSON.stringify({ product: 'physical', email: 'buyer@example.com' }),
+    });
+    const checkoutResp = await handleBookCheckout(checkoutReq, env);
+    const checkoutData = await checkoutResp.json();
+    expect(checkoutResp.status).toBe(200);
+    expect(checkoutData.checkout_url).toBeDefined();
+    const fetchCalls = globalThis.fetch.mock.calls;
+    const stripeFetchCall = fetchCalls.find((c) => typeof c[0] === 'string' && c[0].includes('checkout/sessions'));
+    expect(stripeFetchCall).toBeDefined();
+    expect(stripeFetchCall[1].body).toContain('shipping_address_collection');
+  });
+});

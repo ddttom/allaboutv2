@@ -19,6 +19,13 @@
 // --- REGINALD API imports (write-side handlers) ---
 import { handleSubscribe } from './reginald/handlers/subscribe.js';
 import { handleStripeWebhook } from './reginald/handlers/stripe-webhook.js';
+import { handleBookCheckout } from './reginald/handlers/book-checkout.js';
+import {
+  handleDownloadPage,
+  handleDownloadFile,
+  handleDownloadStatus,
+  handleGenerateLink,
+} from './reginald/handlers/books.js';
 import { handleRegister } from './reginald/handlers/register.js';
 import { handleStatus } from './reginald/handlers/status.js';
 import { handleTokenRotate } from './reginald/handlers/token-rotate.js';
@@ -711,6 +718,82 @@ const handleRequest = async (request, env, _ctx) => {
       });
     }
 
+    // --- Book purchase routes ---
+
+    // Book checkout (unauthenticated — creates Stripe session).
+    if (method === 'POST' && path === '/api/v1/books/checkout') {
+      return handleBookCheckout(request, env);
+    }
+
+    // Poll for download URL after checkout (used by success page).
+    if (method === 'GET' && path === '/api/v1/books/checkout/download-url') {
+      const sessionId = url.searchParams.get('session_id');
+      if (!sessionId) {
+        return new Response(JSON.stringify({ error: 'session_id required' }), {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+      try {
+        // Retrieve the checkout session from Stripe to get the customer ID.
+        const sessionResp = await fetch(`https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(sessionId)}`, {
+          headers: { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}` },
+        });
+        const sessionData = await sessionResp.json();
+        if (!sessionData.customer) {
+          return new Response(JSON.stringify({ download_url: null }), {
+            headers: { 'Content-Type': 'application/json' },
+          });
+        }
+        // Retrieve customer metadata where webhook stored the download URL.
+        const custResp = await fetch(`https://api.stripe.com/v1/customers/${sessionData.customer}`, {
+          headers: { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}` },
+        });
+        const custData = await custResp.json();
+        return new Response(JSON.stringify({ download_url: custData.metadata?.download_url || null }), {
+          headers: { 'Content-Type': 'application/json' },
+        });
+      } catch {
+        return new Response(JSON.stringify({ download_url: null }), {
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+    }
+
+    // Book purchase success page.
+    if (method === 'GET' && path === '/api/v1/books/checkout/success') {
+      const product = url.searchParams.get('product') || 'pdf';
+      const sessionId = url.searchParams.get('session_id') || '';
+      return new Response(bookSuccessPageHTML(product, sessionId), {
+        headers: { 'Content-Type': 'text/html; charset=utf-8' },
+      });
+    }
+
+    // --- Book download routes ---
+
+    // Download landing page (unauthenticated — token in URL).
+    const downloadPageMatch = path.match(/^\/api\/v1\/books\/download\/([a-f0-9]{16})$/);
+    if (method === 'GET' && downloadPageMatch) {
+      return handleDownloadPage(request, env, downloadPageMatch[1]);
+    }
+
+    // Download PDF file (unauthenticated — token in URL).
+    const downloadFileMatch = path.match(/^\/api\/v1\/books\/download\/([a-f0-9]{16})\/file$/);
+    if (method === 'GET' && downloadFileMatch) {
+      return handleDownloadFile(request, env, downloadFileMatch[1]);
+    }
+
+    // Download link status (unauthenticated — for live UI updates).
+    const downloadStatusMatch = path.match(/^\/api\/v1\/books\/download\/([a-f0-9]{16})\/status$/);
+    if (method === 'GET' && downloadStatusMatch) {
+      return handleDownloadStatus(request, env, downloadStatusMatch[1]);
+    }
+
+    // Generate download link (authenticated).
+    if (method === 'POST' && path === '/api/v1/books/generate-link') {
+      return handleGenerateLink(request, env);
+    }
+
     // All other GET requests → GitHub proxy (read-side: static JSON, index.html, etc.)
     return handleMxSubdomain(request, url, 'reginald', env);
   }
@@ -1086,6 +1169,167 @@ function subscribeCancelledHTML() {
   <p>Your subscription checkout was cancelled. No charges were made.</p>
   <p>You can restart the process at any time by calling <code>POST /api/v1/subscribe</code>.</p>
   <p><a href="https://reginald.allabout.network">Return to MX-Reginald</a></p>
+</body>
+</html>`;
+}
+
+/**
+ * Book purchase success page — MX-compliant.
+ * Polls Stripe customer metadata for the download URL stored by the webhook.
+ */
+function bookSuccessPageHTML(product, sessionId) {
+  const isPdf = product === 'pdf';
+  const pageUrl = 'https://reginald.allabout.network/api/v1/books/checkout/success';
+  return `<!DOCTYPE html>
+<html lang="en-GB" dir="ltr">
+<head>
+  <!-- Layer 1: Document Fundamentals -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Purchase Complete — MX: The Handbook | CogNovaMX</title>
+  <meta name="author" content="Tom Cranstoun">
+  <meta name="description" content="Thank you for purchasing MX: The Handbook.">
+  <link rel="canonical" href="${pageUrl}">
+
+  <!-- Layer 4: Robots and Discovery -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="llms-txt" href="/llms.txt">
+
+  <!-- Layer 5: MX Carrier Tags -->
+  <meta name="mx:status" content="active">
+  <meta name="mx:contentType" content="document">
+  <meta name="mx:content-policy" content="no-extraction">
+
+  <!-- Layer 7: Styles -->
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8f9fa;
+      color: #1a1a2e;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      max-width: 520px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .card-header {
+      background: linear-gradient(135deg, #1a7f37 0%, #2ea043 100%);
+      color: #fff;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .card-header h1 { font-size: 1.5rem; font-weight: 600; margin-bottom: 4px; }
+    .card-header p { font-size: 0.95rem; opacity: 0.9; }
+    .card-body { padding: 32px 24px; }
+    .card-body p { margin-bottom: 1rem; line-height: 1.6; }
+    .download-link {
+      display: block;
+      text-align: center;
+      padding: 16px;
+      margin: 24px 0;
+      background: #1a7f37;
+      color: #fff;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .download-link:hover { background: #158a32; }
+    .info-box {
+      background: #f0f8ff;
+      border: 1px solid #c8e1ff;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+    .card-footer {
+      padding: 16px 24px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #999;
+      border-top: 1px solid #eee;
+    }
+    .card-footer a { color: #666; text-decoration: none; }
+    .loading { color: #666; font-style: italic; }
+  </style>
+</head>
+<body>
+  <main>
+    <article class="card">
+      <header class="card-header">
+        <h1>Thank You</h1>
+        <p>Your purchase of MX: The Handbook is confirmed</p>
+      </header>
+
+      <section class="card-body" aria-label="Purchase details">
+        ${isPdf ? `
+        <p>Your PDF download link is being prepared. You will also receive it by email.</p>
+        <div id="download-area">
+          <p class="loading" aria-live="polite">Preparing your download link&hellip;</p>
+        </div>
+        <div class="info-box" role="note">
+          <p><strong>Download details:</strong> Your link is valid for 4 downloads over 14 days. Save your PDF once downloaded.</p>
+        </div>
+        ` : `
+        <p>Your physical copy of MX: The Handbook will be dispatched to the shipping address you provided.</p>
+        <div class="info-box" role="note">
+          <p><strong>What happens next:</strong> Our printworks team will process your order and send you a shipping confirmation by email.</p>
+        </div>
+        `}
+        <p>A confirmation email has been sent to your email address.</p>
+        <p><a href="https://mx.allabout.network/books/">Browse our other books</a></p>
+      </section>
+
+      <footer class="card-footer">
+        <p>&copy; <a href="https://allabout.network">CogNovaMX Ltd</a> &mdash; Making the web work for everyone and everything that uses it.</p>
+      </footer>
+    </article>
+  </main>
+
+  ${isPdf ? `
+  <script>
+  (function () {
+    // Poll Stripe for the download URL stored in customer metadata by the webhook.
+    var sessionId = '${sessionId}';
+    if (!sessionId) return;
+
+    var area = document.getElementById('download-area');
+    var attempts = 0;
+    var maxAttempts = 20;
+
+    function poll() {
+      attempts++;
+      fetch('/api/v1/books/checkout/download-url?session_id=' + encodeURIComponent(sessionId))
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data.download_url) {
+            area.innerHTML = '<a href="' + data.download_url + '" class="download-link">Download Your PDF</a>';
+          } else if (attempts < maxAttempts) {
+            setTimeout(poll, 2000);
+          } else {
+            area.innerHTML = '<p>Your download link will be sent to your email shortly.</p>';
+          }
+        })
+        .catch(function () {
+          area.innerHTML = '<p>Your download link will be sent to your email shortly.</p>';
+        });
+    }
+
+    setTimeout(poll, 3000);
+  })();
+  </script>
+  ` : ''}
+
 </body>
 </html>`;
 }

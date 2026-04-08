@@ -9,10 +9,12 @@
 
 import { json, error } from '../lib/responses.js';
 import { verifyStripeSignature } from '../middleware/stripe-verify.js';
-import { generateToken } from '../lib/token.js';
+import { generateToken, hashToken } from '../lib/token.js';
+import { notifyPurchase } from '../lib/mailerlite.js';
 import * as publishersDb from '../db/publishers.js';
 import * as tokensDb from '../db/tokens.js';
 import * as subscriptionsDb from '../db/subscriptions.js';
+import * as downloadsDb from '../db/downloads.js';
 import * as audit from '../db/audit.js';
 
 const GRACE_PERIOD_DAYS = 14;
@@ -58,10 +60,17 @@ const EVENT_HANDLERS = {
 };
 
 /**
- * Checkout completed — create publisher, subscription, and token.
+ * Checkout completed — route to publisher subscription or book purchase handler.
  */
 async function handleCheckoutComplete(event, env) {
     const session = event.data.object;
+
+    // Book purchase checkout — generate download link and notify.
+    if (session.metadata?.type === 'book_purchase') {
+        return handleBookPurchase(session, env);
+    }
+
+    // Publisher subscription checkout — existing flow.
     const namespace = session.metadata?.namespace;
     const email = session.customer_details?.email || session.customer_email;
 
@@ -204,6 +213,106 @@ async function handleSubscriptionDeleted(event, env) {
     await audit.log(env.DB, sub.publisher_id, 'subscription_cancelled', {
         stripe_subscription_id: subscription.id,
     });
+}
+
+/**
+ * Handle book purchase — generate download link, notify via MailerLite.
+ * Both PDF and physical orders notify printworks (BCC tom.cranstoun@gmail.com).
+ * PDF orders also generate a download link for the buyer.
+ */
+async function handleBookPurchase(session, env) {
+    const email = session.customer_details?.email || session.customer_email;
+    const name = session.customer_details?.name || '';
+    const bookId = session.metadata?.book_id || 'handbook';
+    const productType = session.metadata?.product_type || 'pdf';
+    const shipping = session.shipping_details?.address || null;
+
+    let downloadUrl = '';
+
+    // Generate download link for PDF purchases.
+    if (productType === 'pdf') {
+        const bytes = new Uint8Array(8);
+        crypto.getRandomValues(bytes);
+        const downloadToken = Array.from(bytes)
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join('');
+
+        const tokenHash = await hashToken(downloadToken);
+
+        const expiresAt = new Date();
+        expiresAt.setDate(expiresAt.getDate() + 14);
+
+        await downloadsDb.create(env.DB, {
+            tokenHash,
+            bookId,
+            email,
+            name,
+            source: 'stripe',
+            stripeSessionId: session.id,
+            maxDownloads: 4,
+            expiresAt: expiresAt.toISOString(),
+        });
+
+        downloadUrl = `https://reginald.allabout.network/api/v1/books/download/${downloadToken}`;
+    }
+
+    await audit.log(env.DB, null, 'book_purchase_completed', {
+        book_id: bookId,
+        product_type: productType,
+        email,
+        stripe_session_id: session.id,
+        has_download_link: !!downloadUrl,
+    });
+
+    // Store download URL in Stripe customer metadata for the success page.
+    if (session.customer) {
+        try {
+            const metaParts = [`metadata[book_id]=${encodeURIComponent(bookId)}`, `metadata[product_type]=${encodeURIComponent(productType)}`];
+            if (downloadUrl) {
+                metaParts.push(`metadata[download_url]=${encodeURIComponent(downloadUrl)}`);
+            }
+            await fetch(`https://api.stripe.com/v1/customers/${session.customer}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${env.STRIPE_SECRET_KEY}`,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: metaParts.join('&'),
+            });
+        } catch (e) {
+            console.error('Failed to store metadata in Stripe customer:', e);
+        }
+    }
+
+    // Notify via MailerLite — adds subscriber to group, triggers automation.
+    // Automation sends buyer email (with download link for PDF) and
+    // printworks notification (BCC tom.cranstoun@gmail.com).
+    if (env.MAILERLITE_API_KEY) {
+        const groupId = productType === 'pdf'
+            ? env.MAILERLITE_GROUP_HANDBOOK_PDF
+            : env.MAILERLITE_GROUP_HANDBOOK_PHYSICAL;
+
+        try {
+            await notifyPurchase(env.MAILERLITE_API_KEY, {
+                email,
+                name,
+                productType,
+                bookTitle: 'MX: The Handbook',
+                downloadUrl,
+                orderId: session.id,
+                shippingAddress: shipping,
+                groupId,
+            });
+            console.log(`MailerLite: subscriber added for ${productType} purchase — ${email}`);
+        } catch (e) {
+            console.error('MailerLite notification failed:', e);
+            // Non-fatal — purchase still succeeded, download link still works.
+        }
+    } else {
+        console.warn('MAILERLITE_API_KEY not set — skipping email notification');
+    }
+
+    console.log(`Book purchase: ${bookId} (${productType}) for ${email} — complete`);
 }
 
 /**

@@ -81,6 +81,39 @@ export async function createCheckoutSession(secretKey, { priceId, namespace, ema
 }
 
 /**
+ * Create a Stripe Checkout session for a one-time book purchase.
+ * @param {string} secretKey
+ * @param {object} options
+ * @returns {Promise<object>} Checkout session
+ */
+export async function createBookCheckoutSession(secretKey, { priceId, email, bookId, productType, successUrl, cancelUrl, shippingRequired }) {
+    const params = {
+        mode: 'payment',
+        'line_items[0][price]': priceId,
+        'line_items[0][quantity]': '1',
+        success_url: successUrl,
+        cancel_url: cancelUrl,
+        'metadata[type]': 'book_purchase',
+        'metadata[book_id]': bookId,
+        'metadata[product_type]': productType,
+    };
+
+    if (email) {
+        params.customer_email = email;
+    }
+
+    if (shippingRequired) {
+        // Stripe requires explicit country list for shipping.
+        const countries = ['GB', 'US', 'CA', 'AU', 'NZ', 'IE', 'DE', 'FR', 'NL', 'BE', 'AT', 'CH', 'SE', 'DK', 'NO', 'FI', 'ES', 'IT', 'PT'];
+        countries.forEach((code, i) => {
+            params[`shipping_address_collection[allowed_countries][${i}]`] = code;
+        });
+    }
+
+    return stripeRequest(secretKey, 'POST', '/checkout/sessions', params);
+}
+
+/**
  * Retrieve a Stripe subscription.
  * @param {string} secretKey
  * @param {string} subscriptionId
