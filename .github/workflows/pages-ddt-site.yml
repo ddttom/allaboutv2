@@ -35,6 +35,9 @@ jobs:
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
+        with:
+          # Auto-enable Pages on first run if not yet enabled in repo settings.
+          enablement: true
 
       - name: Upload ddt-site as Pages artifact
         uses: actions/upload-pages-artifact@v3
