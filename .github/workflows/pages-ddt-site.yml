@@ -1,0 +1,46 @@
+name: Deploy ddt-site to GitHub Pages
+
+# Publishes allaboutv2/ddt-site/ as the site for digitaldomaintechnologies.com.
+# Only the contents of ddt-site/ are uploaded as the Pages artifact, so the
+# rest of the allaboutv2 repo is never exposed via Pages — the EDS site at
+# allabout.network is unaffected (it goes through aem.live + Cloudflare Worker).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ddt-site/**'
+      - '.github/workflows/pages-ddt-site.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Cancel in-flight runs when a new commit lands.
+concurrency:
+  group: pages-ddt-site
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload ddt-site as Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./ddt-site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -21,6 +21,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **ddt-site/ — GitHub Pages landing page for digitaldomaintechnologies.com** (2026-04-08)
+  - `ddt-site/index.html`, `ddt-site/styles.css`, `ddt-site/CNAME` — minimal HTML5 + CSS landing page for Digital Domain Technologies Ltd
+  - `.github/workflows/pages-ddt-site.yml` — GitHub Actions workflow that uploads only the `ddt-site/` folder as the Pages artifact and deploys on every push to main that touches it
+  - The EDS site at `allabout.network` is unaffected — it goes through aem.live and the Cloudflare Worker, not Pages
+  - Manual one-off setup: enable Pages → Source: GitHub Actions in repo settings, then point UK2 DNS A records at GitHub Pages IPs (185.199.108–111.153)
+
 - **ipynb-viewer Help Button in GitHub Overlays**: Added help button (❓) to GitHub markdown overlays for consistent help access across all overlay types (2026-01-16)
   - Help button now appears in both notebook overlays and GitHub markdown overlays
   - Uses correct repository URL extracted from current GitHub URL
