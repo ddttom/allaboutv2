@@ -3,91 +3,210 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Digital Domain Technologies Ltd — Tom Cranstoun</title>
-  <meta name="description" content="Digital Domain Technologies Ltd — Adobe Edge Delivery Services (EDS) consulting, content engineering, and Machine Experience (MX) work by Tom Cranstoun.">
+  <title>Digital Domain Technologies — Tom Cranstoun, The AEM Guy</title>
+  <meta name="description" content="Digital Domain Technologies is the consultancy of Tom Cranstoun — building content systems since 1977, from assembler code through Adobe AEM and Edge Delivery Services to AI-ready Machine Experience.">
   <meta name="author" content="Tom Cranstoun">
 
-  <!-- MX metadata -->
+  <!-- MX carrier metadata -->
   <meta name="mx:status" content="active">
   <meta name="mx:contentType" content="landing-page">
   <meta name="mx:owner" content="Digital Domain Technologies Ltd">
   <meta name="mx:audience" content="humans, machines">
+  <meta name="mx:aiAssistance" content="welcome">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Digital Domain Technologies Ltd — Tom Cranstoun">
-  <meta property="og:description" content="Adobe Edge Delivery Services consulting, content engineering, and Machine Experience work.">
+  <meta property="og:title" content="Digital Domain Technologies — Tom Cranstoun">
+  <meta property="og:description" content="Strategic consultancy on Adobe AEM, Edge Delivery Services, and Machine Experience. Building content systems since 1977.">
   <meta property="og:url" content="https://digitaldomaintechnologies.com/">
   <meta property="og:locale" content="en_GB">
 
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@ddttomtom">
+  <meta name="twitter:title" content="Digital Domain Technologies — Tom Cranstoun">
+  <meta name="twitter:description" content="Strategic consultancy on Adobe AEM, Edge Delivery Services, and Machine Experience. Building content systems since 1977.">
+
   <link rel="canonical" href="https://digitaldomaintechnologies.com/">
   <link rel="stylesheet" href="/styles.css">
+  <meta name="theme-color" content="#0a1628">
 
+  <!-- Schema.org: the person, the company, and the consultancy services -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Digital Domain Technologies Ltd",
-    "url": "https://digitaldomaintechnologies.com",
-    "founder": {
-      "@type": "Person",
-      "name": "Tom Cranstoun",
-      "jobTitle": "Director",
-      "sameAs": [
-        "https://twitter.com/ddttomtom",
-        "https://allabout.network"
-      ]
-    },
-    "email": "tom.cranstoun@gmail.com",
-    "areaServed": "Worldwide",
-    "knowsAbout": [
-      "Adobe Edge Delivery Services",
-      "Content engineering",
-      "Machine Experience (MX)",
-      "Cloudflare Workers"
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://digitaldomaintechnologies.com/#org",
+        "name": "Digital Domain Technologies Ltd",
+        "url": "https://digitaldomaintechnologies.com",
+        "description": "Independent consultancy specialising in Adobe Experience Manager, Edge Delivery Services, and Machine Experience strategy.",
+        "founder": { "@id": "https://digitaldomaintechnologies.com/#tom" },
+        "areaServed": "Worldwide",
+        "knowsAbout": [
+          "Adobe Experience Manager",
+          "Adobe Edge Delivery Services",
+          "Machine Experience",
+          "Content systems architecture",
+          "AI agent readiness",
+          "Cloudflare Workers"
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://digitaldomaintechnologies.com/#tom",
+        "name": "Tom Cranstoun",
+        "jobTitle": "The Machine Experience Authority",
+        "alternateName": "The AEM Guy",
+        "description": "Independent CMS architect building content systems since 1977. From assembler code and Superbase to Adobe AEM, Edge Delivery Services, and Machine Experience.",
+        "worksFor": { "@id": "https://digitaldomaintechnologies.com/#org" },
+        "email": "info@cognovamx.com",
+        "sameAs": [
+          "https://www.linkedin.com/in/tom-cranstoun/",
+          "https://twitter.com/ddttomtom",
+          "https://allabout.network",
+          "https://mx.allabout.network/blog/about.tom.cranstoun.html"
+        ],
+        "knowsAbout": [
+          "Adobe Experience Manager",
+          "Edge Delivery Services",
+          "Machine Experience",
+          "AI agent compatibility",
+          "Content systems",
+          "Universal design"
+        ]
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://digitaldomaintechnologies.com/#services",
+        "name": "Digital Domain Technologies — Strategic Advisory",
+        "provider": { "@id": "https://digitaldomaintechnologies.com/#org" },
+        "serviceType": [
+          "Plan Reviews",
+          "Architecture Strategy",
+          "AI Integration",
+          "Team Mentoring",
+          "Audit"
+        ]
+      }
     ]
   }
   </script>
 </head>
 <body>
-  <header>
-    <h1>Digital Domain Technologies Ltd</h1>
-    <p class="tagline">Content engineering and machine experience.</p>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Digital Domain Technologies Ltd</p>
+      <h1>Building content systems since 1977.</h1>
+      <p class="lede">
+        From assembler code and Superbase, through the BBC newsroom system and a decade of Adobe Experience Manager, to Edge Delivery Services and the new world of AI-ready Machine Experience — Tom Cranstoun, The AEM Guy.
+      </p>
+      <nav class="hero-cta" aria-label="Primary actions">
+        <a href="#services" class="btn btn-primary">Strategic advisory</a>
+        <a href="https://mx.allabout.network/" class="btn btn-secondary">Machine Experience work</a>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <section id="about">
-      <h2>About</h2>
+  <main id="main">
+
+    <section class="section" id="about" aria-labelledby="about-heading">
+      <h2 id="about-heading">About</h2>
       <p>
-        Digital Domain Technologies Ltd is the consultancy of <strong>Tom Cranstoun</strong>,
-        specialising in Adobe Edge Delivery Services (EDS), content engineering, and
-        Machine Experience (MX) — the practice of making the web work for AI agents as
-        well as humans.
+        Digital Domain Technologies is the engagement vehicle for <strong>Tom Cranstoun</strong> — independent CMS architect, member of Boye &amp; Company's CMS Experts Group, and the person known in CMS circles as <em>The AEM Guy</em>.
+      </p>
+      <p>
+        I have been solving content distribution problems across every generation of technology since 1977. I co-authored <strong>Superbase</strong>, a database and content management system that predated the CMS category. I worked on the <strong>BBC's electronic newsroom system</strong>. I spent over a decade with Adobe Experience Manager, and recent years with Edge Delivery Services.
+      </p>
+      <p>
+        My current focus is <a href="https://mx.allabout.network/">Machine Experience (MX)</a> — the practice of adding metadata and explicit structure so AI agents do not have to guess. Working with EDS taught me that the patterns which break for AI agents (hidden state, ephemeral notifications, incomplete information) also break for humans with disabilities, cognitive load, or non-ideal conditions. <strong>Design for machines, benefit humans.</strong>
       </p>
     </section>
 
-    <section id="work">
-      <h2>What I do</h2>
-      <ul>
-        <li>Adobe Edge Delivery Services architecture, blocks, and migrations</li>
-        <li>Cloudflare Worker development for content delivery and metadata enhancement</li>
-        <li>Content modelling and Content-Driven Development (CDD)</li>
-        <li>Machine Experience audits, governance, and remediation</li>
+    <section class="section" id="track-record" aria-labelledby="track-record-heading">
+      <h2 id="track-record-heading">Track record</h2>
+      <p>Strategic content architecture for organisations including:</p>
+      <ul class="client-list">
+        <li>BBC News — electronic newsroom</li>
+        <li>Twitter (now X) — AEM strategy</li>
+        <li>Nissan-Renault — global rollout, hundreds of websites</li>
+        <li>EE — UK telecom AEM strategy</li>
+        <li>Ford</li>
+        <li>MediaMonks</li>
+      </ul>
+      <p>
+        I have established AEM practices from scratch. Strategic decisions have prevented platform crashes and delivered significant cost savings. Teams gain capabilities to maintain and evolve solutions independently.
+      </p>
+    </section>
+
+    <section class="section" id="services" aria-labelledby="services-heading">
+      <h2 id="services-heading">What I offer</h2>
+      <p>I take on interim consultancy roles and advisory engagements where strategic experience makes the difference. I am not seeking full-time positions.</p>
+      <dl class="services">
+        <dt>Plan reviews</dt>
+        <dd>Identifying gaps between intention and reality before implementation begins, particularly around agent compatibility.</dd>
+
+        <dt>Architecture strategy</dt>
+        <dd>Frameworks that balance corporate control with team flexibility while ensuring agent-ready foundations.</dd>
+
+        <dt>AI integration</dt>
+        <dd>Ensuring automation enhances rather than complicates workflows, with focus on clarity infrastructure — explicit state, persistent feedback, complete information.</dd>
+
+        <dt>Team mentoring</dt>
+        <dd>Building strategic thinking capabilities that outlast any single project.</dd>
+
+        <dt>Audit</dt>
+        <dd>Where things went well, and where they could be improved — with concrete next steps.</dd>
+      </dl>
+    </section>
+
+    <section class="section" id="mx" aria-labelledby="mx-heading">
+      <h2 id="mx-heading">Machine Experience</h2>
+      <p>
+        Machine Experience is the strategic foundation for everything I now build. It is published under the CogNovaMX Ltd brand and lives at <a href="https://mx.allabout.network/">mx.allabout.network</a>.
+      </p>
+      <ul class="resource-list">
+        <li>
+          <strong><a href="https://mx.allabout.network/books/handbook.html">MX: The Handbook</a></strong> —
+          the practical implementation guide. Published 2026.
+        </li>
+        <li>
+          <strong>MX: The Protocols</strong> —
+          the comprehensive reference. Publishing 1 July 2026.
+        </li>
+        <li>
+          <strong><a href="https://mx.allabout.network/blog/">MX blog</a></strong> —
+          ongoing essays on AI agent compatibility, semantic structure, and content systems.
+        </li>
+        <li>
+          <strong><a href="https://github.com/Digital-Domain-Technologies-Ltd/MX-Gathering">MX-Gathering</a></strong> —
+          open-source community resources and the MX manifesto.
+        </li>
       </ul>
     </section>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <ul>
-        <li>Email: <a href="mailto:tom.cranstoun@gmail.com">tom.cranstoun@gmail.com</a></li>
+    <section class="section" id="contact" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Contact</h2>
+      <p>
+        I work exclusively through Digital Domain Technologies, focusing on engagements where experience and objectivity matter most. If you are evaluating Edge Delivery Services for agent readiness, planning major AEM changes in an AI-native world, or need architectural guidance that prevents problems before they are expensive to solve — let's talk.
+      </p>
+      <ul class="contact-list">
+        <li>Email: <a href="mailto:info@cognovamx.com">info@cognovamx.com</a></li>
+        <li>LinkedIn: <a href="https://www.linkedin.com/in/tom-cranstoun/" rel="me">tom-cranstoun</a></li>
         <li>X / Twitter: <a href="https://twitter.com/ddttomtom" rel="me">@ddttomtom</a></li>
         <li>MX work: <a href="https://allabout.network">allabout.network</a></li>
+        <li>Professional profile: <a href="https://mx.allabout.network/blog/about.tom.cranstoun.html">mx.allabout.network</a></li>
       </ul>
     </section>
+
   </main>
 
-  <footer>
+  <footer class="site-footer">
     <p>&copy; Digital Domain Technologies Ltd. Registered in England.</p>
+    <p>Published in collaboration with CogNovaMX Ltd — making the web work for everyone and everything that uses it.</p>
   </footer>
 </body>
 </html>
