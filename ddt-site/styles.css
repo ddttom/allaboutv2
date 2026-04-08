@@ -257,6 +257,25 @@ ol:last-child {
   padding: 0.375rem 0;
 }
 
+/* Postal address */
+.postal-address {
+  display: block;
+  margin: 1.5rem 0 0;
+  padding: 1rem 1.125rem;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  font-style: normal;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.postal-address strong {
+  display: block;
+  color: var(--fg);
+  margin-bottom: 0.25rem;
+}
+
 /* Footer */
 .site-footer {
   max-width: var(--max-width);
