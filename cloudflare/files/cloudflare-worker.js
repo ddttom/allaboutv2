@@ -187,6 +187,75 @@ export const formatISO8601Date = (dateString) => {
 };
 
 /**
+ * Wrap raw llms.txt content as a minimal HTML document so Common Crawl
+ * (which only ingests HTML) can index the content. Preserves the original
+ * text verbatim inside <pre>; no transformation of the text body.
+ *
+ * Pure function — testable in Node without the Workers runtime.
+ *
+ * @param {string} text - Raw llms.txt content
+ * @param {string} [requestUrl] - Request URL (used for canonical link and host fallback)
+ * @returns {string} Complete HTML document
+ */
+export const wrapLlmsTxtAsHtml = (text, requestUrl) => {
+  const safe = (text || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  // Title: first "# heading" line if present, else hostname-based fallback
+  const firstHeading = (text || '').split('\n').find((l) => l.startsWith('# '));
+
+  let host = '';
+  let canonical = '';
+  try {
+    const u = new URL(requestUrl);
+    host = u.hostname;
+    canonical = u.toString();
+  } catch (_) {
+    // requestUrl is optional — tests may call without one
+  }
+
+  const title = firstHeading
+    ? firstHeading.replace(/^#\s+/, '').trim()
+    : `llms.txt${host ? ` — ${host}` : ''}`;
+
+  const jsonLdObj = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description: 'Agent directory file (llms.txt) served as HTML for crawler ingestion.',
+    inLanguage: 'en-GB',
+  };
+  if (canonical) jsonLdObj.url = canonical;
+  const jsonLd = JSON.stringify(jsonLdObj);
+
+  const canonicalTag = canonical ? `<link rel="canonical" href="${canonical}">\n` : '';
+  const descHost = host || 'this site';
+
+  return `<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${title}</title>
+<meta name="description" content="Agent directory file for ${descHost} — published as HTML so AI training crawlers can ingest it.">
+<meta name="robots" content="index, follow">
+<meta name="mx:status" content="active">
+<meta name="mx:contentType" content="agent-directory">
+<meta name="mx:audience" content="machines, humans">
+${canonicalTag}<script type="application/ld+json">${jsonLd}</script>
+<style>body{font:14px/1.5 ui-monospace,Menlo,Consolas,monospace;max-width:80ch;margin:2rem auto;padding:0 1rem;color:#1a1a1a}pre.llms-txt{white-space:pre-wrap;word-wrap:break-word}</style>
+</head>
+<body>
+<main>
+<pre class="llms-txt">${safe}</pre>
+</main>
+</body>
+</html>`;
+};
+
+/**
 
 * Builds JSON-LD object from article metadata
 * @param {Object} article - Article metadata
@@ -593,10 +662,20 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
     woff2: 'font/woff2',
     pdf: 'application/pdf',
   };
-  // Filename-specific overrides (llms.txt served as HTML so browsers render it)
+  // Filename-specific overrides — wrap llms.txt in real HTML so Common Crawl
+  // (which only ingests HTML) can index the content. Matches at any depth via
+  // basename check, so /llms.txt, /blog/llms.txt, /services/llms.txt all work.
   const filename = subPath.split('/').pop();
-  if (filename === 'llms.txt') {
+  if (filename === 'llms.txt' && resp.ok) {
+    const original = await resp.text();
+    const wrapped = wrapLlmsTxtAsHtml(original, url.toString());
+    resp = new Response(wrapped, {
+      status: resp.status,
+      statusText: resp.statusText,
+      headers: resp.headers,
+    });
     resp.headers.set('Content-Type', 'text/html; charset=utf-8');
+    resp.headers.delete('Content-Length');
   } else if (contentTypes[ext]) {
     const ct = contentTypes[ext];
     const isText = ct.startsWith('text/') || ct === 'application/json' || ct === 'application/xml' || ct === 'application/javascript';
@@ -1086,9 +1165,18 @@ const handleRequest = async (request, env, _ctx) => {
   // Add worker version header
   resp.headers.set('cfw', WORKER_VERSION);
 
-  // llms.txt served as HTML so browsers render it
-  if (url.pathname.endsWith('/llms.txt') || url.pathname === '/llms.txt') {
+  // llms.txt wrapped in real HTML so Common Crawl ingests it.
+  // Matches root /llms.txt and any nested path like /blog/llms.txt.
+  if ((url.pathname.endsWith('/llms.txt') || url.pathname === '/llms.txt') && resp.ok) {
+    const original = await resp.text();
+    const wrapped = wrapLlmsTxtAsHtml(original, url.toString());
+    resp = new Response(wrapped, {
+      status: resp.status,
+      statusText: resp.statusText,
+      headers: resp.headers,
+    });
     resp.headers.set('Content-Type', 'text/html; charset=utf-8');
+    resp.headers.delete('Content-Length');
   }
 
   return resp;

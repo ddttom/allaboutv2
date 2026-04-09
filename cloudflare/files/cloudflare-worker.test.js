@@ -38,6 +38,7 @@ import worker, {
   findLanguageSite,
   shouldLanguageRedirect,
   categoriseAgent,
+  wrapLlmsTxtAsHtml,
   WORKER_VERSION,
   PICTURE_PLACEHOLDER_CONFIG,
 } from './cloudflare-worker.js';
@@ -349,6 +350,115 @@ describe('formatISO8601Date - 2-digit year support', () => {
     expect(formatISO8601Date('25/December/99')).toBe('1999-12-25');
     expect(formatISO8601Date('1/jan/00')).toBe('2000-01-01');
     expect(formatISO8601Date('dec/12/25')).toBe('2025-12-12'); // US format with slashes
+  });
+});
+
+// Test suite for wrapLlmsTxtAsHtml
+describe('wrapLlmsTxtAsHtml', () => {
+  const sample = `# mx.allabout.network — MX
+
+> MX is the practice of adding metadata so AI agents don't have to guess.
+
+## Books
+- MX: The Intro
+- MX: The Handbook
+`;
+
+  test('returns a string starting with <!DOCTYPE html>', () => {
+    const out = wrapLlmsTxtAsHtml(sample, 'https://mx.allabout.network/llms.txt');
+    expect(typeof out).toBe('string');
+    expect(out.startsWith('<!DOCTYPE html>')).toBe(true);
+  });
+
+  test('preserves original text verbatim inside <pre class="llms-txt">', () => {
+    const out = wrapLlmsTxtAsHtml(sample, 'https://mx.allabout.network/llms.txt');
+    const match = out.match(/<pre class="llms-txt">([\s\S]*?)<\/pre>/);
+    expect(match).not.toBeNull();
+    // Decode the HTML entities the function inserts and confirm it matches input
+    const decoded = match[1]
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&');
+    expect(decoded).toBe(sample);
+  });
+
+  test('escapes HTML special chars (<, >, &) in input', () => {
+    const dangerous = '<script>alert("xss")</script> & more';
+    const out = wrapLlmsTxtAsHtml(dangerous, 'https://example.com/llms.txt');
+    expect(out).not.toContain('<script>alert');
+    expect(out).toContain('&lt;script&gt;');
+    expect(out).toContain('&amp; more');
+  });
+
+  test('extracts title from first "# heading" line when present', () => {
+    const out = wrapLlmsTxtAsHtml(sample, 'https://mx.allabout.network/llms.txt');
+    expect(out).toContain('<title>mx.allabout.network — MX</title>');
+  });
+
+  test('falls back to "llms.txt — {hostname}" when no heading and a URL is supplied', () => {
+    const out = wrapLlmsTxtAsHtml('no heading here\njust some text', 'https://example.com/llms.txt');
+    expect(out).toContain('<title>llms.txt — example.com</title>');
+  });
+
+  test('falls back to "llms.txt" when no heading and no URL', () => {
+    const out = wrapLlmsTxtAsHtml('no heading here');
+    expect(out).toContain('<title>llms.txt</title>');
+  });
+
+  test('sets <link rel="canonical"> when URL is supplied', () => {
+    const out = wrapLlmsTxtAsHtml(sample, 'https://mx.allabout.network/blog/llms.txt');
+    expect(out).toContain('<link rel="canonical" href="https://mx.allabout.network/blog/llms.txt">');
+  });
+
+  test('omits <link rel="canonical"> when no URL is supplied', () => {
+    const out = wrapLlmsTxtAsHtml(sample);
+    expect(out).not.toContain('rel="canonical"');
+  });
+
+  test('contains the four required machine-readable meta signals', () => {
+    const out = wrapLlmsTxtAsHtml(sample, 'https://mx.allabout.network/llms.txt');
+    expect(out).toContain('<meta name="robots" content="index, follow">');
+    expect(out).toContain('<meta name="mx:status" content="active">');
+    expect(out).toContain('<meta name="mx:contentType" content="agent-directory">');
+    expect(out).toContain('<meta name="mx:audience" content="machines, humans">');
+  });
+
+  test('contains a valid application/ld+json WebPage block', () => {
+    const out = wrapLlmsTxtAsHtml(sample, 'https://mx.allabout.network/llms.txt');
+    const match = out.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+    expect(match).not.toBeNull();
+    const parsed = JSON.parse(match[1]);
+    expect(parsed['@context']).toBe('https://schema.org');
+    expect(parsed['@type']).toBe('WebPage');
+    expect(parsed.name).toBe('mx.allabout.network — MX');
+    expect(parsed.url).toBe('https://mx.allabout.network/llms.txt');
+    expect(parsed.inLanguage).toBe('en-GB');
+  });
+
+  test('handles empty input gracefully', () => {
+    const out = wrapLlmsTxtAsHtml('', 'https://example.com/llms.txt');
+    expect(out.startsWith('<!DOCTYPE html>')).toBe(true);
+    expect(out).toContain('<pre class="llms-txt"></pre>');
+  });
+
+  test('handles undefined input gracefully', () => {
+    const out = wrapLlmsTxtAsHtml(undefined, 'https://example.com/llms.txt');
+    expect(out.startsWith('<!DOCTYPE html>')).toBe(true);
+    expect(out).toContain('<pre class="llms-txt"></pre>');
+  });
+
+  test('preserves multi-line whitespace verbatim inside <pre>', () => {
+    const multiline = 'line one\nline two\n\nline four after blank\n';
+    const out = wrapLlmsTxtAsHtml(multiline, 'https://example.com/llms.txt');
+    const match = out.match(/<pre class="llms-txt">([\s\S]*?)<\/pre>/);
+    expect(match[1]).toBe(multiline);
+  });
+
+  test('extracts only the FIRST # heading (ignores subsequent ones)', () => {
+    const text = '# First Title\n## Sub heading\n# Second Title\n';
+    const out = wrapLlmsTxtAsHtml(text, 'https://example.com/llms.txt');
+    expect(out).toContain('<title>First Title</title>');
+    expect(out).not.toContain('<title>Second Title</title>');
   });
 });
 
