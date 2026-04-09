@@ -415,6 +415,13 @@ describe('wrapLlmsTxtAsHtml', () => {
     expect(out).not.toContain('rel="canonical"');
   });
 
+  test('strips query string and fragment from canonical', () => {
+    const out = wrapLlmsTxtAsHtml(sample, 'https://mx.allabout.network/llms.txt?cb=12345#frag');
+    expect(out).toContain('<link rel="canonical" href="https://mx.allabout.network/llms.txt">');
+    expect(out).not.toContain('cb=12345');
+    expect(out).not.toContain('#frag');
+  });
+
   test('contains the four required machine-readable meta signals', () => {
     const out = wrapLlmsTxtAsHtml(sample, 'https://mx.allabout.network/llms.txt');
     expect(out).toContain('<meta name="robots" content="index, follow">');

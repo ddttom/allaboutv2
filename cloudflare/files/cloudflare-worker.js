@@ -211,6 +211,9 @@ export const wrapLlmsTxtAsHtml = (text, requestUrl) => {
   try {
     const u = new URL(requestUrl);
     host = u.hostname;
+    // Strip query string and fragment — canonical should be the bare resource URL
+    u.search = '';
+    u.hash = '';
     canonical = u.toString();
   } catch (_) {
     // requestUrl is optional — tests may call without one
@@ -1167,9 +1170,13 @@ const handleRequest = async (request, env, _ctx) => {
 
   // llms.txt wrapped in real HTML so Common Crawl ingests it.
   // Matches root /llms.txt and any nested path like /blog/llms.txt.
+  // url.hostname has been rewritten to ORIGIN_HOSTNAME above — use the
+  // captured publicHostname so canonical/title reflect the public domain.
   if ((url.pathname.endsWith('/llms.txt') || url.pathname === '/llms.txt') && resp.ok) {
     const original = await resp.text();
-    const wrapped = wrapLlmsTxtAsHtml(original, url.toString());
+    const publicUrl = new URL(url);
+    publicUrl.hostname = publicHostname;
+    const wrapped = wrapLlmsTxtAsHtml(original, publicUrl.toString());
     resp = new Response(wrapped, {
       status: resp.status,
       statusText: resp.statusText,
