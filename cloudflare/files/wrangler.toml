@@ -15,10 +15,14 @@ PUSH_INVALIDATION = "enabled"
 STRIPE_HANDBOOK_PDF_PRICE_ID = "price_1TK2SLL6f3HzLE8radZkqGgd"
 STRIPE_HANDBOOK_PHYSICAL_UK_PRICE_ID = "price_1TK2clL6f3HzLE8rdKHlx2xC"
 STRIPE_HANDBOOK_PHYSICAL_WORLD_PRICE_ID = "price_1TK2WgL6f3HzLE8r5KgE4n1w"
-# MailerLite groups still pending — checkout will succeed but the post-purchase
-# notification fails gracefully until these are populated.
-MAILERLITE_GROUP_HANDBOOK_PDF = "placeholder-set-in-dashboard"
-MAILERLITE_GROUP_HANDBOOK_PHYSICAL = "placeholder-set-in-dashboard"
+# MailerLite group IDs (account: tom.cranstoun@gmail.com,
+# Digital Domain Technologies Ltd, Free plan).
+# Both physical_uk and physical_world products use the same physical group;
+# the worker code branches on productType === 'pdf', everything else routes
+# to the physical group. The buyer's shipping country is in the address field
+# so the printworks can route accordingly.
+MAILERLITE_GROUP_HANDBOOK_PDF = "184247221067187481"
+MAILERLITE_GROUP_HANDBOOK_PHYSICAL = "184247454217012721"
 
 # Secrets (set via `wrangler secret put` — never commit values):
 #   STRIPE_SECRET_KEY        — sk_test_... or sk_live_...
