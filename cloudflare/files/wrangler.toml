@@ -9,9 +9,14 @@ MX_OUTPUTS_REPO_PATH = "/Digital-Domain-Technologies-Ltd/MX-outputs/main"
 PUSH_INVALIDATION = "enabled"
 
 # Book sales — Stripe price IDs and MailerLite group IDs.
-# Replace placeholders with real values from Stripe Dashboard / MailerLite.
-STRIPE_HANDBOOK_PDF_PRICE_ID = "placeholder-set-in-dashboard"
-STRIPE_HANDBOOK_PHYSICAL_PRICE_ID = "placeholder-set-in-dashboard"
+# Three handbook products: PDF download (£25), UK-only print (£35),
+# worldwide print (£40). Stripe price IDs are test-mode values; replace
+# with live-mode IDs when going live.
+STRIPE_HANDBOOK_PDF_PRICE_ID = "price_1TK2SLL6f3HzLE8radZkqGgd"
+STRIPE_HANDBOOK_PHYSICAL_UK_PRICE_ID = "price_1TK2clL6f3HzLE8rdKHlx2xC"
+STRIPE_HANDBOOK_PHYSICAL_WORLD_PRICE_ID = "price_1TK2WgL6f3HzLE8r5KgE4n1w"
+# MailerLite groups still pending — checkout will succeed but the post-purchase
+# notification fails gracefully until these are populated.
 MAILERLITE_GROUP_HANDBOOK_PDF = "placeholder-set-in-dashboard"
 MAILERLITE_GROUP_HANDBOOK_PHYSICAL = "placeholder-set-in-dashboard"
 
@@ -24,6 +29,12 @@ MAILERLITE_GROUP_HANDBOOK_PHYSICAL = "placeholder-set-in-dashboard"
 [[r2_buckets]]
 binding = "BOOKS_R2"
 bucket_name = "mx-books"
+
+# D1 database for reginald publishers, tokens, audit log, and book download links.
+[[d1_databases]]
+binding = "DB"
+database_name = "reginald-auth"
+database_id = "c705c861-4d8f-454f-b53e-f8fa0c2d214a"
 
 [[routes]]
 pattern = "allabout.network/*"
@@ -41,4 +52,10 @@ zone_name = "allabout.network"
 pattern = "mx.allabout.network/*"
 zone_name = "allabout.network"
 
-# reginald.allabout.network now handled by reginald-api Worker (mx-reginald/worker/)
+# reginald.allabout.network — book sales API + reginald publisher API.
+# The deprecated mx-reginald/worker has its route binding commented out
+# to prevent conflicts; this worker (cool-cell-c75e) is now the canonical
+# handler for all reginald.allabout.network/* traffic.
+[[routes]]
+pattern = "reginald.allabout.network/*"
+zone_name = "allabout.network"

@@ -35,6 +35,7 @@ import { handlePublisherCogs } from './reginald/handlers/publisher-cogs.js';
 import * as subscriptionsDb from './reginald/db/subscriptions.js';
 import * as publishersDb from './reginald/db/publishers.js';
 import * as audit from './reginald/db/audit.js';
+import * as downloadsDb from './reginald/db/downloads.js';
 import { runAlivenessChecks } from './reginald/lib/aliveness.js';
 
 // Worker version - hardcoded for compatibility
@@ -726,6 +727,8 @@ const handleRequest = async (request, env, _ctx) => {
     }
 
     // Poll for download URL after checkout (used by success page).
+    // Reads from our own D1 by Stripe session ID — no Stripe round-trip,
+    // works even when no Customer object exists on the session.
     if (method === 'GET' && path === '/api/v1/books/checkout/download-url') {
       const sessionId = url.searchParams.get('session_id');
       if (!sessionId) {
@@ -735,22 +738,11 @@ const handleRequest = async (request, env, _ctx) => {
         });
       }
       try {
-        // Retrieve the checkout session from Stripe to get the customer ID.
-        const sessionResp = await fetch(`https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(sessionId)}`, {
-          headers: { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}` },
-        });
-        const sessionData = await sessionResp.json();
-        if (!sessionData.customer) {
-          return new Response(JSON.stringify({ download_url: null }), {
-            headers: { 'Content-Type': 'application/json' },
-          });
-        }
-        // Retrieve customer metadata where webhook stored the download URL.
-        const custResp = await fetch(`https://api.stripe.com/v1/customers/${sessionData.customer}`, {
-          headers: { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}` },
-        });
-        const custData = await custResp.json();
-        return new Response(JSON.stringify({ download_url: custData.metadata?.download_url || null }), {
+        const row = await downloadsDb.findBySessionId(env.DB, sessionId);
+        const downloadUrl = (row && row.download_token)
+          ? `https://reginald.allabout.network/api/v1/books/download/${row.download_token}`
+          : null;
+        return new Response(JSON.stringify({ download_url: downloadUrl }), {
           headers: { 'Content-Type': 'application/json' },
         });
       } catch {

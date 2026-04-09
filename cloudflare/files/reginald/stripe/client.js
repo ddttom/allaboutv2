@@ -86,7 +86,7 @@ export async function createCheckoutSession(secretKey, { priceId, namespace, ema
  * @param {object} options
  * @returns {Promise<object>} Checkout session
  */
-export async function createBookCheckoutSession(secretKey, { priceId, email, bookId, productType, successUrl, cancelUrl, shippingRequired }) {
+export async function createBookCheckoutSession(secretKey, { priceId, email, bookId, productType, successUrl, cancelUrl, shippingCountries }) {
     const params = {
         mode: 'payment',
         'line_items[0][price]': priceId,
@@ -102,10 +102,10 @@ export async function createBookCheckoutSession(secretKey, { priceId, email, boo
         params.customer_email = email;
     }
 
-    if (shippingRequired) {
-        // Stripe requires explicit country list for shipping.
-        const countries = ['GB', 'US', 'CA', 'AU', 'NZ', 'IE', 'DE', 'FR', 'NL', 'BE', 'AT', 'CH', 'SE', 'DK', 'NO', 'FI', 'ES', 'IT', 'PT'];
-        countries.forEach((code, i) => {
+    // shippingCountries: array of ISO codes for the allowed shipping zones, or
+    // null for digital products. Stripe requires an explicit country list.
+    if (Array.isArray(shippingCountries) && shippingCountries.length > 0) {
+        shippingCountries.forEach((code, i) => {
             params[`shipping_address_collection[allowed_countries][${i}]`] = code;
         });
     }

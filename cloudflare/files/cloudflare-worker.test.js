@@ -1590,7 +1590,8 @@ function createBookMockEnv() {
     STRIPE_SECRET_KEY: 'sk_test_fake_key',
     STRIPE_WEBHOOK_SECRET: 'whsec_test_fake_secret',
     STRIPE_HANDBOOK_PDF_PRICE_ID: 'price_test_pdf_123',
-    STRIPE_HANDBOOK_PHYSICAL_PRICE_ID: 'price_test_physical_456',
+    STRIPE_HANDBOOK_PHYSICAL_UK_PRICE_ID: 'price_test_physical_uk_789',
+    STRIPE_HANDBOOK_PHYSICAL_WORLD_PRICE_ID: 'price_test_physical_world_456',
     MAILERLITE_API_KEY: 'ml_test_fake_key',
     MAILERLITE_GROUP_HANDBOOK_PDF: 'group_pdf_123',
     MAILERLITE_GROUP_HANDBOOK_PHYSICAL: 'group_physical_456',
@@ -1627,13 +1628,30 @@ describe('Book Checkout Handler', () => {
     expect(data.session_id).toBe('cs_test_abc123');
   });
 
-  test('creates physical checkout session', async () => {
+  test('creates physical_world checkout session', async () => {
     const { handleBookCheckout } = await import('./reginald/handlers/book-checkout.js');
-    const request = bookMockRequest({ method: 'POST', body: JSON.stringify({ product: 'physical' }) });
+    const request = bookMockRequest({ method: 'POST', body: JSON.stringify({ product: 'physical_world' }) });
     const response = await handleBookCheckout(request, env);
     const data = await response.json();
     expect(response.status).toBe(200);
     expect(data.checkout_url).toBeDefined();
+  });
+
+  test('creates physical_uk checkout session restricted to GB', async () => {
+    const { handleBookCheckout } = await import('./reginald/handlers/book-checkout.js');
+    const request = bookMockRequest({ method: 'POST', body: JSON.stringify({ product: 'physical_uk' }) });
+    const response = await handleBookCheckout(request, env);
+    const data = await response.json();
+    expect(response.status).toBe(200);
+    expect(data.checkout_url).toBeDefined();
+    // Verify GB-only shipping was set on the underlying Stripe call.
+    const stripeCall = globalThis.fetch.mock.calls.find((c) => typeof c[0] === 'string' && c[0].includes('checkout/sessions'));
+    const body = stripeCall[1].body;
+    expect(body).toContain('shipping_address_collection');
+    expect(body).toContain('GB');
+    // physical_uk should not include US/CA/etc
+    expect(body).not.toContain('%5D=US');
+    expect(body).not.toContain('%5D=CA');
   });
 
   test('rejects invalid product type', async () => {
@@ -1687,7 +1705,7 @@ describe('Stripe Client — createBookCheckoutSession', () => {
       productType: 'pdf',
       successUrl: 'https://example.com/success',
       cancelUrl: 'https://example.com/cancel',
-      shippingRequired: false,
+      shippingCountries: null,
     });
     expect(session.id).toBe('cs_test_abc123');
     expect(session.url).toContain('checkout.stripe.com');
@@ -1695,22 +1713,45 @@ describe('Stripe Client — createBookCheckoutSession', () => {
     const body = fetchCall[1].body;
     expect(body).toContain('mode=payment');
     expect(body).not.toContain('mode=subscription');
+    // No shipping for digital products.
+    expect(body).not.toContain('shipping_address_collection');
   });
 
-  test('includes shipping collection for physical books', async () => {
+  test('includes worldwide shipping collection for physical_world', async () => {
     const { createBookCheckoutSession } = await import('./reginald/stripe/client.js');
     await createBookCheckoutSession('sk_test_key', {
-      priceId: 'price_physical_456',
+      priceId: 'price_physical_world_456',
       bookId: 'handbook',
-      productType: 'physical',
+      productType: 'physical_world',
       successUrl: 'https://example.com/success',
       cancelUrl: 'https://example.com/cancel',
-      shippingRequired: true,
+      shippingCountries: ['GB', 'US', 'CA', 'AU', 'DE', 'FR'],
     });
     const fetchCall = globalThis.fetch.mock.calls[0];
     const body = fetchCall[1].body;
     expect(body).toContain('shipping_address_collection');
     expect(body).toContain('GB');
+    expect(body).toContain('US');
+    expect(body).toContain('CA');
+  });
+
+  test('restricts shipping to GB only for physical_uk', async () => {
+    const { createBookCheckoutSession } = await import('./reginald/stripe/client.js');
+    await createBookCheckoutSession('sk_test_key', {
+      priceId: 'price_physical_uk_789',
+      bookId: 'handbook',
+      productType: 'physical_uk',
+      successUrl: 'https://example.com/success',
+      cancelUrl: 'https://example.com/cancel',
+      shippingCountries: ['GB'],
+    });
+    const fetchCall = globalThis.fetch.mock.calls[0];
+    const body = fetchCall[1].body;
+    expect(body).toContain('shipping_address_collection');
+    expect(body).toContain('GB');
+    // Should not include other countries.
+    expect(body).not.toContain('%5D=US');
+    expect(body).not.toContain('%5D=DE');
   });
 
   test('sets book_purchase metadata', async () => {
@@ -1721,7 +1762,7 @@ describe('Stripe Client — createBookCheckoutSession', () => {
       productType: 'pdf',
       successUrl: 'https://example.com/success',
       cancelUrl: 'https://example.com/cancel',
-      shippingRequired: false,
+      shippingCountries: null,
     });
     const fetchCall = globalThis.fetch.mock.calls[0];
     const body = fetchCall[1].body;
@@ -1771,7 +1812,7 @@ describe('MailerLite Client', () => {
     await notifyPurchase('ml_test_key', {
       email: 'buyer@example.com',
       name: 'Test Buyer',
-      productType: 'physical',
+      productType: 'physical_uk',
       bookTitle: 'MX: The Handbook',
       downloadUrl: '',
       orderId: 'cs_test_abc123',
@@ -1851,11 +1892,11 @@ describe('End-to-End Book Flow', () => {
     expect(env.MAILERLITE_GROUP_HANDBOOK_PDF).toBeDefined();
   });
 
-  test('full physical purchase flow: checkout includes shipping', async () => {
+  test('full physical_world purchase flow: checkout includes worldwide shipping', async () => {
     const { handleBookCheckout } = await import('./reginald/handlers/book-checkout.js');
     const checkoutReq = bookMockRequest({
       method: 'POST',
-      body: JSON.stringify({ product: 'physical', email: 'buyer@example.com' }),
+      body: JSON.stringify({ product: 'physical_world', email: 'buyer@example.com' }),
     });
     const checkoutResp = await handleBookCheckout(checkoutReq, env);
     const checkoutData = await checkoutResp.json();
@@ -1865,5 +1906,7 @@ describe('End-to-End Book Flow', () => {
     const stripeFetchCall = fetchCalls.find((c) => typeof c[0] === 'string' && c[0].includes('checkout/sessions'));
     expect(stripeFetchCall).toBeDefined();
     expect(stripeFetchCall[1].body).toContain('shipping_address_collection');
+    expect(stripeFetchCall[1].body).toContain('GB');
+    expect(stripeFetchCall[1].body).toContain('US');
   });
 });

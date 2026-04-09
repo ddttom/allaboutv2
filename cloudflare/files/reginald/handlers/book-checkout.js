@@ -10,14 +10,24 @@ import { json, error } from '../lib/responses.js';
 import { createBookCheckoutSession } from '../stripe/client.js';
 import * as audit from '../db/audit.js';
 
+// Worldwide shipping zones for the physical_world product.
+const WORLD_SHIPPING_COUNTRIES = [
+    'GB', 'US', 'CA', 'AU', 'NZ', 'IE', 'DE', 'FR', 'NL', 'BE',
+    'AT', 'CH', 'SE', 'DK', 'NO', 'FI', 'ES', 'IT', 'PT',
+];
+
 const VALID_PRODUCTS = {
     pdf: {
         envKey: 'STRIPE_HANDBOOK_PDF_PRICE_ID',
-        shippingRequired: false,
+        shippingCountries: null,
     },
-    physical: {
-        envKey: 'STRIPE_HANDBOOK_PHYSICAL_PRICE_ID',
-        shippingRequired: true,
+    physical_uk: {
+        envKey: 'STRIPE_HANDBOOK_PHYSICAL_UK_PRICE_ID',
+        shippingCountries: ['GB'],
+    },
+    physical_world: {
+        envKey: 'STRIPE_HANDBOOK_PHYSICAL_WORLD_PRICE_ID',
+        shippingCountries: WORLD_SHIPPING_COUNTRIES,
     },
 };
 
@@ -25,7 +35,10 @@ const VALID_PRODUCTS = {
  * Handle POST /api/v1/books/checkout
  * Creates a Stripe Checkout session for a handbook purchase.
  *
- * Body: { product: "pdf" | "physical", email? }
+ * Body: { product: "pdf" | "physical_uk" | "physical_world", email? }
+ *   pdf            — instant download, no shipping
+ *   physical_uk    — printed copy, UK-only shipping
+ *   physical_world — printed copy, worldwide shipping
  */
 export async function handleBookCheckout(request, env) {
     let body;
@@ -37,7 +50,7 @@ export async function handleBookCheckout(request, env) {
 
     const product = body.product;
     if (!product || !VALID_PRODUCTS[product]) {
-        return error('product must be "pdf" or "physical"', 400);
+        return error('product must be "pdf", "physical_uk", or "physical_world"', 400);
     }
 
     const config = VALID_PRODUCTS[product];
@@ -59,7 +72,7 @@ export async function handleBookCheckout(request, env) {
             productType: product,
             successUrl,
             cancelUrl,
-            shippingRequired: config.shippingRequired,
+            shippingCountries: config.shippingCountries,
         });
 
         await audit.log(env.DB, null, 'book_checkout_created', {

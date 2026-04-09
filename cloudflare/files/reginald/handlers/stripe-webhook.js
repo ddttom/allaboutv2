@@ -242,8 +242,13 @@ async function handleBookPurchase(session, env) {
         const expiresAt = new Date();
         expiresAt.setDate(expiresAt.getDate() + 14);
 
+        // Store both the hash (for the download landing page lookup) and the
+        // plaintext token (for the success-page polling endpoint to read by
+        // session_id). Plaintext can be cleared/nulled after MailerLite
+        // delivery is wired up.
         await downloadsDb.create(env.DB, {
             tokenHash,
+            downloadToken,
             bookId,
             email,
             name,
@@ -263,26 +268,6 @@ async function handleBookPurchase(session, env) {
         stripe_session_id: session.id,
         has_download_link: !!downloadUrl,
     });
-
-    // Store download URL in Stripe customer metadata for the success page.
-    if (session.customer) {
-        try {
-            const metaParts = [`metadata[book_id]=${encodeURIComponent(bookId)}`, `metadata[product_type]=${encodeURIComponent(productType)}`];
-            if (downloadUrl) {
-                metaParts.push(`metadata[download_url]=${encodeURIComponent(downloadUrl)}`);
-            }
-            await fetch(`https://api.stripe.com/v1/customers/${session.customer}`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${env.STRIPE_SECRET_KEY}`,
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: metaParts.join('&'),
-            });
-        } catch (e) {
-            console.error('Failed to store metadata in Stripe customer:', e);
-        }
-    }
 
     // Notify via MailerLite — adds subscriber to group, triggers automation.
     // Automation sends buyer email (with download link for PDF) and

@@ -21,6 +21,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Book sales LIVE on cool-cell-c75e Cloudflare Worker** (2026-04-09)
+  - Three Stripe products configured: Handbook PDF £25, Print UK £35, Print Worldwide £40
+  - Three-product worker refactor: `VALID_PRODUCTS` map with per-product `shippingCountries` arrays (`pdf` → null, `physical_uk` → `['GB']`, `physical_world` → 19-country worldwide list)
+  - `createBookCheckoutSession` parameter renamed `shippingRequired` (boolean) → `shippingCountries` (array), enabling per-product shipping zones
+  - D1 binding `DB → reginald-auth` added to `wrangler.toml`
+  - Route `reginald.allabout.network/*` now owned by `cool-cell-c75e` (atomic-switched from deprecated `reginald-api` worker; 46 existing download_links rows preserved)
+  - **Migration 004** (`migration-003-book-downloads.sql` followed by `migration-004-download-token-plaintext.sql`): adds `download_token` plaintext column to `download_links` table, enabling the success-page polling endpoint to read directly from D1 by `stripe_session_id` without round-tripping through Stripe Customer metadata
+  - **Architectural fix:** webhook handler no longer writes download URL to Stripe customer metadata (which silently failed when no Customer object existed); polling endpoint now reads from D1 directly. Stripe is now strictly a payment processor, not a key-value store.
+  - 146 / 146 vitest tests passing (was 144, +2 for `physical_uk` shipping isolation)
+  - End-to-end verified: real Stripe test session → webhook → D1 token → R2 PDF → 4,532,489 bytes of `application/pdf` delivered
+
 - **ddt-site/ — GitHub Pages landing page for digitaldomaintechnologies.com** (2026-04-08)
   - `ddt-site/index.html`, `ddt-site/styles.css`, `ddt-site/CNAME` — minimal HTML5 + CSS landing page for Digital Domain Technologies Ltd
   - `.github/workflows/pages-ddt-site.yml` — GitHub Actions workflow that uploads only the `ddt-site/` folder as the Pages artifact and deploys on every push to main that touches it

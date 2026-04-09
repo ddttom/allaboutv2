@@ -16,10 +16,11 @@
 export async function create(db, data) {
     const result = await db.prepare(
         `INSERT INTO download_links
-         (token_hash, book_id, email, name, source, stripe_session_id, max_downloads, expires_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+         (token_hash, download_token, book_id, email, name, source, stripe_session_id, max_downloads, expires_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
     ).bind(
         data.tokenHash,
+        data.downloadToken || null,
         data.bookId || 'handbook',
         data.email || null,
         data.name || null,
@@ -43,6 +44,20 @@ export async function findByHash(db, tokenHash) {
     return db.prepare(
         'SELECT * FROM download_links WHERE token_hash = ? AND status = ?'
     ).bind(tokenHash, 'active').first();
+}
+
+/**
+ * Find an active download link by Stripe checkout session ID.
+ * Used by the success-page polling endpoint to retrieve the download URL
+ * after the webhook has minted the token.
+ * @param {D1Database} db
+ * @param {string} sessionId
+ * @returns {Promise<object|null>}
+ */
+export async function findBySessionId(db, sessionId) {
+    return db.prepare(
+        'SELECT * FROM download_links WHERE stripe_session_id = ? AND status = ? ORDER BY id DESC LIMIT 1'
+    ).bind(sessionId, 'active').first();
 }
 
 /**
