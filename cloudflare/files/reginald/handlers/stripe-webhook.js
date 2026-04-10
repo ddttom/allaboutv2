@@ -304,6 +304,7 @@ async function handleBookPurchase(session, env) {
     };
 
     let emailSent = false;
+    let emailError = null;
 
     // Primary: Resend (direct transactional email).
     if (env.RESEND_API_KEY) {
@@ -316,6 +317,7 @@ async function handleBookPurchase(session, env) {
             console.log(`Resend: email sent for ${productType} purchase — ${email}`);
             emailSent = true;
         } catch (e) {
+            emailError = `Resend: ${e.message}`;
             console.error('Resend notification failed:', e);
         }
     }
@@ -333,13 +335,21 @@ async function handleBookPurchase(session, env) {
             });
             console.log(`MailerLite: subscriber added for ${productType} purchase — ${email}`);
             emailSent = true;
+            emailError = null;
         } catch (e) {
+            emailError = `${emailError || ''}; MailerLite: ${e.message}`;
             console.error('MailerLite notification failed:', e);
         }
     }
 
     if (!emailSent) {
         console.warn('No email provider available — buyer will use success page download link');
+        await audit.log(env.DB, null, 'email_notification_failed', {
+            email,
+            product_type: productType,
+            stripe_session_id: session.id,
+            error: emailError || 'No email provider configured',
+        });
     }
 
     console.log(`Book purchase: ${bookId} (${productType}) for ${email} — complete`);
