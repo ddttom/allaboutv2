@@ -1,0 +1,48 @@
+# Digital Domain Technologies Ltd
+
+> The consultancy of Tom Cranstoun — The MX Guy. Building content systems since 1977.
+
+Digital Domain Technologies Ltd is an independent consultancy specialising in Adobe Experience Manager, Edge Delivery Services, and Machine Experience strategy. The company trades as CogNovaMX for Machine Experience work.
+
+## About Tom Cranstoun
+
+Tom Cranstoun is an independent CMS architect, member of Boye & Company's CMS Experts Group. Known as "The AEM Guy" for over a decade, now "The MX Guy". Career spans from assembler code and Superbase (1977), through the BBC electronic newsroom system, a decade of Adobe Experience Manager, Edge Delivery Services, and Machine Experience.
+
+## Machine Experience (MX)
+
+MX is the practice of adding metadata and explicit structure to internet assets so AI agents do not have to guess. When AI agents encounter incomplete information, they hallucinate. MX makes the gaps disappear.
+
+MX work is published under CogNovaMX at https://mx.allabout.network/
+
+## Services
+
+- Plan reviews — identifying gaps before implementation begins
+- Architecture strategy — frameworks balancing control with flexibility
+- AI integration — ensuring automation enhances workflows
+- Team mentoring — building strategic thinking capabilities
+- Audit — what went well and what could be improved
+
+## Books
+
+- MX: The Handbook — practical implementation guide (published April 2026): https://mx.allabout.network/books/handbook.html
+- MX: The Protocols — comprehensive reference (publishing July 2026): https://mx.allabout.network/books/protocols.html
+
+## Track Record
+
+Strategic content architecture for BBC News, Twitter (now X), Nissan-Renault, EE, Ford, MediaMonks.
+
+## Contact
+
+- Email: tom.cranstoun@gmail.com
+- Phone: +44 7575 295845
+- LinkedIn: https://www.linkedin.com/in/tom-cranstoun/
+- X: https://twitter.com/ddttomtom
+- MX work: https://allabout.network
+- Professional profile: https://mx.allabout.network/blog/about.tom.cranstoun.html
+
+## Links
+
+- Main site: https://digitaldomaintechnologies.com/
+- MX site: https://mx.allabout.network/
+- MX blog: https://mx.allabout.network/blog/
+- The Gathering (MX community): https://tg.community
