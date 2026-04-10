@@ -6,6 +6,7 @@ modified: 2026-03-02
 version: "1.0"
 
 mx:
+  type: eds-block
   status: draft
   category: eds-block
   tags: [eds, block, header, navigation]

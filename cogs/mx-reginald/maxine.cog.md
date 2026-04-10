@@ -6,6 +6,7 @@ modified: 2026-03-02
 version: "1.0"
 
 mx:
+  type: info-doc
   status: draft
   category: identity
   tags: [maxine, identity, ai-partner, mx-reginald]

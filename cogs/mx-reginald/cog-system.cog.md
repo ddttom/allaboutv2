@@ -6,6 +6,7 @@ modified: 2026-03-02
 version: "1.0"
 
 mx:
+  type: info-doc
   status: draft
   category: specification
   tags: [cog, system, specification, mx-reginald]

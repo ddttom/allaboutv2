@@ -9,6 +9,7 @@ modified: 2026-02-25
 author: Media219 Ltd
 
 mx:
+  type: organization-cog
   maintainer: tony@media219.com
   license: proprietary
   status: published
