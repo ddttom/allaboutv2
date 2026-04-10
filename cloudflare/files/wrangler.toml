@@ -24,10 +24,14 @@ STRIPE_HANDBOOK_PHYSICAL_WORLD_PRICE_ID = "price_1TK2WgL6f3HzLE8r5KgE4n1w"
 MAILERLITE_GROUP_HANDBOOK_PDF = "184247221067187481"
 MAILERLITE_GROUP_HANDBOOK_PHYSICAL = "184247454217012721"
 
+# Resend (primary email provider — transactional purchase emails).
+RESEND_FROM = "CogNovaMX <info@cognovamx.com>"
+
 # Secrets (set via `wrangler secret put` — never commit values):
+#   RESEND_API_KEY           — Resend API key (primary email provider)
 #   STRIPE_SECRET_KEY        — sk_test_... or sk_live_...
 #   STRIPE_WEBHOOK_SECRET    — whsec_... from Stripe Dashboard webhook endpoint
-#   MAILERLITE_API_KEY       — MailerLite Developer API token
+#   MAILERLITE_API_KEY       — MailerLite Developer API token (secondary fallback)
 
 # R2 bucket for book PDFs (handbook, protocols, introduction).
 [[r2_buckets]]

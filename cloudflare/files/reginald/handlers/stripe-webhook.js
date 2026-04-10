@@ -10,6 +10,7 @@
 import { json, error } from '../lib/responses.js';
 import { verifyStripeSignature } from '../middleware/stripe-verify.js';
 import { generateToken, hashToken } from '../lib/token.js';
+import { sendPurchaseEmail } from '../lib/resend.js';
 import { notifyPurchase } from '../lib/mailerlite.js';
 import * as publishersDb from '../db/publishers.js';
 import * as tokensDb from '../db/tokens.js';
@@ -290,32 +291,55 @@ async function handleBookPurchase(session, env) {
         has_download_link: !!downloadUrl,
     });
 
-    // Notify via MailerLite — adds subscriber to group, triggers automation.
-    // Automation sends buyer email (with download link for PDF) and
-    // printworks notification (BCC tom.cranstoun@gmail.com).
-    if (env.MAILERLITE_API_KEY) {
+    // Send purchase confirmation email. Resend is primary (transactional),
+    // MailerLite is secondary fallback (subscriber/automation model).
+    const notificationParams = {
+        email,
+        name,
+        productType,
+        bookTitle: 'MX: The Handbook',
+        downloadUrl,
+        orderId: session.id,
+        shippingAddress: shipping,
+    };
+
+    let emailSent = false;
+
+    // Primary: Resend (direct transactional email).
+    if (env.RESEND_API_KEY) {
+        try {
+            await sendPurchaseEmail(env.RESEND_API_KEY, {
+                ...notificationParams,
+                from: env.RESEND_FROM || 'CogNovaMX <info@cognovamx.com>',
+                bcc: 'tom.cranstoun@gmail.com',
+            });
+            console.log(`Resend: email sent for ${productType} purchase — ${email}`);
+            emailSent = true;
+        } catch (e) {
+            console.error('Resend notification failed:', e);
+        }
+    }
+
+    // Secondary fallback: MailerLite (subscriber + automation).
+    if (!emailSent && env.MAILERLITE_API_KEY) {
         const groupId = productType === 'pdf'
             ? env.MAILERLITE_GROUP_HANDBOOK_PDF
             : env.MAILERLITE_GROUP_HANDBOOK_PHYSICAL;
 
         try {
             await notifyPurchase(env.MAILERLITE_API_KEY, {
-                email,
-                name,
-                productType,
-                bookTitle: 'MX: The Handbook',
-                downloadUrl,
-                orderId: session.id,
-                shippingAddress: shipping,
+                ...notificationParams,
                 groupId,
             });
             console.log(`MailerLite: subscriber added for ${productType} purchase — ${email}`);
+            emailSent = true;
         } catch (e) {
             console.error('MailerLite notification failed:', e);
-            // Non-fatal — purchase still succeeded, download link still works.
         }
-    } else {
-        console.warn('MAILERLITE_API_KEY not set — skipping email notification');
+    }
+
+    if (!emailSent) {
+        console.warn('No email provider available — buyer will use success page download link');
     }
 
     console.log(`Book purchase: ${bookId} (${productType}) for ${email} — complete`);
