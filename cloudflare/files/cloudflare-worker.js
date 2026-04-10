@@ -614,14 +614,20 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   // reginald.allabout.network/api/* → raw.githubusercontent.com/{repo}/main/reginald/api/*
   // content.allabout.network/cogs/* → raw.githubusercontent.com/{repo}/main/content/cogs/*
 
-  // Resolve directory-style paths to index.html (GitHub raw doesn't serve directory listings)
+  // Redirect directory-style paths without trailing slash to add one
+  // (prevents relative links resolving against wrong base path)
   let subPath = url.pathname;
+  if (subPath !== '/' && !subPath.endsWith('/') && !subPath.includes('.')) {
+    const redirectUrl = new URL(url);
+    redirectUrl.pathname = subPath + '/';
+    return Response.redirect(redirectUrl.toString(), 301);
+  }
+
+  // Resolve directory-style paths to index.html (GitHub raw doesn't serve directory listings)
   if (subPath === '/' || subPath === '') {
     subPath = '/index.html';
   } else if (subPath.endsWith('/')) {
     subPath += 'index.html';
-  } else if (!subPath.includes('.')) {
-    subPath += '/index.html';
   }
 
   const repoPath = env.MX_OUTPUTS_REPO_PATH || '/Digital-Domain-Technologies-Ltd/MX-outputs/main';
