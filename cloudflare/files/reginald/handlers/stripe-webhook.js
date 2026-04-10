@@ -15,6 +15,7 @@ import * as publishersDb from '../db/publishers.js';
 import * as tokensDb from '../db/tokens.js';
 import * as subscriptionsDb from '../db/subscriptions.js';
 import * as downloadsDb from '../db/downloads.js';
+import { getCheckoutSession } from '../stripe/client.js';
 import * as audit from '../db/audit.js';
 
 const GRACE_PERIOD_DAYS = 14;
@@ -225,7 +226,27 @@ async function handleBookPurchase(session, env) {
     const name = session.customer_details?.name || '';
     const bookId = session.metadata?.book_id || 'handbook';
     const productType = session.metadata?.product_type || 'pdf';
-    const shipping = session.shipping_details?.address || null;
+
+    // Stripe moved shipping data to collected_information.shipping_details
+    // in recent API versions. Check all three possible locations.
+    let shipping = session.collected_information?.shipping_details?.address
+        || session.shipping_details?.address
+        || session.shipping?.address
+        || null;
+
+    // Webhook payload often omits collected_information. For physical orders,
+    // retrieve the full session from Stripe to guarantee we have the address.
+    if (!shipping && productType !== 'pdf' && env.STRIPE_SECRET_KEY) {
+        try {
+            const fullSession = await getCheckoutSession(env.STRIPE_SECRET_KEY, session.id);
+            shipping = fullSession.collected_information?.shipping_details?.address
+                || fullSession.shipping_details?.address
+                || fullSession.shipping?.address
+                || null;
+        } catch (e) {
+            console.error('Failed to retrieve full session for shipping address:', e);
+        }
+    }
 
     let downloadUrl = '';
 

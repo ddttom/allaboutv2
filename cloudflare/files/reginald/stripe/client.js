@@ -114,6 +114,16 @@ export async function createBookCheckoutSession(secretKey, { priceId, email, boo
 }
 
 /**
+ * Retrieve a Stripe Checkout session (with shipping details expanded).
+ * @param {string} secretKey
+ * @param {string} sessionId
+ * @returns {Promise<object>}
+ */
+export async function getCheckoutSession(secretKey, sessionId) {
+    return stripeRequest(secretKey, 'GET', `/checkout/sessions/${sessionId}`);
+}
+
+/**
  * Retrieve a Stripe subscription.
  * @param {string} secretKey
  * @param {string} subscriptionId
