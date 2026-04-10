@@ -33,6 +33,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Generate llms.html from llms.txt
+        run: node .github/scripts/wrap-llms-txt.cjs ddt-site
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
