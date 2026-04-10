@@ -12,9 +12,9 @@ PUSH_INVALIDATION = "enabled"
 # Three handbook products: PDF download (£25), UK-only print (£35),
 # worldwide print (£40). Stripe price IDs are test-mode values; replace
 # with live-mode IDs when going live.
-STRIPE_HANDBOOK_PDF_PRICE_ID = "price_1TK2SLL6f3HzLE8radZkqGgd"
-STRIPE_HANDBOOK_PHYSICAL_UK_PRICE_ID = "price_1TK2clL6f3HzLE8rdKHlx2xC"
-STRIPE_HANDBOOK_PHYSICAL_WORLD_PRICE_ID = "price_1TK2WgL6f3HzLE8r5KgE4n1w"
+STRIPE_HANDBOOK_PDF_PRICE_ID = "price_1TKcy5L6f3HzLE8reW5zq4nD"
+STRIPE_HANDBOOK_PHYSICAL_UK_PRICE_ID = "price_1TKcz5L6f3HzLE8r84hAMiqK"
+STRIPE_HANDBOOK_PHYSICAL_WORLD_PRICE_ID = "price_1TKczrL6f3HzLE8rKhP2sSUF"
 # MailerLite group IDs (account: tom.cranstoun@gmail.com,
 # Digital Domain Technologies Ltd, Free plan).
 # Both physical_uk and physical_world products use the same physical group;
