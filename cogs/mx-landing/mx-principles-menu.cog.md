@@ -6,7 +6,6 @@ modified: 2026-03-02
 version: "1.0"
 
 mx:
-  type: landing-page
   status: draft
   category: landing-page
   tags: [mx, principles, navigation, landing]
