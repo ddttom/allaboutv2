@@ -219,10 +219,9 @@ async function handleSubscriptionDeleted(event, env) {
 
 /**
  * Handle book purchase — generate download link, notify via Resend.
- * Physical orders BCC info@cognovamx.com, info@surprint.com (the print
- * supplier), and tom.cranstoun@gmail.com. PDF orders BCC info@cognovamx.com
- * and Tom (no supplier — nothing to print). PDF orders also generate a
- * download link.
+ * Physical orders BCC info@cognovamx.com and info@surprint.com (the print
+ * supplier). PDF orders BCC info@cognovamx.com only. PDF orders also
+ * generate a download link.
  */
 async function handleBookPurchase(session, env) {
     const email = session.customer_details?.email || session.customer_email;
@@ -312,11 +311,9 @@ async function handleBookPurchase(session, env) {
     const BCC_PHYSICAL = [
         'info@cognovamx.com',
         'info@surprint.com',
-        'tom.cranstoun@gmail.com',
     ];
     const BCC_PDF = [
         'info@cognovamx.com',
-        'tom.cranstoun@gmail.com',
     ];
     const bccList = productType === 'pdf' ? BCC_PDF : BCC_PHYSICAL;
 
