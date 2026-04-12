@@ -38,6 +38,11 @@ import worker, {
   findLanguageSite,
   shouldLanguageRedirect,
   categoriseAgent,
+  categoriseReferer,
+  isAiAgent,
+  shouldSkipAiCapture,
+  buildAiVisitRow,
+  isAttributionHost,
   wrapLlmsTxtAsHtml,
   WORKER_VERSION,
   PICTURE_PLACEHOLDER_CONFIG,
@@ -1543,13 +1548,33 @@ describe('categoriseAgent', () => {
     expect(categoriseAgent('PerplexityBot/1.0')).toBe('perplexity');
   });
 
-  test('identifies GPTBot', () => {
-    expect(categoriseAgent('GPTBot/1.0')).toBe('gptbot');
+  test('identifies GPTBot as chatgpt family', () => {
+    expect(categoriseAgent('GPTBot/1.0')).toBe('chatgpt');
+    expect(categoriseAgent('OAI-SearchBot/1.0')).toBe('chatgpt');
   });
 
   test('identifies Googlebot', () => {
     expect(categoriseAgent('Googlebot/2.1')).toBe('googlebot');
-    expect(categoriseAgent('Google-Extended')).toBe('googlebot');
+  });
+
+  test('identifies Google-Extended as gemini family', () => {
+    expect(categoriseAgent('Mozilla/5.0 (compatible; Google-Extended/1.0)')).toBe('gemini');
+  });
+
+  test('identifies Copilot', () => {
+    expect(categoriseAgent('Mozilla/5.0 (compatible; Copilot/1.0)')).toBe('copilot');
+  });
+
+  test('identifies PerplexityBot variants', () => {
+    expect(categoriseAgent('PerplexityBot/1.0')).toBe('perplexity');
+  });
+
+  test('identifies newer crawlers', () => {
+    expect(categoriseAgent('Applebot-Extended/1.0')).toBe('applebot');
+    expect(categoriseAgent('meta-externalagent/1.0')).toBe('meta-ai');
+    expect(categoriseAgent('Bytespider')).toBe('bytespider');
+    expect(categoriseAgent('CCBot/2.0')).toBe('ccbot');
+    expect(categoriseAgent('Amazonbot/0.1')).toBe('amazonbot');
   });
 
   test('identifies Bingbot', () => {
@@ -2025,5 +2050,167 @@ describe('End-to-End Book Flow', () => {
     expect(stripeFetchCall[1].body).toContain('shipping_address_collection');
     expect(stripeFetchCall[1].body).toContain('GB');
     expect(stripeFetchCall[1].body).toContain('US');
+  });
+});
+
+// ============================================================
+// AI Attribution — pure function tests
+// ============================================================
+describe('isAiAgent', () => {
+  test('classifies AI categories as AI', () => {
+    ['chatgpt', 'claude', 'perplexity', 'gemini', 'copilot', 'applebot', 'meta-ai', 'bytespider', 'ccbot', 'amazonbot'].forEach((k) => {
+      expect(isAiAgent(k)).toBe(true);
+    });
+  });
+  test('classifies non-AI categories as not AI', () => {
+    ['browser', 'googlebot', 'bingbot', 'bot', 'unknown'].forEach((k) => {
+      expect(isAiAgent(k)).toBe(false);
+    });
+  });
+});
+
+describe('categoriseReferer', () => {
+  test('returns null for missing or malformed referer', () => {
+    expect(categoriseReferer(null)).toBeNull();
+    expect(categoriseReferer('')).toBeNull();
+    expect(categoriseReferer('not a url')).toBeNull();
+  });
+
+  test('matches ChatGPT surfaces', () => {
+    expect(categoriseReferer('https://chat.openai.com/c/abc')).toEqual({
+      source: 'chat.openai.com', agentKey: 'chatgpt',
+    });
+    expect(categoriseReferer('https://chatgpt.com/share/xyz')).toEqual({
+      source: 'chatgpt.com', agentKey: 'chatgpt',
+    });
+  });
+
+  test('matches Perplexity, Gemini, Copilot, Claude', () => {
+    expect(categoriseReferer('https://www.perplexity.ai/search?q=x').agentKey).toBe('perplexity');
+    expect(categoriseReferer('https://gemini.google.com/app').agentKey).toBe('gemini');
+    expect(categoriseReferer('https://copilot.microsoft.com/').agentKey).toBe('copilot');
+    expect(categoriseReferer('https://claude.ai/chat/123').agentKey).toBe('claude');
+  });
+
+  test('returns null for non-AI referrers', () => {
+    expect(categoriseReferer('https://www.google.com/search?q=x')).toBeNull();
+    expect(categoriseReferer('https://twitter.com/foo')).toBeNull();
+    expect(categoriseReferer('https://allabout.network/some/page')).toBeNull();
+  });
+});
+
+describe('shouldSkipAiCapture', () => {
+  test('skips asset extensions', () => {
+    ['/foo.css', '/bar.js', '/img.png', '/photo.jpg', '/data.json', '/styles.map', '/robots.txt', '/sitemap.xml'].forEach((p) => {
+      expect(shouldSkipAiCapture(p)).toBe(true);
+    });
+  });
+  test('skips internal paths', () => {
+    expect(shouldSkipAiCapture('/.rum/abc')).toBe(true);
+    expect(shouldSkipAiCapture('/favicon.ico')).toBe(true);
+    expect(shouldSkipAiCapture('/api/v1/ai-attribution')).toBe(true);
+  });
+  test('captures HTML pages', () => {
+    expect(shouldSkipAiCapture('/')).toBe(false);
+    expect(shouldSkipAiCapture('/blog/post')).toBe(false);
+    expect(shouldSkipAiCapture('/books/handbook.html')).toBe(false);
+  });
+});
+
+describe('buildAiVisitRow', () => {
+  const base = {
+    hostname: 'allabout.network',
+    pathname: '/blog/post',
+    country: 'GB',
+    status: 200,
+    now: 1700000000000,
+  };
+
+  test('returns crawler row for AI User-Agent', () => {
+    const row = buildAiVisitRow({ ...base, userAgent: 'ClaudeBot/1.0', referer: null });
+    expect(row).toMatchObject({
+      hostname: 'allabout.network',
+      path: '/blog/post',
+      eventType: 'crawler',
+      agentKey: 'claude',
+      ts: 1700000000000,
+    });
+  });
+
+  test('returns referral row for AI referer', () => {
+    const row = buildAiVisitRow({
+      ...base,
+      userAgent: 'Mozilla/5.0 Chrome/120',
+      referer: 'https://chatgpt.com/c/abc',
+    });
+    expect(row.eventType).toBe('referral');
+    expect(row.agentKey).toBe('chatgpt');
+  });
+
+  test('returns null for ordinary browser + ordinary referer', () => {
+    expect(buildAiVisitRow({
+      ...base,
+      userAgent: 'Mozilla/5.0 Chrome/120',
+      referer: 'https://www.google.com/search?q=x',
+    })).toBeNull();
+  });
+
+  test('returns null when path should be skipped', () => {
+    expect(buildAiVisitRow({
+      ...base,
+      pathname: '/styles.css',
+      userAgent: 'ClaudeBot/1.0',
+    })).toBeNull();
+  });
+
+  test('returns null when hostname/path missing', () => {
+    expect(buildAiVisitRow({ ...base, hostname: '', userAgent: 'ClaudeBot' })).toBeNull();
+    expect(buildAiVisitRow({ ...base, pathname: '', userAgent: 'ClaudeBot' })).toBeNull();
+  });
+});
+
+describe('isAttributionHost', () => {
+  test('matches operated domains and subdomains', () => {
+    expect(isAttributionHost('allabout.network')).toBe(true);
+    expect(isAttributionHost('mx.allabout.network')).toBe(true);
+    expect(isAttributionHost('reginald.allabout.network')).toBe(true);
+    expect(isAttributionHost('cognovamx.com')).toBe(true);
+    expect(isAttributionHost('www.cognovamx.com')).toBe(true);
+  });
+  test('rejects other hostnames', () => {
+    expect(isAttributionHost('example.com')).toBe(false);
+    expect(isAttributionHost('allabout.network.attacker.com')).toBe(false);
+    expect(isAttributionHost('')).toBe(false);
+    expect(isAttributionHost(null)).toBe(false);
+  });
+});
+
+// ============================================================
+// GA4 Connector — buildPayload pure function
+// ============================================================
+import { buildPayload as buildGa4Payload } from './reginald/lib/ga4-connector.js';
+
+describe('GA4 connector buildPayload', () => {
+  test('maps ai_visits rows to ai_agent_visit events', () => {
+    const rows = [
+      { agent_key: 'chatgpt', event_type: 'crawler', path: '/blog/a' },
+      { agent_key: 'perplexity', event_type: 'referral', path: '/blog/b' },
+    ];
+    const payload = buildGa4Payload(rows);
+    expect(payload.client_id).toBe('ai_attribution_connector');
+    expect(payload.events).toHaveLength(2);
+    expect(payload.events[0].name).toBe('ai_agent_visit');
+    expect(payload.events[0].params.agent_key).toBe('chatgpt');
+    expect(payload.events[0].params.medium).toBe('ai_crawler');
+    expect(payload.events[1].params.medium).toBe('ai_referral');
+    expect(payload.events[1].params.source).toBe('perplexity');
+  });
+
+  test('caps batch size at 25', () => {
+    const rows = Array.from({ length: 40 }, (_, i) => ({
+      agent_key: 'chatgpt', event_type: 'crawler', path: `/p${i}`,
+    }));
+    const payload = buildGa4Payload(rows);
+    expect(payload.events).toHaveLength(25);
   });
 });

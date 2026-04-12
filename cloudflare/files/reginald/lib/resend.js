@@ -22,7 +22,7 @@ const RESEND_API = 'https://api.resend.com/emails';
  * @param {string} options.downloadUrl - Download link (PDF only)
  * @param {string} options.orderId - Stripe session ID
  * @param {object|null} options.shippingAddress - Shipping address object (physical only)
- * @param {string} [options.bcc] - BCC address for printworks notifications
+ * @param {string|string[]} [options.bcc] - BCC address(es) for printworks/supplier notifications
  * @returns {Promise<object>} Resend API response
  */
 export async function sendPurchaseEmail(apiKey, {
@@ -103,7 +103,7 @@ function physicalEmailHtml({ name, bookTitle, shippingAddress, orderId }) {
 <p>Your printed copy of <strong>${bookTitle}</strong> will be dispatched to:</p>
 <p><strong>${addressStr}</strong></p>
 <p>You should receive your copy within 5–10 working days. We'll let you know if there are any issues.</p>
-<p>If you have any questions about your order, reply to this email or contact us at <a href="mailto:mx-printworks@cognovamx.com">mx-printworks@cognovamx.com</a>.</p>
+<p>If you have any questions about your order, reply to this email or contact us at <a href="mailto:info@cognovamx.com">info@cognovamx.com</a>.</p>
 <p style="color:#666;font-size:0.9em;">Order reference: ${orderId}</p>
 <p>Best regards,<br>Tom Cranstoun<br>Digital Domain Technologies Ltd, trading as CogNovaMX</p>
 `.trim();

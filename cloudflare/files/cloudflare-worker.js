@@ -36,6 +36,11 @@ import * as subscriptionsDb from './reginald/db/subscriptions.js';
 import * as publishersDb from './reginald/db/publishers.js';
 import * as audit from './reginald/db/audit.js';
 import * as downloadsDb from './reginald/db/downloads.js';
+import * as aiVisitsDb from './reginald/db/ai-visits.js';
+import { handleAiAttribution } from './reginald/handlers/ai-attribution.js';
+import { handleAiAttributionDashboard } from './reginald/handlers/ai-attribution-dashboard.js';
+import { AI_ATTRIBUTION_HOSTS, isAttributionHost } from './reginald/lib/ai-attribution-hosts.js';
+import { runGa4Connector } from './reginald/lib/ga4-connector.js';
 import { runAlivenessChecks } from './reginald/lib/aliveness.js';
 
 // Worker version - hardcoded for compatibility
@@ -589,15 +594,135 @@ export const shouldLanguageRedirect = (remainingPath, site) => {
 export const categoriseAgent = (userAgent) => {
   if (!userAgent) return 'unknown';
   const ua = userAgent.toLowerCase();
-  if (ua.includes('chatgpt') || ua.includes('openai')) return 'chatgpt';
-  if (ua.includes('claude') || ua.includes('anthropic')) return 'claude';
-  if (ua.includes('perplexity')) return 'perplexity';
-  if (ua.includes('gptbot')) return 'gptbot';
-  if (ua.includes('googlebot') || ua.includes('google-extended')) return 'googlebot';
+  if (ua.includes('gptbot') || ua.includes('oai-searchbot') || ua.includes('chatgpt') || ua.includes('openai')) return 'chatgpt';
+  if (ua.includes('claudebot') || ua.includes('claude') || ua.includes('anthropic')) return 'claude';
+  if (ua.includes('perplexitybot') || ua.includes('perplexity')) return 'perplexity';
+  if (ua.includes('google-extended') || ua.includes('gemini')) return 'gemini';
+  if (ua.includes('copilot') || ua.includes('bingpreview')) return 'copilot';
+  if (ua.includes('applebot-extended')) return 'applebot';
+  if (ua.includes('meta-externalagent') || ua.includes('facebookexternalhit')) return 'meta-ai';
+  if (ua.includes('bytespider')) return 'bytespider';
+  if (ua.includes('ccbot')) return 'ccbot';
+  if (ua.includes('amazonbot')) return 'amazonbot';
+  if (ua.includes('youbot') || ua.includes('you.com')) return 'you';
+  if (ua.includes('phindbot')) return 'phind';
+  if (ua.includes('mistralai') || ua.includes('mistral-ai')) return 'mistral';
+  if (ua.includes('googlebot')) return 'googlebot';
   if (ua.includes('bingbot')) return 'bingbot';
   if (ua.includes('mozilla') || ua.includes('chrome') || ua.includes('safari')) return 'browser';
   if (ua.includes('bot') || ua.includes('crawler') || ua.includes('spider')) return 'bot';
   return 'unknown';
+};
+
+/**
+ * Is the given agent category an AI agent (crawler or assistant)?
+ * Pure function.
+ * @param {string} category - output of categoriseAgent
+ * @returns {boolean}
+ */
+export const isAiAgent = (category) => [
+  'chatgpt', 'claude', 'perplexity', 'gemini', 'copilot',
+  'applebot', 'meta-ai', 'bytespider', 'ccbot', 'amazonbot',
+  'you', 'phind', 'mistral',
+].includes(category);
+
+/**
+ * Categorise a Referer header against known AI surfaces.
+ * Pure function - no network, no runtime dependencies.
+ *
+ * Returns null if the referer is absent, same-site, or not from a known AI
+ * surface. Returns { source, agentKey } otherwise.
+ *
+ * @param {string|null} referer - Referer header value
+ * @returns {{ source: string, agentKey: string }|null}
+ */
+export const categoriseReferer = (referer) => {
+  if (!referer) return null;
+  let host;
+  try {
+    host = new URL(referer).hostname.toLowerCase();
+  } catch {
+    return null;
+  }
+  const matches = [
+    { pattern: /(^|\.)chat\.openai\.com$/, source: 'chat.openai.com', agentKey: 'chatgpt' },
+    { pattern: /(^|\.)chatgpt\.com$/, source: 'chatgpt.com', agentKey: 'chatgpt' },
+    { pattern: /(^|\.)perplexity\.ai$/, source: 'perplexity.ai', agentKey: 'perplexity' },
+    { pattern: /(^|\.)gemini\.google\.com$/, source: 'gemini.google.com', agentKey: 'gemini' },
+    { pattern: /(^|\.)bard\.google\.com$/, source: 'bard.google.com', agentKey: 'gemini' },
+    { pattern: /(^|\.)copilot\.microsoft\.com$/, source: 'copilot.microsoft.com', agentKey: 'copilot' },
+    { pattern: /(^|\.)bing\.com\/chat$/, source: 'bing.com/chat', agentKey: 'copilot' },
+    { pattern: /(^|\.)claude\.ai$/, source: 'claude.ai', agentKey: 'claude' },
+    { pattern: /(^|\.)you\.com$/, source: 'you.com', agentKey: 'you' },
+    { pattern: /(^|\.)phind\.com$/, source: 'phind.com', agentKey: 'phind' },
+    { pattern: /(^|\.)poe\.com$/, source: 'poe.com', agentKey: 'poe' },
+    { pattern: /(^|\.)chat\.mistral\.ai$/, source: 'chat.mistral.ai', agentKey: 'mistral' },
+  ];
+  for (const { pattern, source, agentKey } of matches) {
+    if (pattern.test(host)) return { source, agentKey };
+  }
+  return null;
+};
+
+/**
+ * Should this request be skipped for AI-visit capture?
+ * Pure function — skips asset paths so the ai_visits table stays signal-rich.
+ * @param {string} pathname
+ * @returns {boolean}
+ */
+export const shouldSkipAiCapture = (pathname) => {
+  if (!pathname) return true;
+  const assetExt = /\.(css|js|mjs|map|json|svg|png|jpe?g|gif|webp|avif|ico|woff2?|ttf|eot|otf|pdf|xml|txt|webmanifest)$/i;
+  if (assetExt.test(pathname)) return true;
+  if (pathname === '/favicon.ico' || pathname === '/robots.txt') return true;
+  if (pathname.startsWith('/.rum/') || pathname.startsWith('/.optel/')) return true;
+  if (pathname.startsWith('/api/')) return true;
+  return false;
+};
+
+/**
+ * Build an ai_visits row from request + response + agent/referer classification.
+ * Pure function — takes primitives, returns a plain object.
+ * @param {object} args
+ * @returns {object|null}
+ */
+export const buildAiVisitRow = (args) => {
+  const {
+    hostname, pathname, userAgent, referer, country, status, now = Date.now(),
+  } = args;
+  if (!hostname || !pathname) return null;
+  if (shouldSkipAiCapture(pathname)) return null;
+
+  const agentCategory = categoriseAgent(userAgent);
+  const refererMatch = categoriseReferer(referer);
+
+  if (isAiAgent(agentCategory)) {
+    return {
+      ts: now,
+      hostname,
+      path: pathname,
+      eventType: 'crawler',
+      agentKey: agentCategory,
+      ua: userAgent || null,
+      referer: referer || null,
+      country: country || null,
+      status: status || null,
+    };
+  }
+  if (refererMatch) {
+    return {
+      ts: now,
+      hostname,
+      path: pathname,
+      eventType: 'referral',
+      agentKey: refererMatch.agentKey,
+      ua: userAgent || null,
+      referer: referer || null,
+      country: country || null,
+      status: status || null,
+    };
+  }
+  return null;
 };
 
 /**
@@ -751,7 +876,45 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   return resp;
 };
 
-const handleRequest = async (request, env, _ctx) => {
+// Re-export host allowlist helpers so existing test imports keep working.
+export { AI_ATTRIBUTION_HOSTS, isAttributionHost };
+
+/**
+ * Fire-and-forget capture of an AI-visit into D1 and Analytics Engine.
+ * Called from handleRequest via ctx.waitUntil so it never blocks the response.
+ * Safe to call with missing bindings or an irrelevant hostname — it no-ops.
+ *
+ * @param {object} args - { request, response, url, env }
+ * @returns {Promise<void>}
+ */
+const captureAiVisit = async ({ request, response, url, env }) => {
+  try {
+    if (!isAttributionHost(url.hostname)) return;
+    const row = buildAiVisitRow({
+      hostname: url.hostname,
+      pathname: url.pathname,
+      userAgent: request.headers.get('User-Agent') || '',
+      referer: request.headers.get('Referer') || '',
+      country: request.cf?.country || null,
+      status: response?.status || null,
+    });
+    if (!row) return;
+    if (env.DB) {
+      await aiVisitsDb.insert(env.DB, row);
+    }
+    if (env.ANALYTICS) {
+      env.ANALYTICS.writeDataPoint({
+        blobs: [row.hostname, row.path, row.agentKey, row.eventType, row.country || 'XX'],
+        doubles: [row.status || 0],
+        indexes: [row.agentKey],
+      });
+    }
+  } catch (_) {
+    /* never let capture interfere with responses */
+  }
+};
+
+const handleRequest = async (request, env, ctx) => {
   // Validate required environment variables
   if (!env.ORIGIN_HOSTNAME) {
     return new Response('Configuration Error: Missing ORIGIN_HOSTNAME environment variable', {
@@ -762,6 +925,20 @@ const handleRequest = async (request, env, _ctx) => {
 
   const url = new URL(request.url);
   const publicHostname = url.hostname; // Store public-facing domain for JSON-LD
+
+  // AI traffic attribution — fire-and-forget capture of AI crawlers and
+  // AI-referred human visits for hostnames we operate. Runs before routing
+  // so it sees every GET, regardless of which origin handles the response.
+  // The response status written to D1 is "intent to serve" (200), since we
+  // capture pre-response to keep the hot path branchless.
+  if (ctx && request.method === 'GET' && isAttributionHost(publicHostname)) {
+    ctx.waitUntil(captureAiVisit({
+      request,
+      response: { status: 200 },
+      url,
+      env,
+    }));
+  }
 
   // Handle CORS preflight OPTIONS requests
   if (request.method === 'OPTIONS') {
@@ -793,6 +970,18 @@ const handleRequest = async (request, env, _ctx) => {
     if (method === 'GET' && path === '/api/v1/publisher/analytics')  return handlePublisherAnalytics(request, env);
     if (method === 'GET' && path === '/api/v1/publisher/aliveness')  return handlePublisherAliveness(request, env);
     if (method === 'GET' && path === '/api/v1/publisher/cogs')       return handlePublisherCogs(request, env);
+
+    // AI Attribution read API — open read for hostnames we operate.
+    // Returns totals + agent breakdown for a given hostname since a given ts.
+    if (method === 'GET' && path === '/api/v1/ai-attribution') {
+      return handleAiAttribution(request, env);
+    }
+
+    // AI Attribution dashboard — small read-only admin UI.
+    if (method === 'GET' && path.startsWith('/admin/ai-attribution')) {
+      const dashResp = handleAiAttributionDashboard(request, url);
+      if (dashResp) return dashResp;
+    }
 
     // Subscription success/cancelled pages
     if (method === 'GET' && path === '/api/v1/subscribe/success') {
@@ -1437,6 +1626,11 @@ export default {
     // Monthly on 1st at 03:00 UTC — run aliveness checks
     if (event.cron === '0 3 1 * *') {
       await runAlivenessChecks(env);
+    }
+    // Hourly at :05 — forward ai_visits to GA4 Measurement Protocol
+    // for every row in ga4_connectors where enabled=1.
+    if (event.cron === '5 * * * *') {
+      await runGa4Connector(env);
     }
   },
 };

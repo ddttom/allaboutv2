@@ -218,9 +218,11 @@ async function handleSubscriptionDeleted(event, env) {
 }
 
 /**
- * Handle book purchase — generate download link, notify via MailerLite.
- * Both PDF and physical orders notify printworks (BCC tom.cranstoun@gmail.com).
- * PDF orders also generate a download link for the buyer.
+ * Handle book purchase — generate download link, notify via Resend.
+ * Physical orders BCC info@cognovamx.com, info@surprint.com (the print
+ * supplier), and tom.cranstoun@gmail.com. PDF orders BCC info@cognovamx.com
+ * and Tom (no supplier — nothing to print). PDF orders also generate a
+ * download link.
  */
 async function handleBookPurchase(session, env) {
     const email = session.customer_details?.email || session.customer_email;
@@ -303,6 +305,21 @@ async function handleBookPurchase(session, env) {
         shippingAddress: shipping,
     };
 
+    // Internal fulfilment + audit trail. Physical orders go to the print
+    // supplier (surprint) and the CogNovaMX inbox; PDFs skip surprint since
+    // there's nothing to print. info@cognovamx.com is both sender and BCC —
+    // that's intentional so a copy lands in the CogNovaMX mailbox.
+    const BCC_PHYSICAL = [
+        'info@cognovamx.com',
+        'info@surprint.com',
+        'tom.cranstoun@gmail.com',
+    ];
+    const BCC_PDF = [
+        'info@cognovamx.com',
+        'tom.cranstoun@gmail.com',
+    ];
+    const bccList = productType === 'pdf' ? BCC_PDF : BCC_PHYSICAL;
+
     let emailSent = false;
     let emailError = null;
 
@@ -312,7 +329,7 @@ async function handleBookPurchase(session, env) {
             await sendPurchaseEmail(env.RESEND_API_KEY, {
                 ...notificationParams,
                 from: env.RESEND_FROM || 'CogNovaMX <info@cognovamx.com>',
-                bcc: 'tom.cranstoun@gmail.com',
+                bcc: bccList,
             });
             console.log(`Resend: email sent for ${productType} purchase — ${email}`);
             emailSent = true;
