@@ -1,4 +1,5 @@
 ---
+title: "mx-audit"
 version: "1.2.0"
 description: "Comprehensive web audit — crawl pages, analyse accessibility, performance, SEO, and AI agent suitability, then generate a partnership-ready executive report."
 
@@ -11,6 +12,7 @@ mx:
   maintainer: mx.machine.experience@gmail.com
   license: proprietary
   status: published
+  riskLevel: medium
 
   category: mx-sales
   partOf: mx-os
@@ -28,7 +30,7 @@ mx:
       - name: audit
         description: Run the full audit pipeline — crawl, analyse, inspect, verify, generate report
         usage: |
-          Run all actions in sequence: recon → crawl → analyse → inspect → check-discovery → verify-claims → select-template → generate-report → lint → summary.
+          Run all actions in sequence: recon → crawl → analyse → inspect → check-discovery → verify-claims → select-template → generate-report → lint → generate-pdf → summary.
           This is the primary workflow. It produces a complete executive report from a URL.
           CRITICAL: The verify-claims step runs BEFORE report generation. Never publish discovery claims without evidence.
         inputs:
@@ -112,8 +114,8 @@ mx:
           2. Create output directory: mx-crm/outreach/YYYY-MM-DD/
           3. Extract client name from domain (e.g. dotfusion.com → dotfusion)
 
-          4. Run the audit with cache cleared:
-             npm run audit:start -- -s [URL] -c [MAX_PAGES] --no-recursive --force-delete-cache
+          4. Run the audit (cache preserved, staleness checked per-URL):
+             npm run audit:start -- -s [URL] -c [MAX_PAGES] --no-recursive
 
           5. Wait for completion (2-5 minutes typical)
 
@@ -134,9 +136,10 @@ mx:
              Accessibility: total WCAG AA errors by page, critical issues, colour contrast, ARIA, alt text
              AI Agent Suitability: served HTML score, rendered HTML score, main/nav/Schema.org/Open Graph presence
              SEO: title optimisation, meta descriptions, image alt text percentage, structured data
-             Image Optimisation: total images, lazy loading, alt text, width/height attributes
+             Image Optimisation: total images, lazy loading, alt text, width/height attributes, formats (PNG/JPG/WebP)
+             If non-WebP images detected: note format and gently suggest WebP conversion as an optimisation opportunity (25-90% smaller). Do not flag SVGs or images under 5KB.
 
-          CRITICAL: Always use --force-delete-cache. Never reuse cached results.
+          CRITICAL: Cache is preserved by default — staleness checked per-URL. Only use --force-delete-cache when explicitly requested.
           CRITICAL: Always use --no-recursive to limit crawling scope.
         inputs:
           - name: url
@@ -153,57 +156,75 @@ mx:
             description: "All metrics extracted from audit result files"
 
       - name: inspect
-        description: Manual HTML verification via WebFetch — supplements automated findings
+        description: Manual HTML verification via curl + Read — supplements automated findings
         usage: |
           Skip this action if the URL ends with .xml (sitemap files).
+
+          **Do NOT use WebFetch.** WebFetch delegates to a small, fast model that truncates HTML
+          and hallucinates tag absence. Use curl to fetch raw HTML, then Read + analyse directly.
 
           1. Extract homepage URL:
              - Read mx-audit/results/results.json
              - Use the first URL from results
              - OR extract base domain from sitemap URL if provided
 
-          2. Use WebFetch to fetch and analyse the homepage HTML with this prompt:
+          2. Fetch HTML with curl:
 
-             "Analyse this HTML page comprehensively for accessibility and AI agent compatibility:
+             curl -sL -o /tmp/audit-manual-homepage.html -w "%{http_code}" \
+               -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36" \
+               -H "Accept: text/html,application/xhtml+xml" \
+               "[URL]"
 
-             1. DOM Structure:
+          3. Read the fetched HTML file with the Read tool and analyse it directly.
+             You are the AI — read the actual HTML source. Check for:
+
+             DOM Structure:
                 - Heading hierarchy (H1-H6 presence, order, nesting)
                 - Multiple H1s or skipped heading levels?
                 - Semantic landmarks (main, header, footer, nav, aside, article, section)
                 - Empty structural elements?
 
-             2. Metadata:
+             Metadata:
                 - Does html tag have lang attribute?
                 - Character encoding declared?
                 - Viewport properly configured?
+                - Open Graph, Twitter Card, MX carrier tags, Schema.org JSON-LD
 
-             3. Accessibility:
+             Accessibility:
                 - Navigation structure and skip links
                 - Form accessibility (labels, fieldsets, ARIA, autocomplete attributes)
                 - Interactive elements (proper button/link usage, ARIA states)
                 - Keyboard navigation support
 
-             4. Code Quality:
+             Code Quality:
                 - Redundant ARIA on semantic elements (e.g. nav with role=navigation)
                 - Semantic violations (divs instead of buttons/links)
                 - Heading structure issues
+                - Inline CSS or JavaScript
 
-             5. Positive Patterns:
+             Positive Patterns:
                 - Well-implemented accessibility features
                 - Good semantic structure
                 - Proper ARIA usage
                 - Image optimisation (lazy loading, responsive, WebP)
 
-             For each finding: specific code examples (current HTML), fixed code examples (recommended), WCAG violation codes, user impact, AI agent impact."
+             For each finding: quote actual HTML from the source, provide recommended fix,
+             note WCAG violation codes, user impact, AI agent impact.
 
-          3. Structure findings into categories:
+          4. For large HTML files, use targeted curl+grep to verify specific tags:
+
+             curl -sL "[URL]" | grep -i 'name="mx:' | head -20
+             curl -sL "[URL]" | grep -i 'property="og:' | head -10
+             curl -sL "[URL]" | grep -i 'name="twitter:' | head -10
+
+          5. Structure findings into categories:
              - critical: WCAG Level A violations with code examples and fixes
              - highPriority: WCAG Level AA violations
              - medium: enhancement opportunities
              - positivePatterns: well-implemented features with code examples
 
-          4. Error handling:
-             - WebFetch timeout/failure: log warning, continue with automated data only
+          6. Error handling:
+             - curl returns 403: use pages from recon step, or note bot blocking
              - Homepage not found: try {baseURL}/index.html, then {baseURL}/, then skip
              - Non-HTML content: detect Content-Type, skip verification
              - Duplicates Pa11y findings: cross-reference and enhance, do not duplicate
@@ -473,6 +494,28 @@ mx:
             type: string
             description: "'clean' or list of remaining issues"
 
+      - name: generate-pdf
+        description: Generate client-ready PDF from the audit report
+        usage: |
+          After lint passes, generate PDF:
+
+          1. Run: mx.pdf.sh [report-path]
+          2. Output goes to: mx-outputs/pdf/[client-slug]-report.pdf
+          3. All YAML metadata is embedded in PDF properties
+
+          If PDF generation fails, log the error but do NOT block the workflow.
+          The markdown report is the primary deliverable; PDF is a convenience output.
+          The user can regenerate later with /mx-create-pdf.
+        inputs:
+          - name: report-path
+            type: string
+            required: true
+            description: "Path to the linted markdown report"
+        outputs:
+          - name: pdf-path
+            type: string
+            description: "Path to the generated PDF (or null if generation failed)"
+
       - name: summary
         description: Report completion status to the user
         usage: |
@@ -481,6 +524,7 @@ mx:
           - Audit completed: [N] pages analysed
           - Manual verification: [completed/skipped/failed]
           - Report generated: [path]
+          - PDF generated: [pdf-path] (or "failed — regenerate with /mx-create-pdf")
           - Key findings: Performance, Accessibility (issues count), SEO, AI Agent Suitability
           - Engagement options: price range
           - Full audit results: mx-audit/results/
@@ -501,13 +545,13 @@ Run a comprehensive web audit and generate a partnership-ready executive report.
 
 This action-doc codifies the three-stage audit pipeline that produces executive reports for business development and partnership outreach.
 
-Nine actions, one pipeline:
+Ten actions, one pipeline:
 
 1. **Recon** — Pre-inference data collection. Run `scripts/mx-audit-recon.sh` to gather robots.txt, llms.txt, sitemap.xml, homepage HTML, HTTP headers, security headers, and page HTML. Pure bash + curl. No AI inference needed. Produces a YAML manifest the AI reads first. Separates data gathering (cheap) from analysis (expensive). Cut compute, not context.
 
 2. **Crawl** — Run the MX Web Audit Suite against a URL. Automated analysis across accessibility (Pa11y), performance, SEO, AI agent suitability, image optimisation, security headers, and content quality. Includes three-screenshot visual dynamism detection via Puppeteer.
 
-3. **Inspect** — Manual HTML verification via WebFetch. Deep DOM inspection of the homepage: heading hierarchy, semantic landmarks, form accessibility, code quality, positive patterns. Produces specific code examples with recommended fixes.
+3. **Inspect** — Manual HTML verification via curl + Read. Deep DOM inspection of the homepage: heading hierarchy, semantic landmarks, form accessibility, code quality, positive patterns. Produces specific code examples with recommended fixes.
 
 4. **Check discovery** — Analyse llms.txt and robots.txt from recon data (already collected in step 1). AI agent discoverability and crawler permissions.
 
@@ -519,9 +563,11 @@ Nine actions, one pipeline:
 
 8. **Write and lint** — Write the report file and validate against project markdown standards.
 
-9. **Summary** — Report completion status with key scores and file locations.
+9. **Generate PDF** — Run `mx.pdf.sh` on the report to produce a client-ready PDF at `mx-outputs/pdf/`. All YAML metadata embedded in PDF properties. Non-blocking — PDF failure does not stop the workflow.
 
-The full **audit** action runs all nine in sequence.
+10. **Summary** — Report completion status with key scores, file locations, and PDF path.
+
+The full **audit** action runs all ten in sequence.
 
 ---
 
@@ -544,7 +590,7 @@ The MX Web Audit Suite (`mx-audit/`) crawls the target site and produces CSV and
 **Key command:**
 
 ```bash
-npm run audit:start -- -s https://example.com -c 9 --no-recursive --force-delete-cache
+npm run audit:start -- -s https://example.com -c 9 --no-recursive
 ```
 
 **Result files:** `mx-audit/results/`
@@ -563,7 +609,7 @@ npm run audit:start -- -s https://example.com -c 9 --no-recursive --force-delete
 
 ### Stage 2: Manual HTML Verification
 
-WebFetch retrieves the homepage HTML for direct inspection. This catches patterns that automated tools miss: placeholder-only forms, redundant ARIA, semantic violations, heading hierarchy gaps, and positive patterns worth highlighting.
+curl fetches the raw homepage HTML into a temp file, which the AI agent reads directly with the Read tool. This approach replaces WebFetch, which delegated analysis to a small model that truncated HTML and hallucinated tag absence. Reading the actual HTML source catches patterns that automated tools miss: placeholder-only forms, redundant ARIA, semantic violations, heading hierarchy gaps, and positive patterns worth highlighting.
 
 The manual findings include current HTML code and recommended fixes with WCAG violation codes. These specific examples make the report credible — they demonstrate that someone (or something) actually read the markup.
 
@@ -641,7 +687,8 @@ When a user asks you to audit a website:
 6. **Never leave placeholders** — every `[BRACKET]` must be replaced with real data
 7. **Warm and professional tone** — the report starts a partnership conversation, not an argument
 8. **Lint before finishing** — the report must pass markdownlint
-9. **Report output paths** — when the report is generated, provide the full absolute path
+9. **Generate PDF after linting** — run `mx.pdf.sh` on the report. If it fails, report the error but continue to summary
+10. **Report output paths** — when the report is generated, provide the full absolute path for both markdown and PDF
 
 **Output Reporting Principle:** When the generate-report action completes and writes the audit report, always report the full absolute path of the created file. This enables traceability and makes it easy to locate the deliverable.
 
@@ -651,7 +698,8 @@ Example:
 ✓ Web audit report generated successfully
 
 Output:
-  /Users/tom/Documents/MX/MX-The-Books/repo/mx-crm/outreach/2026-02-17/dotfusion-report.md
+  Report: /Users/tom/Documents/MX/MX-hub/mx-crm/outreach/2026-02-17/dotfusion-report.md
+  PDF:    /Users/tom/Documents/MX/MX-hub/mx-outputs/pdf/dotfusion-report.pdf
 
 Summary:
   Template: automated (full metrics available)
@@ -659,7 +707,7 @@ Summary:
   Performance: 78/100
   Accessibility: 23 issues
   AI Agent Suitability: 55/100
-  Engagement options: £12k-£65k
+  Engagement options: see report
 ```
 
 Not just "report saved to outreach/2026-02-17/" — the full absolute path from root.
@@ -668,7 +716,7 @@ Not just "report saved to outreach/2026-02-17/" — the full absolute path from 
 
 ## The Rules
 
-1. **Fresh data only.** Always `--force-delete-cache`. Never reuse results from previous audits.
+1. **Cache preserved.** The cache checks freshness per-URL and detects poisoned content. Only use `--force-delete-cache` when explicitly requested.
 
 2. **Manual verification is not optional.** Unless the URL is a sitemap XML, run the inspect action. The code examples are what make the report credible.
 
