@@ -309,7 +309,8 @@ async function handleBookPurchase(session, env) {
     // there's nothing to print. info@cognovamx.com is both sender and BCC —
     // that's intentional so a copy lands in the CogNovaMX mailbox.
     const BCC_PHYSICAL = [
-        'info@cognovamx.com',
+        'mx-printworks@cognovamx.com',
+        'tcranstoun@outlook.com',
         'info@surprint.com',
     ];
     const BCC_PDF = [
@@ -328,15 +329,43 @@ async function handleBookPurchase(session, env) {
                 from: env.RESEND_FROM || 'CogNovaMX <info@cognovamx.com>',
                 bcc: bccList,
             });
-            console.log(`Resend: email sent for ${productType} purchase — ${email}`);
+            console.log(`[STRIPE-WEBHOOK] Resend OK — ${productType} — to=${email} bcc=${bccList.join(',')}`);
             emailSent = true;
+            await audit.log(env.DB, null, 'email_notification_sent', {
+                provider: 'resend',
+                email,
+                bcc: bccList,
+                product_type: productType,
+                stripe_session_id: session.id,
+            });
         } catch (e) {
             emailError = `Resend: ${e.message}`;
-            console.error('Resend notification failed:', e);
+            console.error(`[STRIPE-WEBHOOK] Resend FAILED — ${productType} — to=${email} bcc=${bccList.join(',')} err=${e.message}`);
+            await audit.log(env.DB, null, 'email_provider_failed', {
+                provider: 'resend',
+                email,
+                bcc: bccList,
+                product_type: productType,
+                stripe_session_id: session.id,
+                error: e.message,
+            });
         }
+    } else {
+        emailError = 'Resend: RESEND_API_KEY not configured';
+        console.warn('[STRIPE-WEBHOOK] Resend skipped — RESEND_API_KEY missing');
+        await audit.log(env.DB, null, 'email_provider_failed', {
+            provider: 'resend',
+            product_type: productType,
+            stripe_session_id: session.id,
+            error: 'RESEND_API_KEY not configured',
+        });
     }
 
     // Secondary fallback: MailerLite (subscriber + automation).
+    // NOTE: MailerLite does not BCC the printer — it only subscribes the
+    // buyer and triggers a dashboard automation. If Resend is the channel
+    // used to notify the printer, a MailerLite-only run means the printer
+    // hears nothing unless the automation is configured to send to them.
     if (!emailSent && env.MAILERLITE_API_KEY) {
         const groupId = productType === 'pdf'
             ? env.MAILERLITE_GROUP_HANDBOOK_PDF
@@ -347,19 +376,36 @@ async function handleBookPurchase(session, env) {
                 ...notificationParams,
                 groupId,
             });
-            console.log(`MailerLite: subscriber added for ${productType} purchase — ${email}`);
+            console.log(`[STRIPE-WEBHOOK] MailerLite OK — ${productType} — subscriber=${email} group=${groupId} (printer NOT bcc'd via this path)`);
             emailSent = true;
             emailError = null;
+            await audit.log(env.DB, null, 'email_notification_sent', {
+                provider: 'mailerlite',
+                email,
+                group_id: groupId,
+                product_type: productType,
+                stripe_session_id: session.id,
+                warning: 'fallback path — printer not BCC\'d unless dashboard automation handles it',
+            });
         } catch (e) {
             emailError = `${emailError || ''}; MailerLite: ${e.message}`;
-            console.error('MailerLite notification failed:', e);
+            console.error(`[STRIPE-WEBHOOK] MailerLite FAILED — ${productType} — subscriber=${email} group=${groupId} err=${e.message}`);
+            await audit.log(env.DB, null, 'email_provider_failed', {
+                provider: 'mailerlite',
+                email,
+                group_id: groupId,
+                product_type: productType,
+                stripe_session_id: session.id,
+                error: e.message,
+            });
         }
     }
 
     if (!emailSent) {
-        console.warn('No email provider available — buyer will use success page download link');
+        console.warn(`[STRIPE-WEBHOOK] All providers failed — buyer relies on success-page download link — ${email}`);
         await audit.log(env.DB, null, 'email_notification_failed', {
             email,
+            bcc: bccList,
             product_type: productType,
             stripe_session_id: session.id,
             error: emailError || 'No email provider configured',
