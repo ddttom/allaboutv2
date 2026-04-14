@@ -11,11 +11,16 @@
  * Verify a Stripe webhook signature.
  * @param {string} payload - Raw request body
  * @param {string} sigHeader - Stripe-Signature header value
- * @param {string} secret - Webhook signing secret (whsec_...)
+ * @param {string|string[]} secrets - Webhook signing secret(s) (whsec_...).
+ *   Pass an array to accept signatures from multiple endpoints (e.g. live and
+ *   test mode); the request is valid if any one of them matches.
  * @returns {Promise<boolean>}
  */
-export async function verifyStripeSignature(payload, sigHeader, secret) {
-    if (!sigHeader || !secret) return false;
+export async function verifyStripeSignature(payload, sigHeader, secrets) {
+    if (!sigHeader || !secrets) return false;
+
+    const secretList = (Array.isArray(secrets) ? secrets : [secrets]).filter(Boolean);
+    if (secretList.length === 0) return false;
 
     const parts = {};
     for (const item of sigHeader.split(',')) {
@@ -32,22 +37,26 @@ export async function verifyStripeSignature(payload, sigHeader, secret) {
     const age = Math.floor(Date.now() / 1000) - parseInt(timestamp, 10);
     if (age > 300) return false;
 
-    // Compute expected signature.
-    const signedPayload = `${timestamp}.${payload}`;
     const encoder = new TextEncoder();
-    const key = await crypto.subtle.importKey(
-        'raw',
-        encoder.encode(secret),
-        { name: 'HMAC', hash: 'SHA-256' },
-        false,
-        ['sign']
-    );
-    const mac = await crypto.subtle.sign('HMAC', key, encoder.encode(signedPayload));
-    const expected = Array.from(new Uint8Array(mac))
-        .map(b => b.toString(16).padStart(2, '0'))
-        .join('');
+    const signedPayload = `${timestamp}.${payload}`;
 
-    return timingSafeEqual(expected, signature);
+    for (const secret of secretList) {
+        const key = await crypto.subtle.importKey(
+            'raw',
+            encoder.encode(secret),
+            { name: 'HMAC', hash: 'SHA-256' },
+            false,
+            ['sign']
+        );
+        const mac = await crypto.subtle.sign('HMAC', key, encoder.encode(signedPayload));
+        const expected = Array.from(new Uint8Array(mac))
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join('');
+
+        if (timingSafeEqual(expected, signature)) return true;
+    }
+
+    return false;
 }
 
 /**

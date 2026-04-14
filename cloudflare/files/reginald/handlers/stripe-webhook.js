@@ -28,7 +28,12 @@ export async function handleStripeWebhook(request, env) {
     const payload = await request.text();
     const sigHeader = request.headers.get('Stripe-Signature');
 
-    const valid = await verifyStripeSignature(payload, sigHeader, env.STRIPE_WEBHOOK_SECRET);
+    // Accept signatures from either the live or test endpoint. Either secret
+    // may be unset; verifyStripeSignature filters falsy values.
+    const valid = await verifyStripeSignature(payload, sigHeader, [
+        env.STRIPE_WEBHOOK_SECRET,
+        env.STRIPE_WEBHOOK_SECRET_TEST,
+    ]);
     if (!valid) {
         return error('Invalid webhook signature', 401);
     }
@@ -311,6 +316,7 @@ async function handleBookPurchase(session, env) {
     const BCC_PHYSICAL = [
         'mx-printworks@cognovamx.com',
         'tcranstoun@outlook.com',
+        'tom.cranstoun@gmail.com',
         'info@surprint.com',
     ];
     const BCC_PDF = [
