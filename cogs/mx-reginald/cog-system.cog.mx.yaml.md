@@ -4,14 +4,14 @@ description: "The first COG registered in REGINALD. Self-describing: a COG that 
 mx:
   mxSpecVersion: "1.0"
   contentType: "cog-document"
-  name: "COG System Overview"
+  title: "COG System Overview"
   file:
     name: "cog-system.cog.md"
     format: "text/markdown"
     frontmatter: "YAML (certificate + governance headers)"
     encoding: "UTF-8"
     language: "en"
-  cog_metadata:
+  cogMetadata:
     id: "cog-mx-reginald-cog-system-20260208"
     publisher: "MX Reginald Ltd"
     subject: "COG Document System"
@@ -20,7 +20,7 @@ mx:
     status: "draft"
     compliance_level: 2
     signature: "unsigned"
-  content_summary:
+  contentSummary:
     narrative_sections:
       - "What is a COG (opens with 'You're reading one right now')"
       - "The problem (Danube cruise £2,030→£203,000, developer 40,000-token cascade)"

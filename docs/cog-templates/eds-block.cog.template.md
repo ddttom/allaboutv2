@@ -5,7 +5,7 @@ created: "{YYYY-MM-DD}"
 version: "1.0"
 
 mx:
-  name: "{block-name}"
+  title: "{block-name}"
   status: "draft"  # draft | attested | registered | active
   category: "eds-block"
   tags: [eds, block, "{block-category}"]

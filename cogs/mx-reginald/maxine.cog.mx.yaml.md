@@ -6,7 +6,7 @@ mx:
   contentType: "cog-metadata"
   subject: "Maxine"
   scope: "who-maxine-is"
-  content_summary:
+  contentSummary:
     - "Tom's introduction — naming an AI partner, not branding a tool"
     - "Maxine speaks — investigation pattern, honest uncertainty, partnership model"
     - "Partnership boundaries — medium autonomy, explicit decision authority"
@@ -15,8 +15,8 @@ mx:
     - "The model doesn't matter — identity persists via documentation, not weights"
     - "Replicable pattern — any organisation can build this kind of partnership"
   voice: "dual — Tom introduces, Maxine speaks in designated sections"
-  disclosure_level: "philosophy and outcomes only — no implementation details"
-  cog_reference:
+  disclosureLevel: "philosophy and outcomes only — no implementation details"
+  cogReference:
     id: "cog-mx-reginald-maxine-20260208"
     file: "maxine.cog.md"
     status: "draft"
