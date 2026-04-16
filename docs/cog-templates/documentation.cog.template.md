@@ -1,5 +1,8 @@
 ---
 
+title: '[TITLE]'
+author: '[AUTHOR]'
+created: '[YYYY-MM-DD]'
 mx:
   cog:
     version: "1.0"

@@ -1,10 +1,12 @@
 ---
 description: "The first COG registered in REGINALD. Self-describing: a COG that documents the COG system itself, with human narrative and links to MX Holdings, MX Books, and MX Reginald."
 
+title: COG System Overview
+author: Tom Cranstoun
+created: '2026-03-01'
 mx:
   mxSpecVersion: "1.0"
   contentType: "cog-document"
-  title: "COG System Overview"
   file:
     name: "cog-system.cog.md"
     format: "text/markdown"

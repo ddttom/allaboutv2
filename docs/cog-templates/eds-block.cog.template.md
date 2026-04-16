@@ -4,8 +4,8 @@ author: "{Author Name}"
 created: "{YYYY-MM-DD}"
 version: "1.0"
 
+title: '{block-name}'
 mx:
-  title: "{block-name}"
   status: "draft"  # draft | attested | registered | active
   category: "eds-block"
   tags: [eds, block, "{block-category}"]

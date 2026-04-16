@@ -1,6 +1,9 @@
 ---
 description: "MX metadata for the Maxine identity COG — who Maxine is, why the partnership works, and what it produces."
 
+title: Maxine COG — Metadata
+author: Tom Cranstoun
+created: '2026-03-01'
 mx:
   mxSpecVersion: "1.0"
   contentType: "cog-metadata"

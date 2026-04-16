@@ -5,6 +5,7 @@ created: 2026-02-08
 modified: 2026-03-02
 version: "1.0"
 
+title: What is a COG?
 mx:
   contentType: info-doc
   status: draft

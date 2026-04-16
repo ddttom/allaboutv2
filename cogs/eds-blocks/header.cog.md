@@ -5,6 +5,7 @@ created: 2026-02-22
 modified: 2026-03-02
 version: "1.0"
 
+title: Header Block
 mx:
   status: draft
   category: eds-block
