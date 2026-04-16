@@ -19,6 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Cloudflare Worker: stop emitting synthetic `Last-Modified` header** (2026-04-16)
+  - `cloudflare-worker.js:834-838` previously set `Last-Modified: new Date().toUTCString()` when the upstream (raw.githubusercontent.com) did not provide one. This broke conditional-GET / HEAD-based cache validation for every downstream consumer: a `Last-Modified` equal to the response `Date` carries no staleness signal, so a reasonable cache has to treat every response as "always fresh" and never re-validates.
+  - Symptom: `mx-audit` re-audits of mx.allabout.network after a deploy silently returned the same Schema Maturity verdict because the audit's local cache at `mx-audit/.cache/body/*.html` was never invalidated. The audit's freshness heuristic at `mx-audit/src/utils/caching.js:176` explicitly treats `Last-Modified == Date` as "origin emits no real mtime" and keeps the cached body.
+  - Fix: removed the synthetic-header branch entirely. The Cloudflare edge already emits a content-hash-based weak ETag on cached responses, which is the correct validation primitive when the origin has no real mtime. Upstream `Last-Modified` still passes through when present.
+  - Impact: downstream HTTP caches (mx-audit, browsers, CDNs, search engines) can now correctly detect content changes via ETag/If-None-Match on HEAD requests.
+
 ### Added
 
 - **Book sales LIVE on cool-cell-c75e Cloudflare Worker** (2026-04-09)

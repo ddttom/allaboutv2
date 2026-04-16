@@ -831,11 +831,17 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   // with a permissive policy that allows CSS, JS, images, and fonts from same origin
   resp.headers.set('Content-Security-Policy', "default-src 'self'; img-src 'self' https://allabout.network https://*.allabout.network data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; font-src 'self'; connect-src 'self' https://allabout.network https://*.allabout.network https://cloudflareinsights.com; frame-ancestors 'self'");
 
-  // Set Last-Modified header for content freshness signals (AI agents and search engines)
-  // GitHub raw doesn't provide Last-Modified; use current date as deployment-time proxy
-  if (!resp.headers.has('Last-Modified')) {
-    resp.headers.set('Last-Modified', new Date().toUTCString());
-  }
+  // Do NOT emit a synthetic Last-Modified. Earlier versions set
+  // `Last-Modified: new Date().toUTCString()` when the upstream did not
+  // provide one; this broke conditional-GET / HEAD-based cache validation
+  // for every downstream consumer (audit tools, CDNs, browsers), because a
+  // Last-Modified equal to the response Date carries no staleness signal
+  // — a reasonable cache has to treat it as "always fresh" and never
+  // re-fetches. The Cloudflare edge already emits a content-hash-based
+  // weak ETag on cached responses, which is the correct validation
+  // primitive when the origin has no real mtime. Pass upstream
+  // Last-Modified through when present; otherwise let ETag alone do the
+  // work.
 
   // Resolution analytics: log COG resolutions to Analytics Engine (fire-and-forget)
   if (subdomain === 'reginald' && env.ANALYTICS) {
