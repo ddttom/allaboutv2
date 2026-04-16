@@ -35,12 +35,15 @@ jobs:
       - name: Verify test coverage
         working-directory: cloudflare/files
         run: |
-          # Check that all tests pass
-          if ! npm test 2>&1 | grep -q "passing"; then
+          # Check that all tests pass. Vitest writes "X passed" (past
+          # tense); older Mocha runs used "X passing" (present participle).
+          # Match either form so a test-runner swap does not silently
+          # break the deploy gate.
+          if ! npm test 2>&1 | grep -qE "(passed|passing)"; then
             echo "❌ Tests failed"
             exit 1
           fi
-          echo "✓ All tests passing"
+          echo "✓ All tests passed"
 
   deploy:
     name: Deploy to Cloudflare
