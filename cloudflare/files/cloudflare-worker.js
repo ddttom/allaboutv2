@@ -821,6 +821,9 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   resp.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   resp.headers.set('X-Frame-Options', 'SAMEORIGIN');
   resp.headers.set('X-Content-Type-Options', 'nosniff');
+  // Referrer-Policy: send origin on cross-origin navigations, full URL on same-origin.
+  // Explicit policy is more predictable than browser defaults (which vary by context).
+  resp.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   // Prevent AI agents and search engines from indexing/following PDF files
   if (ext === 'pdf') {
     resp.headers.set('X-Robots-Tag', 'noindex, nofollow');
