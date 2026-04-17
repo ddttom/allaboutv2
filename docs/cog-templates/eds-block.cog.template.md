@@ -7,10 +7,10 @@ version: "1.0"
 title: '{block-name}'
 mx:
   status: "draft"  # draft | attested | registered | active
-  category: "eds-block"
+  x-mx-category: "eds-block"
   tags: [eds, block, "{block-category}"]
-  cogId: "cog-eds-block-{block-name}-{YYYYMMDD}"
-  cogType: "certificate-of-genuineness"
+  x-mx-cogId: "cog-eds-block-{block-name}-{YYYYMMDD}"
+  x-mx-cogType: "certificate-of-genuineness"
   license: "MIT"
 
   publisher:
@@ -28,7 +28,7 @@ mx:
 
   publicationDate: "{YYYY-MM-DDTHH:MM:SSZ}"
   expires: "{YYYY-MM-DDTHH:MM:SSZ}"
-  maintainedDate: "{YYYY-MM-DDTHH:MM:SSZ}"
+  modified: "{YYYY-MM-DDTHH:MM:SSZ}"
   attestation: "unattested"
   mxCompliance: "level-2"
   registry: "allabout.network"

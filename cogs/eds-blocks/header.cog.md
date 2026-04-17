@@ -8,10 +8,10 @@ version: "1.0"
 title: Header Block
 mx:
   status: draft
-  category: eds-block
+  x-mx-category: eds-block
   tags: [eds, block, header, navigation]
-  cogId: "cog-eds-block-header-20260222"
-  cogType: "certificate-of-genuineness"
+  x-mx-cogId: "cog-eds-block-header-20260222"
+  x-mx-cogType: "certificate-of-genuineness"
   license: "MIT"
 
   publisher:
@@ -29,7 +29,7 @@ mx:
 
   publicationDate: "2026-02-22"
   expires: "2026-08-22"
-  maintainedDate: "2026-02-22"
+  modified: "2026-02-22"
   signature: "unsigned"
   mxCompliance: "level-2"
   registry: "allabout.network"

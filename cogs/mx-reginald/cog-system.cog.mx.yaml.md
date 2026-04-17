@@ -60,7 +60,7 @@ mx:
       - "reginald/README.md"
       - "reginald/grant/README.md"
       - "reginald/grant/public-explainer.md"
-  related:
+  refersTo:
     specification: "reginald/cog-specification.md"
     registry_root: "cogs/"
     client_directory: "cogs/mx-reginald/"

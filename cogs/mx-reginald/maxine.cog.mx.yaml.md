@@ -44,7 +44,7 @@ mx:
       - "SOUL.md"
       - "hub-content/mx-canon/mx-maxine-lives/MAXINE-DECISIONS.md"
       - "reginald/cog-specification.md"
-  related:
+  refersTo:
     cog_system: "cog-system.cog.md"
     soul_document: "https://github.com/tomcranstoun/MX-hub/blob/main/SOUL.md"
     decision_boundaries: "https://github.com/tomcranstoun/MX-hub/blob/main/hub-content/mx-canon/mx-maxine-lives/MAXINE-DECISIONS.md"

@@ -13,7 +13,7 @@ mx:
   license: proprietary
   status: published
 
-  category: creative-services
+  x-mx-category: creative-services
   partOf: broadcast-industry
   tags: [television, graphics, title-sequences, 3d-models, sports-broadcasting, motion-graphics, premier-league, fifa, mls, broadcast]
 

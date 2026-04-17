@@ -9,10 +9,10 @@ title: What is a COG?
 mx:
   contentType: info-doc
   status: draft
-  category: specification
+  x-mx-category: specification
   tags: [cog, system, specification, mx-reginald]
-  cogId: "cog-mx-reginald-cog-system-20260208"
-  cogType: "certificate-of-genuineness"
+  x-mx-cogId: "cog-mx-reginald-cog-system-20260208"
+  x-mx-cogType: "certificate-of-genuineness"
   license: "MIT"
 
   publisher:
@@ -30,7 +30,7 @@ mx:
 
   publicationDate: "2026-02-08"
   expires: "2026-08-08"
-  maintainedDate: "2026-02-08"
+  modified: "2026-02-08"
   signature: "unsigned"
   mxCompliance: "level-2"
   registry: "allabout.network"
