@@ -1,63 +1,49 @@
 ---
-description: "What COGs are, how they work, and the ecosystem behind them"
+description: What COGs are, how they work, and the ecosystem behind them
 author: Tom Cranstoun
 created: 2026-02-08
 modified: 2026-03-02
-version: "1.0"
-
+version: '1.0'
 title: What is a COG?
 mx:
   contentType: info-doc
   status: draft
   x-mx-category: specification
-  tags: [cog, system, specification, mx-reginald]
-  x-mx-cogId: "cog-mx-reginald-cog-system-20260208"
-  x-mx-cogType: "certificate-of-genuineness"
-  license: "MIT"
-
+  tags:
+  - cog
+  - system
+  - specification
+  - mx-reginald
+  x-mx-cogId: cog-mx-reginald-cog-system-20260208
+  x-mx-cogType: certificate-of-genuineness
+  license: MIT
   publisher:
-    name: "MX Reginald Ltd"
     verified: false
-    signedBy: "unsigned"
-    contact: "info@cognovamx.com"
-    website: "https://allabout.network"
-
-  subject:
-    name: "COG Document System"
-    category: "specification"
-    scope: "system-overview"
-    description: "What COGs are, how they work, and the ecosystem behind them"
-
-  publicationDate: "2026-02-08"
-  expires: "2026-08-08"
-  modified: "2026-02-08"
-  signature: "unsigned"
-  mxCompliance: "level-2"
-  registry: "allabout.network"
-
+    signedBy: unsigned
+    contact: info@cognovamx.com
+  publicationDate: '2026-02-08'
+  expires: '2026-08-08'
+  modified: '2026-02-08'
+  signature: unsigned
+  mxCompliance: level-2
+  registry: allabout.network
   maintainer:
-    name: "Tom Cranstoun"
-    role: "Co-founder and CTO, MX Reginald Ltd"
-    contact: "info@cognovamx.com"
-    escalation: "info@cognovamx.com"
-
-  reviewCycle: "monthly"
+    contact: info@cognovamx.com
+    escalation: info@cognovamx.com
+  reviewCycle: monthly
   updateTriggers:
-    - "COG specification version change"
-    - "new compliance level added"
-    - "signing engine changes"
-    - "registry structure change"
-    - "user-reported inaccuracy"
-
-  accuracyCommitment: "verified against current COG specification and REGINALD registry implementation"
-  correctionSla: "72 hours from report to updated COG"
-
+  - COG specification version change
+  - new compliance level added
+  - signing engine changes
+  - registry structure change
+  - user-reported inaccuracy
+  accuracyCommitment: verified against current COG specification and REGINALD registry implementation
+  correctionSla: 72 hours from report to updated COG
   usage:
-    sopInference: "permitted"
-    caching: "permitted for 24 hours"
-    redistribution: "with attribution to MX Reginald Ltd"
-    commercialUse: "permitted"
-    aiTraining: "permitted with attribution"
+    sopInference: permitted
+    caching: permitted for 24 hours
+    redistribution: with attribution to MX Reginald Ltd
+    commercialUse: permitted
 ---
 
 # What is a COG?

@@ -1,115 +1,81 @@
 ---
-description: "Responsive site header with navigation, hamburger menu, and brand identity"
+description: Responsive site header with navigation, hamburger menu, and brand identity
 author: Tom Cranstoun
 created: 2026-02-22
 modified: 2026-03-02
-version: "1.0"
-
+version: '1.0'
 title: Header Block
 mx:
   status: draft
   x-mx-category: eds-block
-  tags: [eds, block, header, navigation]
-  x-mx-cogId: "cog-eds-block-header-20260222"
-  x-mx-cogType: "certificate-of-genuineness"
-  license: "MIT"
-
+  tags:
+  - eds
+  - block
+  - header
+  - navigation
+  x-mx-cogId: cog-eds-block-header-20260222
+  x-mx-cogType: certificate-of-genuineness
+  license: MIT
   publisher:
-    name: "CogNovaMX Ltd"
     verified: false
-    signedBy: "unsigned"
-    contact: "info@cognovamx.com"
-    website: "https://allabout.network"
-
-  subject:
-    name: "Header Block"
-    category: "eds-block"
-    scope: "navigation"
-    description: "Responsive site header with navigation, hamburger menu, and brand identity"
-
-  publicationDate: "2026-02-22"
-  expires: "2026-08-22"
-  modified: "2026-02-22"
-  signature: "unsigned"
-  mxCompliance: "level-2"
-  registry: "allabout.network"
-
+    signedBy: unsigned
+    contact: info@cognovamx.com
+  publicationDate: '2026-02-22'
+  expires: '2026-08-22'
+  modified: '2026-02-22'
+  signature: unsigned
+  mxCompliance: level-2
+  registry: allabout.network
   maintainer:
-    name: "Tom Cranstoun"
-    role: "MX Authority"
-    contact: "info@cognovamx.com"
-    escalation: "info@cognovamx.com"
-
-  reviewCycle: "quarterly"
+    contact: info@cognovamx.com
+    escalation: info@cognovamx.com
+  reviewCycle: quarterly
   updateTriggers:
-    - "EDS core update"
-    - "accessibility requirement change"
-    - "navigation structure change"
-    - "mobile breakpoint change"
-
-  accuracyCommitment: "Verified against current allaboutv2 header block implementation"
-  correctionSla: "72 hours"
-
+  - EDS core update
+  - accessibility requirement change
+  - navigation structure change
+  - mobile breakpoint change
+  accuracyCommitment: Verified against current allaboutv2 header block implementation
+  correctionSla: 72 hours
   usage:
-    sopInference: "permitted"
-    caching: "permitted for 24 hours"
-    redistribution: "with attribution"
-    commercialUse: "permitted"
-    aiTraining: "permitted with attribution"
-
+    sopInference: permitted
+    caching: permitted for 24 hours
+    redistribution: with attribution
+    commercialUse: permitted
   block:
-    name: "header"
-    version: "1.0"
-    category: "navigation"
-
+    version: '1.0'
     contentModel:
-      description: |
-        Header content is authored as a fragment in /nav.
+      description: 'Header content is authored as a fragment in /nav.
+
         The block loads this fragment and transforms it into
+
         a responsive navigation structure.
+
+        '
       rows:
-        - name: "Brand/Logo"
-          purpose: "Site logo and home link"
-          required: true
-        - name: "Nav Sections"
-          purpose: "Primary navigation links"
-          required: true
-        - name: "Nav Tools"
-          purpose: "Secondary actions (search, language, CTA)"
-          required: false
-
+      - purpose: Site logo and home link
+        required: true
+      - purpose: Primary navigation links
+        required: true
+      - purpose: Secondary actions (search, language, CTA)
+        required: false
     decoration:
-      approach: "decorate()"
+      approach: decorate()
       transforms:
-        - "Loads nav fragment from /nav path"
-        - "Wraps content in semantic nav element with id='nav'"
-        - "Creates hamburger button for mobile"
-        - "Adds aria-expanded state management"
-        - "Binds keyboard navigation (Escape, Enter, Space)"
-
-    dependencies:
-      scripts:
-        - "../../scripts/aem.js"
-        - "../fragment/fragment.js"
-      styles:
-        - "./header.css"
-      blocks:
-        - "fragment"
-
-    accessibility:
-      ariaRoles:
-        - "navigation"
-        - "button (hamburger)"
-      keyboardSupport: "Escape closes menu, Enter/Space opens dropdowns, Tab navigates"
-      wcagLevel: "AA"
-
+      - Loads nav fragment from /nav path
+      - Wraps content in semantic nav element with id='nav'
+      - Creates hamburger button for mobile
+      - Adds aria-expanded state management
+      - Binds keyboard navigation (Escape, Enter, Space)
     responsive:
-      mobileBehavior: "Hamburger menu with slide-in drawer from right"
-      breakpoints: [900]
-
-  contentType: "eds-block"
-  audience: ["tech", "machines"]
-  runbook: |
+      mobileBehavior: Hamburger menu with slide-in drawer from right
+      breakpoints:
+      - 900
+  contentType: eds-block
+  audience:
+  - tech
+  - machines
+  runbook: ''
 ---
 
 # Header Block

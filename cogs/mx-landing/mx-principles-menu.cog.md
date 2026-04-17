@@ -1,65 +1,52 @@
 ---
-description: "Navigation page linking to core MX principles and concepts"
+description: Navigation page linking to core MX principles and concepts
 author: Tom Cranstoun
 created: 2026-02-22
 modified: 2026-03-02
-version: "1.0"
-
+version: '1.0'
 title: MX Principles Menu
 mx:
   status: draft
   x-mx-category: landing-page
-  tags: [mx, principles, navigation, landing]
-  x-mx-cogId: "cog-mx-landing-principles-menu-20260222"
-  x-mx-cogType: "certificate-of-genuineness"
-  license: "MIT"
-
+  tags:
+  - mx
+  - principles
+  - navigation
+  - landing
+  x-mx-cogId: cog-mx-landing-principles-menu-20260222
+  x-mx-cogType: certificate-of-genuineness
+  license: MIT
   publisher:
-    name: "CogNovaMX Ltd"
     verified: false
-    signedBy: "unsigned"
-    contact: "info@cognovamx.com"
-    website: "https://allabout.network"
-
-  subject:
-    name: "MX Principles Menu"
-    category: "landing-page"
-    scope: "navigation-hub"
-    description: "Navigation page linking to core MX principles and concepts"
-
-  publicationDate: "2026-02-22"
-  expires: "2026-08-22"
-  modified: "2026-02-22"
-  signature: "unsigned"
-  mxCompliance: "level-2"
-  registry: "allabout.network"
-
+    signedBy: unsigned
+    contact: info@cognovamx.com
+  publicationDate: '2026-02-22'
+  expires: '2026-08-22'
+  modified: '2026-02-22'
+  signature: unsigned
+  mxCompliance: level-2
+  registry: allabout.network
   maintainer:
-    name: "Tom Cranstoun"
-    role: "MX Authority"
-    contact: "info@cognovamx.com"
-    escalation: "info@cognovamx.com"
-
-  reviewCycle: "quarterly"
+    contact: info@cognovamx.com
+    escalation: info@cognovamx.com
+  reviewCycle: quarterly
   updateTriggers:
-    - "new MX principle added"
-    - "principle content restructured"
-    - "navigation path change"
-    - "user-reported broken link"
-
-  accuracyCommitment: "Links verified against current MX content structure"
-  correctionSla: "72 hours"
-
+  - new MX principle added
+  - principle content restructured
+  - navigation path change
+  - user-reported broken link
+  accuracyCommitment: Links verified against current MX content structure
+  correctionSla: 72 hours
   usage:
-    sopInference: "permitted"
-    caching: "permitted for 24 hours"
-    redistribution: "with attribution"
-    commercialUse: "permitted"
-    aiTraining: "permitted with attribution"
-
-  contentType: "landing-page"
-  audience: ["humans", "machines"]
-  runbook: |
+    sopInference: permitted
+    caching: permitted for 24 hours
+    redistribution: with attribution
+    commercialUse: permitted
+  contentType: landing-page
+  audience:
+  - humans
+  - machines
+  runbook: ''
 ---
 
 # MX Principles Menu

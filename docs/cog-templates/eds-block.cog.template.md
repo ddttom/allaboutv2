@@ -1,101 +1,72 @@
 ---
-description: "{One-sentence description of what this block does}"
-author: "{Author Name}"
-created: "{YYYY-MM-DD}"
-version: "1.0"
-
+description: '{One-sentence description of what this block does}'
+author: '{Author Name}'
+created: '{YYYY-MM-DD}'
+version: '1.0'
 title: '{block-name}'
 mx:
-  status: "draft"  # draft | attested | registered | active
-  x-mx-category: "eds-block"
-  tags: [eds, block, "{block-category}"]
-  x-mx-cogId: "cog-eds-block-{block-name}-{YYYYMMDD}"
-  x-mx-cogType: "certificate-of-genuineness"
-  license: "MIT"
-
+  status: draft
+  x-mx-category: eds-block
+  tags:
+  - eds
+  - block
+  - '{block-category}'
+  x-mx-cogId: cog-eds-block-{block-name}-{YYYYMMDD}
+  x-mx-cogType: certificate-of-genuineness
+  license: MIT
   publisher:
-    name: "{Publisher Name}"
     verified: false
-    attestedBy: "unattested"
-    contact: "{email@example.com}"
-    website: "{https://example.com}"
-
-  subject:
-    name: "{Block Name} Block"
-    category: "eds-block"
-    scope: "{block-category}"  # e.g., navigation, content, media, layout, commerce
-    description: "{One-sentence description of what this block does}"
-
-  publicationDate: "{YYYY-MM-DDTHH:MM:SSZ}"
-  expires: "{YYYY-MM-DDTHH:MM:SSZ}"
-  modified: "{YYYY-MM-DDTHH:MM:SSZ}"
-  attestation: "unattested"
-  mxCompliance: "level-2"
-  registry: "allabout.network"
-
+    attestedBy: unattested
+    contact: '{email@example.com}'
+  publicationDate: '{YYYY-MM-DDTHH:MM:SSZ}'
+  expires: '{YYYY-MM-DDTHH:MM:SSZ}'
+  modified: '{YYYY-MM-DDTHH:MM:SSZ}'
+  attestation: unattested
+  mxCompliance: level-2
+  registry: allabout.network
   maintainer:
-    name: "{Maintainer Name}"
-    role: "{Role/Title}"
-    contact: "{email@example.com}"
-    escalation: "{escalation-email@example.com}"
-
-  reviewCycle: "quarterly"
+    contact: '{email@example.com}'
+    escalation: '{escalation-email@example.com}'
+  reviewCycle: quarterly
   updateTriggers:
-    - "EDS core update"
-    - "accessibility requirement change"
-    - "content model change"
-    - "bug report"
-
-  accuracyCommitment: "Verified against current EDS block implementation"
-  correctionSla: "72 hours"
-
+  - EDS core update
+  - accessibility requirement change
+  - content model change
+  - bug report
+  accuracyCommitment: Verified against current EDS block implementation
+  correctionSla: 72 hours
   usage:
-    sopInference: "permitted"
-    caching: "permitted for 24 hours"
-    redistribution: "with attribution"
-    commercialUse: "permitted"
-    aiTraining: "permitted with attribution"
-
+    sopInference: permitted
+    caching: permitted for 24 hours
+    redistribution: with attribution
+    commercialUse: permitted
   block:
-    name: "{block-name}"
-    version: "1.0"
-    category: "{navigation|content|media|layout|commerce|utility}"
-
+    version: '1.0'
     contentModel:
-      description: |
-        {Describe the expected content structure in the Word/Google Doc.
+      description: '{Describe the expected content structure in the Word/Google Doc.
+
         What rows/columns does the author create?}
+
+        '
       rows:
-        - name: "{Row 1 name}"
-          purpose: "{What this row contains}"
-          required: true
-        - name: "{Row 2 name}"
-          purpose: "{What this row contains}"
-          required: false
-
+      - purpose: '{What this row contains}'
+        required: true
+      - purpose: '{What this row contains}'
+        required: false
     decoration:
-      approach: "decorate()"  # decorate() | loadLazy() | loadEager()
+      approach: decorate()
       transforms:
-        - "{DOM transformation 1}"
-        - "{DOM transformation 2}"
-
-    dependencies:
-      scripts: []  # e.g., ["../../scripts/aem.js"]
-      styles: []   # e.g., ["./block-name.css"]
-      blocks: []   # Other blocks this depends on
-
-    accessibility:
-      ariaRoles: []
-      keyboardSupport: "{Description of keyboard interactions}"
-      wcagLevel: "AA"
-
+      - '{DOM transformation 1}'
+      - '{DOM transformation 2}'
     responsive:
-      mobileBehavior: "{How block adapts below 900px}"
-      breakpoints: [900]
-
-  contentType: "eds-block"
-  audience: ["developers", "machines"]
-  runbook: |
+      mobileBehavior: '{How block adapts below 900px}'
+      breakpoints:
+      - 900
+  contentType: eds-block
+  audience:
+  - developers
+  - machines
+  runbook: ''
 ---
 
 # {Block Name} Block

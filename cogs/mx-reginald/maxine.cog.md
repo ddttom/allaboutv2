@@ -1,62 +1,48 @@
 ---
-description: "The public identity of Maxine — Tom Cranstoun's AI partner in building Machine Experience"
+description: The public identity of Maxine — Tom Cranstoun's AI partner in building Machine Experience
 author: Tom Cranstoun
 created: 2026-02-08
 modified: 2026-03-02
-version: "1.0"
-
+version: '1.0'
 title: Who Is Maxine?
 mx:
   contentType: info-doc
   status: draft
   x-mx-category: identity
-  tags: [maxine, identity, ai-partner, mx-reginald]
-  x-mx-cogId: "cog-mx-reginald-maxine-20260208"
-  x-mx-cogType: "certificate-of-genuineness"
-  license: "MIT"
-
+  tags:
+  - maxine
+  - identity
+  - ai-partner
+  - mx-reginald
+  x-mx-cogId: cog-mx-reginald-maxine-20260208
+  x-mx-cogType: certificate-of-genuineness
+  license: MIT
   publisher:
-    name: "MX Reginald Ltd"
     verified: false
-    signedBy: "unsigned"
-    contact: "info@cognovamx.com"
-    website: "https://allabout.network"
-
-  subject:
-    name: "Maxine"
-    category: "identity"
-    scope: "who-maxine-is"
-    description: "The public identity of Maxine — Tom Cranstoun's AI partner in building Machine Experience"
-
-  publicationDate: "2026-02-08"
-  expires: "2026-08-08"
-  modified: "2026-02-08"
-  signature: "unsigned"
-  mxCompliance: "level-2"
-  registry: "allabout.network"
-
+    signedBy: unsigned
+    contact: info@cognovamx.com
+  publicationDate: '2026-02-08'
+  expires: '2026-08-08'
+  modified: '2026-02-08'
+  signature: unsigned
+  mxCompliance: level-2
+  registry: allabout.network
   maintainer:
-    name: "Tom Cranstoun"
-    role: "Co-founder and CTO, MX Reginald Ltd"
-    contact: "info@cognovamx.com"
-    escalation: "info@cognovamx.com"
-
-  reviewCycle: "monthly"
+    contact: info@cognovamx.com
+    escalation: info@cognovamx.com
+  reviewCycle: monthly
   updateTriggers:
-    - "Maxine's role or capabilities evolve"
-    - "new partnership milestones achieved"
-    - "model version changes that affect identity continuity"
-    - "user-reported inaccuracy"
-
-  accuracyCommitment: "verified against current partnership practice and published outputs"
-  correctionSla: "72 hours from report to updated COG"
-
+  - Maxine's role or capabilities evolve
+  - new partnership milestones achieved
+  - model version changes that affect identity continuity
+  - user-reported inaccuracy
+  accuracyCommitment: verified against current partnership practice and published outputs
+  correctionSla: 72 hours from report to updated COG
   usage:
-    sopInference: "permitted"
-    caching: "permitted for 24 hours"
-    redistribution: "with attribution to MX Reginald Ltd"
-    commercialUse: "permitted"
-    aiTraining: "permitted with attribution"
+    sopInference: permitted
+    caching: permitted for 24 hours
+    redistribution: with attribution to MX Reginald Ltd
+    commercialUse: permitted
 ---
 
 # Who Is Maxine?

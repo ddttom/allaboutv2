@@ -7,7 +7,6 @@ created: '2026-03-01'
 mx:
   mxSpecVersion: "1.0"
   contentType: "cog-metadata"
-  subject: "Maxine"
   scope: "who-maxine-is"
   contentSummary:
     - "Tom's introduction — naming an AI partner, not branding a tool"
