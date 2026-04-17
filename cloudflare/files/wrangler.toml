@@ -15,6 +15,8 @@ PUSH_INVALIDATION = "enabled"
 STRIPE_HANDBOOK_PDF_PRICE_ID = "price_1TKcy5L6f3HzLE8reW5zq4nD"
 STRIPE_HANDBOOK_PHYSICAL_UK_PRICE_ID = "price_1TKcz5L6f3HzLE8r84hAMiqK"
 STRIPE_HANDBOOK_PHYSICAL_WORLD_PRICE_ID = "price_1TKczrL6f3HzLE8rKhP2sSUF"
+# MX-Reginald Publisher Listing — annual subscription, GBP 240.
+STRIPE_PRICE_ID = "price_1TNBoCL6f3HzLE8rcXRpQR63"
 # MailerLite group IDs (account: tom.cranstoun@gmail.com,
 # Digital Domain Technologies Ltd, Free plan).
 # Both physical_uk and physical_world products use the same physical group;
@@ -43,6 +45,13 @@ bucket_name = "mx-books"
 binding = "DB"
 database_name = "reginald-auth"
 database_id = "c705c861-4d8f-454f-b53e-f8fa0c2d214a"
+
+# Analytics Engine — logs COG resolution events from handleMxSubdomain for
+# the reginald subdomain. Dataset is auto-created on first write.
+# Query via the SQL API using CLOUDFLARE_API_TOKEN (Account Analytics: Read).
+[[analytics_engine_datasets]]
+binding = "ANALYTICS"
+dataset = "reginald-resolutions"
 
 [[routes]]
 pattern = "allabout.network/*"
