@@ -2097,6 +2097,26 @@ describe('categoriseReferer', () => {
     expect(categoriseReferer('https://twitter.com/foo')).toBeNull();
     expect(categoriseReferer('https://allabout.network/some/page')).toBeNull();
   });
+
+  test('matches Bing chat by hostname+path (the earlier hostname-only regex never hit)', () => {
+    expect(categoriseReferer('https://www.bing.com/chat?q=foo')).toEqual({
+      source: 'bing.com/chat', agentKey: 'copilot',
+    });
+    expect(categoriseReferer('https://bing.com/chat/something')).toEqual({
+      source: 'bing.com/chat', agentKey: 'copilot',
+    });
+    // Bing without /chat is organic search, not chat
+    expect(categoriseReferer('https://www.bing.com/search?q=x')).toBeNull();
+  });
+
+  test('matches newer AI surfaces (Meta, Grok, Copilot cloud, DuckAI)', () => {
+    expect(categoriseReferer('https://meta.ai/chat/abc').agentKey).toBe('meta-ai');
+    expect(categoriseReferer('https://grok.com/c/abc').agentKey).toBe('grok');
+    expect(categoriseReferer('https://x.ai/app').agentKey).toBe('grok');
+    expect(categoriseReferer('https://copilot.cloud.microsoft/').agentKey).toBe('copilot');
+    expect(categoriseReferer('https://m365.cloud.microsoft/chat').agentKey).toBe('copilot');
+    expect(categoriseReferer('https://duckduckgo.com/duckai?q=x').agentKey).toBe('duckai');
+  });
 });
 
 describe('shouldSkipAiCapture', () => {

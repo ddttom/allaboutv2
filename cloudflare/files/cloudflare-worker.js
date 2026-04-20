@@ -639,27 +639,47 @@ export const isAiAgent = (category) => [
 export const categoriseReferer = (referer) => {
   if (!referer) return null;
   let host;
+  let path;
   try {
-    host = new URL(referer).hostname.toLowerCase();
+    const u = new URL(referer);
+    host = u.hostname.toLowerCase();
+    path = u.pathname.toLowerCase();
   } catch {
     return null;
   }
-  const matches = [
+  // Hostname-only matchers. The anchored (^|\.) prefix lets bare domains
+  // and subdomains both match without over-matching (e.g. `evil.com`
+  // would not hit `chatgpt.com` because `.com` doesn't precede `chatgpt`).
+  const hostMatches = [
     { pattern: /(^|\.)chat\.openai\.com$/, source: 'chat.openai.com', agentKey: 'chatgpt' },
     { pattern: /(^|\.)chatgpt\.com$/, source: 'chatgpt.com', agentKey: 'chatgpt' },
     { pattern: /(^|\.)perplexity\.ai$/, source: 'perplexity.ai', agentKey: 'perplexity' },
     { pattern: /(^|\.)gemini\.google\.com$/, source: 'gemini.google.com', agentKey: 'gemini' },
     { pattern: /(^|\.)bard\.google\.com$/, source: 'bard.google.com', agentKey: 'gemini' },
     { pattern: /(^|\.)copilot\.microsoft\.com$/, source: 'copilot.microsoft.com', agentKey: 'copilot' },
-    { pattern: /(^|\.)bing\.com\/chat$/, source: 'bing.com/chat', agentKey: 'copilot' },
+    { pattern: /(^|\.)copilot\.cloud\.microsoft$/, source: 'copilot.cloud.microsoft', agentKey: 'copilot' },
+    { pattern: /(^|\.)m365\.cloud\.microsoft$/, source: 'm365.cloud.microsoft', agentKey: 'copilot' },
     { pattern: /(^|\.)claude\.ai$/, source: 'claude.ai', agentKey: 'claude' },
     { pattern: /(^|\.)you\.com$/, source: 'you.com', agentKey: 'you' },
     { pattern: /(^|\.)phind\.com$/, source: 'phind.com', agentKey: 'phind' },
     { pattern: /(^|\.)poe\.com$/, source: 'poe.com', agentKey: 'poe' },
     { pattern: /(^|\.)chat\.mistral\.ai$/, source: 'chat.mistral.ai', agentKey: 'mistral' },
+    { pattern: /(^|\.)meta\.ai$/, source: 'meta.ai', agentKey: 'meta-ai' },
+    { pattern: /(^|\.)grok\.com$/, source: 'grok.com', agentKey: 'grok' },
+    { pattern: /(^|\.)x\.ai$/, source: 'x.ai', agentKey: 'grok' },
   ];
-  for (const { pattern, source, agentKey } of matches) {
+  for (const { pattern, source, agentKey } of hostMatches) {
     if (pattern.test(host)) return { source, agentKey };
+  }
+  // Host+path matchers. Bing chat lives at www.bing.com/chat — the earlier
+  // pattern `(^|\.)bing\.com\/chat$` never matched because the regex ran
+  // against hostname-only, so Bing-Copilot referrals fell through to
+  // "unknown" instead of being credited to copilot.
+  if (/(^|\.)bing\.com$/.test(host) && /^\/chat($|\/)/.test(path)) {
+    return { source: 'bing.com/chat', agentKey: 'copilot' };
+  }
+  if (/(^|\.)duckduckgo\.com$/.test(host) && /duckai/.test(path)) {
+    return { source: 'duckduckgo.com/duckai', agentKey: 'duckai' };
   }
   return null;
 };
