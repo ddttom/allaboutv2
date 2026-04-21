@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Cloudflare Worker: general `/blogs/*` → `/blog/*` redirect** (2026-04-21)
   - Any request to `/blogs`, `/blogs/`, or `/blogs/*` on allabout.network now 301-redirects to the singular `/blog` equivalent.
   - Catches the common plural-form typo and legacy links. The existing `/blogs/mx/*` rule still runs first (it additionally swaps hostname to `mx.allabout.network`), so no behaviour change for that case.
+  - Same rule now duplicated inside `handleMxSubdomain` so `mx.allabout.network/blogs/*` also redirects — the subdomain dispatch at `handleRequest` returns before the general rule can fire, so the mx-site case needs its own copy.
 
 ### Fixed
 

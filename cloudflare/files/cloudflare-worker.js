@@ -797,6 +797,13 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
       redirectUrl.pathname = profileRedirects[url.pathname];
       return Response.redirect(redirectUrl.toString(), 301);
     }
+
+    // Plural-to-singular: /blogs or /blogs/* → /blog or /blog/*
+    if (url.pathname === '/blogs' || url.pathname === '/blogs/' || url.pathname.startsWith('/blogs/')) {
+      const redirectUrl = new URL(url);
+      redirectUrl.pathname = url.pathname.replace(/^\/blogs/, '/blog') || '/blog/';
+      return Response.redirect(redirectUrl.toString(), 301);
+    }
   }
 
   // Redirect directory-style paths without trailing slash to add one
