@@ -782,6 +782,23 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   // reginald.allabout.network/api/* → raw.githubusercontent.com/{repo}/main/reginald/api/*
   // content.allabout.network/cogs/* → raw.githubusercontent.com/{repo}/main/content/cogs/*
 
+  // Permanent redirects for relocated profile pages on mx-site.
+  // The printed book points readers at /blog/about.tom.cranstoun.html; the
+  // files now live under /blog/profiles/. Keep the old URLs working with 301.
+  if (subdomain === 'mx-site') {
+    const profileRedirects = {
+      '/blog/about.tom.cranstoun.html': '/blog/profiles/about.tom.cranstoun.html',
+      '/blog/about.claude.code.html': '/blog/profiles/about.claude.code.html',
+      '/blog/about.claude.sonnet.4.5.html': '/blog/profiles/about.claude.sonnet.4.5.html',
+      '/blog/about.microsoft.copilot.html': '/blog/profiles/about.microsoft.copilot.html',
+    };
+    if (profileRedirects[url.pathname]) {
+      const redirectUrl = new URL(url);
+      redirectUrl.pathname = profileRedirects[url.pathname];
+      return Response.redirect(redirectUrl.toString(), 301);
+    }
+  }
+
   // Redirect directory-style paths without trailing slash to add one
   // (prevents relative links resolving against wrong base path)
   let subPath = url.pathname;

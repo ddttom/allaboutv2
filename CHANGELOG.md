@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Cloudflare Worker: 301 redirects for relocated profile pages** (2026-04-21)
+  - `handleMxSubdomain` now returns 301 for the four pre-move profile URLs — `/blog/about.tom.cranstoun.html`, `/blog/about.claude.code.html`, `/blog/about.claude.sonnet.4.5.html`, `/blog/about.microsoft.copilot.html` — redirecting to their new locations under `/blog/profiles/`.
+  - The printed book references `/blog/about.tom.cranstoun.html`; this redirect keeps those links working after the mx-site blog reorganisation (SVGs → `assets/`, profile pages → `profiles/`).
+
 ### Fixed
 
 - **Cloudflare Worker: stop emitting synthetic `Last-Modified` header** (2026-04-16)
