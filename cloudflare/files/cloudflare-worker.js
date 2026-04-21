@@ -1209,6 +1209,18 @@ const handleRequest = async (request, env, ctx) => {
     });
   }
 
+  // General redirect: /blogs/* → /blog/* (same hostname). Catches typos and
+  // legacy plural-form URLs. The /blogs/mx/* rule above handles the MX-specific
+  // hostname swap first, so this only fires for other /blogs paths.
+  if (url.pathname === '/blogs' || url.pathname === '/blogs/' || url.pathname.startsWith('/blogs/')) {
+    const redirectUrl = new URL(request.url);
+    redirectUrl.pathname = url.pathname.replace(/^\/blogs/, '/blog') || '/blog/';
+    return new Response(null, {
+      status: 301,
+      headers: { Location: redirectUrl.toString() },
+    });
+  }
+
   // Backward-compatible redirect: allabout.network/reginald/* → reginald.allabout.network/*
   if (url.pathname.startsWith('/reginald/') || url.pathname === '/reginald') {
     const redirectUrl = new URL(request.url);
