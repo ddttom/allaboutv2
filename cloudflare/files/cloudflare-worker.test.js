@@ -44,6 +44,7 @@ import worker, {
   buildAiVisitRow,
   isAttributionHost,
   wrapLlmsTxtAsHtml,
+  isAgentDirectoryFile,
   WORKER_VERSION,
   PICTURE_PLACEHOLDER_CONFIG,
 } from './cloudflare-worker.js';
@@ -471,6 +472,65 @@ describe('wrapLlmsTxtAsHtml', () => {
     const out = wrapLlmsTxtAsHtml(text, 'https://example.com/llms.txt');
     expect(out).toContain('<title>First Title</title>');
     expect(out).not.toContain('<title>Second Title</title>');
+  });
+
+  test('wraps llms-full.txt with filename-specific description', () => {
+    const out = wrapLlmsTxtAsHtml('# MX — Full Content\n\nbody', 'https://mx.allabout.network/llms-full.txt');
+    expect(out).toContain('<link rel="canonical" href="https://mx.allabout.network/llms-full.txt">');
+    expect(out).toContain('Comprehensive agent content corpus (llms-full.txt)');
+    expect(out).toContain('llms-full.txt for mx.allabout.network');
+    expect(out).not.toContain('Agent directory file (llms.txt)');
+  });
+
+  test('llms-full.txt fallback title uses correct basename when no heading', () => {
+    const out = wrapLlmsTxtAsHtml('no heading here', 'https://example.com/llms-full.txt');
+    expect(out).toContain('<title>llms-full.txt — example.com</title>');
+  });
+});
+
+// Test suite for isAgentDirectoryFile
+describe('isAgentDirectoryFile', () => {
+  test('returns true for /llms.txt', () => {
+    expect(isAgentDirectoryFile('/llms.txt')).toBe(true);
+  });
+
+  test('returns true for /llms-full.txt', () => {
+    expect(isAgentDirectoryFile('/llms-full.txt')).toBe(true);
+  });
+
+  test('returns true for nested llms.txt at any depth', () => {
+    expect(isAgentDirectoryFile('/blog/llms.txt')).toBe(true);
+    expect(isAgentDirectoryFile('/docs/services/llms.txt')).toBe(true);
+  });
+
+  test('returns true for nested llms-full.txt at any depth', () => {
+    expect(isAgentDirectoryFile('/blog/llms-full.txt')).toBe(true);
+    expect(isAgentDirectoryFile('/docs/llms-full.txt')).toBe(true);
+  });
+
+  test('returns true for bare filenames', () => {
+    expect(isAgentDirectoryFile('llms.txt')).toBe(true);
+    expect(isAgentDirectoryFile('llms-full.txt')).toBe(true);
+  });
+
+  test('returns false for other text files', () => {
+    expect(isAgentDirectoryFile('/robots.txt')).toBe(false);
+    expect(isAgentDirectoryFile('/ai.txt')).toBe(false);
+    expect(isAgentDirectoryFile('/humans.txt')).toBe(false);
+    expect(isAgentDirectoryFile('/sitemap.xml')).toBe(false);
+    expect(isAgentDirectoryFile('/index.html')).toBe(false);
+  });
+
+  test('does not match partial names or suffixes', () => {
+    expect(isAgentDirectoryFile('/my-llms.txt')).toBe(false);
+    expect(isAgentDirectoryFile('/llms.txt.bak')).toBe(false);
+    expect(isAgentDirectoryFile('/llms-full.txt.gz')).toBe(false);
+  });
+
+  test('handles empty, null, and undefined safely', () => {
+    expect(isAgentDirectoryFile('')).toBe(false);
+    expect(isAgentDirectoryFile(null)).toBe(false);
+    expect(isAgentDirectoryFile(undefined)).toBe(false);
   });
 });
 
