@@ -1017,6 +1017,29 @@ describe('handleRequest Integration', () => {
     expect(MockHTMLRewriter.activeHandlers.length).toBe(0);
   });
 
+  test('passes through unmodified when client requests Accept: text/markdown', async () => {
+    // Markdown for Agents: when the client asks for markdown, the Worker must
+    // return the origin response verbatim so Cloudflare's native converter
+    // can transform it. Skipping Worker transforms means no cfw header, no
+    // CORS/security headers, no HTML rewriting — the converter does the rest.
+    const env = {
+      ORIGIN_HOSTNAME: 'main--test--owner.aem.live',
+    };
+    const request = {
+      url: 'https://allabout.network/article',
+      method: 'GET',
+      headers: new Map([['accept', 'text/markdown']]),
+    };
+
+    const response = await worker.fetch(request, env);
+
+    expect(response.status).toBe(200);
+    // The cfw header is only added after the HTML-transform block; the
+    // pass-through returns before that, so absence of cfw confirms the guard
+    // fired. (Live traffic will carry Cloudflare's own converter headers.)
+    expect(response.headers.get('cfw')).toBeUndefined();
+  });
+
   test('includes cfw version header in response', async () => {
     const env = {
       ORIGIN_HOSTNAME: 'main--test--owner.aem.live',

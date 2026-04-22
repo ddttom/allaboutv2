@@ -836,6 +836,26 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
     cf: { cacheEverything: true, cacheTtl: 300 },
   });
 
+  // Markdown for Agents: let Cloudflare's native converter transform HTML
+  // responses on mx-site/content. GitHub raw serves .html as text/plain, so
+  // we re-label Content-Type to text/html before returning — the converter
+  // only matches text/html. Scoped to HTML paths to preserve Worker's
+  // Content-Type correction for images/CSS/JS. Reginald is excluded at the
+  // zone level via Configuration Rule.
+  if (
+    (subdomain === 'mx-site' || subdomain === 'content')
+    && subPath.endsWith('.html')
+    && (request.headers.get('accept') || '').includes('text/markdown')
+  ) {
+    const mdHeaders = new Headers(resp.headers);
+    mdHeaders.set('Content-Type', 'text/html; charset=utf-8');
+    return new Response(resp.body, {
+      status: resp.status,
+      statusText: resp.statusText,
+      headers: mdHeaders,
+    });
+  }
+
   // Create mutable response for header modifications
   resp = new Response(resp.body, resp);
 
@@ -1377,6 +1397,14 @@ const handleRequest = async (request, env, ctx) => {
         'cfw': WORKER_VERSION,
       },
     });
+  }
+
+  // Markdown for Agents: short-circuit when client requests markdown, so
+  // Cloudflare's native converter can transform the origin HTML response.
+  // Skipping Worker HTML transforms here is safe — they add chrome (JSON-LD,
+  // picture placeholders, metadata tweaks) that gets stripped on MD conversion.
+  if ((request.headers.get('accept') || '').includes('text/markdown')) {
+    return resp;
   }
 
   // Only process HTML responses for content transformations
