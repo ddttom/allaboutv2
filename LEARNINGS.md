@@ -27,7 +27,7 @@ Critical insights for AI assistants working on this project. Focus: actionable g
 - Missing h3 headings breaks the logical flow of content
 - Example: "Part 1: The Discovery" → "The Pagination Problem" (h3) → "The Broader Investigation" (h3)
 
-**Bug that occurred:**
+**Incorrect pattern:**
 
 ```javascript
 // ❌ WRONG - Excludes h3 headings
@@ -37,7 +37,7 @@ const partHeading = lines.find((line) => {
 });
 ```
 
-This explicitly filtered OUT h3 headings with the condition `!trimmed.startsWith('###')`, causing cells like "The Pagination Problem" and "The Broader Investigation" to disappear from the tree.
+Explicitly filtering out h3 headings with `!trimmed.startsWith('###')` causes any cell with a `###` heading to disappear from the tree.
 
 **Correct pattern:**
 
@@ -49,11 +49,7 @@ const partHeading = lines.find((line) => {
 });
 ```
 
-**Impact:** All notebook cells with headings now appear in tree navigation, maintaining complete structural visibility.
-
-**Documentation:** See `blocks/ipynb-viewer/ipynb-viewer.js` lines 1448-1473 (extractHeadingFromRaw function)
-
-**Commit:** 4a13457e
+**Documentation:** See `blocks/ipynb-viewer/ipynb-viewer.js` `extractHeadingFromRaw` function.
 
 ---
 
@@ -130,14 +126,6 @@ const partHeading = lines.find((line) => {
 - `/main/file` = raw content (API/download)
 - **Metadata should be**: Base repo only (no tree, blob, or branch)
 
-**Real example (mx-handbook-manuscript):**
-
-```
-Repository structure: Chapter files at root level
-✅ Correct: "repo": "https://github.com/.../mx-handbook-manuscript"
-❌ Wrong:   "repo": "https://github.com/.../mx-handbook-manuscript/packages/manuscript/manuscript"
-```
-
 **Documentation:** See `blocks/ipynb-viewer/README.md` section on "Smart Links and GitHub Integration"
 
 ---
@@ -187,14 +175,6 @@ Repository structure: Chapter files at root level
 - `## Heading` = Main outline item (always visible)
 - `### Heading` = Sub-item under previous `##` heading
 - `#### Heading` = Nested further under `###`
-
-**Real example (mx-handbook/notebook.ipynb):**
-
-- **Issue 1**: Part 12 used `###` (level-3) and was missing from outline
-  - Fix: Changed to `##` (level-2) for consistency
-- **Issue 2**: Part 9 had markdown lines without proper `\n` newline characters
-  - Fix: Added `\n` to end of each line (except last) in source array
-  - Result: VSCode outline now parses and displays Part 9 correctly
 
 **Technical note on Jupyter notebook line formatting:**
 Jupyter notebook cells store markdown source as an array of strings. Each line should end with `\n` (newline character) for proper rendering in most viewers:
@@ -291,12 +271,6 @@ When removing emojis from headings, remember to update action card links to matc
 - Update corresponding action card link: `[Key Insight](#)` instead of `[💡 Key Insight](#)`
 - Smart link resolution requires link text to match heading text (fuzzy matching applies)
 
-**Real example (mx-handbook/notebook.ipynb):**
-
-- Removed emojis from 19 cells including headings in cells 1, 7, 37, 38, 40
-- Fixed broken action card links after emoji removal
-- Validation score restored to 100/100
-
 **Documentation:** See `blocks/ipynb-viewer/README.md` section on "Markdown Cells" - heading formatting best practices
 
 ---
@@ -313,7 +287,7 @@ When removing emojis from headings, remember to update action card links to matc
 - Users won't see sub-sections when expanding parts in the outline sidebar
 - Proper newlines ensure consistent rendering across all notebook viewers
 
-**Problem example (Cell 40 from mx-handbook/notebook.ipynb):**
+**Problem example:**
 
 ```python
 # ❌ WRONG - All content in single string without newlines
@@ -365,12 +339,6 @@ If you have a cell with massive single-line string:
 2. Add `\n` to end of each line except the last
 3. Verify with VSCode outline - all sub-sections should be visible
 
-**Real example fix (mx-handbook/notebook.ipynb Cell 40):**
-
-- **Before**: 1 line (massive string) - 0 sub-sections visible in outline
-- **After**: 177 lines (properly formatted) - 7 sub-sections visible in outline
-- **Result**: VSCode outline now shows all `####` headings as expandable sub-items
-
 **Common symptoms:**
 
 - Parts appear in VSCode outline but have no sub-sections when expanded
@@ -420,18 +388,6 @@ The notebook-validator script does NOT catch this issue because:
   - Returns file contents directly
   - Used for fetching, embedding, downloading
 
-**Real example (mx-handbook SVG inlining):**
-
-- **Bug**: `https://raw.githubusercontent.com/Digital-Domain-Technologies-Ltd/mx-handbook-manuscript/raw/main/illustrations/chapter-02-illustration.svg` → 404
-- **Fix**: `https://raw.githubusercontent.com/Digital-Domain-Technologies-Ltd/mx-handbook-manuscript/main/illustrations/chapter-02-illustration.svg` → 200
-
-**How the bug occurred:**
-
-1. Code converted repo URL: `github.com` → `raw.githubusercontent.com` ✓
-2. Code added path: `/raw/${branch}/${path}` ✗ (extra `/raw/` is wrong)
-3. Result: Double "raw" in URL (once in domain, once in path)
-4. GitHub raw server returned 404 because path doesn't exist
-
 **Correct conversion pattern:**
 
 ```javascript
@@ -458,13 +414,6 @@ curl -I https://raw.githubusercontent.com/org/repo/main/path/file.svg
 # Should return: HTTP/2 200
 # If returns 404, check for extra /raw/ in path
 ```
-
-**Where this bug appeared:**
-
-- File: `blocks/ipynb-viewer/ipynb-viewer.js`
-- Line: 159 (in `parseMarkdown` function)
-- Impact: All images referenced in notebooks were getting 404 errors
-- Fix: Removed `/raw/` from path construction
 
 **Related learnings:**
 
@@ -559,14 +508,6 @@ Use AskUserQuestion to clarify with visual descriptions:
 - Tree items: `.ipynb-nav-tree-item { padding: 0.5rem 1rem; gap: 0.5rem; }`
 - Root nodes: `.ipynb-nav-tree-item[data-type="root"] { margin-bottom: 0.25rem; }`
 
-**Real example (2026-01-14):**
-
-- **Issue**: User showed screenshot saying "repository view" spacing too deep
-- **Confusion**: AI assumed navigation tree sidebar needed fixing
-- **Reality**: User meant markdown cell content (the rendered notebook content)
-- **Fix**: Added clarifying question, then adjusted paragraph margins, line-height, and heading spacing in markdown cells
-- **Result**: Correct CSS modified after clarification
-
 **Best practice:**
 
 1. When user mentions "spacing" without specifying area, ask for clarification
@@ -589,12 +530,12 @@ Use AskUserQuestion to clarify with visual descriptions:
 - Code duplication violates DRY principle and increases maintenance burden
 - Unified functions enable centralized logging and consistent behavior
 
-**Real example - Home button duplication (2026-01-14):**
+**Example - Home button duplication:**
 
 **Problem:**
 
 ```javascript
-// Paged overlay (lines 1984-2016) - Notebook mode home button
+// Paged overlay — notebook mode home button
 let homeButton;
 if (isNotebookMode) {
   homeButton = document.createElement('button');
@@ -605,7 +546,7 @@ if (isNotebookMode) {
   });
 }
 
-// GitHub markdown overlay (lines 2994-3012) - GitHub mode home button
+// GitHub markdown overlay — GitHub mode home button
 const homeButton = document.createElement('button');
 homeButton.className = 'ipynb-overlay-button ipynb-home-button';
 // ... setup code ...
@@ -743,7 +684,7 @@ createButton({ context: 'B', onClick: () => { /* do thing B */ } });
 5. Add `data-*` attributes to track context in DOM
 6. Refactor both usages to use unified function
 
-**Documentation:** See `blocks/ipynb-viewer/ipynb-viewer.js` lines 2904-2963 for complete implementation
+**Documentation:** See `createHomeButton` in `blocks/ipynb-viewer/ipynb-viewer.js`.
 
 ---
 
@@ -788,16 +729,6 @@ Displays correctly as:
 1. Your interface is partly invisible to them
 ```
 
-**Regression history:**
-
-- **Original fix**: Commit 57a4b3d3 (2026-01-14 12:25) - Added `list-style-type: none`
-- **Regression**: Commit 7f6dd772 (2026-01-14 15:06) - Accidentally removed rule during blockquote styling updates
-- **Re-fixed**: Commit e4ecc9c1 (2026-01-14, refactor branch) - Restored the rule
-
-**Why the regression occurred:**
-
-The CSS rule was accidentally deleted when updating blockquote styles for `.ipynb-github-md-overlay`. The deletion happened in the same block of changes and wasn't related to the blockquote updates - it was an editing mistake during conflict resolution or manual deletion.
-
 **Prevention pattern:**
 
 When modifying CSS files with many similar selectors:
@@ -823,7 +754,7 @@ When modifying CSS files with many similar selectors:
 
 If you need to modify multiple related selectors (like adding `.ipynb-github-md-overlay` to blockquote rules), make changes to ONLY those selectors. Don't delete or modify unrelated rules even if they're in the same CSS section.
 
-**Documentation:** See `blocks/ipynb-viewer/ipynb-viewer.css` lines 302-305 for current implementation
+**Documentation:** See the `.ipynb-markdown-cell ol` rule in `blocks/ipynb-viewer/ipynb-viewer.css`.
 
 ---
 
@@ -879,13 +810,6 @@ html = html.replace(/\n/g, ' '); // Single newlines become spaces
 - Works consistently across all markdown content types
 - Minimal parsing logic - just regex replacements
 
-**Impact of this discovery:**
-
-- **Before**: 5 attempts to fix spacing, all targeting `p` elements → no effect
-- **After**: Targeting `br` elements → spacing fixed immediately
-- **Time wasted**: ~1 hour debugging why CSS wasn't applying
-- **Root cause**: Assumptions about HTML structure without inspecting generated output
-
 **How to verify HTML structure:**
 
 1. Open browser DevTools (F12)
@@ -893,15 +817,6 @@ html = html.replace(/\n/g, ' '); // Single newlines become spaces
 3. Look at the actual HTML generated by `parseMarkdown()`
 4. Check what elements exist (br vs p vs div)
 5. Write CSS rules for the actual structure, not the assumed structure
-
-**Real example (2026-01-14):**
-
-- **User report**: "Spacing in GitHub markdown is too much" (5 times)
-- **Initial attempts**: Targeted `p` elements, added `!important`, reduced margins progressively
-- **Problem**: Rules had zero effect because no `<p>` elements exist
-- **Discovery**: Inspected code at line 397, found `<br><br>` pattern
-- **Solution**: Target `br` elements and hide consecutive pairs
-- **Result**: Spacing fixed immediately
 
 **Best practice:**
 
@@ -913,11 +828,7 @@ When debugging CSS that "isn't applying":
 4. **Test in isolation** - Add a bright background color to verify selector matches
 5. **Read the source** - 5 minutes reading code beats 1 hour of trial-and-error
 
-**Documentation:**
-
-- Parser implementation: `blocks/ipynb-viewer/ipynb-viewer.js` lines 395-400
-- CSS fix: `blocks/ipynb-viewer/ipynb-viewer.css` lines 1819-1864
-- Commit: c10eed55
+**Documentation:** Parser in `parseMarkdown` (`blocks/ipynb-viewer/ipynb-viewer.js`); CSS in the `.ipynb-github-md-overlay .ipynb-manual-content-area br` rules (`blocks/ipynb-viewer/ipynb-viewer.css`).
 
 ---
 
@@ -1005,41 +916,20 @@ const blockElementPattern = /^<(h[1-6]|table|ul|ol|blockquote|pre|hr)|^__CODEBLO
 // Result: `__CODEBLOCK_0__` matches, stays unwrapped
 ```
 
-**Real example (appendix-a-implementation-cookbook.md):**
-
-- **Issue:** Code blocks showing `<p>` tags inside `<pre>` elements
-- **Symptom:** All code on one line despite "Restored 26 lines" in console
-- **Root cause:** Code blocks restored before paragraph processing
-- **Fix:** Moved restoration after paragraph processing, added placeholder protection
-- **Result:** Code blocks render correctly with proper line breaks and indentation
-
 **Testing verification:**
 
-```bash
-# Test URL
-http://localhost:3000/mx-handbook/notebook.html#appendix-a-implementation-cookbook.md
-
-# Check HTML structure in DevTools
+```javascript
+// In DevTools
 document.querySelector('.ipynb-github-md-overlay pre code').childNodes
 // Should be: Single text node with newlines
 // Should NOT be: Multiple <p> elements
 ```
 
-**Impact:**
-
-- **Before:** Code blocks split by blank lines, `<p>` tags injected, everything on one line
-- **After:** Code blocks preserved intact, proper line breaks, correct indentation
-- **Files modified:** `blocks/ipynb-viewer/ipynb-viewer.js` (parseMarkdown function order)
-
 **Related learnings:**
 
-- See "parseMarkdown() Uses `<br>` Tags, Not `<p>` Tags" (earlier in this file) for paragraph rendering context
-- Paragraph processing order matters for ALL content types, not just code blocks
+- See "parseMarkdown() Uses `<br>` Tags, Not `<p>` Tags" for paragraph rendering context. Paragraph processing order matters for ALL content types, not just code blocks.
 
-**Documentation:**
-
-- Implementation: `blocks/ipynb-viewer/ipynb-viewer.js` lines 19-427
-- Result: `/Users/tomcranstoun/Documents/GitHub/allaboutV2/result.md`
+**Documentation:** See `parseMarkdown` in `blocks/ipynb-viewer/ipynb-viewer.js`.
 
 ---
 
@@ -1089,41 +979,18 @@ splashOverlay.style.cssText = `
 `;
 ```
 
-**How the bug manifested:**
+**Debugging approach when a UI element "works but is invisible":**
 
-- Console logs showed splash working perfectly:
-  - `[SPLASH] showSplashScreen called`
-  - `[SPLASH] Creating splash overlay...`
-  - `[SPLASH] Splash overlay added to body`
-  - `[SPLASH] Faded in splash overlay`
-  - `[SPLASH] Auto-dismiss timer fired` (after 4 seconds)
-  - `[SPLASH] Splash overlay removed from DOM`
-- User saw: Nothing. 4-second delay, then overlay closed.
-- Root cause: Splash was behind GitHub overlay with higher z-index
+1. Console shows creation/timing correct → Not an async/timing issue
+2. Element not visible to user → Visual/CSS issue
+3. Check z-index hierarchy against every other overlay class
+4. The new element's z-index must exceed the highest existing one
 
-**Debugging approach:**
-
-1. Console shows splash working → Timing/async is correct
-2. User doesn't see it → Visual/CSS issue
-3. Check z-index hierarchy → Found GitHub overlay at 10001, splash at 10000
-4. Increase splash z-index → Fixed immediately
-
-**Impact:**
-
-- **Before**: Splash screen invisible (behind overlay), users confused by 4-second delay
-- **After**: Splash screen visible above overlay, users see transition feedback
-
-**Related issues:**
+**Related issues for splash to work properly:**
 
 - Splash close button (×) must await splash promise resolution
 - Home button addEventListener must be async to await onClick handler
-- All three issues needed fixing for splash to work properly
 
-**Documentation:**
-
-- Splash z-index: `blocks/ipynb-viewer/ipynb-viewer.js` line 478
-- Paged overlay z-index: `blocks/ipynb-viewer/ipynb-viewer.css` line 1052
-- GitHub overlay z-index: `blocks/ipynb-viewer/ipynb-viewer.css` line 1698
-- Commit: 2ab3fa9b
+**Documentation:** See the z-index values on `.ipynb-paged-overlay`, `.ipynb-manual-overlay`, and the splash overlay in `blocks/ipynb-viewer/ipynb-viewer.js` / `.css`.
 
 ---
