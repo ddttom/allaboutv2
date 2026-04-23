@@ -8,6 +8,7 @@
     "test": "vitest run cloudflare-worker.test.js",
     "test:coverage": "vitest run --coverage",
     "test:local": "node test-local-html.js",
+    "test:live": "node test-markdown-for-agents.js",
     "lint": "eslint cloudflare-worker.js"
   },
   "keywords": [
