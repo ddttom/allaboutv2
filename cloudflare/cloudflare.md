@@ -3,8 +3,8 @@ title: "Cloudflare Configuration Reference"
 description: "Complete Cloudflare CDN configuration and Adobe EDS integration for allabout.network"
 author: Tom Cranstoun
 created: 2025-12-09
-modified: 2026-03-06
-version: "1.3"
+modified: 2026-04-22
+version: "1.4"
 
 mx:
   status: active
@@ -1054,6 +1054,76 @@ dig main--allaboutv2--ddttom.aem.live +short
 
 ---
 
+## Markdown for Agents
+
+Cloudflare's **Markdown for Agents** feature (shipped Feb 2026) converts HTML responses to clean Markdown when a client sends `Accept: text/markdown`. This is enabled zone-wide on `allabout.network` and reduces token consumption for AI agents by roughly 80%.
+
+### Configuration
+
+| Setting | Value |
+|---------|-------|
+| Zone toggle | AI Crawl Control → Markdown for Agents → **On** |
+| Excluded subdomain | `reginald.allabout.network` — via Configuration Rule (expression: `http.host eq "reginald.allabout.network"`, Markdown for Agents: Off) |
+
+`reginald.allabout.network` is excluded because it serves JSON API responses and Stripe/book-sales pages where Markdown conversion would corrupt the payload.
+
+### How to request Markdown
+
+```bash
+# Page as Markdown
+curl -H "Accept: text/markdown" https://allabout.network/
+
+# mx subdomain
+curl -H "Accept: text/markdown" https://mx.allabout.network/
+
+# Confirm reginald stays HTML
+curl -sI -H "Accept: text/markdown" https://reginald.allabout.network/ | grep content-type
+# → content-type: text/html; charset=utf-8
+```
+
+### Expected response headers (allabout.network + mx.)
+
+```
+content-type: text/markdown; charset=utf-8
+vary: accept
+x-markdown-tokens: <number>
+content-signal: ai-train=yes, search=yes, ai-input=yes
+```
+
+### Worker compatibility
+
+The Worker (`cool-cell-c75e`) performs HTML transforms (JSON-LD injection, picture placeholder replacement, metadata cleanup). Cloudflare's Markdown converter runs after the Worker in the response pipeline, but is short-circuited when the Worker wraps the response in `new Response()`.
+
+To allow the converter to run, the Worker contains early-return guards before the HTML-transform block:
+
+**`handleRequest` (apex `allabout.network`)** — returns the raw origin response before any HTML transforms when `Accept: text/markdown` is present.
+
+**`handleMxSubdomain` (mx-site / content subdomains)** — GitHub raw serves `.html` files as `text/plain`. The guard re-labels `Content-Type: text/html; charset=utf-8` before returning, so Cloudflare's converter activates. Scoped to `mx-site` and `content` subdomains on `.html` paths only.
+
+```js
+// handleRequest guard (simplified)
+if ((request.headers.get('accept') || '').includes('text/markdown')) {
+  return resp; // skip HTML transforms; let CF converter run
+}
+
+// handleMxSubdomain guard (simplified)
+if (
+  (subdomain === 'mx-site' || subdomain === 'content')
+  && subPath.endsWith('.html')
+  && (request.headers.get('accept') || '').includes('text/markdown')
+) {
+  const mdHeaders = new Headers(resp.headers);
+  mdHeaders.set('Content-Type', 'text/html; charset=utf-8');
+  return new Response(resp.body, { status: resp.status, statusText: resp.statusText, headers: mdHeaders });
+}
+```
+
+### Known behaviour
+
+The `content-type` response header may still read `text/html; charset=utf-8` in some cases — this is a CF pipeline detail when the Worker wraps the response. The **body** is correctly converted to Markdown. Browsers unaffected: requests without `Accept: text/markdown` return normal HTML unchanged.
+
+---
+
 ## Future Considerations
 
 ### Potential Enhancements
@@ -1183,9 +1253,9 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 
 **Owner:** Tom Cranstoun
 **Created:** 9 December 2025
-**Last Updated:** 6 March 2026
+**Last Updated:** 22 April 2026
 **Review Schedule:** Quarterly or after significant changes
-**Version:** 1.3
+**Version:** 1.4
 
 **Update this document when:**
 
@@ -1200,6 +1270,18 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 ---
 
 ## Change Log
+
+### 2026-04-22 - Markdown for Agents (Version 1.4)
+
+**Enabled Cloudflare Markdown for Agents on allabout.network**
+
+- Zone-wide toggle enabled via AI Crawl Control in the Cloudflare dashboard.
+- Configuration Rule added to exclude `reginald.allabout.network` (API / book-sales endpoints must remain HTML).
+- Worker (`cool-cell-c75e`) updated with pass-through guards in `handleRequest` and `handleMxSubdomain` so Cloudflare's native converter can run after the Worker's response stage.
+- GitHub raw content-type quirk handled: `.html` files served as `text/plain` by raw.githubusercontent.com are re-labelled `text/html; charset=utf-8` in the mx guard so the converter activates.
+- AI agents request Markdown with `Accept: text/markdown`; browsers unaffected.
+- 196 tests passing (one integration test added to cover the pass-through guard).
+- Added Markdown for Agents section to this document.
 
 ### 2026-03-06 - Worker Name, Wrangler Deployment, 404 Fallback (Version 1.3)
 
@@ -1327,4 +1409,4 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 
 ## End of Document
 
-This reference document provides complete details of the current allabout.network Cloudflare configuration for use by AI assistants helping Tom Cranstoun manage the site. All configuration details are current as of 6 March 2026.
+This reference document provides complete details of the current allabout.network Cloudflare configuration for use by AI assistants helping Tom Cranstoun manage the site. All configuration details are current as of 22 April 2026.

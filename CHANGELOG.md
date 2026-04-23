@@ -21,6 +21,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Markdown for Agents: zone-wide Cloudflare feature enabled on allabout.network** (2026-04-22)
+  - Cloudflare AI Crawl Control toggle enabled zone-wide. AI agents send `Accept: text/markdown` and receive clean Markdown with ~80% fewer tokens than HTML.
+  - Configuration Rule added to exclude `reginald.allabout.network` (API and book-sales endpoints stay HTML).
+  - Worker (`cool-cell-c75e`) updated with pass-through guards in `handleRequest` and `handleMxSubdomain` so Cloudflare's native HTML→Markdown converter runs after the Worker. Without these guards the Worker's `new Response()` wrapping short-circuits the converter.
+  - GitHub raw serves `.html` files as `text/plain`; the `handleMxSubdomain` guard re-labels `Content-Type: text/html; charset=utf-8` before returning so the converter activates on mx-site and content subdomain paths.
+  - One integration test added (`cloudflare-worker.test.js`): verifies that requests with `Accept: text/markdown` return before the HTML-transform block (196 tests total, all passing).
+  - `cloudflare/cloudflare.md` updated with a Markdown for Agents section (v1.4).
+
 - **Cloudflare Worker: 301 redirects for relocated profile pages** (2026-04-21)
   - `handleMxSubdomain` now returns 301 for the four pre-move profile URLs — `/blog/about.tom.cranstoun.html`, `/blog/about.claude.code.html`, `/blog/about.claude.sonnet.4.5.html`, `/blog/about.microsoft.copilot.html` — redirecting to their new locations under `/blog/profiles/`.
   - The printed book references `/blog/about.tom.cranstoun.html`; this redirect keeps those links working after the mx-site blog reorganisation (SVGs → `assets/`, profile pages → `profiles/`).
