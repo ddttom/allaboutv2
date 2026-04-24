@@ -2093,6 +2093,53 @@ describe('Free Book Email Capture', () => {
   });
 });
 
+describe('Free Book Admin Notification', () => {
+  let originalFetch;
+
+  beforeEach(() => {
+    originalFetch = globalThis.fetch;
+    globalThis.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ id: 'email_test_123' }),
+    });
+  });
+
+  afterEach(() => {
+    globalThis.fetch = originalFetch;
+  });
+
+  test('sendFreeBookNotification sends to the from address', async () => {
+    const { sendFreeBookNotification } = await import('./reginald/lib/resend.js');
+    await sendFreeBookNotification('re_test_key', {
+      from: 'CogNovaMX <info@cognovamx.com>',
+      to: 'CogNovaMX <info@cognovamx.com>',
+      email: 'reader@example.com',
+      name: 'Test Reader',
+    });
+    const call = globalThis.fetch.mock.calls[0];
+    const body = JSON.parse(call[1].body);
+    expect(call[0]).toContain('resend.com');
+    expect(body.to).toBe('CogNovaMX <info@cognovamx.com>');
+    expect(body.subject).toContain('reader@example.com');
+    expect(body.subject).toContain('Test Reader');
+    expect(body.html).toContain('MX: The Introduction');
+  });
+
+  test('sendFreeBookNotification handles missing name gracefully', async () => {
+    const { sendFreeBookNotification } = await import('./reginald/lib/resend.js');
+    await sendFreeBookNotification('re_test_key', {
+      from: 'CogNovaMX <info@cognovamx.com>',
+      to: 'CogNovaMX <info@cognovamx.com>',
+      email: 'anon@example.com',
+      name: '',
+    });
+    const call = globalThis.fetch.mock.calls[0];
+    const body = JSON.parse(call[1].body);
+    expect(body.subject).toBe('Free book download: anon@example.com');
+    expect(body.html).toContain('not provided');
+  });
+});
+
 describe('Webhook — Book Purchase Routing', () => {
   test('routes book_purchase events correctly (not to subscription handler)', () => {
     const sessionWithBookMeta = { metadata: { type: 'book_purchase', product_type: 'pdf' } };

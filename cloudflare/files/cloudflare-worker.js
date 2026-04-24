@@ -40,6 +40,7 @@ import * as aiVisitsDb from './reginald/db/ai-visits.js';
 import { handleAiAttribution } from './reginald/handlers/ai-attribution.js';
 import { handleAiAttributionDashboard } from './reginald/handlers/ai-attribution-dashboard.js';
 import { notifyPurchase } from './reginald/lib/mailerlite.js';
+import { sendFreeBookNotification } from './reginald/lib/resend.js';
 import { AI_ATTRIBUTION_HOSTS, isAttributionHost } from './reginald/lib/ai-attribution-hosts.js';
 import { runGa4Connector } from './reginald/lib/ga4-connector.js';
 import { runAlivenessChecks } from './reginald/lib/aliveness.js';
@@ -842,19 +843,36 @@ const handleFreeBookDownload = async (request, env) => {
       // Unparseable body — proceed directly to download
     }
 
-    if (email && env.MAILERLITE_API_KEY) {
-      try {
-        await notifyPurchase(env.MAILERLITE_API_KEY, {
-          email,
-          name,
-          productType: 'free',
-          bookTitle: 'MX: The Introduction',
-          downloadUrl: 'https://mx.allabout.network/books/mx-introduction-chapter.pdf',
-          orderId: `free-${Date.now()}`,
-          groupId: env.MAILERLITE_GROUP_FREE_BOOK || '',
-        });
-      } catch {
-        // MailerLite failure does not block the download
+    if (email) {
+      // Subscribe to MailerLite — fire-and-forget
+      if (env.MAILERLITE_API_KEY) {
+        try {
+          await notifyPurchase(env.MAILERLITE_API_KEY, {
+            email,
+            name,
+            productType: 'free',
+            bookTitle: 'MX: The Introduction',
+            downloadUrl: 'https://mx.allabout.network/books/mx-introduction-chapter.pdf',
+            orderId: `free-${Date.now()}`,
+            groupId: env.MAILERLITE_GROUP_FREE_BOOK || '',
+          });
+        } catch {
+          // MailerLite failure does not block the download
+        }
+      }
+
+      // Notify the site owner via Resend — fire-and-forget
+      if (env.RESEND_API_KEY && env.RESEND_FROM) {
+        try {
+          await sendFreeBookNotification(env.RESEND_API_KEY, {
+            from: env.RESEND_FROM,
+            to: env.RESEND_FROM,
+            email,
+            name,
+          });
+        } catch {
+          // Notification failure does not block the download
+        }
       }
     }
 

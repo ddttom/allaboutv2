@@ -110,6 +110,42 @@ function physicalEmailHtml({ name, bookTitle, shippingAddress, orderId }) {
 }
 
 /**
+ * Send a brief admin notification when a free book is downloaded.
+ *
+ * @param {string} apiKey - Resend API key
+ * @param {object} options
+ * @param {string} options.from - Sender address
+ * @param {string} options.to - Admin notification address
+ * @param {string} options.email - Downloader email
+ * @param {string} options.name - Downloader name (may be empty)
+ * @returns {Promise<object>} Resend API response
+ */
+export async function sendFreeBookNotification(apiKey, { from, to, email, name }) {
+    const subject = `Free book download: ${name ? `${name} <${email}>` : email}`;
+    const html = `<p>Someone just downloaded <strong>MX: The Introduction</strong>.</p>
+<table style="border-collapse:collapse;font-size:0.95em;">
+  <tr><td style="padding:4px 12px 4px 0;color:#555">Email</td><td><a href="mailto:${email}">${email}</a></td></tr>
+  <tr><td style="padding:4px 12px 4px 0;color:#555">Name</td><td>${name || '<em>not provided</em>'}</td></tr>
+</table>
+<p style="color:#666;font-size:0.9em;margin-top:1em">Added to MailerLite &ldquo;Free Book Downloads&rdquo; group.</p>`;
+
+    const response = await fetch(RESEND_API, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({ from, to, subject, html }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.message || `Resend API error: ${response.status}`);
+    }
+    return data;
+}
+
+/**
  * Format a Stripe shipping address object to a readable string.
  * @param {object} address
  * @returns {string}
