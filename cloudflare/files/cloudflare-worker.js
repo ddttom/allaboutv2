@@ -39,6 +39,7 @@ import * as downloadsDb from './reginald/db/downloads.js';
 import * as aiVisitsDb from './reginald/db/ai-visits.js';
 import { handleAiAttribution } from './reginald/handlers/ai-attribution.js';
 import { handleAiAttributionDashboard } from './reginald/handlers/ai-attribution-dashboard.js';
+import { notifyPurchase } from './reginald/lib/mailerlite.js';
 import { AI_ATTRIBUTION_HOSTS, isAttributionHost } from './reginald/lib/ai-attribution-hosts.js';
 import { runGa4Connector } from './reginald/lib/ga4-connector.js';
 import { runAlivenessChecks } from './reginald/lib/aliveness.js';
@@ -769,6 +770,101 @@ export const buildAiVisitRow = (args) => {
 };
 
 /**
+ * HTML form for free book email capture.
+ * Pure function — returns the form page HTML as a string.
+ * @returns {string}
+ */
+export const buildFreeBookFormHTML = () => `<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <title>Download MX: The Introduction — CogNovaMX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:roboto,sans-serif;background:#fff;color:#202020;line-height:1.6}
+    .wrap{max-width:600px;margin:0 auto;padding:3rem 1.5rem}
+    .back{display:inline-block;margin-bottom:1.5rem;color:#035fe6;text-decoration:none;font-size:.9rem}
+    .back:hover{text-decoration:underline}
+    h1{font-size:1.75rem;font-weight:700;margin-bottom:.5rem}
+    .sub{color:#555;margin-bottom:1.75rem}
+    label{display:block;font-weight:600;margin-bottom:.25rem;font-size:.95rem}
+    input[type="email"],input[type="text"]{width:100%;padding:.7rem .875rem;border:1px solid #ccc;border-radius:8px;font-size:1rem;margin-bottom:1.25rem}
+    input:focus{outline:2px solid #035fe6;border-color:transparent}
+    .btn{display:inline-block;padding:.75rem 2.25rem;background:#035fe6;color:#fff;border:none;border-radius:30px;font-size:1rem;font-weight:600;cursor:pointer;text-decoration:none}
+    .btn:hover{background:#024bc4}
+    .note{margin-top:1.25rem;font-size:.85rem;color:#666}
+    .note a{color:#035fe6}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="https://mx.allabout.network/books/">&larr; Back to Books</a>
+    <h1>MX: The Introduction</h1>
+    <p class="sub">Free PDF &mdash; enter your email to download.</p>
+    <form method="post" action="/books/download-intro">
+      <label for="ml-email">Email address <span aria-hidden="true">*</span></label>
+      <input type="email" id="ml-email" name="email" required autocomplete="email" placeholder="you@example.com">
+      <label for="ml-name">Name <span style="font-weight:400;color:#777">(optional)</span></label>
+      <input type="text" id="ml-name" name="name" autocomplete="name" placeholder="Your name">
+      <button type="submit" class="btn">Download PDF</button>
+    </form>
+    <p class="note">By downloading you agree to receive occasional emails about Machine Experience from CogNovaMX. <a href="mailto:info@cognovamx.com">Unsubscribe any time.</a></p>
+  </div>
+</body>
+</html>`;
+
+/**
+ * Handle GET /books/download-intro (email capture form) and
+ * POST /books/download-intro (subscribe + redirect to PDF).
+ * Called only for mx.allabout.network.
+ * @param {Request} request
+ * @param {object} env - Worker environment bindings
+ * @returns {Promise<Response>}
+ */
+const handleFreeBookDownload = async (request, env) => {
+  const method = request.method.toUpperCase();
+
+  if (method === 'GET') {
+    return new Response(buildFreeBookFormHTML(), {
+      headers: { 'Content-Type': 'text/html; charset=utf-8' },
+    });
+  }
+
+  if (method === 'POST') {
+    let email = '';
+    let name = '';
+    try {
+      const formData = await request.formData();
+      email = (formData.get('email') || '').trim().toLowerCase();
+      name = (formData.get('name') || '').trim();
+    } catch {
+      // Unparseable body — proceed directly to download
+    }
+
+    if (email && env.MAILERLITE_API_KEY) {
+      try {
+        await notifyPurchase(env.MAILERLITE_API_KEY, {
+          email,
+          name,
+          productType: 'free',
+          bookTitle: 'MX: The Introduction',
+          downloadUrl: 'https://mx.allabout.network/books/mx-introduction-chapter.pdf',
+          orderId: `free-${Date.now()}`,
+          groupId: env.MAILERLITE_GROUP_FREE_BOOK || '',
+        });
+      } catch {
+        // MailerLite failure does not block the download
+      }
+    }
+
+    return Response.redirect('https://mx.allabout.network/books/mx-introduction-chapter.pdf', 302);
+  }
+
+  return new Response('Method Not Allowed', { status: 405 });
+};
+
+/**
  * Handles requests for MX subdomains (content.allabout.network, reginald.allabout.network).
  * Routes to the mx-outputs Cloudflare Pages origin with path prefix mapping.
  * @param {Request} request - Incoming request
@@ -1167,6 +1263,9 @@ const handleRequest = async (request, env, ctx) => {
   // mx.allabout.network and content.allabout.network → GitHub raw mx-outputs repo
   if (env.MX_OUTPUTS_HOSTNAME) {
     if (publicHostname === 'mx.allabout.network') {
+      if (url.pathname === '/books/download-intro') {
+        return handleFreeBookDownload(request, env);
+      }
       return handleMxSubdomain(request, url, 'mx-site', env);
     }
     if (publicHostname === 'content.allabout.network') {

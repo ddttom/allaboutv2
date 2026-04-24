@@ -25,6 +25,7 @@ STRIPE_PRICE_ID = "price_1TNBoCL6f3HzLE8rcXRpQR63"
 # so the printworks can route accordingly.
 MAILERLITE_GROUP_HANDBOOK_PDF = "184247221067187481"
 MAILERLITE_GROUP_HANDBOOK_PHYSICAL = "184247454217012721"
+MAILERLITE_GROUP_FREE_BOOK = "185654229318239343"
 
 # Resend (primary email provider — transactional purchase emails).
 RESEND_FROM = "CogNovaMX <info@cognovamx.com>"

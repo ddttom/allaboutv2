@@ -45,6 +45,7 @@ import worker, {
   isAttributionHost,
   wrapLlmsTxtAsHtml,
   isAgentDirectoryFile,
+  buildFreeBookFormHTML,
   WORKER_VERSION,
   PICTURE_PLACEHOLDER_CONFIG,
 } from './cloudflare-worker.js';
@@ -2055,6 +2056,40 @@ describe('MailerLite Client', () => {
     expect(body.fields.shipping_address).toContain('120 Main Street');
     expect(body.fields.shipping_address).toContain('Largs');
     expect(body.fields.shipping_address).toContain('GB');
+  });
+});
+
+describe('Free Book Email Capture', () => {
+  test('buildFreeBookFormHTML returns valid HTML with form', () => {
+    const html = buildFreeBookFormHTML();
+    expect(typeof html).toBe('string');
+    expect(html).toContain('<!DOCTYPE html>');
+    expect(html).toContain('<form method="post" action="/books/download-intro">');
+    expect(html).toContain('type="email"');
+    expect(html).toContain('name="email"');
+    expect(html).toContain('required');
+  });
+
+  test('buildFreeBookFormHTML includes back link to books page', () => {
+    const html = buildFreeBookFormHTML();
+    expect(html).toContain('https://mx.allabout.network/books/');
+  });
+
+  test('buildFreeBookFormHTML includes MX branding', () => {
+    const html = buildFreeBookFormHTML();
+    expect(html).toContain('MX: The Introduction');
+    expect(html).toContain('CogNovaMX');
+  });
+
+  test('buildFreeBookFormHTML optional name field present', () => {
+    const html = buildFreeBookFormHTML();
+    expect(html).toContain('name="name"');
+    expect(html).toContain('type="text"');
+  });
+
+  test('buildFreeBookFormHTML has lang attribute for accessibility', () => {
+    const html = buildFreeBookFormHTML();
+    expect(html).toContain('lang="en-GB"');
   });
 });
 
