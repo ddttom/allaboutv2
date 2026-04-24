@@ -862,11 +862,11 @@ const handleFreeBookDownload = async (request, env) => {
       }
 
       // Notify the site owner via Resend — fire-and-forget
-      if (env.RESEND_API_KEY && env.RESEND_FROM) {
+      if (env.RESEND_API_KEY && env.RESEND_FROM && env.FREE_BOOK_NOTIFY_EMAIL) {
         try {
           await sendFreeBookNotification(env.RESEND_API_KEY, {
             from: env.RESEND_FROM,
-            to: env.RESEND_FROM,
+            to: env.FREE_BOOK_NOTIFY_EMAIL,
             email,
             name,
           });
