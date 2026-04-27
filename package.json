@@ -11,7 +11,9 @@
     "lint:markdown:fix": "npx markdownlint-cli2 --fix",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:markdown",
     "debug": "node server.js",
-    "generate-sitemap:mx-handbook": "node scripts/generate-mx-handbook-sitemap.js"
+    "generate-sitemap:mx-handbook": "node scripts/generate-mx-handbook-sitemap.js",
+    "sitemap:check": "node scripts/check-sitemap.js",
+    "sitemap:clean": "node scripts/check-sitemap.js --clean"
   },
   "repository": {
     "type": "git",
