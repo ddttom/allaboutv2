@@ -21,6 +21,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Schema.org sameAs Organisation identity in JSON-LD** (2026-04-27)
+  - `ORGANISATION_CONFIG` constant added to `cloudflare-worker.js` with `name: CogNovaMX`, `legalName: Digital Domain Technologies Ltd`, and `sameAs: [allabout.network, cognovamx.com, mx.allabout.network]`.
+  - Every Article JSON-LD block now emits a full publisher `Organization` with `sameAs`, enabling search engines and AI agents to consolidate authority across all three domains.
+  - One new integration test added: `publisher sameAs links all organisation domains` (204 tests total, all passing).
+
+- **Sitemap health tooling** (2026-04-27)
+  - `scripts/check-sitemap.js` — HEAD-checks every `<loc>` in `eds-sitemap.xml`, categorises 200/3xx/404/error, prints summary, exits 1 if any 404s found.
+  - `--clean` flag removes confirmed 404 entries from sitemap XML, `my-blog.json` ×2, and `llms.txt` ×2 in a single pass.
+  - `npm run sitemap:check` and `npm run sitemap:clean` scripts added to `package.json`.
+
+### Fixed
+
+- **Cloudflare Worker: remove `/blogs/*` → `/blog/*` general redirect** (2026-04-27)
+  - The 2026-04-21 general `/blogs/*` redirect was intercepting every allabout.network blog URL and routing it to a non-existent `/blog/*` path, causing 103/108 sitemap URLs to return 404.
+  - Redirect removed. After fix: 107/108 sitemap URLs return 200.
+  - Also removed the 404→index.html fallback that fired as a downstream consequence.
+
+### Removed
+
+- **Dead sitemap entry** `mx.allabout.network/blog/content-operations` removed from `eds-sitemap.xml` — confirmed genuine 404 (page never existed).
+
 - **Markdown for Agents: zone-wide Cloudflare feature enabled on allabout.network** (2026-04-22)
   - Cloudflare AI Crawl Control toggle enabled zone-wide. AI agents send `Accept: text/markdown` and receive clean Markdown with ~80% fewer tokens than HTML.
   - Configuration Rule added to exclude `reginald.allabout.network` (API and book-sales endpoints stay HTML).
