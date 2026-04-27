@@ -27,6 +27,7 @@ import worker, {
   isMediaRequest,
   isRUMRequest,
   buildJsonLd,
+  ORGANISATION_CONFIG,
   formatISO8601Date,
   normalizeYear,
   replacePicturePlaceholder,
@@ -564,7 +565,18 @@ describe('buildJsonLd', () => {
 
     expect(jsonLd.publisher).toBeDefined();
     expect(jsonLd.publisher['@type']).toBe('Organization');
-    expect(jsonLd.publisher.name).toBe(hostname);
+    expect(jsonLd.publisher.name).toBe(ORGANISATION_CONFIG.name);
+    expect(jsonLd.publisher.legalName).toBe(ORGANISATION_CONFIG.legalName);
+    expect(jsonLd.publisher.url).toBe(`https://${hostname}`);
+    expect(jsonLd.publisher.sameAs).toEqual(ORGANISATION_CONFIG.sameAs);
+  });
+
+  test('publisher sameAs links all organisation domains', () => {
+    const article = { title: 'Test', shouldGenerateJsonLd: true };
+    const jsonLd = buildJsonLd(article, 'allabout.network');
+    expect(jsonLd.publisher.sameAs).toContain('https://cognovamx.com');
+    expect(jsonLd.publisher.sameAs).toContain('https://allabout.network');
+    expect(jsonLd.publisher.sameAs).toContain('https://mx.allabout.network');
   });
 
   test('omits empty fields from JSON-LD', () => {
@@ -689,9 +701,10 @@ describe('buildJsonLd', () => {
 
     expect(result.publisher).toBeDefined();
     expect(result.publisher['@type']).toBe('Organization');
-    expect(result.publisher.name).toBe('allabout.network');
+    expect(result.publisher.name).toBe(ORGANISATION_CONFIG.name);
+    expect(result.publisher.url).toBe('https://allabout.network');
     // Verify it's NOT using the origin hostname
-    expect(result.publisher.name).not.toBe('main--allaboutv2--ddttom.aem.live');
+    expect(result.publisher.url).not.toContain('main--allaboutv2--ddttom.aem.live');
   });
 });
 

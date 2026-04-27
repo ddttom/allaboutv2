@@ -49,6 +49,17 @@ import { runAlivenessChecks } from './reginald/lib/aliveness.js';
 // Update this when package.json version changes
 export const WORKER_VERSION = '1.4.0';
 
+// Organisation identity — used in JSON-LD publisher blocks across all domains
+export const ORGANISATION_CONFIG = {
+  name: 'CogNovaMX',
+  legalName: 'Digital Domain Technologies Ltd',
+  sameAs: [
+    'https://allabout.network',
+    'https://cognovamx.com',
+    'https://mx.allabout.network',
+  ],
+};
+
 // Picture placeholder configuration
 export const PICTURE_PLACEHOLDER_CONFIG = {
   TRIGGER_TEXT: 'Picture Here',
@@ -336,7 +347,10 @@ export const buildJsonLd = (article, hostname) => {
 
   jsonLd.publisher = {
     '@type': 'Organization',
-    name: hostname,
+    name: ORGANISATION_CONFIG.name,
+    legalName: ORGANISATION_CONFIG.legalName,
+    url: `https://${hostname}`,
+    sameAs: ORGANISATION_CONFIG.sameAs,
   };
 
   return jsonLd;
@@ -1353,18 +1367,6 @@ const handleRequest = async (request, env, ctx) => {
     });
   }
 
-  // General redirect: /blogs/* → /blog/* (same hostname). Catches typos and
-  // legacy plural-form URLs. The /blogs/mx/* rule above handles the MX-specific
-  // hostname swap first, so this only fires for other /blogs paths.
-  if (url.pathname === '/blogs' || url.pathname === '/blogs/' || url.pathname.startsWith('/blogs/')) {
-    const redirectUrl = new URL(request.url);
-    redirectUrl.pathname = url.pathname.replace(/^\/blogs/, '/blog') || '/blog/';
-    return new Response(null, {
-      status: 301,
-      headers: { Location: redirectUrl.toString() },
-    });
-  }
-
   // Backward-compatible redirect: allabout.network/reginald/* → reginald.allabout.network/*
   if (url.pathname.startsWith('/reginald/') || url.pathname === '/reginald') {
     const redirectUrl = new URL(request.url);
@@ -1499,22 +1501,6 @@ const handleRequest = async (request, env, ctx) => {
     },
   });
 
-  // 404 fallback: redirect extensionless paths to index.html
-  if (resp.status === 404 && !extension) {
-    const fallbackUrl = new URL(request.url);
-    fallbackUrl.pathname = url.pathname.replace(/\/+$/, '') + '/index.html';
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: fallbackUrl.toString(),
-        'Cache-Control': 'no-cache',
-        'Strict-Transport-Security': 'max-age=31557600',
-        'X-Frame-Options': 'SAMEORIGIN',
-        'X-Content-Type-Options': 'nosniff',
-        'cfw': WORKER_VERSION,
-      },
-    });
-  }
 
   // Markdown for Agents: short-circuit when client requests markdown, so
   // Cloudflare's native converter can transform the origin HTML response.
