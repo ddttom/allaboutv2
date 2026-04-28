@@ -794,23 +794,36 @@ export const buildFreeBookFormHTML = () => `<!DOCTYPE html>
 <head>
   <meta charset="utf-8">
   <title>Download MX: The Introduction — CogNovaMX</title>
+  <meta name="description" content="Get the free PDF introduction to Machine Experience. Enter your email to download MX: The Introduction.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:roboto,sans-serif;background:#fff;color:#202020;line-height:1.6}
-    .wrap{max-width:600px;margin:0 auto;padding:3rem 1.5rem}
-    .back{display:inline-block;margin-bottom:1.5rem;color:#035fe6;text-decoration:none;font-size:.9rem}
-    .back:hover{text-decoration:underline}
-    h1{font-size:1.75rem;font-weight:700;margin-bottom:.5rem}
-    .sub{color:#555;margin-bottom:1.75rem}
-    label{display:block;font-weight:600;margin-bottom:.25rem;font-size:.95rem}
-    input[type="email"],input[type="text"]{width:100%;padding:.7rem .875rem;border:1px solid #ccc;border-radius:8px;font-size:1rem;margin-bottom:1.25rem}
-    input:focus{outline:2px solid #035fe6;border-color:transparent}
-    .btn{display:inline-block;padding:.75rem 2.25rem;background:#035fe6;color:#fff;border:none;border-radius:30px;font-size:1rem;font-weight:600;cursor:pointer;text-decoration:none}
-    .btn:hover{background:#024bc4}
-    .note{margin-top:1.25rem;font-size:.85rem;color:#666}
-    .note a{color:#035fe6}
-  </style>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Download MX: The Introduction — CogNovaMX">
+  <meta property="og:description" content="Get the free PDF introduction to Machine Experience. Enter your email to download.">
+  <meta property="og:url" content="https://mx.allabout.network/books/download-intro">
+  <meta property="og:image" content="https://mx.allabout.network/images/book-cover-3d.png">
+  <meta property="og:image:alt" content="MX book series covers — The Intro, The Handbook, and The Protocols">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Download MX: The Introduction — CogNovaMX">
+  <meta name="twitter:description" content="Get the free PDF introduction to Machine Experience. Enter your email to download.">
+  <meta name="twitter:image" content="https://mx.allabout.network/images/book-cover-3d.png">
+  <meta name="mx:status" content="published">
+  <meta name="mx:contentType" content="form">
+  <link rel="canonical" href="https://mx.allabout.network/books/download-intro">
+  <link rel="stylesheet" href="/styles/books-download-intro.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Download MX: The Introduction",
+    "description": "Free PDF introduction to Machine Experience. Enter your email to download.",
+    "url": "https://mx.allabout.network/books/download-intro",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "CogNovaMX",
+      "url": "https://mx.allabout.network"
+    }
+  }
+  </script>
 </head>
 <body>
   <div class="wrap">
@@ -820,7 +833,7 @@ export const buildFreeBookFormHTML = () => `<!DOCTYPE html>
     <form method="post" action="/books/download-intro">
       <label for="ml-email">Email address <span aria-hidden="true">*</span></label>
       <input type="email" id="ml-email" name="email" required autocomplete="email" placeholder="you@example.com">
-      <label for="ml-name">Name <span style="font-weight:400;color:#777">(optional)</span></label>
+      <label for="ml-name">Name <span class="optional-label">(optional)</span></label>
       <input type="text" id="ml-name" name="name" autocomplete="name" placeholder="Your name">
       <button type="submit" class="btn">Download PDF</button>
     </form>
@@ -842,7 +855,13 @@ const handleFreeBookDownload = async (request, env) => {
 
   if (method === 'GET') {
     return new Response(buildFreeBookFormHTML(), {
-      headers: { 'Content-Type': 'text/html; charset=utf-8' },
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Strict-Transport-Security': 'max-age=31557600',
+        'X-Frame-Options': 'SAMEORIGIN',
+        'X-Content-Type-Options': 'nosniff',
+        'Content-Security-Policy': "default-src 'self'; style-src 'self'; script-src 'self' https://static.cloudflareinsights.com; img-src 'self' https://mx.allabout.network data:; connect-src 'self' https://cloudflareinsights.com; font-src 'self'; frame-ancestors 'self'",
+      },
     });
   }
 

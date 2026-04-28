@@ -2104,6 +2104,41 @@ describe('Free Book Email Capture', () => {
     const html = buildFreeBookFormHTML();
     expect(html).toContain('lang="en-GB"');
   });
+
+  test('buildFreeBookFormHTML includes Open Graph metadata', () => {
+    const html = buildFreeBookFormHTML();
+    expect(html).toContain('property="og:type"');
+    expect(html).toContain('property="og:title"');
+    expect(html).toContain('property="og:description"');
+    expect(html).toContain('property="og:url"');
+    expect(html).toContain('property="og:image"');
+  });
+
+  test('buildFreeBookFormHTML includes MX governance tags', () => {
+    const html = buildFreeBookFormHTML();
+    expect(html).toContain('name="mx:status"');
+    expect(html).toContain('name="mx:contentType"');
+  });
+
+  test('buildFreeBookFormHTML includes Schema.org JSON-LD', () => {
+    const html = buildFreeBookFormHTML();
+    expect(html).toContain('application/ld+json');
+    expect(html).toContain('"@type": "WebPage"');
+    expect(html).toContain('schema.org');
+  });
+
+  test('buildFreeBookFormHTML uses external stylesheet not inline styles', () => {
+    const html = buildFreeBookFormHTML();
+    expect(html).toContain('rel="stylesheet"');
+    expect(html).toContain('/styles/books-download-intro.css');
+    expect(html).not.toContain('<style>');
+  });
+
+  test('buildFreeBookFormHTML optional label uses CSS class not inline color', () => {
+    const html = buildFreeBookFormHTML();
+    expect(html).toContain('class="optional-label"');
+    expect(html).not.toContain('color:#777');
+  });
 });
 
 describe('Free Book Admin Notification', () => {
