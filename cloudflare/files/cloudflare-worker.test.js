@@ -2130,7 +2130,7 @@ describe('Free Book Email Capture', () => {
   test('buildFreeBookFormHTML uses external stylesheet not inline styles', () => {
     const html = buildFreeBookFormHTML();
     expect(html).toContain('rel="stylesheet"');
-    expect(html).toContain('/styles/books-download-intro.css');
+    expect(html).toContain('/css/books-download-intro.css');
     expect(html).not.toContain('<style>');
   });
 

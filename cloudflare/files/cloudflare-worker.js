@@ -809,7 +809,7 @@ export const buildFreeBookFormHTML = () => `<!DOCTYPE html>
   <meta name="mx:status" content="published">
   <meta name="mx:contentType" content="form">
   <link rel="canonical" href="https://mx.allabout.network/books/download-intro">
-  <link rel="stylesheet" href="/styles/books-download-intro.css">
+  <link rel="stylesheet" href="/css/books-download-intro.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
