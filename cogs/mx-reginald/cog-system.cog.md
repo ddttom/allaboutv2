@@ -120,7 +120,9 @@ COG stands for Community Owned Governance Standard. The name carries weight.
 
 **Standard** — the format is specified, versioned, and interoperable. Any AI agent, any registry, any tool that understands the spec can read any COG.
 
-The mechanical metaphor still fits: a cog is a tooth on a gear. Each document is a cog that makes the machine work. Remove a cog and the gear slips, the machine fails, the output is wrong.
+The mechanical metaphor fits too. A cog is a tooth on a gear. Each verified document is a cog that makes the machine work. Remove a cog and the gear slips, the machine fails, the output is wrong.
+
+AI systems are machines. They need COGs — verified, governed documents — to function correctly. Without them, they guess. And guessing is how a £2,030 cruise becomes a £203,000 nightmare.
 
 | Layer | What it provides |
 |---|---|
