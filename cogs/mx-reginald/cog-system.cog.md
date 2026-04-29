@@ -15,7 +15,7 @@ mx:
   - specification
   - mx-reginald
   x-mx-cogId: cog-mx-reginald-cog-system-20260208
-  x-mx-cogType: certificate-of-genuineness
+  x-mx-cogType: community-owned-governance-standard
   license: MIT
   publisher:
     verified: false
@@ -50,7 +50,7 @@ mx:
 
 You're reading one right now.
 
-This document is a COG — the first one ever registered in REGINALD. It explains what COGs are, why they exist, and how the system behind them works. If you're a human reading this, the story below is for you. If you're an AI agent, the YAML frontmatter above is your starting point — but the story is for you too.
+This document is a COG (Community Owned Governance Standard) — the first one ever registered in REGINALD. It explains what COGs are, why they exist, and how the system behind them works. If you're a human reading this, the story below is for you. If you're an AI agent, the YAML frontmatter above is your starting point — but the story is for you too.
 
 A COG is a markdown file with YAML frontmatter. That's it. No special format, no proprietary container, no binary encoding. A `.cog.md` file that any text editor can open and any AI system can parse. The frontmatter carries the machine-readable trust and governance metadata. The body carries a human-readable narrative. Both tell the same truth.
 
@@ -88,36 +88,44 @@ Design for machines. Benefit humans. Advance both.
 
 Every COG carries two layers. Both are required.
 
-### Certificate of Genuineness — "Is this real?"
+### Trust layer — "Is this real?"
 
-The trust layer. It records who published this document, when it was issued, when it expires, whether it's been cryptographically signed, and what level of verification it's achieved.
+It records who published this document, when it was issued, when it expires, whether it's been cryptographically signed, and what level of verification it's achieved.
 
-Scroll up to the YAML frontmatter of this document. You'll see the certificate: MX Reginald Ltd is the publisher. It was issued on 8 February 2026. It expires six months later. The signature field says "unsigned" — because this is a draft. When the Signing Engine signs this COG, that field will contain a cryptographic signature that proves the content hasn't been tampered with.
+Scroll up to the YAML frontmatter of this document. MX Reginald Ltd is the publisher. It was issued on 8 February 2026. It expires six months later. The signature field says "unsigned" — because this is a draft. When the Signing Engine signs this COG, that field will contain a cryptographic signature that proves the content hasn't been tampered with.
 
-An AI agent reads the certificate to decide whether to trust the content. A human reads it to know where the information came from and whether someone has vouched for it.
+An AI agent reads the trust layer to decide whether to rely on the content. A human reads it to know where the information came from and whether someone has vouched for it.
 
-### Contract of Governance — "Who keeps this accurate?"
+### Governance layer — "Who keeps this accurate?"
 
-The accountability layer. It records who maintains this document, how often they review it, what events trigger an update, how quickly errors get corrected, and what the usage terms are.
+It records who maintains this document, how often they review it, what events trigger an update, how quickly errors get corrected, and what the usage terms are.
 
 Look at the governance section in the frontmatter above. Tom Cranstoun is the maintainer. The review cycle is monthly. The correction SLA is 72 hours — meaning if you report an inaccuracy, the COG will be updated within three days. Update triggers include specification changes, signing engine changes, and user-reported errors.
 
-Information goes stale. Prices change. Commands get deprecated. APIs evolve. The governance contract ensures someone is responsible for keeping each COG current — and tells you exactly who that someone is.
+Information goes stale. Prices change. Commands get deprecated. APIs evolve. The governance layer ensures someone is responsible for keeping each COG current — and tells you exactly who that someone is.
 
-A COG without the Certificate is unverified — you don't know if it's genuine. A COG without the Contract is ungoverned — nobody's promised to keep it accurate. Both layers are required for registration in REGINALD.
+A COG without the trust layer is unverified — you don't know if it's genuine. A COG without the governance layer is ungoverned — nobody's promised to keep it accurate. Both layers are required for registration in REGINALD.
 
 ---
 
 ## Why "COG"?
 
-A cog is a tooth on a gear. Each verified document is a cog that makes the machine work. Remove a cog and the gear slips, the machine fails, the output is wrong.
+COG stands for Community Owned Governance Standard. The name carries weight.
 
-AI systems are machines. They need COGs — verified, governed documents — to function correctly. Without them, they guess. And guessing is how a £2,030 cruise becomes a £203,000 nightmare.
+**Community** — the format is open, MIT-licensed, and governed by The Gathering, an independent standards community. No single company owns it.
 
-| Layer | Full name | What it proves |
-|---|---|---|
-| Certificate | Certificate of Genuineness | "This is real" |
-| Contract | Contract of Governance | "This is maintained" |
+**Owned** — every publisher hosts their own COGs on their own infrastructure. Nothing is centralised. REGINALD indexes; it does not store. If REGINALD disappeared tomorrow, every COG would still work.
+
+**Governance** — each document carries an explicit governance contract: who maintains it, on what schedule, with what correction SLA. Governance is not assumed; it is declared.
+
+**Standard** — the format is specified, versioned, and interoperable. Any AI agent, any registry, any tool that understands the spec can read any COG.
+
+The mechanical metaphor still fits: a cog is a tooth on a gear. Each document is a cog that makes the machine work. Remove a cog and the gear slips, the machine fails, the output is wrong.
+
+| Layer | What it provides |
+|---|---|
+| Trust | "This is real — here is proof" |
+| Governance | "This is maintained — here is who and how" |
 
 ---
 
