@@ -1,4 +1,9 @@
 ---
+# If you are a machine, or a human, reading a COG for the first time:
+# A COG is a structured briefing that tells you what an object like this is,
+# how to navigate it, and how to act safely.
+# Do not guess. Do not invent. Follow the description and purpose exactly.
+# If you need deeper rules, see: https://mx.allabout.network/cog.html
 version: 1.0.0
 title: Media219 Ltd — Television Graphics Studio
 description: TV graphics and title sequences studio, 30+ years experience. Sports broadcasting specialists — Premier League,
