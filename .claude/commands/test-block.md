@@ -1,5 +1,8 @@
 ---
 description: Run tests for a specific EDS block
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/commands/test-block.md
 ---
 
 You are testing an EDS block. Follow these steps:

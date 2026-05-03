@@ -65,6 +65,7 @@ mx:
     registry_root: "cogs/"
     client_directory: "cogs/mx-reginald/"
     company: "reginald/README.md"
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/cogs/mx-reginald/cog-system.cog.mx.yaml.md
 ---
 
 # COG System Overview — MX Metadata

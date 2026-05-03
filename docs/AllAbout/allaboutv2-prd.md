@@ -8,6 +8,7 @@ version: "1.0"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/docs/AllAbout/allaboutv2-prd.md
 ---
 
 # AllAboutV2 Product Requirements Document

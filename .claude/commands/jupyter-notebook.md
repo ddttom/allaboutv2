@@ -1,5 +1,8 @@
 ---
 description: Create or edit Jupyter notebooks for testing EDS blocks interactively using JSLab kernel, jsdom virtual DOM, and VS Code. Handles notebook creation, test case generation, content structure patterns, HTML preview generation with testBlock and saveBlockHTML functions, and live CSS reload workflow.
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/commands/jupyter-notebook.md
 ---
 
 # Jupyter Notebook for EDS Block Testing

@@ -8,6 +8,7 @@ version: "1.0"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/docs/for-ai/testing/instrumentation-how-it-works.md
 ---
 
 # How the JavaScript Performance Instrumentation System Works

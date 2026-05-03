@@ -1,6 +1,9 @@
 ---
 name: Building Blocks
 description: Guide for creating new AEM Edge Delivery blocks or modifying existing blocks. Use this skill whenever you are creating a new block from scratch or making significant changes to existing blocks that involve JavaScript decoration, CSS styling, or content model changes.
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/skills/building-blocks/SKILL.md
 ---
 
 # Building Blocks

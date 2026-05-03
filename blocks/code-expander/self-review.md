@@ -8,6 +8,7 @@ version: "1.0"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/blocks/code-expander/self-review.md
 ---
 
 # Code Expander Block Self-Review

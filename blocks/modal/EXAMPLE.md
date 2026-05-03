@@ -8,6 +8,7 @@ version: "1.0"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/blocks/modal/EXAMPLE.md
 ---
 
 # Modal Block - Usage Examples

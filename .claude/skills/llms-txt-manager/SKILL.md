@@ -1,6 +1,9 @@
 ---
 name: llms-txt-manager
 description: Comprehensive system for managing llms.txt and my-blog.json files across the project. Handles creation, updating, and synchronization of AI-readable content catalogs. Automatically detects when working with llms.txt files, my-blog.json files, or updating blog content. Includes utilities for fetching latest content from query-index.json and organizing by last modified dates. Keywords include llms.txt, my-blog.json, blog catalog, content index, query-index.json, AI content discovery, update llms, update blog, content synchronization.
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/skills/llms-txt-manager/SKILL.md
 ---
 
 # llms.txt Manager Skill

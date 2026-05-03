@@ -8,6 +8,7 @@ version: "1.0"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/docs/for-ai/explaining-educational-notebooks.md
 ---
 
 # Educational Jupyter Notebooks Guide

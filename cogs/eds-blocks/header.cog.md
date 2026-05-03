@@ -51,6 +51,7 @@ mx:
     version: '1.0'
     contentModel:
       description: 'Header content is authored as a fragment in /nav.
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/cogs/eds-blocks/header.cog.md
 
         The block loads this fragment and transforms it into
 

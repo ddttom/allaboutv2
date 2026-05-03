@@ -4,6 +4,9 @@ version: "1.0"
 created: 2026-03-01
 modified: 2026-03-01
 author: Tom Cranstoun
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/SOUL.md
 ---
 
 # allaboutv2 — SOUL

@@ -8,6 +8,7 @@ version: "1.0"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/blocks/grid/EXAMPLE.md
 ---
 
 # Grid Block - Usage Examples

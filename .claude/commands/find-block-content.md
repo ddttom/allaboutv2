@@ -1,5 +1,8 @@
 ---
 description: Find pages in the site that use a specific block
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/commands/find-block-content.md
 ---
 
 You are searching for content that uses a specific block.

@@ -9,6 +9,7 @@ mx:
     id: "cog-{publisher-id}-{subject-slug}-{YYYYMMDD}"
     type: "certificate-of-genuineness"
     status: "draft"  # draft | attested | registered | active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/docs/cog-templates/landing-page.cog.template.md
 
     publisher:
       name: "{Publisher Name}"

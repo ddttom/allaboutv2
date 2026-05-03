@@ -8,6 +8,7 @@ version: "1.0"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/docs/for-ai/guidelines/style-guide.md
 ---
 
 # CSS Naming Convention Style Guide

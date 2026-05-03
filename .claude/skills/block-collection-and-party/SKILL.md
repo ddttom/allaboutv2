@@ -1,6 +1,9 @@
 ---
 name: Using the Block Collection and Block Party
 description: The Block Collection and Block Party are repositories for existing AEM blocks, build tools, code snippets, integration patterns, plugins, and more. Use this skill anytime you are developing something and want to find a reference to use as a starting point.
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/skills/block-collection-and-party/SKILL.md
 ---
 
 # Using the Block Collection and Block Party

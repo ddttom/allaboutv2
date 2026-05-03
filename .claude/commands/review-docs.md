@@ -1,5 +1,8 @@
 ---
 description: Review and understand the EDS documentation structure in docs/for-AI
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/commands/review-docs.md
 ---
 
 You are helping the user navigate the comprehensive EDS documentation.

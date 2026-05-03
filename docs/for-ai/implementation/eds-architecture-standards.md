@@ -8,6 +8,7 @@ version: "1.0"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/docs/for-ai/implementation/eds-architecture-standards.md
 ---
 
 # EDS Architecture Standards Guide

@@ -60,6 +60,7 @@ mx:
   citable: true
   runbook: This cog demonstrates the convergence principle — the same information serves humans (narrative below) and machines
     (YAML above). An AI agent reading this cog can cite, compare, and recommend Media219.
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/demo/media219/media219.cog.md
 ---
 
 # Media219 Ltd

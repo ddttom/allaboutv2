@@ -8,6 +8,7 @@ version: "1.0"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/docs/for-ai/eds-appendix.md
 ---
 
 # Adobe Edge Delivery Services (EDS) Development Reference Guide

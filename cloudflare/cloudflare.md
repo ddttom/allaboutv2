@@ -8,6 +8,7 @@ version: "1.4"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/cloudflare/cloudflare.md
 ---
 
 # allabout.network Cloudflare Configuration Reference

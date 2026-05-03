@@ -8,6 +8,7 @@ version: "2.0"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/bright-sparks-plan.md
 ---
 
 # Product Requirements Document (PRD): Bright Sparks Management System

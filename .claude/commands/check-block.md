@@ -1,5 +1,8 @@
 ---
 description: Analyze a block and provide architecture review and improvement suggestions
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/commands/check-block.md
 ---
 
 You are performing an architecture review of an EDS block.

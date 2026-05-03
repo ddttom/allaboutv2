@@ -1,5 +1,8 @@
 ---
 description: Deploy a block from build/ directory to blocks/ directory
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/commands/deploy-block.md
 ---
 
 You are deploying a build-enhanced block to production.

@@ -44,6 +44,7 @@ mx:
     version: '1.0'
     contentModel:
       description: '{Describe the expected content structure in the Word/Google Doc.
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/docs/cog-templates/eds-block.cog.template.md
 
         What rows/columns does the author create?}
 

@@ -1,6 +1,9 @@
 ---
 name: eds-block-testing
 description: Guide for testing EDS blocks using test.html files and the development server. Covers test file structure, EDS core integration, testing patterns, and debugging workflows for Adobe Edge Delivery Services blocks.
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/skills/eds-block-testing/SKILL.md
 ---
 
 # EDS Block Testing Guide

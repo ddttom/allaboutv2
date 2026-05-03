@@ -1,5 +1,8 @@
 ---
 description: Run all linting checks (JavaScript and CSS) across the project
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/commands/lint-all.md
 ---
 
 You are running comprehensive linting checks.

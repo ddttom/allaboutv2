@@ -5,6 +5,7 @@ description: Guide for creating high-quality MCP (Model Context Protocol) server
 mx:
   license: Complete terms in LICENSE.txt
   ---
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/skills/mcp-builder/SKILL.md
 
 
 # MCP Server Development Guide

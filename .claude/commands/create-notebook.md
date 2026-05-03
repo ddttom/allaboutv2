@@ -1,5 +1,8 @@
 ---
 description: Create educational and interactive Jupyter notebooks as SPAs from text content, topics, or concepts. Guides through topic selection, structure planning, content organization, and notebook generation with proper markdown and code cells for display via ipynb-viewer block.
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/commands/create-notebook.md
 ---
 
 # Create Educational Jupyter Notebook

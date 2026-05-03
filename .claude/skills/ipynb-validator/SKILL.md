@@ -1,6 +1,9 @@
 ---
 name: ipynb-validator
 description: Validate Jupyter notebooks (.ipynb files) for production readiness. Checks smart links consistency, layout structure, transition cells with action cards, numbered part flow, cell ordering, and overall quality. Use when validating notebooks, checking notebook structure, testing smart links, verifying action cards, or preparing notebooks for production deployment. Keywords include ipynb validation, notebook structure, smart links, action cards, transitions, part flow, production ready.
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/skills/ipynb-validator/SKILL.md
 ---
 
 # Jupyter Notebook Validator

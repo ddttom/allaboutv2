@@ -8,6 +8,7 @@ version: "1.0"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/docs/AllAbout/allaboutv2-tech-stack.md
 ---
 
 # AllAboutV2 Technology Stack Document

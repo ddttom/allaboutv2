@@ -1,5 +1,8 @@
 ---
 description: Create a new EDS block following Content Driven Development (CDD) process
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/commands/new-block.md
 ---
 
 You are creating a new EDS block. Follow these steps:

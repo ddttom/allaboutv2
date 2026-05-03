@@ -1,6 +1,9 @@
 ---
 name: eds-block-development
 description: Guide for developing EDS blocks using vanilla JavaScript, Content Driven Development, and block decoration patterns. Covers block structure, decorate function, content extraction, DOM manipulation, and EDS best practices for Adobe Edge Delivery Services.
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/skills/eds-block-development/SKILL.md
 ---
 
 # EDS Block Development Guide

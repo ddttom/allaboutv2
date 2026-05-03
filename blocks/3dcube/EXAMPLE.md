@@ -8,6 +8,7 @@ version: "1.0"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/blocks/3dcube/EXAMPLE.md
 ---
 
 # 3D Cube Block Examples

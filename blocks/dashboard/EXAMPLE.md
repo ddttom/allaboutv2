@@ -8,6 +8,7 @@ version: "1.0"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/blocks/dashboard/EXAMPLE.md
 ---
 
 # Dashboard Block - Usage Examples

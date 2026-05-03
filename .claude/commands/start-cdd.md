@@ -1,5 +1,8 @@
 ---
 description: Start Content Driven Development process for creating or modifying blocks
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/commands/start-cdd.md
 ---
 
 You are starting the Content Driven Development (CDD) process.

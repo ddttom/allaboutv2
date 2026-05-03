@@ -1,6 +1,9 @@
 ---
 name: Testing Blocks
 description: Guide for testing code changes in AEM Edge Delivery projects including blocks, scripts, and styles. Use this skill after making code changes and before opening a pull request to validate functionality. Covers unit testing for utilities and logic, browser testing with Playwright/Puppeteer, linting, performance validation, and guidance on which tests to maintain vs use as throwaway validation.
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/skills/testing-blocks/SKILL.md
 ---
 
 # Testing Blocks

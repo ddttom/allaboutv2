@@ -1,5 +1,8 @@
 ---
 description: Validate Jupyter notebook for production readiness - checks smart links, layout structure, transitions, part flow, cell ordering, and overall quality
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/commands/validate-notebook.md
 ---
 
 # Validate Notebook Command

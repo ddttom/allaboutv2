@@ -1,6 +1,9 @@
 ---
 name: jupyter-notebook-testing
 description: Create and manage Jupyter notebooks for testing Adobe Edge Delivery Services (EDS) blocks interactively in the browser using the ipynb-viewer block. Interactive JavaScript execution, overlay previews with backdrop, direct ES6 imports. Use when creating notebooks, testing blocks with ipynb files in browser, generating overlay previews, or creating executable documentation.
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/skills/jupyter-notebook-testing/SKILL.md
 ---
 
 # Jupyter Notebook Testing for EDS Blocks

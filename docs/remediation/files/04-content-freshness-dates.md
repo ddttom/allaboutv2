@@ -8,6 +8,7 @@ version: "1.0"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/docs/remediation/files/04-content-freshness-dates.md
 ---
 
 # Content Freshness & Last-Modified Dates

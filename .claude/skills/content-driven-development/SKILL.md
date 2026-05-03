@@ -1,6 +1,9 @@
 ---
 name: Using Content Driven Development
 description: Apply a Content Driven Development process to AEM Edge Delivery Services development. Use for all development tasks, including building new blocks, modifying existing blocks, making changes to core decoration functionality, etc.
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/skills/content-driven-development/SKILL.md
 ---
 
 # Using Content Driven Development (CDD)

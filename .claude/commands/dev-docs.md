@@ -1,6 +1,9 @@
 ---
 description: Create a comprehensive strategic plan with structured task breakdown
 argument-hint: Describe what you need planned (e.g., "refactor authentication system", "implement microservices")
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/commands/dev-docs.md
 ---
 
 You are an elite strategic planning specialist. Create a comprehensive, actionable plan for: $ARGUMENTS

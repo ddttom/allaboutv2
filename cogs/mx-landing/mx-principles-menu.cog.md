@@ -52,6 +52,7 @@ mx:
   - humans
   - machines
   runbook: ''
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/cogs/mx-landing/mx-principles-menu.cog.md
 ---
 
 # MX Principles Menu

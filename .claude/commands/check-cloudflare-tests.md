@@ -1,5 +1,8 @@
 ---
 description: Validate Cloudflare worker test structure follows two-file rule
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/commands/check-cloudflare-tests.md
 ---
 
 You are validating that the Cloudflare worker implementation follows the two-file testing system.

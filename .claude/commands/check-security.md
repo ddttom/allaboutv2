@@ -1,5 +1,8 @@
 ---
 description: Run security checklist validation based on EDS security guidelines
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/commands/check-security.md
 ---
 
 You are performing a security review based on the comprehensive security checklist.

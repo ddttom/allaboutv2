@@ -1,6 +1,9 @@
 ---
 name: Modeling Content
 description: Create effective content models for your blocks that are easy for authors to work with. Use this skill anytime you are building new blocks, making changes to existing blocks that modify the initial structure authors work with.
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/skills/content-modeling/SKILL.md
 ---
 
 # Content Modeling for AEM Edge Delivery Blocks

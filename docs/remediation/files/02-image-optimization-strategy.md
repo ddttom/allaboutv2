@@ -8,6 +8,7 @@ version: "1.0"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/docs/remediation/files/02-image-optimization-strategy.md
 ---
 
 # Image Optimization Strategy

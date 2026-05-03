@@ -1,6 +1,9 @@
 ---
 name: create-presentation
 description: Create or update presentation notebooks with embedded HTML and JavaScript in markdown cells using EDS blocks. Convert executable code cells to informative text. Build presentations, slides, demos, showcases with accordion, cards, tabs, hero, grid, table blocks. No runnable JavaScript cells - only visual markdown with inline scripts for presentation mode.
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/skills/create-presentation/SKILL.md
 ---
 
 # Create Presentation Skill

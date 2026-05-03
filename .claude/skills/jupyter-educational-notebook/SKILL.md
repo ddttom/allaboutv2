@@ -1,6 +1,9 @@
 ---
 name: jupyter-educational-notebook
 description: Create educational and interactive Jupyter notebooks as SPAs that explain concepts, teach topics, create tutorials, illustrate ideas from text, or build blog posts. Use for interactive guides, demonstrations, explanations, documentation, or any content meant for end users and learners displayed via ipynb-viewer block. Keywords include educational notebook, tutorial notebook, interactive guide, blog notebook, SPA notebook, explain topic, illustrate concept, teach interactively.
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/skills/jupyter-educational-notebook/SKILL.md
 ---
 
 # Educational Jupyter Notebook Creator

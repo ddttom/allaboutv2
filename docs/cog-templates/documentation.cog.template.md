@@ -40,6 +40,7 @@ mx:
   - humans
   - machines
   runbook: ''
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/docs/cog-templates/documentation.cog.template.md
 ---
 
 # {Document Title}

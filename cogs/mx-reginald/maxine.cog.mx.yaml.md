@@ -47,6 +47,7 @@ mx:
     cog_system: "cog-system.cog.md"
     soul_document: "https://github.com/tomcranstoun/MX-hub/blob/main/SOUL.md"
     decision_boundaries: "https://github.com/tomcranstoun/MX-hub/blob/main/hub-content/mx-canon/mx-maxine-lives/MAXINE-DECISIONS.md"
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/cogs/mx-reginald/maxine.cog.mx.yaml.md
 ---
 
 # Maxine COG — Metadata

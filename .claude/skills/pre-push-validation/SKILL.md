@@ -17,6 +17,9 @@ intent_patterns:
   - "ready.*push"
   - "update.*push"
 enforcement: suggest
+
+mx:
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/.claude/skills/pre-push-validation/SKILL.md
 ---
 
 # Pre-Push Validation Skill

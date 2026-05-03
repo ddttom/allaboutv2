@@ -8,6 +8,7 @@ version: "1.0"
 
 mx:
   status: active
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/docs/remediation/files/03-security-headers-implementation.md
 ---
 
 # Security Headers Implementation

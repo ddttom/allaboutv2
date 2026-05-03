@@ -49,6 +49,7 @@ mx:
     caching: permitted for 24 hours
     redistribution: with attribution to MX Reginald Ltd
     commercialUse: permitted
+  canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/cogs/mx-reginald/cog-system.cog.md
 ---
 
 # What is a COG?
