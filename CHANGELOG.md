@@ -21,6 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **CI: pass `CLOUDFLARE_ACCOUNT_ID` to the deploy workflow** (2026-05-04)
+  - `deploy-cloudflare.yml` now sets `CLOUDFLARE_ACCOUNT_ID` (literal account ID, not a secret) alongside `CLOUDFLARE_API_TOKEN` in the `Deploy Worker` step's env block.
+  - Wrangler's `/memberships` pre-flight call requires the `User → User Details → Read` scope, which the standard "Edit Cloudflare Workers" token template does not include. Passing the account ID explicitly skips that lookup.
+  - Fixes deploy workflow runs that failed with `[code: 9106] Authentication failed (status: 400)` on `/memberships`.
+
 - **Cloudflare worker: serve `/.well-known/llms.txt` from the root file** (2026-05-04)
   - New pure function `rewriteWellKnownLlmsTxt(pathname)` in `cloudflare-worker.js` maps `/.well-known/llms.txt` to `/llms.txt` and `/.well-known/llms-full.txt` to `/llms-full.txt`. Any other path returned unchanged.
   - Wired into `handleRequest` after the AI-attribution capture so telemetry still records the original `.well-known` probe as a distinct signal, but the downstream origin fetch reads the canonical root path. The existing `wrapLlmsTxtAsHtml` handling fires unchanged because it matches on basename.
