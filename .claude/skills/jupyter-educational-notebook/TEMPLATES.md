@@ -172,7 +172,7 @@ Part 6: Pro Tips (11 tips)
 - Use Navigation Flows
 - Use Relationship Mapping
 - Start with Getting Started
-- EDS.md is Your Bible
+- EDS.md is Your Protocols
 - Know the Dual-Pattern
 - Master Three Notebook Types
 - Use Templates
