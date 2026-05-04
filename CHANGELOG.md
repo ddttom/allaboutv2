@@ -19,12 +19,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- **GitHub Actions deploy workflow for the Cloudflare worker** (2026-05-04)
+  - `deploy-cloudflare.yml` removed. Policy: Cloudflare worker deploys are human-in-the-loop only — a person runs `npx wrangler deploy`, watches the output, and curls the live site to verify. No CI deploy pipeline.
+  - Reason: worker behaviour changes can show up only under live traffic (header rewrites, cache interactions, edge-runtime quirks, downstream-fetch drift). The engineer pressing the button needs to be the same person who verifies the result a minute later.
+  - The `CLOUDFLARE_API_TOKEN` GitHub repository secret was deleted at the same time since it's no longer needed.
+
 ### Added
 
-- **CI: pass `CLOUDFLARE_ACCOUNT_ID` to the deploy workflow** (2026-05-04)
-  - `deploy-cloudflare.yml` now sets `CLOUDFLARE_ACCOUNT_ID` (literal account ID, not a secret) alongside `CLOUDFLARE_API_TOKEN` in the `Deploy Worker` step's env block.
-  - Wrangler's `/memberships` pre-flight call requires the `User → User Details → Read` scope, which the standard "Edit Cloudflare Workers" token template does not include. Passing the account ID explicitly skips that lookup.
-  - Fixes deploy workflow runs that failed with `[code: 9106] Authentication failed (status: 400)` on `/memberships`.
+- **DEPLOY.md** (2026-05-04) — `cloudflare/files/DEPLOY.md` documents the new manual procedure: `npm test` → `npx wrangler deploy` → live curl smoke checks → Cloudflare cache purge. Includes rollback via `wrangler versions deploy <id>@100%`.
 
 - **Cloudflare worker: serve `/.well-known/llms.txt` from the root file** (2026-05-04)
   - New pure function `rewriteWellKnownLlmsTxt(pathname)` in `cloudflare-worker.js` maps `/.well-known/llms.txt` to `/llms.txt` and `/.well-known/llms-full.txt` to `/llms-full.txt`. Any other path returned unchanged.
