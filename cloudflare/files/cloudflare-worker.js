@@ -221,6 +221,27 @@ export const isAgentDirectoryFile = (pathOrFilename) => {
 };
 
 /**
+ * Map an inbound request pathname to the canonical content path when an agent
+ * probes the /.well-known/ alias of an agent-directory file. The IANA
+ * Well-Known URIs registry pattern means agent crawlers may try
+ * /.well-known/llms.txt or /.well-known/llms-full.txt before falling back to
+ * the root path. Rather than serve a 404 (and lose that traffic), we rewrite
+ * the pathname so the existing root-llms.txt handling fires.
+ *
+ * Pure function — testable in Node without the Workers runtime. Returns the
+ * rewritten pathname when the input matches a known well-known alias,
+ * otherwise returns the input unchanged.
+ *
+ * @param {string} pathname - URL pathname (e.g. "/.well-known/llms.txt")
+ * @returns {string} Canonical content path (e.g. "/llms.txt") or unchanged
+ */
+export const rewriteWellKnownLlmsTxt = (pathname) => {
+  if (pathname === '/.well-known/llms.txt') return '/llms.txt';
+  if (pathname === '/.well-known/llms-full.txt') return '/llms-full.txt';
+  return pathname;
+};
+
+/**
  * Wrap raw llms.txt or llms-full.txt content as a minimal HTML document so
  * Common Crawl (which only ingests HTML) can index the content. Preserves
  * the original text verbatim inside <pre>; no transformation of the text body.
@@ -1175,6 +1196,8 @@ const handleRequest = async (request, env, ctx) => {
   // so it sees every GET, regardless of which origin handles the response.
   // The response status written to D1 is "intent to serve" (200), since we
   // capture pre-response to keep the hot path branchless.
+  // Captures the ORIGINAL pathname so the .well-known probe is visible in
+  // telemetry as a distinct signal from a direct read of /llms.txt.
   if (ctx && request.method === 'GET' && isAttributionHost(publicHostname)) {
     ctx.waitUntil(captureAiVisit({
       request,
@@ -1182,6 +1205,16 @@ const handleRequest = async (request, env, ctx) => {
       url,
       env,
     }));
+  }
+
+  // Well-known agent-directory aliasing — when an agent probes
+  // /.well-known/llms.txt or /.well-known/llms-full.txt, serve the same
+  // content as the root path so the existing wrapping/inferred-HTML handling
+  // fires. Mutates url.pathname AFTER attribution so the original probe is
+  // recorded but downstream routing reads the canonical path.
+  const rewritten = rewriteWellKnownLlmsTxt(url.pathname);
+  if (rewritten !== url.pathname) {
+    url.pathname = rewritten;
   }
 
   // Handle CORS preflight OPTIONS requests

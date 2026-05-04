@@ -3,8 +3,8 @@ title: "Changelog"
 description: "All notable changes to the AllAboutV2 project"
 author: Tom Cranstoun
 created: 2026-01-15
-modified: 2026-02-09
-version: "1.0"
+modified: 2026-05-04
+version: "1.1"
 
 mx:
   status: active
@@ -20,6 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+- **Cloudflare worker: serve `/.well-known/llms.txt` from the root file** (2026-05-04)
+  - New pure function `rewriteWellKnownLlmsTxt(pathname)` in `cloudflare-worker.js` maps `/.well-known/llms.txt` to `/llms.txt` and `/.well-known/llms-full.txt` to `/llms-full.txt`. Any other path returned unchanged.
+  - Wired into `handleRequest` after the AI-attribution capture so telemetry still records the original `.well-known` probe as a distinct signal, but the downstream origin fetch reads the canonical root path. The existing `wrapLlmsTxtAsHtml` handling fires unchanged because it matches on basename.
+  - Rationale: agents probing the IANA Well-Known URIs registry pattern try `/.well-known/llms.txt` before falling back to the root. Serving the same content from both locations preserves discoverability without requiring a duplicate origin file.
+  - Seven new unit tests added (rewrites both aliases; leaves root paths, subpath llms.txt, unrelated paths, and partial matches unchanged). Total: 216 tests, all passing.
 
 - **Schema.org sameAs Organisation identity in JSON-LD** (2026-04-27)
   - `ORGANISATION_CONFIG` constant added to `cloudflare-worker.js` with `name: CogNovaMX`, `legalName: Digital Domain Technologies Ltd`, and `sameAs: [allabout.network, cognovamx.com, mx.allabout.network]`.

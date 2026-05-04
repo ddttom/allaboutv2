@@ -46,6 +46,7 @@ import worker, {
   isAttributionHost,
   wrapLlmsTxtAsHtml,
   isAgentDirectoryFile,
+  rewriteWellKnownLlmsTxt,
   buildFreeBookFormHTML,
   WORKER_VERSION,
   PICTURE_PLACEHOLDER_CONFIG,
@@ -533,6 +534,42 @@ describe('isAgentDirectoryFile', () => {
     expect(isAgentDirectoryFile('')).toBe(false);
     expect(isAgentDirectoryFile(null)).toBe(false);
     expect(isAgentDirectoryFile(undefined)).toBe(false);
+  });
+});
+
+// Test suite for rewriteWellKnownLlmsTxt
+describe('rewriteWellKnownLlmsTxt', () => {
+  test('rewrites /.well-known/llms.txt to /llms.txt', () => {
+    expect(rewriteWellKnownLlmsTxt('/.well-known/llms.txt')).toBe('/llms.txt');
+  });
+
+  test('rewrites /.well-known/llms-full.txt to /llms-full.txt', () => {
+    expect(rewriteWellKnownLlmsTxt('/.well-known/llms-full.txt')).toBe('/llms-full.txt');
+  });
+
+  test('returns root /llms.txt unchanged', () => {
+    expect(rewriteWellKnownLlmsTxt('/llms.txt')).toBe('/llms.txt');
+  });
+
+  test('returns root /llms-full.txt unchanged', () => {
+    expect(rewriteWellKnownLlmsTxt('/llms-full.txt')).toBe('/llms-full.txt');
+  });
+
+  test('returns subpath llms.txt unchanged (only root well-known is aliased)', () => {
+    expect(rewriteWellKnownLlmsTxt('/blog/llms.txt')).toBe('/blog/llms.txt');
+    expect(rewriteWellKnownLlmsTxt('/docs/llms-full.txt')).toBe('/docs/llms-full.txt');
+  });
+
+  test('returns unrelated paths unchanged', () => {
+    expect(rewriteWellKnownLlmsTxt('/')).toBe('/');
+    expect(rewriteWellKnownLlmsTxt('/about/index.html')).toBe('/about/index.html');
+    expect(rewriteWellKnownLlmsTxt('/.well-known/agent-card.json')).toBe('/.well-known/agent-card.json');
+    expect(rewriteWellKnownLlmsTxt('/.well-known/security.txt')).toBe('/.well-known/security.txt');
+  });
+
+  test('does not partially match (exact path required)', () => {
+    expect(rewriteWellKnownLlmsTxt('/.well-known/llms.txt.bak')).toBe('/.well-known/llms.txt.bak');
+    expect(rewriteWellKnownLlmsTxt('/.well-known/llms.txtish')).toBe('/.well-known/llms.txtish');
   });
 });
 
