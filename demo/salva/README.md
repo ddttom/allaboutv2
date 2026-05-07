@@ -219,4 +219,4 @@ curl -H "Accept-Language: en-US,en;q=0.9" -L https://allabout.network/demo/salva
 
 ---
 
-**CogNovaMX Ltd** — Making the web work for everyone and everything that uses it.
+**CogNovaMX Ltd** — Making the web — and everything you publish beyond it — work for everyone and everything that uses it.

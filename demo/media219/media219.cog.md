@@ -142,4 +142,4 @@ This is the **convergence principle** in practice: by designing for machines (st
 
 *This cog was created as a demonstration of MX principles applied to Media219 Ltd's existing business. It shows what machine-readable presence could look like — enabling AI agents to discover, cite, and recommend the studio.*
 
-*CogNovaMX Ltd — Making the web work for everyone and everything that uses it.*
+*CogNovaMX Ltd — Making the web — and everything you publish beyond it — work for everyone and everything that uses it.*

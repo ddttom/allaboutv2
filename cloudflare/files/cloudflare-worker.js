@@ -1846,7 +1846,7 @@ function bookSuccessPageHTML(product, sessionId) {
       </section>
 
       <footer class="card-footer">
-        <p>&copy; <a href="https://allabout.network">CogNovaMX Ltd</a> &mdash; Making the web work for everyone and everything that uses it.</p>
+        <p>&copy; <a href="https://allabout.network">CogNovaMX Ltd</a> &mdash; Making the web, and everything you publish beyond it, work for everyone and everything that uses it.</p>
       </footer>
     </article>
   </main>

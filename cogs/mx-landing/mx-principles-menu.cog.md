@@ -113,4 +113,4 @@ The HTML version (`mx-principles-menu.html`) renders a visual menu. This COG pro
 
 ---
 
-*CogNovaMX Ltd — Making the web work for everyone and everything that uses it.*
+*CogNovaMX Ltd — Making the web — and everything you publish beyond it — work for everyone and everything that uses it.*

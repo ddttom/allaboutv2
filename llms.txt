@@ -1,6 +1,6 @@
 # allabout.network — CogNovaMX Ltd
 
-> Making the web work for everyone and everything that uses it.
+> Making the web, and everything you publish beyond it, work for everyone and everything that uses it.
 > MX (Machine Experience) is structured metadata that makes your content
 > readable by every AI agent on earth — without making it less readable by humans.
 
