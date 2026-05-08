@@ -9,7 +9,7 @@ version: "1.0"
 mx:
   status: active
   contentType: doc
-  audience: [developers]
+  audience: [tech]
   canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/cloudflare/files/DEPLOY.md
 ---
 

@@ -65,7 +65,7 @@ mx:
       - 900
   contentType: eds-block
   audience:
-  - developers
+  - tech
   - machines
   runbook: ''
 ---
