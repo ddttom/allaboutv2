@@ -682,46 +682,25 @@
       "attestation": "base64:LQlT1bCR+qIy1xba7P2cOLBa//TGfAPYGy8ntNoDoH5l+K0LjX+ix3OeG9IwDea30aTWy2cq5Xc37VG46hzsDA=="
     },
     {
-      "name": "blog-generator",
+      "name": "blog-post",
       "version": "1.0.0",
-      "description": "Generates, converts, and updates blog posts for allabout.network in both EDS markdown and MX HTML formats.",
-      "canonical_url": "https://content.allabout.network/cogs/cognovamx/blog-generator/content.md",
-      "content_hash": "sha256:f774776d18b233e3b9eda6bdf470f017dcd2c7e282ceea2ce146a397984db8d2",
-      "category": "mx-core",
-      "tags": [
-        "blog",
-        "content",
-        "publishing",
-        "eds",
-        "html",
-        "allabout",
-        "writing",
-        "action"
-      ],
-      "type": "action-doc",
-      "modified": "2026-02-11",
-      "attestation": "base64:QtTexjPbSuGsb0C93s6WDRKViGyyH/y0ULphlxKdGezt7PRZ2ZIH9mh0TjNrBV89PIU/SLOGWMqhmLeitLtoAw=="
-    },
-    {
-      "name": "blog-reviewer",
-      "version": "1.0.0",
-      "description": "Review blog posts — scan for AI writing patterns, check dual-audience balance, interview the author, rewrite. Accepts markdown, HTML, or plain text.",
-      "canonical_url": "https://content.allabout.network/cogs/cognovamx/blog-reviewer/content.md",
-      "content_hash": "sha256:40e10e51496ace33b80f52ac6537af4ececd99b042a1b71df01dd952d2df1f4c",
+      "description": "End-to-end cog for mx-site blog posts: create a draft, review it for AI patterns and dual-audience balance, publish via git mv. Replaces blog-generator and blog-reviewer.",
+      "canonical_url": "https://content.allabout.network/cogs/cognovamx/blog-post/content.md",
       "category": "mx-content",
       "tags": [
         "blog",
+        "post",
+        "content",
+        "create",
         "review",
-        "humanizer",
+        "publish",
+        "mx-site",
         "dual-audience",
-        "interview",
-        "rewrite",
-        "content-quality",
-        "sales-enablement"
+        "humanizer",
+        "action"
       ],
       "type": "action-doc",
-      "modified": "2026-02-11",
-      "attestation": "base64:5jylsaTjhGu84KE+6nPofcjE8IrHt+5t63W8g6EbzS2WGqJ6LSzRVcmAEyTUqQpVohCTuqwia/ulZ++F/KdvCw=="
+      "modified": "2026-05-10"
     },
     {
       "name": "building-action-docs",
