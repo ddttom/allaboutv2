@@ -69,6 +69,8 @@ AI assistants get things wrong. Not because they're stupid, but because they hav
 
 A couple wanted to book a Danube river cruise. The price was £2,030 — a good deal. They asked an AI assistant for help. The AI read the website, but the price wasn't formatted for machines to understand. The AI saw £203,000. Two hundred and three thousand pounds. The AI told them it was unreasonably expensive. They never saw the real price. They never booked. The cruise company lost the sale. Neither party knew why.
 
+The page could have carried Schema.org markup that named the field as a price; any page can. Schema.org defines what `price` means as a field; it does not certify that the operator actually issued the figure. The same JSON-LD payload could have come from the operator, from a scraper, from a competitor's mirror, from a malicious copy. The trust layer is not on the page. It is in the signed record above the page — the version the operator published, dated, cryptographically signed, and registered, against which the agent verifies what the page claims. The page can lie; the signature cannot. That is the layer COGs add, and it is the layer REGINALD indexes.
+
 A developer asked an AI coding assistant about a specific authentication command. The command was real. It was fully documented on the vendor's website. The AI said it didn't exist. The resulting troubleshooting cascade consumed over 40,000 tokens across two AI systems. The correct answer required 200 tokens. A 200x waste ratio — on a single question.
 
 These aren't edge cases. This is happening millions of times a day, across every industry, on every AI platform. The information exists. It's just written for human eyes, and AI can't reliably read it.
