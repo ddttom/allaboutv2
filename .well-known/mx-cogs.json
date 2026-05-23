@@ -2,7 +2,7 @@
   "manifest_version": "1.0",
   "publisher": {
     "namespace": "cognovamx",
-    "name": "CogNovaMX Ltd",
+    "name": "CogNovaMX",
     "domain": "allabout.network",
     "contact": "tom.cranstoun@gmail.com",
     "attestation_key": {

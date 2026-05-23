@@ -213,4 +213,4 @@ Document structure:
 
 ---
 
-*Block maintained by Tom Cranstoun, CogNovaMX Ltd*
+*Block maintained by Tom Cranstoun, CogNovaMX*

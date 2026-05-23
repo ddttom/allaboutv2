@@ -29,7 +29,7 @@ It contains the complete current Cloudflare CDN configuration, Adobe Edge Delive
 **Registrar:** GoDaddy  
 **DNS Management:** Cloudflare  
 **Primary Purpose:** Personal/professional website powered by Adobe Edge Delivery Services  
-**Owner:** Tom Cranstoun (CogNovaMX Ltd)
+**Owner:** Tom Cranstoun (CogNovaMX)
 
 ---
 
@@ -966,7 +966,7 @@ curl -sI https://allabout.network | grep cfw
 
 **Domain Owner:** Tom Cranstoun  
 **Email:** info@cognovamx.com  
-**Company:** CogNovaMX Ltd
+**Company:** CogNovaMX
 
 ### Official Documentation
 
@@ -1310,7 +1310,7 @@ Use this checklist to verify configuration if troubleshooting or rebuilding setu
 
 **Other updates:**
 
-- Company name updated to CogNovaMX Ltd
+- Company name updated to CogNovaMX
 - Worker version updated to 1.2.0
 - Document dates refreshed
 

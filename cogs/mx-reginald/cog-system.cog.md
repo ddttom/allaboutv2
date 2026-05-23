@@ -224,7 +224,7 @@ COGs don't exist in isolation. They're part of a broader ecosystem of companies,
 
 Three companies work together:
 
-**CogNovaMX Ltd** is the commercial steward of Machine Experience. Founded and owned by Tom Cranstoun — 52 years in technology, BBC, Adobe Expert, Fortune 500 clients. CogNovaMX operates consulting, the MX certification framework, and the MaXinE AI engine. Tom originated the MX discipline, built on Steve Krug's "Don't Make Me Think" principle applied to AI agents: if a machine has to think, it hallucinates.
+**CogNovaMX** is the commercial steward of Machine Experience. Founded and owned by Tom Cranstoun — 52 years in technology, BBC, Adobe Expert, Fortune 500 clients. CogNovaMX operates consulting, the MX certification framework, and the MaXinE AI engine. Tom originated the MX discipline, built on Steve Krug's "Don't Make Me Think" principle applied to AI agents: if a machine has to think, it hallucinates.
 
 **MX Reginald Ltd** operates the REGINALD registry and the Signing Engine. Co-founded by Tom Cranstoun and Scott McGregor, who runs independent technology pilots. This is the company publishing this COG — the company that runs the library where verified documentation lives.
 

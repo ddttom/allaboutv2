@@ -162,4 +162,4 @@ To move from Level 2 to Level 3:
 
 ---
 
-*CogNovaMX Ltd — Design for machines. Benefit humans. Advance both.*
+*CogNovaMX — Design for machines. Benefit humans. Advance both.*
