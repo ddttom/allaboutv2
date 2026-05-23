@@ -115,6 +115,72 @@ class NotebookValidator:
             'score': score
         }
 
+    def validate_cell_quality(self) -> List[str]:
+        """Check headings and cell formatting for rendering issues.
+
+        Returns warnings folded into structure validation. Catches three
+        classes of issue documented in the project's historical LEARNINGS:
+
+        1. Part/Section headings using ### (level 3) instead of ## (level 2),
+           which hides them from the VSCode notebook outline.
+        2. Emoji pictographs in headings, which can cause text concatenation
+           and inconsistent rendering across viewers.
+        3. Cell sources stored as one long concatenated string without \n
+           line breaks, which breaks VSCode's outline parsing for sub-headings.
+        """
+        emoji_pattern = re.compile(
+            r'['
+            r'\U0001F300-\U0001F5FF'  # symbols & pictographs
+            r'\U0001F600-\U0001F64F'  # emoticons
+            r'\U0001F680-\U0001F6FF'  # transport & map
+            r'\U0001F900-\U0001F9FF'  # supplemental symbols
+            r']+'
+        )
+        part_heading_h3 = re.compile(
+            r'###\s*(?:[^\w\s]+\s*)?(?:Part|Section)\s*\d+:',
+            re.IGNORECASE
+        )
+
+        warnings = []
+        for idx, cell in enumerate(self.cells):
+            if cell['cell_type'] != 'markdown':
+                continue
+            source_list = cell.get('source', [])
+            source = ''.join(source_list)
+
+            # Check 1: Part/Section headings should be ## not ###
+            for line in source.split('\n'):
+                if part_heading_h3.match(line.lstrip()):
+                    warnings.append(
+                        f"Cell {idx}: Part/Section heading uses ### "
+                        f"(use ## for VSCode outline visibility)"
+                    )
+                    break
+
+            # Check 2: Emoji pictographs in headings
+            for line in source.split('\n'):
+                stripped = line.lstrip()
+                if stripped.startswith('#') and emoji_pattern.search(stripped):
+                    warnings.append(
+                        f"Cell {idx}: heading contains emoji pictographs "
+                        f"(may cause text concatenation in some viewers)"
+                    )
+                    break
+
+            # Check 3: Long source stored as one string without proper newlines
+            # Heuristic: large content with multiple headings but few \n breaks
+            # suggests the source array was built as one concatenated chunk
+            if len(source) > 300:
+                heading_count = len(re.findall(r'(?:^|\n)#{2,}\s', source))
+                newline_count = source.count('\n')
+                if heading_count >= 2 and newline_count < heading_count * 2:
+                    warnings.append(
+                        f"Cell {idx}: long source missing proper line breaks "
+                        f"(breaks VSCode outline parsing for sub-headings)"
+                    )
+
+        return warnings
+
     def identify_parts(self) -> List[Dict]:
         """Identify all parts/sections in the notebook."""
         parts = []
