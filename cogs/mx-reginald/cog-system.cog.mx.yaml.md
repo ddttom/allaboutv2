@@ -27,7 +27,7 @@ mx:
       - "What is a COG (opens with 'You're reading one right now')"
       - "The problem (Danube cruise £2,030→£203,000, developer 40,000-token cascade)"
       - "The solution (verified documents for both humans and machines)"
-      - "The two layers (Certificate of Genuineness + Contract of Governance)"
+      - "The two strands (attestation + stewardship metadata) in the COG record"
       - "Why COG (gear metaphor)"
       - "The lifecycle (7 stages, explained in plain language)"
       - "Five compliance levels (Basic through Audited)"
@@ -54,7 +54,7 @@ mx:
       - "book publication dates change"
       - "signing engine processes first document"
   regeneration:
-    prompt: "Create a self-describing COG document that explains the COG system (Certificate of Genuineness / Contract of Governance). Must include rich human narrative with real-world examples (cruise pricing, developer token waste). Links to MX Holdings, MX Books, and MX Reginald. Follow the COG specification at reginald/cog-specification.md. Status: draft, unsigned, Level 2 compliance. COGs live at allabout.network/cogs/{client-id}/{subject}.cog.md — no dot prefix."
+    prompt: "Create a self-describing COG document that explains the COG system (Community Owned Governance Standard). Must include rich human narrative with real-world examples (cruise pricing, developer token waste). Links to MX Holdings, MX Books, and MX Reginald. Follow the COG specification at reginald/cog-specification.md. Status: draft, unsigned, Level 2 compliance. COGs live at allabout.network/cogs/{client-id}/{subject}.cog.md — no dot prefix."
     sources:
       - "reginald/cog-specification.md"
       - "reginald/README.md"

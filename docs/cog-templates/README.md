@@ -1,13 +1,13 @@
 # COG Templates
 
-Templates for creating Certificate of Genuineness (COG) documents across allaboutv2 content.
+Templates for creating COG (Community Owned Governance Standard) documents across allaboutv2 content.
 
 ## What Are COGs?
 
-A COG is a markdown file (`.cog.md`) with YAML frontmatter that provides:
+A COG is a markdown file (`.cog.md`) with YAML frontmatter that provides, in one record:
 
-1. **Certificate of Genuineness** — Trust layer: who published it, when, verification status
-2. **Contract of Governance** — Accountability layer: who maintains it, review cycle, correction SLA
+1. **Attestation** — Trust layer: who published it, when, verification status
+2. **Stewardship metadata** — Accountability layer: who maintains it, review cycle, correction SLA
 
 COGs make content readable by both humans and AI agents. The YAML is for machines. The markdown body is for people. Same truth, both audiences.
 
