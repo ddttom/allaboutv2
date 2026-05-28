@@ -21,6 +21,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Cloudflare worker: lead-capture endpoints for mx.allabout.network** (2026-05-28)
+  - Two new POST endpoints mounted on `mx.allabout.network`:
+    - `POST /api/v1/lead/pdf-check` — backs the free MX-readiness check form on `/learn/mx-for-pdfs.html`.
+    - `POST /api/v1/lead/certified-operator-waitlist` — backs the waitlist form on `/services/certified-operator.html`.
+  - Accepts both JSON (progressive-enhanced fetch) and form-urlencoded (no-JS fallback). Returns JSON on `Accept: application/json`, otherwise 303 See Other to the source page with a `?submitted=<formType>` query param the page JS uses to flip the inline status element.
+  - Sends two transactional emails via Resend per submission: an admin notification to `LEAD_CAPTURE_NOTIFY_EMAIL` (falls back to `FREE_BOOK_NOTIFY_EMAIL`) and an acknowledgement to the submitter. Resend failures are soft: the submission is accepted, the failure is reported back in the JSON response during alpha.
+  - Pure functions in `reginald/lib/lead-capture.js`: `validateLeadCapture`, `escapeHtml`, `buildAdminEmail`, `buildAcknowledgementEmail`, `buildSuccessRedirectUrl`, `buildSuccessResponseBody`. Handler in `reginald/handlers/lead-capture.js` exports `classifyLeadCaptureRequest` (pure dispatch classifier) and `handleLeadCapture` (orchestrator). CORS is restricted to `mx.allabout.network` and `allabout.network`.
+  - 28 new unit tests in `cloudflare-worker.test.js` covering validation, HTML escaping (XSS-resistant), admin and acknowledgement email body construction, redirect target derivation, JSON response body shape, and the classifier's path-to-formType mapping. Total: 252 tests, all passing.
+  - New env var: `LEAD_CAPTURE_NOTIFY_EMAIL` in `wrangler.toml` (defaults to `tom.cranstoun@gmail.com`).
+  - Rationale: turns the explainer at `/learn/mx-for-pdfs.html` into a top-of-funnel that reuses the existing audit pipeline, and gives the §3.1 badge-restriction clause in `mx-canon/.../accreditation-programme.md` a public `apply here` destination. Both forms are progressive-enhancement: they work without JS, the JS just intercepts to avoid a full-page redirect.
+
 - **Cloudflare worker: trailing-slash fallback to `<path>.html`** (2026-05-28)
   - New pure function `resolveSubPathWithFallback(rawPath)` returns `{primary, fallback}` for any URL path. Trailing-slash URLs get `<path>/index.html` as primary and `<path-stripped>.html` as fallback; other paths pass through with `null` fallback.
   - Wired into the mx-outputs subdomain handler in `handleMxOutputsSubdomain`. The worker fetches the primary; if it returns 404 AND a fallback exists, it fetches the fallback. If the fallback returns 200, that response is used.

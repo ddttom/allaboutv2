@@ -41,6 +41,7 @@ import { handleAiAttribution } from './reginald/handlers/ai-attribution.js';
 import { handleAiAttributionDashboard } from './reginald/handlers/ai-attribution-dashboard.js';
 import { notifyPurchase } from './reginald/lib/mailerlite.js';
 import { sendFreeBookNotification } from './reginald/lib/resend.js';
+import { handleLeadCapture } from './reginald/handlers/lead-capture.js';
 import { AI_ATTRIBUTION_HOSTS, isAttributionHost } from './reginald/lib/ai-attribution-hosts.js';
 import { runGa4Connector } from './reginald/lib/ga4-connector.js';
 import { runAlivenessChecks } from './reginald/lib/aliveness.js';
@@ -1396,6 +1397,9 @@ const handleRequest = async (request, env, ctx) => {
     if (publicHostname === 'mx.allabout.network') {
       if (url.pathname === '/books/download-intro') {
         return handleFreeBookDownload(request, env);
+      }
+      if (url.pathname.startsWith('/api/v1/lead/')) {
+        return handleLeadCapture(request, env, url);
       }
       return handleMxSubdomain(request, url, 'mx-site', env);
     }

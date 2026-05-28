@@ -2544,3 +2544,213 @@ describe('GA4 connector buildPayload', () => {
     expect(payload.events).toHaveLength(25);
   });
 });
+
+// =============================================================
+// Lead capture (free PDF check + Certified Operator waitlist)
+// =============================================================
+import {
+  validateLeadCapture,
+  escapeHtml,
+  buildAdminEmail,
+  buildAcknowledgementEmail,
+  buildSuccessRedirectUrl,
+  buildSuccessResponseBody,
+} from './reginald/lib/lead-capture.js';
+import {
+  classifyLeadCaptureRequest,
+} from './reginald/handlers/lead-capture.js';
+
+describe('Lead capture — validateLeadCapture', () => {
+  const goodPdfCheck = {
+    consent: true, email: 'jane@example.com', url: 'https://example.com/doc.pdf',
+  };
+  const goodWaitlist = {
+    consent: true,
+    email: 'jane@example.com',
+    name: 'Jane Doe',
+    tier: 'tier-2',
+    vocabulary: 'wcag-2-2',
+  };
+
+  test('accepts a valid pdf-check submission', () => {
+    expect(validateLeadCapture('pdf-check', goodPdfCheck)).toEqual({ valid: true, error: '' });
+  });
+
+  test('accepts a valid certified-operator-waitlist submission', () => {
+    expect(validateLeadCapture('certified-operator-waitlist', goodWaitlist)).toEqual({ valid: true, error: '' });
+  });
+
+  test('rejects unknown form type', () => {
+    const r = validateLeadCapture('not-a-form', goodPdfCheck);
+    expect(r.valid).toBe(false);
+    expect(r.error).toMatch(/Unknown form type/);
+  });
+
+  test('rejects when consent missing', () => {
+    const r = validateLeadCapture('pdf-check', { ...goodPdfCheck, consent: false });
+    expect(r.valid).toBe(false);
+    expect(r.error).toMatch(/Consent/);
+  });
+
+  test('accepts consent as string yes/on/true', () => {
+    expect(validateLeadCapture('pdf-check', { ...goodPdfCheck, consent: 'on' }).valid).toBe(true);
+    expect(validateLeadCapture('pdf-check', { ...goodPdfCheck, consent: 'yes' }).valid).toBe(true);
+    expect(validateLeadCapture('pdf-check', { ...goodPdfCheck, consent: 'true' }).valid).toBe(true);
+  });
+
+  test('rejects invalid email', () => {
+    const r = validateLeadCapture('pdf-check', { ...goodPdfCheck, email: 'not-an-email' });
+    expect(r.valid).toBe(false);
+    expect(r.error).toMatch(/email/);
+  });
+
+  test('pdf-check requires a URL', () => {
+    const r = validateLeadCapture('pdf-check', { ...goodPdfCheck, url: '' });
+    expect(r.valid).toBe(false);
+    expect(r.error).toMatch(/URL/);
+  });
+
+  test('pdf-check rejects non-http URL', () => {
+    const r = validateLeadCapture('pdf-check', { ...goodPdfCheck, url: 'ftp://example.com/x' });
+    expect(r.valid).toBe(false);
+  });
+
+  test('waitlist rejects missing name', () => {
+    const r = validateLeadCapture('certified-operator-waitlist', { ...goodWaitlist, name: '' });
+    expect(r.valid).toBe(false);
+    expect(r.error).toMatch(/name/);
+  });
+
+  test('waitlist rejects unknown tier', () => {
+    const r = validateLeadCapture('certified-operator-waitlist', { ...goodWaitlist, tier: 'tier-99' });
+    expect(r.valid).toBe(false);
+    expect(r.error).toMatch(/tier/);
+  });
+
+  test('waitlist rejects unknown vocabulary', () => {
+    const r = validateLeadCapture('certified-operator-waitlist', { ...goodWaitlist, vocabulary: 'made-up' });
+    expect(r.valid).toBe(false);
+    expect(r.error).toMatch(/vocabulary/);
+  });
+});
+
+describe('Lead capture — escapeHtml', () => {
+  test('escapes the five HTML-significant characters', () => {
+    expect(escapeHtml('<a href="x">Tom & Co\'s "drop"</a>'))
+      .toBe('&lt;a href=&quot;x&quot;&gt;Tom &amp; Co&#39;s &quot;drop&quot;&lt;/a&gt;');
+  });
+
+  test('handles null and undefined', () => {
+    expect(escapeHtml(null)).toBe('');
+    expect(escapeHtml(undefined)).toBe('');
+  });
+});
+
+describe('Lead capture — buildAdminEmail', () => {
+  test('pdf-check email includes URL and submitter email', () => {
+    const r = buildAdminEmail('pdf-check', {
+      email: 'jane@example.com', url: 'https://example.com/doc.pdf', name: 'Jane',
+    });
+    expect(r.subject).toContain('Free PDF check');
+    expect(r.subject).toContain('jane@example.com');
+    expect(r.html).toContain('https://example.com/doc.pdf');
+    expect(r.html).toContain('Jane');
+  });
+
+  test('waitlist email includes tier, vocabulary, organisation', () => {
+    const r = buildAdminEmail('certified-operator-waitlist', {
+      email: 'jane@example.com',
+      name: 'Jane',
+      tier: 'tier-2',
+      vocabulary: 'wcag-2-2',
+      organisation: 'Acme Audits',
+    });
+    expect(r.subject).toContain('Certified Operator');
+    expect(r.html).toContain('Acme Audits');
+    expect(r.html).toContain('tier-2');
+    expect(r.html).toContain('wcag-2-2');
+  });
+
+  test('escapes user-supplied HTML in admin email', () => {
+    const r = buildAdminEmail('pdf-check', {
+      email: 'jane@example.com',
+      url: 'https://example.com/<script>alert(1)</script>',
+      name: '<img src=x>',
+    });
+    expect(r.html).not.toMatch(/<script>/);
+    expect(r.html).not.toMatch(/<img/);
+    expect(r.html).toContain('&lt;script&gt;');
+  });
+});
+
+describe('Lead capture — buildAcknowledgementEmail', () => {
+  test('pdf-check ack mentions the submitted URL', () => {
+    const r = buildAcknowledgementEmail('pdf-check', {
+      email: 'jane@example.com', url: 'https://example.com/doc.pdf', name: 'Jane',
+    });
+    expect(r.subject).toMatch(/MX-readiness/);
+    expect(r.html).toContain('https://example.com/doc.pdf');
+    expect(r.html).toContain('Hello Jane');
+  });
+
+  test('waitlist ack mentions tier and vocabulary', () => {
+    const r = buildAcknowledgementEmail('certified-operator-waitlist', {
+      email: 'jane@example.com', name: 'Jane', tier: 'tier-3', vocabulary: 'eu-ai-act-13',
+    });
+    expect(r.subject).toMatch(/waitlist/);
+    expect(r.html).toContain('tier-3');
+    expect(r.html).toContain('eu-ai-act-13');
+  });
+
+  test('omits name greeting cleanly when name is empty', () => {
+    const r = buildAcknowledgementEmail('pdf-check', {
+      email: 'jane@example.com', url: 'https://example.com/doc.pdf', name: '',
+    });
+    expect(r.html).toContain('Hello,');
+    expect(r.html).not.toMatch(/Hello \s*,/);
+  });
+});
+
+describe('Lead capture — buildSuccessRedirectUrl', () => {
+  test('pdf-check redirects to the learn page with anchor', () => {
+    expect(buildSuccessRedirectUrl('pdf-check')).toBe('/learn/mx-for-pdfs.html?submitted=pdf-check#free-check');
+  });
+  test('waitlist redirects to the services page with anchor', () => {
+    expect(buildSuccessRedirectUrl('certified-operator-waitlist'))
+      .toBe('/services/certified-operator.html?submitted=certified-operator-waitlist#joining');
+  });
+  test('unknown form type falls back to root', () => {
+    expect(buildSuccessRedirectUrl('not-real')).toBe('/');
+  });
+});
+
+describe('Lead capture — buildSuccessResponseBody', () => {
+  test('pdf-check body advertises 2-day turnaround', () => {
+    const r = buildSuccessResponseBody('pdf-check');
+    expect(r.ok).toBe(true);
+    expect(r.message).toMatch(/two working days/);
+  });
+  test('waitlist body mentions Stage 1', () => {
+    const r = buildSuccessResponseBody('certified-operator-waitlist');
+    expect(r.ok).toBe(true);
+    expect(r.message).toMatch(/Stage 1/);
+  });
+});
+
+describe('Lead capture — classifyLeadCaptureRequest', () => {
+  test('POST + known path returns submit', () => {
+    expect(classifyLeadCaptureRequest('POST', '/api/v1/lead/pdf-check'))
+      .toEqual({ kind: 'submit', formType: 'pdf-check' });
+    expect(classifyLeadCaptureRequest('POST', '/api/v1/lead/certified-operator-waitlist'))
+      .toEqual({ kind: 'submit', formType: 'certified-operator-waitlist' });
+  });
+  test('OPTIONS returns preflight', () => {
+    expect(classifyLeadCaptureRequest('OPTIONS', '/api/v1/lead/pdf-check').kind).toBe('preflight');
+  });
+  test('GET returns method-not-allowed', () => {
+    expect(classifyLeadCaptureRequest('GET', '/api/v1/lead/pdf-check').kind).toBe('method-not-allowed');
+  });
+  test('Unknown path returns not-found', () => {
+    expect(classifyLeadCaptureRequest('POST', '/api/v1/lead/unknown').kind).toBe('not-found');
+  });
+});
