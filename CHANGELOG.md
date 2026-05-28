@@ -19,6 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Cloudflare worker: trailing-slash fallback to `<path>.html`** (2026-05-28)
+  - New pure function `resolveSubPathWithFallback(rawPath)` returns `{primary, fallback}` for any URL path. Trailing-slash URLs get `<path>/index.html` as primary and `<path-stripped>.html` as fallback; other paths pass through with `null` fallback.
+  - Wired into the mx-outputs subdomain handler in `handleMxOutputsSubdomain`. The worker fetches the primary; if it returns 404 AND a fallback exists, it fetches the fallback. If the fallback returns 200, that response is used.
+  - Rationale: `mx.allabout.network/learn/` is a flat folder (`learn/<slug>.html`), but visitors who type `/learn/<slug>/` (matching the site convention used for `/about/`, `/blog/`, `/books/`, `/services/`) got a 404. The fallback makes both forms resolve to the same file.
+  - Eight new unit tests added for `resolveSubPathWithFallback` (root, empty, trailing-slash, nested trailing-slash, top-level trailing-slash, .html extension, non-html extension, extensionless without slash). Total: 224 tests, all passing.
+
 ### Removed
 
 - **GitHub Actions deploy workflow for the Cloudflare worker** (2026-05-04)

@@ -80,6 +80,38 @@ export const isMediaRequest = (url) => (
 export const isRUMRequest = (url) => /\/\.(rum|optel)\/.*/.test(url.pathname);
 
 /**
+ * Resolve a trailing-slash URL to the GitHub-raw subpath plus a fallback.
+ *
+ * GitHub raw does not serve directory listings, so the worker rewrites
+ * `/foo/` to `/foo/index.html`. The mx-site `learn/` folder is flat —
+ * `learn/mx-for-pdfs.html` is a file, not `learn/mx-for-pdfs/index.html`.
+ * When the index.html form 404s, fall through to `<path-stripped>.html`
+ * so trailing-slash URLs typed by hand resolve the same as the canonical
+ * `.html` form.
+ *
+ * Returns `{primary, fallback}` where:
+ *   - primary is the path to try first
+ *   - fallback is a second path to try if the primary returns 404 (or null
+ *     when no fallback applies)
+ *
+ * @param {string} rawPath - url.pathname as received
+ * @returns {{primary: string, fallback: string|null}}
+ */
+export const resolveSubPathWithFallback = (rawPath) => {
+  if (rawPath === '/' || rawPath === '') {
+    return { primary: '/index.html', fallback: null };
+  }
+  if (rawPath.endsWith('/')) {
+    const stripped = rawPath.replace(/\/$/, '');
+    return {
+      primary: `${rawPath}index.html`,
+      fallback: `${stripped}.html`,
+    };
+  }
+  return { primary: rawPath, fallback: null };
+};
+
+/**
 
 * Converts 2-digit year to 4-digit year using century inference
 * Years 00-49 -> 2000-2049, Years 50-99 -> 1950-1999
@@ -983,12 +1015,12 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
     return Response.redirect(redirectUrl.toString(), 301);
   }
 
-  // Resolve directory-style paths to index.html (GitHub raw doesn't serve directory listings)
-  if (subPath === '/' || subPath === '') {
-    subPath = '/index.html';
-  } else if (subPath.endsWith('/')) {
-    subPath += 'index.html';
-  }
+  // Resolve directory-style paths to index.html (GitHub raw doesn't serve
+  // directory listings). For trailing-slash URLs that come back 404, fall
+  // through to `<path-stripped>.html` so flat folders like learn/ resolve
+  // both `/learn/<slug>/` and `/learn/<slug>.html` to the same file.
+  const { primary, fallback } = resolveSubPathWithFallback(subPath);
+  subPath = primary;
 
   const repoPath = env.MX_OUTPUTS_REPO_PATH || '/Digital-Domain-Technologies-Ltd/MX-outputs/main';
   const originUrl = new URL(url);
@@ -1003,6 +1035,21 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   let resp = await fetch(originReq, {
     cf: { cacheEverything: true, cacheTtl: 300 },
   });
+
+  if (resp.status === 404 && fallback) {
+    subPath = fallback;
+    originUrl.pathname = `${repoPath}/${subdomain}${subPath}`;
+    const fallbackReq = new Request(originUrl, {
+      method: request.method,
+      headers: request.headers,
+    });
+    const fallbackResp = await fetch(fallbackReq, {
+      cf: { cacheEverything: true, cacheTtl: 300 },
+    });
+    if (fallbackResp.status === 200) {
+      resp = fallbackResp;
+    }
+  }
 
   // Markdown for Agents: let Cloudflare's native converter transform HTML
   // responses on mx-site/content. GitHub raw serves .html as text/plain, so

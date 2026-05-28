@@ -26,6 +26,7 @@ import worker, {
   getExtension,
   isMediaRequest,
   isRUMRequest,
+  resolveSubPathWithFallback,
   buildJsonLd,
   ORGANISATION_CONFIG,
   formatISO8601Date,
@@ -166,6 +167,65 @@ describe('isRUMRequest', () => {
     invalidUrls.forEach((urlStr) => {
       const url = new URL(urlStr);
       expect(isRUMRequest(url)).toBe(false);
+    });
+  });
+});
+
+// Test suite for resolveSubPathWithFallback
+describe('resolveSubPathWithFallback', () => {
+  test('root path resolves to /index.html with no fallback', () => {
+    expect(resolveSubPathWithFallback('/')).toEqual({
+      primary: '/index.html',
+      fallback: null,
+    });
+  });
+
+  test('empty path resolves to /index.html with no fallback', () => {
+    expect(resolveSubPathWithFallback('')).toEqual({
+      primary: '/index.html',
+      fallback: null,
+    });
+  });
+
+  test('trailing-slash path returns index.html primary + .html fallback', () => {
+    expect(resolveSubPathWithFallback('/learn/mx-for-pdfs/')).toEqual({
+      primary: '/learn/mx-for-pdfs/index.html',
+      fallback: '/learn/mx-for-pdfs.html',
+    });
+  });
+
+  test('nested trailing-slash path returns both forms', () => {
+    expect(resolveSubPathWithFallback('/about/team/leads/')).toEqual({
+      primary: '/about/team/leads/index.html',
+      fallback: '/about/team/leads.html',
+    });
+  });
+
+  test('top-level trailing-slash returns index.html primary + .html fallback', () => {
+    expect(resolveSubPathWithFallback('/learn/')).toEqual({
+      primary: '/learn/index.html',
+      fallback: '/learn.html',
+    });
+  });
+
+  test('path with file extension passes through unchanged with no fallback', () => {
+    expect(resolveSubPathWithFallback('/learn/mx-for-pdfs.html')).toEqual({
+      primary: '/learn/mx-for-pdfs.html',
+      fallback: null,
+    });
+  });
+
+  test('path with non-html extension passes through unchanged', () => {
+    expect(resolveSubPathWithFallback('/assets/logo.png')).toEqual({
+      primary: '/assets/logo.png',
+      fallback: null,
+    });
+  });
+
+  test('extensionless path without trailing slash passes through (redirect handles slash addition)', () => {
+    expect(resolveSubPathWithFallback('/learn/mx-for-pdfs')).toEqual({
+      primary: '/learn/mx-for-pdfs',
+      fallback: null,
     });
   });
 });
