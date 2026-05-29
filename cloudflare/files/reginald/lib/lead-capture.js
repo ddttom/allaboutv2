@@ -19,6 +19,28 @@ const RESEND_API = 'https://api.resend.com/emails';
 const VALID_FORM_TYPES = new Set([
   'pdf-check',
   'certified-operator-waitlist',
+  'general-enquiry',
+]);
+
+// Service options for the general-enquiry form. The first option in the
+// list ('mx-printworks') is the only one that routes to Scott; every other
+// service routes to Tom. Keep this list in lockstep with the <select>
+// options in mx-outputs/mx-site/about/contact.html.
+const VALID_GENERAL_ENQUIRY_SERVICES = new Set([
+  'mx-printworks',
+  'mx-audit',
+  'pdf-eaa',
+  'reginald',
+  'certification',
+  'training',
+  'other',
+]);
+
+const VALID_GENERAL_ENQUIRY_BUDGET = new Set([
+  '',
+  'exploring',
+  'allocated',
+  'business-case',
 ]);
 
 const VALID_TIERS = new Set([
@@ -41,12 +63,27 @@ const MAX_FIELD_LENGTH = 500;
 const FORM_LABELS = {
   'pdf-check': 'Free PDF check request',
   'certified-operator-waitlist': 'Certified Operator waitlist signup',
+  'general-enquiry': 'General enquiry',
 };
 
 const REDIRECT_TARGETS = {
   'pdf-check': '/learn/mx-for-pdfs.html?submitted=pdf-check#free-check',
   'certified-operator-waitlist': '/services/certified-operator.html?submitted=certified-operator-waitlist#joining',
+  'general-enquiry': '/about/contact.html?submitted=general-enquiry#thanks',
 };
+
+/**
+ * Route-by-service rule for the general-enquiry form. The MX Printworks
+ * line routes to Scott (it sits on his operating remit); every other
+ * service routes to Tom. Returns the env-var key to read for the admin
+ * recipient, or null to let the caller fall back to the default.
+ *
+ * Pure function. Caller does the env lookup to keep this testable.
+ */
+export function chooseGeneralEnquiryAdminKey(service) {
+  if (service === 'mx-printworks') return 'MX_PRINTWORKS_NOTIFY_EMAIL';
+  return null;
+}
 
 /**
  * Validate a parsed submission payload.
@@ -61,12 +98,18 @@ export function validateLeadCapture(formType, data) {
     return { valid: false, error: 'Missing submission payload.' };
   }
 
-  const consent = data.consent === true
-    || data.consent === 'true'
-    || data.consent === 'yes'
-    || data.consent === 'on';
-  if (!consent) {
-    return { valid: false, error: 'Consent is required.' };
+  // Consent checkbox is required for the lead-magnet and waitlist forms;
+  // the general-enquiry form treats submission itself as B2B legitimate-
+  // interest consent under GDPR (the form clearly identifies the
+  // recipient and the purpose, and the submitter is initiating contact).
+  if (formType !== 'general-enquiry') {
+    const consent = data.consent === true
+      || data.consent === 'true'
+      || data.consent === 'yes'
+      || data.consent === 'on';
+    if (!consent) {
+      return { valid: false, error: 'Consent is required.' };
+    }
   }
 
   const email = typeof data.email === 'string' ? data.email.trim() : '';
@@ -99,6 +142,32 @@ export function validateLeadCapture(formType, data) {
     const vocab = typeof data.vocabulary === 'string' ? data.vocabulary.trim() : '';
     if (!VALID_VOCABULARIES.has(vocab)) {
       return { valid: false, error: 'Please choose a predicate vocabulary.' };
+    }
+  }
+
+  if (formType === 'general-enquiry') {
+    const name = typeof data.name === 'string' ? data.name.trim() : '';
+    if (!name) {
+      return { valid: false, error: 'Your name is required.' };
+    }
+    const company = typeof data.company === 'string' ? data.company.trim() : '';
+    if (!company) {
+      return { valid: false, error: 'Your company is required.' };
+    }
+    const service = typeof data.service === 'string' ? data.service.trim() : '';
+    if (!VALID_GENERAL_ENQUIRY_SERVICES.has(service)) {
+      return { valid: false, error: 'Please choose a service.' };
+    }
+    const message = typeof data.message === 'string' ? data.message.trim() : '';
+    if (!message) {
+      return { valid: false, error: 'Please tell us about your needs.' };
+    }
+    if (message.length > 4000) {
+      return { valid: false, error: 'Message is too long; please keep it under 4000 characters.' };
+    }
+    const budget = typeof data.budget === 'string' ? data.budget.trim() : '';
+    if (budget && !VALID_GENERAL_ENQUIRY_BUDGET.has(budget)) {
+      return { valid: false, error: 'Budget value is not recognised.' };
     }
   }
 
@@ -145,6 +214,21 @@ export function buildAdminEmail(formType, data) {
     if (data.note) rows += `<tr><td style="padding:4px 12px 4px 0;color:#555">Note</td><td>${escapeHtml(data.note)}</td></tr>`;
   }
 
+  if (formType === 'general-enquiry') {
+    if (data.company) rows += `<tr><td style="padding:4px 12px 4px 0;color:#555">Company</td><td>${escapeHtml(data.company)}</td></tr>`;
+    if (data.phone) rows += `<tr><td style="padding:4px 12px 4px 0;color:#555">Phone</td><td>${escapeHtml(data.phone)}</td></tr>`;
+    if (data.website) {
+      const w = escapeHtml(data.website);
+      rows += `<tr><td style="padding:4px 12px 4px 0;color:#555">Website</td><td><a href="${w}">${w}</a></td></tr>`;
+    }
+    rows += `<tr><td style="padding:4px 12px 4px 0;color:#555">Service</td><td>${escapeHtml(data.service)}</td></tr>`;
+    if (data.budget) rows += `<tr><td style="padding:4px 12px 4px 0;color:#555">Budget</td><td>${escapeHtml(data.budget)}</td></tr>`;
+    if (data.message) rows += `<tr><td style="padding:4px 12px 4px 0;color:#555;vertical-align:top">Message</td><td style="white-space:pre-wrap">${escapeHtml(data.message)}</td></tr>`;
+    if (data.service === 'mx-printworks') {
+      rows += `<tr><td style="padding:4px 12px 4px 0;color:#c95000">Routing</td><td><strong>MX Printworks line → Scott</strong></td></tr>`;
+    }
+  }
+
   if (data.pageUrl) rows += `<tr><td style="padding:4px 12px 4px 0;color:#555">Submitted from</td><td>${escapeHtml(data.pageUrl)}</td></tr>`;
   if (data.referrer) rows += `<tr><td style="padding:4px 12px 4px 0;color:#555">Referrer</td><td>${escapeHtml(data.referrer)}</td></tr>`;
 
@@ -185,6 +269,18 @@ export function buildAcknowledgementEmail(formType, data) {
 <p>Thank you for joining the waitlist for the CogNovaMX Accreditation Programme. We have noted your interest in <strong>${escapeHtml(data.tier)}</strong> for the <strong>${escapeHtml(data.vocabulary)}</strong> vocabulary.</p>
 <p>Stage 1 admissions are opening shortly; we will contact you when applications open for your tier and vocabulary. Joining the waitlist is not an application and does not commit you to anything.</p>
 <p>In the meantime, the public programme overview is at <a href="https://mx.allabout.network/services/certified-operator.html">mx.allabout.network/services/certified-operator.html</a>. Reply to this email if you have any questions.</p>
+<p>Best regards,<br>Tom Cranstoun<br>Digital Domain Technologies Ltd, trading as CogNovaMX</p>`,
+    };
+  }
+
+  if (formType === 'general-enquiry') {
+    return {
+      subject: 'We received your enquiry',
+      html: `<p>${greeting}</p>
+<p>Thank you for getting in touch with CogNovaMX. We have received your enquiry and will reply within two working days.</p>
+<p>For reference, this is the message you submitted:</p>
+<blockquote style="border-left:3px solid #2D7DD2;padding:0.5rem 1rem;margin:1rem 0;color:#444;white-space:pre-wrap">${escapeHtml(data.message || '')}</blockquote>
+<p>If you need to add anything to the enquiry, reply to this email; it threads back to the right person.</p>
 <p>Best regards,<br>Tom Cranstoun<br>Digital Domain Technologies Ltd, trading as CogNovaMX</p>`,
     };
   }

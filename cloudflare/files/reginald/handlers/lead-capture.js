@@ -21,6 +21,7 @@ import {
   sendLeadCaptureEmails,
   buildSuccessRedirectUrl,
   buildSuccessResponseBody,
+  chooseGeneralEnquiryAdminKey,
 } from '../lib/lead-capture.js';
 
 const ALLOWED_ORIGINS = new Set([
@@ -99,6 +100,7 @@ async function parseSubmission(request) {
 function formTypeFromPath(pathname) {
   if (pathname === '/api/v1/lead/pdf-check') return 'pdf-check';
   if (pathname === '/api/v1/lead/certified-operator-waitlist') return 'certified-operator-waitlist';
+  if (pathname === '/api/v1/lead/general-enquiry') return 'general-enquiry';
   return null;
 }
 
@@ -142,6 +144,18 @@ export async function handleLeadCapture(request, env, url) {
     return jsonResponse(request, 400, { ok: false, error: validation.error });
   }
 
+  // Choose the admin recipient. The general-enquiry form routes by
+  // service: MX Printworks lines go to MX_PRINTWORKS_NOTIFY_EMAIL (Scott)
+  // if configured; everything else falls through to the standard
+  // LEAD_CAPTURE_NOTIFY_EMAIL → FREE_BOOK_NOTIFY_EMAIL chain (Tom).
+  let adminTo = env.LEAD_CAPTURE_NOTIFY_EMAIL || env.FREE_BOOK_NOTIFY_EMAIL;
+  if (formType === 'general-enquiry') {
+    const adminKey = chooseGeneralEnquiryAdminKey(parsed.data.service);
+    if (adminKey && env[adminKey]) {
+      adminTo = env[adminKey];
+    }
+  }
+
   // Send emails — fire-and-forget on individual failures so a flaky Resend
   // call does not block the submitter's confirmation. We still log via the
   // returned promise so a fully broken send surfaces in Cloudflare logs.
@@ -150,7 +164,7 @@ export async function handleLeadCapture(request, env, url) {
     try {
       await sendLeadCaptureEmails(env.RESEND_API_KEY, {
         from: env.RESEND_FROM,
-        adminTo: env.LEAD_CAPTURE_NOTIFY_EMAIL || env.FREE_BOOK_NOTIFY_EMAIL,
+        adminTo,
         formType,
         data: parsed.data,
       });
