@@ -871,10 +871,34 @@ export const buildFreeBookFormHTML = () => `<!DOCTYPE html>
     "name": "Download MX: The Introduction",
     "description": "Free PDF introduction to Machine Experience. Enter your email to download.",
     "url": "https://mx.allabout.network/books/download-intro",
+    "image": "https://mx.allabout.network/images/book-cover-3d.png",
+    "datePublished": "2026-05-01",
+    "author": {
+      "@type": "Person",
+      "name": "Tom Cranstoun",
+      "url": "https://mx.allabout.network/blog/profiles/about.tom.cranstoun.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CogNovaMX",
+      "url": "https://mx.allabout.network"
+    },
     "isPartOf": {
       "@type": "WebSite",
       "name": "CogNovaMX",
-      "url": "https://mx.allabout.network"
+      "url": "https://mx.allabout.network",
+      "image": "https://mx.allabout.network/images/book-cover-3d.png",
+      "datePublished": "2026-05-01",
+      "author": {
+        "@type": "Person",
+        "name": "Tom Cranstoun",
+        "url": "https://mx.allabout.network/blog/profiles/about.tom.cranstoun.html"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "CogNovaMX",
+        "url": "https://mx.allabout.network"
+      }
     }
   }
   </script>
