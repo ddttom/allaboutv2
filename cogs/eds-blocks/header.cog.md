@@ -20,7 +20,7 @@ mx:
   - header
   - navigation
   x-mx-cogId: cog-eds-block-header-20260222
-  x-mx-cogType: certificate-of-genuineness
+  x-mx-cogType: info
   license: MIT
   publisher:
     verified: false

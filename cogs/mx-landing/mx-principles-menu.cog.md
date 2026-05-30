@@ -20,7 +20,7 @@ mx:
   - navigation
   - landing
   x-mx-cogId: cog-mx-landing-principles-menu-20260222
-  x-mx-cogType: certificate-of-genuineness
+  x-mx-cogType: info
   license: MIT
   publisher:
     verified: false

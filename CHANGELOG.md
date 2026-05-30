@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Retire `certificate-of-genuineness` cogType across MX cogs** (2026-05-30)
+  - EDS-block and landing cogs were never attestations; they inherited the value as template boilerplate. Reassigned the four `x-mx-cogType: certificate-of-genuineness` instances to `info`: `cogs/eds-blocks/header.cog.md`, `cogs/mx-reginald/maxine.cog.md`, `cogs/mx-landing/mx-principles-menu.cog.md`, `docs/cog-templates/eds-block.cog.template.md`.
+  - Also updated `docs/cog-templates/landing-page.cog.template.md`: nested `cog.type: "certificate-of-genuineness"` reassigned to `"cogs"` so generated cogs follow the surviving classification.
+  - Background: `certificate-of-genuineness` was retired in mx-hub commit `d69f886` (2026-05-30). Attestation is now a property set carried on a cog of any type (publisher block + `proofOfAuthorship` + `integritySignature`), most often a `cogs` community-owned-governance-standard, not a distinct type. The handoff plan for this submodule sweep is at `mx-hub:mx-canon/mx-maxine-lives/management/todo/cert-genuineness-submodule-sweep.md`.
+
 ### Added
 
 - **Cloudflare worker: lead-capture endpoints for mx.allabout.network** (2026-05-28)

@@ -21,7 +21,7 @@ mx:
   - ai-partner
   - mx-reginald
   x-mx-cogId: cog-mx-reginald-maxine-20260208
-  x-mx-cogType: certificate-of-genuineness
+  x-mx-cogType: info
   license: MIT
   publisher:
     verified: false

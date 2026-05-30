@@ -12,7 +12,7 @@ mx:
   - block
   - '{block-category}'
   x-mx-cogId: cog-eds-block-{block-name}-{YYYYMMDD}
-  x-mx-cogType: certificate-of-genuineness
+  x-mx-cogType: info
   license: MIT
   publisher:
     verified: false

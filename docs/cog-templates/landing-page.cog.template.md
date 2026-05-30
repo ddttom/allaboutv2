@@ -8,7 +8,7 @@ mx:
   cog:
     version: "1.0"
     id: "cog-{publisher-id}-{subject-slug}-{YYYYMMDD}"
-    type: "certificate-of-genuineness"
+    type: "cogs"
     status: "draft"  # draft | attested | registered | active
 
     publisher:
