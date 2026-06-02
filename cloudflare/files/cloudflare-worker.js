@@ -889,16 +889,8 @@ export const buildFreeBookFormHTML = () => `<!DOCTYPE html>
       "url": "https://mx.allabout.network",
       "image": "https://mx.allabout.network/images/book-cover-3d.png",
       "datePublished": "2026-05-01",
-      "author": {
-        "@type": "Person",
-        "name": "Tom Cranstoun",
-        "url": "https://mx.allabout.network/blog/profiles/about.tom.cranstoun.html"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "CogNovaMX",
-        "url": "https://mx.allabout.network"
-      }
+      "author": { "@type": "Person", "name": "Tom Cranstoun", "url": "https://mx.allabout.network/about/tom-cranstoun" },
+      "publisher": { "@type": "Organization", "name": "CogNovaMX", "url": "https://allabout.network" }
     }
   }
   </script>
