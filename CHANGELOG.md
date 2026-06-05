@@ -31,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Cloudflare worker: resolve dead cog-runtime / cog-spec documentation URLs on mx-site** (2026-06-05)
   - Every cog magic-header advertised `runtime=https://mx.allabout.network/cog-runtime.html`, and `cog.html` linked the extensionless `/drafts/cog-runtime` and `/drafts/cog-spec.v1`; none resolved, because the only published files are the `.md` drafts and the clean-URL resolver falls back to `.html` only.
   - Added pure function `resolveMxSiteDocRedirect(pathname)` issuing a 302 that maps `/cog-runtime.html`, `/drafts/cog-runtime`, and `/drafts/cog-spec.v1` to their canonical `.md` drafts; wired into the mx-site redirect block ahead of the generic trailing-slash logic. Five unit tests added.
-  - Worker version bumped to 1.2.1.
+  - Aligned `package.json` version to the worker's declared `WORKER_VERSION` (`1.4.0`), which had drifted (package.json was `1.2.0`, the hardcoded constant `1.4.0`). The redirect ships within the deployed `1.4.0` worker; the `cfw` response header reads `1.4.0`.
 
 ### Added
 
