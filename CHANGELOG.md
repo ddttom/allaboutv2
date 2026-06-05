@@ -26,6 +26,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Also updated `docs/cog-templates/landing-page.cog.template.md`: nested `cog.type: "certificate-of-genuineness"` reassigned to `"cogs"` so generated cogs follow the surviving classification.
   - Background: `certificate-of-genuineness` was retired in mx-hub commit `d69f886` (2026-05-30). Attestation is now a property set carried on a cog of any type (publisher block + `proofOfAuthorship` + `integritySignature`), most often a `cogs` community-owned-governance-standard, not a distinct type. The handoff plan for this submodule sweep is at `mx-hub:mx-canon/mx-maxine-lives/management/todo/cert-genuineness-submodule-sweep.md`.
 
+### Fixed
+
+- **Cloudflare worker: resolve dead cog-runtime / cog-spec documentation URLs on mx-site** (2026-06-05)
+  - Every cog magic-header advertised `runtime=https://mx.allabout.network/cog-runtime.html`, and `cog.html` linked the extensionless `/drafts/cog-runtime` and `/drafts/cog-spec.v1`; none resolved, because the only published files are the `.md` drafts and the clean-URL resolver falls back to `.html` only.
+  - Added pure function `resolveMxSiteDocRedirect(pathname)` issuing a 302 that maps `/cog-runtime.html`, `/drafts/cog-runtime`, and `/drafts/cog-spec.v1` to their canonical `.md` drafts; wired into the mx-site redirect block ahead of the generic trailing-slash logic. Five unit tests added.
+  - Worker version bumped to 1.2.1.
+
 ### Added
 
 - **Cloudflare worker: lead-capture endpoints for mx.allabout.network** (2026-05-28)

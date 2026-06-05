@@ -679,6 +679,26 @@ export const shouldLanguageRedirect = (remainingPath, site) => {
 };
 
 /**
+ * Resolves mx-site documentation URLs whose only published file carries a .md
+ * extension. The cog magic-header convention advertises
+ * runtime=https://mx.allabout.network/cog-runtime.html on every page, and
+ * cog.html links to the extensionless /drafts/cog-runtime and /drafts/cog-spec.v1;
+ * none of those resolve, because the published files are the .md drafts and the
+ * clean-URL resolver only falls back to .html. Map them to the canonical draft.
+ * Pure function - fully testable without Cloudflare Workers runtime.
+ * @param {string} pathname - Request pathname (e.g. "/cog-runtime.html")
+ * @returns {string|null} Target pathname to redirect to, or null if none applies
+ */
+export const resolveMxSiteDocRedirect = (pathname) => {
+  const map = {
+    '/cog-runtime.html': '/drafts/cog-runtime.md',
+    '/drafts/cog-runtime': '/drafts/cog-runtime.md',
+    '/drafts/cog-spec.v1': '/drafts/cog-spec.v1.md',
+  };
+  return map[pathname] || null;
+};
+
+/**
  * Categorise an AI agent or browser from User-Agent string.
  * Pure function - fully testable without Cloudflare Workers runtime.
  * @param {string} userAgent - User-Agent header value
@@ -1003,6 +1023,16 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   // The printed book points readers at /blog/about.tom.cranstoun.html; the
   // files now live under /blog/profiles/. Keep the old URLs working with 301.
   if (subdomain === 'mx-site') {
+    // Documentation URLs whose canonical file only exists as .md (cog-runtime,
+    // cog-spec). 302 (not 301) so a future published cog-runtime.html landing
+    // page is not shadowed by a cached permanent redirect.
+    const docRedirect = resolveMxSiteDocRedirect(url.pathname);
+    if (docRedirect) {
+      const redirectUrl = new URL(url);
+      redirectUrl.pathname = docRedirect;
+      return Response.redirect(redirectUrl.toString(), 302);
+    }
+
     const profileRedirects = {
       '/blog/about.tom.cranstoun.html': '/blog/profiles/about.tom.cranstoun.html',
       '/blog/about.claude.code.html': '/blog/profiles/about.claude.code.html',

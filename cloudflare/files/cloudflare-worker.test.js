@@ -39,6 +39,7 @@ import worker, {
   detectLanguage,
   findLanguageSite,
   shouldLanguageRedirect,
+  resolveMxSiteDocRedirect,
   categoriseAgent,
   categoriseReferer,
   isAiAgent,
@@ -1721,6 +1722,34 @@ describe('shouldLanguageRedirect', () => {
   test('handles site without redirectPaths', () => {
     const noRedirect = { excludePaths: ['/assets/'] };
     expect(shouldLanguageRedirect('/', noRedirect)).toBe(false);
+  });
+});
+
+// ============================================================
+// resolveMxSiteDocRedirect Tests
+// ============================================================
+describe('resolveMxSiteDocRedirect', () => {
+  test('maps the cog magic-header runtime URL to the canonical .md draft', () => {
+    expect(resolveMxSiteDocRedirect('/cog-runtime.html')).toBe('/drafts/cog-runtime.md');
+  });
+
+  test('maps the extensionless cog-runtime link to the .md draft', () => {
+    expect(resolveMxSiteDocRedirect('/drafts/cog-runtime')).toBe('/drafts/cog-runtime.md');
+  });
+
+  test('maps the extensionless cog-spec.v1 link to the .md draft', () => {
+    expect(resolveMxSiteDocRedirect('/drafts/cog-spec.v1')).toBe('/drafts/cog-spec.v1.md');
+  });
+
+  test('returns null for the already-resolving .md drafts (no redirect loop)', () => {
+    expect(resolveMxSiteDocRedirect('/drafts/cog-runtime.md')).toBeNull();
+    expect(resolveMxSiteDocRedirect('/drafts/cog-spec.v1.md')).toBeNull();
+  });
+
+  test('returns null for the live cog explainer and unrelated paths', () => {
+    expect(resolveMxSiteDocRedirect('/cog.html')).toBeNull();
+    expect(resolveMxSiteDocRedirect('/blog/')).toBeNull();
+    expect(resolveMxSiteDocRedirect('/')).toBeNull();
   });
 });
 
