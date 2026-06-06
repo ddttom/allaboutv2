@@ -26,6 +26,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Also updated `docs/cog-templates/landing-page.cog.template.md`: nested `cog.type: "certificate-of-genuineness"` reassigned to `"cogs"` so generated cogs follow the surviving classification.
   - Background: `certificate-of-genuineness` was retired in mx-hub commit `d69f886` (2026-05-30). Attestation is now a property set carried on a cog of any type (publisher block + `proofOfAuthorship` + `integritySignature`), most often a `cogs` community-owned-governance-standard, not a distinct type. The handoff plan for this submodule sweep is at `mx-hub:mx-canon/mx-maxine-lives/management/todo/cert-genuineness-submodule-sweep.md`.
 
+- **Cloudflare worker: 301-redirect the retired Salesforce/Contentful post to its replacement** (2026-06-06)
+  - The post `salesforce-buys-contentful-agent-ready-content.html` was retired and superseded by `salesforce-contentful-not-an-mx-strategy.html`. Added a `retiredPostRedirects` map in the mx-site redirect block issuing a 301 from the old path to the new one, mirroring the existing `profileRedirects` pattern. All worker tests pass.
+
 ### Fixed
 
 - **Cloudflare worker: resolve dead cog-runtime / cog-spec documentation URLs on mx-site** (2026-06-05)

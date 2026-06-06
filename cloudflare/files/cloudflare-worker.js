@@ -1045,6 +1045,16 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
       return Response.redirect(redirectUrl.toString(), 301);
     }
 
+    // Retired/superseded posts: 301 to the replacement that is now canonical.
+    const retiredPostRedirects = {
+      '/blog/salesforce-buys-contentful-agent-ready-content.html': '/blog/salesforce-contentful-not-an-mx-strategy.html',
+    };
+    if (retiredPostRedirects[url.pathname]) {
+      const redirectUrl = new URL(url);
+      redirectUrl.pathname = retiredPostRedirects[url.pathname];
+      return Response.redirect(redirectUrl.toString(), 301);
+    }
+
     // Plural-to-singular: /blogs or /blogs/* → /blog or /blog/*
     if (url.pathname === '/blogs' || url.pathname === '/blogs/' || url.pathname.startsWith('/blogs/')) {
       const redirectUrl = new URL(url);
