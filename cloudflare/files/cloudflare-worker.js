@@ -1048,6 +1048,20 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
     // Retired/superseded posts: 301 to the replacement that is now canonical.
     const retiredPostRedirects = {
       '/blog/salesforce-buys-contentful-agent-ready-content.html': '/blog/salesforce-contentful-not-an-mx-strategy.html',
+      // Blog group migration 2026-06-16
+      '/blog/the-crawl-still-speaks-english.html': '/blog/agent-web/the-crawl-still-speaks-english.html',
+      '/blog/what-googles-web-dev-agent-guidance-does-not-touch.html': '/blog/agent-web/what-googles-web-dev-agent-guidance-does-not-touch.html',
+      '/blog/a-pdf-that-can-prove-itself.html': '/blog/provenance/a-pdf-that-can-prove-itself.html',
+      '/blog/read-is-not-the-same-as-trusted.html': '/blog/provenance/read-is-not-the-same-as-trusted.html',
+      '/blog/software-agreed-the-deal.html': '/blog/provenance/software-agreed-the-deal.html',
+      '/blog/the-inspector-you-can-audit-yourself.html': '/blog/provenance/the-inspector-you-can-audit-yourself.html',
+      '/blog/the-padlock-and-the-page.html': '/blog/provenance/the-padlock-and-the-page.html',
+      '/blog/agency-platforms-and-the-open-layer.html': '/blog/industry/agency-platforms-and-the-open-layer.html',
+      '/blog/geo-is-a-tactic-mx-is-the-specification.html': '/blog/industry/geo-is-a-tactic-mx-is-the-specification.html',
+      '/blog/google-named-geo-then-debunked-it.html': '/blog/industry/google-named-geo-then-debunked-it.html',
+      '/blog/microsoft-frontier-tuning-and-the-unsigned-trace.html': '/blog/industry/microsoft-frontier-tuning-and-the-unsigned-trace.html',
+      '/blog/orange-with-pump.html': '/blog/foundations/orange-with-pump.html',
+      '/blog/strip-the-marks-lose-the-word.html': '/blog/foundations/strip-the-marks-lose-the-word.html',
     };
     if (retiredPostRedirects[url.pathname]) {
       const redirectUrl = new URL(url);
