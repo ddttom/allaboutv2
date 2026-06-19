@@ -1,12 +1,17 @@
 ---
-title: "allaboutv2 — SOUL"
-version: "1.0"
-created: 2026-03-01
-modified: 2026-03-01
+title: allaboutv2 — SOUL
+version: '1.0'
+created: 2026-03-01T00:00:00.000Z
+modified: '2026-06-19'
 author: Tom Cranstoun
-
 mx:
   canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/SOUL.md
+  contentType: identity-documentation
+  status: active
+  tags:
+    - identity
+    - website
+    - allabout
 ---
 
 # allaboutv2 — SOUL
