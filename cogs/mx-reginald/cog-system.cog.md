@@ -15,6 +15,7 @@ mx:
   contentType: info-doc
   status: draft
   x-mx-category: specification
+  x-mx-cogRole: definition
   tags:
   - cog
   - system
