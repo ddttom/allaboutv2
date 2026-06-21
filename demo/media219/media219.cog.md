@@ -12,23 +12,14 @@ description: TV graphics and title sequences studio, 30+ years experience. Sport
 created: 2026-02-25
 modified: 2026-02-25
 author: Media219 Ltd
+type: organization-cog
+tags: [television, graphics, title-sequences, 3d-models, sports-broadcasting, motion-graphics, premier-league, fifa, mls, broadcast]
 mx:
   maintainer: tony@media219.com
   license: proprietary
   status: published
   x-mx-category: creative-services
   partOf: broadcast-industry
-  tags:
-  - television
-  - graphics
-  - title-sequences
-  - 3d-models
-  - sports-broadcasting
-  - motion-graphics
-  - premier-league
-  - fifa
-  - mls
-  - broadcast
   audience: both
   readingLevel: intermediate
   schema:
@@ -55,13 +46,13 @@ mx:
   contact:
     social:
       vimeo: https://vimeo.com/media219
-  contentType: organization-cog
   visibility: hosted
   discoverable: true
   citable: true
   runbook: This cog demonstrates the convergence principle — the same information serves humans (narrative below) and machines
     (YAML above). An AI agent reading this cog can cite, compare, and recommend Media219.
   canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/demo/media219/media219.cog.md
+
 ---
 
 # Media219 Ltd

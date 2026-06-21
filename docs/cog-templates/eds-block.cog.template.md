@@ -4,13 +4,11 @@ author: '{Author Name}'
 created: '{YYYY-MM-DD}'
 version: '1.0'
 title: '{block-name}'
+type: eds-block
+tags: [eds, block, {block-category}]
 mx:
   status: draft
   x-mx-category: eds-block
-  tags:
-  - eds
-  - block
-  - '{block-category}'
   x-mx-cogId: cog-eds-block-{block-name}-{YYYYMMDD}
   x-mx-cogType: info
   license: MIT
@@ -63,11 +61,11 @@ mx:
       mobileBehavior: '{How block adapts below 900px}'
       breakpoints:
       - 900
-  contentType: eds-block
   audience:
   - tech
   - machines
   runbook: ''
+
 ---
 
 # {Block Name} Block

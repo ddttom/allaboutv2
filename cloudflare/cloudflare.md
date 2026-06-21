@@ -6,9 +6,11 @@ created: 2025-12-09
 modified: 2026-04-22
 version: "1.4"
 
+type: info-doc
 mx:
   status: active
   canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/cloudflare/cloudflare.md
+
 ---
 
 # allabout.network Cloudflare Configuration Reference

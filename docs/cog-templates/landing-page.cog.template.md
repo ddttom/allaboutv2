@@ -3,6 +3,7 @@
 title: '[TITLE]'
 author: '[AUTHOR]'
 created: '[YYYY-MM-DD]'
+type: "landing-page"
 mx:
   canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/docs/cog-templates/landing-page.cog.template.md
   cog:
@@ -59,9 +60,9 @@ mx:
     licence: "MIT"
     licenceUrl: "https://opensource.org/licenses/MIT"
 
-  contentType: "landing-page"
   audience: ["humans", "machines"]
   runbook: |
+
 ---
 
 # {Landing Page Title}

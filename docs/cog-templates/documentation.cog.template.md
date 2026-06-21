@@ -2,6 +2,7 @@
 title: '[TITLE]'
 author: '[AUTHOR]'
 created: '[YYYY-MM-DD]'
+type: documentation
 mx:
   cog:
     version: '1.0'
@@ -35,12 +36,12 @@ mx:
       commercialUse: permitted
     licence: MIT
     licenceUrl: https://opensource.org/licenses/MIT
-  contentType: documentation
   audience:
   - humans
   - machines
   runbook: ''
   canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/docs/cog-templates/documentation.cog.template.md
+
 ---
 
 # {Document Title}

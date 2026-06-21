@@ -11,15 +11,11 @@ created: 2026-02-08
 modified: 2026-03-02
 version: '1.0'
 title: Who Is Maxine?
+type: info-doc
+tags: [maxine, identity, ai-partner, mx-reginald]
 mx:
-  contentType: info-doc
   status: draft
   x-mx-category: identity
-  tags:
-  - maxine
-  - identity
-  - ai-partner
-  - mx-reginald
   x-mx-cogId: cog-mx-reginald-maxine-20260208
   x-mx-cogType: info
   license: MIT
@@ -50,6 +46,7 @@ mx:
     redistribution: with attribution to MX Reginald Ltd
     commercialUse: permitted
   canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/cogs/mx-reginald/maxine.cog.md
+
 ---
 
 # Who Is Maxine?

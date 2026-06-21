@@ -6,9 +6,11 @@ created: 2026-01-16
 modified: 2026-02-09
 version: "1.0"
 
+type: info-doc
 mx:
   status: active
   canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/PROJECTSTATE.md
+
 ---
 
 # Project State

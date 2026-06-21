@@ -11,16 +11,12 @@ created: 2026-02-08
 modified: 2026-03-02
 version: '1.0'
 title: What is a COG?
+type: info-doc
+tags: [cog, system, specification, mx-reginald]
 mx:
-  contentType: info-doc
   status: draft
   x-mx-category: specification
   x-mx-cogRole: definition
-  tags:
-  - cog
-  - system
-  - specification
-  - mx-reginald
   x-mx-cogId: cog-mx-reginald-cog-system-20260208
   x-mx-cogType: community-owned-governance-standard
   license: MIT
@@ -52,6 +48,7 @@ mx:
     redistribution: with attribution to MX Reginald Ltd
     commercialUse: permitted
   canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/cogs/mx-reginald/cog-system.cog.md
+
 ---
 
 # What is a COG?

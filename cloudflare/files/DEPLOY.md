@@ -6,11 +6,12 @@ created: "2026-05-04"
 modified: "2026-05-04"
 version: "1.0"
 
+type: doc
 mx:
   status: active
-  contentType: doc
   audience: [tech]
   canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/cloudflare/files/DEPLOY.md
+
 ---
 
 # Cloudflare Worker Deploy

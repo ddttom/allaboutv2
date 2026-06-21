@@ -11,14 +11,11 @@ created: 2026-02-22
 modified: 2026-03-02
 version: '1.0'
 title: Header Block
+type: eds-block
+tags: [eds, block, header, navigation]
 mx:
   status: draft
   x-mx-category: eds-block
-  tags:
-  - eds
-  - block
-  - header
-  - navigation
   x-mx-cogId: cog-eds-block-header-20260222
   x-mx-cogType: info
   license: MIT
@@ -78,11 +75,11 @@ mx:
       mobileBehavior: Hamburger menu with slide-in drawer from right
       breakpoints:
       - 900
-  contentType: eds-block
   audience:
   - tech
   - machines
   runbook: ''
+
 ---
 
 # Header Block

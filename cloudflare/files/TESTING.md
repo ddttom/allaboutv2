@@ -6,9 +6,11 @@ created: 2025-12-01
 modified: 2026-02-09
 version: "1.0"
 
+type: info-doc
 mx:
   status: active
   canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/cloudflare/files/TESTING.md
+
 ---
 
 # Testing Guide for Cloudflare Worker

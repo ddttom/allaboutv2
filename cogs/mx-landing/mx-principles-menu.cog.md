@@ -11,14 +11,11 @@ created: 2026-02-22
 modified: 2026-03-02
 version: '1.0'
 title: MX Principles Menu
+type: landing-page
+tags: [mx, principles, navigation, landing]
 mx:
   status: draft
   x-mx-category: landing-page
-  tags:
-  - mx
-  - principles
-  - navigation
-  - landing
   x-mx-cogId: cog-mx-landing-principles-menu-20260222
   x-mx-cogType: info
   license: MIT
@@ -48,12 +45,12 @@ mx:
     caching: permitted for 24 hours
     redistribution: with attribution
     commercialUse: permitted
-  contentType: landing-page
   audience:
   - humans
   - machines
   runbook: ''
   canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/cogs/mx-landing/mx-principles-menu.cog.md
+
 ---
 
 # MX Principles Menu
