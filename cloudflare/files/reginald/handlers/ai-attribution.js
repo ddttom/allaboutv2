@@ -21,6 +21,8 @@ import * as aiVisitsDb from '../db/ai-visits.js';
 import * as usageDb from '../db/ai-attribution-usage.js';
 import { FREE_TIER_MONTHLY_QUERIES } from '../db/ai-attribution-usage.js';
 import * as publishersDb from '../db/publishers.js';
+import * as tokensDb from '../db/tokens.js';
+import { hashToken } from '../lib/token.js';
 import { isAttributionHost } from '../lib/ai-attribution-hosts.js';
 
 const jsonResponse = (body, status = 200) => new Response(JSON.stringify(body, null, 2), {
@@ -47,7 +49,7 @@ async function resolveTier(request, env, host) {
     if (isAttributionHost(host)) {
         return { tier: 'open' };
     }
-    if (!env.DB || !publishersDb.findByToken) {
+    if (!env.DB) {
         return { tier: 'denied', reason: 'publisher auth not configured' };
     }
     const authHeader = request.headers.get('Authorization') || '';
@@ -56,7 +58,10 @@ async function resolveTier(request, env, host) {
         return { tier: 'denied', reason: 'no auth token' };
     }
     try {
-        const publisher = await publishersDb.findByToken(env.DB, token);
+        const tokenHash = await hashToken(token);
+        const tokenRecord = await tokensDb.findByHash(env.DB, tokenHash);
+        if (!tokenRecord) return { tier: 'denied', reason: 'invalid token' };
+        const publisher = await publishersDb.findById(env.DB, tokenRecord.publisher_id);
         if (!publisher) return { tier: 'denied', reason: 'invalid token' };
         const verifiedHosts = (publisher.verified_hostnames || '').split(',').map((h) => h.trim().toLowerCase());
         if (!verifiedHosts.includes(host)) {

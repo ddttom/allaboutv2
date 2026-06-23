@@ -23,6 +23,15 @@ mx:
 From this directory (`allaboutv2/cloudflare/files/`):
 
 ```bash
+# 0. Guard: ensure deprecated CF_API_TOKEN is not exported in your shell.
+#    If it is, it overrides Wrangler's OAuth token and deploy fails with
+#    authentication error [code: 10000].
+if [ -n "${CF_API_TOKEN}" ]; then
+  echo "⚠️  CF_API_TOKEN is set — this overrides Wrangler's OAuth token."
+  echo "   Run: unset CF_API_TOKEN  (and remove it from ~/.zshrc)"
+  exit 1
+fi
+
 # 1. Run tests first — same gate the workflow used.
 npm test
 

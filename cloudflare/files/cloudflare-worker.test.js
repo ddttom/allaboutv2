@@ -2783,3 +2783,136 @@ describe('Lead capture — classifyLeadCaptureRequest', () => {
     expect(classifyLeadCaptureRequest('POST', '/api/v1/lead/unknown').kind).toBe('not-found');
   });
 });
+
+// ─── AI Attribution Handler ────────────────────────────────────────────────
+
+/** Smart mock D1 for AI attribution tests. Returns different rows per table. */
+function createAttributionMockDB({ tokenRecord = null, publisher = null, usageCount = 0 } = {}) {
+  return {
+    prepare: vi.fn((sql) => ({
+      bind: vi.fn(function bindStub() { return this; }),
+      first: vi.fn(async () => {
+        if (sql.includes('tokens')) return tokenRecord;
+        if (sql.includes('publishers')) return publisher;
+        return null;
+      }),
+      run: vi.fn(async () => ({ meta: { last_row_id: 1, changes: 1 } })),
+      all: vi.fn(async () => {
+        if (sql.includes('ai_attribution_usage')) return { results: [{ count: usageCount }] };
+        return { results: [] };
+      }),
+    })),
+  };
+}
+
+describe('AI Attribution Handler — resolveTier', () => {
+  let originalResponse;
+
+  beforeEach(() => {
+    originalResponse = globalThis.Response;
+    if (!globalThis.Response) {
+      globalThis.Response = class {
+        constructor(body, init = {}) {
+          this.body = body;
+          this.status = init.status || 200;
+          this.headers = new Map(Object.entries(init.headers || {}));
+        }
+        async json() { return typeof this.body === 'string' ? JSON.parse(this.body) : this.body; }
+      };
+    }
+  });
+
+  afterEach(() => {
+    globalThis.Response = originalResponse;
+  });
+
+  test('open host returns tier:open without auth', async () => {
+    const { handleAiAttribution } = await import('./reginald/handlers/ai-attribution.js');
+    const request = new Request('https://reginald.allabout.network/api/v1/ai-attribution?host=mx.allabout.network', {
+      headers: {},
+    });
+    const env = { DB: createAttributionMockDB() };
+    const response = await handleAiAttribution(request, env);
+    const data = await response.json();
+    expect(response.status).toBe(200);
+    expect(data.tier).toBe('open');
+  });
+
+  test('external host with no token returns 404', async () => {
+    const { handleAiAttribution } = await import('./reginald/handlers/ai-attribution.js');
+    const request = new Request('https://reginald.allabout.network/api/v1/ai-attribution?host=example.com', {
+      headers: {},
+    });
+    const env = { DB: createAttributionMockDB() };
+    const response = await handleAiAttribution(request, env);
+    const data = await response.json();
+    expect(response.status).toBe(404);
+    expect(data.reason).toBe('no auth token');
+  });
+
+  test('external host with invalid token returns 404', async () => {
+    const { handleAiAttribution } = await import('./reginald/handlers/ai-attribution.js');
+    const request = new Request('https://reginald.allabout.network/api/v1/ai-attribution?host=example.com', {
+      headers: { Authorization: 'Bearer reg_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' },
+    });
+    const env = { DB: createAttributionMockDB({ tokenRecord: null }) };
+    const response = await handleAiAttribution(request, env);
+    const data = await response.json();
+    expect(response.status).toBe(404);
+    expect(data.reason).toBe('invalid token');
+  });
+
+  test('valid token with mismatched hostname returns 404', async () => {
+    const { handleAiAttribution } = await import('./reginald/handlers/ai-attribution.js');
+    const request = new Request('https://reginald.allabout.network/api/v1/ai-attribution?host=other.com', {
+      headers: { Authorization: 'Bearer reg_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' },
+    });
+    const env = {
+      DB: createAttributionMockDB({
+        tokenRecord: { id: 1, publisher_id: 42, status: 'active' },
+        publisher: { id: 42, namespace: 'test', verified_hostnames: 'example.com', status: 'active' },
+      }),
+    };
+    const response = await handleAiAttribution(request, env);
+    const data = await response.json();
+    expect(response.status).toBe(404);
+    expect(data.reason).toBe('hostname not verified for publisher');
+  });
+
+  test('valid token with matching hostname returns tier:authed', async () => {
+    const { handleAiAttribution } = await import('./reginald/handlers/ai-attribution.js');
+    const request = new Request('https://reginald.allabout.network/api/v1/ai-attribution?host=example.com', {
+      headers: { Authorization: 'Bearer reg_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' },
+    });
+    const env = {
+      DB: createAttributionMockDB({
+        tokenRecord: { id: 1, publisher_id: 42, status: 'active' },
+        publisher: { id: 42, namespace: 'test', verified_hostnames: 'example.com', status: 'active' },
+        usageCount: 0,
+      }),
+    };
+    const response = await handleAiAttribution(request, env);
+    const data = await response.json();
+    expect(response.status).toBe(200);
+    expect(data.tier).toBe('authed');
+    expect(data.host).toBe('example.com');
+  });
+
+  test('authed publisher over free-tier quota returns 429', async () => {
+    const { handleAiAttribution } = await import('./reginald/handlers/ai-attribution.js');
+    const request = new Request('https://reginald.allabout.network/api/v1/ai-attribution?host=example.com', {
+      headers: { Authorization: 'Bearer reg_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' },
+    });
+    const env = {
+      DB: createAttributionMockDB({
+        tokenRecord: { id: 1, publisher_id: 42, status: 'active' },
+        publisher: { id: 42, namespace: 'test', verified_hostnames: 'example.com', status: 'active', ai_attribution_paid: 0 },
+        usageCount: 1000,
+      }),
+    };
+    const response = await handleAiAttribution(request, env);
+    const data = await response.json();
+    expect(response.status).toBe(429);
+    expect(data.error).toContain('quota');
+  });
+});

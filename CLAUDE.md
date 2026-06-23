@@ -458,9 +458,15 @@ The project uses GitHub Actions for continuous integration and deployment.
 
 ### Required Secrets
 
-To enable Cloudflare deployment, add to GitHub repository secrets:
+Three distinct Cloudflare credentials are in use — do not conflate them:
 
-- `CLOUDFLARE_API_TOKEN` - API token for Wrangler deployment
+- **Wrangler OAuth token** — stored automatically in `~/Library/Preferences/.wrangler/config/default.toml` by `npx wrangler login`. Never set manually. Deploys fail if the deprecated `CF_API_TOKEN` shell variable is exported (it overrides the OAuth token); remove it from `~/.zshrc` if present.
+- **Cache purge token** — `CLOUDFLARE_API_TOKEN` in `allaboutv2/.env`, scoped to `POST /purge_cache` on the allabout.network zone. Used after deploys to flush the CDN.
+- **Analytics Engine secret** — `CLOUDFLARE_API_TOKEN` set via `wrangler secret put CLOUDFLARE_API_TOKEN`. Grants Account Analytics: Read for the publisher analytics SQL API (`reginald/handlers/publisher-analytics.js`).
+
+To enable Cloudflare deployment via GitHub Actions, add to repository secrets:
+
+- `CLOUDFLARE_API_TOKEN` - cache purge token (scoped to allabout.network zone, not a deployment token)
 
 ### Workflow Status
 
