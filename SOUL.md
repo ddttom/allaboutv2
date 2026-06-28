@@ -2,14 +2,18 @@
 title: allaboutv2 — SOUL
 version: '1.0'
 created: 2026-03-01T00:00:00.000Z
-modified: '2026-06-19'
+modified: '2026-06-23'
 author: Tom Cranstoun
 type: identity-documentation
-tags: [identity, website, allabout]
+tags:
+  - identity
+  - website
+  - allabout
 mx:
   canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/SOUL.md
   status: active
-
+  purpose: Public website estate for allabout.network and related sites.
+description: Public website estate for allabout.network and related sites.
 ---
 
 # allaboutv2 — SOUL
