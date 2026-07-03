@@ -15,6 +15,31 @@
  */
 
 const RESEND_API = 'https://api.resend.com/emails';
+const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+
+/**
+ * Verify a Cloudflare Turnstile token server-side.
+ *
+ * @param {string} secretKey - CF_TURNSTILE_SECRET_KEY env var
+ * @param {string} token - the cf-turnstile-response value from the form
+ * @param {string} [ip] - optional CF-Connecting-IP for extra assurance
+ * @returns {Promise<boolean>} true if the token is valid
+ */
+export async function verifyTurnstile(secretKey, token, ip) {
+  try {
+    const body = new URLSearchParams({ secret: secretKey, response: token });
+    if (ip) body.set('remoteip', ip);
+    const res = await fetch(TURNSTILE_VERIFY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString(),
+    });
+    const data = await res.json();
+    return data && data.success === true;
+  } catch (_) {
+    return false;
+  }
+}
 
 const VALID_FORM_TYPES = new Set([
   'pdf-check',

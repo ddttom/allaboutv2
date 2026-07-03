@@ -22,6 +22,7 @@ import {
   buildSuccessRedirectUrl,
   buildSuccessResponseBody,
   chooseGeneralEnquiryAdminKey,
+  verifyTurnstile,
 } from '../lib/lead-capture.js';
 
 const ALLOWED_ORIGINS = new Set([
@@ -134,6 +135,47 @@ export async function handleLeadCapture(request, env, url) {
   }
 
   const { formType } = classification;
+
+  // --- Turnstile bot protection ---
+  // Verify the cf-turnstile-response token before touching the submission.
+  // If CF_TURNSTILE_SECRET_KEY is not set (e.g. local dev), skip silently.
+  if (env.CF_TURNSTILE_SECRET_KEY) {
+    // We must clone the request before reading it here, because parseSubmission
+    // also reads the body. We extract the token from the raw body then let
+    // parseSubmission re-read the original (Workers allow a single body read;
+    // we therefore peek via a clone).
+    const clonedRequest = request.clone();
+    let turnstileToken = null;
+    try {
+      const ct = (clonedRequest.headers.get('Content-Type') || '').toLowerCase();
+      if (ct.includes('application/json')) {
+        const json = await clonedRequest.json();
+        turnstileToken = json['cf-turnstile-response'] || null;
+      } else {
+        const form = await clonedRequest.formData();
+        turnstileToken = form.get('cf-turnstile-response') || null;
+      }
+    } catch (_) {
+      // Unreadable body — treat as missing token
+    }
+
+    if (!turnstileToken) {
+      if (wantsJson(request)) {
+        return jsonResponse(request, 400, { ok: false, error: 'Bot check failed. Please refresh and try again.' });
+      }
+      return Response.redirect(`${SITE_BASE}/about/contact.html?error=bot-check#contact-form`, 303);
+    }
+
+    const ip = request.headers.get('CF-Connecting-IP') || undefined;
+    const tsOk = await verifyTurnstile(env.CF_TURNSTILE_SECRET_KEY, turnstileToken, ip);
+    if (!tsOk) {
+      if (wantsJson(request)) {
+        return jsonResponse(request, 400, { ok: false, error: 'Bot check failed. Please refresh and try again.' });
+      }
+      return Response.redirect(`${SITE_BASE}/about/contact.html?error=bot-check#contact-form`, 303);
+    }
+  }
+
   const parsed = await parseSubmission(request);
   if (!parsed.ok) {
     return jsonResponse(request, 400, { ok: false, error: parsed.error });
