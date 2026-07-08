@@ -113,6 +113,38 @@ export const resolveSubPathWithFallback = (rawPath) => {
 };
 
 /**
+ * Decide whether a trailing-slash request that resolved via its `<path>.html`
+ * fallback should be 301-redirected to that canonical `.html` URL.
+ *
+ * A flat page (e.g. `blog/<slug>.html`, `learn/<slug>.html`) answers both
+ * `/blog/<slug>/` and `/blog/<slug>.html`, but its relative asset paths
+ * (`../css/...`, `../js/...`) resolve against the request base. Under the
+ * trailing-slash base `/blog/<slug>/` they point at the non-existent
+ * `/blog/<slug>/css/...` (404); under the `.html` base `/blog/` they resolve.
+ * So when a trailing-slash URL falls through to its `<path>.html` file,
+ * canonicalise to the `.html` form instead of serving the body at the
+ * trailing-slash URL.
+ *
+ * Real directories (a genuine `<path>/index.html` exists, so the primary fetch
+ * returns 200) never reach the fallback, so this returns null and they keep
+ * serving at the slash.
+ *
+ * @param {string} rawPath - the original request pathname (`url.pathname`)
+ * @param {number} primaryStatus - status of the `<path>/index.html` fetch
+ * @param {number} fallbackStatus - status of the `<path>.html` fetch
+ * @returns {string|null} the `.html` pathname to redirect to, or null
+ */
+export const canonicalHtmlRedirectTarget = (rawPath, primaryStatus, fallbackStatus) => {
+  if (typeof rawPath !== 'string' || rawPath === '/' || !rawPath.endsWith('/')) {
+    return null;
+  }
+  if (primaryStatus === 404 && fallbackStatus === 200) {
+    return `${rawPath.replace(/\/$/, '')}.html`;
+  }
+  return null;
+};
+
+/**
 
 * Converts 2-digit year to 4-digit year using century inference
 * Years 00-49 -> 2000-2049, Years 50-99 -> 1950-1999
@@ -1108,6 +1140,7 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   });
 
   if (resp.status === 404 && fallback) {
+    const primaryStatus = resp.status;
     subPath = fallback;
     originUrl.pathname = `${repoPath}/${subdomain}${subPath}`;
     const fallbackReq = new Request(originUrl, {
@@ -1118,6 +1151,22 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
       cf: { cacheEverything: true, cacheTtl: 300 },
     });
     if (fallbackResp.status === 200) {
+      // A trailing-slash URL that only resolves via its `<path>.html` file is a
+      // flat page (blog post, learn page), not a real directory. Serving it at
+      // the slash base breaks the page's relative asset paths
+      // (`../css/...` -> `/<dir>/css/...`, which 404s). Canonicalise to the
+      // `.html` URL, where those paths resolve. Real directories keep their
+      // index.html and never reach this branch.
+      const canonicalHtml = canonicalHtmlRedirectTarget(
+        url.pathname,
+        primaryStatus,
+        fallbackResp.status,
+      );
+      if (canonicalHtml) {
+        const redirectUrl = new URL(url);
+        redirectUrl.pathname = canonicalHtml;
+        return Response.redirect(redirectUrl.toString(), 301);
+      }
       resp = fallbackResp;
     }
   }

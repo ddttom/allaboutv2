@@ -27,6 +27,7 @@ import worker, {
   isMediaRequest,
   isRUMRequest,
   resolveSubPathWithFallback,
+  canonicalHtmlRedirectTarget,
   buildJsonLd,
   ORGANISATION_CONFIG,
   formatISO8601Date,
@@ -232,6 +233,47 @@ describe('resolveSubPathWithFallback', () => {
 });
 
 // Test suite for formatISO8601Date
+// Test suite for canonicalHtmlRedirectTarget: a trailing-slash flat page is
+// 301'd to its `.html` form so its relative asset paths (../css, ../js) resolve
+// against the correct base instead of the non-existent `/<dir>/css/...`.
+describe('canonicalHtmlRedirectTarget', () => {
+  test('trailing-slash flat page (index.html 404, .html 200) redirects to .html', () => {
+    expect(canonicalHtmlRedirectTarget('/blog/what-i-do-found-to-used/', 404, 200))
+      .toBe('/blog/what-i-do-found-to-used.html');
+  });
+
+  test('nested flat page canonicalises to its .html file', () => {
+    expect(canonicalHtmlRedirectTarget('/blog/foundations/orange-with-pump/', 404, 200))
+      .toBe('/blog/foundations/orange-with-pump.html');
+  });
+
+  test('flat learn page canonicalises to .html', () => {
+    expect(canonicalHtmlRedirectTarget('/learn/mx-for-pdfs/', 404, 200))
+      .toBe('/learn/mx-for-pdfs.html');
+  });
+
+  test('real directory (index.html 200) is not redirected', () => {
+    expect(canonicalHtmlRedirectTarget('/blog/', 200, 200)).toBeNull();
+  });
+
+  test('neither form found (both 404) is not redirected', () => {
+    expect(canonicalHtmlRedirectTarget('/blog/missing/', 404, 404)).toBeNull();
+  });
+
+  test('root path is never redirected', () => {
+    expect(canonicalHtmlRedirectTarget('/', 404, 200)).toBeNull();
+  });
+
+  test('non-trailing-slash path (already .html or extensionless) is not redirected', () => {
+    expect(canonicalHtmlRedirectTarget('/blog/post.html', 404, 200)).toBeNull();
+    expect(canonicalHtmlRedirectTarget('/blog/post', 404, 200)).toBeNull();
+  });
+
+  test('non-string input is handled safely', () => {
+    expect(canonicalHtmlRedirectTarget(undefined, 404, 200)).toBeNull();
+  });
+});
+
 describe('formatISO8601Date', () => {
   test('passes through already formatted ISO 8601 dates', () => {
     expect(formatISO8601Date('2024-12-10')).toBe('2024-12-10');
