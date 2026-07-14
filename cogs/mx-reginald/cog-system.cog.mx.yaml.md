@@ -4,9 +4,9 @@ description: "The first COG registered in REGINALD. Self-describing: a COG that 
 title: COG System Overview
 author: Tom Cranstoun
 created: '2026-03-01'
+type: cog-document
 mx:
   mxSpecVersion: "1.0"
-  contentType: "cog-document"
   file:
     name: "cog-system.cog.md"
     format: "text/markdown"

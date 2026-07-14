@@ -4,9 +4,9 @@ description: "MX metadata for the Maxine identity COG — who Maxine is, why the
 title: Maxine COG — Metadata
 author: Tom Cranstoun
 created: '2026-03-01'
+type: cog-metadata
 mx:
   mxSpecVersion: "1.0"
-  contentType: "cog-metadata"
   scope: "who-maxine-is"
   contentSummary:
     - "Tom's introduction — naming an AI partner, not branding a tool"
