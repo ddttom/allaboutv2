@@ -7,6 +7,9 @@
 .hlx/*
 helix-importer-ui
 
+# Claude Code hook runtime state (device-local, ephemeral; parity with the hub .gitignore)
+.claude/hooks/state/
+
 # ========================================
 
 # Build Artifacts & Dependencies
