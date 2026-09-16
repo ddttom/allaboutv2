@@ -15,7 +15,7 @@ type: eds-block
 tags: [eds, block, header, navigation]
 mx:
   status: draft
-  x-mx-category: eds-block
+  x-mx-category: reference-implementation
   x-mx-cogId: cog-eds-block-header-20260222
   x-mx-cogType: info
   license: MIT

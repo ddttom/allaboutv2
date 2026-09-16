@@ -15,7 +15,7 @@ type: landing-page
 tags: [mx, principles, navigation, landing]
 mx:
   status: draft
-  x-mx-category: landing-page
+  x-mx-category: mx-content
   x-mx-cogId: cog-mx-landing-principles-menu-20260222
   x-mx-cogType: info
   license: MIT

@@ -18,7 +18,7 @@ mx:
   maintainer: tony@media219.com
   license: proprietary
   status: published
-  x-mx-category: creative-services
+  x-mx-category: example
   partOf: broadcast-industry
   audience: both
   readingLevel: intermediate

@@ -8,7 +8,7 @@ type: eds-block
 tags: [eds, block, {block-category}]
 mx:
   status: draft
-  x-mx-category: eds-block
+  x-mx-category: template
   x-mx-cogId: cog-eds-block-{block-name}-{YYYYMMDD}
   x-mx-cogType: info
   license: MIT
