@@ -19,7 +19,7 @@ mx:
   publicationDate: '{YYYY-MM-DDTHH:MM:SSZ}'
   expires: '{YYYY-MM-DDTHH:MM:SSZ}'
   modified: '{YYYY-MM-DDTHH:MM:SSZ}'
-  attestation: unattested
+  attestationStatus: unattested
   mxCompliance: level-2
   registry: allabout.network
   maintainer:
