@@ -19,6 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Cloudflare worker 1.4.1: the public MX Explained PDF may be indexed** (2026-09-25)
+  - mx-site PDFs carry `X-Robots-Tag: noindex, nofollow` to protect proprietary content. `/mx-explained.pdf` is a public explainer meant to be found, so it is opted out by exact path through the new `INDEXABLE_MX_SITE_PDFS` allowlist and the pure helper `pdfRobotsTag` in `cloudflare/files/cloudflare-worker.js`. Every other PDF, and the same path on any other subdomain, keeps `noindex`. Unit tests cover the allowlisted path, the default, the subdomain boundary, and exact-path matching; all 276 worker tests pass.
+
 ### Fixed
 
 - **Cloudflare worker: canonicalise trailing-slash flat-page URLs to their `.html` form** (2026-07-08)

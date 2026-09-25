@@ -13,7 +13,7 @@
 * OF ANY KIND, either express or implied. See the License for the specific language
 * governing permissions and limitations under the License.
 *
-* @version 1.4.0
+* @version 1.4.1
  */
 
 // --- REGINALD API imports (write-side handlers) ---
@@ -48,7 +48,7 @@ import { runAlivenessChecks } from './reginald/lib/aliveness.js';
 
 // Worker version - hardcoded for compatibility
 // Update this when package.json version changes
-export const WORKER_VERSION = '1.4.0';
+export const WORKER_VERSION = '1.4.1';
 
 // Organisation identity — used in JSON-LD publisher blocks across all domains
 export const ORGANISATION_CONFIG = {
@@ -731,6 +731,30 @@ export const resolveMxSiteDocRedirect = (pathname) => {
 };
 
 /**
+ * mx-site PDFs that search engines and agents MAY index. Every other PDF on
+ * the subdomain keeps `X-Robots-Tag: noindex, nofollow`; a PDF is opted in
+ * by path, one deliberate entry at a time, because the default protects
+ * proprietary content.
+ */
+export const INDEXABLE_MX_SITE_PDFS = new Set([
+  '/mx-explained.pdf', // public MX explainer, meant to be found
+]);
+
+/**
+ * The X-Robots-Tag value for a PDF served from an mx subdomain, or null when
+ * the PDF may be indexed (no header is set).
+ * Pure function - fully testable without Cloudflare Workers runtime.
+ * @param {string} subdomain - The mx subdomain being served (e.g. "mx-site")
+ * @param {string} pathname - Request pathname (e.g. "/mx-explained.pdf")
+ * @returns {string|null} Header value, or null to leave the PDF indexable
+ */
+export const pdfRobotsTag = (subdomain, pathname) => (
+  subdomain === 'mx-site' && INDEXABLE_MX_SITE_PDFS.has(pathname)
+    ? null
+    : 'noindex, nofollow'
+);
+
+/**
  * Categorise an AI agent or browser from User-Agent string.
  * Pure function - fully testable without Cloudflare Workers runtime.
  * @param {string} userAgent - User-Agent header value
@@ -1247,9 +1271,12 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
   // Referrer-Policy: send origin on cross-origin navigations, full URL on same-origin.
   // Explicit policy is more predictable than browser defaults (which vary by context).
   resp.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  // Prevent AI agents and search engines from indexing/following PDF files
+  // Prevent AI agents and search engines from indexing/following PDF files,
+  // except the public PDFs opted in by INDEXABLE_MX_SITE_PDFS.
   if (ext === 'pdf') {
-    resp.headers.set('X-Robots-Tag', 'noindex, nofollow');
+    const robots = pdfRobotsTag(subdomain, url.pathname);
+    if (robots) resp.headers.set('X-Robots-Tag', robots);
+    else resp.headers.delete('X-Robots-Tag');
   }
   resp.headers.set('cfw', WORKER_VERSION);
   resp.headers.delete('age');

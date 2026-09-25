@@ -41,6 +41,8 @@ import worker, {
   findLanguageSite,
   shouldLanguageRedirect,
   resolveMxSiteDocRedirect,
+  INDEXABLE_MX_SITE_PDFS,
+  pdfRobotsTag,
   categoriseAgent,
   categoriseReferer,
   isAiAgent,
@@ -1271,7 +1273,7 @@ describe('handleRequest Integration', () => {
 
     // Verify version header still present and shows current version
     expect(response.headers.get('cfw')).toBe(WORKER_VERSION);
-    expect(WORKER_VERSION).toBe('1.4.0');
+    expect(WORKER_VERSION).toBe('1.4.1');
   });
 
   test('includes speculation rules in HTML responses', async () => {
@@ -1764,6 +1766,34 @@ describe('shouldLanguageRedirect', () => {
   test('handles site without redirectPaths', () => {
     const noRedirect = { excludePaths: ['/assets/'] };
     expect(shouldLanguageRedirect('/', noRedirect)).toBe(false);
+  });
+});
+
+// ============================================================
+// pdfRobotsTag Tests
+// ============================================================
+describe('pdfRobotsTag', () => {
+  test('lets the opted-in public explainer PDF be indexed', () => {
+    expect(pdfRobotsTag('mx-site', '/mx-explained.pdf')).toBeNull();
+  });
+
+  test('keeps noindex on every other mx-site PDF', () => {
+    expect(pdfRobotsTag('mx-site', '/books/mx-introduction-chapter.pdf')).toBe('noindex, nofollow');
+    expect(pdfRobotsTag('mx-site', '/AI-USAGE.pdf')).toBe('noindex, nofollow');
+  });
+
+  test('an allowlisted path on another subdomain stays noindex', () => {
+    expect(pdfRobotsTag('content', '/mx-explained.pdf')).toBe('noindex, nofollow');
+  });
+
+  test('matches the exact path, not a prefix or a different case', () => {
+    expect(pdfRobotsTag('mx-site', '/mx-explained.pdf.bak')).toBe('noindex, nofollow');
+    expect(pdfRobotsTag('mx-site', '/MX-EXPLAINED.pdf')).toBe('noindex, nofollow');
+    expect(pdfRobotsTag('mx-site', '/drafts/mx-explained.pdf')).toBe('noindex, nofollow');
+  });
+
+  test('the allowlist is explicit and small', () => {
+    expect([...INDEXABLE_MX_SITE_PDFS]).toEqual(['/mx-explained.pdf']);
   });
 });
 
