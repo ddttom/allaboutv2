@@ -6,9 +6,9 @@ version: '1.0'
 title: '{block-name}'
 type: eds-block
 tags: [eds, block, {block-category}]
+category: template
 mx:
   status: draft
-  x-mx-category: template
   x-mx-cogId: cog-eds-block-{block-name}-{YYYYMMDD}
   x-mx-cogType: info
   license: MIT

@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Cog frontmatter: `category` moves out of the retired `x-mx-category`** (2026-09-30)
+  - Six cogs carried the deprecated `mx.x-mx-category`. Each now declares `category` at the top level, where the MX frontmatter zones place it (Zone 1a), so the hub's compliance sweep and zone check read them clean. Files: `cogs/eds-blocks/header.cog.md`, `cogs/mx-landing/mx-principles-menu.cog.md`, `cogs/mx-reginald/cog-system.cog.md`, `cogs/mx-reginald/maxine.cog.md`, `demo/media219/media219.cog.md`, `docs/cog-templates/eds-block.cog.template.md`.
+
 - **Cloudflare worker 1.4.1: the public MX Explained PDF may be indexed** (2026-09-25)
   - mx-site PDFs carry `X-Robots-Tag: noindex, nofollow` to protect proprietary content. `/mx-explained.pdf` is a public explainer meant to be found, so it is opted out by exact path through the new `INDEXABLE_MX_SITE_PDFS` allowlist and the pure helper `pdfRobotsTag` in `cloudflare/files/cloudflare-worker.js`. Every other PDF, and the same path on any other subdomain, keeps `noindex`. Unit tests cover the allowlisted path, the default, the subdomain boundary, and exact-path matching; all 276 worker tests pass.
 

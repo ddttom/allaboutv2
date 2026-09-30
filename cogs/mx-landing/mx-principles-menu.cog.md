@@ -13,9 +13,9 @@ version: '1.0'
 title: MX Principles Menu
 type: landing-page
 tags: [mx, principles, navigation, landing]
+category: mx-content
 mx:
   status: draft
-  x-mx-category: mx-content
   x-mx-cogId: cog-mx-landing-principles-menu-20260222
   x-mx-cogType: info
   license: MIT

@@ -14,11 +14,11 @@ modified: 2026-02-25
 author: Media219 Ltd
 type: organization-cog
 tags: [television, graphics, title-sequences, 3d-models, sports-broadcasting, motion-graphics, premier-league, fifa, mls, broadcast]
+category: example
 mx:
   maintainer: tony@media219.com
   license: proprietary
   status: published
-  x-mx-category: example
   partOf: broadcast-industry
   audience: both
   readingLevel: intermediate

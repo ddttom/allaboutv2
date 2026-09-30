@@ -13,9 +13,9 @@ version: '1.0'
 title: What is a COG?
 type: info-doc
 tags: [cog, system, specification, mx-reginald]
+category: specification
 mx:
   status: draft
-  x-mx-category: specification
   x-mx-cogRole: definition
   x-mx-cogId: cog-mx-reginald-cog-system-20260208
   x-mx-cogType: community-owned-governance-standard

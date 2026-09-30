@@ -13,9 +13,9 @@ version: '1.0'
 title: Who Is Maxine?
 type: info-doc
 tags: [maxine, identity, ai-partner, mx-reginald]
+category: mx-maxine-core
 mx:
   status: draft
-  x-mx-category: mx-maxine-core
   x-mx-cogId: cog-mx-reginald-maxine-20260208
   x-mx-cogType: info
   license: MIT
