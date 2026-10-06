@@ -6,7 +6,7 @@ author: Tom Cranstoun
 created: '2026-03-01'
 type: cog-metadata
 mx:
-  mxSpecVersion: "1.0"
+  mxSpecVersion: "0.9"
   scope: "who-maxine-is"
   contentSummary:
     - "Tom's introduction — naming an AI partner, not branding a tool"

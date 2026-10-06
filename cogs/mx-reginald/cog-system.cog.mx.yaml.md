@@ -6,7 +6,7 @@ author: Tom Cranstoun
 created: '2026-03-01'
 type: cog-document
 mx:
-  mxSpecVersion: "1.0"
+  mxSpecVersion: "0.9"
   file:
     name: "cog-system.cog.md"
     format: "text/markdown"
