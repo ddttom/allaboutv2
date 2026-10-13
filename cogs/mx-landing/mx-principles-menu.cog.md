@@ -16,8 +16,8 @@ tags: [mx, principles, navigation, landing]
 category: mx-content
 mx:
   status: draft
-  x-mx-cogId: cog-mx-landing-principles-menu-20260222
-  x-mx-cogType: info
+  cogId: cog-mx-landing-principles-menu-20260222
+  cogType: info
   license: MIT
   publisher:
     verified: false

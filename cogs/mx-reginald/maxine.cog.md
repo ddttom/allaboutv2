@@ -16,8 +16,8 @@ tags: [maxine, identity, ai-partner, mx-reginald]
 category: mx-maxine-core
 mx:
   status: draft
-  x-mx-cogId: cog-mx-reginald-maxine-20260208
-  x-mx-cogType: info
+  cogId: cog-mx-reginald-maxine-20260208
+  cogType: info
   license: MIT
   publisher:
     verified: false

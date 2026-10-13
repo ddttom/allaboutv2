@@ -9,8 +9,8 @@ tags: [eds, block, {block-category}]
 category: template
 mx:
   status: draft
-  x-mx-cogId: cog-eds-block-{block-name}-{YYYYMMDD}
-  x-mx-cogType: info
+  cogId: cog-eds-block-{block-name}-{YYYYMMDD}
+  cogType: info
   license: MIT
   publisher:
     verified: false

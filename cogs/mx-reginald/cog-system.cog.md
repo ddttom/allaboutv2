@@ -17,8 +17,8 @@ category: specification
 mx:
   status: draft
   x-mx-cogRole: definition
-  x-mx-cogId: cog-mx-reginald-cog-system-20260208
-  x-mx-cogType: community-owned-governance-standard
+  cogId: cog-mx-reginald-cog-system-20260208
+  cogType: community-owned-governance-standard
   license: MIT
   publisher:
     verified: false
