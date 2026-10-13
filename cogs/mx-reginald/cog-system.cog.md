@@ -18,7 +18,7 @@ mx:
   status: draft
   x-mx-cogRole: definition
   cogId: cog-mx-reginald-cog-system-20260208
-  cogType: community-owned-governance-standard
+  cogType: info
   license: MIT
   publisher:
     verified: false
