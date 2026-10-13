@@ -13,35 +13,15 @@ mx:
     frontmatter: "YAML (certificate + governance headers)"
     encoding: "UTF-8"
     language: "en"
-  cogMetadata:
-    id: "cog-mx-reginald-cog-system-20260208"
-    publisher: "MX Reginald Ltd"
-    subject: "COG Document System"
-    category: "specification"
-    scope: "system-overview"
-    status: "draft"
-    compliance_level: 2
-    signature: "unsigned"
-  contentSummary:
-    narrative_sections:
-      - "What is a COG (opens with 'You're reading one right now')"
-      - "The problem (Danube cruise £2,030→£203,000, developer 40,000-token cascade)"
-      - "The solution (verified documents for both humans and machines)"
-      - "The two strands (attestation + stewardship metadata) in the COG record"
-      - "Why COG (gear metaphor)"
-      - "The lifecycle (7 stages, explained in plain language)"
-      - "Five compliance levels (Basic through Audited)"
-      - "Where COGs live (allabout.network/cogs/ path)"
-      - "The MX ecosystem (Holdings, Books, what exists today)"
-      - "The community (The Gathering)"
-      - "Key dates and further reading"
-    links_to:
-      - "MX Holdings (three companies)"
-      - "MX Books (Handbook April 2026, Protocols July 2026)"
-      - "MX Reginald Ltd (operating company)"
-      - "COG specification (full technical reference)"
-      - "Grant application (investor pitch)"
-      - "Public explainer (plain language)"
+  x-mx-scope: "system-overview"
+  summary: >-
+    Opens with "You're reading one right now" and explains what a COG is. It sets out the problem through two
+    examples (a Danube cruise priced at £2,030 read as £203,000, and a developer's 40,000-token cascade) and the
+    solution: verified documents for humans and machines alike. It covers the two strands of the COG record
+    (attestation and stewardship metadata), the gear metaphor behind the name, the lifecycle and the compliance
+    levels in plain language, where COGs live under allabout.network/cogs/, the MX ecosystem and The Gathering,
+    and closes with key dates and further reading. It links to MX Holdings, MX Books, MX Reginald Ltd, the COG
+    specification, the grant application and the public explainer.
   lifecycle:
     created: "2026-02-08"
     author: "Tom Cranstoun"
@@ -53,7 +33,7 @@ mx:
       - "MX ecosystem company changes"
       - "book publication dates change"
       - "signing engine processes first document"
-  regeneration:
+  x-mx-regeneration:
     prompt: "Create a self-describing COG document that explains the COG system (Community Owned Governance Standard). Must include rich human narrative with real-world examples (cruise pricing, developer token waste). Links to MX Holdings, MX Books, and MX Reginald. Follow the COG specification at reginald/cog-specification.md. Status: draft, unsigned, Level 2 compliance. COGs live at allabout.network/cogs/{client-id}/{subject}.cog.md — no dot prefix."
     sources:
       - "reginald/cog-specification.md"

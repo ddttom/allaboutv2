@@ -1,37 +1,31 @@
 ---
 
 title: '[TITLE]'
+description: "{One-sentence description of what this page communicates}"
 author: '[AUTHOR]'
 created: '[YYYY-MM-DD]'
 type: "landing-page"
+category: template
 mx:
   canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/docs/cog-templates/landing-page.cog.template.md
-  cog:
-    version: "1.0"
-    id: "cog-{publisher-id}-{subject-slug}-{YYYYMMDD}"
-    type: "cogs"
-    status: "draft"  # draft | attested | registered | active
+  cogId: "cog-{publisher-id}-{subject-slug}-{YYYYMMDD}"
+  cogType: info
+  status: "draft"  # draft | attested | registered | active
+  x-mx-scope: "{page-scope}"  # e.g., product-intro, coming-soon, demo
 
-    publisher:
-      name: "{Publisher Name}"
-      verified: false
-      attestedBy: "unattested"
-      contact: "{email@example.com}"
-      website: "{https://example.com}"
+  publisher:
+    name: "{Publisher Name}"
+    verified: false
+    attestedBy: "unattested"
+    contact: "{email@example.com}"
+    website: "{https://example.com}"
 
-    subject:
-      name: "{Landing Page Title}"
-      category: "landing-page"
-      scope: "{page-scope}"  # e.g., product-intro, coming-soon, demo
-      description: "{One-sentence description of what this page communicates}"
+  publicationDate: "{YYYY-MM-DDTHH:MM:SSZ}"
+  expires: "{YYYY-MM-DDTHH:MM:SSZ}"  # Typically 6 months from issued
 
-    publicationDate: "{YYYY-MM-DDTHH:MM:SSZ}"
-    expires: "{YYYY-MM-DDTHH:MM:SSZ}"  # Typically 6 months from issued
-    maintainedDate: "{YYYY-MM-DDTHH:MM:SSZ}"
-
-    attestation: "unattested"
-    mxCompliance: "level-2"
-    registry: "allabout.network"
+  attestationStatus: "unattested"
+  mxCompliance: "level-2"
+  registry: "allabout.network"
 
   governance:
     maintainer:

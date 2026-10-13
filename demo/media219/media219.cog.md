@@ -43,9 +43,6 @@ mx:
     sameAs:
     - https://www.linkedin.com/company/media219
     - https://vimeo.com/media219
-  contact:
-    social:
-      vimeo: https://vimeo.com/media219
   visibility: hosted
   discoverable: true
   citable: true

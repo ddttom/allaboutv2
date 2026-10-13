@@ -38,7 +38,7 @@ mx:
     caching: permitted for 24 hours
     redistribution: with attribution
     commercialUse: permitted
-  block:
+  x-mx-block:
     version: '1.0'
     contentModel:
       description: '{Describe the expected content structure in the Word/Google Doc.

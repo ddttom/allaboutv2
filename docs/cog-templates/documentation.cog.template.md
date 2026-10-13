@@ -4,19 +4,18 @@ author: '[AUTHOR]'
 created: '[YYYY-MM-DD]'
 type: documentation
 mx:
-  cog:
-    version: '1.0'
-    id: cog-docs-{subject-slug}-{YYYYMMDD}
-    status: draft
-    publisher:
-      verified: false
-      attestedBy: unattested
-      contact: '{email@example.com}'
-    publicationDate: '{YYYY-MM-DDTHH:MM:SSZ}'
-    expires: '{YYYY-MM-DDTHH:MM:SSZ}'
-    attestationStatus: unattested
-    mxCompliance: level-2
-    registry: allabout.network
+  cogId: cog-docs-{subject-slug}-{YYYYMMDD}
+  cogType: info
+  status: draft
+  publisher:
+    verified: false
+    attestedBy: unattested
+    contact: '{email@example.com}'
+  publicationDate: '{YYYY-MM-DDTHH:MM:SSZ}'
+  expires: '{YYYY-MM-DDTHH:MM:SSZ}'
+  attestationStatus: unattested
+  mxCompliance: level-2
+  registry: allabout.network
   governance:
     maintainer:
       contact: '{email@example.com}'

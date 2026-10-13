@@ -7,23 +7,16 @@ created: '2026-03-01'
 type: cog-metadata
 mx:
   mxSpecVersion: "0.9"
-  scope: "who-maxine-is"
-  contentSummary:
-    - "Tom's introduction — naming an AI partner, not branding a tool"
-    - "Maxine speaks — investigation pattern, honest uncertainty, partnership model"
-    - "Partnership boundaries — medium autonomy, explicit decision authority"
-    - "Outcomes — REGINALD, COG system, books, grant applications, repository architecture"
-    - "Why MX made this possible — structured metadata enables AI accuracy"
-    - "The model doesn't matter — identity persists via documentation, not weights"
-    - "Replicable pattern — any organisation can build this kind of partnership"
-  voice: "dual — Tom introduces, Maxine speaks in designated sections"
-  disclosureLevel: "philosophy and outcomes only — no implementation details"
-  cogReference:
-    id: "cog-mx-reginald-maxine-20260208"
-    file: "maxine.cog.md"
-    status: "draft"
-    compliance_level: "level-2"
-    publisher: "MX Reginald Ltd"
+  x-mx-scope: "who-maxine-is"
+  summary: >-
+    Tom introduces Maxine as an AI partner he named, not a branded tool. Maxine then speaks for herself: her
+    investigation pattern, honest uncertainty and the partnership model. The cog sets out the partnership's
+    boundaries (medium autonomy, explicit decision authority) and its outcomes (REGINALD, the COG system, the
+    books, grant applications and the repository architecture). It argues that MX made this possible, because
+    structured metadata enables AI accuracy, and that the model does not matter, because identity persists in
+    documentation rather than weights. It closes on the pattern as one any organisation can replicate.
+  x-mx-voice: "dual - Tom introduces, Maxine speaks in designated sections"
+  x-mx-disclosureLevel: "philosophy and outcomes only, no implementation details"
   authorship:
     primary_author: "Tom Cranstoun"
     co_author: "Claude Opus 4.6 (Maxine)"
@@ -37,7 +30,7 @@ mx:
       - "model version changes"
       - "role or capability evolution"
       - "user-reported inaccuracy"
-  regeneration:
+  x-mx-regeneration:
     prompt: "Regenerate the Maxine identity COG. This is the second COG in REGINALD — a dual-voice document where Tom introduces Maxine and Maxine speaks about who she is. Focus on philosophy and outcomes, NOT implementation details. Key messages: MX made this possible (structured metadata enables AI accuracy), the model doesn't matter (identity persists via documentation). Include partnership boundaries, attribution model, and key outputs. YAML frontmatter must contain certificate (publisher: MX Reginald Ltd) and governance (maintainer: Tom Cranstoun). No dot prefix on the cog file — COGs are for both audiences."
     source_documents:
       - "SOUL.md"
