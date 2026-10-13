@@ -40,11 +40,9 @@ mx:
   - user-reported inaccuracy
   accuracyCommitment: verified against current partnership practice and published outputs
   correctionSla: 72 hours from report to updated COG
-  usage:
-    sopInference: permitted
-    caching: permitted for 24 hours
-    redistribution: with attribution to MX Reginald Ltd
-    commercialUse: permitted
+  contentPolicy: extract-with-attribution
+  attribution: required
+  cacheability: medium
   canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/cogs/mx-reginald/maxine.cog.md
 
 ---

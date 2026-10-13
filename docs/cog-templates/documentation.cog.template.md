@@ -28,13 +28,11 @@ mx:
     - dependency update
     accuracyCommitment: '{What accuracy standard this doc commits to}'
     correctionSla: 72 hours
-    usage:
-      sopInference: permitted
-      caching: permitted for 24 hours
-      redistribution: with attribution
-      commercialUse: permitted
     licence: MIT
     licenceUrl: https://opensource.org/licenses/MIT
+  contentPolicy: extract-with-attribution
+  attribution: required
+  cacheability: medium
   audience:
   - humans
   - machines

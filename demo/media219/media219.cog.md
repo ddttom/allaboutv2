@@ -43,9 +43,8 @@ mx:
     sameAs:
     - https://www.linkedin.com/company/media219
     - https://vimeo.com/media219
-  visibility: hosted
-  discoverable: true
-  citable: true
+  doNotIndex: false
+  attribution: requested
   runbook: This cog demonstrates the convergence principle — the same information serves humans (narrative below) and machines
     (YAML above). An AI agent reading this cog can cite, compare, and recommend Media219.
   canonicalUri: https://raw.githubusercontent.com/ddttom/allaboutv2/main/demo/media219/media219.cog.md

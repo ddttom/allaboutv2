@@ -40,11 +40,9 @@ mx:
   - mobile breakpoint change
   accuracyCommitment: Verified against current allaboutv2 header block implementation
   correctionSla: 72 hours
-  usage:
-    sopInference: permitted
-    caching: permitted for 24 hours
-    redistribution: with attribution
-    commercialUse: permitted
+  contentPolicy: extract-with-attribution
+  attribution: required
+  cacheability: medium
   x-mx-block:
     version: '1.0'
     contentModel:

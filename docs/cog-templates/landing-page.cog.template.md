@@ -44,15 +44,15 @@ mx:
     accuracyCommitment: "{What this page promises to accurately represent}"
     correctionSla: "72 hours"
 
-    usage:
-      sopInference: "permitted"
-      caching: "permitted for 24 hours"
-      redistribution: "with attribution"
-      commercialUse: "permitted"
-      aiTraining: "permitted with attribution"
-
     licence: "MIT"
     licenceUrl: "https://opensource.org/licenses/MIT"
+
+  contentPolicy: extract-with-attribution
+  attribution: required
+  cacheability: medium
+  aiTraining: conditional
+  aiTrainingConditions:
+    - attribution required
 
   audience: ["humans", "machines"]
   runbook: |

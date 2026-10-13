@@ -40,11 +40,9 @@ mx:
   - user-reported broken link
   accuracyCommitment: Links verified against current MX content structure
   correctionSla: 72 hours
-  usage:
-    sopInference: permitted
-    caching: permitted for 24 hours
-    redistribution: with attribution
-    commercialUse: permitted
+  contentPolicy: extract-with-attribution
+  attribution: required
+  cacheability: medium
   audience:
   - humans
   - machines
