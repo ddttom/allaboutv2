@@ -10,35 +10,25 @@ import { json, error } from '../lib/responses.js';
 import { createBookCheckoutSession } from '../stripe/client.js';
 import * as audit from '../db/audit.js';
 
-// Worldwide shipping zones for the physical_world product.
-const WORLD_SHIPPING_COUNTRIES = [
-    'GB', 'US', 'CA', 'AU', 'NZ', 'IE', 'DE', 'FR', 'NL', 'BE',
-    'AT', 'CH', 'SE', 'DK', 'NO', 'FI', 'ES', 'IT', 'PT',
-];
-
+// The PDF is the only edition sold. The printed edition is promotional stock
+// handed out at conferences and in person (decision record
+// 2026-11-02-printed-handbook-stock-is-promotional); its former product ids
+// (physical_uk, physical_world) are refused here with a plain message, while
+// the webhook still completes any checkout session opened before the change.
 const VALID_PRODUCTS = {
     pdf: {
         envKey: 'STRIPE_HANDBOOK_PDF_PRICE_ID',
         shippingCountries: null,
     },
-    physical_uk: {
-        envKey: 'STRIPE_HANDBOOK_PHYSICAL_UK_PRICE_ID',
-        shippingCountries: ['GB'],
-    },
-    physical_world: {
-        envKey: 'STRIPE_HANDBOOK_PHYSICAL_WORLD_PRICE_ID',
-        shippingCountries: WORLD_SHIPPING_COUNTRIES,
-    },
 };
+const RETIRED_PRODUCTS = new Set(['physical_uk', 'physical_world']);
 
 /**
  * Handle POST /api/v1/books/checkout
  * Creates a Stripe Checkout session for a handbook purchase.
  *
- * Body: { product: "pdf" | "physical_uk" | "physical_world", email? }
- *   pdf            — instant download, no shipping
- *   physical_uk    — printed copy, UK-only shipping
- *   physical_world — printed copy, worldwide shipping
+ * Body: { product: "pdf", email? }
+ *   pdf — instant download, no shipping. The printed edition is not sold.
  */
 export async function handleBookCheckout(request, env) {
     let body;
@@ -49,8 +39,11 @@ export async function handleBookCheckout(request, env) {
     }
 
     const product = body.product;
+    if (RETIRED_PRODUCTS.has(product)) {
+        return error('The printed edition is not sold online; copies are handed out at conferences. Choose "pdf".', 410);
+    }
     if (!product || !VALID_PRODUCTS[product]) {
-        return error('product must be "pdf", "physical_uk", or "physical_world"', 400);
+        return error('product must be "pdf"', 400);
     }
 
     const config = VALID_PRODUCTS[product];

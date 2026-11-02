@@ -2065,30 +2065,18 @@ describe('Book Checkout Handler', () => {
     expect(data.session_id).toBe('cs_test_abc123');
   });
 
-  test('creates physical_world checkout session', async () => {
+  test('refuses the retired printed products with a plain message (410)', async () => {
     const { handleBookCheckout } = await import('./reginald/handlers/book-checkout.js');
-    const request = bookMockRequest({ method: 'POST', body: JSON.stringify({ product: 'physical_world' }) });
-    const response = await handleBookCheckout(request, env);
-    const data = await response.json();
-    expect(response.status).toBe(200);
-    expect(data.checkout_url).toBeDefined();
-  });
-
-  test('creates physical_uk checkout session restricted to GB', async () => {
-    const { handleBookCheckout } = await import('./reginald/handlers/book-checkout.js');
-    const request = bookMockRequest({ method: 'POST', body: JSON.stringify({ product: 'physical_uk' }) });
-    const response = await handleBookCheckout(request, env);
-    const data = await response.json();
-    expect(response.status).toBe(200);
-    expect(data.checkout_url).toBeDefined();
-    // Verify GB-only shipping was set on the underlying Stripe call.
+    for (const product of ['physical_uk', 'physical_world']) {
+      const request = bookMockRequest({ method: 'POST', body: JSON.stringify({ product }) });
+      const response = await handleBookCheckout(request, env);
+      const data = await response.json();
+      expect(response.status).toBe(410);
+      expect(data.error).toContain('not sold online');
+    }
+    // No Stripe session is opened for a retired product.
     const stripeCall = globalThis.fetch.mock.calls.find((c) => typeof c[0] === 'string' && c[0].includes('checkout/sessions'));
-    const body = stripeCall[1].body;
-    expect(body).toContain('shipping_address_collection');
-    expect(body).toContain('GB');
-    // physical_uk should not include US/CA/etc
-    expect(body).not.toContain('%5D=US');
-    expect(body).not.toContain('%5D=CA');
+    expect(stripeCall).toBeUndefined();
   });
 
   test('rejects invalid product type', async () => {
@@ -2445,7 +2433,7 @@ describe('End-to-End Book Flow', () => {
     expect(env.MAILERLITE_GROUP_HANDBOOK_PDF).toBeDefined();
   });
 
-  test('full physical_world purchase flow: checkout includes worldwide shipping', async () => {
+  test('a printed-copy checkout is refused end to end, with no Stripe call', async () => {
     const { handleBookCheckout } = await import('./reginald/handlers/book-checkout.js');
     const checkoutReq = bookMockRequest({
       method: 'POST',
@@ -2453,14 +2441,10 @@ describe('End-to-End Book Flow', () => {
     });
     const checkoutResp = await handleBookCheckout(checkoutReq, env);
     const checkoutData = await checkoutResp.json();
-    expect(checkoutResp.status).toBe(200);
-    expect(checkoutData.checkout_url).toBeDefined();
-    const fetchCalls = globalThis.fetch.mock.calls;
-    const stripeFetchCall = fetchCalls.find((c) => typeof c[0] === 'string' && c[0].includes('checkout/sessions'));
-    expect(stripeFetchCall).toBeDefined();
-    expect(stripeFetchCall[1].body).toContain('shipping_address_collection');
-    expect(stripeFetchCall[1].body).toContain('GB');
-    expect(stripeFetchCall[1].body).toContain('US');
+    expect(checkoutResp.status).toBe(410);
+    expect(checkoutData.error).toContain('not sold online');
+    const stripeFetchCall = globalThis.fetch.mock.calls.find((c) => typeof c[0] === 'string' && c[0].includes('checkout/sessions'));
+    expect(stripeFetchCall).toBeUndefined();
   });
 });
 
