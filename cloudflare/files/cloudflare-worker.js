@@ -1103,6 +1103,11 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
 
     // Retired/superseded posts: 301 to the replacement that is now canonical.
     const retiredPostRedirects = {
+      '/blog/drafts/watching-the-machines/the-security-scare-i-checked.html': '/blog/the-security-scare-i-checked.html',
+      '/blog/drafts/watching-the-machines/structured-index-buys-precision-not-reach.html': '/blog/structured-index-buys-precision-not-reach.html',
+      '/blog/drafts/watching-the-machines/a-watermark-answers-the-wrong-question.html': '/blog/a-watermark-answers-the-wrong-question.html',
+      '/blog/drafts/watching-the-machines/a-benchmark-table-is-not-an-eval.html': '/blog/a-benchmark-table-is-not-an-eval.html',
+      '/blog/drafts/watching-the-machines/the-repair-retold-as-a-breakthrough.html': '/blog/the-repair-retold-as-a-breakthrough.html',
       '/blog/drafts/agent-web/most-ai-assistants-ignore-robots-txt-canary-test.html': '/blog/agent-web/most-ai-assistants-ignore-robots-txt-canary-test.html',
       '/blog/drafts/agent-web/the-cheapest-bot-is-an-honest-one.html': '/blog/the-cheapest-bot-is-an-honest-one.html',
       '/blog/salesforce-buys-contentful-agent-ready-content.html': '/blog/salesforce-contentful-not-an-mx-strategy.html',
