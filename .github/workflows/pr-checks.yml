@@ -14,9 +14,11 @@ jobs:
           fetch-depth: 0
 
       - name: Check PR title format
+        # Event fields reach the shell only through env vars, never inline,
+        # so text in a PR title or body cannot run as a command.
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
-          PR_TITLE="${{ github.event.pull_request.title }}"
-
           # Check for conventional commit format
           if [[ "$PR_TITLE" =~ ^(feat|fix|docs|style|refactor|test|chore|perf)(\(.+\))?: ]]; then
             echo "✓ PR title follows conventional commit format"
@@ -31,9 +33,9 @@ jobs:
           fi
 
       - name: Check for linked issues
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
         run: |
-          PR_BODY="${{ github.event.pull_request.body }}"
-
           if [[ "$PR_BODY" =~ (Fixes|Closes|Resolves)[[:space:]]+#[0-9]+ ]]; then
             echo "✓ PR links to an issue"
           else

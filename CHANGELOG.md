@@ -29,6 +29,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **PR checks workflow: event fields reach the shell only through env vars** (2026-11-16)
+  - `.github/workflows/pr-checks.yml` placed `${{ github.event.pull_request.title }}` and `${{ github.event.pull_request.body }}` inline in its run scripts, so backticks or `$(...)` in a pull request title or body ran as shell commands. Both now pass through step `env:` entries and are read as quoted `"$PR_TITLE"` and `"$PR_BODY"`. No other workflow places `github.event` fields inline in a run script.
+
 - **Cloudflare worker: canonicalise trailing-slash flat-page URLs to their `.html` form** (2026-07-08)
   - A blog post reached at `/blog/<slug>/` (the form the extensionless clean URL 301s into) was served the flat `<slug>.html` body at the trailing-slash base, so the page's relative asset paths (`../css/...`, `../js/...`) resolved to the non-existent `/blog/css/...` and 404'd (returned as the `text/html` 404 page). The worker now 301-redirects such fallback-resolved trailing-slash URLs to their canonical `.html` URL, where the relative paths resolve. Real directories (a genuine `index.html` exists) are unaffected because they never reach the `.html` fallback. New pure helper `canonicalHtmlRedirectTarget` in `cloudflare/files/cloudflare-worker.js` with unit tests; all worker tests pass.
 
