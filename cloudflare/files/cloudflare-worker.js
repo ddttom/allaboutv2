@@ -48,7 +48,7 @@ import { runAlivenessChecks } from './reginald/lib/aliveness.js';
 
 // Worker version - hardcoded for compatibility
 // Update this when package.json version changes
-export const WORKER_VERSION = '1.4.1';
+export const WORKER_VERSION = '1.4.2';
 
 // Organisation identity — used in JSON-LD publisher blocks across all domains
 export const ORGANISATION_CONFIG = {
@@ -270,19 +270,26 @@ export const formatISO8601Date = (dateString) => {
 };
 
 /**
- * Returns true if the given URL pathname (or bare filename) points to one of
- * the agent-directory text files we wrap in HTML for Common Crawl ingestion:
- * llms.txt (curated index) or llms-full.txt (full corpus).
+ * Content-Type for the llms.txt family. The llms.txt proposal
+ * (https://llmstxt.org/) defines a Markdown file, and the Lighthouse llms-txt
+ * audit fetches it as text, so it is served as plain text with no HTML wrapper.
+ */
+export const AGENT_DIRECTORY_CONTENT_TYPE = 'text/plain; charset=utf-8';
+
+/**
+ * Returns true if the given URL pathname (or bare filename) points to a file
+ * in the llms.txt family: llms.txt, llms-full.txt, the numbered
+ * llms-full-N.txt parts, llms-blog.txt and any other llms-<name>.txt.
  *
- * Pure function — matches on the final path segment so /llms.txt,
- * /blog/llms.txt, /llms-full.txt, /docs/llms-full.txt all return true.
+ * Pure function: matches on the final path segment so /llms.txt,
+ * /blog/llms.txt, /llms-full-2.txt and /docs/llms-blog.txt all return true.
  *
  * @param {string} pathOrFilename - Full path or bare filename
  * @returns {boolean}
  */
 export const isAgentDirectoryFile = (pathOrFilename) => {
   const basename = String(pathOrFilename || '').split('/').pop();
-  return basename === 'llms.txt' || basename === 'llms-full.txt';
+  return /^llms(-[a-z0-9-]+)?\.txt$/i.test(basename);
 };
 
 /**
@@ -307,82 +314,18 @@ export const rewriteWellKnownLlmsTxt = (pathname) => {
 };
 
 /**
- * Wrap raw llms.txt or llms-full.txt content as a minimal HTML document so
- * Common Crawl (which only ingests HTML) can index the content. Preserves
- * the original text verbatim inside <pre>; no transformation of the text body.
+ * Return the response for an llms.txt-family file: the origin body unchanged,
+ * labelled as plain text. Status and other headers are kept; Content-Length is
+ * kept too, because the body is not altered.
  *
- * Pure function — testable in Node without the Workers runtime.
- *
- * @param {string} text - Raw llms.txt / llms-full.txt content
- * @param {string} [requestUrl] - Request URL (used for canonical link and title fallback)
- * @returns {string} Complete HTML document
+ * @param {Response} resp - Origin response for an llms.txt-family file
+ * @returns {Response} Response with Content-Type text/plain; charset=utf-8
  */
-export const wrapLlmsTxtAsHtml = (text, requestUrl) => {
-  const safe = (text || '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-
-  // Title: first "# heading" line if present, else basename + hostname fallback
-  const firstHeading = (text || '').split('\n').find((l) => l.startsWith('# '));
-
-  let host = '';
-  let canonical = '';
-  let basename = 'llms.txt';
-  try {
-    const u = new URL(requestUrl);
-    host = u.hostname;
-    const pathBasename = u.pathname.split('/').pop();
-    if (pathBasename) basename = pathBasename;
-    // Strip query string and fragment — canonical should be the bare resource URL
-    u.search = '';
-    u.hash = '';
-    canonical = u.toString();
-  } catch (_) {
-    // requestUrl is optional — tests may call without one
-  }
-
-  const title = firstHeading
-    ? firstHeading.replace(/^#\s+/, '').trim()
-    : `${basename}${host ? ` — ${host}` : ''}`;
-
-  const description = basename === 'llms-full.txt'
-    ? 'Comprehensive agent content corpus (llms-full.txt) served as HTML for crawler ingestion.'
-    : 'Agent directory file (llms.txt) served as HTML for crawler ingestion.';
-
-  const jsonLdObj = {
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    name: title,
-    description,
-    inLanguage: 'en-GB',
-  };
-  if (canonical) jsonLdObj.url = canonical;
-  const jsonLd = JSON.stringify(jsonLdObj);
-
-  const canonicalTag = canonical ? `<link rel="canonical" href="${canonical}">\n` : '';
-  const descHost = host || 'this site';
-
-  return `<!DOCTYPE html>
-<html lang="en-GB">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${title}</title>
-<meta name="description" content="${basename} for ${descHost} — published as HTML so AI training crawlers can ingest it.">
-<meta name="robots" content="index, follow">
-<meta name="mx:status" content="active">
-<meta name="mx:contentType" content="agent-directory">
-<meta name="mx:audience" content="machines, humans">
-${canonicalTag}<script type="application/ld+json">${jsonLd}</script>
-<style>body{font:14px/1.5 ui-monospace,Menlo,Consolas,monospace;max-width:80ch;margin:2rem auto;padding:0 1rem;color:#1a1a1a}pre.llms-txt{white-space:pre-wrap;word-wrap:break-word}</style>
-</head>
-<body>
-<main>
-<pre class="llms-txt">${safe}</pre>
-</main>
-</body>
-</html>`;
+export const serveAgentDirectoryFile = (resp) => {
+  const out = new Response(resp.body, resp);
+  out.headers.set('Content-Type', AGENT_DIRECTORY_CONTENT_TYPE);
+  out.headers.set('X-Content-Type-Options', 'nosniff');
+  return out;
 };
 
 /**
@@ -1249,21 +1192,11 @@ const handleMxSubdomain = async (request, url, subdomain, env) => {
     woff2: 'font/woff2',
     pdf: 'application/pdf',
   };
-  // Filename-specific overrides — wrap llms.txt and llms-full.txt in real HTML
-  // so Common Crawl (which only ingests HTML) can index the content. Matches
-  // at any depth via basename check, so /llms.txt, /blog/llms.txt,
-  // /llms-full.txt, /docs/llms-full.txt all work.
+  // llms.txt-family files are served as plain text with no HTML wrapper, at
+  // any depth (/llms.txt, /blog/llms.txt, /llms-full-2.txt, /llms-blog.txt).
   const filename = subPath.split('/').pop();
   if (isAgentDirectoryFile(filename) && resp.ok) {
-    const original = await resp.text();
-    const wrapped = wrapLlmsTxtAsHtml(original, url.toString());
-    resp = new Response(wrapped, {
-      status: resp.status,
-      statusText: resp.statusText,
-      headers: resp.headers,
-    });
-    resp.headers.set('Content-Type', 'text/html; charset=utf-8');
-    resp.headers.delete('Content-Length');
+    resp = serveAgentDirectoryFile(resp);
   } else if (contentTypes[ext]) {
     const ct = contentTypes[ext];
     const isText = ct.startsWith('text/') || ct === 'application/json' || ct === 'application/xml' || ct === 'application/javascript';
@@ -1839,23 +1772,10 @@ const handleRequest = async (request, env, ctx) => {
   // Add worker version header
   resp.headers.set('cfw', WORKER_VERSION);
 
-  // llms.txt and llms-full.txt wrapped in real HTML so Common Crawl ingests
-  // them. Matches any path ending in either filename (/llms.txt, /blog/llms.txt,
-  // /llms-full.txt, /docs/llms-full.txt). url.hostname has been rewritten to
-  // ORIGIN_HOSTNAME above — use the captured publicHostname so canonical/title
-  // reflect the public domain.
+  // llms.txt-family files are served as plain text with no HTML wrapper.
+  // Matches any path ending in an llms*.txt filename.
   if (isAgentDirectoryFile(url.pathname) && resp.ok) {
-    const original = await resp.text();
-    const publicUrl = new URL(url);
-    publicUrl.hostname = publicHostname;
-    const wrapped = wrapLlmsTxtAsHtml(original, publicUrl.toString());
-    resp = new Response(wrapped, {
-      status: resp.status,
-      statusText: resp.statusText,
-      headers: resp.headers,
-    });
-    resp.headers.set('Content-Type', 'text/html; charset=utf-8');
-    resp.headers.delete('Content-Length');
+    resp = serveAgentDirectoryFile(resp);
   }
 
   return resp;
