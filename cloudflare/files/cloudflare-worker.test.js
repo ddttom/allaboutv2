@@ -49,7 +49,8 @@ import worker, {
   shouldSkipAiCapture,
   buildAiVisitRow,
   isAttributionHost,
-  wrapLlmsTxtAsHtml,
+  serveAgentDirectoryFile,
+  AGENT_DIRECTORY_CONTENT_TYPE,
   isAgentDirectoryFile,
   rewriteWellKnownLlmsTxt,
   buildFreeBookFormHTML,
@@ -467,132 +468,66 @@ describe('formatISO8601Date - 2-digit year support', () => {
   });
 });
 
-// Test suite for wrapLlmsTxtAsHtml
-describe('wrapLlmsTxtAsHtml', () => {
-  const sample = `# mx.allabout.network — MX
+// Test suite for serveAgentDirectoryFile
+describe('serveAgentDirectoryFile', () => {
+  const sample = `# mx.allabout.network
 
 > MX is the practice of adding metadata so AI agents don't have to guess.
 
 ## Books
-- MX: The Intro
-- MX: The Handbook
+- [MX: The Handbook](https://mx.allabout.network/books/): a self-check guide
 `;
 
-  test('returns a string starting with <!DOCTYPE html>', () => {
-    const out = wrapLlmsTxtAsHtml(sample, 'https://mx.allabout.network/llms.txt');
-    expect(typeof out).toBe('string');
-    expect(out.startsWith('<!DOCTYPE html>')).toBe(true);
+  const originResponse = (body, init = {}) => new Response(body, {
+    status: 200,
+    headers: { 'Content-Type': 'text/plain', 'Content-Length': String(new TextEncoder().encode(body).length) },
+    ...init,
   });
 
-  test('preserves original text verbatim inside <pre class="llms-txt">', () => {
-    const out = wrapLlmsTxtAsHtml(sample, 'https://mx.allabout.network/llms.txt');
-    const match = out.match(/<pre class="llms-txt">([\s\S]*?)<\/pre>/);
-    expect(match).not.toBeNull();
-    // Decode the HTML entities the function inserts and confirm it matches input
-    const decoded = match[1]
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&amp;/g, '&');
-    expect(decoded).toBe(sample);
+  test('content type is text/plain; charset=utf-8', () => {
+    expect(AGENT_DIRECTORY_CONTENT_TYPE).toBe('text/plain; charset=utf-8');
+    const out = serveAgentDirectoryFile(originResponse(sample));
+    expect(out.headers.get('Content-Type')).toBe('text/plain; charset=utf-8');
   });
 
-  test('escapes HTML special chars (<, >, &) in input', () => {
-    const dangerous = '<script>alert("xss")</script> & more';
-    const out = wrapLlmsTxtAsHtml(dangerous, 'https://example.com/llms.txt');
-    expect(out).not.toContain('<script>alert');
-    expect(out).toContain('&lt;script&gt;');
-    expect(out).toContain('&amp; more');
+  test('body is the origin text, byte for byte, with no HTML wrapper', async () => {
+    const out = serveAgentDirectoryFile(originResponse(sample));
+    const body = await out.text();
+    expect(body).toBe(sample);
+    expect(body).not.toContain('<html');
+    expect(body).not.toContain('<pre');
+    expect(body.startsWith('# ')).toBe(true);
   });
 
-  test('extracts title from first "# heading" line when present', () => {
-    const out = wrapLlmsTxtAsHtml(sample, 'https://mx.allabout.network/llms.txt');
-    expect(out).toContain('<title>mx.allabout.network — MX</title>');
+  test('angle brackets and ampersands are not escaped', async () => {
+    const text = '# Site\n\n- [A & B](https://example.com/?a=1&b=2): <not html>\n';
+    const body = await serveAgentDirectoryFile(originResponse(text)).text();
+    expect(body).toBe(text);
   });
 
-  test('falls back to "llms.txt — {hostname}" when no heading and a URL is supplied', () => {
-    const out = wrapLlmsTxtAsHtml('no heading here\njust some text', 'https://example.com/llms.txt');
-    expect(out).toContain('<title>llms.txt — example.com</title>');
+  test('replaces a text/html content type from the origin', () => {
+    const out = serveAgentDirectoryFile(new Response(sample, { headers: { 'Content-Type': 'text/html' } }));
+    expect(out.headers.get('Content-Type')).toBe('text/plain; charset=utf-8');
   });
 
-  test('falls back to "llms.txt" when no heading and no URL', () => {
-    const out = wrapLlmsTxtAsHtml('no heading here');
-    expect(out).toContain('<title>llms.txt</title>');
+  test('sets X-Content-Type-Options: nosniff', () => {
+    const out = serveAgentDirectoryFile(originResponse(sample));
+    expect(out.headers.get('X-Content-Type-Options')).toBe('nosniff');
   });
 
-  test('sets <link rel="canonical"> when URL is supplied', () => {
-    const out = wrapLlmsTxtAsHtml(sample, 'https://mx.allabout.network/blog/llms.txt');
-    expect(out).toContain('<link rel="canonical" href="https://mx.allabout.network/blog/llms.txt">');
+  test('keeps status, other headers and Content-Length', () => {
+    const resp = originResponse(sample);
+    resp.headers.set('Cache-Control', 'max-age=300');
+    const out = serveAgentDirectoryFile(resp);
+    expect(out.status).toBe(200);
+    expect(out.headers.get('Cache-Control')).toBe('max-age=300');
+    expect(out.headers.get('Content-Length')).toBe(String(new TextEncoder().encode(sample).length));
   });
 
-  test('omits <link rel="canonical"> when no URL is supplied', () => {
-    const out = wrapLlmsTxtAsHtml(sample);
-    expect(out).not.toContain('rel="canonical"');
-  });
-
-  test('strips query string and fragment from canonical', () => {
-    const out = wrapLlmsTxtAsHtml(sample, 'https://mx.allabout.network/llms.txt?cb=12345#frag');
-    expect(out).toContain('<link rel="canonical" href="https://mx.allabout.network/llms.txt">');
-    expect(out).not.toContain('cb=12345');
-    expect(out).not.toContain('#frag');
-  });
-
-  test('contains the four required machine-readable meta signals', () => {
-    const out = wrapLlmsTxtAsHtml(sample, 'https://mx.allabout.network/llms.txt');
-    expect(out).toContain('<meta name="robots" content="index, follow">');
-    expect(out).toContain('<meta name="mx:status" content="active">');
-    expect(out).toContain('<meta name="mx:contentType" content="agent-directory">');
-    expect(out).toContain('<meta name="mx:audience" content="machines, humans">');
-  });
-
-  test('contains a valid application/ld+json WebPage block', () => {
-    const out = wrapLlmsTxtAsHtml(sample, 'https://mx.allabout.network/llms.txt');
-    const match = out.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
-    expect(match).not.toBeNull();
-    const parsed = JSON.parse(match[1]);
-    expect(parsed['@context']).toBe('https://schema.org');
-    expect(parsed['@type']).toBe('WebPage');
-    expect(parsed.name).toBe('mx.allabout.network — MX');
-    expect(parsed.url).toBe('https://mx.allabout.network/llms.txt');
-    expect(parsed.inLanguage).toBe('en-GB');
-  });
-
-  test('handles empty input gracefully', () => {
-    const out = wrapLlmsTxtAsHtml('', 'https://example.com/llms.txt');
-    expect(out.startsWith('<!DOCTYPE html>')).toBe(true);
-    expect(out).toContain('<pre class="llms-txt"></pre>');
-  });
-
-  test('handles undefined input gracefully', () => {
-    const out = wrapLlmsTxtAsHtml(undefined, 'https://example.com/llms.txt');
-    expect(out.startsWith('<!DOCTYPE html>')).toBe(true);
-    expect(out).toContain('<pre class="llms-txt"></pre>');
-  });
-
-  test('preserves multi-line whitespace verbatim inside <pre>', () => {
-    const multiline = 'line one\nline two\n\nline four after blank\n';
-    const out = wrapLlmsTxtAsHtml(multiline, 'https://example.com/llms.txt');
-    const match = out.match(/<pre class="llms-txt">([\s\S]*?)<\/pre>/);
-    expect(match[1]).toBe(multiline);
-  });
-
-  test('extracts only the FIRST # heading (ignores subsequent ones)', () => {
-    const text = '# First Title\n## Sub heading\n# Second Title\n';
-    const out = wrapLlmsTxtAsHtml(text, 'https://example.com/llms.txt');
-    expect(out).toContain('<title>First Title</title>');
-    expect(out).not.toContain('<title>Second Title</title>');
-  });
-
-  test('wraps llms-full.txt with filename-specific description', () => {
-    const out = wrapLlmsTxtAsHtml('# MX — Full Content\n\nbody', 'https://mx.allabout.network/llms-full.txt');
-    expect(out).toContain('<link rel="canonical" href="https://mx.allabout.network/llms-full.txt">');
-    expect(out).toContain('Comprehensive agent content corpus (llms-full.txt)');
-    expect(out).toContain('llms-full.txt for mx.allabout.network');
-    expect(out).not.toContain('Agent directory file (llms.txt)');
-  });
-
-  test('llms-full.txt fallback title uses correct basename when no heading', () => {
-    const out = wrapLlmsTxtAsHtml('no heading here', 'https://example.com/llms-full.txt');
-    expect(out).toContain('<title>llms-full.txt — example.com</title>');
+  test('handles an empty body', async () => {
+    const out = serveAgentDirectoryFile(new Response(''));
+    expect(await out.text()).toBe('');
+    expect(out.headers.get('Content-Type')).toBe('text/plain; charset=utf-8');
   });
 });
 
@@ -614,6 +549,13 @@ describe('isAgentDirectoryFile', () => {
   test('returns true for nested llms-full.txt at any depth', () => {
     expect(isAgentDirectoryFile('/blog/llms-full.txt')).toBe(true);
     expect(isAgentDirectoryFile('/docs/llms-full.txt')).toBe(true);
+  });
+
+  test('returns true for llms-blog.txt and numbered llms-full parts', () => {
+    expect(isAgentDirectoryFile('/llms-blog.txt')).toBe(true);
+    expect(isAgentDirectoryFile('/llms-full-2.txt')).toBe(true);
+    expect(isAgentDirectoryFile('/llms-full-5.txt')).toBe(true);
+    expect(isAgentDirectoryFile('/llms-understanding.txt')).toBe(true);
   });
 
   test('returns true for bare filenames', () => {
@@ -1273,7 +1215,7 @@ describe('handleRequest Integration', () => {
 
     // Verify version header still present and shows current version
     expect(response.headers.get('cfw')).toBe(WORKER_VERSION);
-    expect(WORKER_VERSION).toBe('1.4.1');
+    expect(WORKER_VERSION).toBe('1.4.2');
   });
 
   test('includes speculation rules in HTML responses', async () => {

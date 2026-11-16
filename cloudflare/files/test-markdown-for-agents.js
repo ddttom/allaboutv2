@@ -76,8 +76,7 @@ async function run() {
   console.log('═══════════════════════════════════════════════════════════');
 
   // ── Test 1: Browser request (no Accept header) ───────────────────────────
-  // The Worker wraps llms.txt in an HTML document for Common Crawl ingestion.
-  // A plain request should receive text/html with the <pre class="llms-txt"> wrapper.
+  // The Worker serves llms.txt as plain text with no HTML wrapper.
   const { res: htmlRes, body: htmlBody } = await fetchProbe(
     'Browser request (no Accept header)',
     `${BASE_URL}${PATH}`,
@@ -90,19 +89,19 @@ async function run() {
     `got ${htmlRes.status}`,
   );
   assert(
-    'Content-Type is text/html',
-    (htmlRes.headers.get('content-type') || '').includes('text/html'),
+    'Content-Type is text/plain',
+    (htmlRes.headers.get('content-type') || '').includes('text/plain'),
     `got "${htmlRes.headers.get('content-type')}"`,
   );
   assert(
-    'body is HTML (contains <html)',
-    htmlBody.includes('<html'),
-    'expected <html> tag in body',
+    'body is not HTML (no <html)',
+    !htmlBody.includes('<html'),
+    'found an <html> tag in body; expected raw llms.txt text',
   );
   assert(
-    'Worker llms.txt wrapper present (<pre class="llms-txt">)',
-    htmlBody.includes('llms-txt'),
-    'expected Worker HTML wrapper; wrapLlmsTxtAsHtml did not run',
+    'body starts with a Markdown H1',
+    htmlBody.trimStart().startsWith('# '),
+    'expected the llms.txt H1 as the first line',
   );
   assert(
     'content-type header is NOT text/markdown (no conversion on browser request)',
@@ -111,8 +110,7 @@ async function run() {
   );
 
   // ── Test 2: AI agent request (Accept: text/markdown) ─────────────────────
-  // The Worker's pass-through guard fires before wrapLlmsTxtAsHtml, so the
-  // origin's raw llms.txt text is returned directly.  Cloudflare's Markdown for
+  // The origin's raw llms.txt text is returned directly.  Cloudflare's Markdown for
   // Agents converter operates on text/html; since the origin returns text/plain
   // the converter does not re-encode the body — the agent receives the raw
   // llms.txt content, which is already clean plain text.
@@ -130,9 +128,9 @@ async function run() {
     `got ${mdRes.status}`,
   );
   assert(
-    'body does NOT contain HTML wrapper — pass-through guard fired',
+    'body does NOT contain an HTML wrapper',
     !mdBody.includes('<pre class="llms-txt">'),
-    'Worker HTML wrapper found; pass-through guard did not fire',
+    'HTML wrapper found; expected raw llms.txt text',
   );
   assert(
     'body does NOT start with <html — raw content returned',

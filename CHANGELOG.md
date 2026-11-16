@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Cloudflare worker 1.4.2: llms.txt files are served as plain text** (2026-11-16)
+  - `llms.txt`, `llms-full.txt`, the numbered `llms-full-N.txt` parts, `llms-blog.txt` and any other `llms-<name>.txt` are now served unchanged as `text/plain; charset=utf-8`, with `X-Content-Type-Options: nosniff` and no HTML wrapper, on mx.allabout.network and allabout.network. This matches the llms.txt proposal (https://llmstxt.org/), MX: The Handbook chapter 7, and the Lighthouse `llms-txt` audit (https://github.com/GoogleChrome/lighthouse/blob/main/core/audits/agentic/llms-txt.js), which reads the file as text. `wrapLlmsTxtAsHtml` is replaced by `serveAgentDirectoryFile` in `cloudflare/files/cloudflare-worker.js`, and `isAgentDirectoryFile` now matches the whole llms.txt family. Unit tests cover the content type, the body passing through byte for byte, the absence of a wrapper, and the extended filename match; all 266 worker tests pass. The live probe `test-markdown-for-agents.js` now expects plain text.
+
 - **Cog frontmatter: `category` moves out of the retired `x-mx-category`** (2026-09-30)
   - Six cogs carried the deprecated `mx.x-mx-category`. Each now declares `category` at the top level, where the MX frontmatter zones place it (Zone 1a), so the hub's compliance sweep and zone check read them clean. Files: `cogs/eds-blocks/header.cog.md`, `cogs/mx-landing/mx-principles-menu.cog.md`, `cogs/mx-reginald/cog-system.cog.md`, `cogs/mx-reginald/maxine.cog.md`, `demo/media219/media219.cog.md`, `docs/cog-templates/eds-block.cog.template.md`.
 
