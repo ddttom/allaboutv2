@@ -13,6 +13,13 @@ PUSH_INVALIDATION = "enabled"
 PUBLIC_COG_KEY_ID = "did:web:allabout.network:publishers:public-facts#publisher-key-1"
 PUBLIC_COG_PUBLIC_KEY = "z6Mkisy2BF8Qbn2sJbFhawonocw6xcWDdADzXwmnm92nsBy5"
 
+# Content provenance store uploads (/api/v1/content-provenance/<object>).
+# Not set: the pages operator key is minted by the operator (runbook in the
+# MX-hub design cog aem-content-provenance-example). The public key is not
+# secret; once minted, uncomment and fill in.
+# CPS_PUBLISHER_KEY_ID = "did:web:allabout.network:publishers:pages#publisher-key-1"
+# CPS_PUBLISHER_PUBLIC_KEY = "<publicKeyMultibase of the pages operator key>"
+
 # Book sales — Stripe price IDs and MailerLite group IDs.
 # Three handbook products: PDF download (£25), UK-only print (£35),
 # worldwide print (£40). Stripe price IDs are test-mode values; replace
@@ -54,6 +61,14 @@ bucket_name = "mx-books"
 [[r2_buckets]]
 binding = "PUBLIC_COGS_R2"
 bucket_name = "mx-public-cogs"
+
+# R2 bucket for the content provenance store (CPS draft 0.4 listing, keys,
+# Fact annotations and per-page entries). Left unbound, so every
+# /.well-known/content-provenance route answers 404. The operator creates the
+# bucket and uncomments the binding.
+# [[r2_buckets]]
+# binding = "CONTENT_PROVENANCE_R2"
+# bucket_name = "mx-content-provenance"
 
 # D1 database for reginald publishers, tokens, audit log, and book download links.
 [[d1_databases]]

@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Cloudflare worker 1.5.0: Content Provenance Specification (draft 0.4) endpoints** (2026-11-27)
+  - New module `cloudflare/files/content-provenance.js` serves `/.well-known/content-provenance` (paginated listing with RFC 8288 Link header), `/keys`, `/keys/{keyId}` and `/facts/{id}` on allabout.network from the `CONTENT_PROVENANCE_R2` bucket, before any other routing. Published pages gain their signed Record, MX head metadata and Fact spans in the HTML, and the Markdown alternate gains frontmatter pointing back to the Record, only while the origin `Last-Modified` equals the value the publisher signed against (fail closed). The store is uploaded by signed RFC 9421 PUT/DELETE at `/api/v1/content-provenance/<object>`, reusing the public cog store verifier with its own key (`CPS_PUBLISHER_KEY_ID`, `CPS_PUBLISHER_PUBLIC_KEY`).
+  - Signing happens at publish time in MX-hub (`scripts/lib/content-provenance`), where REGINALD attests the canonical Record digest for the `did:web:allabout.network:publishers:pages` operator. The worker holds no private key.
+  - The bucket binding and the upload key are left commented in `wrangler.toml`; until they are set every route answers 404 and pages are served unchanged. `content-provenance.test.js` tests the module against a golden store written by the MX-hub prototype.
+
 ### Changed
 
 - **Cog frontmatter: `category` moves out of the retired `x-mx-category`** (2026-09-30)

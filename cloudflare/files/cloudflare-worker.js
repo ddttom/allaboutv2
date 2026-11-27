@@ -13,7 +13,7 @@
 * OF ANY KIND, either express or implied. See the License for the specific language
 * governing permissions and limitations under the License.
 *
-* @version 1.4.1
+* @version 1.5.0
  */
 
 // --- REGINALD API imports (write-side handlers) ---
@@ -46,10 +46,18 @@ import { AI_ATTRIBUTION_HOSTS, isAttributionHost } from './reginald/lib/ai-attri
 import { runGa4Connector } from './reginald/lib/ga4-connector.js';
 import { runAlivenessChecks } from './reginald/lib/aliveness.js';
 import { isPublicCogRequest, handlePublicCogRequest } from './public-cog-store.js';
+import {
+  isContentProvenanceRequest,
+  handleContentProvenanceRequest,
+  loadPageEntry,
+  applyContentProvenance,
+  applyMarkdownFrontmatter,
+  CPS_HOSTS,
+} from './content-provenance.js';
 
 // Worker version - hardcoded for compatibility
 // Update this when package.json version changes
-export const WORKER_VERSION = '1.4.1';
+export const WORKER_VERSION = '1.5.0';
 
 // Organisation identity — used in JSON-LD publisher blocks across all domains
 export const ORGANISATION_CONFIG = {
@@ -1401,6 +1409,13 @@ const handleRequest = async (request, env, ctx) => {
     return handlePublicCogRequest(request, env, url);
   }
 
+  // Content provenance (CPS draft 0.4): the listing, keys and Fact
+  // annotations are served from R2 before any other routing, for the same
+  // reason. Inert (404) until CONTENT_PROVENANCE_R2 is bound.
+  if (isContentProvenanceRequest(url)) {
+    return handleContentProvenanceRequest(request, env, url);
+  }
+
   // AI traffic attribution — fire-and-forget capture of AI crawlers and
   // AI-referred human visits for hostnames we operate. Runs before routing
   // so it sees every GET, regardless of which origin handles the response.
@@ -1788,6 +1803,15 @@ const handleRequest = async (request, env, ctx) => {
     // 2. Transform: Inject JSON-LD structured data
     htmlText = injectJsonLd(htmlText, publicHostname);
 
+    // 2a. Transform: the signed CPS Record, MX head metadata and Fact spans.
+    // Applied after the transforms that change body text, so the page carries
+    // its Record only when its canonical text matches the signed contentHash;
+    // a stale entry (origin Last-Modified moved on) is not applied.
+    if (CPS_HOSTS.includes(publicHostname) && env.CONTENT_PROVENANCE_R2) {
+      const entry = await loadPageEntry(env, url.pathname);
+      htmlText = applyContentProvenance(htmlText, entry, resp.headers.get('last-modified'));
+    }
+
     // 3. Transform: Inject Speculation Rules for near-instant navigation
     htmlText = injectSpeculationRules(htmlText);
 
@@ -1809,6 +1833,20 @@ const handleRequest = async (request, env, ctx) => {
       statusText: resp.statusText,
       headers: processedHeaders,
     });
+  }
+
+  // Markdown alternate: prepend the frontmatter that points back to the
+  // signed Record, under the same freshness rule as the HTML.
+  if (contentType && contentType.includes('text/markdown') && url.pathname.endsWith('.md')
+    && resp.status === 200 && CPS_HOSTS.includes(publicHostname) && env.CONTENT_PROVENANCE_R2) {
+    const entry = await loadPageEntry(env, url.pathname);
+    if (entry) {
+      const markdown = applyMarkdownFrontmatter(await resp.text(), entry, resp.headers.get('last-modified'));
+      const mdHeaders = new Headers(resp.headers);
+      mdHeaders.delete('content-encoding');
+      mdHeaders.delete('content-length');
+      resp = new Response(markdown, { status: resp.status, statusText: resp.statusText, headers: mdHeaders });
+    }
   }
 
   // Create new Response for header modifications
