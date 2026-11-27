@@ -8,6 +8,11 @@ MX_OUTPUTS_HOSTNAME = "raw.githubusercontent.com"
 MX_OUTPUTS_REPO_PATH = "/Digital-Domain-Technologies-Ltd/MX-outputs/main"
 PUSH_INVALIDATION = "enabled"
 
+# Public cog body store (/cogs/public/<path>.cog.md). PUT and DELETE are
+# authenticated by an RFC 9421 Ed25519 signature; the public key is not secret.
+PUBLIC_COG_KEY_ID = "did:web:allabout.network:publishers:public-facts#publisher-key-1"
+PUBLIC_COG_PUBLIC_KEY = "z6Mkisy2BF8Qbn2sJbFhawonocw6xcWDdADzXwmnm92nsBy5"
+
 # Book sales — Stripe price IDs and MailerLite group IDs.
 # Three handbook products: PDF download (£25), UK-only print (£35),
 # worldwide print (£40). Stripe price IDs are test-mode values; replace
@@ -44,6 +49,11 @@ RESEND_FROM = "CogNovaMX <info@cognovamx.com>"
 [[r2_buckets]]
 binding = "BOOKS_R2"
 bucket_name = "mx-books"
+
+# R2 bucket for public cog bodies (the bucket is created by the operator).
+[[r2_buckets]]
+binding = "PUBLIC_COGS_R2"
+bucket_name = "mx-public-cogs"
 
 # D1 database for reginald publishers, tokens, audit log, and book download links.
 [[d1_databases]]
