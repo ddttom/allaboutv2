@@ -6,7 +6,7 @@
  * PUT / DELETE from the publisher.
  *
  * Authentication is the RFC 9421 profile the MX hub uses (Ed25519 over
- * @method, @path, content-digest and x-mx-signed-at). The signature-base
+ * @method, @path, content-digest and mx-signed-at). The signature-base
  * builder, Signature-Input parser and base58btc decoder are ported from the
  * hub's REGINALD verifier; they are kept byte-compatible so a signature made
  * by the hub's signSubmission verifies here.
@@ -25,7 +25,7 @@ export const PUBLIC_COG_SUFFIX = '.cog.md';
 export const PUBLIC_COG_SLUG_PATH = /^[a-z0-9]+(?:-[a-z0-9]+)*(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)*$/;
 export const PUBLIC_COG_MAX_BYTES = 262144;
 export const PUBLIC_COG_MAX_SKEW_SECONDS = 300;
-export const PUBLIC_COG_REQUIRED_COVERED = ['@method', '@path', 'content-digest', 'x-mx-signed-at'];
+export const PUBLIC_COG_REQUIRED_COVERED = ['@method', '@path', 'content-digest', 'mx-signed-at'];
 export const PUBLIC_COG_HOSTS = ['allabout.network', 'www.allabout.network'];
 const CONTENT_TYPE = 'text/markdown; charset=utf-8';
 
@@ -160,12 +160,12 @@ export const verifyPublicCogRequest = async (req, env, nowMs = Date.now()) => {
   if (h['content-digest'] !== await contentDigestOf(req.body)) {
     return fail('content-digest does not match body');
   }
-  const signedAt = h['x-mx-signed-at'];
-  if (!signedAt) return fail('missing x-mx-signed-at header');
+  const signedAt = h['mx-signed-at'];
+  if (!signedAt) return fail('missing mx-signed-at header');
   const t = Date.parse(signedAt);
-  if (Number.isNaN(t)) return fail('x-mx-signed-at is not a valid time');
+  if (Number.isNaN(t)) return fail('mx-signed-at is not a valid time');
   if (Math.abs(nowMs - t) > PUBLIC_COG_MAX_SKEW_SECONDS * 1000) {
-    return fail('x-mx-signed-at is outside the allowed window');
+    return fail('mx-signed-at is outside the allowed window');
   }
   const sigValue = extractSignatureValue(h.signature, parsed.label);
   if (!sigValue) return fail(`no signature value for label ${parsed.label}`);
@@ -257,7 +257,7 @@ export const handlePublicCogRequest = async (request, env, url = new URL(request
       headers: {
         ...CORS,
         'access-control-allow-methods': 'GET, HEAD, PUT, DELETE, OPTIONS',
-        'access-control-allow-headers': 'content-type, content-digest, signature, signature-input, x-mx-signed-at',
+        'access-control-allow-headers': 'content-type, content-digest, signature, signature-input, mx-signed-at',
         'access-control-max-age': '86400',
       },
     });

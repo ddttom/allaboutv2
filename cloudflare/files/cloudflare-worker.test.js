@@ -3014,10 +3014,10 @@ describe('Public cog store', () => {
 
   const sign = ({
     method, path, body = '', keys = goodKeys, keyId = KEY_ID, signedAt = new Date().toISOString(),
-    covered = ['@method', '@path', 'content-digest', 'x-mx-signed-at'], omitSignedAt = false,
+    covered = ['@method', '@path', 'content-digest', 'mx-signed-at'], omitSignedAt = false,
   }) => {
     const digest = `sha-256=:${nodeCrypto.createHash('sha256').update(body).digest('base64')}:`;
-    const hdrs = { 'content-digest': digest, 'x-mx-signed-at': signedAt };
+    const hdrs = { 'content-digest': digest, 'mx-signed-at': signedAt };
     const inner = covered.map((c) => `"${c}"`).join(' ');
     const params = `(${inner});keyid="${keyId}";alg="ed25519"`;
     const lines = covered.map((c) => {
@@ -3034,7 +3034,7 @@ describe('Public cog store', () => {
       'signature-input': `sig1=${params}`,
       signature: `sig1=z${b58encode(sig)}`,
     };
-    if (!omitSignedAt) headers['x-mx-signed-at'] = signedAt;
+    if (!omitSignedAt) headers['mx-signed-at'] = signedAt;
     return headers;
   };
 
@@ -3148,12 +3148,12 @@ describe('Public cog store', () => {
     expect((await res.json()).reason).toContain('content-digest');
   });
 
-  test('missing x-mx-signed-at is 401', async () => {
+  test('missing mx-signed-at is 401', async () => {
     const res = await put(P, BODY, { omitSignedAt: true });
     expect(res.status).toBe(401);
   });
 
-  test('stale x-mx-signed-at is 401', async () => {
+  test('stale mx-signed-at is 401', async () => {
     const old = new Date(Date.now() - 400 * 1000).toISOString();
     const res = await put(P, BODY, { signedAt: old });
     expect(res.status).toBe(401);
@@ -3169,7 +3169,7 @@ describe('Public cog store', () => {
   test('covered components must include all four', async () => {
     const res = await put(P, BODY, { covered: ['@method', '@path', 'content-digest'] });
     expect(res.status).toBe(401);
-    expect((await res.json()).reason).toContain('x-mx-signed-at');
+    expect((await res.json()).reason).toContain('mx-signed-at');
   });
 
   test('a signature for another path does not authorise this path', async () => {
@@ -3248,10 +3248,10 @@ describe('Public cog store', () => {
       body: BODY,
       keyId: KEY_ID,
       privateKey: goodKeys.privateKey,
-      covered: ['@method', '@path', 'content-digest', 'x-mx-signed-at'],
-      headers: { 'x-mx-signed-at': signedAt },
+      covered: ['@method', '@path', 'content-digest', 'mx-signed-at'],
+      headers: { 'mx-signed-at': signedAt },
     });
-    const res = await call('PUT', P, { body: out.body, headers: { ...out.headers, 'x-mx-signed-at': signedAt } });
+    const res = await call('PUT', P, { body: out.body, headers: { ...out.headers, 'mx-signed-at': signedAt } });
     expect(res.status).toBe(201);
     return undefined;
   });
