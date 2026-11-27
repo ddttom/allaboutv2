@@ -19,9 +19,12 @@
 /*eslint-disable max-classes-per-file, import/no-unresolved*/
 // Multiple mock classes needed for testing
 
+import nodeCrypto from 'node:crypto';
+import { existsSync } from 'node:fs';
 import {
   describe, test, expect, vi, beforeEach, afterEach,
 } from 'vitest';
+import { decodeMultibaseZ, importPublicKey } from './public-cog-store.js';
 import worker, {
   getExtension,
   isMediaRequest,
@@ -2970,5 +2973,286 @@ describe('AI Attribution Handler — resolveTier', () => {
     const data = await response.json();
     expect(response.status).toBe(429);
     expect(data.error).toContain('quota');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Public cog body store (/cogs/public/*)
+// ---------------------------------------------------------------------------
+// The handleRequest tests above replace and delete global.Response; keep the
+// real one so these tests run against the platform implementation.
+const RealResponse = globalThis.Response;
+const RealFetch = globalThis.fetch;
+
+describe('Public cog store', () => {
+  const KEY_ID = 'did:web:allabout.network:publishers:public-facts#publisher-key-1';
+  const B58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+  const b58encode = (bytes) => {
+    let zeros = 0;
+    while (zeros < bytes.length && bytes[zeros] === 0) zeros += 1;
+    const digits = [];
+    for (let i = zeros; i < bytes.length; i += 1) {
+      let carry = bytes[i];
+      for (let j = 0; j < digits.length; j += 1) {
+        carry += digits[j] << 8;
+        digits[j] = carry % 58;
+        carry = (carry / 58) | 0;
+      }
+      while (carry > 0) { digits.push(carry % 58); carry = (carry / 58) | 0; }
+    }
+    return '1'.repeat(zeros) + digits.reverse().map((d) => B58[d]).join('');
+  };
+  const makeKeys = () => {
+    const { publicKey, privateKey } = nodeCrypto.generateKeyPairSync('ed25519');
+    const der = publicKey.export({ format: 'der', type: 'spki' });
+    const raw = der.subarray(der.length - 32);
+    const mb = `z${b58encode(Buffer.concat([Buffer.from([0xed, 0x01]), raw]))}`;
+    return { privateKey, mb };
+  };
+
+  const goodKeys = makeKeys();
+
+  const sign = ({
+    method, path, body = '', keys = goodKeys, keyId = KEY_ID, signedAt = new Date().toISOString(),
+    covered = ['@method', '@path', 'content-digest', 'x-mx-signed-at'], omitSignedAt = false,
+  }) => {
+    const digest = `sha-256=:${nodeCrypto.createHash('sha256').update(body).digest('base64')}:`;
+    const hdrs = { 'content-digest': digest, 'x-mx-signed-at': signedAt };
+    const inner = covered.map((c) => `"${c}"`).join(' ');
+    const params = `(${inner});keyid="${keyId}";alg="ed25519"`;
+    const lines = covered.map((c) => {
+      let v;
+      if (c === '@method') v = method;
+      else if (c === '@path') v = path;
+      else v = hdrs[c];
+      return `"${c}": ${v}`;
+    });
+    lines.push(`"@signature-params": ${params}`);
+    const sig = nodeCrypto.sign(null, Buffer.from(lines.join('\n')), keys.privateKey);
+    const headers = {
+      'content-digest': digest,
+      'signature-input': `sig1=${params}`,
+      signature: `sig1=z${b58encode(sig)}`,
+    };
+    if (!omitSignedAt) headers['x-mx-signed-at'] = signedAt;
+    return headers;
+  };
+
+  const makeR2 = () => {
+    const store = new Map();
+    return {
+      store,
+      async put(key, value, opts) {
+        store.set(key, { bytes: new Uint8Array(value), ...opts });
+      },
+      async get(key) {
+        const o = store.get(key);
+        if (!o) return null;
+        return {
+          size: o.bytes.length,
+          customMetadata: o.customMetadata,
+          httpMetadata: o.httpMetadata,
+          arrayBuffer: async () => o.bytes.slice().buffer,
+        };
+      },
+      async head(key) {
+        const o = store.get(key);
+        return o ? { size: o.bytes.length, customMetadata: o.customMetadata } : null;
+      },
+      async delete(key) { store.delete(key); },
+    };
+  };
+
+  let r2;
+  let env;
+  let fetchSpy;
+  const BODY = '---\ntitle: "A cog"\n---\n\nBody with unicode é and trailing newline.\n';
+  const call = (method, path, { body, headers = {}, host = 'allabout.network' } = {}) => worker.fetch(
+    new Request(`https://${host}${path}`, { method, body, headers }),
+    env,
+    { waitUntil: () => {} },
+  );
+
+  beforeEach(() => {
+    global.Response = RealResponse;
+    fetchSpy = vi.fn(async () => new RealResponse('<html>origin</html>', { headers: { 'content-type': 'text/html' } }));
+    global.fetch = fetchSpy;
+    global.HTMLRewriter = class { on() { return this; } transform() { throw new Error('HTMLRewriter must not run'); } };
+    r2 = makeR2();
+    env = {
+      ORIGIN_HOSTNAME: 'main--test--owner.aem.live',
+      PUBLIC_COGS_R2: r2,
+      PUBLIC_COG_KEY_ID: KEY_ID,
+      PUBLIC_COG_PUBLIC_KEY: goodKeys.mb,
+    };
+  });
+  afterEach(() => {
+    global.fetch = RealFetch;
+    delete global.HTMLRewriter;
+  });
+
+  const P = '/cogs/public/facts/example-one.cog.md';
+  const put = (path = P, body = BODY, sigOpts = {}) => call('PUT', path, {
+    body, headers: sign({ method: 'PUT', path, body, ...sigOpts }),
+  });
+
+  test('PUT then GET returns identical bytes and the contract headers', async () => {
+    const res = await put();
+    expect(res.status).toBe(201);
+    const j = await res.json();
+    const hex = nodeCrypto.createHash('sha256').update(BODY).digest('hex');
+    expect(j).toEqual({ path: P, digest: `sha256:${hex}`, url: `https://allabout.network${P}` });
+    const stored = r2.store.get('facts/example-one.cog.md');
+    expect(stored.httpMetadata.contentType).toBe('text/markdown; charset=utf-8');
+    expect(stored.customMetadata.sha256).toBe(`sha256:${hex}`);
+    expect(stored.customMetadata.signedAt).toBeTruthy();
+
+    const got = await call('GET', P);
+    expect(got.status).toBe(200);
+    expect(await got.text()).toBe(BODY);
+    expect(got.headers.get('content-type')).toBe('text/markdown; charset=utf-8');
+    expect(got.headers.get('cache-control')).toBe('public, max-age=60');
+    expect(got.headers.get('etag')).toBe(`"sha256-${hex}"`);
+    expect(got.headers.get('x-content-sha256')).toBe(`sha256:${hex}`);
+    expect(got.headers.get('access-control-allow-origin')).toBe('*');
+  });
+
+  test('www host works and HEAD returns headers with no body', async () => {
+    await put();
+    const res = await call('HEAD', P, { host: 'www.allabout.network' });
+    expect(res.status).toBe(200);
+    expect(await res.text()).toBe('');
+    expect(res.headers.get('x-content-sha256')).toMatch(/^sha256:[0-9a-f]{64}$/);
+    expect(res.headers.get('content-type')).toBe('text/markdown; charset=utf-8');
+  });
+
+  test('GET of an absent cog is a plain-text 404; bad GET path is 404', async () => {
+    const res = await call('GET', P);
+    expect(res.status).toBe(404);
+    expect(res.headers.get('content-type')).toContain('text/plain');
+    expect((await call('GET', '/cogs/public/Bad_Path.cog.md')).status).toBe(404);
+    expect((await call('GET', '/cogs/public/nothing')).status).toBe(404);
+  });
+
+  test('signed with the wrong key is 401 with a JSON reason', async () => {
+    const res = await put(P, BODY, { keys: makeKeys() });
+    expect(res.status).toBe(401);
+    expect((await res.json()).reason).toContain('verification failed');
+    expect(r2.store.size).toBe(0);
+  });
+
+  test('tampered body is 401', async () => {
+    const headers = sign({ method: 'PUT', path: P, body: BODY });
+    const res = await call('PUT', P, { body: `${BODY}tampered`, headers });
+    expect(res.status).toBe(401);
+    expect((await res.json()).reason).toContain('content-digest');
+  });
+
+  test('missing x-mx-signed-at is 401', async () => {
+    const res = await put(P, BODY, { omitSignedAt: true });
+    expect(res.status).toBe(401);
+  });
+
+  test('stale x-mx-signed-at is 401', async () => {
+    const old = new Date(Date.now() - 400 * 1000).toISOString();
+    const res = await put(P, BODY, { signedAt: old });
+    expect(res.status).toBe(401);
+    expect((await res.json()).reason).toContain('window');
+  });
+
+  test('keyid mismatch is 401', async () => {
+    const res = await put(P, BODY, { keyId: 'did:web:evil.example#k' });
+    expect(res.status).toBe(401);
+    expect((await res.json()).reason).toContain('keyid');
+  });
+
+  test('covered components must include all four', async () => {
+    const res = await put(P, BODY, { covered: ['@method', '@path', 'content-digest'] });
+    expect(res.status).toBe(401);
+    expect((await res.json()).reason).toContain('x-mx-signed-at');
+  });
+
+  test('a signature for another path does not authorise this path', async () => {
+    const headers = sign({ method: 'PUT', path: '/cogs/public/other.cog.md', body: BODY });
+    const res = await call('PUT', P, { body: BODY, headers });
+    expect(res.status).toBe(401);
+  });
+
+  test('bad path is 400 for PUT and DELETE', async () => {
+    const bads = ['/cogs/public/Upper.cog.md', '/cogs/public/a//b.cog.md', '/cogs/public/a_b.cog.md',
+      '/cogs/public/-a.cog.md', '/cogs/public/x.txt', '/cogs/public/%2e%2e.cog.md'];
+    for (const bad of bads) {
+      expect((await put(bad)).status).toBe(400);
+      const del = await call('DELETE', bad, { headers: sign({ method: 'DELETE', path: bad, body: '' }) });
+      expect(del.status).toBe(400);
+    }
+  });
+
+  test('oversize body is 413; exactly the limit is accepted', async () => {
+    expect((await put(P, 'a'.repeat(262145))).status).toBe(413);
+    expect((await put(P, 'a'.repeat(262144))).status).toBe(201);
+  });
+
+  test('DELETE removes the body, and is 200 when already absent', async () => {
+    await put();
+    const del = () => call('DELETE', P, { headers: sign({ method: 'DELETE', path: P, body: '' }) });
+    const res = await del();
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ path: P, deleted: true });
+    expect((await call('GET', P)).status).toBe(404);
+    expect((await del()).status).toBe(200);
+  });
+
+  test('unsigned DELETE is 401 and removes nothing', async () => {
+    await put();
+    const res = await call('DELETE', P);
+    expect(res.status).toBe(401);
+    expect(r2.store.size).toBe(1);
+  });
+
+  test('a /cogs/public path never reaches EDS or markdown-for-agents', async () => {
+    await put();
+    await call('GET', P, { headers: { accept: 'text/markdown' } });
+    await call('GET', '/cogs/public/missing.cog.md', { headers: { accept: 'text/html' } });
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
+  test('a stored cog is not rewritten for an Accept: text/html reader', async () => {
+    await put();
+    const res = await call('GET', P, { headers: { accept: 'text/html' } });
+    expect(await res.text()).toBe(BODY);
+  });
+
+  test('module unit: base58 decode and key import', async () => {
+    const dec = decodeMultibaseZ('z6Mkisy2BF8Qbn2sJbFhawonocw6xcWDdADzXwmnm92nsBy5');
+    expect(dec.length).toBe(34);
+    expect([dec[0], dec[1]]).toEqual([0xed, 0x01]);
+    await expect(importPublicKey('z6Mkisy2BF8Qbn2sJbFhawonocw6xcWDdADzXwmnm92nsBy5')).resolves.toBeTruthy();
+    await expect(importPublicKey('zabc')).rejects.toThrow();
+    expect(() => decodeMultibaseZ('z0OIl')).toThrow();
+  });
+
+  const HUB_SIGN = '/Users/tomcranstoun/Code/MX-hub/mx-reginald/packages/verifier/src/submission-sign.js';
+  test('a signature from the hub signSubmission verifies here (drift guard)', async (ctx) => {
+    if (!existsSync(HUB_SIGN)) return ctx.skip();
+    let hub;
+    try {
+      hub = await import(/* @vite-ignore */ HUB_SIGN);
+    } catch {
+      return ctx.skip();
+    }
+    const signedAt = new Date().toISOString();
+    const out = hub.signSubmission({
+      method: 'PUT',
+      path: P,
+      body: BODY,
+      keyId: KEY_ID,
+      privateKey: goodKeys.privateKey,
+      covered: ['@method', '@path', 'content-digest', 'x-mx-signed-at'],
+      headers: { 'x-mx-signed-at': signedAt },
+    });
+    const res = await call('PUT', P, { body: out.body, headers: { ...out.headers, 'x-mx-signed-at': signedAt } });
+    expect(res.status).toBe(201);
+    return undefined;
   });
 });

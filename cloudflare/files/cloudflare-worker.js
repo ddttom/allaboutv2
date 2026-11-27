@@ -45,6 +45,7 @@ import { handleLeadCapture } from './reginald/handlers/lead-capture.js';
 import { AI_ATTRIBUTION_HOSTS, isAttributionHost } from './reginald/lib/ai-attribution-hosts.js';
 import { runGa4Connector } from './reginald/lib/ga4-connector.js';
 import { runAlivenessChecks } from './reginald/lib/aliveness.js';
+import { isPublicCogRequest, handlePublicCogRequest } from './public-cog-store.js';
 
 // Worker version - hardcoded for compatibility
 // Update this when package.json version changes
@@ -1391,6 +1392,14 @@ const handleRequest = async (request, env, ctx) => {
 
   const url = new URL(request.url);
   const publicHostname = url.hostname; // Store public-facing domain for JSON-LD
+
+  // Public cog body store: /cogs/public/* on allabout.network is served
+  // straight from R2, before any other routing, so no HTML wrapping,
+  // markdown-for-agents rewriting, redirects or EDS proxying can touch the
+  // exact bytes a reader hashes.
+  if (isPublicCogRequest(url)) {
+    return handlePublicCogRequest(request, env, url);
+  }
 
   // AI traffic attribution — fire-and-forget capture of AI crawlers and
   // AI-referred human visits for hostnames we operate. Runs before routing
