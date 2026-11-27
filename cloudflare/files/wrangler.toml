@@ -17,8 +17,10 @@ PUBLIC_COG_PUBLIC_KEY = "z6Mkisy2BF8Qbn2sJbFhawonocw6xcWDdADzXwmnm92nsBy5"
 # Not set: the pages operator key is minted by the operator (runbook in the
 # MX-hub design cog aem-content-provenance-example). The public key is not
 # secret; once minted, uncomment and fill in.
-# CPS_PUBLISHER_KEY_ID = "did:web:allabout.network:publishers:pages#publisher-key-1"
-# CPS_PUBLISHER_PUBLIC_KEY = "<publicKeyMultibase of the pages operator key>"
+# The upload key is separate from the attesting key #publisher-key-1 and is
+# left out of the pages DID document, so it signs store uploads only.
+# CPS_PUBLISHER_KEY_ID = "did:web:allabout.network:publishers:pages#upload-key-1"
+# CPS_PUBLISHER_PUBLIC_KEY = "<publicKeyMultibase of the pages upload key>"
 
 # Book sales — Stripe price IDs and MailerLite group IDs.
 # Three handbook products: PDF download (£25), UK-only print (£35),
@@ -63,7 +65,8 @@ binding = "PUBLIC_COGS_R2"
 bucket_name = "mx-public-cogs"
 
 # R2 bucket for the content provenance store (CPS draft 0.4 listing, keys,
-# Fact annotations and per-page entries). Left unbound, so every
+# Fact annotations and per-page entries), a new bucket shared with nothing
+# else. Left unbound, so every
 # /.well-known/content-provenance route answers 404. The operator creates the
 # bucket and uncomments the binding.
 # [[r2_buckets]]

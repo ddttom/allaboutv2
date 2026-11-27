@@ -29,8 +29,11 @@
  *   GET /.well-known/content-provenance/facts/{id} one Fact annotation
  *   PUT|DELETE /api/v1/content-provenance/<object> signed store upload
  *
- * Uploads reuse the RFC 9421 verifier of the public cog store with a key of
- * their own (CPS_PUBLISHER_KEY_ID, CPS_PUBLISHER_PUBLIC_KEY). Until the
+ * Uploads reuse the RFC 9421 verifier of the public cog store with an upload
+ * key of their own, separate from the REGINALD attesting key and absent from
+ * the pages DID document (CPS_PUBLISHER_KEY_ID, CPS_PUBLISHER_PUBLIC_KEY). The
+ * publisher runs on the operator's Mac and re-signs every page after any site
+ * or worker deploy, since a deploy moves Last-Modified. Until the
  * bucket is bound every route answers 404, so the module is inert.
  */
 
