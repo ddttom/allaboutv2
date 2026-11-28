@@ -34,7 +34,8 @@
  * the pages DID document (CPS_PUBLISHER_KEY_ID, CPS_PUBLISHER_PUBLIC_KEY). The
  * publisher runs on the operator's Mac and re-signs every page after any site
  * or worker deploy, since a deploy moves Last-Modified. Until the
- * bucket is bound every route answers 404, so the module is inert.
+ * bucket is bound the listing and key list are valid and empty, every other
+ * route answers 404, and pages are served unchanged.
  */
 
 import { verifyPublicCogRequest } from './public-cog-store.js';
@@ -55,6 +56,15 @@ const READ_CORS = {
 };
 const JSON_TYPE = 'application/json; charset=utf-8';
 const OBJECT_NAME = /^(site\.json|documents\.json|keys\.json|facts\/[A-Za-z0-9._~-]+\.json|pages\/(?:[a-z0-9][a-z0-9._-]*\/)*[a-z0-9][a-z0-9._-]*\.json)$/;
+
+/**
+ * The site description used until the publisher uploads site.json: the
+ * listing is then valid and empty rather than missing.
+ */
+export const CPS_DEFAULT_SITE = Object.freeze({
+  siteUrl: 'https://allabout.network',
+  generator: 'Adobe Edge Delivery Services (ddttom/allaboutv2) + mx-content-provenance 0.1.0',
+});
 
 const trimSlash = (u) => String(u).replace(/\/+$/, '');
 
@@ -136,13 +146,15 @@ export const buildListingPage = (site, entries, page, pageSize = CPS_PAGE_SIZE) 
 const handleRead = async (request, env, url) => {
   const bucket = env.CONTENT_PROVENANCE_R2;
   const cache = { 'cache-control': 'public, max-age=300' };
-  if (!bucket) return jsonResponse(404, { error: 'not found' });
   const rest = url.pathname.slice(CPS_WELL_KNOWN.length);
 
   if (rest === '' || rest === '/') {
-    const site = await readJson(bucket, 'site.json');
-    const entries = await readJson(bucket, 'documents.json');
-    if (!site || !Array.isArray(entries)) return jsonResponse(404, { error: 'not found' });
+    // Without the bucket, site.json or documents.json the listing is valid
+    // and empty (totalItems 0), never a 404.
+    const stored = bucket ? await readJson(bucket, 'site.json') : null;
+    const site = stored && stored.siteUrl && stored.generator ? stored : CPS_DEFAULT_SITE;
+    const listed = bucket ? await readJson(bucket, 'documents.json') : null;
+    const entries = Array.isArray(listed) ? listed : [];
     const raw = url.searchParams.get('page');
     const page = raw === null ? 1 : (/^[0-9]+$/.test(raw) ? Number(raw) : NaN);
     const built = buildListingPage(site, entries, page);
@@ -151,9 +163,8 @@ const handleRead = async (request, env, url) => {
   }
 
   if (rest === '/keys') {
-    const keys = await readJson(bucket, 'keys.json');
-    if (!keys) return jsonResponse(404, { error: 'not found' });
-    return jsonResponse(200, keys, cache);
+    const keys = bucket ? await readJson(bucket, 'keys.json') : null;
+    return jsonResponse(200, keys && Array.isArray(keys.keys) ? keys : { keys: [] }, cache);
   }
 
   if (rest.startsWith('/keys/')) {
@@ -163,7 +174,7 @@ const handleRead = async (request, env, url) => {
     } catch {
       return jsonResponse(404, { error: 'unknown key' });
     }
-    const keys = await readJson(bucket, 'keys.json');
+    const keys = bucket ? await readJson(bucket, 'keys.json') : null;
     const entry = keys && Array.isArray(keys.keys) ? keys.keys.find((k) => k.keyId === keyId) : null;
     if (!entry) return jsonResponse(404, { error: 'unknown key' });
     return jsonResponse(200, entry, cache);
@@ -171,7 +182,7 @@ const handleRead = async (request, env, url) => {
 
   if (rest.startsWith('/facts/')) {
     const id = rest.slice('/facts/'.length);
-    const annotation = /^[A-Za-z0-9._~-]+$/.test(id) ? await readJson(bucket, `facts/${id}.json`) : null;
+    const annotation = bucket && /^[A-Za-z0-9._~-]+$/.test(id) ? await readJson(bucket, `facts/${id}.json`) : null;
     if (!annotation) return jsonResponse(404, { error: 'unknown fact' });
     return jsonResponse(200, annotation, { ...cache, 'content-type': ANNOTATION_CONTENT_TYPE });
   }

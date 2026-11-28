@@ -81,9 +81,65 @@ describe('content provenance: routing', () => {
     expect(pageObjectName('/blogs/ddt/a-guide')).toBe('pages/blogs/ddt/a-guide.json');
   });
 
-  test('is inert without the bucket', async () => {
-    const res = await get('/.well-known/content-provenance', {});
-    expect(res.status).toBe(404);
+});
+
+describe('content provenance: before the first publish', () => {
+  const SITE = 'https://allabout.network';
+  const emptyListing = {
+    '@context': ['https://schema.org', 'https://cms-provenance.org/ns/v1'],
+    specVersion: '0.4',
+    generator: 'Adobe Edge Delivery Services (ddttom/allaboutv2) + mx-content-provenance 0.1.0',
+    cpsConformance: 1,
+    site: { url: `${SITE}/`, keys: `${SITE}/.well-known/content-provenance/keys` },
+    totalItems: 0,
+    page: 1,
+    pageSize: 100,
+    documents: [],
+  };
+  const stores = {
+    'no bucket': {},
+    'an empty bucket': { CONTENT_PROVENANCE_R2: makeR2() },
+    'a bucket with only site.json': { CONTENT_PROVENANCE_R2: makeR2({ 'site.json': GOLDEN.store['site.json'] }) },
+    'a bucket with unreadable objects': { CONTENT_PROVENANCE_R2: makeR2({ 'site.json': '{', 'documents.json': '{', 'keys.json': '{' }) },
+  };
+
+  for (const [label, env] of Object.entries(stores)) {
+    test(`with ${label} the listing is a valid empty listing`, async () => {
+      const res = await get('/.well-known/content-provenance', env);
+      expect(res.status).toBe(200);
+      expect(res.headers.get('content-type')).toBe('application/json; charset=utf-8');
+      expect(res.headers.get('access-control-allow-origin')).toBe('*');
+      expect(res.headers.get('access-control-expose-headers')).toBe('Link');
+      expect(res.headers.get('cache-control')).toBe('public, max-age=300');
+      expect(res.headers.get('link')).toBe(`<${SITE}/.well-known/content-provenance?page=1>; rel="first", <${SITE}/.well-known/content-provenance?page=1>; rel="last"`);
+      const body = await res.json();
+      expect(Object.keys(body)).toEqual(Object.keys(emptyListing));
+      expect(body).toEqual({ ...emptyListing, generator: body.generator });
+      expect(typeof body.generator).toBe('string');
+      expect(body.generator.length).toBeGreaterThan(0);
+      expect((await get('/.well-known/content-provenance?page=1', env)).status).toBe(200);
+      const beyond = await get('/.well-known/content-provenance?page=2', env);
+      expect(beyond.status).toBe(404);
+      expect(await beyond.json()).toEqual({ error: 'page out of range' });
+    });
+
+    test(`with ${label} the key list is valid and empty, and lookups are 404`, async () => {
+      const res = await get('/.well-known/content-provenance/keys', env);
+      expect(res.status).toBe(200);
+      expect(res.headers.get('content-type')).toBe('application/json; charset=utf-8');
+      expect(res.headers.get('access-control-allow-origin')).toBe('*');
+      expect(await res.json()).toEqual({ keys: [] });
+      expect((await get('/.well-known/content-provenance/keys/nope', env)).status).toBe(404);
+      const fact = await get('/.well-known/content-provenance/facts/nope', env);
+      expect(fact.status).toBe(404);
+      expect(await fact.json()).toEqual({ error: 'unknown fact' });
+      expect((await get('/.well-known/content-provenance/other', env)).status).toBe(404);
+    });
+  }
+
+  test('without the bucket the default generator is the one the publisher writes', async () => {
+    const body = await (await get('/.well-known/content-provenance', {})).json();
+    expect(body.generator).toBe(GOLDEN.store['site.json'].generator);
   });
 });
 
@@ -299,6 +355,14 @@ describe('content provenance: through the worker', () => {
   test('without the bucket nothing changes', async () => {
     const { text } = await run(GOLDEN.path, { bucket: false });
     expect(text).not.toContain('"contentHash"');
+  });
+
+  test('without the bucket the worker serves a valid empty listing', async () => {
+    const { res, text } = await run('/.well-known/content-provenance', { bucket: false });
+    expect(res.status).toBe(200);
+    const body = JSON.parse(text);
+    expect(body.totalItems).toBe(0);
+    expect(body.documents).toEqual([]);
   });
 
   test('the Markdown alternate is served with the frontmatter', async () => {

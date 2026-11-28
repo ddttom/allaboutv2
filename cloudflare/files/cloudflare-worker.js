@@ -1411,7 +1411,8 @@ const handleRequest = async (request, env, ctx) => {
 
   // Content provenance (CPS draft 0.4): the listing, keys and Fact
   // annotations are served from R2 before any other routing, for the same
-  // reason. Inert (404) until CONTENT_PROVENANCE_R2 is bound.
+  // reason. Until CONTENT_PROVENANCE_R2 is bound and published to, the
+  // listing and key list are valid and empty.
   if (isContentProvenanceRequest(url)) {
     return handleContentProvenanceRequest(request, env, url);
   }

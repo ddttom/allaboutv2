@@ -66,8 +66,8 @@ bucket_name = "mx-public-cogs"
 
 # R2 bucket for the content provenance store (CPS draft 0.4 listing, keys,
 # Fact annotations and per-page entries), a new bucket shared with nothing
-# else. Left unbound, so every
-# /.well-known/content-provenance route answers 404. The operator creates the
+# else. Left unbound, so the listing and key list are valid and empty and
+# the other /.well-known/content-provenance routes answer 404. The operator creates the
 # bucket and uncomments the binding.
 # [[r2_buckets]]
 # binding = "CONTENT_PROVENANCE_R2"
