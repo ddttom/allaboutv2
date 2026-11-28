@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Pull request template: HTML test URLs only** (2026-11-28)
+  - `.github/pull_request_template.md` gives every PR a "URL for testing" section for the AEM Code Sync PageSpeed Insights check (`aem-psi-check`), which scores the URLs in the PR description. Authors list HTML preview pages only, never `.json`, `.txt`, `.xml`, `.pem`, `.md` or `.yaml` files, which Lighthouse rejects as `NOT_HTML`. A PR that changes only non-HTML files, such as a DID or key update, lists the default blog page `/blogs/ddt/a-guide-to-ai-optimization-an-update` on its branch preview.
+
 - **REGINALD pages publisher DID** (2026-11-28)
   - `publishers/pages/did.json` publishes `did:web:allabout.network:publishers:pages` with its Ed25519 key `#publisher-key-1`, the key that attests allabout.network page provenance through REGINALD. The key was minted on the New Pro and its private half stays there; the file holds the public key only. The document is the output of `submitter-key doc` in MX-hub for the pinned key, and sits beside `publishers/public-facts/did.json` at the path the REGINALD verifier resolves.
 
